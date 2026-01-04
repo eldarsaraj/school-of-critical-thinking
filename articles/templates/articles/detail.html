@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} – The School of Critical Thinking{% endblock %}
+
+{% block content %}
+  <article class="essay">
+    <header class="essay__header">
+      <p class="essay__meta">{{ article.author }}</p>
+      <h1 class="essay__title">{{ article.title }}</h1>
+    </header>
+
+    <section class="essay__body">
+      <p>This is a placeholder. Later this page will show the full article content.</p>
+      <p><em>Slug:</em> {{ article.slug }}</p>
+    </section>
+
+    <footer class="essay__footer">
+      <span class="proof-mark">■</span>
+    </footer>
+  </article>
+{% endblock %}

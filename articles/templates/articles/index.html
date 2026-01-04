@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Articles – The School of Critical Thinking{% endblock %}
+
+{% block content %}
+  <h1>Articles</h1>
+  <p>Long-form studies and working notes.</p>
+
+  <section class="cards">
+    {% for a in page_obj %}
+      <article class="card">
+        <a class="card__thumb" href="/articles/{{ a.slug }}/" aria-label="Read: {{ a.title }}"></a>
+        <div class="card__body">
+          <h2 class="card__title"><a href="/articles/{{ a.slug }}/">{{ a.title }}</a></h2>
+          <p class="card__meta">{{ a.author }}</p>
+          <p class="card__summary">{{ a.summary }}</p>
+        </div>
+      </article>
+    {% endfor %}
+  </section>
+
+  <nav class="pagination" aria-label="Articles pagination">
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span class="pagination__meta">
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+  </span>
+
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+  {% endif %}
+</nav>
+
+{% endblock %}

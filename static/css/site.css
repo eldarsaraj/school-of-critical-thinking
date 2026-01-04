@@ -1,0 +1,157 @@
+/* Base: calm, readable, institutional */
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Content column */
+main {
+  max-width: 760px;
+  padding: 48px 24px;
+}
+
+/* Header + nav: quiet */
+header {
+  max-width: 760px;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header a {
+  color: inherit;
+  text-decoration: none;
+}
+
+nav a {
+  margin-left: 16px;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Headings */
+h1 {
+  font-size: 32px;
+  line-height: 1.2;
+  margin: 0 0 24px 0;
+}
+
+p {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+}
+
+
+/* Articles list */
+.cards {
+  margin-top: 32px;
+  display: grid;
+  gap: 20px;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.card__thumb {
+  display: block;
+  width: 140px;
+  height: 92px;
+  background: #FFFEF8;
+}
+
+.card__title {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+.card__title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card__meta {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.card__summary {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+
+/* Article detail (long-form reading) */
+
+.essay {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.essay__header {
+  margin-bottom: 40px;
+}
+
+.essay__meta {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.essay__title {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.2;
+}
+
+.essay__body p {
+  font-size: 19px;
+  line-height: 1.75;
+  margin: 0 0 24px 0;
+}
+
+.essay__footer {
+  margin-top: 64px;
+  text-align: right;
+}
+
+.proof-mark {
+  font-size: 18px;
+}
+
+/* Pagination */
+
+.pagination {
+  margin-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pagination a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.pagination__meta {
+  text-transform: none;
+  letter-spacing: 0;
+}
