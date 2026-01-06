@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ book.title }} – Books – The School of Critical Thinking{% endblock %}
+
+{% block social_meta %}
+  <meta property="og:type" content="book" />
+  <meta property="og:title" content="{{ book.title }}" />
+  <meta property="og:description" content="{{ book.short_promise }}" />
+  <meta property="og:image" content="{% static book.cover %}" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ book.title }}" />
+  <meta name="twitter:description" content="{{ book.short_promise }}" />
+  <meta name="twitter:image" content="{% static book.cover %}" />
+  <meta name="twitter:image:alt" content="Cover: {{ book.title }}" />
+{% endblock %}
+
+{% block content %}
+
+<article class="book-detail">
+
+  <header class="book-detail__header">
+    {% if book.shelf %}
+      <p class="book-detail__meta">{{ book.shelf }}</p>
+    {% endif %}
+
+    <h1 class="book-detail__title">{{ book.title }}</h1>
+
+    {% if book.author %}
+      <p class="book-detail__author">{{ book.author }}</p>
+    {% endif %}
+  </header>
+
+  <section class="book-detail__main">
+
+    {% if book.cover %}
+      <figure class="book-detail__cover" aria-label="Book cover">
+        <img src="{% static book.cover %}" alt="Cover: {{ book.title }}">
+        {% if book.cover_caption %}
+          <figcaption class="book-detail__caption">
+            {{ book.cover_caption }}
+          </figcaption>
+        {% endif %}
+      </figure>
+    {% endif %}
+
+    <div class="book-detail__body">
+
+      {% if book.short_promise %}
+        <p class="book-detail__promise">
+          {{ book.short_promise }}
+        </p>
+      {% endif %}
+
+      {% if book.description %}
+        <div class="book-detail__description">
+          {{ book.description|linebreaks }}
+        </div>
+      {% endif %}
+
+      {% if book.format or book.status %}
+        <section class="book-detail__facts" aria-label="Book details">
+          {% if book.format %}
+            <p>
+              <span class="book-detail__k">Format</span>
+              <span class="book-detail__v">{{ book.format }}</span>
+            </p>
+          {% endif %}
+          {% if book.status %}
+            <p>
+              <span class="book-detail__k">Status</span>
+              <span class="book-detail__v">{{ book.status }}</span>
+            </p>
+          {% endif %}
+        </section>
+      {% endif %}
+
+      {% if book.buy_url %}
+        <p class="book-detail__cta">
+          <a href="{{ book.buy_url }}" target="_blank" rel="noopener">
+            Buy on Amazon
+          </a>
+        </p>
+      {% endif %}
+
+    </div>
+
+  </section>
+
+  <nav class="book-detail__back" aria-label="Back">
+    <a href="/books/">← Back to Books</a>
+  </nav>
+
+</article>
+
+{% endblock %}

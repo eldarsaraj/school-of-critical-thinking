@@ -1,21 +1,99 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ article.title }} – The School of Critical Thinking{% endblock %}
 
 {% block content %}
   <article class="essay">
+
     <header class="essay__header">
-      <p class="essay__meta">{{ article.author }}</p>
       <h1 class="essay__title">{{ article.title }}</h1>
+
+      {% if article.author %}
+        <p class="essay__meta">{{ article.author }}</p>
+      {% endif %}
+
+      {% if article.cover_image %}
+        <figure class="essay__cover" aria-label="Article cover">
+          <img src="{{ article.cover_image.url }}" alt="Cover: {{ article.title }}">
+        </figure>
+      {% endif %}
     </header>
 
+    {% if toc_items %}
+      <nav class="toc" aria-label="Table of contents">
+        <div class="toc__label">Contents</div>
+        <ol class="toc__list">
+          {% for item in toc_items %}
+            <li class="toc__item toc__item--{{ item.level }}">
+              <a href="#{{ item.id }}">{{ item.text }}</a>
+            </li>
+          {% endfor %}
+        </ol>
+      </nav>
+    {% endif %}
+
     <section class="essay__body">
-      <p>This is a placeholder. Later this page will show the full article content.</p>
-      <p><em>Slug:</em> {{ article.slug }}</p>
+      <div class="essay__content">
+        {% if article.content_markdown %}
+          {{ article_html|safe }}
+        {% else %}
+          <p>No content yet.</p>
+        {% endif %}
+      </div>
     </section>
 
-    <footer class="essay__footer">
-      <span class="proof-mark">■</span>
-    </footer>
+    <!-- Continuation block -->
+    <section class="continuation" aria-label="Context">
+      <p class="continuation__label">Context</p>
+      <p class="continuation__text">
+        This article is part of the School of Critical Thinking's unique curriculum.
+      </p>
+      <p class="continuation__text continuation__text--secondary">
+        Some ideas are developed further in books. Others through guided instruction.
+      </p>
+
+      <p class="continuation__close">
+        If this way of thinking feels unfamiliar, there is a reason for that.
+      </p>
+      <p class="continuation__action">
+        <a class="continuation__link" href="{% url 'start' %}">Start here →</a>
+      </p>
+    </section>
+
+    <nav class="pagination" aria-label="Article navigation">
+      <div>
+        {% if prev_article %}
+          <a href="{% url 'articles_detail' prev_article.slug %}">Previous</a>
+        {% endif %}
+      </div>
+
+      <div class="pagination__meta">
+        {% if prev_article %}{{ prev_article.title }}{% endif %}
+        {% if prev_article and next_article %} · {% endif %}
+        {% if next_article %}{{ next_article.title }}{% endif %}
+      </div>
+
+      <div>
+        {% if next_article %}
+          <a href="{% url 'articles_detail' next_article.slug %}">Next</a>
+        {% endif %}
+      </div>
+    </nav>
+
+    {% if article.related.all %}
+      <section class="related" aria-label="Related reading">
+        <div class="related__label">Related reading</div>
+        <ul class="related__list">
+          {% for r in article.related.all %}
+            <li class="related__item">
+              <a href="{% url 'articles_detail' r.slug %}">{{ r.title }}</a>
+              <span class="related__meta">— {{ r.author }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
   </article>
 {% endblock %}

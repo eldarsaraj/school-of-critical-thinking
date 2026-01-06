@@ -4,5 +4,123 @@
 
 {% block content %}
   <h1>Contact</h1>
-  <p>Inquiries may be sent to: contact@schoolofcriticalthinking.org</p>
+
+  {% if path == "adult" %}
+    <p class="contact-context">
+      If you have the sense that something important is missing, you’re not imagining it.
+      Modern life gives you infinite information, and fewer reliable ways to decide.
+      AI makes this sharper: answers are cheap, but responsibility is not.
+    </p>
+
+    <p class="contact-context">
+      The School teaches critical thinking for agency.
+      Not as abstract “smartness,” but as a practical ability to choose well under uncertainty:
+      to frame problems correctly, spot the real constraint, see tradeoffs, and commit to action.
+    </p>
+
+    <p class="contact-context">
+      Send a short note with one situation where you want better judgment (career, money, relationships, risk).
+      If the goal is clearer decisions and more control over outcomes, you’re in the right place.
+    </p>
+
+  {% elif path == "parent" %}
+    <p class="contact-context">
+      If you’re here as a parent, you’re likely aiming higher than grades and test scores.
+      In an AI-dominated future, the advantage won’t be “knowing more,” but thinking better:
+      asking sharper questions, reasoning across domains, and acting with confidence.
+    </p>
+
+    <p class="contact-context">
+      The School teaches critical thinking for agency.
+      We don’t train students to perform for a rubric. Instead, we train them to take intellectual control:
+      to write clearly, reason under pressure, handle evidence and probability, and make decisions that hold up.
+      That is why we are different from ordinary tutoring centers.
+    </p>
+
+    <p class="contact-context">
+      Send a short note with your child’s age and what you want them to become able to do.
+      We’ll suggest a starting point.
+    </p>
+
+  {% else %}
+    <p class="contact-context">
+      The School of Critical Thinking is a small intellectual school.
+      We teach critical thinking for agency: the kind that changes decisions, not just opinions.
+      If you’re unsure where you fit, send a short note and we’ll route you.
+    </p>
+  {% endif %}
+
+  {# ---------------- STATUS ---------------- #}
+
+  {% if sent %}
+    <p class="contact-success" role="status">
+      Message sent. Thank you — We’ll reply by email.
+    </p>
+  {% endif %}
+
+  {% if errors %}
+    <p class="contact-error" role="alert">
+      Please fix the fields below and try again.
+    </p>
+  {% endif %}
+
+  {# ---------------- CONTACT FORM ---------------- #}
+
+  <form method="post" class="contact-form" novalidate>
+    {% csrf_token %}
+
+    <div class="contact-form__field">
+      <label for="id_name">Name</label>
+      <input
+        type="text"
+        name="name"
+        id="id_name"
+        required
+        autocomplete="name"
+        value="{{ form.name|default:'' }}"
+        aria-invalid="{% if errors.name %}true{% else %}false{% endif %}"
+      >
+      {% if errors.name %}
+        <p class="contact-form__error">{{ errors.name }}</p>
+      {% endif %}
+    </div>
+
+    <div class="contact-form__field">
+      <label for="id_email">Email</label>
+      <input
+        type="email"
+        name="email"
+        id="id_email"
+        required
+        autocomplete="email"
+        value="{{ form.email|default:'' }}"
+        aria-invalid="{% if errors.email %}true{% else %}false{% endif %}"
+      >
+      {% if errors.email %}
+        <p class="contact-form__error">{{ errors.email }}</p>
+      {% endif %}
+    </div>
+
+    <div class="contact-form__field">
+      <label for="id_message">Message</label>
+      <textarea
+        name="message"
+        id="id_message"
+        rows="7"
+        required
+        aria-invalid="{% if errors.message %}true{% else %}false{% endif %}"
+      >{{ form.message|default:'' }}</textarea>
+      {% if errors.message %}
+        <p class="contact-form__error">{{ errors.message }}</p>
+      {% endif %}
+    </div>
+
+    <p class="contact-form__action">
+      <button type="submit">Send message</button>
+    </p>
+  </form>
+
+  <p class="contact-note">
+    Messages are read by a human. One paragraph is enough.
+  </p>
 {% endblock %}

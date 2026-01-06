@@ -1,8 +1,145 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Books – The School of Critical Thinking{% endblock %}
 
 {% block content %}
-  <h1>Books</h1>
-  <p>Books here are understood as formal extensions of the School’s work.</p>
+
+  <section class="books-intro">
+    <h1>Books</h1>
+    <p>
+      Formal extensions of the School’s curriculum, designed for different stages of thinking.
+    </p>
+  </section>
+
+  {# ---------- FOUNDATIONS ---------- #}
+  <section class="shelf">
+    <h2>Foundations</h2>
+    <p class="shelf__note">
+      Early thinking skills, built before habits harden.
+      These books are written for children and families.
+    </p>
+
+    <div class="book-list">
+      {% for b in books %}
+        {% if b.shelf == "foundations" %}
+          <article class="book-card">
+            <a class="book-card__cover{% if b.cover_fit == 'contain' %} book-card__cover--contain{% endif %}"
+               href="{% url 'book_detail' b.slug %}"
+               aria-label="Open: {{ b.title }}">
+              {% if b.cover %}
+                <img src="{% static b.cover %}" alt="Cover: {{ b.title }}">
+              {% endif %}
+            </a>
+
+            <div class="book-card__body">
+              <h3 class="book-card__title">
+                <a href="{% url 'book_detail' b.slug %}">{{ b.title }}</a>
+              </h3>
+
+              {% if b.author %}
+                <p class="book-card__author">{{ b.author }}</p>
+              {% endif %}
+
+              {% if b.short_promise %}
+                <p class="book-card__promise">{{ b.short_promise }}</p>
+              {% endif %}
+
+              <p class="book-card__meta">
+                {% if b.format %}{{ b.format }}{% endif %}
+                {% if b.status %}{% if b.format %} · {% endif %}{{ b.status }}{% endif %}
+              </p>
+            </div>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  {# ---------- TOOLS ---------- #}
+  <section class="shelf">
+    <h2>Tools</h2>
+    <p class="shelf__note">
+      Practice-focused books: test preparation, workbooks, and applied reasoning.
+    </p>
+
+    <div class="book-list">
+      {% for b in books %}
+        {% if b.shelf == "tools" %}
+          <article class="book-card">
+            <a class="book-card__cover{% if b.cover_fit == 'contain' %} book-card__cover--contain{% endif %}"
+               href="{% url 'book_detail' b.slug %}"
+               aria-label="Open: {{ b.title }}">
+              {% if b.cover %}
+                <img src="{% static b.cover %}" alt="Cover: {{ b.title }}">
+              {% endif %}
+            </a>
+
+            <div class="book-card__body">
+              <h3 class="book-card__title">
+                <a href="{% url 'book_detail' b.slug %}">{{ b.title }}</a>
+              </h3>
+
+              {% if b.author %}
+                <p class="book-card__author">{{ b.author }}</p>
+              {% endif %}
+
+              {% if b.short_promise %}
+                <p class="book-card__promise">{{ b.short_promise }}</p>
+              {% endif %}
+
+              <p class="book-card__meta">
+                {% if b.format %}{{ b.format }}{% endif %}
+                {% if b.status %}{% if b.format %} · {% endif %}{{ b.status }}{% endif %}
+              </p>
+            </div>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  {# ---------- MASTERY ---------- #}
+  <section class="shelf">
+    <h2>Mastery</h2>
+    <p class="shelf__note">
+      College-level and advanced work for readers who want depth, rigor, and long arcs of thought.
+    </p>
+
+    <div class="book-list">
+      {% for b in books %}
+        {% if b.shelf == "mastery" %}
+          <article class="book-card">
+            <a class="book-card__cover{% if b.cover_fit == 'contain' %} book-card__cover--contain{% endif %}"
+               href="{% url 'book_detail' b.slug %}"
+               aria-label="Open: {{ b.title }}">
+              {% if b.cover %}
+                <img src="{% static b.cover %}" alt="Cover: {{ b.title }}">
+              {% endif %}
+            </a>
+
+            <div class="book-card__body">
+              <h3 class="book-card__title">
+                <a href="{% url 'book_detail' b.slug %}">{{ b.title }}</a>
+              </h3>
+
+              {% if b.author %}
+                <p class="book-card__author">{{ b.author }}</p>
+              {% endif %}
+
+              {% if b.short_promise %}
+                <p class="book-card__promise">{{ b.short_promise }}</p>
+              {% endif %}
+
+              <p class="book-card__meta">
+                {% if b.format %}{{ b.format }}{% endif %}
+                {% if b.status %}{% if b.format %} · {% endif %}{{ b.status }}{% endif %}
+              </p>
+            </div>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
 {% endblock %}

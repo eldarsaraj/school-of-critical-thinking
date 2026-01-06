@@ -3,6 +3,119 @@
 {% block title %}About – The School of Critical Thinking{% endblock %}
 
 {% block content %}
-  <h1>About</h1>
-  <p>The School of Critical Thinking exists to rebuild thinking from first principles.</p>
+
+<h1>About the School</h1>
+
+<p>
+Critical thinking is usually taught as an academic skill:
+analyzing texts, spotting fallacies, debating abstract claims.
+That version made sense in a world where information was scarce
+and decisions unfolded slowly.
+</p>
+
+<p>
+That world no longer exists.
+</p>
+
+<section class="about-block">
+  <p class="about-block__label">Why critical thinking must change</p>
+
+  <p class="about-block__text">
+    Today, answers are abundant. AI can generate arguments, summaries,
+    explanations, and solutions faster than any human.
+    What it cannot replace—yet—is responsibility for choice.
+  </p>
+
+  <p class="about-block__text">
+    The central problem is no longer <em>what is true</em> in theory,
+    but <em>what to do</em> under uncertainty: when information is incomplete,
+    incentives are misaligned, and mistakes are costly.
+  </p>
+</section>
+
+<section class="about-block">
+  <p class="about-block__label">Our approach</p>
+
+  <p class="about-block__text">
+    The School of Critical Thinking teaches critical thinking as
+    <em>agency</em>: the capacity to act deliberately in situations where
+    rules are unclear, outcomes are probabilistic, and no authority can decide for you.
+  </p>
+
+  <p class="about-block__text">
+    We focus on the thinking layer beneath content:
+    how judgments are formed, how confidence becomes misplaced,
+    how reasoning breaks under pressure, and how to design decisions
+    that remain robust even when you are wrong.
+  </p>
+</section>
+
+<section class="about-block">
+  <p class="about-block__label">What this looks like in practice</p>
+
+  <p class="about-block__text">
+    This is not abstract philosophy and not generic productivity advice.
+    It is applied reasoning, trained through concrete problems:
+    risk, tradeoffs, long-term consequences, and second-order effects. At the School, we provide:
+  </p>
+
+  <ul class="about-list">
+    <li>Articles that demonstrate the method on real decisions.</li>
+    <li>Books that systematize thinking tools and mental models.</li>
+    <li>Instruction and consulting that adapt the framework to individual constraints.</li>
+    <li>Tutoring that builds durable reasoning skills rather than test performance alone.</li>
+  </ul>
+</section>
+
+<section class="about-block">
+  <p class="about-block__label">Why this matters now</p>
+
+  <p class="about-block__text">
+    Many people feel that something is missing, not because they lack intelligence,
+    but because traditional education did not prepare them for a world
+    where machines think faster and environments change continuously.
+  </p>
+
+  <p class="about-block__text">
+    The goal of the School is not to compete with AI at producing answers,
+    but to train humans to remain decisive, adaptive, and responsible
+    where automation ends.
+  </p>
+</section>
+
+<section class="about-founder" aria-label="Founder perspective">
+  <p class="about-founder__label">Founder perspective</p>
+
+  <p class="about-founder__text">
+    I built this School out of a practical frustration: intelligent, capable people
+    keep getting punished by situations where intelligence isn’t the bottleneck.
+    The bottleneck is structure: how to decide when the map is incomplete.
+  </p>
+
+  <p class="about-founder__text">
+    My background is in philosophy, but the School is not “philosophy class.”
+    Philosophy is useful here for one reason: it forces first principles.
+    The mission is simple: give people thinking tools that convert into agency—
+    in work, in education, and in life.
+  </p>
+
+  <p class="about-founder__signature">
+    — Eldar Sarajlic<br>
+    <span class="about-founder__role">
+      Founder, The School of Critical Thinking
+    </span>
+  </p>
+</section>
+
+<section class="about-cta" aria-label="Next steps">
+  <p class="about-cta__label">Next</p>
+  <p class="about-cta__links">
+    <a href="/articles/">Read Articles</a>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    <a href="{% url 'start' %}">Start</a>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    <a href="/books/">Books</a>
+  </p>
+</section>
+
 {% endblock %}

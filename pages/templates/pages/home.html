@@ -3,6 +3,114 @@
 {% block title %}The School of Critical Thinking{% endblock %}
 
 {% block content %}
+
   <h1>Education teaches content. It doesn’t teach thinking.</h1>
-  <p>The School of Critical Thinking exists to rebuild thinking from first principles.</p>
+
+  <p>
+    The School of Critical Thinking exists to rebuild thinking from first principles,
+    not for knowledge, but for agency: the ability to choose well when information is incomplete
+    and the stakes are real.
+  </p>
+
+  <p>Most real decisions look simpler than they are.</p>
+
+  <section class="home-problem">
+    <p class="home-problem__label">A simple decision</p>
+
+    <p class="home-problem__prompt">
+      Choose one. Don’t calculate. Don’t overthink.
+    </p>
+
+    <div class="home-choice" role="group" aria-label="Decision choices">
+      <button
+        type="button"
+        class="home-choice__btn"
+        data-choice="a"
+        aria-pressed="false"
+      >
+        Receive $1,000
+      </button>
+
+      <button
+        type="button"
+        class="home-choice__btn"
+        data-choice="b"
+        aria-pressed="false"
+      >
+        Flip a coin: if heads receive $5,000, if tails receive $0
+      </button>
+    </div>
+
+    <p class="home-reveal" hidden>
+      <em>How did you decide?</em><br>
+      <span class="home-reveal__sub">Notice what you relied on.</span>
+    </p>
+  </section>
+
+  <section class="home-explain">
+    <p>
+      Most people can choose. But, fewer can justify the choice without collapsing into intuition,
+      vibes, or fear. That isn’t a lack of intelligence.
+    </p>
+
+    <p>
+      It’s a lack of structure: a first-principles way to reason about risk, uncertainty,
+      tradeoffs, and consequences. This is where “being smart” stops helping.
+    </p>
+
+    <p>
+      AI makes this unavoidable. Answers are now cheap. The scarce skill is judgment.
+    </p>
+  </section>
+
+  <section class="home-offer">
+    <h2>What we teach</h2>
+    <p>
+      We teach the layer underneath subjects: how judgments are formed, how errors propagate,
+      and how decisions are actually made when you don’t get perfect information.
+    </p>
+
+    <p>
+      The output is not opinions. The output is action: clearer decisions, better bets,
+      fewer self-inflicted disasters.
+    </p>
+  </section>
+
+  <section class="home-cta" aria-label="Next steps">
+    <h2>Start here</h2>
+    <p>
+      Read an article to see the method in motion, or begin with the Start page to reach the School.
+    </p>
+
+    <p class="home-cta__links">
+      <a href="/articles/">Read Articles</a>
+      &nbsp;&nbsp;·&nbsp;&nbsp;
+      <a href="{% url 'start' %}">Start</a>
+      &nbsp;&nbsp;·&nbsp;&nbsp;
+      <a href="/books/">Books</a>
+    </p>
+  </section>
+
+  <script>
+    (function () {
+      const buttons = document.querySelectorAll(".home-choice__btn");
+      const reveal = document.querySelector(".home-reveal");
+      if (!buttons.length) return;
+
+      buttons.forEach(btn => {
+        btn.addEventListener("click", function () {
+          buttons.forEach(b => {
+            b.classList.remove("is-selected");
+            b.setAttribute("aria-pressed", "false");
+          });
+
+          this.classList.add("is-selected");
+          this.setAttribute("aria-pressed", "true");
+
+          if (reveal) reveal.hidden = false;
+        });
+      });
+    })();
+  </script>
+
 {% endblock %}

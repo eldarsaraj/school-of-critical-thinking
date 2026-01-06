@@ -5,24 +5,85 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>{% block title %}The School of Critical Thinking{% endblock %}</title>
+
+    {% block social_meta %}
+      <meta property="og:site_name" content="The School of Critical Thinking" />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="The School of Critical Thinking" />
+      <meta property="og:description" content="Rebuilding thinking for agency, from first principles." />
+      <meta property="og:image" content="{% static 'images/og-default.png' %}" />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="The School of Critical Thinking" />
+      <meta name="twitter:description" content="Rebuilding thinking for agency, from first principles." />
+      <meta name="twitter:image" content="{% static 'images/og-default.png' %}" />
+      <meta name="twitter:image:alt" content="The School of Critical Thinking" />
+    {% endblock %}
+
     <link rel="stylesheet" href="{% static 'css/site.css' %}">
   </head>
+
   <body>
-  <header>
-    <a href="/" aria-label="Home">The School of Critical Thinking</a>
 
-    <nav aria-label="Primary">
-      <a href="/about/">About</a>
-      <a href="/books/">Books</a>
-      <a href="/articles/">Articles</a>
-      <a href="/contact/">Contact</a>
-    </nav>
-  </header>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a href="/" class="logo" aria-label="Home">
+          <img src="{% static 'images/logo.png' %}" alt="The School of Critical Thinking">
+        </a>
 
-  <main>
-    {% block content %}{% endblock %}
-  </main>
-</body>
+        <button
+          class="nav-toggle"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          ☰
+        </button>
 
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/about/">About</a>
+          <a href="/books/">Books</a>
+          <a href="/articles/">Articles</a>
+          <a href="{% url 'start' %}">Start</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+
+    <footer class="site-footer" aria-label="Footer">
+      <div class="container site-footer__inner">
+        <div class="site-footer__left">
+          <p class="site-footer__brand">The School of Critical Thinking</p>
+          <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+        </div>
+
+        <nav class="site-footer__nav" aria-label="Footer links">
+          <a href="/contact/">Contact</a>
+          <a href="/about/">About</a>
+          <a href="/books/">Books</a>
+          <a href="/articles/">Articles</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        const btn = document.querySelector(".nav-toggle");
+        const header = document.querySelector(".site-header");
+
+        if (!btn || !header) return;
+
+        btn.addEventListener("click", function () {
+          const isOpen = header.classList.toggle("nav-open");
+          btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        });
+      })();
+    </script>
+
+  </body>
 </html>
