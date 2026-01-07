@@ -3,6 +3,34 @@
 
 {% block title %}{{ article.title }} – The School of Critical Thinking{% endblock %}
 
+{% block social_meta %}
+  {# Per-article Open Graph + Twitter override (fixes “shares like homepage”) #}
+  <meta property="og:site_name" content="The School of Critical Thinking" />
+  <meta property="og:type" content="article" />
+
+  <meta property="og:title" content="{{ article.title }}" />
+  <meta property="og:description" content="{% if article.summary %}{{ article.summary }}{% else %}Rebuilding thinking for agency, from first principles.{% endif %}" />
+  <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+
+  {% if article.cover_image %}
+    {# Cloudinary URLs are already absolute #}
+    <meta property="og:image" content="{{ article.cover_image.url }}" />
+  {% else %}
+    {# Fallback must be absolute #}
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+  {% endif %}
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ article.title }}" />
+  <meta name="twitter:description" content="{% if article.summary %}{{ article.summary }}{% else %}Rebuilding thinking for agency, from first principles.{% endif %}" />
+  {% if article.cover_image %}
+    <meta name="twitter:image" content="{{ article.cover_image.url }}" />
+  {% else %}
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+  {% endif %}
+  <meta name="twitter:image:alt" content="Cover image for {{ article.title }}" />
+{% endblock %}
+
 {% block content %}
   <article class="essay">
 
