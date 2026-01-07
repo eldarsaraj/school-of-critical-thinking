@@ -164,3 +164,23 @@ LOGGING = {
         },
     },
 }
+
+# --- Production hardening (safe defaults) ---
+
+# Heroku terminates SSL at the router; Django must trust that header.
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# If you turned on HTTPS redirect via Heroku config, keep Django aligned too:
+DJANGO_SECURE_SSL_REDIRECT = (
+    os.environ.get("DJANGO_SECURE_SSL_REDIRECT", "False") == "True"
+)
+SECURE_SSL_REDIRECT = DJANGO_SECURE_SSL_REDIRECT
+
+# Cookie protection (only send cookies over HTTPS)
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# HSTS (tell browsers: always use HTTPS)
+SECURE_HSTS_SECONDS = 60  # start small; once you’re confident, raise to 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
