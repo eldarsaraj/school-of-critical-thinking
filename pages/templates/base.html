@@ -9,23 +9,24 @@
     <title>{% block title %}The School of Critical Thinking{% endblock %}</title>
     
     {% block social_meta %}
-      <!-- Open Graph -->
       <meta property="og:site_name" content="The School of Critical Thinking" />
       <meta property="og:type" content="website" />
+
       <meta property="og:title" content="The School of Critical Thinking" />
       <meta property="og:description" content="Rebuilding thinking for agency, from first principles." />
+
+      {# Canonical URL of the current page #}
       <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+
+      {# Absolute image URL (Facebook requires this) #}
       <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 
-      <!-- Twitter / X -->
+      {# Twitter #}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="The School of Critical Thinking" />
       <meta name="twitter:description" content="Rebuilding thinking for agency, from first principles." />
       <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
       <meta name="twitter:image:alt" content="The School of Critical Thinking" />
-
-      <!-- Optional (only if/when you create a Facebook app) -->
-      {# <meta property="fb:app_id" content="YOUR_FB_APP_ID" /> #}
     {% endblock %}
 
     <link rel="canonical" href="{{ request.build_absolute_uri }}" />
