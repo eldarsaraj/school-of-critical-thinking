@@ -9,11 +9,20 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
 from django.views.static import serve
+from django.contrib.sitemaps.views import sitemap
+from articles.sitemaps import ArticleSitemap
+from pages.sitemaps import StaticSitemap
+
+sitemaps = {
+    "articles": ArticleSitemap,
+    "pages": StaticSitemap,
+}
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("articles/", include("articles.urls")),
     path("", include("pages.urls")),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
 ]
 
 # Serve uploaded media files (works even when DEBUG=False)
