@@ -91,8 +91,10 @@ class Article(models.Model):
         self.full_clean()  # enforce rules
         self.save()
 
+    from django.urls import reverse
+
     def get_absolute_url(self):
-        return reverse("articles_detail", kwargs={"slug": self.slug})
+        return reverse("articles_detail", args=[self.slug])
 
 
 class ArticleImage(models.Model):
