@@ -904,9 +904,22 @@ main { padding: 48px 24px; }
     gap: 12px;
   }
 
-  .book-card__cover {
+  /* Cover wrapper (it's an <a>) */
+  .book-card__cover,
+  a.book-card__cover {
+    display: block;
     width: 100%;
-    height: 320px;
+    height: auto;
+  }
+
+  /* Cover image: show full cover (no cropping) */
+  .book-card__cover img,
+  a.book-card__cover > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
   }
 }
 
