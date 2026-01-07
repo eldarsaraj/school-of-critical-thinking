@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 import re
 
 
@@ -89,6 +90,9 @@ class Article(models.Model):
             self.published_at = timezone.now()
         self.full_clean()  # enforce rules
         self.save()
+
+    def get_absolute_url(self):
+        return reverse("articles_detail", kwargs={"slug": self.slug})
 
 
 class ArticleImage(models.Model):
