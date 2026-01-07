@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.utils import timezone
+from django.template import loader
+from django.http import HttpResponse
+
 
 from .book_data import BOOKS
 from .models import ContactMessage
@@ -79,3 +82,8 @@ def contact(request):
         "pages/contact.html",
         {"path": path, "source": source, "sent": sent},
     )
+
+
+def robots_txt(request):
+    template = loader.get_template("robots.txt")
+    return HttpResponse(template.render({}, request), content_type="text/plain")
