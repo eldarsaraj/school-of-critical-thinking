@@ -8,8 +8,22 @@ from .models import Article, ArticleImage
 class ArticleImageInline(admin.TabularInline):
     model = ArticleImage
     extra = 1
-    fields = ("image", "title", "alt_text")
-    readonly_fields = ()
+    fields = ("image", "title", "alt_text", "image_url_preview")
+    readonly_fields = ("image_url_preview",)
+
+    def image_url_preview(self, obj):
+        if not obj or not getattr(obj, "image", None):
+            return "—"
+        url = obj.image.url
+        return mark_safe(
+            f"<div style='display:flex; gap:12px; align-items:center;'>"
+            f"<img src='{url}' style='height:50px; width:auto; border-radius:6px; border:1px solid #ddd;' />"
+            f"<a href='{url}' target='_blank' rel='noopener'>Open</a>"
+            f"<code style='user-select:all; padding:2px 6px; border:1px solid #eee; border-radius:4px;'>{url}</code>"
+            f"</div>"
+        )
+
+    image_url_preview.short_description = "URL"
 
 
 @admin.register(Article)
