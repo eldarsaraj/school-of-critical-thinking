@@ -89,3 +89,26 @@ class Article(models.Model):
             self.published_at = timezone.now()
         self.full_clean()  # enforce rules
         self.save()
+
+
+class ArticleImage(models.Model):
+    # Optional: link to an article (so you can keep images organized)
+    article = models.ForeignKey(
+        "Article",
+        on_delete=models.CASCADE,
+        related_name="images",
+        blank=True,
+        null=True,
+    )
+
+    # This will upload to Cloudinary because your DEFAULT file storage is Cloudinary
+    image = models.ImageField(upload_to="articles/inline/")
+
+    title = models.CharField(max_length=200, blank=True)  # admin-only label
+    alt_text = models.CharField(max_length=300, blank=True)  # for accessibility/SEO
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        if self.title:
+            return self.title
+        return self.image.name
