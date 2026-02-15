@@ -23,5 +23,6 @@ sqlparse==0.5.5
 urllib3==2.6.2
 whitenoise==6.6.0
 dj-database-url==2.2.0
-psycopg[binary]==3.2.13PyYAML==6.0.2
+psycopg[binary]==3.2.13
+PyYAML==6.0.2
 PyYAML==6.0.2
