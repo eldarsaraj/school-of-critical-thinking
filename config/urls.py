@@ -23,6 +23,7 @@ urlpatterns = [
     path("articles/", include("articles.urls")),
     path("", include("pages.urls")),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
+    path("diagnostic/", include("diagnostic.urls")),
 ]
 
 # Serve uploaded media files (works even when DEBUG=False)

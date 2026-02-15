@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     "cloudinary_storage",
     "pages",
     "articles",
+    "diagnostic",
 ]
+
 SITE_ID = 1
 
 MIDDLEWARE = [
