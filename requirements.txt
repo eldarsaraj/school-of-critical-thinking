@@ -26,3 +26,6 @@ dj-database-url==2.2.0
 psycopg[binary]==3.2.13
 PyYAML==6.0.2
 PyYAML==6.0.2
+
+weasyprint==62.3
+reportlab==4.2.5
