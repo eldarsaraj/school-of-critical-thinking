@@ -1,0 +1,472 @@
+version: v0_1
+
+modules:
+  # -------------------------
+  # Uncertainty Handling
+  # -------------------------
+
+  - id: UH_PU
+    breakpoint: paralysis_until_certainty
+    dimension: Uncertainty Handling
+    title: "Deciding Without Certainty"
+    goal: "Learn how to act productively when evidence is incomplete, contested, or unlikely to improve in time."
+    primary_modality: M2
+    backup_modality: M1
+    content_path: "modules/UH_PU_paralysis_until_certainty.md"
+    core_ideas:
+      - "Information has diminishing returns; waiting can be a choice with costs."
+      - "Reversibility and optionality reduce the cost of being wrong."
+      - "Distinguish uncertainty you can reduce from uncertainty you can’t."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Decision-making under uncertainty; optionality; when to act before certainty."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Practical heuristics for acting with incomplete evidence."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Concrete examples of acting under uncertainty."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Reversible-step planning; pre-mortem; decision journal prompts."
+
+  - id: UH_PC
+    breakpoint: premature_closure
+    dimension: Uncertainty Handling
+    title: "Knowing When to Stop Reasoning"
+    goal: "Learn how to recognize when confidence is outpacing evidence and how to delay commitment without drifting."
+    primary_modality: M2
+    backup_modality: M1
+    content_path: "modules/UH_PC_premature_closure.md"
+    core_ideas:
+      - "Stopping rules: when more thinking improves vs. merely stabilizes a story."
+      - "Distinguish closure for action from closure for identity."
+      - "Maintain provisional beliefs without spinning."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Overconfidence; stopping rules; holding provisional views."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "When reasoning becomes rationalization."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Biases around certainty and confidence."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Confidence tagging; 'what would change my mind' prompts."
+
+  - id: UH_PV
+    breakpoint: probability_as_vibe
+    dimension: Uncertainty Handling
+    title: "Thinking in Calibrated Risk"
+    goal: "Learn how to reason about likelihoods and downside in concrete terms rather than vague impressions."
+    primary_modality: M2
+    backup_modality: M1
+    content_path: "modules/UH_PV_probability_as_vibe.md"
+    core_ideas:
+      - "Separate likelihood from impact; risk is not just probability."
+      - "Base rates and reference classes anchor vague beliefs."
+      - "Calibration makes probabilistic language meaningful."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Probability calibration; base rates; forecasting basics."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Practical risk framing; downside thinking."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Forecasting and probability intuition."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Calibration drills; simple forecasting log."
+
+  # -------------------------
+  # Model Awareness
+  # -------------------------
+
+  - id: MA_MR
+    breakpoint: model_reification
+    dimension: Model Awareness
+    title: "Explanations vs. Reality"
+    goal: "Learn how to use theories and explanations without mistaking them for reality."
+    primary_modality: M1
+    backup_modality: M3
+    content_path: "modules/MA_MR_model_reification.md"
+    core_ideas:
+      - "A useful explanation can still mislead."
+      - "Maps are not the territory."
+      - "Overreach happens when explanations explain everything."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Models as tools; limits of explanatory frameworks."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Examples of theory overreach."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "How explanatory frameworks shape perception."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Model boundary checks; falsifiability prompts."
+
+  - id: MA_AB
+    breakpoint: assumption_blindness
+    dimension: Model Awareness
+    title: "Seeing the Assumptions You’re Standing On"
+    goal: "Learn how hidden premises shape disagreement and failure."
+    primary_modality: M1
+    backup_modality: M3
+    content_path: "modules/MA_AB_assumption_blindness.md"
+    core_ideas:
+      - "Disagreements often start at assumptions, not logic."
+      - "Implicit definitions drive conclusions."
+      - "Assumptions are inputs, not facts."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Hidden premises; framing effects."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Cases of assumption failure."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Framing and premise blindness."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Premise listing; disagreement decomposition."
+
+  - id: MA_MS
+    breakpoint: model_shopping
+    dimension: Model Awareness
+    title: "Choosing Explanations Instead of Collecting Them"
+    goal: "Learn how to commit to explanations without opportunistic switching."
+    primary_modality: M4
+    backup_modality: M1
+    content_path: "modules/MA_MS_model_shopping.md"
+    core_ideas:
+      - "Plausibility alone is not a selection rule."
+      - "Good explanations guide prediction and action."
+      - "Motivated switching erodes clarity."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Model selection and motivated reasoning."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Framework switching examples."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "How explanations justify conclusions."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Explanation scorecard."
+
+  # -------------------------
+  # Causal Reasoning
+  # -------------------------
+
+  - id: CR_CC
+    breakpoint: correlation_causation_leap
+    dimension: Causal Reasoning
+    title: "Correlation Is Not a Strategy"
+    goal: "Learn why associations rarely tell you what to change."
+    primary_modality: M4
+    backup_modality: M1
+    content_path: "modules/CR_CC_correlation_causation.md"
+    core_ideas:
+      - "Patterns don’t identify mechanisms."
+      - "Confounding creates false signals."
+      - "Causal claims require intervention thinking."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Causation basics; confounding."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Classic correlation failures."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Intuitive causal errors."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Confounder spotting."
+
+  - id: CR_ND
+    breakpoint: narrative_dominance
+    dimension: Causal Reasoning
+    title: "Why Stories Explain Too Much"
+    goal: "Learn how narratives mislead by compressing complex causes."
+    primary_modality: M4
+    backup_modality: M1
+    content_path: "modules/CR_ND_narrative_dominance.md"
+    core_ideas:
+      - "Narratives trade accuracy for coherence."
+      - "Hindsight feels like foresight."
+      - "Structure and noise disappear in stories."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Narrative fallacy; hindsight bias."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Story-driven misattribution."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Narrative bias demonstrations."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Alternative explanation drills."
+
+  - id: CR_NI
+    breakpoint: no_intervention_thinking
+    dimension: Causal Reasoning
+    title: "Thinking in Interventions"
+    goal: "Learn to test understanding by imagining change."
+    primary_modality: M2
+    backup_modality: M1
+    content_path: "modules/CR_NI_no_intervention.md"
+    core_ideas:
+      - "Understanding is tested by change."
+      - "Interventions reveal leverage."
+      - "Explaining is not fixing."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Intervention and counterfactual thinking."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Applied causal reasoning."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Intervention intuition."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Intervention ladder."
+
+  # -------------------------
+  # Abstraction Control
+  # -------------------------
+
+  - id: AC_AT
+    breakpoint: anecdote_trap
+    dimension: Abstraction Control
+    title: "When Examples Mislead"
+    goal: "Learn how vivid cases distort judgment."
+    primary_modality: M2
+    backup_modality: M4
+    content_path: "modules/AC_AT_anecdote_trap.md"
+    core_ideas:
+      - "Memorability is not frequency."
+      - "Stories feel like evidence."
+      - "Examples suggest hypotheses, not conclusions."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Availability bias; reasoning from examples."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Anecdote-driven domains."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Bias demonstrations."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Reference-class drills."
+
+  - id: AC_TL
+    breakpoint: theory_lock_in
+    dimension: Abstraction Control
+    title: "When Principles Stop Working"
+    goal: "Learn to test abstraction without forcing reality."
+    primary_modality: M2
+    backup_modality: M4
+    content_path: "modules/AC_TL_theory_lock_in.md"
+    core_ideas:
+      - "Principles need boundaries."
+      - "Overgeneralization creates ideology."
+      - "Cases refine theory."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Boundary cases; abstraction limits."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Misapplied principles."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Theory failure examples."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Boundary testing."
+
+  - id: AC_LC
+    breakpoint: level_confusion
+    dimension: Abstraction Control
+    title: "Keeping Levels of Explanation Separate"
+    goal: "Learn to match explanations to decisions."
+    primary_modality: M1
+    backup_modality: M4
+    content_path: "modules/AC_LC_level_confusion.md"
+    core_ideas:
+      - "Different levels answer different questions."
+      - "Mixing levels blocks action."
+      - "Choose the level that gives leverage."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Levels of analysis."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Level-confusion case studies."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Individual vs system debates."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Level-labeling drills."
+
+  # -------------------------
+  # Epistemic Humility
+  # -------------------------
+
+  - id: EH_DR
+    breakpoint: defensive_rejection
+    dimension: Epistemic Humility
+    title: "Disagreement Without Defense"
+    goal: "Learn to engage counterevidence without reflexive dismissal."
+    primary_modality: M1
+    backup_modality: M2
+    content_path: "modules/EH_DR_defensive_rejection.md"
+    core_ideas:
+      - "Defensiveness is a threat response."
+      - "Separate claims from identity."
+      - "Steelman before rebuttal."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Motivated reasoning; dissonance."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Good-faith disagreement."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Disconfirmation bias."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Steelman drills."
+
+  - id: EH_AS
+    breakpoint: authority_surrender
+    dimension: Epistemic Humility
+    title: "Using Expertise Without Outsourcing Judgment"
+    goal: "Learn to rely on experts without surrendering thinking."
+    primary_modality: M1
+    backup_modality: M2
+    content_path: "modules/EH_AS_authority_surrender.md"
+    core_ideas:
+      - "Expertise has domains."
+      - "Trust track record, not confidence."
+      - "Ask what would falsify."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Expert judgment; incentives."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Cases of expert error."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Forecasting and trust."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Expert evaluation checklist."
+
+  - id: EH_IF
+    breakpoint: identity_fusion
+    dimension: Epistemic Humility
+    title: "Changing Your Mind Without Losing Yourself"
+    goal: "Learn to revise beliefs without identity threat."
+    primary_modality: M1
+    backup_modality: M2
+    content_path: "modules/EH_IF_identity_fusion.md"
+    core_ideas:
+      - "Beliefs carry identity weight."
+      - "Updating can feel like loss."
+      - "Separate values from claims."
+    resource_slots:
+      core_readings:
+        - type: book_or_chapter
+          count: 2
+          note: "Identity and belief."
+      supporting:
+        - type: essay_or_article
+          count: 2
+          note: "Identity-driven belief persistence."
+      video:
+        - type: talk_or_lecture
+          count: 1
+          note: "Identity-protective cognition."
+      practice:
+        - type: worksheet_or_exercises
+          count: 1
+          note: "Claim/value separation."

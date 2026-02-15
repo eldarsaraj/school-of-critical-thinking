@@ -1,0 +1,123 @@
+version: v0_1
+
+resources:
+  # Keyed by module_id (same as modules.yaml "id")
+  UH_PU:
+    core_readings:
+      - title: "Thinking in Bets"
+        author: "Annie Duke"
+        kind: "book_or_chapter"
+        why: "Clean separation of decision quality from outcome; practical way to act under uncertainty."
+        link: ""
+      - title: "Antifragile (Book II: Modernity and the Denial of Randomness)"
+        author: "Nassim Nicholas Taleb"
+        kind: "book_or_chapter"
+        why: "Optionality, asymmetry, and why reversibility beats prediction."
+        link: ""
+    supporting:
+      - title: "A Checklist for Making Better Decisions"
+        author: ""
+        kind: "essay_or_article"
+        why: "A short decision-process checklist you can apply immediately."
+        link: ""
+      - title: "The Premortem"
+        author: "Gary Klein"
+        kind: "essay_or_article"
+        why: "A simple method for stress-testing a decision before committing."
+        link: ""
+    video:
+      - title: "How to Decide Under Uncertainty"
+        author: ""
+        kind: "talk_or_lecture"
+        why: "Concrete examples of deciding without waiting for certainty."
+        link: ""
+    practice:
+      - title: "Decision Journal (template)"
+        author: ""
+        kind: "worksheet_or_exercises"
+        why: "Track predictions, confidence, and outcomes to improve calibration over time."
+        link: ""
+
+  UH_PC:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  UH_PV:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  MA_MR:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  MA_AB:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  MA_MS:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  CR_CC:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  CR_ND:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  CR_NI:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  AC_AT:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  AC_TL:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  AC_LC:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  EH_DR:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  EH_AS:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []
+
+  EH_IF:
+    core_readings: []
+    supporting: []
+    video: []
+    practice: []

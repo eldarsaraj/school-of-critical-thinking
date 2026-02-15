@@ -1,0 +1,132 @@
+<h1>Your Syllabus</h1>
+
+<p style="margin: 12px 0;">
+  <a
+    href="{% url 'diagnostic_pdf' %}"
+    style="display:inline-block; padding:10px 14px; border:1px solid #222; text-decoration:none;"
+  >
+    Download PDF
+  </a>
+</p>
+
+{% if selected_modules %}
+  {% for m in selected_modules %}
+
+    {% if forloop.first %}
+      <div style="margin: 18px 0 8px; padding: 10px 12px; border-left: 4px solid #222; background: #f6f6f6;">
+        <strong>Primary module</strong>
+        <div style="font-size: 13px; margin-top: 4px;">
+          This is the main skill to build first. It will give you the highest leverage fastest.
+        </div>
+      </div>
+    {% else %}
+      <div style="margin: 28px 0 8px; padding: 10px 12px; border-left: 4px solid #777; background: #fafafa;">
+        <strong>Secondary module</strong>
+        <div style="font-size: 13px; margin-top: 4px;">
+          This is the next constraint. It amplifies the primary module once you start applying it.
+        </div>
+      </div>
+    {% endif %}
+
+    <section style="margin: 12px 0 24px; padding: 16px; border: 1px solid #ddd;">
+      <h2 style="margin-top: 0;">{{ m.title }}</h2>
+
+      {% if m.content_html %}
+        <div style="margin-top: 16px;">
+          {{ m.content_html|safe }}
+        </div>
+      {% endif %}
+
+      <hr style="margin: 18px 0;" />
+
+      <h3 style="margin: 0 0 10px;">Resources</h3>
+
+      {% with r=m.resources %}
+        {% if r.core_readings %}
+          <div style="margin: 12px 0;">
+            <h4 style="margin: 0 0 6px;">Core readings</h4>
+            <ul style="margin: 0; padding-left: 20px;">
+              {% for item in r.core_readings %}
+                <li style="margin: 8px 0;">
+                  {% if item.link %}
+                    <a href="{{ item.link }}" target="_blank" rel="noopener">{{ item.title }}</a>
+                  {% else %}
+                    {{ item.title }}
+                  {% endif %}
+                  {% if item.author %} — {{ item.author }}{% endif %}
+                  {% if item.why %}<br /><small>{{ item.why }}</small>{% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        {% if r.supporting %}
+          <div style="margin: 12px 0;">
+            <h4 style="margin: 0 0 6px;">Supporting</h4>
+            <ul style="margin: 0; padding-left: 20px;">
+              {% for item in r.supporting %}
+                <li style="margin: 8px 0;">
+                  {% if item.link %}
+                    <a href="{{ item.link }}" target="_blank" rel="noopener">{{ item.title }}</a>
+                  {% else %}
+                    {{ item.title }}
+                  {% endif %}
+                  {% if item.author %} — {{ item.author }}{% endif %}
+                  {% if item.why %}<br /><small>{{ item.why }}</small>{% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        {% if r.video %}
+          <div style="margin: 12px 0;">
+            <h4 style="margin: 0 0 6px;">Video</h4>
+            <ul style="margin: 0; padding-left: 20px;">
+              {% for item in r.video %}
+                <li style="margin: 8px 0;">
+                  {% if item.link %}
+                    <a href="{{ item.link }}" target="_blank" rel="noopener">{{ item.title }}</a>
+                  {% else %}
+                    {{ item.title }}
+                  {% endif %}
+                  {% if item.author %} — {{ item.author }}{% endif %}
+                  {% if item.why %}<br /><small>{{ item.why }}</small>{% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        {% if r.practice %}
+          <div style="margin: 12px 0;">
+            <h4 style="margin: 0 0 6px;">Practice</h4>
+            <ul style="margin: 0; padding-left: 20px;">
+              {% for item in r.practice %}
+                <li style="margin: 8px 0;">
+                  {% if item.link %}
+                    <a href="{{ item.link }}" target="_blank" rel="noopener">{{ item.title }}</a>
+                  {% else %}
+                    {{ item.title }}
+                  {% endif %}
+                  {% if item.author %} — {{ item.author }}{% endif %}
+                  {% if item.why %}<br /><small>{{ item.why }}</small>{% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        {% if not r.core_readings and not r.supporting and not r.video and not r.practice %}
+          <p style="margin: 10px 0;"><em>Resources for this module will be added soon.</em></p>
+        {% endif %}
+      {% endwith %}
+    </section>
+
+  {% endfor %}
+{% else %}
+  <p>No modules found.</p>
+{% endif %}
+
+<p><a href="{% url 'diagnostic_home' %}">Retake diagnostic</a></p>

@@ -1,0 +1,27 @@
+<h1>Thinking Diagnostic</h1>
+
+<form method="post" action="{% url 'diagnostic_results' %}">
+  {% csrf_token %}
+
+  {% for q in questions %}
+    <fieldset style="margin-bottom: 24px;">
+      <legend><strong>{{ q.id }}</strong></legend>
+
+      <p style="white-space: pre-line;">{{ q.prompt }}</p>
+
+      {% for c in q.choices %}
+        <label style="display: block; margin: 6px 0;">
+          <input
+            type="radio"
+            name="{{ q.id }}"
+            value="{{ c.id }}"
+            {% if forloop.first %}required{% endif %}
+          >
+          <strong>{{ c.id }}.</strong> {{ c.text }}
+        </label>
+      {% endfor %}
+    </fieldset>
+  {% endfor %}
+
+  <button type="submit">Get Results</button>
+</form>
