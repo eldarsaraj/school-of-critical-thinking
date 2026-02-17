@@ -24,7 +24,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "--version",
+            "--map-version",
             default="v0_1",
             help="Reporting map version (expects diagnostic/reporting_map_<version>.yaml). Default: v0_1",
         )
@@ -36,7 +36,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **opts):
-        map_version = opts["version"]
+        map_version = opts["map_version"]
         agg = opts["format"]
 
         version, by_id = load_reporting_map(map_version)
