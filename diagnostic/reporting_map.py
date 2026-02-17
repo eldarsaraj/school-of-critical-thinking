@@ -40,7 +40,17 @@ def load_reporting_map(
     Loads the YAML and returns (version, modules_by_id).
     Unknown ids are handled later (they'll be counted under UNKNOWN).
     """
+
+    # Ensure path is always a Path object (even if DEFAULT_MAP_PATH is a string)
+    if not isinstance(path, Path):
+        path = Path(path)
+
+    # If relative path, resolve relative to this file
+    if not path.is_absolute():
+        path = Path(__file__).resolve().parent / path
+
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
+
     version = data.get("version", "unknown")
     modules = data.get("modules", []) or []
 
@@ -55,6 +65,7 @@ def load_reporting_map(
             breakpoint=(m.get("breakpoint") or "UNKNOWN").strip(),
             title=(m.get("title") or "").strip(),
         )
+
     return version, by_id
 
 
