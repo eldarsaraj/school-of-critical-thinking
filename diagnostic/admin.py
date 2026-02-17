@@ -9,10 +9,15 @@ class DiagnosticLeadAdmin(admin.ModelAdmin):
     list_filter = ("version", "created_at")
     search_fields = ("email", "full_name", "organization")
 
-    # IMPORTANT: do NOT use distinct("email") with ordering that starts with created_at
+    # Lock sorting so Postgres DISTINCT ON stays valid.
     ordering = ("email", "-created_at")
+    sortable_by = ()  # disables clicking column headers to change ORDER BY
+
+    def get_ordering(self, request):
+        # extra lock: admin must always order starting with "email"
+        return ("email", "-created_at")
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        # One row per email (latest created_at) – Postgres-safe:
+        # Latest row per email (Postgres-safe DISTINCT ON)
         return qs.order_by("email", "-created_at").distinct("email")
