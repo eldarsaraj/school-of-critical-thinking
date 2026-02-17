@@ -52,4 +52,29 @@ BOOKS = [
         "cover": "images/books/thinkers-tales-cover.jpg",
         "buy_url": "https://www.amazon.com/dp/B0D8YM1L5X",
     },
+    {
+        "slug": "louie-the-unfinished-pigeon",
+        "title": "Louie: The Unfinished Pigeon",
+        "author": "Eldar Sarajlic",
+        "shelf": "foundations",
+        "short_promise": (
+            "A quirky story about incompleteness, patience, and becoming—"
+            "for children learning that growth is not instant."
+        ),
+        "description": (
+            "Louie is not like the other pigeons. He feels unfinished—unsure, uneven, "
+            "still becoming something he cannot yet name.\n\n"
+            "In this gentle and visually distinctive picture book, children follow Louie "
+            "as he navigates comparison, frustration, and the quiet pressure to be ‘done’ "
+            "before his time. Without preaching or heavy moralizing, the story explores "
+            "a deeper idea: growth is a process, not a performance.\n\n"
+            "Louie: The Unfinished Pigeon is written for children who sense they are "
+            "still forming—and for parents who want to affirm that incompleteness "
+            "is not a flaw but a stage of becoming."
+        ),
+        "format": "Paperback · Illustrated picture book",
+        "status": "published",
+        "cover": "images/books/louie-cover.png",
+        "buy_url": "https://www.amazon.com/dp/B0GJPSYFG3",
+    },
 ]
