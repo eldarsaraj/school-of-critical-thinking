@@ -452,20 +452,16 @@ def diagnostic_pdf(request: HttpRequest) -> HttpResponse:
         m["resources"] = resources.get(mid, {})
         selected_modules.append(m)
 
-        # Render HTML using your PDF template
-        html_string = render_to_string(
-            "diagnostic/diagnostic_pdf.html",
-            {
-                "selected_modules": selected_modules,
-                "full_name": full_name,
-                "organization": organization,
-                "now": timezone.now(),
-                "version": "v0_1",
-            },
-            request=request,
-        )
+    html_string = render_to_string(
+        "diagnostic/diagnostic_pdf.html",
+        {
+            "selected_modules": selected_modules,
+            "full_name": full_name,
+            "organization": organization,
+        },
+        request=request,
+    )
 
-    # Primary: WeasyPrint (nice PDF). Fallback: ReportLab (always works).
     try:
         from weasyprint import HTML  # import here on purpose
 
@@ -478,12 +474,21 @@ def diagnostic_pdf(request: HttpRequest) -> HttpResponse:
         response["Content-Disposition"] = (
             'attachment; filename="thinking-diagnostic.pdf"'
         )
+        response["X-PDF-Engine"] = "weasyprint"
         return response
 
-    except Exception:
-        return _pdf_reportlab_fallback(
+    except Exception as e:
+        # IMPORTANT: log the real error to Heroku logs
+        import traceback
+
+        print("WEASYPRINT FAILED:", repr(e))
+        traceback.print_exc()
+
+        pdf_response = _pdf_reportlab_fallback(
             module_ids=module_ids,
             selected_modules=selected_modules,
             full_name=full_name,
             organization=organization,
         )
+        pdf_response["X-PDF-Engine"] = "reportlab"
+        return pdf_response
