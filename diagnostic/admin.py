@@ -1,5 +1,8 @@
 # diagnostic/admin.py
 from django.contrib import admin
+from django.db.models import F, Window
+from django.db.models.functions import RowNumber
+
 from .models import DiagnosticLead
 
 
@@ -8,16 +11,18 @@ class DiagnosticLeadAdmin(admin.ModelAdmin):
     list_display = ("email", "full_name", "organization", "version", "created_at")
     list_filter = ("version", "created_at")
     search_fields = ("email", "full_name", "organization")
-
-    # Lock sorting so Postgres DISTINCT ON stays valid.
-    ordering = ("email", "-created_at")
-    sortable_by = ()  # disables clicking column headers to change ORDER BY
-
-    def get_ordering(self, request):
-        # extra lock: admin must always order starting with "email"
-        return ("email", "-created_at")
+    ordering = ("-created_at",)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        # Latest row per email (Postgres-safe DISTINCT ON)
-        return qs.order_by("email", "-created_at").distinct("email")
+
+        # Latest lead per email without DISTINCT ON (Postgres-safe in admin/paginator)
+        qs = qs.annotate(
+            rn=Window(
+                expression=RowNumber(),
+                partition_by=[F("email")],
+                order_by=F("created_at").desc(),
+            )
+        ).filter(rn=1)
+
+        return qs
