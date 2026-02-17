@@ -1,49 +1,102 @@
-<h1>Your Diagnostic Results</h1>
+{% extends "base.html" %}
 
-<p>
-  The results of the diagnostic suggest that you should focus on developing
-  the following critical thinking skills.
-</p>
+{% block title %}Thinking Diagnostic · Results{% endblock %}
 
-{% if preview_modules %}
-  <ul>
-    {% for m in preview_modules %}
-      <li><strong>{{ m.title }}</strong></li>
-    {% endfor %}
-  </ul>
-{% endif %}
+{% block content %}
+  <h1>You finished the diagnostic.</h1>
 
-<p style="margin-top: 18px;">
-  Enter your details to receive:
-</p>
+  <p class="diagnostic-desc" style="margin: 10px 0 22px 0;">
+    Based on your answers, two areas for development have surfaced. Start with the primary one: it’s the highest-leverage fix.
+    Then, move on to the secondary one.
+  </p>
 
-<ul>
-  <li>A detailed assessment of your results</li>
-  <li>A structured learning syllabus tailored to your profile</li>
-  <li>A downloadable PDF with all recommended resources</li>
-</ul>
+  {% if preview_modules %}
+    <div class="diagnostic-stack">
 
-<form method="post" action="{% url 'diagnostic_email' %}" style="margin-top: 24px;">
-  {% csrf_token %}
+      {% for m in preview_modules %}
 
-  <label style="display:block; margin: 12px 0;">
-    Full name
-    <input type="text" name="full_name" required style="margin-left: 8px;">
-  </label>
+        {% if forloop.first %}
+          <div class="diagnostic-card diagnostic-card--primary">
 
-  <label style="display:block; margin: 12px 0;">
-    Organization (optional)
-    <input type="text" name="organization" style="margin-left: 8px;">
-  </label>
+            <p class="diagnostic-kicker">
+              Primary constraint
+            </p>
 
-  <label style="display:block; margin: 12px 0;">
-    Email
-    <input type="email" name="email" required style="margin-left: 8px;">
-  </label>
+            <h2 class="diagnostic-title">
+              {{ m.title }}
+            </h2>
 
-  <button type="submit">Get My Syllabus</button>
-</form>
+            <p class="diagnostic-desc" style="margin: 10px 0 0 0;">
+              This is the place your reasoning is most likely to fail under pressure.
+              Fixing it tends to improve everything downstream.
+            </p>
 
-<p style="margin-top: 18px;">
-  <a href="{% url 'diagnostic_home' %}">Retake diagnostic</a>
-</p>
+          </div>
+        {% else %}
+          <div class="diagnostic-card diagnostic-card--secondary">
+
+            <p class="diagnostic-kicker">
+              Secondary constraint
+            </p>
+
+            <h2 class="diagnostic-title diagnostic-title--secondary">
+              {{ m.title }}
+            </h2>
+
+            <p class="diagnostic-desc" style="margin: 10px 0 0 0;">
+              This one usually hides behind the first. Once you start applying the primary module,
+              it becomes obvious (and fixable).
+            </p>
+
+          </div>
+        {% endif %}
+
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="diagnostic-card diagnostic-note">
+    <p class="diagnostic-kicker">
+      What you’ll receive
+    </p>
+
+    <ul class="diagnostic-list">
+      <li>A structured syllabus (primary → secondary)</li>
+      <li>Curated readings and videos (serious, readable, no pop-science)</li>
+      <li>A downloadable PDF you can keep</li>
+    </ul>
+  </div>
+
+  <p class="diagnostic-desc" style="margin: 18px 0 12px 0;">
+    Enter your email to generate the syllabus + PDF.
+    You’ll also get a copy sent to you, so you can revisit it later.
+    Your name personalizes the document header. Organization helps tailor examples (optional). Email is not used for newsletter subscription or anything of that sort.
+  </p>
+
+  <form method="post" action="{% url 'diagnostic_email' %}" class="contact-form">
+    {% csrf_token %}
+
+    <div class="contact-form__field">
+      <label for="id_full_name">Full name</label>
+      <input id="id_full_name" type="text" name="full_name" required autocomplete="name">
+    </div>
+
+    <div class="contact-form__field">
+      <label for="id_organization">Organization (optional)</label>
+      <input id="id_organization" type="text" name="organization" autocomplete="organization">
+    </div>
+
+    <div class="contact-form__field">
+      <label for="id_email">Email</label>
+      <input id="id_email" type="email" name="email" required autocomplete="email">
+    </div>
+
+    <div class="contact-form__action">
+      <button type="submit">Generate my syllabus →</button>
+      <p class="diagnostic-desc" style="margin: 10px 0 0 0; font-size: 12px;">
+        No spam. One email with your PDF + syllabus link.
+      </p>
+    </div>
+  </form>
+
+{% endblock %}

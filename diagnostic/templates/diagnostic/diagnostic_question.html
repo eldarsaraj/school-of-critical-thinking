@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Thinking Diagnostic · Question {{ idx|add:1 }}{% endblock %}
+
+{% block content %}
+  <h1>Thinking Diagnostic</h1>
+
+  <p style="margin-top:-10px; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color: rgba(0,0,0,0.55);">
+    Question {{ idx|add:1 }} of {{ total }}
+  </p>
+
+  <div style="height:6px; background: rgba(0,0,0,0.08); border-radius: 999px; margin: 12px 0 28px 0;">
+    <div style="height:6px; width: {{ progress }}%; background: rgba(0,0,0,0.35); border-radius: 999px;"></div>
+  </div>
+
+  <form method="post" action="{% url 'diagnostic_questions' %}">
+    {% csrf_token %}
+    <input type="hidden" name="qid" value="{{ q.id }}">
+
+    <fieldset style="margin-bottom: 40px; border: none; padding: 0;">
+
+      <legend style="display:none;">{{ q.id }}</legend>
+
+      <div style="margin-bottom: 36px; max-width: 720px;">
+        {% for paragraph in q.prompt.splitlines %}
+          {% if paragraph %}
+            <p style="
+                font-size: 18px;
+                line-height: 1.75;
+                margin-bottom: 20px;
+            ">
+              {{ paragraph }}
+            </p>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+
+        {% for c in q.choices %}
+          <label style="
+              display: block;
+              padding: 14px 16px;
+              border: 1px solid rgba(0,0,0,0.12);
+              border-radius: 8px;
+              cursor: pointer;
+              transition: all 0.15s ease;
+          "
+          onmouseover="this.style.borderColor='rgba(0,0,0,0.35)'"
+          onmouseout="this.style.borderColor='rgba(0,0,0,0.12)'"
+          >
+            <input type="radio" name="{{ q.id }}" value="{{ c.id }}" required style="margin-right:10px;">
+            <strong>{{ c.id }}.</strong> {{ c.text }}
+          </label>
+        {% endfor %}
+
+      </div>
+
+    </fieldset>
+
+    <div style="margin-top: 22px;">
+      <button
+        type="submit"
+        style="
+          background: none;
+          border: none;
+          padding: 0;
+
+          font-size: 14px;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: rgba(0,0,0,0.8);
+
+          border-bottom: 1px solid rgba(0,0,0,0.35);
+          padding-bottom: 4px;
+
+          cursor: pointer;
+        "
+        onmouseover="this.style.color='rgba(0,0,0,0.95)'; this.style.borderBottomColor='rgba(0,0,0,0.7)';"
+        onmouseout="this.style.color='rgba(0,0,0,0.8)'; this.style.borderBottomColor='rgba(0,0,0,0.35)';"
+      >
+        {% if idx|add:1 == total %}
+          Get results →
+        {% else %}
+          Next →
+        {% endif %}
+      </button>
+    </div>
+
+  </form>
+{% endblock %}

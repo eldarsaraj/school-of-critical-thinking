@@ -1,27 +1,40 @@
-<h1>Thinking Diagnostic</h1>
+{# templates/diagnostic/diagnostic_home.html #}
+{% extends "base.html" %}
 
-<form method="post" action="{% url 'diagnostic_results' %}">
-  {% csrf_token %}
+{% block title %}Thinking Diagnostic · Questions{% endblock %}
 
-  {% for q in questions %}
-    <fieldset style="margin-bottom: 24px;">
-      <legend><strong>{{ q.id }}</strong></legend>
+{% block content %}
+  <h1>Thinking Diagnostic</h1>
 
-      <p style="white-space: pre-line;">{{ q.prompt }}</p>
+  <form method="post" action="{% url 'diagnostic_results' %}" class="diagnostic">
+    {% csrf_token %}
 
-      {% for c in q.choices %}
-        <label style="display: block; margin: 6px 0;">
-          <input
-            type="radio"
-            name="{{ q.id }}"
-            value="{{ c.id }}"
-            {% if forloop.first %}required{% endif %}
-          >
-          <strong>{{ c.id }}.</strong> {{ c.text }}
-        </label>
-      {% endfor %}
-    </fieldset>
-  {% endfor %}
+    {% for q in questions %}
+      <fieldset class="diagnostic__q">
+        <legend class="diagnostic__qid">{{ q.id }}</legend>
 
-  <button type="submit">Get Results</button>
-</form>
+        <p class="diagnostic__prompt">{{ q.prompt|linebreaksbr }}</p>
+
+        <div class="diagnostic__choices" role="radiogroup" aria-label="{{ q.id }}">
+          {% for c in q.choices %}
+            <label class="diagnostic__choice">
+              <input
+                type="radio"
+                name="{{ q.id }}"
+                value="{{ c.id }}"
+                {% if forloop.first %}required{% endif %}
+              >
+              <span class="diagnostic__choice-text">
+                <strong>{{ c.id }}.</strong> {{ c.text }}
+              </span>
+            </label>
+          {% endfor %}
+        </div>
+      </fieldset>
+    {% endfor %}
+
+    <div class="diagnostic__action">
+      <button type="submit" class="diagnostic__submit">Get Results</button>
+    </div>
+  </form>
+{% endblock %}

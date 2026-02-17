@@ -1,0 +1,61 @@
+{# templates/diagnostic/diagnostic_intro.html #}
+{% extends "base.html" %}
+
+{% block title %}Thinking Diagnostic · The School of Critical Thinking{% endblock %}
+
+{% block content %}
+  <h1>Thinking Diagnostic</h1>
+
+  <p>Thanks for taking the time to do this diagnostic.</p>
+
+  <p>Before you start, here are a few things to keep in mind about what it is and how to use it.</p>  
+  
+  <p>
+    First, <strong>this is not a personality quiz</strong>, and it’s not a “what type are you” game.
+    It’s a stress test for reasoning: you’ll be placed into short scenarios and asked to choose what you’d actually do or infer.
+    The goal is to locate <em>where</em> your thinking tends to break under pressure. It's not a judgment of your intelligence or potential.
+  </p>
+
+  <p>
+    Most people fail because they’re using the wrong mental move for the situation, not becuse they're unintelligent.
+    Sometimes they freeze until certainty arrives; sometimes they close too early and defend a story; 
+    sometimes they confuse description for explanation, or correlation for leverage.
+  </p>
+    
+    <p>This diagnostic is built to detect those failure modes directly.</p>
+
+  <p>
+    The framework behind it has been refined in real classrooms and through years of research into how people think and learn. It’s a carefully designed path that leads to a diagnosis of your thinking.
+    What you'll get from this is not an academic exercise: the point is to produce an actionable diagnosis you can use immediately.
+  </p>
+
+  <div class="start">
+    <div class="start__path">
+      <p class="start__text">
+        Answer honestly. Don’t pick what sounds sophisticated. Pick what you’d actually do.
+        If you try to perform intelligence, you’ll get a flattering result and a useless plan.
+      </p>
+      <p class="start__text" style="margin-bottom: 0;">
+        At the end, you’ll get a short diagnosis and a personalized syllabus: a primary module to start with,
+        and a secondary module to remove the next constraint once you begin applying the first.
+      </p>
+    </div>
+
+    <div class="start__path">
+      <p class="start__text">
+        Time: ~5–8 minutes. Forward-only, no backtracking.
+      </p>
+
+      <p class="start__action">
+        <a href="{% url 'diagnostic_questions' %}">Start the diagnostic →</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="start__note">
+    <p class="start__note-label">Note</p>
+    <p class="start__note-text">
+      If a question feels ambiguous, answer anyway. Try to think of real life scenarios that match the situation.
+    </p>
+  </div>
+{% endblock %}

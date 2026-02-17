@@ -25,7 +25,7 @@ The goal of this module is to help you use examples without letting them dictate
 
 ## The core mistake
 
-The mistake is treating a vivid case as **representative**.
+The mistake here is treating a vivid case as **representative**.
 
 Of course, anecdotes are not completely useless. They often contain important detail, and they can sometimes alert us to risks or opportunities we hadn’t considered before.
 
@@ -37,13 +37,13 @@ When an anecdote becomes the main evidence, then:
 - Common outcomes fade into the background, we lose the baseline for comparison
 - Emotional weight replaces actual frequency
 
-You end up reasoning from memorability rather than prevalence. But, you don't want that. You need to be more deliberate and scientific in your reasoning.
+You end up reasoning from memorability rather than prevalence. But, you don't want that. You want to be more deliberate and scientific in your reasoning.
 
 ---
 
 ## Key idea 1: Memorability is not frequency
 
-Events that are dramatic, unusual, or emotionally intense are easier to remember and easier to retell. A bad experience stays longer in your mind than thousands neutral ones.
+Here's the first idea: Events that are dramatic, unusual, or emotionally intense are easier to remember and easier to retell. A bad experience stays longer in your mind than thousands neutral ones.
 
 Because these kinds of events are easy to retrieve from memory, they feel common.
 
@@ -71,15 +71,15 @@ A person who succeeded in a particular move may have:
 - Hidden support
 - Different constraints
 
-When you absorb the story but not the context, you import the outcome without the conditions.
+When you **absorb the story but not the context**, you import the outcome without the conditions.
 
-The key idea here is that examples merely suggest possibilities. They do not automatically justify replication. A single swallow does not indicate that the spring has arrived.
+But, examples merely suggest possibilities; they do not automatically justify replication. A single swallow does not indicate that the spring has arrived.
 
 ---
 
 ## Key idea 3: Examples are hypotheses, not conclusions
 
-Anecdotes are often useful as prompts.
+We don't want you to think that anectdotes are completely useless. Often, anecdotes are useful as prompts.
 
 They can lead you to ask:
 
@@ -102,7 +102,7 @@ Write:
 3. How many similar cases end differently?
 4. What information would help estimate how common this outcome is?
 
-This shifts your attention from the story to the distribution.
+This will shift your attention from the story to the distribution.
 
 ---
 

@@ -4,12 +4,16 @@ from pathlib import Path
 
 import markdown
 import yaml
+import re
+from django.shortcuts import redirect
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 
 from diagnostic.data.v0_1.scoring import score_answers
 from diagnostic.models import DiagnosticLead
+from django.utils import timezone
+
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data" / "v0_1"
@@ -45,11 +49,38 @@ def find_module_markdown_path(module_id: str) -> Path | None:
     return matches[0] if matches else None
 
 
+import re
+
+_FRONT_MATTER_RE = re.compile(r"\A---\s*\n(.*?)\n---\s*\n", re.DOTALL)
+
+
+def read_module_front_matter(module_id: str) -> dict:
+    p = find_module_markdown_path(module_id)
+    if not p:
+        return {}
+    md_text = p.read_text(encoding="utf-8")
+    m = _FRONT_MATTER_RE.search(md_text)
+    if not m:
+        return {}
+    try:
+        return yaml.safe_load(m.group(1)) or {}
+    except Exception:
+        return {}
+
+
+_FRONT_MATTER_RE = re.compile(r"\A---\s*\n(.*?)\n---\s*\n", re.DOTALL)
+
+
 def render_module_markdown(module_id: str) -> str:
     p = find_module_markdown_path(module_id)
     if not p:
         return ""
+
     md_text = p.read_text(encoding="utf-8")
+
+    # Remove YAML front matter if present (--- ... --- at the top)
+    md_text = _FRONT_MATTER_RE.sub("", md_text, count=1)
+
     return markdown.markdown(
         md_text,
         extensions=["fenced_code", "tables"],
@@ -57,34 +88,133 @@ def render_module_markdown(module_id: str) -> str:
     )
 
 
-def diagnostic_home(request: HttpRequest) -> HttpResponse:
+# -----------------------------
+# NEW: wizard state helpers
+# -----------------------------
+def _get_answer_store(request: HttpRequest) -> dict[str, str]:
+    return request.session.setdefault("diagnostic_v0_1_answers", {})
+
+
+def _clear_run_state(request: HttpRequest) -> None:
+    for k in [
+        "diagnostic_v0_1_answers",
+        "diagnostic_v0_1_q_index",
+        "diagnostic_v0_1_top_breakpoints",
+        "diagnostic_v0_1_module_ids",
+        "diagnostic_v0_1_full_name",
+        "diagnostic_v0_1_organization",
+        "diagnostic_v0_1_email",
+    ]:
+        request.session.pop(k, None)
+
+
+# ---------------------------------------------------------
+# Intro page (small explanation page before questions)
+# ---------------------------------------------------------
+def diagnostic_intro(request: HttpRequest) -> HttpResponse:
+    # Hard reset any in-progress diagnostic state so "Start" always begins at Q1
+    for k in list(request.session.keys()):
+        if k.startswith("diagnostic_v0_1_"):
+            del request.session[k]
+
+    return render(request, "diagnostic/diagnostic_intro.html")
+
+
+# ---------------------------------------------------------
+# Questions wizard (one question per page)
+# ---------------------------------------------------------
+def diagnostic_questions(request: HttpRequest) -> HttpResponse:
     questions = load_questions()
-    return render(request, "diagnostic/diagnostic_home.html", {"questions": questions})
+    total = len(questions)
+
+    # Optional: reset progress when starting fresh
+    if request.method == "GET" and request.GET.get("reset") == "1":
+        for k in [
+            "diagnostic_v0_1_idx",
+            "diagnostic_v0_1_answers",
+            "diagnostic_v0_1_top_breakpoints",
+            "diagnostic_v0_1_module_ids",
+            "diagnostic_v0_1_full_name",
+            "diagnostic_v0_1_organization",
+            "diagnostic_v0_1_email",
+        ]:
+            request.session.pop(k, None)
+
+    idx = int(request.session.get("diagnostic_v0_1_idx", 0))
+    answers: dict[str, str] = request.session.get("diagnostic_v0_1_answers", {})
+
+    if request.method == "POST":
+        # Authoritative question id comes from the form (prevents idx drift / mismatch)
+        qid = request.POST.get("qid")
+        if qid:
+            choice = request.POST.get(qid)
+            if choice:
+                answers[qid] = choice
+                request.session["diagnostic_v0_1_answers"] = answers
+
+        # Advance to next question
+        idx += 1
+        request.session["diagnostic_v0_1_idx"] = idx
+
+        # If we just answered the last question, go compute results
+        if idx >= total:
+            return redirect("diagnostic_results")
+
+        return redirect("diagnostic_questions")
+
+    # GET: show current question (clamp idx)
+    if idx < 0:
+        idx = 0
+    if idx >= total:
+        return redirect("diagnostic_results")
+
+    q = questions[idx]
+    progress = int(((idx + 1) / total) * 100)
+
+    return render(
+        request,
+        "diagnostic/diagnostic_question.html",
+        {
+            "q": q,
+            "idx": idx,
+            "total": total,
+            "progress": progress,
+        },
+    )
+
+
+def _norm_bp(s: str) -> str:
+    """
+    Normalize breakpoint strings so slugs and Title Case match.
+    Examples:
+    "Paralysis Until Certainty" -> "paralysis_until_certainty"
+    "correlation_causation_leap" -> "correlation_causation_leap"
+    """
+    s = (s or "").strip().lower()
+    s = re.sub(r"[^a-z0-9]+", "_", s)  # spaces, hyphens -> underscore
+    s = re.sub(r"_+", "_", s).strip("_")
+    return s
 
 
 def diagnostic_results(request: HttpRequest) -> HttpResponse:
-    if request.method != "POST":
-        return redirect("diagnostic_home")
-
     questions = load_questions()
+    answers: dict[str, str] = request.session.get("diagnostic_v0_1_answers", {})
 
-    answers: dict[str, str] = {}
-    for q in questions:
-        qid = q["id"]
-        choice = request.POST.get(qid)
-        if choice:
-            answers[qid] = choice
+    if not answers:
+        return redirect("diagnostic_intro")
 
     result = score_answers(questions=questions, answers=answers, top_k=2)
 
     request.session["diagnostic_v0_1_top_breakpoints"] = list(result.top_breakpoints)
 
     modules = load_modules()
-    by_breakpoint = {m["breakpoint"]: m for m in modules}
+
+    # KEY FIX: normalize module breakpoints into slug keys
+    by_breakpoint = {_norm_bp(m.get("breakpoint", "")): m for m in modules}
 
     selected_module_ids: list[str] = []
     for bp in result.top_breakpoints:
-        m = by_breakpoint.get(bp)
+        m = by_breakpoint.get(_norm_bp(bp))
         if m:
             selected_module_ids.append(m["id"])
 
@@ -100,7 +230,7 @@ def diagnostic_email(request: HttpRequest) -> HttpResponse:
     )
 
     if not module_ids:
-        return redirect("diagnostic_home")
+        return redirect("diagnostic_intro")
 
     modules = load_modules()
     by_id = {m["id"]: m for m in modules}
@@ -158,7 +288,7 @@ def diagnostic_email(request: HttpRequest) -> HttpResponse:
 def diagnostic_syllabus(request: HttpRequest) -> HttpResponse:
     module_ids: list[str] = request.session.get("diagnostic_v0_1_module_ids", [])
     if not module_ids:
-        return redirect("diagnostic_home")
+        return redirect("diagnostic_intro")
 
     full_name = request.session.get("diagnostic_v0_1_full_name", "")
     organization = request.session.get("diagnostic_v0_1_organization", "")
@@ -303,7 +433,7 @@ def _pdf_reportlab_fallback(
 def diagnostic_pdf(request: HttpRequest) -> HttpResponse:
     module_ids: list[str] = request.session.get("diagnostic_v0_1_module_ids", [])
     if not module_ids:
-        return redirect("diagnostic_home")
+        return redirect("diagnostic_intro")
 
     full_name = request.session.get("diagnostic_v0_1_full_name", "")
     organization = request.session.get("diagnostic_v0_1_organization", "")
@@ -322,16 +452,18 @@ def diagnostic_pdf(request: HttpRequest) -> HttpResponse:
         m["resources"] = resources.get(mid, {})
         selected_modules.append(m)
 
-    # Render HTML using your PDF template
-    html_string = render_to_string(
-        "diagnostic/diagnostic_pdf.html",
-        {
-            "selected_modules": selected_modules,
-            "full_name": full_name,
-            "organization": organization,
-        },
-        request=request,
-    )
+        # Render HTML using your PDF template
+        html_string = render_to_string(
+            "diagnostic/diagnostic_pdf.html",
+            {
+                "selected_modules": selected_modules,
+                "full_name": full_name,
+                "organization": organization,
+                "now": timezone.now(),
+                "version": "v0_1",
+            },
+            request=request,
+        )
 
     # Primary: WeasyPrint (nice PDF). Fallback: ReportLab (always works).
     try:

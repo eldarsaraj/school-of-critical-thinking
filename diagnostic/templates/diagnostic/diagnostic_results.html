@@ -1,132 +1,283 @@
-<h1>Your Syllabus</h1>
 
-<p style="margin: 12px 0;">
-  <a
-    href="{% url 'diagnostic_pdf' %}"
-    style="display:inline-block; padding:10px 14px; border:1px solid #222; text-decoration:none;"
-  >
-    Download PDF
-  </a>
-</p>
+{% extends "base.html" %}
 
-{% if selected_modules %}
-  {% for m in selected_modules %}
+{% block title %}Your Syllabus · The School of Critical Thinking{% endblock %}
 
-    {% if forloop.first %}
-      <div style="margin: 18px 0 8px; padding: 10px 12px; border-left: 4px solid #222; background: #f6f6f6;">
-        <strong>Primary module</strong>
-        <div style="font-size: 13px; margin-top: 4px;">
-          This is the main skill to build first. It will give you the highest leverage fastest.
+{% block content %}
+  <h1>Your Syllabus</h1>
+
+  <p style="margin: 0 0 18px 0; font-size: 16px; line-height: 1.6; color: rgba(0,0,0,0.75); max-width: 62ch;">
+    This is you syllabus. It's a focused plan for improving your reasoning in two areas. Start with the primary module. Then, when you feel ready, move on to the secondary one.
+    Use the resources to develop these ideas further. Take your time to read the books and watch the videos. Do the exercises. The more you put in, the more you get out.
+    Accept that it will take time to do this and see the improvement. The good news is that you now have a clear path forward.
+  </p>
+
+  <p style="margin: 0 0 28px 0; font-size: 14px; line-height: 1.6; max-width: 68ch;">
+    This syllabus is designed for independent work. If you want guided, individualized, or group support applying it,
+    <a href="/contact/" style="color: inherit; text-decoration: none; border-bottom: 0.5px solid rgba(0,0,0,0.4);">
+      contact the School
+    </a>.
+  </p>
+
+  <p style="margin: 12px 0 34px 0;">
+    <a
+      href="{% url 'diagnostic_pdf' %}"
+      style="
+        display: inline-block;
+        font-size: 14px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(0,0,0,0.78);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0,0,0,0.35);
+        padding-bottom: 4px;
+      "
+      onmouseover="this.style.color='rgba(0,0,0,0.95)'; this.style.borderBottomColor='rgba(0,0,0,0.7)';"
+      onmouseout="this.style.color='rgba(0,0,0,0.78)'; this.style.borderBottomColor='rgba(0,0,0,0.35)';"
+    >
+      Download PDF →
+    </a>
+  </p>
+
+  {% if selected_modules %}
+    {% for m in selected_modules %}
+
+      {% if forloop.first %}
+        <div style="margin: 24px 0 18px 0;">
+          <p style="
+            margin: 0 0 8px 0;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(0,0,0,0.55);
+          ">
+            Primary module
+          </p>
+          <p style="margin: 0; font-size: 14px; color: rgba(0,0,0,0.72);">
+            Highest leverage first.
+          </p>
         </div>
-      </div>
-    {% else %}
-      <div style="margin: 28px 0 8px; padding: 10px 12px; border-left: 4px solid #777; background: #fafafa;">
-        <strong>Secondary module</strong>
-        <div style="font-size: 13px; margin-top: 4px;">
-          This is the next constraint. It amplifies the primary module once you start applying it.
-        </div>
-      </div>
-    {% endif %}
-
-    <section style="margin: 12px 0 24px; padding: 16px; border: 1px solid #ddd;">
-      <h2 style="margin-top: 0;">{{ m.title }}</h2>
-
-      {% if m.content_html %}
-        <div style="margin-top: 16px;">
-          {{ m.content_html|safe }}
+      {% else %}
+        <hr style="margin: 42px 0; border: none; border-top: 1px solid rgba(0,0,0,0.18);" />
+        <div style="margin: 0 0 18px 0;">
+          <p style="
+            margin: 0 0 8px 0;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(0,0,0,0.55);
+          ">
+            Secondary module
+          </p>
+          <p style="margin: 0; font-size: 14px; color: rgba(0,0,0,0.68);">
+            Next constraint.
+          </p>
         </div>
       {% endif %}
 
-      <hr style="margin: 18px 0;" />
+      <section style="margin: 0 0 44px 0; max-width: 72ch;">
+        <h2 style="margin: 0 0 14px 0; font-size: 22px; line-height: 1.3;">
+          {{ m.title }}
+        </h2>
 
-      <h3 style="margin: 0 0 10px;">Resources</h3>
+        {# ----- Module Spec (structured, no raw YAML) ----- #}
+        <div style="
+          margin: 12px 0 18px 0;
+          padding: 14px 0;
+          border-top: 1px solid rgba(0,0,0,0.12);
+          border-bottom: 1px solid rgba(0,0,0,0.12);
+        ">
+          <p style="
+            margin: 0 0 10px 0;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(0,0,0,0.55);
+          ">
+            Module spec
+          </p>
 
-      {% with r=m.resources %}
-        {% if r.core_readings %}
-          <div style="margin: 12px 0;">
-            <h4 style="margin: 0 0 6px;">Core readings</h4>
-            <ul style="margin: 0; padding-left: 20px;">
-              {% for item in r.core_readings %}
-                <li style="margin: 8px 0;">
-                  {% if item.link %}
-                    <a href="{{ item.link }}" target="_blank" rel="noopener">{{ item.title }}</a>
-                  {% else %}
-                    {{ item.title }}
-                  {% endif %}
-                  {% if item.author %} — {{ item.author }}{% endif %}
-                  {% if item.why %}<br /><small>{{ item.why }}</small>{% endif %}
-                </li>
-              {% endfor %}
-            </ul>
+          <ul style="margin: 0; padding-left: 18px; line-height: 1.6;">
+            {% if m.dimension %}
+              <li style="margin: 6px 0;">
+                <strong>Dimension:</strong> {{ m.dimension }}
+              </li>
+            {% endif %}
+
+            {% if m.breakpoint %}
+              <li style="margin: 6px 0;">
+                <strong>Constraint:</strong> {{ m.breakpoint }}
+              </li>
+            {% endif %}
+
+            {# NOTE: this will only show once views.py attaches estimated_time onto m #}
+            {% if m.estimated_time %}
+              <li style="margin: 6px 0;">
+                <strong>Estimated time:</strong> {{ m.estimated_time }}
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+
+        {# ----- Module body (FULL, not truncated) ----- #}
+        {% if m.content_html %}
+          <div style="margin-top: 14px; line-height: 1.7;" class="diagnostic-module__content">
+            {{ m.content_html|safe }}
           </div>
         {% endif %}
 
-        {% if r.supporting %}
-          <div style="margin: 12px 0;">
-            <h4 style="margin: 0 0 6px;">Supporting</h4>
-            <ul style="margin: 0; padding-left: 20px;">
-              {% for item in r.supporting %}
-                <li style="margin: 8px 0;">
-                  {% if item.link %}
-                    <a href="{{ item.link }}" target="_blank" rel="noopener">{{ item.title }}</a>
-                  {% else %}
-                    {{ item.title }}
-                  {% endif %}
-                  {% if item.author %} — {{ item.author }}{% endif %}
-                  {% if item.why %}<br /><small>{{ item.why }}</small>{% endif %}
-                </li>
-              {% endfor %}
-            </ul>
+        {# ----- Resources (ALL sections) ----- #}
+        {% with r=m.resources %}
+          <div style="margin-top: 26px;">
+            <p style="
+              margin: 0 0 10px 0;
+              font-size: 11px;
+              letter-spacing: 0.12em;
+              text-transform: uppercase;
+              color: rgba(0,0,0,0.55);
+            ">
+              Resources
+            </p>
+
+            {% if r.core_readings %}
+              <div style="margin: 14px 0 0 0;">
+                <p style="margin: 0 0 6px 0; font-size: 12px; text-transform: uppercase; color: rgba(0,0,0,0.55);">
+                  Core readings
+                </p>
+                <ul style="margin: 0; padding-left: 18px;">
+                  {% for item in r.core_readings %}
+                    <li style="margin: 10px 0; line-height: 1.55;">
+                      {% if item.link %}
+                        <a href="{{ item.link }}" target="_blank" rel="noopener"
+                           style="color: inherit; text-decoration: none; border-bottom: 0.5px solid rgba(0,0,0,0.25);">
+                          {{ item.title }}
+                        </a>
+                      {% else %}
+                        {{ item.title }}
+                      {% endif %}
+                      {% if item.author %}
+                        <span style="color: rgba(0,0,0,0.65);"> — {{ item.author }}</span>
+                      {% endif %}
+                      {% if item.why %}
+                        <div style="margin-top: 4px; font-size: 13px; color: rgba(0,0,0,0.62);">
+                          {{ item.why }}
+                        </div>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            {% if r.supporting %}
+              <div style="margin: 18px 0 0 0;">
+                <p style="margin: 0 0 6px 0; font-size: 12px; text-transform: uppercase; color: rgba(0,0,0,0.55);">
+                  Supporting
+                </p>
+                <ul style="margin: 0; padding-left: 18px;">
+                  {% for item in r.supporting %}
+                    <li style="margin: 10px 0; line-height: 1.55;">
+                      {% if item.link %}
+                        <a href="{{ item.link }}" target="_blank" rel="noopener"
+                           style="color: inherit; text-decoration: none; border-bottom: 0.5px solid rgba(0,0,0,0.25);">
+                          {{ item.title }}
+                        </a>
+                      {% else %}
+                        {{ item.title }}
+                      {% endif %}
+                      {% if item.author %}
+                        <span style="color: rgba(0,0,0,0.65);"> — {{ item.author }}</span>
+                      {% endif %}
+                      {% if item.why %}
+                        <div style="margin-top: 4px; font-size: 13px; color: rgba(0,0,0,0.62);">
+                          {{ item.why }}
+                        </div>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            {% if r.video %}
+              <div style="margin: 18px 0 0 0;">
+                <p style="margin: 0 0 6px 0; font-size: 12px; text-transform: uppercase; color: rgba(0,0,0,0.55);">
+                  Video
+                </p>
+                <ul style="margin: 0; padding-left: 18px;">
+                  {% for item in r.video %}
+                    <li style="margin: 10px 0; line-height: 1.55;">
+                      {% if item.link %}
+                        <a href="{{ item.link }}" target="_blank" rel="noopener"
+                           style="color: inherit; text-decoration: none; border-bottom: 0.5px solid rgba(0,0,0,0.25);">
+                          {{ item.title }}
+                        </a>
+                      {% else %}
+                        {{ item.title }}
+                      {% endif %}
+                      {% if item.author %}
+                        <span style="color: rgba(0,0,0,0.65);"> — {{ item.author }}</span>
+                      {% endif %}
+                      {% if item.why %}
+                        <div style="margin-top: 4px; font-size: 13px; color: rgba(0,0,0,0.62);">
+                          {{ item.why }}
+                        </div>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            {% if r.practice %}
+              <div style="margin: 18px 0 0 0;">
+                <p style="margin: 0 0 6px 0; font-size: 12px; text-transform: uppercase; color: rgba(0,0,0,0.55);">
+                  Practice
+                </p>
+                <ul style="margin: 0; padding-left: 18px;">
+                  {% for item in r.practice %}
+                    <li style="margin: 10px 0; line-height: 1.55;">
+                      {% if item.link %}
+                        <a href="{{ item.link }}" target="_blank" rel="noopener"
+                           style="color: inherit; text-decoration: none; border-bottom: 0.5px solid rgba(0,0,0,0.25);">
+                          {{ item.title }}
+                        </a>
+                      {% else %}
+                        {{ item.title }}
+                      {% endif %}
+                      {% if item.author %}
+                        <span style="color: rgba(0,0,0,0.65);"> — {{ item.author }}</span>
+                      {% endif %}
+                      {% if item.why %}
+                        <div style="margin-top: 4px; font-size: 13px; color: rgba(0,0,0,0.62);">
+                          {{ item.why }}
+                        </div>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            {% if not r.core_readings and not r.supporting and not r.video and not r.practice %}
+              <p style="margin: 12px 0; font-size: 14px; color: rgba(0,0,0,0.65);">
+                <em>Resources for this module will be added soon.</em>
+              </p>
+            {% endif %}
           </div>
-        {% endif %}
+        {% endwith %}
+      </section>
 
-        {% if r.video %}
-          <div style="margin: 12px 0;">
-            <h4 style="margin: 0 0 6px;">Video</h4>
-            <ul style="margin: 0; padding-left: 20px;">
-              {% for item in r.video %}
-                <li style="margin: 8px 0;">
-                  {% if item.link %}
-                    <a href="{{ item.link }}" target="_blank" rel="noopener">{{ item.title }}</a>
-                  {% else %}
-                    {{ item.title }}
-                  {% endif %}
-                  {% if item.author %} — {{ item.author }}{% endif %}
-                  {% if item.why %}<br /><small>{{ item.why }}</small>{% endif %}
-                </li>
-              {% endfor %}
-            </ul>
-          </div>
-        {% endif %}
+    {% endfor %}
+  {% else %}
+    <p>No modules found.</p>
+  {% endif %}
 
-        {% if r.practice %}
-          <div style="margin: 12px 0;">
-            <h4 style="margin: 0 0 6px;">Practice</h4>
-            <ul style="margin: 0; padding-left: 20px;">
-              {% for item in r.practice %}
-                <li style="margin: 8px 0;">
-                  {% if item.link %}
-                    <a href="{{ item.link }}" target="_blank" rel="noopener">{{ item.title }}</a>
-                  {% else %}
-                    {{ item.title }}
-                  {% endif %}
-                  {% if item.author %} — {{ item.author }}{% endif %}
-                  {% if item.why %}<br /><small>{{ item.why }}</small>{% endif %}
-                </li>
-              {% endfor %}
-            </ul>
-          </div>
-        {% endif %}
+  <p style="margin-top: 42px; font-size: 14px;">
+    <a href="{% url 'diagnostic_intro' %}"
+       style="color: inherit; text-decoration: none; border-bottom: 0.5px solid rgba(0,0,0,0.25);">
+      Retake diagnostic
+    </a>
+  </p>
 
-        {% if not r.core_readings and not r.supporting and not r.video and not r.practice %}
-          <p style="margin: 10px 0;"><em>Resources for this module will be added soon.</em></p>
-        {% endif %}
-      {% endwith %}
-    </section>
-
-  {% endfor %}
-{% else %}
-  <p>No modules found.</p>
-{% endif %}
-
-<p><a href="{% url 'diagnostic_home' %}">Retake diagnostic</a></p>
+{% endblock %}

@@ -2,122 +2,433 @@ version: v0_1
 
 resources:
   # Keyed by module_id (same as modules.yaml "id")
+
   UH_PU:
     core_readings:
-      - title: "Thinking in Bets"
+      - title: "Lady Luck: The Theory of Probability"
+        author: "Warren Weaver"
+        link: "https://www.amazon.com/Lady-Luck-Theory-Probability-Warren/dp/048642745X/"
+        why: "Builds foundational intuition about randomness and probability before formalism; clarifies what uncertainty actually is."
+
+      - title: "The Art of Statistics: Learning from Data"
+        author: "David Spiegelhalter"
+        link: "https://www.amazon.com/Art-Statistics-Learning-David-Spiegelhalter/dp/1541618513/"
+        why: "Shows how evidence constrains belief in the real world; teaches how to reason about risk, uncertainty, and data without distortion."
+
+      - title: "The Signal and the Noise: Why So Many Predictions Fail — but Some Don’t"
+        author: "Nate Silver"
+        link: "https://www.amazon.com/Signal-Noise-Many-Predictions-Fail/dp/0143125087/"
+        why: "Examines why prediction fails even when data exists; sharpens calibration and exposes common probabilistic errors."
+
+      - title: "Thinking in Bets: Making Smarter Decisions When You Don’t Have All the Facts"
         author: "Annie Duke"
-        kind: "book_or_chapter"
-        why: "Clean separation of decision quality from outcome; practical way to act under uncertainty."
-        link: ""
-      - title: "Antifragile (Book II: Modernity and the Denial of Randomness)"
-        author: "Nassim Nicholas Taleb"
-        kind: "book_or_chapter"
-        why: "Optionality, asymmetry, and why reversibility beats prediction."
-        link: ""
-    supporting:
-      - title: "A Checklist for Making Better Decisions"
-        author: ""
-        kind: "essay_or_article"
-        why: "A short decision-process checklist you can apply immediately."
-        link: ""
-      - title: "The Premortem"
-        author: "Gary Klein"
-        kind: "essay_or_article"
-        why: "A simple method for stress-testing a decision before committing."
-        link: ""
+        link: "https://www.amazon.com/Thinking-Bets-Making-Smarter-Decisions/dp/0735216355"
+        why: "Translates probabilistic reasoning into practical decision-making; separates decision quality from outcomes and trains action under uncertainty."
+
     video:
-      - title: "How to Decide Under Uncertainty"
-        author: ""
-        kind: "talk_or_lecture"
-        why: "Concrete examples of deciding without waiting for certainty."
-        link: ""
-    practice:
-      - title: "Decision Journal (template)"
-        author: ""
-        kind: "worksheet_or_exercises"
-        why: "Track predictions, confidence, and outcomes to improve calibration over time."
-        link: ""
+      - title: "Annie Duke — Thinking in Bets (Google Talk)"
+        author: "Annie Duke"
+        link: "https://www.youtube.com/watch?v=uYNsSeYjkp4"
+        why: "Clarifies the separation between decision quality and outcome bias."
+
+      - title: "David Spiegelhalter — The Art of Statistics (RSA Talk)"
+        author: "David Spiegelhalter"
+        link: "https://www.youtube.com/watch?v=pCWH97vBFmU"
+        why: "Demonstrates how to interpret uncertainty without overconfidence."
 
   UH_PC:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "Superforecasting: The Art and Science of Prediction"
+        author: "Philip E. Tetlock & Dan Gardner"
+        link: "https://www.amazon.com/Superforecasting-Science-Prediction-Philip-Tetlock/dp/0804136696/"
+        why: "Teaches probabilistic updating and calibrated confidence; shows how to revise beliefs without premature certainty."
+
+      - title: "The Scout Mindset"
+        author: "Julia Galef"
+        link: "https://www.amazon.com/Scout-Mindset-Why-Some-People/dp/0735217556/"
+        why: "Explains how to seek accuracy instead of defending identity; sharpens the difference between confidence and truth."
+
+      - title: "Rationality: What It Is, Why It Seems Scarce, Why It Matters"
+        author: "Steven Pinker"
+        link: "https://www.amazon.com/Rationality-What-Seems-Scarce-Matters/dp/052556201X/"
+        why: "Clarifies when reasoning improves outcomes and when it devolves into motivated rationalization."
+
+      - title: "Thinking, Fast and Slow"
+        author: "Daniel Kahneman"
+        link: "https://www.amazon.com/Thinking-Fast-and-Slow/dp/0374533555/"
+        why: "Foundational explanation of overconfidence, cognitive bias, and the illusion of explanatory depth."
+
+    video:
+      - title: "Philip Tetlock — Superforecasting (Long Now Talk)"
+        author: "Philip E. Tetlock"
+        link: "https://www.youtube.com/watch?v=pedNak4S9IE"
+        why: "Demonstrates disciplined updating and probabilistic calibration instead of locking into early conclusions."
+
+      - title: "Julia Galef — Why You Think You're Right (TED Talk)"
+        author: "Julia Galef"
+        link: "https://www.ted.com/talks/julia_galef_why_you_think_you_re_right_even_if_you_re_wrong"
+        why: "Explains the psychology of premature certainty and how identity-driven reasoning distorts updating."
 
   UH_PV:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "Risk Savvy: How to Make Good Decisions"
+        author: "Gerd Gigerenzer"
+        link: "https://www.amazon.com/Risk-Savvy-Good-Decisions/dp/0143127101/"
+        why: "Teaches risk literacy using natural frequencies; replaces vague probability language with numerically grounded reasoning."
+
+      - title: "Superforecasting: The Art and Science of Prediction"
+        author: "Philip E. Tetlock and Dan Gardner"
+        link: "https://www.amazon.com/Superforecasting-Science-Prediction-Philip-Tetlock/dp/0804136718/"
+        why: "Shows how calibrated probability judgments are built and measured; introduces disciplined updating instead of intuition-driven confidence."
+
+      - title: "The Art of Statistics: Learning from Data"
+        author: "David Spiegelhalter"
+        link: "https://www.amazon.com/Art-Statistics-Learning-David-Spiegelhalter/dp/1541618513/"
+        why: "Clarifies uncertainty, margins of error, and risk interpretation in real-world contexts."
+
+      - title: "The Signal and the Noise: Why So Many Predictions Fail — but Some Don’t"
+        author: "Nate Silver"
+        link: "https://www.amazon.com/Signal-Noise-Many-Predictions-Fail/dp/0143125087/"
+        why: "Explores base rates, Bayesian updating, and why probabilistic reasoning breaks under narrative pressure."
+
+    video:
+      - title: "Philip Tetlock — Superforecasting (Long Now Talk)"
+        author: "Philip E. Tetlock"
+        link: "https://www.youtube.com/watch?v=pedNak4S9IE"
+        why: "Demonstrates real calibration in action; shows what quantified uncertainty looks like."
+
+      - title: "Gerd Gigerenzer — Risk Literacy"
+        author: "Gerd Gigerenzer"
+        link: "https://www.youtube.com/watch?v=g4op2WNc1e4&pp=ygUhR2VyZCBHaWdlcmVuemVyIOKAlCBSaXNrIExpdGVyYWN5"
+        why: "Explains how misunderstandings of probability distort decisions in medicine, finance, and everyday life."
 
   MA_MR:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "The Model Thinker: What You Need to Know to Make Data Work for You"
+        author: "Scott E. Page"
+        link: "https://www.amazon.com/Model-Thinker-What-Need-Know/dp/0465094627/"
+        why: "Shows how models are tools with assumptions and boundaries; teaches when they illuminate and when they distort."
+
+      - title: "How to Lie with Statistics"
+        author: "Darrell Huff"
+        link: "https://www.amazon.com/How-Lie-Statistics-Darrell-Huff/dp/0393310728/"
+        why: "A classic demonstration of how formal representations can mislead while appearing precise."
+
+      - title: "The Signal and the Noise: Why So Many Predictions Fail — but Some Don’t"
+        author: "Nate Silver"
+        link: "https://www.amazon.com/Signal-Noise-Many-Predictions-Fail/dp/0143125087/"
+        why: "Explains how overfitting and narrative coherence seduce us into trusting fragile models."
+
+      - title: "Thinking, Fast and Slow"
+        author: "Daniel Kahneman"
+        link: "https://www.amazon.com/Thinking-Fast-and-Slow/dp/0374533555/"
+        why: "Details how cognitive biases make simplified explanations feel truer than they are."
+
+    video:
+      - title: "Scott Page — Why Models Matter (RSA Talk)"
+        author: "Scott E. Page"
+        link: "https://www.youtube.com/watch?v=spEyZKhUEJg"
+        why: "Clarifies how models simplify reality and why multiple models outperform single frameworks."
+
+      - title: "Daniel Kahneman — Cognitive Biases in Judgment"
+        author: "Daniel Kahneman"
+        link: "https://www.youtube.com/watch?v=CjVQJdIrDJ0"
+        why: "Shows how intuitive explanations often feel compelling despite structural weaknesses."
 
   MA_AB:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "Thinking, Fast and Slow"
+        author: "Daniel Kahneman"
+        link: "https://www.amazon.com/Thinking-Fast-and-Slow/dp/0374533555/"
+        why: "Explains framing effects and how unnoticed premises shape judgment before reasoning begins."
+
+      - title: "The Righteous Mind: Why Good People Are Divided by Politics and Religion"
+        author: "Jonathan Haidt"
+        link: "https://www.amazon.com/Righteous-Mind-Divided-Politics-Religion/dp/0307455777/"
+        why: "Shows how moral intuitions precede arguments; disagreements often rest on different underlying values."
+
+      - title: "Mistakes Were Made (But Not by Me)"
+        author: "Carol Tavris & Elliot Aronson"
+        link: "https://www.amazon.com/Mistakes-Were-Made-But-Not/dp/0156033909/"
+        why: "Demonstrates how self-justification protects hidden assumptions from scrutiny."
+
+      - title: "How to Read a Book"
+        author: "Mortimer J. Adler & Charles Van Doren"
+        link: "https://www.amazon.com/How-Read-Book-Classic-Intelligent/dp/0671212095/"
+        why: "Teaches how to extract and question an author's premises rather than passively absorbing conclusions."
+
+    video:
+      - title: "Jonathan Haidt — Moral Psychology and Political Division"
+        author: "Jonathan Haidt"
+        link: "https://www.youtube.com/watch?v=8SOQduoLgRw"
+        why: "Clarifies how differing moral foundations generate disagreement beneath explicit arguments."
+
+      - title: "Daniel Kahneman — Thinking Fast and Slow (Talk at Google)"
+        author: "Daniel Kahneman"
+        link: "https://www.youtube.com/watch?v=CjVQJdIrDJ0"
+        why: "Explains framing effects and cognitive shortcuts that quietly shape conclusions before reasoning even begins."
 
   MA_MS:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "The Book of Why: The New Science of Cause and Effect"
+        author: "Judea Pearl and Dana Mackenzie"
+        link: "https://www.amazon.com/Book-Why-Science-Cause-Effect/dp/046509760X/"
+        why: "Forces you to choose explicit causal models instead of narratively convenient explanations; makes assumptions visible."
+
+      - title: "Knowledge and Its Limits"
+        author: "Timothy Williamson"
+        link: "https://www.amazon.com/Knowledge-Its-Limits-Timothy-Williamson/dp/0199256569/"
+        why: "Serious philosophical account of evidence and justification; pushes against loose explanatory flexibility."
+
+      - title: "Mistakes Were Made (But Not by Me)"
+        author: "Carol Tavris and Elliot Aronson"
+        link: "https://www.amazon.com/Mistakes-Were-Made-But-Not/dp/0156033909/"
+        why: "Explains motivated reasoning and how we protect conclusions by switching standards."
+
+      - title: "The Model Thinker"
+        author: "Scott E. Page"
+        link: "https://www.amazon.com/Model-Thinker-What-Need-Know/dp/1541694015/"
+        why: "Shows when multiple models are useful—and when you must constrain them rather than shop for convenient ones."
+
+    video:
+      - title: "Judea Pearl — The New Science of Cause and Effect (Talk at Google)"
+        author: "Judea Pearl"
+        link: "https://www.youtube.com/watch?v=pEBI0vF45ic"
+        why: "Demonstrates why causal structure matters and why vague explanation-switching produces illusion rather than understanding."
 
   CR_CC:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "The Book of Why: The New Science of Cause and Effect"
+        author: "Judea Pearl and Dana Mackenzie"
+        link: "https://www.amazon.com/Book-Why-Science-Cause-Effect/dp/046509760X/"
+        why: "Introduces causal diagrams and intervention thinking; shows why association alone cannot guide action."
+
+      - title: "Causal Inference: The Mixtape"
+        author: "Scott Cunningham"
+        link: "https://www.amazon.com/Causal-Inference-Mixtape-Scott-Cunningham/dp/0300251688/"
+        why: "Readable, example-driven explanation of how researchers distinguish correlation from causation in real-world settings."
+
+      - title: "The Art of Statistics: Learning from Data"
+        author: "David Spiegelhalter"
+        link: "https://www.amazon.com/Art-Statistics-Learning-David-Spiegelhalter/dp/1541618513/"
+        why: "Clarifies confounding, uncertainty, and misinterpretation of data without requiring heavy math."
+
+      - title: "Calling Bullshit: The Art of Skepticism in a Data-Driven World"
+        author: "Carl T. Bergstrom and Jevin D. West"
+        link: "https://www.amazon.com/Calling-Bullshit-Skepticism-Data-Driven-World/dp/0525509186/"
+        why: "Sharp, accessible guide to spotting causal overreach in media, science, and public claims."
+
+    video:
+      - title: "Judea Pearl — Causality and the Science of Why (Talk)"
+        author: "Judea Pearl"
+        link: "https://www.youtube.com/watch?v=ZaPV1OSEpHw&t=3083s&pp=ygU3SnVkZWEgUGVhcmwg4oCUIENhdXNhbGl0eSBhbmQgdGhlIFNjaWVuY2Ugb2YgV2h5IChUYWxrKQ%3D%3D"
+        why: "Explains why causal questions require intervention logic, not just statistical association."
+
+      - title: "Correlation and causality"
+        author: "Khan Academy"
+        link: "https://www.youtube.com/watch?v=K4MXPV7jX8Q"
+        why: "Clean, non-hype explanation of why correlation alone can’t justify a causal claim; introduces the idea of lurking/confounding variables with simple examples."
 
   CR_ND:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "The Black Swan: The Impact of the Highly Improbable (Part I: The Narrative Fallacy)"
+        author: "Nassim Nicholas Taleb"
+        link: "https://www.amazon.com/Black-Swan-Improbable-Robustness-2nd/dp/081297381X"
+        why: "Explains how humans compress randomness into coherent stories and mistake retrospective clarity for foresight."
+
+      - title: "Thinking, Fast and Slow (Part I & II)"
+        author: "Daniel Kahneman"
+        link: "https://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman/dp/0374533555"
+        why: "Shows how intuitive thinking generates overly coherent explanations and how hindsight bias distorts causal judgment."
+
+      - title: "Fooled by Randomness"
+        author: "Nassim Nicholas Taleb"
+        link: "https://www.amazon.com/Fooled-Randomness-Hidden-Chance-Markets/dp/0812975219"
+        why: "Demonstrates how success stories are often statistical accidents that get rewritten as causal inevitabilities."
+
+    video:
+      - title: "Daniel Kahneman — The Riddle of Experience vs Memory (TED Talk)"
+        author: "Daniel Kahneman"
+        link: "https://www.youtube.com/watch?v=XgRlrBl-7Yg"
+        why: "Shows how memory reconstructs events into simplified stories, reinforcing hindsight distortion."
+
+      - title: "Nassim Nicholas Taleb — On Randomness and Narrative (Talk at Google)"
+        author: "Nassim Nicholas Taleb"
+        link: "https://www.youtube.com/watch?v=BDbuJtAiABA"
+        why: "Explains how humans impose narrative structure on random processes and overestimate predictability."
 
   CR_NI:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "The Book of Why: The New Science of Cause and Effect"
+        author: "Judea Pearl and Dana Mackenzie"
+        link: "https://www.amazon.com/Book-Why-Science-Cause-Effect/dp/046509760X"
+        why: "Introduces causal reasoning through interventions and counterfactuals; clarifies why prediction is not explanation."
+
+      - title: "The Art of Strategy"
+        author: "Avinash K. Dixit and Barry J. Nalebuff"
+        link: "https://www.amazon.com/Art-Strategy-Theorists-Guide-Success/dp/0393337170"
+        why: "Shows how actions change incentives and behavior; reinforces intervention thinking in strategic environments."
+
+      - title: "Thinking in Systems"
+        author: "Donella H. Meadows"
+        link: "https://www.amazon.com/Thinking-Systems-Donella-H-Meadows/dp/1603580557"
+        why: "Teaches leverage points and systemic intervention; moves thinking from description to structural change."
+
+    video:
+      - title: "Judea Pearl — The New Science of Cause and Effect (Talk at Google)"
+        author: "Judea Pearl"
+        link: "https://www.youtube.com/watch?v=ZaPV1OSEpHw&t=3083s&pp=ygVESnVkZWEgUGVhcmwg4oCUIFRoZSBOZXcgU2NpZW5jZSBvZiBDYXVzZSBhbmQgRWZmZWN0IChUYWxrIGF0IEdvb2dsZSk%3D"
+        why: "Clear explanation of why 'what if we do X?' is the core test of real understanding."
+
+      - title: "Donella Meadows — Leverage Points: Places to Intervene in a System (Lecture)"
+        author: "Donella Meadows"
+        link: "https://www.youtube.com/watch?v=_EMnnq3teEs&pp=ygVORG9uZWxsYSBNZWFkb3dzIOKAlCBMZXZlcmFnZSBQb2ludHM6IFBsYWNlcyB0byBJbnRlcnZlbmUgaW4gYSBTeXN0ZW0gKExlY3R1cmUp"
+        why: "Concrete examples of how structural interventions differ from surface explanations."
 
   AC_AT:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "The Art of Statistics: Learning from Data"
+        author: "David Spiegelhalter"
+        link: "https://www.amazon.com/Art-Statistics-Learning-David-Spiegelhalter/dp/1541618513"
+        why: "Explains why individual cases mislead and how aggregate evidence constrains belief."
+
+      - title: "How Not to Be Wrong: The Power of Mathematical Thinking"
+        author: "Jordan Ellenberg"
+        link: "https://www.amazon.com/How-Not-Be-Wrong-Mathematical/dp/0143127535"
+        why: "Accessible demonstrations of how intuition from single examples collapses under scale."
+
+      - title: "The Signal and the Noise"
+        author: "Nate Silver"
+        link: "https://www.amazon.com/Signal-Noise-Many-Predictions-Fail/dp/0143125087"
+        why: "Shows how strong stories can drown out base rates and statistical structure."
+
+    video:
+      - title: "Hans Rosling — The Best Stats You’ve Ever Seen (TED)"
+        author: "Hans Rosling"
+        link: "https://www.youtube.com/watch?v=hVimVzgtD6w"
+        why: "Demonstrates how aggregated data overturns vivid but misleading narratives."
+
+      - title: "Daniel Kahneman — Thinking Fast and Slow (Talk at Google)"
+        author: "Daniel Kahneman"
+        link: "https://www.youtube.com/watch?v=CjVQJdIrDJ0"
+        why: "Explains availability bias and why striking examples overpower statistical reasoning."
 
   AC_TL:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "Models: Attractors, Maps, and Boundary Conditions"
+        author: "Scott E. Page"
+        link: "https://www.amazon.com/Model-Thinker-What-Need-Know/dp/0465094627"
+        why: "Shows that models are tools with domains of validity; teaches boundary awareness instead of blind generalization."
+
+      - title: "The Logic of Scientific Discovery (selected chapters)"
+        author: "Karl Popper"
+        link: "https://www.amazon.com/Logic-Scientific-Discovery-Routledge-Classics/dp/0415278449"
+        why: "Introduces falsifiability and boundary testing; principles must survive confrontation with counterexamples."
+
+      - title: "The Black Swan (Book I)"
+        author: "Nassim Nicholas Taleb"
+        link: "https://www.amazon.com/Black-Swan-Impact-Highly-Improbable/dp/081297381X"
+        why: "Demonstrates how elegant theories collapse when confronted with rare events."
+
+      - title: "The Use and Abuse of History"
+        author: "Friedrich Nietzsche"
+        link: "https://www.amazon.com/Use-Abuse-History-Nietzsche/dp/161427179X"
+        why: "Explores how frameworks can dominate perception and distort present judgment."
+
+    video:
+      - title: "Yale Professor James Choi — Wrong but Useful (All models are wrong, but some are useful)"
+        author: "James Choi (Yale)"
+        link: "https://www.youtube.com/watch?v=7GOZnvNDKQM"
+        why: "A clean, readable explanation of why models are simplifications (therefore false) and how to use them anyway without reifying them."
 
   AC_LC:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "The Big Picture: On the Origins of Life, Meaning, and the Universe Itself"
+        author: "Sean Carroll"
+        link: "https://www.amazon.com/Big-Picture-Origins-Meaning-Universe/dp/110198532X"
+        why: "Clear explanation of multiple levels of description — from physics to emergent systems — and why higher-level explanations are not reducible noise."
+
+      - title: "The Selfish Gene (selected chapters)"
+        author: "Richard Dawkins"
+        link: "https://www.amazon.com/Selfish-Gene-40th-Anniversary/dp/0199291152"
+        why: "Demonstrates gene-level vs organism-level explanation and how confusion between them distorts reasoning."
+
+      - title: "Thinking in Systems"
+        author: "Donella H. Meadows"
+        link: "https://www.amazon.com/Thinking-Systems-Donella-H-Meadows/dp/1603580557"
+        why: "Shows how system-level dynamics differ from individual-level explanations and why mixing them produces policy failure."
+
+    video:
+      - title: "Donella Meadows — A Philosophical Look at Systems Dynamics (Lecture)"
+        author: "Donella Meadows"
+        link: "https://www.youtube.com/watch?v=XL_lOoomRTA&t=26s&pp=ygUkRG9uZWxsYSBNZWFkb3dzIOKAlCBTeXN0ZW1zIFRoaW5raW5n"
+        why: "Concrete introduction to system-level explanation and leverage points."
 
   EH_DR:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "The Enigma of Reason"
+        author: "Hugo Mercier & Dan Sperber"
+        link: "https://www.amazon.com/Enigma-Reason-New-Theory-Understanding/dp/0674368304"
+        why: "Argues that reasoning evolved for argument and persuasion, not pure truth-seeking; clarifies why defensive rejection is the default."
+
+      - title: "Mistakes Were Made (But Not by Me)"
+        author: "Carol Tavris & Elliot Aronson"
+        link: "https://www.amazon.com/Mistakes-Were-Made-But-Third/dp/0358329612"
+        why: "Accessible explanation of cognitive dissonance and self-justification; shows why doubling down feels rational."
+
+      - title: "The Scout Mindset"
+        author: "Julia Galef"
+        link: "https://www.amazon.com/Scout-Mindset-People-Things-Clearly/dp/0735217556"
+        why: "Practical framework for replacing defensive reasoning with curiosity-driven belief updating."
+
+    video:
+      - title: "Julia Galef — Why You Think You're Right (Even If You're Wrong)"
+        author: "TED"
+        link: "https://www.youtube.com/watch?v=w4RLfVxTGH4&pp=ygVBSnVsaWEgR2FsZWYg4oCUIFdoeSBZb3UgVGhpbmsgWW91J3JlIFJpZ2h0IChFdmVuIElmIFlvdSdyZSBXcm9uZynSBwkJhwoBhyohjO8%3D"
+        why: "Clear explanation of 'soldier vs scout mindset' and why defensiveness feels protective but blocks learning."
 
   EH_AS:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "Expert Political Judgment"
+        author: "Philip E. Tetlock"
+        link: "https://www.amazon.com/Expert-Political-Judgment-How-Good/dp/0691128715"
+        why: "Landmark empirical study showing when experts succeed and when they fail; introduces measurable forecasting accuracy."
+
+      - title: "Superforecasting"
+        author: "Philip E. Tetlock & Dan Gardner"
+        link: "https://www.amazon.com/Superforecasting-Science-Prediction-Philip-Tetlock/dp/0804136718"
+        why: "Accessible continuation of Tetlock’s research; shows what reliable judgment looks like and how it differs from confident punditry."
+
+      - title: "The Death of Expertise"
+        author: "Tom Nichols"
+        link: "https://www.amazon.com/Death-Expertise-Campaign-Established-Knowledge/dp/0190469412"
+        why: "Defends the value of expertise while clarifying its limits; helps separate justified trust from blind deference."
+
+    video:
+      - title: "Philip Tetlock — Superforecasting (Long Now Foundation)"
+        author: "Long Now Foundation"
+        link: "https://www.youtube.com/watch?v=pedNak4S9IE&pp=ygU5UGhpbGlwIFRldGxvY2sg4oCUIFN1cGVyZm9yZWNhc3RpbmcgKExvbmcgTm93IEZvdW5kYXRpb24p"
+        why: "Explains how to evaluate expert accuracy, calibration, and probabilistic judgment."
 
   EH_IF:
-    core_readings: []
-    supporting: []
-    video: []
-    practice: []
+    core_readings:
+      - title: "The Righteous Mind"
+        author: "Jonathan Haidt"
+        link: "https://www.amazon.com/Righteous-Mind-Divided-Politics-Religion/dp/0307455777"
+        why: "Explains how moral identity shapes belief formation; clarifies why disagreement feels like attack."
+
+      - title: "Mistakes Were Made (But Not by Me)"
+        author: "Carol Tavris & Elliot Aronson"
+        link: "https://www.amazon.com/Mistakes-Were-Made-But-Not/dp/0156033909"
+        why: "Clear explanation of cognitive dissonance and self-justification; shows why we defend beliefs even when evidence shifts."
+
+      - title: "Think Again"
+        author: "Adam Grant"
+        link: "https://www.amazon.com/Think-Again-Power-Knowing-What/dp/1984878107"
+        why: "Readable argument for intellectual flexibility; frames updating as strength rather than weakness."
+
+    video:
+      - title: "Julia Galef — Why You Think You're Right (TED)"
+        author: "TED"
+        link: "https://www.youtube.com/watch?v=w4RLfVxTGH4&pp=ygUqSnVsaWEgR2FsZWYg4oCUIFdoeSBZb3UgVGhpbmsgWW91J3JlIFJpZ2h0"
+        why: "Clear distinction between the 'soldier mindset' and 'scout mindset'; practical model for updating without identity threat."

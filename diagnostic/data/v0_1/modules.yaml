@@ -6,10 +6,11 @@ modules:
   # -------------------------
 
   - id: UH_PU
-    breakpoint: paralysis_until_certainty
+    breakpoint: Paralysis Until Certainty
     dimension: Uncertainty Handling
     title: "Deciding Without Certainty"
     goal: "Learn how to act productively when evidence is incomplete, contested, or unlikely to improve in time."
+    estimated_time: "60–90 minutes"
     primary_modality: M2
     backup_modality: M1
     content_path: "modules/UH_PU_paralysis_until_certainty.md"
@@ -36,10 +37,11 @@ modules:
           note: "Reversible-step planning; pre-mortem; decision journal prompts."
 
   - id: UH_PC
-    breakpoint: premature_closure
+    breakpoint: Premature Closure
     dimension: Uncertainty Handling
     title: "Knowing When to Stop Reasoning"
     goal: "Learn how to recognize when confidence is outpacing evidence and how to delay commitment without drifting."
+    estimated_time: "60–90 minutes"
     primary_modality: M2
     backup_modality: M1
     content_path: "modules/UH_PC_premature_closure.md"
@@ -66,10 +68,11 @@ modules:
           note: "Confidence tagging; 'what would change my mind' prompts."
 
   - id: UH_PV
-    breakpoint: probability_as_vibe
+    breakpoint: Probability As Vibe
     dimension: Uncertainty Handling
     title: "Thinking in Calibrated Risk"
     goal: "Learn how to reason about likelihoods and downside in concrete terms rather than vague impressions."
+    estimated_time: "60–90 minutes"
     primary_modality: M2
     backup_modality: M1
     content_path: "modules/UH_PV_probability_as_vibe.md"
@@ -100,10 +103,11 @@ modules:
   # -------------------------
 
   - id: MA_MR
-    breakpoint: model_reification
+    breakpoint: Model Reification
     dimension: Model Awareness
     title: "Explanations vs. Reality"
     goal: "Learn how to use theories and explanations without mistaking them for reality."
+    estimated_time: "60–90 minutes"
     primary_modality: M1
     backup_modality: M3
     content_path: "modules/MA_MR_model_reification.md"
@@ -130,10 +134,11 @@ modules:
           note: "Model boundary checks; falsifiability prompts."
 
   - id: MA_AB
-    breakpoint: assumption_blindness
+    breakpoint: Assumption Blindness
     dimension: Model Awareness
     title: "Seeing the Assumptions You’re Standing On"
     goal: "Learn how hidden premises shape disagreement and failure."
+    estimated_time: "60–90 minutes"
     primary_modality: M1
     backup_modality: M3
     content_path: "modules/MA_AB_assumption_blindness.md"
@@ -160,10 +165,11 @@ modules:
           note: "Premise listing; disagreement decomposition."
 
   - id: MA_MS
-    breakpoint: model_shopping
+    breakpoint: Model Shopping
     dimension: Model Awareness
     title: "Choosing Explanations Instead of Collecting Them"
     goal: "Learn how to commit to explanations without opportunistic switching."
+    estimated_time: "60–90 minutes"
     primary_modality: M4
     backup_modality: M1
     content_path: "modules/MA_MS_model_shopping.md"
@@ -194,10 +200,11 @@ modules:
   # -------------------------
 
   - id: CR_CC
-    breakpoint: correlation_causation_leap
+    breakpoint: Correlation Causation Leap
     dimension: Causal Reasoning
     title: "Correlation Is Not a Strategy"
     goal: "Learn why associations rarely tell you what to change."
+    estimated_time: "60–90 minutes"
     primary_modality: M4
     backup_modality: M1
     content_path: "modules/CR_CC_correlation_causation.md"
@@ -224,10 +231,11 @@ modules:
           note: "Confounder spotting."
 
   - id: CR_ND
-    breakpoint: narrative_dominance
+    breakpoint: Narrative Dominance
     dimension: Causal Reasoning
     title: "Why Stories Explain Too Much"
     goal: "Learn how narratives mislead by compressing complex causes."
+    estimated_time: "60–90 minutes"
     primary_modality: M4
     backup_modality: M1
     content_path: "modules/CR_ND_narrative_dominance.md"
@@ -254,10 +262,11 @@ modules:
           note: "Alternative explanation drills."
 
   - id: CR_NI
-    breakpoint: no_intervention_thinking
+    breakpoint: No Intervention Thinking
     dimension: Causal Reasoning
     title: "Thinking in Interventions"
     goal: "Learn to test understanding by imagining change."
+    estimated_time: "60–90 minutes"
     primary_modality: M2
     backup_modality: M1
     content_path: "modules/CR_NI_no_intervention.md"
@@ -288,10 +297,11 @@ modules:
   # -------------------------
 
   - id: AC_AT
-    breakpoint: anecdote_trap
+    breakpoint: Anecdote Trap
     dimension: Abstraction Control
     title: "When Examples Mislead"
     goal: "Learn how vivid cases distort judgment."
+    estimated_time: "60–90 minutes"
     primary_modality: M2
     backup_modality: M4
     content_path: "modules/AC_AT_anecdote_trap.md"
@@ -318,10 +328,11 @@ modules:
           note: "Reference-class drills."
 
   - id: AC_TL
-    breakpoint: theory_lock_in
+    breakpoint: Theory Lock In
     dimension: Abstraction Control
     title: "When Principles Stop Working"
     goal: "Learn to test abstraction without forcing reality."
+    estimated_time: "60–90 minutes"
     primary_modality: M2
     backup_modality: M4
     content_path: "modules/AC_TL_theory_lock_in.md"
@@ -348,10 +359,11 @@ modules:
           note: "Boundary testing."
 
   - id: AC_LC
-    breakpoint: level_confusion
+    breakpoint: Level Confusion
     dimension: Abstraction Control
     title: "Keeping Levels of Explanation Separate"
     goal: "Learn to match explanations to decisions."
+    estimated_time: "60–90 minutes"
     primary_modality: M1
     backup_modality: M4
     content_path: "modules/AC_LC_level_confusion.md"
@@ -382,10 +394,11 @@ modules:
   # -------------------------
 
   - id: EH_DR
-    breakpoint: defensive_rejection
+    breakpoint: Defensive Rejection
     dimension: Epistemic Humility
     title: "Disagreement Without Defense"
     goal: "Learn to engage counterevidence without reflexive dismissal."
+    estimated_time: "60–90 minutes"
     primary_modality: M1
     backup_modality: M2
     content_path: "modules/EH_DR_defensive_rejection.md"
@@ -412,10 +425,11 @@ modules:
           note: "Steelman drills."
 
   - id: EH_AS
-    breakpoint: authority_surrender
+    breakpoint: Authority Surrender
     dimension: Epistemic Humility
     title: "Using Expertise Without Outsourcing Judgment"
     goal: "Learn to rely on experts without surrendering thinking."
+    estimated_time: "60–90 minutes"
     primary_modality: M1
     backup_modality: M2
     content_path: "modules/EH_AS_authority_surrender.md"
@@ -442,10 +456,11 @@ modules:
           note: "Expert evaluation checklist."
 
   - id: EH_IF
-    breakpoint: identity_fusion
+    breakpoint: Identity Fusion
     dimension: Epistemic Humility
     title: "Changing Your Mind Without Losing Yourself"
     goal: "Learn to revise beliefs without identity threat."
+    estimated_time: "60–90 minutes"
     primary_modality: M1
     backup_modality: M2
     content_path: "modules/EH_IF_identity_fusion.md"

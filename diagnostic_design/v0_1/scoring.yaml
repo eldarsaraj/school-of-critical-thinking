@@ -1,0 +1,8 @@
+version: v0_1
+
+selection:
+  dominant_breakpoints: 2
+
+weights:
+  default_choice_weight: 1
+  early_question_multiplier: 1.5

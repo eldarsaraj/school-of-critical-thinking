@@ -1,0 +1,577 @@
+version: v0_1
+
+questions:
+  - id: UH_PU_S1_01
+    dimension: Uncertainty Handling
+    breakpoint: paralysis_until_certainty
+
+    prompt: >
+      You’re considering a change that would meaningfully improve your situation
+      if it works, but would also cost time and effort if it doesn’t.
+      For example, something involving your health, career, or daily habits.
+
+      You’ve read several credible articles. Most suggest the change probably
+      helps people like you, but the evidence is mixed, the studies are small,
+      and experts disagree on long-term effects.
+
+      Waiting longer may bring better information, but it also means staying
+      where you are for now.
+
+      You have to decide how to proceed.
+
+    choices:
+      - id: A
+        text: Wait until there is clearer, more decisive evidence before acting.
+        tag: paralysis_until_certainty
+
+      - id: B
+        text: Commit fully now; the evidence is good enough to justify a clear decision.
+        tag: premature_closure
+
+      - id: C
+        text: Take a limited, reversible step to test whether this works for you, even though it will take time and won’t fully resolve the uncertainty.
+        tag: premature_closure
+
+      - id: D
+        text: Decide not to pursue it; uncertainty at this level isn’t acceptable.
+        tag: paralysis_until_certainty
+
+  - id: UH_PU_S2_02
+    dimension: Uncertainty Handling
+    breakpoint: paralysis_until_certainty
+
+    prompt: >
+      An expert you trust strongly suggests that you act now on an important decision.
+      For example, they recommend buying a house before prices rise further,
+      investing in a specific asset, or making a time-sensitive career move.
+
+      According to them, waiting could mean missing the opportunity entirely.
+      They acknowledge the risks, but insist that hesitation is the bigger danger.
+
+      When you look into it, you find uncertainty everywhere:
+      forecasts conflict, outcomes vary widely, and there is no definitive proof
+      that acting now is the right move.
+
+      You need to decide how to respond.
+
+    choices:
+      - id: A
+        text: Do nothing for now. Acting under this level of uncertainty feels reckless.
+        tag: paralysis_until_certainty
+
+      - id: B
+        text: Act now. If a trusted expert sees urgency, hesitation is likely a mistake.
+        tag: premature_closure
+
+      - id: C
+        text: Act in a limited way now, knowing you’ll have to justify the decision to others without being able to fully explain or defend it yet.
+        tag: premature_closure
+
+      - id: D
+        text: Reject the recommendation entirely. Urgency is often a sign of hype.
+        tag: paralysis_until_certainty
+
+  - id: UH_PU_S2_03
+    dimension: Uncertainty Handling
+    breakpoint: paralysis_until_certainty
+
+    prompt: >
+      You’ve been following an issue that matters to you.
+      Over time, you’ve read articles, watched interviews, and saved links
+      that point in different directions.
+
+      Each new piece of information seems relevant, but also raises new questions.
+      You don’t feel ignorant, but you do feel saturated.
+
+      You notice that weeks have passed, and nothing has changed in practice.
+      There’s no clear moment when the picture will finally feel complete.
+
+      You need to decide how to handle this.
+
+    choices:
+      - id: A
+        text: Keep gathering information until a clearer overall picture emerges.
+        tag: paralysis_until_certainty
+
+      - id: B
+        text: Settle on the most convincing position so far and move on.
+        tag: premature_closure
+
+      - id: C
+        text: Make one concrete move based on what you already know, even if it turns out to be only partially relevant.
+        tag: premature_closure
+
+      - id: D
+        text: Step away from the issue entirely for now.
+        tag: paralysis_until_certainty
+
+  - id: UH_PC_S1_01
+    dimension: Uncertainty Handling
+    breakpoint: premature_closure
+
+    prompt: >
+      You’ve spent a fair amount of time thinking through an issue that matters to you,
+      like climate change, social justice, or economics.
+
+      Nothing is forcing a decision, but the question keeps returning.
+
+      You now have a view that feels coherent and satisfying.
+      It fits the evidence you’ve seen and explains the situation reasonably well.
+
+      You’re aware that more information exists, but continuing to think about it
+      feels mentally draining, and you’re eager to move on to other things.
+
+      What do you do?
+
+    choices:
+      - id: A
+        text: Put the issue aside for now, knowing you may never return to it in depth.
+        tag: paralysis_until_certainty
+
+      - id: B
+        text: Treat your current view as settled and stop revisiting the question.
+        tag: premature_closure
+
+      - id: C
+        text: Act based on your current view, accepting that you’ll likely feel uneasy if conflicting evidence appears later.
+        tag: paralysis_until_certainty
+
+      - id: D
+        text: Force yourself to reopen the question, even though it will take time and mental effort you’d rather spend elsewhere.
+        tag: paralysis_until_certainty
+
+  - id: UH_PV_S1_01
+    dimension: Uncertainty Handling
+    breakpoint: probability_as_vibe
+
+    prompt: >
+      You’re evaluating whether to take a step that has some downside if it goes badly,
+      but would be worthwhile if it works out, like taking some new supplement or medicine
+      that has been popular lately.
+
+      When you ask around, people describe the risk in loose terms.
+      You hear phrases like “probably fine,” “unlikely to be a problem,”
+      and “most people don’t regret it.”
+
+      You don’t have a clear sense of how bad things could get if it goes wrong,
+      but nothing sets off immediate alarm bells.
+
+      You still need to decide how to proceed.
+
+    choices:
+      - id: A
+        text: Go ahead. It doesn’t feel particularly risky, and people generally seem fine with it.
+        tag: probability_as_vibe
+
+      - id: B
+        text: Commit fully and stop worrying about the risk.
+        tag: premature_closure
+
+      - id: C
+        text: Hold off. Without a clearer picture of potential downside, acting seems irresponsible.
+        tag: paralysis_until_certainty
+
+      - id: D
+        text: Decide against it. If the risk can’t be clearly understood, it’s not worth engaging.
+        tag: paralysis_until_certainty
+
+  - id: MA_MR_S1_01
+    dimension: Model Awareness
+    breakpoint: model_reification
+
+    prompt: >
+      You rely on a way of explaining the world that feels right to you
+      (for example, an ideology, a religious view, a cultural explanation,
+      or a general way of understanding how people or society work).
+
+      It helps you make sense of events and people’s behavior.
+      When something doesn’t fit, it’s usually possible to explain it
+      in a way that still preserves the explanation overall.
+
+      This way of seeing things has become your default reference point
+      when interpreting new situations.
+
+      How do you respond?
+
+    choices:
+      - id: A
+        text: Trust the explanation. If it keeps making sense across situations, it’s probably how things really are.
+        tag: model_reification
+
+      - id: B
+        text: Keep using the explanation, treating mismatches as edge cases.
+        tag: assumption_blindness
+
+      - id: C
+        text: Switch between different explanations depending on which one seems to fit best.
+        tag: model_shopping
+
+      - id: D
+        text: Adjust how you apply the explanation so it fits the situation better.
+        tag: assumption_blindness
+
+  - id: MA_AB_S1_01
+    dimension: Model Awareness
+    breakpoint: assumption_blindness
+
+    prompt: >
+      You’re in a disagreement with someone about an issue that matters
+      (for example, politics, parenting, money, work expectations, or relationships).
+
+      From your point of view, the facts seem clear and the reasoning makes sense.
+      The other person disagrees strongly and seems to be reasoning in a completely different way.
+
+      It feels like you’re talking past each other.
+
+      How do you interpret this situation?
+
+    choices:
+      - id: A
+        text: They probably don’t see the facts clearly or aren’t thinking it through properly.
+        tag: assumption_blindness
+
+      - id: B
+        text: They must be starting from different basic assumptions than you.
+        tag: model_shopping
+
+      - id: C
+        text: Your way of understanding the issue is likely correct, even if others disagree.
+        tag: model_reification
+
+      - id: D
+        text: The issue is complicated, and no single way of understanding it is likely to work.
+        tag: model_reification
+
+  - id: MA_MS_S1_01
+    dimension: Model Awareness
+    breakpoint: model_shopping
+
+    prompt: >
+      You’re trying to make sense of a situation that doesn’t have a clear answer
+      (for example, why something went wrong, who is responsible, or what should be done next).
+
+      You’ve come across several different ways of explaining it.
+      Each one highlights something different, and each seems plausible in its own way.
+
+      Depending on the context, a different explanation feels more convincing.
+
+      How do you usually handle this?
+
+    choices:
+      - id: A
+        text: Use whichever explanation seems most convincing in the moment.
+        tag: model_shopping
+
+      - id: B
+        text: Stick with one explanation so your thinking stays consistent.
+        tag: model_reification
+
+      - id: C
+        text: Treat disagreements between explanations as details that don’t really matter.
+        tag: assumption_blindness
+
+      - id: D
+        text: Delay forming a view until one explanation clearly stands out.
+        tag: paralysis_until_certainty
+
+  - id: CR_CC_S1_01
+    dimension: Causal Reasoning
+    breakpoint: correlation_causation_leap
+
+    prompt: >
+      You notice that two things tend to appear together.
+      When one increases, the other often does as well.
+
+      This pattern shows up repeatedly in different places,
+      and people often point to it as evidence of what’s really going on.
+
+      You’re asked to explain why this pattern exists.
+
+    choices:
+      - id: A
+        text: One of these things is probably causing the other.
+        tag: correlation_causation_leap
+
+      - id: B
+        text: They’re likely both influenced by something else in the background.
+        tag: no_intervention_thinking
+
+      - id: C
+        text: The pattern sounds convincing, but it’s not enough to explain what causes what.
+        tag: narrative_dominance
+
+      - id: D
+        text: It’s hard to say without seeing what happens when one of them is deliberately changed.
+        tag: no_intervention_thinking
+
+  - id: CR_ND_S1_01
+    dimension: Causal Reasoning
+    breakpoint: narrative_dominance
+
+    prompt: >
+      You hear a clear, compelling story explaining why something happened
+      (for example, why a company failed, why a policy backfired,
+      or why someone succeeded).
+
+      The story fits the sequence of events well and is easy to remember.
+      It highlights motives, decisions, and turning points.
+
+      There is some data available, but it’s messy and doesn’t clearly point
+      to a single cause.
+
+      How do you explain what happened?
+
+    choices:
+      - id: A
+        text: The story captures the real cause; it explains how things unfolded.
+        tag: narrative_dominance
+
+      - id: B
+        text: One factor in the story probably caused most of the outcome.
+        tag: correlation_causation_leap
+
+      - id: C
+        text: The explanation likely misses important factors that aren’t part of the story.
+        tag: no_intervention_thinking
+
+      - id: D
+        text: The situation is probably shaped by several forces interacting in ways the story can’t capture.
+        tag: no_intervention_thinking
+
+  - id: CR_NI_S1_01
+    dimension: Causal Reasoning
+    breakpoint: no_intervention_thinking
+
+    prompt: >
+      There’s a problem in your life that keeps coming back
+      (for example, constant stress, recurring conflicts,
+      feeling stuck at work, or struggling with motivation).
+
+      You have a good sense of why it happens.
+      You can explain the patterns, the pressures involved,
+      and how things tend to play out.
+
+      When you think about what would actually change the situation,
+      nothing obvious comes to mind.
+
+      How do you usually approach this?
+
+    choices:
+      - id: A
+        text: Try to understand the situation better before attempting to change it.
+        tag: no_intervention_thinking
+
+      - id: B
+        text: Focus on one clear cause and try to fix that.
+        tag: correlation_causation_leap
+
+      - id: C
+        text: Accept that this is just how things tend to go in situations like this.
+        tag: narrative_dominance
+
+      - id: D
+        text: Try one concrete change, even if you’re unsure it will help and worry it could make things awkward or worse.
+        tag: no_intervention_thinking
+
+  - id: AC_AT_S1_01
+    dimension: Abstraction Control
+    breakpoint: anecdote_trap
+
+    prompt: >
+      You hear about someone’s experience that’s vivid and easy to remember
+      (for example, a friend who tried a diet and felt amazing,
+      a coworker who quit a job and became happier,
+      or a story about someone who lost money doing something risky).
+
+      The story feels real and concrete.
+      It sticks with you more than general advice or summaries you’ve heard.
+
+      You’re thinking about what this means for your own decisions.
+
+    choices:
+      - id: A
+        text: Treat the story as strong evidence of what usually happens.
+        tag: anecdote_trap
+
+      - id: B
+        text: Assume the story shows what works for people like you.
+        tag: anecdote_trap
+
+      - id: C
+        text: Ignore the story and rely only on general rules or principles.
+        tag: theory_lock_in
+
+      - id: D
+        text: Notice that the story is influencing you, but still feel unsure about what it actually implies for your situation.
+        tag: theory_lock_in
+
+  - id: AC_TL_S1_01
+    dimension: Abstraction Control
+    breakpoint: theory_lock_in
+
+    prompt: >
+      You’ve learned a general idea or principle that feels powerful
+      (for example, a rule about incentives, habits, productivity,
+      relationships, or how systems behave).
+
+      The idea makes sense in theory and explains many cases.
+      When you try to apply it to specific situations, the details often don’t line up cleanly.
+
+      You still feel confident the idea is basically right.
+
+      How do you handle this?
+
+    choices:
+      - id: A
+        text: Keep applying the idea; real situations are messy, but the principle still holds.
+        tag: theory_lock_in
+
+      - id: B
+        text: Adjust the situation to better fit the idea.
+        tag: theory_lock_in
+
+      - id: C
+        text: Drop the idea and look for a different one that fits the details better.
+        tag: anecdote_trap
+
+      - id: D
+        text: Try to work through one concrete case in detail, even if it makes the idea feel less clean or convincing.
+        tag: anecdote_trap
+
+  - id: AC_LC_S1_01
+    dimension: Abstraction Control
+    breakpoint: level_confusion
+
+    prompt: >
+      You’re talking about a real problem people care about
+      (for example, why someone keeps failing at work,
+      why a team isn’t functioning well,
+      or why a social issue doesn’t improve).
+
+      In the conversation, explanations keep shifting.
+      Sometimes it’s about personal choices and responsibility.
+      Other times it’s about pressure, incentives, or the system people are in.
+
+      The discussion goes back and forth between these,
+      but it’s never clear which level actually matters
+      for deciding what to do next.
+
+      How do you usually think about this?
+
+    choices:
+      - id: A
+        text: Treat personal and systemic explanations as basically saying the same thing.
+        tag: level_confusion
+
+      - id: B
+        text: Focus on the system or environment, since individuals are mostly reacting to it.
+        tag: level_confusion
+
+      - id: C
+        text: Focus on individual responsibility, since systems don’t make decisions.
+        tag: theory_lock_in
+
+      - id: D
+        text: See the personal and systemic explanations as answering different questions, even if that makes the situation harder to summarize or explain.
+        tag: theory_lock_in
+
+  - id: EH_DR_S1_01
+    dimension: Epistemic Humility
+    breakpoint: defensive_rejection
+
+    prompt: >
+      Someone you respect pushes back on a belief you hold
+      (for example, about health choices, money, parenting,
+      politics, or how people should behave).
+
+      They don’t attack you personally, but they question your reasoning
+      and point to evidence or experiences that don’t fit your view.
+
+      The exchange feels uncomfortable.
+
+      How do you usually react internally?
+
+    choices:
+      - id: A
+        text: Look for flaws in their argument so you can defend your position.
+        tag: defensive_rejection
+
+      - id: B
+        text: Discount their point because they don’t fully understand your situation.
+        tag: defensive_rejection
+
+      - id: C
+        text: Accept their claim mainly because they’re knowledgeable or experienced.
+        tag: authority_surrender
+
+      - id: D
+        text: Notice the urge to defend yourself and sit with the discomfort without deciding yet whether you’re right or wrong.
+        tag: authority_surrender
+
+  - id: EH_AS_S1_01
+    dimension: Epistemic Humility
+    breakpoint: authority_surrender
+
+    prompt: >
+      You’re unsure about an issue that matters to you
+      (for example, a health decision, a financial choice,
+      or a judgment about a social or political topic).
+
+      A person with strong credentials or status weighs in.
+      They speak confidently, and others defer to them.
+
+      You don’t fully understand their reasoning,
+      but their authority makes the conclusion feel settled.
+
+      How do you usually think about this?
+
+    choices:
+      - id: A
+        text: Accept their conclusion; they’re qualified to know better than you.
+        tag: authority_surrender
+
+      - id: B
+        text: Go along with their view while assuming the details probably check out.
+        tag: authority_surrender
+
+      - id: C
+        text: Push back mainly because authority shouldn’t decide what’s true.
+        tag: defensive_rejection
+
+      - id: D
+        text: Go along publicly, while privately feeling unsure and unable to explain what you actually think yet.
+        tag: defensive_rejection
+
+  - id: EH_IF_S1_01
+    dimension: Epistemic Humility
+    breakpoint: identity_fusion
+
+    prompt: >
+      There’s a belief or position that feels closely tied to who you are
+      (for example, your political views, moral outlook,
+      parenting philosophy, or how you see the world).
+
+      When this belief is questioned, it doesn’t feel like
+      a disagreement about ideas; it feels personal.
+
+      Changing your mind would feel like losing something important,
+      not just updating a view.
+
+      How do you usually experience this?
+
+    choices:
+      - id: A
+        text: Defending the belief feels necessary, because giving it up would feel like betraying yourself.
+        tag: identity_fusion
+
+      - id: B
+        text: Feel compelled to double down, especially when others criticize the belief.
+        tag: identity_fusion
+
+      - id: C
+        text: Treat challenges to the belief as attacks from people who don’t share your values.
+        tag: defensive_rejection
+
+      - id: D
+        text: Feel unsettled and unsure about who you’d be without the belief, without yet knowing what would replace it.
+        tag: authority_surrender
