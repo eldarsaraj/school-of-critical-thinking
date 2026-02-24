@@ -1,0 +1,6 @@
+map_version,code,dimension,breakpoint,title,count
+v0_1,UH_PU,Uncertainty Handling,Paralysis Until Certainty,Deciding Without Certainty,2
+v0_1,UH_PC,Uncertainty Handling,Premature Closure,Knowing When to Stop Reasoning,2
+v0_1,AC_TL,Abstraction Control,Theory Lock In,When Principles Stop Working,2
+v0_1,MA_AB,Model Awareness,Assumption Blindness,Seeing the Assumptions You’re Standing On,1
+v0_1,CR_NI,Causal Reasoning,No Intervention Thinking,Thinking in Interventions,1

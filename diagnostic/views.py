@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import random  # NEW
 
 import markdown
 import yaml
@@ -104,6 +105,8 @@ def _clear_run_state(request: HttpRequest) -> None:
         "diagnostic_v0_1_full_name",
         "diagnostic_v0_1_organization",
         "diagnostic_v0_1_email",
+        "diagnostic_v0_1_idx",
+        "diagnostic_v0_1_q_order",  # NEW
     ]:
         request.session.pop(k, None)
 
@@ -125,7 +128,32 @@ def diagnostic_intro(request: HttpRequest) -> HttpResponse:
 # ---------------------------------------------------------
 def diagnostic_questions(request: HttpRequest) -> HttpResponse:
     questions = load_questions()
-    total = len(questions)
+
+    # NEW: establish a per-session randomized question order (by question id)
+    # This assumes each question dict has an "id" key (you already rely on it in POST).
+    by_qid: dict[str, dict] = {}
+    qids_in_file_order: list[str] = []
+    for q in questions:
+        qid = (q.get("id") or "").strip()
+        if not qid:
+            continue
+        by_qid[qid] = q
+        qids_in_file_order.append(qid)
+
+    # If something is wrong with YAML (missing ids), fail safely: keep original list behavior.
+    # But your current form logic already assumes ids exist, so this is just a guard.
+    has_valid_ids = len(qids_in_file_order) == len(questions)
+
+    if has_valid_ids:
+        order: list[str] = request.session.get("diagnostic_v0_1_q_order") or []
+        if len(order) != len(qids_in_file_order):
+            order = list(qids_in_file_order)
+            random.shuffle(order)
+            request.session["diagnostic_v0_1_q_order"] = order
+        total = len(order)
+    else:
+        order = []
+        total = len(questions)
 
     # Optional: reset progress when starting fresh
     if request.method == "GET" and request.GET.get("reset") == "1":
@@ -137,8 +165,11 @@ def diagnostic_questions(request: HttpRequest) -> HttpResponse:
             "diagnostic_v0_1_full_name",
             "diagnostic_v0_1_organization",
             "diagnostic_v0_1_email",
+            "diagnostic_v0_1_q_order",  # NEW
         ]:
             request.session.pop(k, None)
+        # redirect so the new shuffled order is created cleanly
+        return redirect("diagnostic_questions")
 
     idx = int(request.session.get("diagnostic_v0_1_idx", 0))
     answers: dict[str, str] = request.session.get("diagnostic_v0_1_answers", {})
@@ -168,7 +199,13 @@ def diagnostic_questions(request: HttpRequest) -> HttpResponse:
     if idx >= total:
         return redirect("diagnostic_results")
 
-    q = questions[idx]
+    # NEW: pick the question according to the randomized order
+    if has_valid_ids:
+        qid = order[idx]
+        q = by_qid[qid]
+    else:
+        q = questions[idx]
+
     progress = int(((idx + 1) / total) * 100)
 
     return render(

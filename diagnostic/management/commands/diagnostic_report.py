@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import csv
+import io
 import sys
-from collections import Counter, defaultdict
-from dataclasses import asdict
-from typing import Dict, Iterable, List, Tuple
+from collections import Counter
+from typing import Dict, List
 
 from django.core.management.base import BaseCommand
 
@@ -17,6 +17,102 @@ def _split_codes(module_ids: str) -> List[str]:
     if not module_ids:
         return []
     return [p.strip() for p in module_ids.split(",") if p.strip()]
+
+
+def render_report_csv(map_version: str = "v0_1", agg: str = "module") -> str:
+    """
+    Returns CSV text for the requested aggregation level.
+    agg: "module" | "dimension" | "breakpoint"
+    """
+    version, by_id = load_reporting_map(map_version)
+
+    # Count module codes across all leads
+    counts = Counter()
+    for s in DiagnosticLead.objects.values_list("module_ids", flat=True).iterator():
+        for code in _split_codes(s or ""):
+            counts[code] += 1
+
+    # Build rows
+    rows: List[Dict[str, object]] = []
+
+    if agg == "module":
+        for code, c in counts.most_common():
+            meta = by_id.get(code)
+            if meta is None:
+                rows.append(
+                    {
+                        "map_version": version,
+                        "code": code,
+                        "dimension": "UNKNOWN",
+                        "breakpoint": "UNKNOWN",
+                        "title": "",
+                        "count": c,
+                    }
+                )
+            else:
+                rows.append(
+                    {
+                        "map_version": version,
+                        "code": code,
+                        "dimension": meta.dimension,
+                        "breakpoint": meta.breakpoint,
+                        "title": meta.title,
+                        "count": c,
+                    }
+                )
+
+        fieldnames = [
+            "map_version",
+            "code",
+            "dimension",
+            "breakpoint",
+            "title",
+            "count",
+        ]
+
+    elif agg == "dimension":
+        dim_counts = Counter()
+        for code, c in counts.items():
+            meta = by_id.get(code)
+            dim = meta.dimension if meta else "UNKNOWN"
+            dim_counts[dim] += c
+
+        for dim, c in dim_counts.most_common():
+            rows.append({"map_version": version, "dimension": dim, "count": c})
+
+        fieldnames = ["map_version", "dimension", "count"]
+
+    else:  # breakpoint
+        bp_counts = Counter()
+        bp_dim = {}
+        for code, c in counts.items():
+            meta = by_id.get(code)
+            if meta:
+                key = meta.breakpoint
+                bp_dim[key] = meta.dimension
+            else:
+                key = "UNKNOWN"
+                bp_dim[key] = "UNKNOWN"
+            bp_counts[key] += c
+
+        for bp, c in bp_counts.most_common():
+            rows.append(
+                {
+                    "map_version": version,
+                    "dimension": bp_dim.get(bp, "UNKNOWN"),
+                    "breakpoint": bp,
+                    "count": c,
+                }
+            )
+
+        fieldnames = ["map_version", "dimension", "breakpoint", "count"]
+
+    # Write CSV to string
+    buf = io.StringIO()
+    writer = csv.DictWriter(buf, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(rows)
+    return buf.getvalue()
 
 
 class Command(BaseCommand):
@@ -38,90 +134,4 @@ class Command(BaseCommand):
     def handle(self, *args, **opts):
         map_version = opts["map_version"]
         agg = opts["format"]
-
-        version, by_id = load_reporting_map(map_version)
-
-        # Count module codes across all leads
-        counts = Counter()
-        for s in DiagnosticLead.objects.values_list("module_ids", flat=True).iterator():
-            for code in _split_codes(s or ""):
-                counts[code] += 1
-
-        # Build rows
-        rows: List[Dict[str, object]] = []
-
-        if agg == "module":
-            for code, c in counts.most_common():
-                meta = by_id.get(code)
-                if meta is None:
-                    rows.append(
-                        {
-                            "map_version": version,
-                            "code": code,
-                            "dimension": "UNKNOWN",
-                            "breakpoint": "UNKNOWN",
-                            "title": "",
-                            "count": c,
-                        }
-                    )
-                else:
-                    rows.append(
-                        {
-                            "map_version": version,
-                            "code": code,
-                            "dimension": meta.dimension,
-                            "breakpoint": meta.breakpoint,
-                            "title": meta.title,
-                            "count": c,
-                        }
-                    )
-
-            fieldnames = [
-                "map_version",
-                "code",
-                "dimension",
-                "breakpoint",
-                "title",
-                "count",
-            ]
-
-        elif agg == "dimension":
-            dim_counts = Counter()
-            for code, c in counts.items():
-                meta = by_id.get(code)
-                dim = meta.dimension if meta else "UNKNOWN"
-                dim_counts[dim] += c
-
-            for dim, c in dim_counts.most_common():
-                rows.append({"map_version": version, "dimension": dim, "count": c})
-
-            fieldnames = ["map_version", "dimension", "count"]
-
-        else:  # breakpoint
-            bp_counts = Counter()
-            bp_dim = {}
-            for code, c in counts.items():
-                meta = by_id.get(code)
-                if meta:
-                    key = meta.breakpoint
-                    bp_dim[key] = meta.dimension
-                else:
-                    key = "UNKNOWN"
-                    bp_dim[key] = "UNKNOWN"
-                bp_counts[key] += c
-
-            for bp, c in bp_counts.most_common():
-                rows.append(
-                    {
-                        "map_version": version,
-                        "dimension": bp_dim.get(bp, "UNKNOWN"),
-                        "breakpoint": bp,
-                        "count": c,
-                    }
-                )
-
-            fieldnames = ["map_version", "dimension", "breakpoint", "count"]
-
-        writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
+        sys.stdout.write(render_report_csv(map_version=map_version, agg=agg))
