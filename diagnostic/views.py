@@ -261,20 +261,16 @@ def diagnostic_email(request: HttpRequest) -> HttpResponse:
             request.session["diagnostic_v0_1_organization"] = organization
             request.session["diagnostic_v0_1_email"] = email
 
-            try:
-                DiagnosticLead.objects.create(
-                    email=email,
-                    full_name=full_name,
-                    organization=organization,
-                    module_ids=",".join(module_ids),
-                    version="v0_1",
-                )
-            except TypeError:
-                DiagnosticLead.objects.create(
-                    email=email,
-                    module_ids=",".join(module_ids),
-                    version="v0_1",
-                )
+            # Proper upsert: update existing record or create new one
+            DiagnosticLead.objects.update_or_create(
+                email=email,
+                defaults={
+                    "full_name": full_name,
+                    "organization": organization,
+                    "module_ids": ",".join(module_ids),
+                    "version": "v0_1",
+                },
+            )
 
             return redirect("diagnostic_syllabus")
 
