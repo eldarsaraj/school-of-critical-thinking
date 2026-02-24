@@ -34,7 +34,7 @@ BOOKS = [
         "author": "Eldar Sarajlic",
         "shelf": "foundations",
         "short_promise": (
-            "Bedtime stories designed to quietly train reasoning, curiosity, "
+            "Bedtime stories designed to train reasoning, curiosity, "
             "and intellectual courage in young minds."
         ),
         "description": (
