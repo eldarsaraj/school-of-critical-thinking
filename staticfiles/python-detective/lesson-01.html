@@ -372,7 +372,7 @@ for letter in "SPY":
           <p class="info-box__label">What Just Happened</p>
           <p><code>for letter in "SPY":</code> means: "Go through each character in 'SPY'. Each time, store the current character in a variable called <code>letter</code>."</p>
           <p>First time through, <code>letter</code> is <code>"S"</code>. Second time, <code>"P"</code>. Third time, <code>"Y"</code>.</p>
-          <p style="margin-bottom: 0;">The indented line runs <strong>once for each letter</strong>. That indentation (the spaces before <code>print</code>) is how Python knows what belongs inside the loop.</p>
+          <p style="margin-bottom: 0;">The indented line runs <strong>once for each letter</strong>. That indentation (the spaces before <code>print</code>) is how Python knows what belongs inside the loop. Without the indentation, the line would run only once, not once per letter. So, keep this in mind.</p>
         </div>
 
         <p>Now let's combine the loop with our letter-shifting trick:</p>
@@ -408,6 +408,15 @@ print("Encoded: ", encoded)</textarea>
           <p><code>encoded = encoded + shifted</code> adds each new shifted letter to the end of our encoded message, building it up one character at a time.</p>
           <p style="margin-bottom: 0;"><code>if</code> checks a condition, and <code>else</code> means "in all other cases." We'll explore these much more in Lesson 3.</p>
         </div>
+
+        <p>This is now a slighly longer and more complex piece of code. So, you have to be more careful about indentation and structure. Make sure all lines inside a loop are indented the same amount, and that each line of code is in the right place.
+          Here, you learn an important programming trick: you can create empty variables and fill them up little by little. This is how you build up a result when you don't know it in advance — like when you're encoding a message, or calculating a score, or keeping track of a total.
+          For example, if you wanted to count how many letters are in a message, you could start with <code>count = 0</code> and then add 1 like this: <code>count = count + 1</code> for each letter you see. This is a very common pattern in programming.</p>
+          You also learn to check whether some things are true, like when you ask whether the message contains a space or a letter (answer this question: why is that important for encoding messages like this?).</p>
+        </p>
+
+        <p>Try it out with some other messages, like "WELCOME TO THE SECRET CODE CLUB" or "I AM A SPY". Play around a little bit before moving on to Part 7. Have some fun, make some encoded messages for your friends or family!</p>
+
       </div>
 
       <!-- ========== PART 7: COMPLETE ENCODER ========== -->
