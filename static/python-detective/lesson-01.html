@@ -186,7 +186,7 @@ print("Your first mission begins now.")</textarea>
 
         <p>Now we know how to store and display text. But to build a secret code, we need to understand something deeper: <strong>text is made of individual characters</strong>, and Python lets you look at each one.</p>
 
-        <p>In Python, a piece of text (like <code>"HELLO"</code>) is called a <strong>string</strong>. Think of a string as a row of boxes, each holding one letter:</p>
+        <p>In Python, a piece of text (like <code>"HELLO"</code>) is called a <strong>string</strong>. Think of a string as a row of small mailboxes, each holding one letter:</p>
 
         <div class="figure">
           <table style="margin: 24px auto; border-collapse: collapse; font-family: 'Courier New', Courier, monospace;">
@@ -232,6 +232,8 @@ print("The word has", len(word), "letters")</textarea>
           <p style="margin-bottom: 0;"><code>len(word)</code> tells us the <strong>length</strong> — how many characters are in the string. "HELLO" has 5 characters.</p>
         </div>
 
+        <p>We can access any letter in a string by using its position number, together with the square brackets. For example, <code>word[2]</code> gives us the third letter in the string (remember, counting starts from 0, so <code>word[2]</code> gives us <code>L</code>).</p>
+
         <p>Try changing <code>"HELLO"</code> to your own name and see what's at each position. What happens if you try a position number that's too high?</p>
       </div>
 
@@ -240,9 +242,11 @@ print("The word has", len(word), "letters")</textarea>
         <p class="pd-section__label">Part 5</p>
         <h2>The Alphabet Is a Number System</h2>
 
-        <p>Here's where it gets interesting. Inside the computer, every letter is secretly a number. The letter A is stored as 65, B as 66, C as 67, and so on. This system is called <strong>ASCII</strong> — it's the code computers use to represent letters.</p>
+        <p>Things are about to get interesting.</p>
+          
+        <p>Inside the computer, every letter is secretly a number. The letter A is stored as 65, B as 66, C as 67, and so on. This system is called <strong>ASCII</strong> — it's the code computers use to represent letters. It stands for <em>American Standard Code for Information Interchange</em>.</p>
 
-        <p>Python gives us two commands to convert between letters and numbers:</p>
+        <p>Python gives us two commands to convert between letters and numbers: <code>ord()</code> and <code>chr()</code>.</p>
 
         <div class="code-cell" id="cell-6">
           <div class="code-cell__header">
@@ -269,9 +273,15 @@ print("The letter for number 72 is:", chr(72))</textarea>
           <p style="margin-bottom: 0;">Lines that start with <code>#</code> are <strong>comments</strong> — notes for humans. Python ignores them completely.</p>
         </div>
 
-        <p>Why does this matter for our secret code? Because if every letter is a number, we can do <strong>math</strong> with letters. We can shift them forward. We can scramble them. We can encode them.</p>
+        <p>Go ahead and practice a bit. Find the codes for letters in your name.</p>
+
+        <p>Why does this matter for our secret code? Because if every letter is a number, we can do <strong>math</strong> with letters. 
+          For example, we can shift them forward. Or, we can scramble them. But most importantly, we can <em>encode</em> them.</p>
 
         <p>Let's try — what if we take a letter and shift it forward by 3?</p>
+
+        <p>First, we'll define a variable called <code>letter</code> and give it some value (some letter). 
+        Then, we'll get the number for that letter using <code>ord()</code>. We'll create another variable called <code>number</code>, and add 3 to it (we put this into another variable called <code>shifted_number</code>), and convert it back to a letter using <code>chr()</code>.</p>
 
         <div class="code-cell" id="cell-7">
           <div class="code-cell__header">
