@@ -12,6 +12,7 @@ from django.views.static import serve
 from django.contrib.sitemaps.views import sitemap
 from articles.sitemaps import ArticleSitemap
 from pages.sitemaps import StaticSitemap
+from django.views.generic import RedirectView
 
 sitemaps = {
     "articles": ArticleSitemap,
@@ -24,6 +25,12 @@ urlpatterns = [
     path("", include("pages.urls")),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path("diagnostic/", include("diagnostic.urls")),
+    path(
+        "python-detective/",
+        RedirectView.as_view(
+            url="/static/python-detective/index.html", permanent=False
+        ),
+    ),
 ]
 
 # Serve uploaded media files (works even when DEBUG=False)

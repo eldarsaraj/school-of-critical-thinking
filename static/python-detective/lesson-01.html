@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 1: How Spies Break Big Problems – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png"alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 1 · Decomposition</p>
+        <h1 class="lesson__title">How Spies (and Your Brain) Break Big Problems Into Tiny Pieces</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to break down complex tasks into small, manageable steps — and how to write your very first lines of Python code to build a secret message encoder.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>The Spy Problem</h2>
+        
+        <p>Imagine you're a spy and you need to send a secret message to your partner. If anyone reads it, your mission is over. So you need to <em>encode</em> the message — scramble it so only someone who knows the trick can read it.</p>
+
+        <p>That sounds hard, right? Where do you even start?</p>
+
+        <p>Here's the secret that every spy, every programmer, every great problem-solver knows: <strong>don't try to do the whole thing at once.</strong> Break it into tiny pieces. Solve each piece. Then put them together.</p>
+
+        <p>This is called <strong>decomposition</strong>, and it's the most important thinking skill you'll ever learn.</p>
+
+        <h3>You Already Do This</h3>
+        <p>Think about how you get ready for school in the morning. You don't just "get ready" — you wake up, brush your teeth, get dressed, eat breakfast, pack your backpack, put your shoes on, and walk out the door. That's decomposition. You broke "get ready" into seven smaller steps without even thinking about it.</p>
+
+        <p>Today we're going to use this same skill — consciously and deliberately — to build something cool: a program that turns ordinary messages into secret codes. But first, we need to learn how to talk to a computer.</p>
+      </div>
+
+      <!-- ========== PART 2: FIRST CODE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Talking to a Computer</h2>
+        
+        <p>A computer doesn't understand English. It understands <em>code</em> — specific instructions written in a very precise way. The language we'll use is called <strong>Python</strong>, and it's one of the most popular programming languages in the world.</p>
+
+        <p>Let's start with the simplest possible thing: telling the computer to display a message on the screen. In Python, you do that with a command called <code>print()</code>.</p>
+
+        <p>Click the <strong>▶ Run</strong> button below to see what happens:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="1">print("Hello, World!")</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <p>You just ran your first line of code! Let's understand what happened:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p><code>print()</code> is a <strong>command</strong> — it tells the computer to display something on screen.</p>
+          <p>The text inside the quotation marks <code>"Hello, World!"</code> is what gets displayed.</p>
+          <p style="margin-bottom: 0;">The quotation marks tell Python: "this is text, not a command."</p>
+        </div>
+
+        <p>Now here's where it gets fun. That code up there? <strong>You can change it.</strong> Click inside the grey box, delete what's there, and type something different. Try making it say your name, like <code>print("My name is Alex")</code>. Then click Run again.</p>
+
+        <p>Go ahead — experiment. You can't break anything.</p>
+
+        <h3>Displaying Multiple Lines</h3>
+
+        <p>You can use <code>print()</code> multiple times to display several lines. Each <code>print()</code> shows on a new line:</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="3">print("Agent name: Shadow")
+print("Mission: Deliver the secret code")
+print("Status: Active")</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <p>Try changing the agent name or the mission. Make it yours.</p>
+      </div>
+
+      <!-- ========== PART 3: VARIABLES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>Storing Information in Variables</h2>
+        
+        <p>So far we've just been displaying text directly. But what if you want the computer to <em>remember</em> something so you can use it later?</p>
+
+        <p>That's what <strong>variables</strong> are for. A variable is like a labeled box where you store information. You give the box a name, and you put something inside it.</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="5">agent_name = "Shadow"
+mission = "Deliver the secret code"
+
+print("Agent:", agent_name)
+print("Mission:", mission)</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p><code>agent_name = "Shadow"</code> creates a variable called <code>agent_name</code> and stores the text <code>"Shadow"</code> inside it.</p>
+          <p>Later, when we write <code>print("Agent:", agent_name)</code>, Python looks inside the <code>agent_name</code> box and finds <code>"Shadow"</code>.</p>
+          <p style="margin-bottom: 0;">Notice: the variable name has <strong>no quotation marks</strong>. That's how Python knows it's a variable (a box to look inside) and not just text to display.</p>
+        </div>
+
+        <p>The powerful thing about variables is that you can <strong>change what's inside them</strong>. Try changing <code>"Shadow"</code> to your own spy name and run it again.</p>
+
+        <h3>Getting Input from the User</h3>
+
+        <p>Right now, the spy name is written directly into the code. But what if we want the person running the program to <em>choose</em> their own spy name? Python has a command for that: <code>input()</code>.</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="4">agent_name = input("What is your spy name? ")
+
+print("Welcome, Agent " + agent_name + "!")
+print("Your first mission begins now.")</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <p>When you run this, a small popup will appear asking for your spy name. Type something in and click OK. The program then uses <em>whatever you typed</em> in the rest of the code.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p><code>input("What is your spy name? ")</code> shows a question and waits for the user to type something.</p>
+          <p>Whatever the user types gets stored in the variable <code>agent_name</code>.</p>
+          <p style="margin-bottom: 0;">The <code>+</code> sign <strong>joins text together</strong>. So <code>"Welcome, Agent " + agent_name + "!"</code> combines three pieces of text into one sentence.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 4: STRINGS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Text Is Made of Individual Letters</h2>
+
+        <p>Now we know how to store and display text. But to build a secret code, we need to understand something deeper: <strong>text is made of individual characters</strong>, and Python lets you look at each one.</p>
+
+        <p>In Python, a piece of text (like <code>"HELLO"</code>) is called a <strong>string</strong>. Think of a string as a row of boxes, each holding one letter:</p>
+
+        <div class="figure">
+          <div class="figure__visual" style="font-family: 'Courier New', Courier, monospace; text-align: center; padding: 24px 0;">
+            <div style="display: inline-flex; gap: 0; border: 1px solid rgba(0,0,0,0.2);">
+              <div style="width: 44px; padding: 10px 0; border-right: 1px solid rgba(0,0,0,0.15); text-align: center; font-size: 20px; font-weight: bold;">H</div>
+              <div style="width: 44px; padding: 10px 0; border-right: 1px solid rgba(0,0,0,0.15); text-align: center; font-size: 20px; font-weight: bold;">E</div>
+              <div style="width: 44px; padding: 10px 0; border-right: 1px solid rgba(0,0,0,0.15); text-align: center; font-size: 20px; font-weight: bold;">L</div>
+              <div style="width: 44px; padding: 10px 0; border-right: 1px solid rgba(0,0,0,0.15); text-align: center; font-size: 20px; font-weight: bold;">L</div>
+              <div style="width: 44px; padding: 10px 0; text-align: center; font-size: 20px; font-weight: bold;">O</div>
+            </div>
+            <div style="display: inline-flex; gap: 0; margin-top: 2px;">
+              <div style="width: 44px; text-align: center; font-size: 12px; color: rgba(0,0,0,0.45);">0</div>
+              <div style="width: 44px; text-align: center; font-size: 12px; color: rgba(0,0,0,0.45);">1</div>
+              <div style="width: 44px; text-align: center; font-size: 12px; color: rgba(0,0,0,0.45);">2</div>
+              <div style="width: 44px; text-align: center; font-size: 12px; color: rgba(0,0,0,0.45);">3</div>
+              <div style="width: 44px; text-align: center; font-size: 12px; color: rgba(0,0,0,0.45);">4</div>
+            </div>
+          </div>
+          <p class="figure__caption">Each letter has a position number, starting from 0.</p>
+        </div>
+
+        <p>One important thing: <strong>computers start counting at 0, not 1.</strong> So the first letter is at position 0, the second at position 1, and so on. This is weird at first, but you'll get used to it.</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="7">word = "HELLO"
+
+print("The full word is:", word)
+print("Letter at position 0:", word[0])
+print("Letter at position 1:", word[1])
+print("Letter at position 4:", word[4])
+print("The word has", len(word), "letters")</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p><code>word[0]</code> means "give me the character at position 0" — that's <code>H</code>.</p>
+          <p><code>word[4]</code> gives us <code>O</code>, the last letter (remember, counting starts from 0).</p>
+          <p style="margin-bottom: 0;"><code>len(word)</code> tells us the <strong>length</strong> — how many characters are in the string. "HELLO" has 5 characters.</p>
+        </div>
+
+        <p>Try changing <code>"HELLO"</code> to your own name and see what's at each position. What happens if you try a position number that's too high?</p>
+      </div>
+
+      <!-- ========== PART 5: LETTERS ARE NUMBERS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>The Alphabet Is a Number System</h2>
+
+        <p>Here's where it gets interesting. Inside the computer, every letter is secretly a number. The letter A is stored as 65, B as 66, C as 67, and so on. This system is called <strong>ASCII</strong> — it's the code computers use to represent letters.</p>
+
+        <p>Python gives us two commands to convert between letters and numbers:</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="9"># ord() turns a letter into its number
+print("The number for A is:", ord("A"))
+print("The number for B is:", ord("B"))
+print("The number for Z is:", ord("Z"))
+
+print()
+
+# chr() turns a number back into a letter
+print("The letter for number 65 is:", chr(65))
+print("The letter for number 72 is:", chr(72))</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p><code>ord("A")</code> gives us <code>65</code> — that's A's secret number code.</p>
+          <p><code>chr(65)</code> does the reverse — it takes the number <code>65</code> and gives us back the letter <code>A</code>.</p>
+          <p style="margin-bottom: 0;">Lines that start with <code>#</code> are <strong>comments</strong> — notes for humans. Python ignores them completely.</p>
+        </div>
+
+        <p>Why does this matter for our secret code? Because if every letter is a number, we can do <strong>math</strong> with letters. We can shift them forward. We can scramble them. We can encode them.</p>
+
+        <p>Let's try — what if we take a letter and shift it forward by 3?</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="9">letter = "A"
+
+# Get the number for this letter
+number = ord(letter)
+print(letter, "is number", number)
+
+# Add 3 to shift it forward
+shifted_number = number + 3
+shifted_letter = chr(shifted_number)
+print("Shifted forward by 3:", shifted_letter)</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <p>A becomes D! If we shift every letter by 3, then B becomes E, C becomes F, and so on. This is the <strong>Caesar cipher</strong> — a secret code invented by Julius Caesar over 2,000 years ago to protect his military messages.</p>
+
+        <p>Try changing the letter to <code>"H"</code> or <code>"M"</code> and see what it becomes when shifted by 3.</p>
+      </div>
+
+      <!-- ========== PART 6: DECOMPOSING ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Decomposing Our Secret Code Machine</h2>
+
+        <p>Now we have all the building blocks. It's time to use <strong>decomposition</strong> — breaking the big problem into steps — to build our complete secret code encoder.</p>
+
+        <p>Let's think like a spy. What does our encoder need to do?</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Plan — 5 Steps</p>
+          <p><strong>Step 1:</strong> Get the secret message from the user</p>
+          <p><strong>Step 2:</strong> Look at each letter, one at a time</p>
+          <p><strong>Step 3:</strong> Shift each letter forward by 3 positions</p>
+          <p><strong>Step 4:</strong> Collect all the shifted letters into a new message</p>
+          <p style="margin-bottom: 0;"><strong>Step 5:</strong> Display the encoded message</p>
+        </div>
+
+        <p>See? Five steps. Each one is something we already know how to do (or will learn right now). That's the power of decomposition — a scary problem becomes five friendly steps.</p>
+
+        <h3>Step 1: Get the Message</h3>
+        <p>We already know this — we use <code>input()</code>:</p>
+
+        <div class="code-cell" id="cell-8">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Step 1</span>
+            <button class="code-cell__run" onclick="runCode(8)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-8" rows="4"># Step 1: Get the message
+message = input("Enter your secret message: ")
+message = message.upper()
+print("You entered:", message)</textarea>
+          <div class="code-cell__output" id="output-8"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing</p>
+          <p style="margin-bottom: 0;"><code>.upper()</code> converts all letters to uppercase. We do this to keep things simple — our encoder will work with capital letters. Try typing "hello" and see it become "HELLO".</p>
+        </div>
+
+        <h3>Steps 2–4: Process Each Letter</h3>
+        
+        <p>Now we need to look at <strong>each letter, one at a time</strong>, and shift it. When you need to repeat an action for each item in a collection, you use a <strong>for loop</strong>.</p>
+
+        <p>It's simpler than it sounds. Let's see it first:</p>
+
+        <div class="code-cell" id="cell-9">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Understanding Loops</span>
+            <button class="code-cell__run" onclick="runCode(9)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-9" rows="3"># This looks at each letter in "SPY" one at a time
+for letter in "SPY":
+    print("Current letter:", letter)</textarea>
+          <div class="code-cell__output" id="output-9"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p><code>for letter in "SPY":</code> means: "Go through each character in 'SPY'. Each time, store the current character in a variable called <code>letter</code>."</p>
+          <p>First time through, <code>letter</code> is <code>"S"</code>. Second time, <code>"P"</code>. Third time, <code>"Y"</code>.</p>
+          <p style="margin-bottom: 0;">The indented line runs <strong>once for each letter</strong>. That indentation (the spaces before <code>print</code>) is how Python knows what belongs inside the loop.</p>
+        </div>
+
+        <p>Now let's combine the loop with our letter-shifting trick:</p>
+
+        <div class="code-cell" id="cell-10">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Steps 2, 3, and 4</span>
+            <button class="code-cell__run" onclick="runCode(10)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-10" rows="14"># Steps 2-4: go through each letter, shift it, collect results
+message = "HELLO"
+encoded = ""
+
+for letter in message:
+    if letter == " ":
+        # Spaces stay as spaces
+        encoded = encoded + " "
+    else:
+        # Shift the letter by 3
+        number = ord(letter)
+        shifted = chr(number + 3)
+        encoded = encoded + shifted
+
+print("Original:", message)
+print("Encoded: ", encoded)</textarea>
+          <div class="code-cell__output" id="output-10"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p><code>encoded = ""</code> creates an empty string — an empty box we'll fill letter by letter.</p>
+          <p><code>if letter == " ":</code> checks whether the current character is a space. We use <code>==</code> (two equals signs) to compare things. Spaces don't get encoded — they stay as spaces.</p>
+          <p><code>encoded = encoded + shifted</code> adds each new shifted letter to the end of our encoded message, building it up one character at a time.</p>
+          <p style="margin-bottom: 0;"><code>if</code> checks a condition, and <code>else</code> means "in all other cases." We'll explore these much more in Lesson 3.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 7: COMPLETE ENCODER ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>The Complete Secret Code Machine</h2>
+
+        <p>Time to put all five steps together. This is the payoff — your very own working secret message encoder:</p>
+
+        <div class="code-cell" id="cell-11">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · The Complete Encoder</span>
+            <button class="code-cell__run" onclick="runCode(11)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-11" rows="22"># === SECRET CODE ENCODER ===
+# Built with decomposition: one step at a time
+
+# Step 1: Get the message from the user
+message = input("Enter your secret message: ")
+message = message.upper()
+
+# Steps 2-4: Go through each letter, shift it, collect results
+shift = 3
+encoded = ""
+
+for letter in message:
+    if letter == " ":
+        encoded = encoded + " "
+    elif letter.isalpha():
+        number = ord(letter) - ord("A")
+        shifted = (number + shift) % 26
+        new_letter = chr(shifted + ord("A"))
+        encoded = encoded + new_letter
+    else:
+        encoded = encoded + letter
+
+# Step 5: Display the result
+print("Original:", message)
+print("Encoded: ", encoded)
+print()
+print("Share the encoded message with a friend!")
+print("Tell them to shift each letter BACK by", shift, "to decode it.")</textarea>
+          <div class="code-cell__output" id="output-11"></div>
+        </div>
+
+        <p>Try encoding <strong>MEET ME AT NOON</strong> — it should become <strong>PHHW PH DW QRRQ</strong>.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · The Wrapping Trick</p>
+          <p>You might notice some new lines in this version. Here's what they do:</p>
+          <p><code>ord(letter) - ord("A")</code> converts each letter to its position in the alphabet (A=0, B=1, … Z=25) instead of using the raw ASCII number.</p>
+          <p><code>(number + shift) % 26</code> is the wrapping trick. The <code>%</code> symbol means "remainder after division." This ensures that if we go past Z, we wrap back to A. So X (position 23) shifted by 3 gives 26, and <code>26 % 26 = 0</code>, which is A.</p>
+          <p><code>elif</code> means "else if" — another condition to check. <code>letter.isalpha()</code> checks if the character is a letter (not a number or punctuation).</p>
+          <p style="margin-bottom: 0;">Don't worry if you don't fully understand every line yet. The point of this lesson is <strong>decomposition</strong> — and you just used it to build a working program.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 8: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>What You Just Did</h2>
+
+        <p>Let's step back. You started with a vague, scary problem — "build a secret message encoder" — and you solved it by breaking it into five clear steps:</p>
+
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 18px; line-height: 2;">
+          <li>Get the message</li>
+          <li>Look at each letter</li>
+          <li>Shift each letter forward</li>
+          <li>Collect the results</li>
+          <li>Display the encoded message</li>
+        </ol>
+
+        <p>Each step was manageable. Each step built on the one before it. And together, they created something genuinely useful — something you can use to send secret messages to your friends.</p>
+
+        <p><strong>That's decomposition.</strong></p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">The next time you face a big, confusing problem — in code, in school, in life — ask yourself: <em>"What are all the steps I need?"</em> Break it down. Tackle one step at a time.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <p>Talk these over with someone, or think about them quietly:</p>
+
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>How did breaking the problem into steps make it less scary?</li>
+          <li>What would have happened if we tried to write the whole program at once?</li>
+          <li>Can you think of a real-life problem you could decompose? (A big homework project? Planning a party? Learning a new skill?)</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+        
+        <p>If you want to push further, try these. Each one requires decomposition — plan your steps before writing any code.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Change the Shift</p>
+          <p style="margin-bottom: 0;">Modify the encoder so the user can <em>choose</em> how much to shift by, instead of always using 3. Hint: add another <code>input()</code> and use <code>int()</code> to convert text to a number.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · Build a Decoder</p>
+          <p style="margin-bottom: 0;">Create a program that <em>decodes</em> messages by shifting backwards. If your friend gets <code>PHHW PH DW QRRQ</code>, they should be able to decode it back to <code>MEET ME AT NOON</code>.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Number Code</p>
+          <p style="margin-bottom: 0;">Replace each letter with its position: A=1, B=2, C=3. So "HI" becomes "8 9". Decompose this first — what are the steps?</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Decomposition</strong> — breaking a big problem into smaller, manageable steps. Always ask: <em>"What are all the steps I need?"</em></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><code>print()</code> — display text on screen</p>
+          <p><strong>Variables</strong> — storing information: <code>name = "Shadow"</code></p>
+          <p><code>input()</code> — get text from the user</p>
+          <p><strong>Strings</strong> — text is made of characters, accessed by position: <code>word[0]</code></p>
+          <p><code>ord()</code> and <code>chr()</code> — convert between letters and numbers</p>
+          <p><code>for</code> loops — repeat an action for each item</p>
+          <p style="margin-bottom: 0;"><code>if</code> / <code>elif</code> / <code>else</code> — make decisions</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="index.html" class="lesson-nav__link">← All Lessons</a>
+        <a href="lesson-02.html" class="lesson-nav__link">Lesson 2 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    // Editor enhancements
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>
