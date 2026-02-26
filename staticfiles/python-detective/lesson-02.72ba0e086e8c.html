@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 2: Your Brain's Filing System – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 2 · Abstraction</p>
+        <h1 class="lesson__title">Your Brain's Filing System: Why Forgetting the Details Makes You Smarter</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to identify what information matters and what can be ignored — and how to use Python to store, organize, and display only the essential details about anything.</p>
+        </div>
+      </div>
+
+      <figure class="figure" style="margin-top: 0;  margin-bottom: 0;">
+        <img src="/static/python-detective/images/filing-cabinet.png" style="width: 100%; display: block;">
+      </figure>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>The Problem With Knowing Everything</h2>
+        
+        <p>Quick: describe your best friend.</p>
+
+        <p>Did you list every single thing about them? Their exact height in centimeters? The color of their shoelaces? How many times they blinked today?</p>
+
+        <p>Of course not. You probably said something like: "She's funny, she likes soccer, and she always shares her snacks." You picked out the <em>important</em> stuff and ignored the rest.</p>
+
+        <p>Perhaps you're unaware of it, but that's kind of a superpower. It's called <strong>abstraction</strong>.</p>
+
+        <h3>What Is Abstraction?</h3>
+
+        <p>Abstraction means <strong>deciding what matters and ignoring what doesn't</strong>. It's the opposite of trying to remember everything. It's about creating a simplified version of something complex so you can actually work with it.</p>
+
+        <p>You do this all the time without noticing. A <em>contact</em> in your phone is an abstraction of a real person — it only stores name, number, and maybe a photo. It doesn't store their shoe size, their breakfast preference, or their mood. Why? Because that information isn't useful for the purpose of a phone contact.</p>
+
+        <p>Today, we're going to use abstraction (plus the Python skills we learned in Lesson 1) to build a <strong>Friend Stats Tracker</strong>: a program that stores the important details about your friends and displays personalized profiles.</p>
+
+        <h3>Quick Review</h3>
+        <p>Before we start building, let's make sure you remember the key tools from Lesson 1. Run this to warm up:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Review</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="6"># Quick review from Lesson 1
+name = "Shadow"
+mission = "Build something cool with Python"
+
+print("Agent:", name)
+print("New Mission:", mission)</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+        <p>Change the name and mission to what we'll do today (the mission is to build a Friend Stats Tracker). Then run the code again.</p>
+
+        <p>Good. You remember variables and <code>print()</code>. Now let's learn something new.</p>
+      </div>
+
+      <!-- ========== PART 2: NUMBERS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Python Knows Two Kinds of Information</h2>
+
+        <p>In Lesson 1, everything we stored in variables was <strong>text</strong> — things inside quotation marks, like <code>"Shadow"</code> or <code>"Hello, World!"</code>. Python calls these <strong>strings</strong>.</p>
+
+        <p>But there's another kind of information Python understands: <strong>numbers</strong>.</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="8"># Text (strings) — always in quotation marks
+friend_name = "Alex"
+
+# Numbers — no quotation marks!
+friend_age = 11
+friendship_level = 8
+
+print("Name:", friend_name)
+print("Age:", friend_age)
+print("Friendship level:", friendship_level, "out of 10")</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Key Difference</p>
+          <p><code>"11"</code> with quotation marks is <strong>text</strong> — just the characters 1 and 1. You can't do math with it.</p>
+          <p><code>11</code> without quotation marks is a <strong>number</strong> — Python understands it as a quantity. You can add, subtract, multiply with it.</p>
+          <p style="margin-bottom: 0;">This matters more than you'd think. Try changing <code>friend_age</code> to <code>"11"</code> (with quotes) and see if it still works. It does — but watch what happens in the next section.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 3: MATH ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>Doing Math With Numbers</h2>
+
+        <p>The whole reason numbers exist in Python (separately from text) is so you can <strong>calculate things</strong>. Let's try some basic math:</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="10"># Python can do math!
+age = 11
+
+print("Current age:", age)
+print("Age next year:", age + 1)
+print("Age in 5 years:", age + 5)
+print("Double your age:", age * 2)
+
+# How many days have you been alive? (roughly)
+days_alive = age * 365
+print("You've been alive about", days_alive, "days!")</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Math Symbols in Python</p>
+          <p><code>+</code> means add (you already know this one — it also joins text!)</p>
+          <p><code>-</code> means subtract</p>
+          <p><code>*</code> means multiply (not ×, because × isn't on your keyboard)</p>
+          <p style="margin-bottom: 0;"><code>/</code> means divide</p>
+        </div>
+
+        <p>Try changing the age and see how the calculations update automatically. That's the power of using variables — change one thing, and everything connected to it updates.</p>
+      </div>
+
+      <!-- ========== PART 4: THE INPUT PROBLEM ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>A Tricky Problem With <code>input()</code></h2>
+
+        <p>In Lesson 1, we used <code>input()</code> to ask the user for their spy name. Let's try using it to ask for someone's age:</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · This Will Break!</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="5"># Try entering a number like 11
+age = input("How old are you? ")
+
+# Let's try to calculate their age next year
+print("Next year you'll be", age + 1)</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <p>O-oh, that gave an <strong>error</strong>! What happened here?</p>
+
+        <p>Before we figure that out, you have to understand something: errors in coding happen all the time — and that's okay! They're just signals that something isn't working as expected. 
+          Learning to read and understand errors is a key skill in programming. It usually takes some time to find and fix this "bug" (yes, errors are called "bugs" in programming), so arm yourself 
+          with patience and curiosity. Read the output that shows error carefully — it tells you exactly what went wrong.</p>
+        
+        <p>Note: 'concatenate' means to join things together. In Python, when you use <code>+</code> with text (strings), it joins them together — like <code>"Hello" + "World"</code> becomes <code>"HelloWorld"</code>.</p>
+        
+          <div class="info-box">
+          <p class="info-box__label">Why It Broke</p>
+          <p>Here's the thing: <code>input()</code> <strong>always gives you text</strong>, even if the user types a number. So when you type <code>11</code>, Python sees it as <code>"11"</code> (text), not <code>11</code> (a number).</p>
+          <p style="margin-bottom: 0;">You can't add <code>1</code> (a number) to <code>"11"</code> (text). That's like trying to add 1 to the word "cat" — it doesn't make sense to Python.</p>
+        </div>
+
+        <p>So how do we fix this? We need to <strong>convert</strong> the text into a number. Python has a command for that: <code>int()</code>.</p>
+
+        <p>You may have noticed that some pieces of code look like <code>int()</code>. In the last lesson you learned <code>print()</code>. 
+          Whenever you use a command with parentheses like <code>int()</code>, you're using something called a <strong>function</strong>. Functions are like mini-programs that do one specific job. 
+          In Python they have parentheses, and you can pass information into them (called "arguments"). Functions are like recipes for making things (like cakes); all you have to do is put some ingredients inside their parentheses, and voila: you get a finished cake!</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Fixed!</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="6"># Ask for their age, then CONVERT it to a number
+age_text = input("How old are you? ")
+age = int(age_text)
+
+# Now math works!
+print("Next year you'll be", age + 1)</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p><code>input()</code> gives us <code>"11"</code> (text). We store it in <code>age_text</code>.</p>
+          <p><code>int(age_text)</code> converts <code>"11"</code> (text) into <code>11</code> (a number). We store that in <code>age</code>.</p>
+          <p style="margin-bottom: 0;">Now <code>age + 1</code> works because both are numbers. You can also write this in one line: <code>age = int(input("How old are you? "))</code> — that does both steps at once.</p>
+        </div>
+
+        <p>Try it — enter your age and see the math work. Then try the one-line shortcut by editing the code.</p>
+      </div>
+
+      <!-- ========== PART 5: ABSTRACTION IN ACTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Choosing What Matters</h2>
+
+        <p>Now you're ready to tackle <strong>abstraction</strong>. We're going to build a Friend Profile — but first, we need to decide: <strong>what information do we actually need?</strong></p>
+
+        <p>Think about a real person. There are thousands of facts about them: hair color, shoe size, number of pets, favorite song, what they ate for lunch, how fast they can they swim 200 yards butterfly style, what time they woke up today…</p>
+
+        <p>We can't store all of that. We <em>shouldn't</em> store all of that. We need to <strong>abstract</strong> — pick out the essential details for our purpose.</p>
+
+        <p>For a <strong>Friend Stats Tracker</strong>, what matters? Let's think about what would be useful and fun:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Abstraction Decision</p>
+          <p><strong>We'll keep:</strong> Name, age, favorite game, a fun inside joke, and a friendship level (1-10)</p>
+          <p style="margin-bottom: 0;"><strong>We'll ignore:</strong> Height, weight, school schedule, parents' names, address, what they wore yesterday, what's their Roblox username…</p>
+        </div>
+
+        <p>This is abstraction in action. We looked at something complex (a whole human being!) and created a simplified <strong>model</strong> with only the parts that matter for our purpose.</p>
+
+        <p>Note: a <strong>model</strong> is a simplified representation of something complex. It's like a map of a city — it doesn't show every building, but it shows the most important roads and landmarks.</p>
+
+        <p>Let's start building — one piece at a time:</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Collecting Friend Data</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="13"># Collect the essential info about a friend
+print("=== FRIEND STATS TRACKER ===")
+print()
+
+name = input("Friend's name: ")
+age = int(input("Their age: "))
+fav_game = input("Their favorite game: ")
+inside_joke = input("An inside joke you share: ")
+friendship_level = int(input("Friendship level (1-10): "))
+
+print()
+print("Got it! I've recorded the stats for", name)
+print("Processing...")</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <p>Notice how we used <code>int()</code> for age and friendship level (numbers we might do math with) but left name, favorite game, and inside joke as regular text. That's another abstraction decision — which pieces of information need to be numbers and which can stay as text.</p>
+        
+        <p>Also, notice that we can put functions inside functions — like <code>int(input())</code>. This is called nesting. It's a powerful way to combine operations. 
+          Here's a silly question for you: would we get a number or a string if we did this <code>str(int("4"))</code></p>? How about <code>int(str(int("4")))</code>?
+
+      </div>
+
+      <!-- ========== PART 6: BUILDING THE PROFILE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Building a Profile Display</h2>
+
+        <p>Now let's make the output look good. We'll display all the information in a clean, organized profile — like a character stats screen in a video game.</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · The Profile Card</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="24"># Collect friend data
+print("=== FRIEND STATS TRACKER ===")
+print()
+name = input("Friend's name: ")
+age = int(input("Their age: "))
+fav_game = input("Their favorite game: ")
+inside_joke = input("An inside joke you share: ")
+friendship_level = int(input("Friendship level (1-10): "))
+
+# Calculate some fun stats
+days_known_guess = friendship_level * 365
+age_next_year = age + 1
+
+# Build the profile display
+print()
+print("╔══════════════════════════════╗")
+print("  FRIEND PROFILE: " + name.upper())
+print("╚══════════════════════════════╝")
+print()
+print("  Name:             " + name)
+print("  Age:              " + str(age) + " (turning " + str(age_next_year) + " next year)")
+print("  Favorite Game:    " + fav_game)
+print("  Inside Joke:      " + inside_joke)
+print("  Friendship Level: " + str(friendship_level) + "/10")
+print()
+print("  Fun Fact: You've probably known " + name)
+print("  for around " + str(days_known_guess) + " days!")</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · <code>str()</code></p>
+          <p>We just hit the reverse of the <code>int()</code> problem. When you join text with <code>+</code>, everything needs to be text. But <code>age</code> is a number.</p>
+          <p><code>str(age)</code> converts a number into text: <code>11</code> becomes <code>"11"</code>. It's the opposite of <code>int()</code>.</p>
+          <p style="margin-bottom: 0;">So: <code>int()</code> converts text → number. <code>str()</code> converts number → text. You use whichever direction you need.</p>
+        </div>
+
+        <p>Run it and enter info about a real friend. See how the profile looks? You just built a simplified model of a real person — that's abstraction.</p>
+      </div>
+
+      <!-- ========== PART 7: ADDING A RATING BAR ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Making It Visual</h2>
+
+        <p>The friendship level is just a number right now — <code>8/10</code>. Let's make it visual with a bar made of characters. Remember the <code>*</code> symbol for multiplication? It works on text too:</p>
+
+        <div class="code-cell" id="cell-8">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · String Multiplication</span>
+            <button class="code-cell__run" onclick="runCode(8)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-8" rows="6"># You can multiply text!
+print("ha" * 3)
+print("=" * 20)
+print("★" * 5)
+
+level = 7
+print("Friendship: " + "█" * level + "░" * (10 - level))</textarea>
+          <div class="code-cell__output" id="output-8"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p><code>"ha" * 3</code> gives us <code>"hahaha"</code> — it repeats the text 3 times.</p>
+          <p><code>"█" * level</code> repeats the filled block character <code>level</code> times.</p>
+          <p style="margin-bottom: 0;"><code>"░" * (10 - level)</code> fills the rest with empty blocks. If level is 7, that's 3 empty blocks. Together, you always get 10 blocks total.</p>
+        </div>
+
+        <p>Try changing <code>level</code> to different numbers between 1 and 10. Watch the bar change.</p>
+      </div>
+
+      <!-- ========== PART 8: THE COMPLETE TRACKER ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>The Complete Friend Stats Tracker</h2>
+
+        <p>Let's put everything together — data collection, math, visual display:</p>
+
+        <div class="code-cell" id="cell-9">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · The Complete Tracker</span>
+            <button class="code-cell__run" onclick="runCode(9)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-9" rows="40"># === FRIEND STATS TRACKER ===
+# Built with abstraction: only the essential details
+
+print("╔══════════════════════════════╗")
+print("  FRIEND STATS TRACKER")
+print("  Enter details about a friend")
+print("╚══════════════════════════════╝")
+print()
+
+# Step 1: Collect the essential data
+name = input("Friend's name: ")
+age = int(input("Their age: "))
+fav_game = input("Their favorite game: ")
+inside_joke = input("An inside joke you share: ")
+friendship_level = int(input("Friendship level (1-10): "))
+
+# Step 2: Calculate extra stats
+age_next_year = age + 1
+days_alive = age * 365
+friendship_bar = "█" * friendship_level + "░" * (10 - friendship_level)
+
+# Step 3: Choose a friendship title based on level
+if friendship_level >= 9:
+    title = "Best Friend Forever"
+elif friendship_level >= 7:
+    title = "Solid Friend"
+elif friendship_level >= 5:
+    title = "Good Buddy"
+elif friendship_level >= 3:
+    title = "Getting There"
+else:
+    title = "Just Met"
+
+# Step 4: Display the profile
+print()
+print("═" * 34)
+print("  " + name.upper() + " — " + title)
+print("═" * 34)
+print()
+print("  Age:        " + str(age) + " (" + str(days_alive) + " days alive!)")
+print("  Next B-Day: Turning " + str(age_next_year))
+print("  Top Game:   " + fav_game)
+print("  Inside Joke: \"" + inside_joke + "\"")
+print()
+print("  Friendship: " + friendship_bar + " " + str(friendship_level) + "/10")
+print("  Status:     " + title)
+print()
+print("═" * 34)</textarea>
+          <div class="code-cell__output" id="output-9"></div>
+        </div>
+
+        <p>Try making profiles for two or three different friends. Notice how the same program creates completely different outputs depending on the input — but the <em>structure</em> stays the same. That structure is your abstraction.</p>
+      </div>
+
+      <!-- ========== PART 9: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>What You Just Did</h2>
+
+        <p>Let's think about what happened here. You took something incredibly complex — a real human being with millions of details — and you created a useful model using just five pieces of information: name, age, favorite game, inside joke, friendship level.</p>
+
+        <p><strong>That's abstraction.</strong></p>
+
+        <p>The most important lesson is this: the details you chose depended on your <em>purpose</em>. A doctor would abstract a person differently (blood type, allergies, medical history). A teacher would choose different details (grades, learning style, attendance). A video game would use health points, attack power, and speed.</p>
+
+        <p><strong>There's no single "right" abstraction.</strong> The right abstraction depends on what you're trying to do.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">When you face a problem with too much information, ask yourself: <em>"What actually matters here? What can I safely ignore?"</em> The ability to simplify without losing what's important — that's one of the most powerful thinking skills you can develop.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <p>Talk these over with someone, or think about them for a bit:</p>
+
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>If you were building a tracker for a sports team instead of friends, what five pieces of information would you keep?</li>
+          <li>Why did we ignore things like height, hair color, and address? Can you think of a program where those <em>would</em> matter?</li>
+          <li>What's an example of abstraction you use in everyday life? (Hint: maps, contact lists, report cards, and emojis are all abstractions.)</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+        
+        <p>If you want to push further, try these. Each one requires you to make abstraction decisions — what details to keep and what to ignore.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Pet Profile</p>
+          <p style="margin-bottom: 0;">Create a Pet Stats Tracker. Decide which 4-5 details matter for a pet profile (species? name? age? cuteness level?). Include at least one calculation and one visual bar.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · Compare Two Friends</p>
+          <p style="margin-bottom: 0;">Modify the tracker to collect info about <em>two</em> friends, then display both profiles side by side. Add a line that shows who is older and whose friendship level is higher.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Game Character Creator</p>
+          <p style="margin-bottom: 0;">Build a character creator for an imaginary game. The player gets 20 points to distribute between Strength, Speed, Intelligence, and Charm. Use bars to display each stat. Hint: you'll need to make sure the total doesn't exceed 20!</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Abstraction</strong> — identifying what information is essential and ignoring what isn't. Always ask: <em>"What actually matters for my purpose?"</em></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><strong>Numbers vs. text</strong> — <code>11</code> (number, no quotes) vs. <code>"11"</code> (text, with quotes)</p>
+          <p><strong>Math operators</strong> — <code>+</code> add, <code>-</code> subtract, <code>*</code> multiply, <code>/</code> divide</p>
+          <p><code>int()</code> — convert text to a number: <code>int("11")</code> gives <code>11</code></p>
+          <p><code>str()</code> — convert a number to text: <code>str(11)</code> gives <code>"11"</code></p>
+          <p><strong>String multiplication</strong> — <code>"ha" * 3</code> gives <code>"hahaha"</code></p>
+          <p style="margin-bottom: 0;"><code>if/elif/else</code> review — choosing different outputs based on values</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Lesson 1 + Lesson 2</p>
+          <p><strong>Decomposition</strong> — break big problems into small steps</p>
+          <p style="margin-bottom: 0;"><strong>Abstraction</strong> — decide what details matter and ignore the rest</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-01.html" class="lesson-nav__link">← Lesson 1</a>
+        <a href="lesson-03.html" class="lesson-nav__link">Lesson 3 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    // Editor enhancements
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>
