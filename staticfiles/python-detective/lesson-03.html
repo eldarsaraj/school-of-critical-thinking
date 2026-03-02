@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 3: If This, Then That – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 3 · Deductive Reasoning</p>
+        <h1 class="lesson__title">If This, Then That: Making Decisions Like a Logic Ninja</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to build rules that make decisions automatically — and how to combine multiple conditions to handle complex, real-world situations.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>Your Brain Is a Decision Machine</h2>
+        
+        <p>You make hundreds of decisions every day without even thinking about them. Should I wear a jacket? Is it worth running to catch the bus? Should I text back now or later? Can I stay up another 30 minutes?</p>
+
+        <p>Here's the interesting part: most of these decisions follow the same pattern. <strong>If</strong> something is true, <strong>then</strong> you do one thing. <strong>Otherwise</strong>, you do something else.</p>
+
+        <p><em>If it's cold outside → wear a jacket.</em><br>
+        <em>If it's warm → don't bother.</em></p>
+
+        <p>This pattern has a name in logic and philosophy: <strong>deductive reasoning</strong>. It means starting with a rule and applying it to a specific situation to reach a conclusion. If you know the rule and you know the facts, the answer follows automatically.</p>
+
+        <p>We've already used <code>if</code> and <code>else</code> a little bit in Lessons 1 and 2. Today, we're going to master them — and build a decision-making program that's actually useful.</p>
+
+        <h3>Quick Review</h3>
+        <p>You've seen <code>if</code> statements before. Let's start with a simple one to warm up:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Review</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="8"># From Lesson 2: if/elif/else with friendship levels
+level = 9
+
+if level >= 9:
+    print("Best Friend Forever")
+elif level >= 7:
+    print("Solid Friend")
+else:
+    print("Still getting to know them")</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <p>Try changing <code>level</code> to different numbers and see which message appears. Today we're going to understand <em>exactly</em> how this works — and build much more powerful versions.</p>
+      </div>
+
+      <!-- ========== PART 2: HOW COMPARISONS WORK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Asking True-or-False Questions</h2>
+
+        <p>Every <code>if</code> statement works by asking a question that has only two possible answers: <strong>True</strong> or <strong>False</strong>. Python checks the answer and decides what to do.</p>
+
+        <p>Let's see what these questions look like:</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="14">temperature = 15
+
+# Each of these is a True/False question
+print("Is it below 10?", temperature < 10)
+print("Is it above 20?", temperature > 20)
+print("Is it exactly 15?", temperature == 15)
+print("Is it 15 or higher?", temperature >= 15)
+print("Is it below 20?", temperature <= 20)
+print("Is it NOT 15?", temperature != 15)
+
+print()
+print("Temperature is", temperature)
+print("So some are True and some are False.")
+print("Try changing the temperature!")</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Comparison Operators</p>
+          <p><code><</code> means "less than" — <code>5 < 10</code> is <code>True</code></p>
+          <p><code>></code> means "greater than" — <code>5 > 10</code> is <code>False</code></p>
+          <p><code>==</code> means "equal to" — remember, it's TWO equals signs (one <code>=</code> is for storing values)</p>
+          <p><code>>=</code> means "greater than or equal to"</p>
+          <p><code><=</code> means "less than or equal to"</p>
+          <p style="margin-bottom: 0;"><code>!=</code> means "not equal to"</p>
+        </div>
+
+        <p>Change the temperature to <code>10</code>, then <code>25</code>, then <code>0</code>. Watch how the True/False answers change. These comparisons are the foundation of every decision your program will ever make.</p>
+      </div>
+
+      <!-- ========== PART 3: IF/ELSE IN DEPTH ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>Making Decisions With <code>if</code></h2>
+
+        <p>Now let's use these True/False questions to actually <em>do</em> things. The basic pattern is simple:</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="10">temperature = int(input("What's the temperature outside? "))
+
+if temperature < 10:
+    print("Brrr! It's cold out there.")
+    print("Definitely wear a jacket.")
+elif temperature < 20:
+    print("It's a bit cool.")
+    print("Maybe bring a light jacket, just in case.")
+else:
+    print("It's warm!")
+    print("No jacket needed.")</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How Python Reads This</p>
+          <p>Python checks conditions <strong>from top to bottom</strong>, and stops at the first one that's True.</p>
+          <p>If temperature is 5: Python checks <code>5 < 10</code> → True! It runs the first block and <strong>skips everything else</strong>.</p>
+          <p>If temperature is 15: Python checks <code>15 < 10</code> → False. Moves to <code>elif</code>. Checks <code>15 < 20</code> → True! Runs that block.</p>
+          <p style="margin-bottom: 0;">If temperature is 25: Both <code>if</code> and <code>elif</code> are False, so Python runs the <code>else</code> block — the "everything else" catch-all.</p>
+        </div>
+
+        <p>This is deductive reasoning in action: you have rules ("if below 10, it's cold"), you have a fact (the temperature), and the conclusion follows automatically.</p>
+
+        <h3>A Common Mistake</h3>
+        <p>What if you used separate <code>if</code> statements instead of <code>elif</code>? Let's see:</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Spot the Problem</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="12">temperature = 5
+
+# Using separate if statements (not elif)
+if temperature < 10:
+    print("Cold!")
+
+if temperature < 20:
+    print("Cool!")
+
+if temperature < 30:
+    print("Not too hot!")
+    
+# Hmm... 5 is less than 10, AND less than 20, AND less than 30!</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Why This Is Wrong</p>
+          <p>With separate <code>if</code> statements, Python checks <strong>every single one</strong> independently. A temperature of 5 matches all three conditions, so all three messages print.</p>
+          <p style="margin-bottom: 0;">With <code>if/elif/else</code>, Python <strong>stops at the first match</strong>. That's what we want — one clear answer, not three conflicting ones.</p>
+        </div>
+
+        <p>This is an important lesson in logical thinking: the order and structure of your rules matter as much as the rules themselves.</p>
+      </div>
+
+      <!-- ========== PART 4: COMPARING TEXT ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Comparing Text, Not Just Numbers</h2>
+
+        <p>So far we've compared numbers (<code>temperature < 10</code>). But you can also compare text:</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="14">weather = input("What's the weather? (sunny/rainy/snowy) ")
+
+if weather == "rainy":
+    print("Grab an umbrella!")
+elif weather == "snowy":
+    print("Wear boots and a warm coat!")
+elif weather == "sunny":
+    print("Enjoy the sunshine!")
+else:
+    print("I don't know that weather type.")
+    print("Try: sunny, rainy, or snowy")
+
+print()
+print("You entered:", weather)</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Important Detail</p>
+          <p>When comparing text, it has to match <strong>exactly</strong>. <code>"rainy"</code> is not the same as <code>"Rainy"</code> or <code>"RAINY"</code>.</p>
+          <p style="margin-bottom: 0;">A good trick: use <code>.lower()</code> to convert the user's input to lowercase before comparing. That way, "Rainy", "RAINY", and "rainy" all work. Try adding <code>weather = weather.lower()</code> after the input line.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 5: COMBINING CONDITIONS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Combining Conditions With <code>and</code> / <code>or</code></h2>
+
+        <p>Real decisions are rarely based on just one thing. Should you wear a jacket? That depends on the temperature <em>and</em> whether it's raining <em>and</em> what you're doing outside.</p>
+
+        <p>Python lets you combine conditions using two special words: <code>and</code> and <code>or</code>.</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Using <code>and</code></span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="12">temperature = int(input("Temperature: "))
+raining = input("Is it raining? (yes/no) ").lower()
+
+# "and" means BOTH conditions must be true
+if temperature < 15 and raining == "yes":
+    print("Cold AND rainy — worst combo!")
+    print("Wear a waterproof jacket.")
+elif temperature < 15:
+    print("Cold but dry.")
+    print("A regular jacket will do.")
+elif raining == "yes":
+    print("Warm but rainy.")
+    print("Just grab an umbrella.")
+else:
+    print("Warm and dry. You're good!")</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How <code>and</code> Works</p>
+          <p><code>and</code> means <strong>both conditions must be True</strong> for the whole thing to be True.</p>
+          <p><code>temperature < 15 and raining == "yes"</code> is only True when it's BOTH cold AND rainy.</p>
+          <p style="margin-bottom: 0;">If either one is False (warm but rainy, or cold but dry), the <code>and</code> condition is False, and Python moves to the next <code>elif</code>.</p>
+        </div>
+
+        <p>Now let's see <code>or</code>:</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Using <code>or</code></span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="12">activity = input("What are you doing? (sports/walking/sitting) ").lower()
+
+# "or" means AT LEAST ONE condition must be true
+if activity == "sports" or activity == "walking":
+    print("You'll be moving around!")
+    print("You might not need a heavy jacket.")
+else:
+    print("You'll be sitting still.")
+    print("Dress warmer than you think!")
+
+print()
+print("Pro tip: when you're active, your body")
+print("generates heat. Sitting = bring extra layers.")</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How <code>or</code> Works</p>
+          <p><code>or</code> means <strong>at least one condition must be True</strong>.</p>
+          <p><code>activity == "sports" or activity == "walking"</code> is True if the activity is sports, OR if it's walking, OR if it's both (though it can only be one at a time here).</p>
+          <p style="margin-bottom: 0;">Think of <code>and</code> as strict (both must be true) and <code>or</code> as flexible (either one works).</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 6: BUILDING THE DECISION HELPER ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Building the Jacket Decision Helper</h2>
+
+        <p>Let's decompose our decision helper (remember decomposition from Lesson 1?) into clear steps:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Plan</p>
+          <p><strong>Step 1:</strong> Ask the user for the facts: temperature, weather, activity</p>
+          <p><strong>Step 2:</strong> Decide what to wear based on the rules</p>
+          <p style="margin-bottom: 0;"><strong>Step 3:</strong> Display the recommendation clearly</p>
+        </div>
+
+        <p>But before we write the code, let's think about the <em>rules</em>. This is the deductive reasoning part — we need to define clear rules that cover all the situations:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Our Rules</p>
+          <p>If temperature ≤ 0 → Heavy winter coat, no matter what</p>
+          <p>If temperature 1-10 and raining → Waterproof jacket</p>
+          <p>If temperature 1-10 and dry → Warm jacket</p>
+          <p>If temperature 11-18 and raining → Light waterproof jacket</p>
+          <p>If temperature 11-18 and active → Maybe a hoodie</p>
+          <p>If temperature 11-18 and sitting → Light jacket</p>
+          <p style="margin-bottom: 0;">If temperature > 18 → No jacket needed (maybe an umbrella if raining)</p>
+        </div>
+
+        <p>See how we're covering all the combinations? That's what good logical thinking looks like — making sure there are no gaps in your reasoning.</p>
+
+        <div class="code-cell" id="cell-8">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · The Jacket Decision Helper</span>
+            <button class="code-cell__run" onclick="runCode(8)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-8" rows="48"># === SHOULD I WEAR A JACKET? ===
+# Built with deductive reasoning: clear rules for every situation
+
+print("╔══════════════════════════════╗")
+print("  JACKET DECISION HELPER")
+print("╚══════════════════════════════╝")
+print()
+
+# Step 1: Get the facts
+temp = int(input("Temperature (degrees): "))
+weather = input("Weather (sunny/cloudy/rainy/snowy): ").lower()
+activity = input("Activity (sports/walking/sitting): ").lower()
+
+# Step 2: Apply the rules
+print()
+print("═" * 34)
+print("  RECOMMENDATION")
+print("═" * 34)
+print()
+
+# Check if it's raining or snowing
+is_wet = weather == "rainy" or weather == "snowy"
+is_active = activity == "sports" or activity == "walking"
+
+if temp <= 0:
+    # Freezing — always bundle up
+    print("  🧥 HEAVY WINTER COAT")
+    print("  It's freezing out there!")
+    if is_wet:
+        print("  Also: waterproof layer + boots")
+    
+elif temp <= 10:
+    # Cold
+    if is_wet:
+        print("  🧥 WATERPROOF JACKET")
+        print("  Cold and wet — stay dry and warm.")
+    else:
+        print("  🧥 WARM JACKET")
+        print("  It's chilly but dry.")
+        if is_active:
+            print("  You'll warm up while moving.")
+
+elif temp <= 18:
+    # Cool
+    if is_wet:
+        print("  🧥 LIGHT WATERPROOF JACKET")
+        print("  Not too cold, but keep dry.")
+    elif is_active:
+        print("  👕 HOODIE OR LIGHT LAYER")
+        print("  You'll generate heat while active.")
+    else:
+        print("  🧥 LIGHT JACKET")
+        print("  Sitting still = dress warmer.")
+
+else:
+    # Warm
+    print("  👕 NO JACKET NEEDED")
+    print("  It's warm enough!")
+    if is_wet:
+        print("  But grab an umbrella! ☂️")
+
+print()
+print("═" * 34)
+print("  Temp: " + str(temp) + "° | " + weather + " | " + activity)
+print("═" * 34)</textarea>
+          <div class="code-cell__output" id="output-8"></div>
+        </div>
+
+        <p>Try different combinations: 5° and rainy with sports. 25° and sunny with sitting. -3° and snowy. See how the rules handle each case differently.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · <code>if</code> Inside <code>if</code></p>
+          <p>You might have noticed that some <code>if</code> statements are <strong>inside</strong> other <code>if</code> statements. This is called <strong>nesting</strong>.</p>
+          <p>For example: first we check if it's freezing (<code>temp <= 0</code>). Once we know it IS freezing, we check whether it's also wet. This is like narrowing down your decision: "OK, it's cold — but is it also raining?"</p>
+          <p style="margin-bottom: 0;">Python knows which <code>if</code> belongs inside which by looking at the <strong>indentation</strong> (the spaces). More spaces = deeper level. This is why indentation matters in Python — it tells Python the structure of your logic.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 7: VARIABLES AS FLAGS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Storing Decisions in Variables</h2>
+
+        <p>Did you notice these two lines in the Jacket Helper?</p>
+
+        <div class="code-cell" id="cell-9">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(9)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-9" rows="12">weather = "rainy"
+activity = "sports"
+
+# Store the answer to a True/False question in a variable
+is_wet = weather == "rainy" or weather == "snowy"
+is_active = activity == "sports" or activity == "walking"
+
+print("Is it wet?", is_wet)
+print("Are you active?", is_active)
+
+# Now use them in if statements — much easier to read!
+if is_wet and is_active:
+    print("Wear something waterproof but breathable.")</textarea>
+          <div class="code-cell__output" id="output-9"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Why This Is Smart</p>
+          <p>Instead of writing <code>if weather == "rainy" or weather == "snowy":</code> over and over, we calculate it once and store it: <code>is_wet = weather == "rainy" or weather == "snowy"</code>.</p>
+          <p>Now <code>is_wet</code> is either <code>True</code> or <code>False</code> — a simple answer we can reuse everywhere.</p>
+          <p style="margin-bottom: 0;">This is actually abstraction again — we're taking a complex check and giving it a simple name. Two thinking skills working together!</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 8: WEEKEND PLANNER ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>Level Up: The Weekend Activity Planner</h2>
+
+        <p>Let's use everything we've learned to build something even cooler — a program that recommends what you should do this weekend based on multiple factors:</p>
+
+        <div class="code-cell" id="cell-10">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Weekend Planner</span>
+            <button class="code-cell__run" onclick="runCode(10)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-10" rows="46"># === WHAT SHOULD I DO THIS WEEKEND? ===
+
+print("╔══════════════════════════════╗")
+print("  WEEKEND ACTIVITY PLANNER")
+print("╚══════════════════════════════╝")
+print()
+
+# Gather the facts
+weather = input("Weather forecast (sunny/rainy/snowy): ").lower()
+energy = input("Energy level (high/medium/low): ").lower()
+friends = input("Friends available? (yes/no): ").lower()
+
+# Deduce the recommendation
+is_nice_out = weather == "sunny"
+is_bad_weather = weather == "rainy" or weather == "snowy"
+has_energy = energy == "high" or energy == "medium"
+has_friends = friends == "yes"
+
+print()
+print("═" * 34)
+print("  YOUR WEEKEND PLAN")
+print("═" * 34)
+print()
+
+if is_nice_out and has_energy and has_friends:
+    print("  🏀 PERFECT DAY!")
+    print("  Go play outside with your friends.")
+    print("  Soccer, basketball, bike ride —")
+    print("  whatever you're in the mood for!")
+
+elif is_nice_out and has_energy:
+    print("  🚲 SOLO ADVENTURE")
+    print("  Great weather and good energy!")
+    print("  Go for a bike ride or explore")
+    print("  a new walking trail.")
+
+elif is_nice_out and has_friends:
+    print("  🌳 CHILL HANGOUT")
+    print("  Nice day but low energy?")
+    print("  Hang at the park or sit outside")
+    print("  and just talk.")
+
+elif is_bad_weather and has_friends:
+    print("  🎮 INDOOR FUN")
+    print("  Bad weather but friends around?")
+    print("  Video games, board games, or")
+    print("  watch a movie together.")
+
+elif is_bad_weather and has_energy:
+    print("  🏋️ INDOOR WORKOUT")
+    print("  Bad weather but feeling energetic?")
+    print("  Do a workout, dance, or try")
+    print("  an indoor hobby.")
+
+elif is_bad_weather:
+    print("  📚 COZY DAY IN")
+    print("  Bad weather + low energy =")
+    print("  perfect excuse to read, draw,")
+    print("  or binge your favorite show.")
+
+else:
+    print("  🎯 FREE CHOICE")
+    print("  Decent weather, do whatever")
+    print("  feels right!")
+
+print()
+print("═" * 34)</textarea>
+          <div class="code-cell__output" id="output-10"></div>
+        </div>
+
+        <p>Try every combination you can think of. Notice how the <strong>order</strong> of the conditions matters — Python checks from top to bottom and stops at the first match. The most specific conditions (sunny + energetic + friends) come first, and the most general ones come last.</p>
+      </div>
+
+      <!-- ========== PART 9: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>What You Just Did</h2>
+
+        <p>You built programs that think logically — that take in facts, apply rules, and produce conclusions. That's exactly what deductive reasoning is.</p>
+
+        <p>The key insight: <strong>if your rules are clear and complete, the right answer follows automatically.</strong> You don't need to figure it out each time — the rules do the work for you.</p>
+
+        <p>This is how GPS navigation works (if distance is shorter, take this road), how thermostats work (if temperature is below the setting, turn on heat), and how video games work (if player health reaches 0, game over).</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">When you need to make a decision, ask: <em>"What are my rules? What are the facts? What conclusion follows?"</em> Clear rules + clear facts = clear answers. And if you can write the rules in code, the computer can make the decision for you — perfectly, every time.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <p>Talk these over with someone, or think about them quietly:</p>
+
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>What happens if your rules have gaps — situations they don't cover? Can you think of an input that would break the Weekend Planner?</li>
+          <li>Why does the order of <code>if/elif/else</code> matter? What would happen if we checked "sunny" before "sunny + friends + energy"?</li>
+          <li>Can you think of a real-life decision you make that could be turned into <code>if/elif/else</code> rules?</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+        
+        <p>Each challenge requires you to design clear rules. Think about all the possible cases before writing any code.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Grade Calculator</p>
+          <p style="margin-bottom: 0;">Ask the user for a test score (0-100) and display the letter grade: A (90+), B (80-89), C (70-79), D (60-69), F (below 60). Add an encouraging message for each grade.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · What Should I Eat?</p>
+          <p style="margin-bottom: 0;">Build a meal recommender that asks: How hungry are you? (starving/normal/snack) Do you want something healthy? (yes/no) Do you want something quick? (yes/no) Then recommend a specific food based on the combination.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Movie Night Picker</p>
+          <p style="margin-bottom: 0;">Ask the user: What mood are you in? (happy/scared/thoughtful) Who are you watching with? (alone/friends/family) Do you want something short? (yes/no) Then recommend a movie genre and explain why it fits. Use <code>and</code> and <code>or</code> to handle the combinations.</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Deductive Reasoning</strong> — if the rules are true and the facts are true, the conclusion must be true. Design clear rules, gather the facts, let logic do the rest.</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><strong>Comparison operators</strong> — <code><</code> <code>></code> <code>==</code> <code>!=</code> <code>>=</code> <code><=</code></p>
+          <p><strong>True and False</strong> — every comparison produces one of these</p>
+          <p><code>if / elif / else</code> in depth — checking from top to bottom, stopping at first match</p>
+          <p><code>and</code> — both conditions must be True</p>
+          <p><code>or</code> — at least one condition must be True</p>
+          <p><strong>Nested if statements</strong> — decisions inside decisions</p>
+          <p><code>.lower()</code> — convert text to lowercase for easier comparison</p>
+          <p style="margin-bottom: 0;"><strong>Boolean variables</strong> — storing True/False in a variable: <code>is_wet = weather == "rainy"</code></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Lessons 1 + 2 + 3</p>
+          <p><strong>Decomposition</strong> — break big problems into small steps</p>
+          <p><strong>Abstraction</strong> — decide what details matter and ignore the rest</p>
+          <p style="margin-bottom: 0;"><strong>Deductive Reasoning</strong> — design rules, gather facts, reach conclusions</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-02.html" class="lesson-nav__link">← Lesson 2</a>
+        <a href="lesson-04.html" class="lesson-nav__link">Lesson 4 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    // Editor enhancements
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>
