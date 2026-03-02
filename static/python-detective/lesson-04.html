@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 4: The Power of Lists – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 4 · Categorization</p>
+        <h1 class="lesson__title">The Power of Lists: How to Organize Chaos (and Your Room)</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to organize related items into collections, add and remove things from those collections, and use Python to manage groups of information — like building your own playlist manager.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>Everything Comes in Groups</h2>
+        
+        <p>Think about your life for a second. You don't have <em>one</em> song you like — you have a playlist. You don't have <em>one</em> friend — you have a friend group. You don't carry <em>one</em> thing to school — you have a backpack full of stuff.</p>
+
+        <p>The world is full of <strong>collections</strong>: groups of related things that belong together. Your phone's contact list. Your closet. The menu at a restaurant. The roster of a sports team.</p>
+
+        <p>So far in Python, we've stored one piece of information per variable: <code>name = "Alex"</code>, <code>age = 11</code>. But what if you want to store <em>five</em> names? Or <em>twenty</em> songs? Making twenty separate variables would be chaos.</p>
+
+        <p>That's where <strong>lists</strong> come in.</p>
+      </div>
+
+      <!-- ========== PART 2: YOUR FIRST LIST ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Your First List</h2>
+
+        <p>A list in Python is exactly what it sounds like — a collection of items, in order, stored under one name. You create one using square brackets <code>[]</code>:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="8"># A list of songs
+playlist = ["Blinding Lights", "Levitating", "Bad Guy", "Shake It Off"]
+
+print("My playlist:", playlist)
+print("Number of songs:", len(playlist))
+
+# You can also make lists of numbers
+scores = [95, 87, 72, 100, 88]
+print("Test scores:", scores)</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p><code>["Blinding Lights", "Levitating", "Bad Guy", "Shake It Off"]</code> creates a list with four items. The square brackets <code>[]</code> mark the start and end, and commas separate each item.</p>
+          <p><code>len(playlist)</code> gives us the number of items in the list — just like <code>len("HELLO")</code> gave us the number of characters in a string back in Lesson 1.</p>
+          <p style="margin-bottom: 0;">Lists can hold text, numbers, or even a mix of both. You decide what goes in them.</p>
+        </div>
+
+        <p>Try adding another song to the list and run it again. Don't forget the comma and quotation marks!</p>
+      </div>
+
+      <!-- ========== PART 3: ACCESSING ITEMS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>Getting Items Out of a List</h2>
+
+        <p>Remember from Lesson 1 how each letter in a string has a position number, starting from 0? Lists work the exact same way:</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="10">friends = ["Alex", "Sam", "Jordan", "Taylor", "Riley"]
+
+print("Full list:", friends)
+print()
+
+# Access individual items by position
+print("First friend:", friends[0])
+print("Second friend:", friends[1])
+print("Last friend:", friends[4])
+
+# You can also count from the end!
+print("Also the last:", friends[-1])</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Positions in a List</p>
+          <p><code>friends[0]</code> gives the first item (remember, counting starts at 0)</p>
+          <p><code>friends[4]</code> gives the fifth item</p>
+          <p style="margin-bottom: 0;"><code>friends[-1]</code> is a shortcut for the <strong>last</strong> item. <code>-2</code> gives the second-to-last. This is handy when you don't know how long the list is.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 4: CHANGING LISTS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Lists Can Change</h2>
+
+        <p>Here's what makes lists really powerful: unlike strings, you can <strong>change them after you create them</strong>. You can add items, remove items, and rearrange them.</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="18">playlist = ["Blinding Lights", "Levitating", "Bad Guy"]
+print("Starting playlist:", playlist)
+print()
+
+# Add a song to the end
+playlist.append("Shake It Off")
+print("After adding a song:", playlist)
+
+# Add another one
+playlist.append("Flowers")
+print("After adding another:", playlist)
+print("Now we have", len(playlist), "songs")
+print()
+
+# Remove a song
+playlist.remove("Bad Guy")
+print("After removing Bad Guy:", playlist)
+
+# Change a song at a specific position
+playlist[0] = "Save Your Tears"
+print("After replacing the first song:", playlist)</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">List Operations</p>
+          <p><code>.append("item")</code> adds an item to the <strong>end</strong> of the list</p>
+          <p><code>.remove("item")</code> finds and removes a specific item</p>
+          <p><code>playlist[0] = "new song"</code> replaces the item at position 0</p>
+          <p style="margin-bottom: 0;">Notice the dot before <code>append</code> and <code>remove</code> — these are <strong>commands that belong to the list</strong>. You're telling <em>that specific list</em> to do something. We saw this pattern before with <code>.upper()</code> and <code>.lower()</code> on strings.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 5: LOOPS AND LISTS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Going Through a List With a Loop</h2>
+
+        <p>In Lesson 1, we used <code>for</code> to go through each letter in a string. The same trick works with lists — and it's one of the most useful things in all of programming:</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="6">playlist = ["Blinding Lights", "Levitating", "Shake It Off", "Flowers"]
+
+print("YOUR PLAYLIST:")
+print("─" * 30)
+for song in playlist:
+    print("  ♫ " + song)</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <p>That's clean, right? No matter how many songs are in the list — 4 or 400 — the loop handles them all.</p>
+
+        <p>We can also number the songs using a counter variable:</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Numbered List</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="10">playlist = ["Blinding Lights", "Levitating", "Shake It Off", "Flowers"]
+
+print("YOUR PLAYLIST:")
+print("─" * 30)
+
+number = 1
+for song in playlist:
+    print("  " + str(number) + ". " + song)
+    number = number + 1
+
+print("─" * 30)
+print("Total: " + str(len(playlist)) + " songs")</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p>We created a variable called <code>number</code> and set it to <code>1</code>.</p>
+          <p>Each time the loop runs, we print the number alongside the song, then increase <code>number</code> by 1.</p>
+          <p style="margin-bottom: 0;">So the first song gets "1.", the second gets "2.", and so on. This is a very common pattern — using a <strong>counter</strong> inside a loop.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 6: BUILDING LISTS FROM INPUT ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Building a List From User Input</h2>
+
+        <p>So far, we've been writing the list items directly in the code. But what if we want the user to <em>create</em> their own list? We can start with an empty list and use <code>.append()</code> to add items one at a time:</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="20"># Start with an empty list
+playlist = []
+
+# Ask the user to add songs
+print("BUILD YOUR PLAYLIST")
+print("Enter 3 songs:")
+print()
+
+song1 = input("Song 1: ")
+playlist.append(song1)
+
+song2 = input("Song 2: ")
+playlist.append(song2)
+
+song3 = input("Song 3: ")
+playlist.append(song3)
+
+# Display the result
+print()
+print("YOUR PLAYLIST:")
+print("─" * 30)
+number = 1
+for song in playlist:
+    print("  " + str(number) + ". " + song)
+    number = number + 1</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <p>That works, but it's a bit repetitive — we wrote almost the same code three times. What if we want 10 songs? 50? There has to be a better way.</p>
+
+        <p>There is — we can use a loop to collect the input too:</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Loop for Input</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="17"># Start with an empty list
+playlist = []
+
+# How many songs?
+count = int(input("How many songs to add? "))
+
+# Use a loop to collect them
+number = 1
+for i in range(count):
+    song = input("Song " + str(number) + ": ")
+    playlist.append(song)
+    number = number + 1
+
+# Display
+print()
+print("YOUR PLAYLIST (" + str(len(playlist)) + " songs):")
+print("─" * 30)
+number = 1
+for song in playlist:
+    print("  " + str(number) + ". " + song)
+    number = number + 1</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · <code>range()</code></p>
+          <p><code>range(count)</code> generates a sequence of numbers from 0 up to (but not including) <code>count</code>. So <code>range(3)</code> gives us 0, 1, 2 — three numbers, which means the loop runs three times.</p>
+          <p>We don't actually use the number <code>i</code> here — we just need the loop to repeat the right number of times. The variable name <code>i</code> is a common convention for "I don't need this value, I just need to count."</p>
+          <p style="margin-bottom: 0;">This is a huge upgrade: now the same code works whether the user wants 3 songs or 30!</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 7: RANDOMNESS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Adding Randomness</h2>
+
+        <p>What's a playlist without a shuffle button? Python has a built-in way to add randomness — you just need to <strong>import</strong> it. Think of importing like borrowing a tool from a toolbox:</p>
+
+        <div class="code-cell" id="cell-8">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(8)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-8" rows="15">import random
+
+playlist = ["Blinding Lights", "Levitating", "Shake It Off", "Flowers", "Bad Guy"]
+
+# Pick a random song
+random_song = random.choice(playlist)
+print("Random pick:", random_song)
+print()
+
+# Shuffle the entire playlist
+random.shuffle(playlist)
+print("SHUFFLED PLAYLIST:")
+print("─" * 30)
+for song in playlist:
+    print("  ♫ " + song)</textarea>
+          <div class="code-cell__output" id="output-8"></div>
+        </div>
+
+        <p>Run it several times — you'll get a different random pick and a different order each time!</p>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p><code>import random</code> loads Python's randomness toolbox. You only need to do this once, at the top of your code.</p>
+          <p><code>random.choice(playlist)</code> picks one random item from the list.</p>
+          <p style="margin-bottom: 0;"><code>random.shuffle(playlist)</code> rearranges the entire list into a random order — just like shuffling a deck of cards.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 8: CHECKING IF SOMETHING IS IN A LIST ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>Searching a List</h2>
+
+        <p>Another super useful thing: checking whether something is <strong>in</strong> a list. Python makes this incredibly easy:</p>
+
+        <div class="code-cell" id="cell-9">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(9)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-9" rows="14">playlist = ["Blinding Lights", "Levitating", "Shake It Off", "Flowers"]
+
+# Check if a song is in the playlist
+search = input("Search for a song: ")
+
+if search in playlist:
+    print("Yes! '" + search + "' is in your playlist.")
+else:
+    print("'" + search + "' is not in your playlist.")
+    add_it = input("Want to add it? (yes/no) ").lower()
+    if add_it == "yes":
+        playlist.append(search)
+        print("Added! Your playlist now has " + str(len(playlist)) + " songs.")</textarea>
+          <div class="code-cell__output" id="output-9"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · <code>in</code></p>
+          <p><code>search in playlist</code> is a True/False question: "Is this value somewhere in the list?"</p>
+          <p>It checks every item in the list and returns <code>True</code> if it finds a match, <code>False</code> if it doesn't.</p>
+          <p style="margin-bottom: 0;">Remember: the match has to be <strong>exact</strong>. "Flowers" won't match "flowers". You could fix this by comparing <code>search.lower()</code> against lowercased versions — but that's a challenge for later!</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 9: THE COMPLETE PLAYLIST MANAGER ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>The Complete Playlist Manager</h2>
+
+        <p>Let's put it all together — a playlist manager where you can add songs, view the list, shuffle it, get a random pick, and search:</p>
+
+        <div class="code-cell" id="cell-10">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · The Complete Playlist Manager</span>
+            <button class="code-cell__run" onclick="runCode(10)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-10" rows="55">import random
+
+# === ULTIMATE PLAYLIST MANAGER ===
+
+print("╔══════════════════════════════╗")
+print("  ULTIMATE PLAYLIST MANAGER")
+print("╚══════════════════════════════╝")
+print()
+
+# Start with some songs
+playlist = []
+
+# Build the initial playlist
+count = int(input("How many songs to start with? "))
+
+number = 1
+for i in range(count):
+    song = input("Song " + str(number) + ": ")
+    playlist.append(song)
+    number = number + 1
+
+# Now let the user pick what to do
+print()
+print("Your playlist has " + str(len(playlist)) + " songs!")
+print()
+print("What would you like to do?")
+print("  1 - View playlist")
+print("  2 - Add a song")
+print("  3 - Shuffle playlist")
+print("  4 - Random pick")
+print("  5 - Search")
+
+print()
+choice = input("Enter your choice (1-5): ")
+
+if choice == "1":
+    # View playlist
+    print()
+    print("YOUR PLAYLIST:")
+    print("═" * 30)
+    number = 1
+    for song in playlist:
+        print("  " + str(number) + ". " + song)
+        number = number + 1
+    print("═" * 30)
+    print("  Total: " + str(len(playlist)) + " songs")
+
+elif choice == "2":
+    # Add a song
+    new_song = input("Song to add: ")
+    if new_song in playlist:
+        print("'" + new_song + "' is already in your playlist!")
+    else:
+        playlist.append(new_song)
+        print("Added '" + new_song + "'!")
+        print("Playlist now has " + str(len(playlist)) + " songs.")
+
+elif choice == "3":
+    # Shuffle
+    random.shuffle(playlist)
+    print()
+    print("SHUFFLED PLAYLIST:")
+    print("═" * 30)
+    number = 1
+    for song in playlist:
+        print("  " + str(number) + ". " + song)
+        number = number + 1
+    print("═" * 30)
+
+elif choice == "4":
+    # Random pick
+    pick = random.choice(playlist)
+    print()
+    print("🎵 RANDOM PICK: " + pick)
+    print("   Enjoy the music!")
+
+elif choice == "5":
+    # Search
+    search = input("Search for: ")
+    if search in playlist:
+        print("✓ Found '" + search + "' in your playlist!")
+    else:
+        print("✗ '" + search + "' not found.")
+
+else:
+    print("Unknown choice. Try 1, 2, 3, 4, or 5.")</textarea>
+          <div class="code-cell__output" id="output-10"></div>
+        </div>
+
+        <p>Try adding 3-4 songs, then test each option. The program only lets you do one action right now — in later lessons, you'll learn how to make it loop so the user can keep going.</p>
+      </div>
+
+      <!-- ========== PART 10: CATEGORIZATION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 10</p>
+        <h2>Organizing With Multiple Lists</h2>
+
+        <p>The real power of lists shows up when you use <strong>several lists</strong> to organize information into categories. This is <strong>categorization</strong> — a form of decomposition where you break information into meaningful groups.</p>
+
+        <div class="code-cell" id="cell-11">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Categorized Playlists</span>
+            <button class="code-cell__run" onclick="runCode(11)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-11" rows="30">import random
+
+# Organize songs by mood
+chill = ["Blinding Lights", "Levitating", "Flowers"]
+hype = ["Shake It Off", "Uptown Funk", "Can't Stop the Feeling"]
+focus = ["Lofi Study Beat", "Piano Calm", "Ocean Waves"]
+
+# Ask the user what they need
+print("MOOD-BASED PLAYLIST")
+print("═" * 30)
+mood = input("What's your mood? (chill/hype/focus) ").lower()
+
+if mood == "chill":
+    songs = chill
+    emoji = "😌"
+elif mood == "hype":
+    songs = hype
+    emoji = "🔥"
+elif mood == "focus":
+    songs = focus
+    emoji = "🎯"
+else:
+    print("Unknown mood — here's a mix of everything!")
+    songs = chill + hype + focus
+    emoji = "🎵"
+
+# Display the playlist for that mood
+random.shuffle(songs)
+print()
+print(emoji + " YOUR " + mood.upper() + " PLAYLIST:")
+print("─" * 30)
+number = 1
+for song in songs:
+    print("  " + str(number) + ". " + song)
+    number = number + 1</textarea>
+          <div class="code-cell__output" id="output-11"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · Combining Lists</p>
+          <p><code>chill + hype + focus</code> joins three lists into one big list. Just like <code>+</code> joins text together, it also joins lists!</p>
+          <p style="margin-bottom: 0;"><code>songs = chill</code> doesn't copy the list — it makes <code>songs</code> point to the same list as <code>chill</code>. This is fine for our purposes. You'll learn more about this in later lessons.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 11: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 11</p>
+        <h2>What You Just Did</h2>
+
+        <p>You learned to organize information into collections and work with those collections as a whole. Instead of needing twenty variables for twenty songs, you use one list.</p>
+
+        <p>And you learned <strong>categorization</strong> — breaking information into meaningful groups. The chill playlist, the hype playlist, the focus playlist. Same songs, but organized by purpose.</p>
+
+        <p>This is how the real world works. Spotify organizes millions of songs into playlists, albums, and genres. Your school organizes students into classes and grades. Stores organize products into departments and shelves. Every time someone takes a mess of information and puts it into groups that make sense — that's categorization.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">When you have many related things, don't manage them one by one — <em>put them in a collection</em>. Then you can search, sort, filter, shuffle, and count them with just a few lines of code. Organization isn't just about neatness — it's about making information <em>useful</em>.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>Why is a list better than having separate variables like <code>song1</code>, <code>song2</code>, <code>song3</code>?</li>
+          <li>If you were organizing your room, what categories would you use? How is that like using multiple lists?</li>
+          <li>Can you think of a real app that uses lists? What kinds of things are in those lists?</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · To-Do List</p>
+          <p style="margin-bottom: 0;">Build a to-do list manager. Let the user add tasks, view all tasks, and mark a task as done (remove it from the list). Display how many tasks are remaining.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · Team Picker</p>
+          <p style="margin-bottom: 0;">Ask for a list of player names, then randomly divide them into two equal teams. Display both teams. Hint: shuffle the list first, then split it in half using slicing (<code>players[:half]</code> and <code>players[half:]</code>).</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Quiz Game</p>
+          <p style="margin-bottom: 0;">Create two lists: one for questions and one for answers (in the same order). Show each question one at a time, get the user's answer, and check if it matches. Track their score and display it at the end.</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Categorization</strong> — organizing related items into meaningful groups. Ask: <em>"What belongs together? How should I group these?"</em></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><strong>Lists</strong> — <code>["item1", "item2", "item3"]</code></p>
+          <p><strong>Accessing items</strong> — <code>list[0]</code>, <code>list[-1]</code></p>
+          <p><code>.append()</code> — add an item to the end</p>
+          <p><code>.remove()</code> — remove a specific item</p>
+          <p><code>len(list)</code> — how many items</p>
+          <p><code>for item in list:</code> — loop through every item</p>
+          <p><code>item in list</code> — check if something exists in a list</p>
+          <p><code>range(n)</code> — generate numbers 0 to n-1 (useful for repeating)</p>
+          <p><code>import random</code> — load the randomness toolbox</p>
+          <p><code>random.choice(list)</code> — pick a random item</p>
+          <p><code>random.shuffle(list)</code> — randomize the order</p>
+          <p style="margin-bottom: 0;"><code>list1 + list2</code> — combine two lists</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Lessons 1–4</p>
+          <p><strong>Decomposition</strong> — break big problems into small steps</p>
+          <p><strong>Abstraction</strong> — decide what details matter</p>
+          <p><strong>Deductive Reasoning</strong> — design rules, gather facts, reach conclusions</p>
+          <p style="margin-bottom: 0;"><strong>Categorization</strong> — organize related items into meaningful groups</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-03.html" class="lesson-nav__link">← Lesson 3</a>
+        <a href="lesson-05.html" class="lesson-nav__link">Lesson 5 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>
