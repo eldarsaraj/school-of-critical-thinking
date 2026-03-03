@@ -366,7 +366,7 @@ if search in playlist:
     print("Yes! '" + search + "' is in your playlist.")
 else:
     print("'" + search + "' is not in your playlist.")
-    add_it = input("Want to add it? (yes/no) ").lower()
+    add_it = input("'" + search + "' is not in your playlist. Want to add it? (yes/no) ").lower()
     if add_it == "yes":
         playlist.append(search)
         print("Added! Your playlist now has " + str(len(playlist)) + " songs.")</textarea>
