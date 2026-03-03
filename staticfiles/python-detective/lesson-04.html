@@ -39,6 +39,10 @@
         </div>
       </div>
 
+      <figure class="figure" style="margin-top: 0;  margin-bottom: 0;">
+        <img src="/static/python-detective/images/fruits.png" style="width: 100%; display: block;">
+      </figure>
+
       <!-- ========== PART 1: THE HOOK ========== -->
       <div class="pd-section">
         <p class="pd-section__label">Part 1</p>
@@ -48,7 +52,7 @@
 
         <p>The world is full of <strong>collections</strong>: groups of related things that belong together. Your phone's contact list. Your closet. The menu at a restaurant. The roster of a sports team.</p>
 
-        <p>So far in Python, we've stored one piece of information per variable: <code>name = "Alex"</code>, <code>age = 11</code>. But what if you want to store <em>five</em> names? Or <em>twenty</em> songs? Making twenty separate variables would be chaos.</p>
+        <p>So far in Python, we've stored one piece of information per variable: <code>name = "Lena"</code>, <code>age = 11</code>. But what if you want to store <em>five</em> names? Or <em>twenty</em> songs? Making twenty separate variables would be chaos.</p>
 
         <p>That's where <strong>lists</strong> come in.</p>
       </div>
@@ -66,7 +70,7 @@
             <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
           </div>
           <textarea class="code-cell__editor" id="editor-1" rows="8"># A list of songs
-playlist = ["Blinding Lights", "Levitating", "Bad Guy", "Shake It Off"]
+playlist = ["Fate of Ofelia", "Levitating", "Pink Pony Club", "Shake It Off"]
 
 print("My playlist:", playlist)
 print("Number of songs:", len(playlist))
@@ -79,7 +83,7 @@ print("Test scores:", scores)</textarea>
 
         <div class="info-box">
           <p class="info-box__label">What Just Happened</p>
-          <p><code>["Blinding Lights", "Levitating", "Bad Guy", "Shake It Off"]</code> creates a list with four items. The square brackets <code>[]</code> mark the start and end, and commas separate each item.</p>
+          <p><code>["Fate of Ofelia", "Levitating", "Pink Pony Club", "Shake It Off"]</code> creates a list with four items. The square brackets <code>[]</code> mark the start and end, and commas separate each item.</p>
           <p><code>len(playlist)</code> gives us the number of items in the list — just like <code>len("HELLO")</code> gave us the number of characters in a string back in Lesson 1.</p>
           <p style="margin-bottom: 0;">Lists can hold text, numbers, or even a mix of both. You decide what goes in them.</p>
         </div>
@@ -99,7 +103,7 @@ print("Test scores:", scores)</textarea>
             <span class="code-cell__label">Python</span>
             <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
           </div>
-          <textarea class="code-cell__editor" id="editor-2" rows="10">friends = ["Alex", "Sam", "Jordan", "Taylor", "Riley"]
+          <textarea class="code-cell__editor" id="editor-2" rows="10">friends = ["Olivia", "Ariel", "Caroline", "Zoe", "Ana"]
 
 print("Full list:", friends)
 print()
@@ -134,7 +138,7 @@ print("Also the last:", friends[-1])</textarea>
             <span class="code-cell__label">Python</span>
             <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
           </div>
-          <textarea class="code-cell__editor" id="editor-3" rows="18">playlist = ["Blinding Lights", "Levitating", "Bad Guy"]
+          <textarea class="code-cell__editor" id="editor-3" rows="18">playlist = ["Fate of Ofelia", "Levitating", "Pink Pony Club"]
 print("Starting playlist:", playlist)
 print()
 
@@ -143,17 +147,17 @@ playlist.append("Shake It Off")
 print("After adding a song:", playlist)
 
 # Add another one
-playlist.append("Flowers")
+playlist.append("Uptown Funk")
 print("After adding another:", playlist)
 print("Now we have", len(playlist), "songs")
 print()
 
 # Remove a song
-playlist.remove("Bad Guy")
-print("After removing Bad Guy:", playlist)
+playlist.remove("Pink Pony Club")
+print("After removing Pink Pony Club:", playlist)
 
 # Change a song at a specific position
-playlist[0] = "Save Your Tears"
+playlist[0] = "Oscar Winning Tears"
 print("After replacing the first song:", playlist)</textarea>
           <div class="code-cell__output" id="output-3"></div>
         </div>
@@ -179,7 +183,7 @@ print("After replacing the first song:", playlist)</textarea>
             <span class="code-cell__label">Python</span>
             <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
           </div>
-          <textarea class="code-cell__editor" id="editor-4" rows="6">playlist = ["Blinding Lights", "Levitating", "Shake It Off", "Flowers"]
+          <textarea class="code-cell__editor" id="editor-4" rows="6">playlist = ["Fate of Ofelia", "Levitating", "Oscar Winning Tears", "Uptown Funk"]
 
 print("YOUR PLAYLIST:")
 print("─" * 30)
@@ -197,7 +201,7 @@ for song in playlist:
             <span class="code-cell__label">Python · Numbered List</span>
             <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
           </div>
-          <textarea class="code-cell__editor" id="editor-5" rows="10">playlist = ["Blinding Lights", "Levitating", "Shake It Off", "Flowers"]
+          <textarea class="code-cell__editor" id="editor-5" rows="10">playlist = ["Fate of Ofelia", "Levitating", "Oscar Winning Tears", "Uptown Funk"]
 
 print("YOUR PLAYLIST:")
 print("─" * 30)
@@ -315,7 +319,7 @@ for song in playlist:
           </div>
           <textarea class="code-cell__editor" id="editor-8" rows="15">import random
 
-playlist = ["Blinding Lights", "Levitating", "Shake It Off", "Flowers", "Bad Guy"]
+playlist = ["Attention", "Birds of a Feather", "Watermelon Sugar", "Bad Romance", "Beautiful"]
 
 # Pick a random song
 random_song = random.choice(playlist)
@@ -353,7 +357,7 @@ for song in playlist:
             <span class="code-cell__label">Python</span>
             <button class="code-cell__run" onclick="runCode(9)">▶ Run</button>
           </div>
-          <textarea class="code-cell__editor" id="editor-9" rows="14">playlist = ["Blinding Lights", "Levitating", "Shake It Off", "Flowers"]
+          <textarea class="code-cell__editor" id="editor-9" rows="14">playlist = ["Attention", "Birds of a Feather", "Watermelon Sugar", "Bad Romance", "Beautiful"]
 
 # Check if a song is in the playlist
 search = input("Search for a song: ")
@@ -496,8 +500,8 @@ else:
           <textarea class="code-cell__editor" id="editor-11" rows="30">import random
 
 # Organize songs by mood
-chill = ["Blinding Lights", "Levitating", "Flowers"]
-hype = ["Shake It Off", "Uptown Funk", "Can't Stop the Feeling"]
+chill = ["Die With A Smile", "Espresso", "Daylight"]
+hype = ["Shake It Off", "APT.", "Good Luck, Babe!"]
 focus = ["Lofi Study Beat", "Piano Calm", "Ocean Waves"]
 
 # Ask the user what they need
