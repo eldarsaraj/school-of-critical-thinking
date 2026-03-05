@@ -323,6 +323,7 @@ def diagnostic_email(request: HttpRequest) -> HttpResponse:
                 },
             )
             try:
+                print(f"EMAIL ATTEMPT: sending to {email} via {lead.token}")
                 send_mail(
                     subject="Your Thinking Diagnostic Syllabus",
                     message=f"Your syllabus is ready: {syllabus_url}",
@@ -331,8 +332,11 @@ def diagnostic_email(request: HttpRequest) -> HttpResponse:
                     html_message=email_html,
                     fail_silently=False,
                 )
+                print(f"EMAIL SUCCESS: sent to {email}")
             except Exception as e:
+                import traceback
                 print(f"EMAIL SEND FAILED: {e}")
+                traceback.print_exc()
 
             return redirect("diagnostic_syllabus")
 
