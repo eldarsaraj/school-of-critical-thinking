@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Thinking Diagnostic Syllabus</title>
+</head>
+<body style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 24px; color: #1a1a1a; line-height: 1.7;">
+
+  <p style="margin: 0 0 24px 0;">{{ full_name }},</p>
+
+  <p style="margin: 0 0 16px 0;">
+    Your Thinking Diagnostic is ready. Based on your answers, two areas for development have surfaced:
+  </p>
+
+  <ul style="margin: 0 0 24px 0; padding-left: 20px;">
+    {% for m in modules %}
+      <li style="margin: 8px 0;">{{ m.title }}</li>
+    {% endfor %}
+  </ul>
+
+  <p style="margin: 0 0 24px 0;">
+    Your full syllabus — with structured modules, curated readings, and practice exercises — is available here:
+  </p>
+
+  <p style="margin: 0 0 32px 0;">
+    <a href="{{ syllabus_url }}" style="color: #1a1a1a; font-weight: bold;">
+      View your syllabus →
+    </a>
+  </p>
+
+  <p style="margin: 0 0 16px 0;">
+    The link is permanent — you can return to it any time.
+  </p>
+
+  <hr style="border: none; border-top: 1px solid #ddd; margin: 32px 0;">
+
+  <p style="margin: 0 0 8px 0; font-size: 14px; color: #555;">
+    If you want to work through this with guidance, you can book a 1:1 session:
+  </p>
+
+  <p style="margin: 0 0 32px 0; font-size: 14px;">
+    <a href="{{ contact_url }}" style="color: #1a1a1a;">Book a session →</a>
+  </p>
+
+  <p style="margin: 0; font-size: 13px; color: #888;">
+    The School of Critical Thinking
+  </p>
+
+</body>
+</html>

@@ -6,10 +6,11 @@ import random  # NEW
 import markdown
 import yaml
 import re
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
+from django.core.mail import send_mail
 
 from diagnostic.data.v0_1.scoring import score_answers
 from diagnostic.models import DiagnosticLead
@@ -299,7 +300,7 @@ def diagnostic_email(request: HttpRequest) -> HttpResponse:
             request.session["diagnostic_v0_1_email"] = email
 
             # Proper upsert: update existing record or create new one
-            DiagnosticLead.objects.update_or_create(
+            lead, _ = DiagnosticLead.objects.update_or_create(
                 email=email,
                 defaults={
                     "full_name": full_name,
@@ -308,6 +309,30 @@ def diagnostic_email(request: HttpRequest) -> HttpResponse:
                     "version": "v0_1",
                 },
             )
+
+            # Send the syllabus email
+            syllabus_url = request.build_absolute_uri(f"/diagnostic/syllabus/{lead.token}/")
+            contact_url = request.build_absolute_uri("/contact/")
+            email_html = render_to_string(
+                "diagnostic/email_syllabus.html",
+                {
+                    "full_name": full_name,
+                    "modules": preview_modules,
+                    "syllabus_url": syllabus_url,
+                    "contact_url": contact_url,
+                },
+            )
+            try:
+                send_mail(
+                    subject="Your Thinking Diagnostic Syllabus",
+                    message=f"Your syllabus is ready: {syllabus_url}",
+                    from_email=None,  # uses DEFAULT_FROM_EMAIL from settings
+                    recipient_list=[email],
+                    html_message=email_html,
+                    fail_silently=False,
+                )
+            except Exception as e:
+                print(f"EMAIL SEND FAILED: {e}")
 
             return redirect("diagnostic_syllabus")
 
@@ -347,6 +372,39 @@ def diagnostic_syllabus(request: HttpRequest) -> HttpResponse:
             "selected_modules": selected_modules,
             "full_name": full_name,
             "organization": organization,
+        },
+    )
+
+
+def diagnostic_syllabus_by_token(request: HttpRequest, token: str) -> HttpResponse:
+    """
+    Permanent syllabus URL sent in the email.
+    Looks up the lead by their unique token — works even after the session has expired.
+    """
+    lead = get_object_or_404(DiagnosticLead, token=token)
+    module_ids = [mid.strip() for mid in lead.module_ids.split(",") if mid.strip()]
+
+    modules = load_modules()
+    resources = load_resources()
+    by_id = {m["id"]: m for m in modules}
+
+    selected_modules: list[dict] = []
+    for mid in module_ids:
+        m = by_id.get(mid)
+        if not m:
+            continue
+        m = dict(m)
+        m["content_html"] = render_module_markdown(mid)
+        m["resources"] = resources.get(mid, {})
+        selected_modules.append(m)
+
+    return render(
+        request,
+        "diagnostic/diagnostic_results.html",
+        {
+            "selected_modules": selected_modules,
+            "full_name": lead.full_name,
+            "organization": lead.organization,
         },
     )
 
