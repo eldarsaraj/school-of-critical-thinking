@@ -312,14 +312,12 @@ def diagnostic_email(request: HttpRequest) -> HttpResponse:
 
             # Send the syllabus email
             syllabus_url = request.build_absolute_uri(f"/diagnostic/syllabus/{lead.token}/")
-            contact_url = request.build_absolute_uri("/contact/")
             email_html = render_to_string(
                 "diagnostic/email_syllabus.html",
                 {
                     "full_name": full_name,
                     "modules": preview_modules,
                     "syllabus_url": syllabus_url,
-                    "contact_url": contact_url,
                 },
             )
             try:
