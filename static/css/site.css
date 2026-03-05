@@ -770,6 +770,114 @@ main { padding: 48px 24px; }
    BOOKS PAGE (SHELVES + LIST CARDS)
    ====================================================== */
 
+/* ======================================================
+   CURRICULUM PAGE
+   ====================================================== */
+
+.curriculum-level {
+  margin-top: 52px;
+}
+
+.curriculum-level__tag {
+  margin: 0 0 6px 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.55);
+}
+
+.curriculum-level__title {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+}
+
+.curriculum-level__meta {
+  margin: 0 0 10px 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.45);
+}
+
+.curriculum-level__goal {
+  margin: 0 0 24px 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(0,0,0,0.68);
+  max-width: 62ch;
+}
+
+.curriculum-books {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.curriculum-book {
+  padding: 18px 0;
+  border-top: 0.5px solid rgba(0,0,0,0.12);
+}
+
+.curriculum-book__number {
+  margin: 0 0 4px 0;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+}
+
+.curriculum-book__title {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.curriculum-book__core {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(0,0,0,0.75);
+  font-style: italic;
+}
+
+.curriculum-book__topics {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.65);
+}
+
+.curriculum-divider {
+  margin: 48px 0 0 0;
+  border: none;
+  border-top: 0.5px solid rgba(0,0,0,0.1);
+}
+
+.curriculum-cta {
+  margin-top: 52px;
+  padding-top: 24px;
+  border-top: 0.5px solid rgba(0,0,0,0.1);
+}
+
+.curriculum-cta__label {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.45);
+}
+
+.curriculum-cta__links a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 0.5px solid rgba(0,0,0,0.3);
+}
+
 /* Shelf blocks (Foundations / Tools / Mastery) */
 .shelf {
   margin-top: 56px;
