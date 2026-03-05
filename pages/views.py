@@ -33,6 +33,10 @@ def start(request):
     return render(request, "pages/start.html")
 
 
+def curriculum(request):
+    return render(request, "pages/curriculum.html")
+
+
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
