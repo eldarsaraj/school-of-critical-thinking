@@ -654,9 +654,16 @@ main { padding: 48px 24px; }
    ====================================================== */
 
 /* Standard “block” separators */
+.about-intro {
+  font-size: 20px;
+  line-height: 1.6;
+  color: rgba(0,0,0,0.7);
+  margin: 28px 0 0 0;
+}
+
 .about-block {
-  margin-top: 48px;
-  padding-top: 18px;
+  margin-top: 56px;
+  padding-top: 20px;
   border-top: 0.5px solid rgba(0,0,0,0.08);
 }
 
@@ -669,9 +676,9 @@ main { padding: 48px 24px; }
 }
 
 .about-block__text {
-  margin: 0 0 12px 0;
+  margin: 0 0 20px 0;
   font-size: 17px;
-  line-height: 1.7;
+  line-height: 1.75;
   color: rgba(0,0,0,0.82);
 }
 
@@ -690,8 +697,8 @@ main { padding: 48px 24px; }
 
 /* Founder callout card */
 .about-founder {
-  margin-top: 56px;
-  padding: 18px 18px 2px 18px;
+  margin-top: 64px;
+  padding: 24px 24px 8px 24px;
   border: 0.5px solid rgba(0,0,0,0.10);
   border-radius: 10px;
   background: rgba(255, 254, 248, 0.85);
