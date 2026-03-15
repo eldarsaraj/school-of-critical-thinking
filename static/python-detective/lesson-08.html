@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 8: Building Your Own Shortcuts – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 8 · Functions</p>
+        <h1 class="lesson__title">Building Your Own Mental Shortcuts (That Actually Work)</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to package a set of steps into a named, reusable shortcut — so you can use it over and over without rewriting the same code.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>You Already Use Shortcuts</h2>
+        
+        <p>When someone says "make me a sandwich," they don't say "go to the kitchen, open the bread bag, take out two slices, put them on a plate, open the fridge, get the cheese…" They just say <strong>"make me a sandwich"</strong> and you know all the steps.</p>
+
+        <p>"Make a sandwich" is a <strong>shortcut</strong> — a single name that represents a whole series of steps. You use these all the time:</p>
+
+        <p><em>"Get ready for school"</em> = wake up + brush teeth + get dressed + eat + pack bag</p>
+        <p><em>"Clean your room"</em> = pick up clothes + make bed + organize desk + vacuum</p>
+        <p><em>"Send a text"</em> = open phone + open app + type message + hit send</p>
+
+        <p>In programming, these shortcuts are called <strong>functions</strong>. A function is a named block of code that you can run whenever you want, just by using its name. You've already been using functions that Python provides — <code>print()</code>, <code>input()</code>, <code>len()</code>, <code>int()</code>. Today, you're going to learn to build <strong>your own</strong>.</p>
+      </div>
+
+      <!-- ========== PART 2: YOUR FIRST FUNCTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Your First Function</h2>
+
+        <p>Let's start with the simplest possible function — one that just displays a greeting:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="11"># DEFINE the function
+def say_hello():
+    print("👋 Hello there!")
+    print("Welcome to the program!")
+    print()
+
+# USE (call) the function
+say_hello()
+say_hello()
+say_hello()</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How Functions Work</p>
+          <p><code>def say_hello():</code> <strong>defines</strong> the function — it tells Python "here's a shortcut called say_hello, and here are the steps." The code inside (indented) is what the function does.</p>
+          <p><strong>Defining a function doesn't run it.</strong> It just saves the recipe. Nothing happens until you <em>call</em> it.</p>
+          <p><code>say_hello()</code> <strong>calls</strong> the function — it runs all the steps inside. The parentheses <code>()</code> are what tells Python "run this now."</p>
+          <p style="margin-bottom: 0;">We called it three times, and each time it printed the same three lines. Write once, use many times.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 3: PARAMETERS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>Functions That Take Input</h2>
+
+        <p>A function that does the exact same thing every time is useful, but limited. The real power comes when you can give it <strong>different information each time</strong>. This is like the difference between "make a sandwich" and "make me a <em>grilled cheese</em> sandwich" — you're giving it specific instructions.</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Parameters</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="12"># A function that takes a name as input
+def greet(name):
+    print(f"👋 Hey {name}!")
+    print(f"   Great to see you, {name}.")
+    print()
+
+# Call it with different names
+greet("Alex")
+greet("Sam")
+greet("Jordan")</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">What's a Parameter?</p>
+          <p><code>def greet(name):</code> — the word <code>name</code> inside the parentheses is called a <strong>parameter</strong>. It's a placeholder — a blank slot that gets filled in when you call the function.</p>
+          <p><code>greet("Alex")</code> — <code>"Alex"</code> is the <strong>argument</strong> — the actual value that fills the slot. Inside the function, <code>name</code> becomes <code>"Alex"</code>.</p>
+          <p style="margin-bottom: 0;">Same function, different input, different output. The <em>structure</em> stays the same (that's abstraction!), but the <em>details</em> change.</p>
+        </div>
+
+        <p>You can have more than one parameter:</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Multiple Parameters</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="11"># A function with two parameters
+def introduce(name, hobby):
+    print(f"Meet {name}!")
+    print(f"{name} loves {hobby}.")
+    print(f"Ask {name} about {hobby} sometime!")
+    print()
+
+introduce("Alex", "soccer")
+introduce("Sam", "drawing")
+introduce("Taylor", "coding")</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <p>The order matters — the first argument goes into the first parameter, the second argument goes into the second parameter.</p>
+      </div>
+
+      <!-- ========== PART 4: RETURN VALUES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Functions That Give Back an Answer</h2>
+
+        <p>So far, our functions <em>do</em> things (they print). But sometimes you want a function to <em>calculate</em> something and <strong>give you back the answer</strong>, so you can use it elsewhere. That's what <code>return</code> does:</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Return Values</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="16"># A function that RETURNS a value
+def double(number):
+    result = number * 2
+    return result
+
+# The function gives back a value, which we can store or use
+answer = double(5)
+print(f"Double of 5 is {answer}")
+
+print(f"Double of 13 is {double(13)}")
+
+# You can use it inside calculations
+total = double(10) + double(20)
+print(f"double(10) + double(20) = {total}")</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How <code>return</code> Works</p>
+          <p><code>return result</code> sends the value back to wherever the function was called. The function stops running immediately after <code>return</code>.</p>
+          <p><code>answer = double(5)</code> — Python runs the function with 5, gets back 10, and stores it in <code>answer</code>.</p>
+          <p style="margin-bottom: 0;">Think of it like a machine: you put something in (the argument), the machine does something to it, and gives you back a result (the return value).</p>
+        </div>
+
+        <p>Let's make a more useful function:</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Useful Functions</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="17"># A function that creates a visual bar
+def make_bar(value, max_value, width):
+    filled = int((value / max_value) * width)
+    bar = "█" * filled + "░" * (width - filled)
+    return bar
+
+# Now we can use it for anything!
+print("Health:  " + make_bar(7, 10, 20) + " 7/10")
+print("Energy:  " + make_bar(3, 10, 20) + " 3/10")
+print("Hunger:  " + make_bar(9, 10, 20) + " 9/10")
+print()
+
+# Even with different scales
+print("Score:     " + make_bar(450, 1000, 15) + " 450/1000")
+print("Progress:  " + make_bar(80, 100, 15) + " 80%")</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <p>Look how useful that is! We wrote the bar-drawing code once, and now we can use it for health, energy, hunger, score — anything. <strong>That's the power of functions.</strong></p>
+      </div>
+
+      <!-- ========== PART 5: WHY FUNCTIONS MATTER ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Why This Changes Everything</h2>
+
+        <p>Let's see the difference functions make. Here's code <strong>without</strong> functions:</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Without Functions (Messy!)</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="20"># Displaying friend profiles WITHOUT functions
+# (imagine doing this for 10 friends!)
+
+print("═" * 30)
+print("  ALEX")
+print("═" * 30)
+print("  Hobby: Soccer")
+print("  Level: " + "█" * 8 + "░" * 2 + " 8/10")
+print()
+
+print("═" * 30)
+print("  SAM")
+print("═" * 30)
+print("  Hobby: Drawing")
+print("  Level: " + "█" * 6 + "░" * 4 + " 6/10")
+print()
+
+print("═" * 30)
+print("  JORDAN")
+print("═" * 30)
+print("  Hobby: Coding")
+print("  Level: " + "█" * 9 + "░" * 1 + " 9/10")</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <p>That's a lot of repeated code. Now here's the same thing <strong>with</strong> a function:</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · With Functions (Clean!)</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="16"># Define the pattern ONCE
+def show_profile(name, hobby, level):
+    bar = "█" * level + "░" * (10 - level)
+    print("═" * 30)
+    print(f"  {name.upper()}")
+    print("═" * 30)
+    print(f"  Hobby: {hobby}")
+    print(f"  Level: {bar} {level}/10")
+    print()
+
+# Use it for any friend
+show_profile("Alex", "Soccer", 8)
+show_profile("Sam", "Drawing", 6)
+show_profile("Jordan", "Coding", 9)
+show_profile("Taylor", "Music", 7)
+show_profile("Riley", "Gaming", 10)</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <p>Same output, but the code is shorter, cleaner, and easier to change. If you want to redesign the profile — add a border, change the bar style, add an emoji — you change it in <strong>one place</strong> and it updates everywhere.</p>
+      </div>
+
+      <!-- ========== PART 6: RESPONSE FUNCTIONS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Building Response Styles</h2>
+
+        <p>Let's start building our Text Conversation Simulator. The idea: different friends have different texting styles. One friend is super enthusiastic, another is sarcastic, another is supportive. We can capture each style as a function:</p>
+
+        <div class="code-cell" id="cell-8">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Response Styles</span>
+            <button class="code-cell__run" onclick="runCode(8)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-8" rows="26">import random
+
+def enthusiastic_reply(message):
+    reactions = ["OMG", "NO WAY", "YESSS", "WAIT WHAT"]
+    emojis = ["🔥🔥🔥", "😍😍", "💯💯", "🎉🎉🎉"]
+    reaction = random.choice(reactions)
+    emoji = random.choice(emojis)
+    return f"{reaction}!! {message}??? That's AMAZING {emoji}"
+
+def sarcastic_reply(message):
+    comebacks = ["oh wow how original", "never heard that before", "cool story", "shocking"]
+    comeback = random.choice(comebacks)
+    return f"'{message}'... {comeback} 🙄"
+
+def supportive_reply(message):
+    support = ["I'm so proud of you!", "You totally deserve that!", "That's so great, keep going!", "I knew you could do it!"]
+    return f"{message}? {random.choice(support)} 💙"
+
+# Test them out
+news = "I got an A on the test"
+print("YOUR MESSAGE: " + news)
+print()
+print("Enthusiastic friend: " + enthusiastic_reply(news))
+print()
+print("Sarcastic friend: " + sarcastic_reply(news))
+print()
+print("Supportive friend: " + supportive_reply(news))</textarea>
+          <div class="code-cell__output" id="output-8"></div>
+        </div>
+
+        <p>Each function takes the same input (your message) but processes it differently — just like your real friends would react differently to the same news. Run it several times to see the randomness.</p>
+      </div>
+
+      <!-- ========== PART 7: FUNCTIONS CALLING FUNCTIONS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Functions Can Use Other Functions</h2>
+
+        <p>Here's something powerful: functions can call <em>other</em> functions. This is like having a recipe that says "make the sauce (see sauce recipe on page 12)." You break big tasks into smaller named pieces:</p>
+
+        <div class="code-cell" id="cell-9">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(9)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-9" rows="22">def make_bar(value, max_val):
+    filled = int((value / max_val) * 10)
+    return "█" * filled + "░" * (10 - filled)
+
+def get_title(level):
+    if level >= 9:
+        return "🏆 Legend"
+    elif level >= 7:
+        return "⭐ Pro"
+    elif level >= 5:
+        return "👍 Solid"
+    else:
+        return "🌱 Newbie"
+
+# This function USES the other two
+def show_player(name, skill_level):
+    bar = make_bar(skill_level, 10)
+    title = get_title(skill_level)
+    print(f"  {name}: {bar} {skill_level}/10 — {title}")
+
+print("PLAYER STATS:")
+print("─" * 40)
+show_player("Alex", 9)
+show_player("Sam", 6)
+show_player("Jordan", 4)
+show_player("Taylor", 7)</textarea>
+          <div class="code-cell__output" id="output-9"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Decomposition With Functions</p>
+          <p><code>show_player</code> doesn't know <em>how</em> to make a bar or choose a title — it just asks the other functions to do those jobs.</p>
+          <p>This is decomposition (Lesson 1) taken to the next level. You break a complex task into named pieces, and each piece is a function.</p>
+          <p style="margin-bottom: 0;">If you want to change how bars look, you change <code>make_bar</code>. If you want different titles, you change <code>get_title</code>. The <code>show_player</code> function doesn't need to change at all.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 8: THE CONVERSATION SIMULATOR ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>The Complete Text Conversation Simulator</h2>
+
+        <p>Let's build the full project — a program that simulates a group chat where your friends each respond in their unique style:</p>
+
+        <div class="code-cell" id="cell-10">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Text Conversation Simulator</span>
+            <button class="code-cell__run" onclick="runCode(10)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-10" rows="68">import random
+
+# === RESPONSE STYLE FUNCTIONS ===
+
+def enthusiastic(name, message):
+    reactions = ["OMG", "NO WAY", "YESSS", "WAIT", "DUUUDE"]
+    emojis = ["🔥🔥", "😍", "💯", "🎉", "✨"]
+    return f"  {name}: {random.choice(reactions)}!! {random.choice(emojis)}"
+
+def sarcastic(name, message):
+    responses = [
+        f"  {name}: oh wow... 🙄",
+        f"  {name}: cool story bro",
+        f"  {name}: shocking 😐",
+        f"  {name}: *slow clap*"
+    ]
+    return random.choice(responses)
+
+def supportive(name, message):
+    responses = [
+        f"  {name}: That's amazing!! So happy for you 💙",
+        f"  {name}: You deserve this!! 🥹",
+        f"  {name}: I KNEW IT! So proud 🫶",
+        f"  {name}: yesss go off!! 💪"
+    ]
+    return random.choice(responses)
+
+def chill(name, message):
+    responses = [
+        f"  {name}: nice 👍",
+        f"  {name}: cool",
+        f"  {name}: dope",
+        f"  {name}: that's sick"
+    ]
+    return random.choice(responses)
+
+def funny(name, message):
+    responses = [
+        f"  {name}: lol but did you bring snacks tho 🍕",
+        f"  {name}: ok but what about MY problems 😂",
+        f"  {name}: not me being jealous rn 😭",
+        f"  {name}: 'write that down write that down!!' 📝"
+    ]
+    return random.choice(responses)
+
+# === DISPLAY FUNCTIONS ===
+
+def show_message_bubble(sender, text):
+    print(f"  💬 {sender}: {text}")
+    print()
+
+def show_divider():
+    print("  " + "·" * 30)
+    print()
+
+# === MAIN PROGRAM ===
+
+print("╔══════════════════════════════╗")
+print("  📱 GROUP CHAT SIMULATOR")
+print("╚══════════════════════════════╝")
+print()
+
+# Set up the group chat
+friends = [
+    ["Alex", enthusiastic],
+    ["Sam", sarcastic],
+    ["Jordan", supportive],
+    ["Taylor", chill],
+    ["Riley", funny]
+]
+
+print("GROUP CHAT: The Squad 🫶")
+print("Members: ", end="")
+for friend in friends:
+    print(friend[0] + " ", end="")
+print()
+show_divider()
+
+# Chat loop
+while True:
+    your_message = input("You: ")
+    
+    if your_message.lower() == "quit":
+        break
+    
+    show_message_bubble("You", your_message)
+    
+    # Each friend responds in their style
+    # Random delay — not everyone replies at once
+    responders = list(friends)
+    random.shuffle(responders)
+    
+    # Pick 2-4 friends to respond each time
+    num_responses = random.randint(2, min(4, len(friends)))
+    
+    for i in range(num_responses):
+        friend_name = responders[i][0]
+        friend_style = responders[i][1]
+        response = friend_style(friend_name, your_message)
+        print(response)
+    
+    print()
+    show_divider()
+
+print()
+print("📱 You left the chat.")</textarea>
+          <div class="code-cell__output" id="output-10"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How This Works</p>
+          <p>Each friend is stored as a list: <code>["Alex", enthusiastic]</code>. The second item is the <strong>function itself</strong> — not a call to the function (no parentheses), but a reference to it.</p>
+          <p><code>friend_style(friend_name, your_message)</code> calls whichever function is stored for that friend. Alex always gets <code>enthusiastic()</code>, Sam always gets <code>sarcastic()</code>, etc.</p>
+          <p style="margin-bottom: 0;">This is a powerful idea: <strong>functions can be stored in variables and lists</strong>, just like numbers and text. This lets us treat behavior as data.</p>
+        </div>
+
+        <p>Try sending a few messages. Type "quit" to exit. Notice how each friend's personality stays consistent — Alex is always hyped, Sam is always sarcastic. The functions define their character.</p>
+      </div>
+
+      <!-- ========== PART 9: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>What You Just Did</h2>
+
+        <p>You learned to take a series of steps, give them a name, and reuse them whenever you want. That's what functions are — <strong>named, reusable shortcuts</strong>.</p>
+
+        <p>This is abstraction at its most powerful. When you use <code>show_profile("Alex", "Soccer", 8)</code>, you don't need to think about <em>how</em> the profile gets displayed — the bars, the formatting, the borders. You just say "show the profile" and it happens. The complexity is hidden behind a simple name.</p>
+
+        <p>This is how every big program in the world works. A video game isn't one giant block of code — it's thousands of functions, each handling one small task: <code>draw_player()</code>, <code>check_collision()</code>, <code>play_sound()</code>, <code>update_score()</code>. Each one is simple on its own. Together, they create something complex.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">When you find yourself writing the same code more than once, <strong>make it a function</strong>. Give it a clear name, define what information it needs (parameters), and what it gives back (return). Now you have a reusable building block — and your code gets shorter, cleaner, and easier to change.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>What's the difference between <em>defining</em> a function and <em>calling</em> it? Why do we need both steps?</li>
+          <li>When should a function <code>print()</code> versus <code>return</code>? (Hint: think about whether you want to <em>display</em> the result or <em>use</em> it in more code.)</li>
+          <li>Can you think of daily tasks that work like functions? Something you do repeatedly that could be described with a name and inputs?</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Greeting Card Generator</p>
+          <p style="margin-bottom: 0;">Create functions for different card types: <code>birthday_card(name, age)</code>, <code>thank_you_card(name, reason)</code>, <code>get_well_card(name)</code>. Each should return a formatted card message. Build a menu that lets the user choose a card type, enter the details, and see the result.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · Calculator Functions</p>
+          <p style="margin-bottom: 0;">Create functions for <code>add(a, b)</code>, <code>subtract(a, b)</code>, <code>multiply(a, b)</code>, and <code>divide(a, b)</code>. Each should return the result. Then build a calculator that asks the user for two numbers and an operation, calls the right function, and shows the answer.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Add a Personality</p>
+          <p style="margin-bottom: 0;">Add a new personality to the Group Chat Simulator. Create a function for a "mysterious" friend who responds with cryptic, philosophical one-liners. Or a "sports" friend who relates everything to athletics. Add them to the friends list and test the chat.</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Encapsulation</strong> — packaging complexity into named, reusable units. When something is complex, hide the details behind a simple name. Ask: <em>"Can I give this a name and reuse it?"</em></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><code>def function_name():</code> — define a function</p>
+          <p><strong>Parameters</strong> — inputs a function receives: <code>def greet(name):</code></p>
+          <p><strong>Arguments</strong> — actual values you pass in: <code>greet("Alex")</code></p>
+          <p><code>return</code> — send a value back from a function</p>
+          <p><strong>Calling functions</strong> — use the name with parentheses: <code>say_hello()</code></p>
+          <p><strong>Functions calling functions</strong> — building complex behavior from simple pieces</p>
+          <p style="margin-bottom: 0;"><strong>Functions as values</strong> — storing functions in lists and variables</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Lessons 1–8</p>
+          <p><strong>Decomposition</strong> — break big problems into small steps</p>
+          <p><strong>Abstraction</strong> — decide what details matter</p>
+          <p><strong>Deductive Reasoning</strong> — rules + facts = conclusions</p>
+          <p><strong>Categorization</strong> — organize items into groups</p>
+          <p><strong>Pattern Recognition</strong> — spot what repeats and changes</p>
+          <p><strong>Automation</strong> — templates for repetitive tasks</p>
+          <p><strong>Inductive Reasoning</strong> — observations → conclusions</p>
+          <p style="margin-bottom: 0;"><strong>Encapsulation</strong> — package complexity into reusable functions</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-07.html" class="lesson-nav__link">← Lesson 7</a>
+        <a href="lesson-09.html" class="lesson-nav__link">Lesson 9 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>

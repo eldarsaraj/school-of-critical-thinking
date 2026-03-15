@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 7: Keep Going Until... – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 7 · Inductive Reasoning</p>
+        <h1 class="lesson__title">Keep Going Until... The Art of Not Knowing When to Stop</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to build programs that keep running until something specific happens — and how to draw conclusions from repeated observations, just like a scientist.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>Some Things Don't Have a Fixed End</h2>
+        
+        <p>Think about playing a board game. You don't say "we'll play exactly 15 turns." You play <em>until someone wins</em>. That could take 10 minutes or two hours — you don't know in advance.</p>
+
+        <p>Or think about practicing free throws. You don't stop after exactly 20 shots. You keep going <em>until you make 5 in a row</em>, or <em>until dinner's ready</em>, or <em>until your arms get tired</em>.</p>
+
+        <p>These are situations where you don't know the end point. You just keep going and <strong>observe what happens</strong>, round after round, until some condition tells you to stop.</p>
+
+        <p>This is called <strong>inductive reasoning</strong> — building understanding through repeated observation. Scientists do it: run an experiment, observe the result, repeat, and eventually draw a conclusion. Today, you're going to do the same thing — by building a game.</p>
+      </div>
+
+      <!-- ========== PART 2: WHILE TRUE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Loops That Run Forever (Until You Say Stop)</h2>
+
+        <p>In Lesson 5, we learned <code>while</code> loops: "keep going while a condition is True." There's a special version of this that's incredibly useful for games and menus:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="12"># A loop that runs until the user says stop
+round_num = 0
+
+while True:
+    round_num = round_num + 1
+    answer = input(f"Round {round_num} — Keep going? (yes/no) ")
+    
+    if answer.lower() == "no":
+        break
+
+print()
+print(f"You went {round_num} rounds!")</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How <code>while True</code> Works</p>
+          <p><code>while True:</code> creates a loop that would run forever — because <code>True</code> is always True.</p>
+          <p>But inside the loop, we use <code>break</code> to escape when we're ready.</p>
+          <p>This pattern is perfect when you don't know how many times to repeat. The loop keeps going, and the code <em>inside</em> decides when to stop.</p>
+          <p style="margin-bottom: 0;">Think of it as: "Keep doing this. I'll tell you when I'm done."</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 3: ROCK PAPER SCISSORS BASICS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>Rock Paper Scissors — The Logic</h2>
+
+        <p>Let's build Rock Paper Scissors. Before we code, let's think about the rules. This is deductive reasoning (from Lesson 3) — clear rules that determine the outcome:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Rules</p>
+          <p>Rock beats Scissors (rock crushes scissors)</p>
+          <p>Scissors beats Paper (scissors cut paper)</p>
+          <p>Paper beats Rock (paper covers rock)</p>
+          <p style="margin-bottom: 0;">If both choose the same thing → it's a tie</p>
+        </div>
+
+        <p>Let's start simple — one round against the computer:</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · One Round</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="25">import random
+
+# The three choices
+choices = ["rock", "paper", "scissors"]
+
+# Get player choice
+player = input("Rock, Paper, or Scissors? ").lower()
+
+# Computer picks randomly
+computer = random.choice(choices)
+
+print(f"You chose: {player}")
+print(f"Computer chose: {computer}")
+print()
+
+# Determine winner
+if player == computer:
+    print("It's a tie! 🤝")
+elif player == "rock" and computer == "scissors":
+    print("You win! Rock crushes scissors! 🎉")
+elif player == "scissors" and computer == "paper":
+    print("You win! Scissors cut paper! 🎉")
+elif player == "paper" and computer == "rock":
+    print("You win! Paper covers rock! 🎉")
+else:
+    print("Computer wins! 😤")</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <p>Play it a few times. Notice that the computer's choice is truly random — sometimes you win, sometimes you lose, sometimes it's a tie. There's no way to predict a single round.</p>
+
+        <p>But what if you played 20 rounds? Would you start to notice patterns? That's inductive reasoning — building understanding from repeated observations.</p>
+      </div>
+
+      <!-- ========== PART 4: THE GAME LOOP ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Making It a Real Game</h2>
+
+        <p>One round isn't a game — it's a coin flip. A real game needs multiple rounds and a way to keep score. Let's combine <code>while True</code> with our RPS logic:</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Multi-Round Game</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="45">import random
+
+choices = ["rock", "paper", "scissors"]
+
+# Track stats
+player_wins = 0
+computer_wins = 0
+ties = 0
+
+print("╔══════════════════════════════╗")
+print("  ROCK PAPER SCISSORS")
+print("  Type 'quit' to stop")
+print("╚══════════════════════════════╝")
+print()
+
+while True:
+    player = input("Rock, Paper, or Scissors? ").lower()
+    
+    # Check if player wants to quit
+    if player == "quit":
+        break
+    
+    # Check for valid input
+    if player not in choices:
+        print("Please type rock, paper, or scissors.")
+        print()
+        continue
+    
+    computer = random.choice(choices)
+    
+    print(f"You: {player} | Computer: {computer}")
+    
+    # Determine winner
+    if player == computer:
+        print("Tie! 🤝")
+        ties = ties + 1
+    elif (player == "rock" and computer == "scissors") or \
+         (player == "scissors" and computer == "paper") or \
+         (player == "paper" and computer == "rock"):
+        print("You win! 🎉")
+        player_wins = player_wins + 1
+    else:
+        print("Computer wins! 😤")
+        computer_wins = computer_wins + 1
+    
+    print()
+
+# Show final stats
+total = player_wins + computer_wins + ties
+print()
+print("═" * 30)
+print("  FINAL STATS")
+print("═" * 30)
+print(f"  Rounds played: {total}")
+print(f"  You won:       {player_wins}")
+print(f"  Computer won:  {computer_wins}")
+print(f"  Ties:          {ties}")</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Things</p>
+          <p><code>continue</code> skips the rest of the loop and starts the next round immediately. We use it when the player types something invalid — no point in comparing "banana" to the computer's choice.</p>
+          <p><code>not in</code> is the opposite of <code>in</code>: <code>player not in choices</code> means "the player's input isn't in our list of valid choices."</p>
+          <p style="margin-bottom: 0;"><code>\</code> at the end of a line means "this line continues on the next line." It lets us split a long condition across multiple lines so it's easier to read.</p>
+        </div>
+
+        <p>Play 10+ rounds and look at your stats. Are they roughly even? With random choices, you'd expect to win about 1/3 of the time, lose 1/3, and tie 1/3. Do your results match that prediction? That's inductive reasoning — checking if your observations match a hypothesis.</p>
+      </div>
+
+      <!-- ========== PART 5: FIRST TO WIN ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>First to 3 Wins</h2>
+
+        <p>Instead of playing forever, let's make it a real tournament — first player to win 3 rounds takes the match:</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Tournament Mode</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="43">import random
+
+choices = ["rock", "paper", "scissors"]
+wins_needed = 3
+
+player_wins = 0
+computer_wins = 0
+round_num = 0
+
+print("╔══════════════════════════════╗")
+print(f"  FIRST TO {wins_needed} WINS!")
+print("╚══════════════════════════════╝")
+print()
+
+while player_wins < wins_needed and computer_wins < wins_needed:
+    round_num = round_num + 1
+    
+    print(f"--- Round {round_num} ---")
+    print(f"Score: You {player_wins} - {computer_wins} Computer")
+    
+    player = input("Rock, Paper, or Scissors? ").lower()
+    
+    if player not in choices:
+        print("Invalid! Try again.")
+        print()
+        round_num = round_num - 1
+        continue
+    
+    computer = random.choice(choices)
+    print(f"Computer chose: {computer}")
+    
+    if player == computer:
+        print("Tie! Go again.")
+    elif (player == "rock" and computer == "scissors") or \
+         (player == "scissors" and computer == "paper") or \
+         (player == "paper" and computer == "rock"):
+        print("You win this round! ✓")
+        player_wins = player_wins + 1
+    else:
+        print("Computer wins this round! ✗")
+        computer_wins = computer_wins + 1
+    
+    print()
+
+# Announce winner
+print("═" * 30)
+if player_wins == wins_needed:
+    print(f"  🏆 YOU WIN THE MATCH!")
+else:
+    print(f"  💻 COMPUTER WINS THE MATCH!")
+print(f"  Final: You {player_wins} - {computer_wins} Computer")
+print(f"  Total rounds: {round_num}")
+print("═" * 30)</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">The Loop Condition</p>
+          <p><code>while player_wins < wins_needed and computer_wins < wins_needed:</code></p>
+          <p>This loop keeps going as long as <strong>neither player</strong> has reached 3 wins. The moment either one hits 3, the condition becomes False and the loop stops.</p>
+          <p style="margin-bottom: 0;">Notice: ties don't count toward anyone's score. The game could theoretically go on for a very long time if there are many ties — and you can't predict how many rounds it'll take. That's why this is an inductive problem, not a deductive one.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 6: TRACKING STREAKS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Tracking Patterns in Results</h2>
+
+        <p>Scientists don't just observe — they look for patterns in their observations. Let's add streak tracking to see if there are any "hot streaks" or "cold streaks":</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Streak Tracker</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="38">import random
+
+choices = ["rock", "paper", "scissors"]
+
+player_wins = 0
+computer_wins = 0
+current_streak = 0
+best_streak = 0
+results = []
+
+print("ROCK PAPER SCISSORS — STREAK TRACKER")
+print("Type 'quit' to stop and see your stats")
+print("═" * 40)
+print()
+
+while True:
+    player = input("Rock, Paper, or Scissors? ").lower()
+    if player == "quit":
+        break
+    if player not in choices:
+        print("Invalid! Try rock, paper, or scissors.")
+        continue
+    
+    computer = random.choice(choices)
+    print(f"You: {player} | Computer: {computer} → ", end="")
+    
+    if player == computer:
+        print("Tie")
+        results.append("T")
+        current_streak = 0
+    elif (player == "rock" and computer == "scissors") or \
+         (player == "scissors" and computer == "paper") or \
+         (player == "paper" and computer == "rock"):
+        print("WIN ✓")
+        results.append("W")
+        player_wins = player_wins + 1
+        current_streak = current_streak + 1
+        if current_streak > best_streak:
+            best_streak = current_streak
+    else:
+        print("LOSS ✗")
+        results.append("L")
+        computer_wins = computer_wins + 1
+        current_streak = 0
+    print()
+
+# Show analysis
+total = len(results)
+if total > 0:
+    print("═" * 40)
+    print("GAME ANALYSIS")
+    print("═" * 40)
+    print(f"  Rounds: {total}")
+    print(f"  Wins: {player_wins} | Losses: {computer_wins} | Ties: {total - player_wins - computer_wins}")
+    print(f"  Win rate: {int(player_wins / total * 100)}%")
+    print(f"  Best win streak: {best_streak}")
+    print()
+    print("  Results: " + " ".join(results))
+    print()
+    if best_streak >= 3:
+        print("  🔥 Nice streak!")
+    if player_wins > computer_wins:
+        print("  🏆 You beat the computer overall!")
+    elif computer_wins > player_wins:
+        print("  💻 Computer had the edge this time.")
+    else:
+        print("  🤝 Perfectly balanced!")</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Tracking With Lists</p>
+          <p>We use <code>results.append("W")</code> to record each round's outcome. At the end, we have a complete history like <code>["W", "L", "T", "W", "W", "L"]</code>.</p>
+          <p><code>" ".join(results)</code> turns that list into a readable string: <code>"W L T W W L"</code>. The <code>.join()</code> command puts a space between each item.</p>
+          <p style="margin-bottom: 0;">The <strong>streak tracker</strong> works by counting consecutive wins. Every win increases <code>current_streak</code>. Any loss or tie resets it to 0. We track the <code>best_streak</code> by checking if the current streak beats the record.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 7: DRAWING CONCLUSIONS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Drawing Conclusions From Data</h2>
+
+        <p>Let's run a bigger experiment. Instead of playing manually, let's have the computer play against itself 1000 times and see what patterns emerge:</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · 1000-Game Experiment</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="35">import random
+
+choices = ["rock", "paper", "scissors"]
+games = 1000
+
+wins_1 = 0
+wins_2 = 0
+ties = 0
+
+# Track what each choice does
+rock_wins = 0
+paper_wins = 0
+scissors_wins = 0
+
+for i in range(games):
+    p1 = random.choice(choices)
+    p2 = random.choice(choices)
+    
+    if p1 == p2:
+        ties = ties + 1
+    elif (p1 == "rock" and p2 == "scissors") or \
+         (p1 == "scissors" and p2 == "paper") or \
+         (p1 == "paper" and p2 == "rock"):
+        wins_1 = wins_1 + 1
+        if p1 == "rock": rock_wins = rock_wins + 1
+        if p1 == "paper": paper_wins = paper_wins + 1
+        if p1 == "scissors": scissors_wins = scissors_wins + 1
+    else:
+        wins_2 = wins_2 + 1
+
+print(f"RESULTS OF {games} RANDOM GAMES")
+print("═" * 35)
+print(f"  Player 1 wins: {wins_1} ({int(wins_1/games*100)}%)")
+print(f"  Player 2 wins: {wins_2} ({int(wins_2/games*100)}%)")
+print(f"  Ties:          {ties} ({int(ties/games*100)}%)")
+print()
+print("WHEN PLAYER 1 WON, THEY USED:")
+total_p1_wins = rock_wins + paper_wins + scissors_wins
+if total_p1_wins > 0:
+    print(f"  Rock:     {rock_wins} ({int(rock_wins/total_p1_wins*100)}%)")
+    print(f"  Paper:    {paper_wins} ({int(paper_wins/total_p1_wins*100)}%)")
+    print(f"  Scissors: {scissors_wins} ({int(scissors_wins/total_p1_wins*100)}%)")
+print()
+print("CONCLUSION:")
+print("With random choices, each player wins")
+print("about 33% of the time, ties 33%.")
+print("No choice is better than another!")
+print("(This is what makes RPS fair.)")</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Inductive Reasoning in Action</p>
+          <p>We didn't <em>prove</em> that each player wins 33% of the time using math (that would be deductive reasoning). Instead, we <strong>observed 1000 games and noticed the pattern</strong>.</p>
+          <p>This is how induction works: observe, observe, observe, then conclude. The more observations, the more confident the conclusion.</p>
+          <p style="margin-bottom: 0;">Run it again — you'll get slightly different numbers each time, but they'll always hover around 33/33/33. That consistency across many trials is what makes the conclusion strong.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 8: BIASED STRATEGY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>What If the Computer Cheats?</h2>
+
+        <p>What if the computer's choices <em>aren't</em> perfectly random? What if it slightly favors rock? Could you detect that through observation?</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Detecting Bias</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="32">import random
+
+# SECRET: the computer is biased toward rock!
+# It picks rock 50% of the time, paper 25%, scissors 25%
+biased_choices = ["rock", "rock", "paper", "scissors"]
+
+rock_count = 0
+paper_count = 0
+scissors_count = 0
+games = 200
+
+for i in range(games):
+    choice = random.choice(biased_choices)
+    if choice == "rock":
+        rock_count = rock_count + 1
+    elif choice == "paper":
+        paper_count = paper_count + 1
+    else:
+        scissors_count = scissors_count + 1
+
+print(f"COMPUTER'S CHOICES OVER {games} GAMES")
+print("═" * 35)
+bar_r = "█" * int(rock_count / games * 30)
+bar_p = "█" * int(paper_count / games * 30)
+bar_s = "█" * int(scissors_count / games * 30)
+print(f"  Rock:     {bar_r} {int(rock_count/games*100)}%")
+print(f"  Paper:    {bar_p} {int(paper_count/games*100)}%")
+print(f"  Scissors: {bar_s} {int(scissors_count/games*100)}%")
+print()
+print("🔍 DETECTIVE ANALYSIS:")
+print("The computer picks rock about 50% of the time!")
+print("If you know this, what should YOU always pick?")
+print()
+print("Answer: PAPER! It beats rock, which the")
+print("computer chooses most often.")</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <p>This is a perfect example of inductive reasoning. You didn't know the computer was biased. But by observing many games, you detected the pattern. And once you know the pattern, you can exploit it — always pick paper to beat the computer's favorite move.</p>
+
+        <p>This is how scientists work: observe, detect patterns, form a theory, test it.</p>
+      </div>
+
+      <!-- ========== PART 9: COMPLETE TOURNAMENT ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>The Complete Tournament</h2>
+
+        <p>Let's build the final version — a polished tournament with everything we've learned:</p>
+
+        <div class="code-cell" id="cell-8">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Complete Tournament</span>
+            <button class="code-cell__run" onclick="runCode(8)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-8" rows="65">import random
+
+# === ROCK PAPER SCISSORS TOURNAMENT ===
+
+emojis = {"rock": "🪨", "paper": "📄", "scissors": "✂️"}
+choices = ["rock", "paper", "scissors"]
+
+print("╔══════════════════════════════╗")
+print("  🪨 📄 ✂️  TOURNAMENT")
+print("  Rock Paper Scissors")
+print("╚══════════════════════════════╝")
+print()
+
+wins_needed = int(input("First to how many wins? "))
+print()
+
+player_wins = 0
+computer_wins = 0
+round_num = 0
+results = []
+player_choices = {"rock": 0, "paper": 0, "scissors": 0}
+
+while player_wins < wins_needed and computer_wins < wins_needed:
+    round_num = round_num + 1
+    
+    # Score display
+    p_bar = "●" * player_wins + "○" * (wins_needed - player_wins)
+    c_bar = "●" * computer_wins + "○" * (wins_needed - computer_wins)
+    print(f"Round {round_num}  |  You [{p_bar}]  vs  [{c_bar}] CPU")
+    
+    player = input("Your move: ").lower()
+    
+    if player not in choices:
+        print("Pick rock, paper, or scissors!")
+        round_num = round_num - 1
+        print()
+        continue
+    
+    computer = random.choice(choices)
+    player_choices[player] = player_choices[player] + 1
+    
+    p_emoji = emojis[player]
+    c_emoji = emojis[computer]
+    
+    print(f"  {p_emoji}  vs  {c_emoji}")
+    
+    if player == computer:
+        print("  TIE — go again!")
+        results.append("T")
+        round_num = round_num - 1
+    elif (player == "rock" and computer == "scissors") or \
+         (player == "scissors" and computer == "paper") or \
+         (player == "paper" and computer == "rock"):
+        print("  YOU WIN this round! ✓")
+        player_wins = player_wins + 1
+        results.append("W")
+    else:
+        print("  CPU WINS this round! ✗")
+        computer_wins = computer_wins + 1
+        results.append("L")
+    
+    print()
+
+# Final results
+print("═" * 35)
+if player_wins == wins_needed:
+    print("  🏆 YOU WIN THE TOURNAMENT! 🏆")
+else:
+    print("  💻 COMPUTER WINS THE TOURNAMENT")
+print(f"  Final: You {player_wins} - {computer_wins} Computer")
+print("═" * 35)
+print()
+
+# Stats
+total = len(results)
+print("MATCH STATISTICS:")
+print(f"  Total rounds: {total}")
+print(f"  Results: {' '.join(results)}")
+print()
+print("YOUR CHOICES:")
+for move in choices:
+    count = player_choices[move]
+    if total > 0:
+        pct = int(count / total * 100)
+    else:
+        pct = 0
+    bar = "█" * int(pct / 5) + "░" * (20 - int(pct / 5))
+    print(f"  {emojis[move]} {move:8s} {bar} {pct}%")
+print()
+print("💡 Did you favor one choice? Humans often do!")
+print("   A truly random player picks each 33% of the time.")</textarea>
+          <div class="code-cell__output" id="output-8"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · Dictionaries Preview</p>
+          <p><code>emojis = {"rock": "🪨", "paper": "📄", "scissors": "✂️"}</code> is a <strong>dictionary</strong> — it pairs keys with values. <code>emojis["rock"]</code> gives <code>"🪨"</code>.</p>
+          <p>We also use <code>player_choices</code> as a dictionary to count how often you pick each move.</p>
+          <p style="margin-bottom: 0;">Dictionaries are like lists, but instead of positions (0, 1, 2) they use names ("rock", "paper", "scissors"). We'll explore them properly in a later lesson.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 10: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 10</p>
+        <h2>What You Just Did</h2>
+
+        <p>You built a game where the outcome is uncertain — you can't predict who will win any single round. But by playing many rounds, you can observe patterns (win rate, streaks, choice bias) and draw conclusions.</p>
+
+        <p><strong>That's inductive reasoning.</strong></p>
+
+        <p>Unlike deductive reasoning (Lesson 3), where you start with rules and reach guaranteed conclusions, inductive reasoning starts with <strong>observations</strong> and builds <strong>probable</strong> conclusions. The more observations, the stronger the conclusion — but it's never 100% certain.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">Some problems can't be solved by thinking ahead — you have to <em>try, observe, and learn</em>. Keep going until you have enough data to see the pattern. This is how scientists discover laws of nature, how athletes find winning strategies, and how you figure out what works and what doesn't.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>What's the difference between deductive reasoning ("if the rule is X, then Y must happen") and inductive reasoning ("I've observed X twenty times, so Y probably happens")?</li>
+          <li>After playing many rounds, did you notice yourself favoring a particular choice? Why do humans have trouble being truly random?</li>
+          <li>If the computer secretly favored scissors 60% of the time, what strategy would you use? How many rounds would you need to detect the bias?</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Number Guessing Game</p>
+          <p style="margin-bottom: 0;">The computer picks a random number between 1 and 100. The player guesses, and the computer says "too high" or "too low." Keep going until they guess correctly. Track how many guesses it took. Hint: <code>random.randint(1, 100)</code> picks a random whole number.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · Best of 5 With Stats</p>
+          <p style="margin-bottom: 0;">Modify the tournament so that after each match, the player can choose to play again. Track stats across <em>all</em> matches (total wins, total losses, matches won). Display an all-time record at the end.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Smart Computer</p>
+          <p style="margin-bottom: 0;">Make the computer track what the player picks most often, then choose the counter. If the player picks rock 50% of the time, the computer should start picking paper more. The computer learns from observation — it does inductive reasoning too!</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Inductive Reasoning</strong> — drawing conclusions from repeated observations. Ask: <em>"What pattern do I see after many trials? What can I conclude?"</em></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><code>while True: ... break</code> — a loop that runs until you tell it to stop</p>
+          <p><code>continue</code> — skip to the next loop iteration</p>
+          <p><code>not in</code> — check if something is NOT in a list</p>
+          <p><code>.join()</code> — turn a list into a string with a separator</p>
+          <p><strong>Game loops</strong> — the while True pattern for interactive programs</p>
+          <p><strong>Streak tracking</strong> — counting consecutive events</p>
+          <p><strong>Dictionaries preview</strong> — <code>{"key": "value"}</code> pairs</p>
+          <p style="margin-bottom: 0;"><strong>Win rate / statistics</strong> — calculating percentages from counts</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Lessons 1–7</p>
+          <p><strong>Decomposition</strong> — break big problems into small steps</p>
+          <p><strong>Abstraction</strong> — decide what details matter</p>
+          <p><strong>Deductive Reasoning</strong> — rules + facts = guaranteed conclusions</p>
+          <p><strong>Categorization</strong> — organize related items into groups</p>
+          <p><strong>Pattern Recognition</strong> — spot what repeats and what changes</p>
+          <p><strong>Automation</strong> — templates that handle repetitive tasks</p>
+          <p style="margin-bottom: 0;"><strong>Inductive Reasoning</strong> — observations → probable conclusions</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-06.html" class="lesson-nav__link">← Lesson 6</a>
+        <a href="lesson-08.html" class="lesson-nav__link">Lesson 8 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>
