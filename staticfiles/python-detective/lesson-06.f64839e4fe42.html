@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 6: Why Do the Same Thing 100 Times? – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 6 · Automation</p>
+        <h1 class="lesson__title">Why Do the Same Thing 100 Times When the Computer Can Do It?</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to spot repetitive tasks, create templates that handle variations automatically, and build a generator that produces personalized messages for every friend in your list.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>The Copy-Paste Problem</h2>
+        
+        <p>Imagine it's the end of the school year and you want to write a nice message to each of your friends. You could write each one from scratch:</p>
+
+        <p><em>"Hey Paige, you're awesome at volleyball and you always make me laugh. Have a great summer!"</em></p>
+        <p><em>"Hey Sadie, you're awesome at dancing and you always share your snacks. Have a great summer!"</em></p>
+        <p><em>"Hey Sam, you're awesome at robotics and you always help with homework. Have a great summer!"</em></p>
+
+        <p>See the problem? You're writing almost the same thing over and over, just changing a few details each time. With 3 friends, that's annoying. With 20 friends, that's painful. With 100? Forget it.</p>
+
+        <p>But look closer — there's a <strong>pattern</strong> here. The message is a <strong>template</strong> with slots that change:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Template</p>
+          <p style="margin-bottom: 0;">"Hey <strong>[NAME]</strong>, you're awesome at <strong>[SKILL]</strong> and you always <strong>[NICE THING]</strong>. Have a great summer!"</p>
+        </div>
+
+        <p>The structure stays the same. Only the details change. And that means a computer can do it — once you teach it the pattern.</p>
+      </div>
+
+      <!-- ========== PART 2: TEMPLATES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Building a Template</h2>
+
+        <p>We already know how to plug variables into text using <code>+</code> to join strings. Let's build a simple message template:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="8"># A message template with slots
+name = "Lena"
+skill = "swimming"
+nice_thing = "make me laugh"
+
+message = "Hey " + name + ", you're awesome at " + skill + " and you always " + nice_thing + ". Have a great summer!"
+
+print(message)</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <p>That works, but all those <code>+</code> signs make it hard to read. Python has a cleaner way to plug values into text:</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · f-strings</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="8"># The same thing, but much easier to read
+name = "Lena"
+skill = "swimming"
+nice_thing = "make me laugh"
+
+message = f"Hey {name}, you're awesome at {skill} and you always {nice_thing}. Have a great summer!"
+
+print(message)</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · f-strings</p>
+          <p>Put an <code>f</code> before the opening quotation mark: <code>f"..."</code></p>
+          <p>Inside the string, put any variable name in curly braces: <code>{name}</code></p>
+          <p>Python automatically replaces <code>{name}</code> with whatever is stored in the variable <code>name</code>.</p>
+          <p style="margin-bottom: 0;">This is called an <strong>f-string</strong> (the f stands for "formatted"). It does exactly the same thing as joining with <code>+</code>, but it's much easier to write and read.</p>
+        </div>
+
+        <p>Try changing the variables and running it again. The template stays the same — only the details change.</p>
+      </div>
+
+      <!-- ========== PART 3: TEMPLATES + LISTS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>Templates Meet Lists</h2>
+
+        <p>Now here's where it gets powerful. What if we have a <em>list</em> of names and want to generate a message for each one?</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="10">friends = ["Paige", "Sam", "Sadie", "Arielle", "Kimberly"]
+
+print("SUMMER MESSAGES")
+print("═" * 40)
+print()
+
+for name in friends:
+    message = f"Hey {name}! You're an amazing friend. Have the best summer ever! 🌞"
+    print(message)
+    print()</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <p>Five personalized messages from three lines of code inside the loop. If you had 50 friends in the list, it would still be three lines of code. That's the power of automation — <strong>the same pattern applied to different data</strong>.</p>
+      </div>
+
+      <!-- ========== PART 4: PARALLEL LISTS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Different Details for Different Friends</h2>
+
+        <p>The messages above are all the same except for the name. But what if we want <em>different</em> compliments for each friend? We can use multiple lists that line up — the first friend matches the first compliment, the second matches the second, and so on:</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Parallel Lists</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="18"># Lists that line up: position 0 matches position 0, etc.
+names =  ["Paige",   "Sam",     "Sadie",  "Oliver"]
+skills = ["golfing", "robotics", "dancing",  "boxing"]
+traits = ["make everyone laugh", "share your snacks", "help with homework", "stay calm under pressure"]
+
+print("PERSONALIZED MESSAGES")
+print("═" * 45)
+print()
+
+for i in range(len(names)):
+    name = names[i]
+    skill = skills[i]
+    trait = traits[i]
+    
+    print(f"Dear {name},")
+    print(f"You're incredible at {skill} and you always")
+    print(f"{trait}. Never change!")
+    print(f"— Your friend")
+    print()</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How Parallel Lists Work</p>
+          <p>We use <code>range(len(names))</code> to get the position numbers: 0, 1, 2, 3.</p>
+          <p>Then <code>names[i]</code>, <code>skills[i]</code>, and <code>traits[i]</code> all use the same position number <code>i</code>.</p>
+          <p>When <code>i</code> is 0: we get "Paige", "golfing", "make everyone laugh".</p>
+          <p>When <code>i</code> is 1: we get "Sam", "robotics", "share your snacks".</p>
+          <p style="margin-bottom: 0;">The lists must be the <strong>same length</strong> and in the <strong>same order</strong> for this to work. Position matters!</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 5: RANDOM TEMPLATES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Adding Variety With Randomness</h2>
+
+        <p>What if you don't want to write specific compliments for each friend? You can create a list of <em>templates</em> and pick randomly for each person:</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="22">import random
+
+friends = ["Paige", "Sam", "Sadie", "Oliver", "Kimberly"]
+
+# A list of compliment templates
+compliments = [
+    "you light up every room you walk into",
+    "your smile is contagious",
+    "you're braver than you think",
+    "you make the world more interesting",
+    "you're the kind of person everyone needs in their life",
+    "your creativity inspires me",
+    "you have the best ideas",
+    "you're going to do amazing things"
+]
+
+print("COMPLIMENT GENERATOR 💫")
+print("═" * 40)
+print()
+
+for friend in friends:
+    compliment = random.choice(compliments)
+    print(f"  {friend}: {compliment}.")
+    print()</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <p>Run it several times — each friend gets a different random compliment each time. Same pattern, infinite variety.</p>
+      </div>
+
+      <!-- ========== PART 6: BUILDING FROM INPUT ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Building the Generator From User Input</h2>
+
+        <p>Let's make it interactive — the user enters their friends, and the program generates compliments for all of them:</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="34">import random
+
+print("╔══════════════════════════════╗")
+print("  COMPLIMENT GENERATOR")
+print("  Spread some kindness!")
+print("╚══════════════════════════════╝")
+print()
+
+# Collect friends
+friends = []
+count = int(input("How many friends? "))
+
+for i in range(count):
+    name = input(f"Friend {i + 1}'s name: ")
+    friends.append(name)
+
+# Compliment templates
+openers = ["You know what's great about", "Here's the thing about", "Can we talk about how", "Everyone knows"]
+middles = [
+    "is the most genuine person",
+    "has the best energy",
+    "always knows the right thing to say",
+    "makes everything more fun",
+    "is secretly a genius",
+    "has the kindest heart"
+]
+closers = ["Never change! ✨", "The world needs more of that. 🌍", "And that's a fact. 💯", "Seriously. 🙌"]
+
+# Generate!
+print()
+print("═" * 40)
+print()
+
+for friend in friends:
+    opener = random.choice(openers)
+    middle = random.choice(middles)
+    closer = random.choice(closers)
+    print(f"  {opener} {friend}? {friend}")
+    print(f"  {middle}.")
+    print(f"  {closer}")
+    print()</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">The Three-Part Template</p>
+          <p>Instead of one list of compliments, we split it into three parts: openers, middles, and closers.</p>
+          <p>The program picks one random piece from each list and combines them.</p>
+          <p style="margin-bottom: 0;">With 4 openers × 6 middles × 4 closers, that's <strong>96 possible combinations</strong> — all from three short lists. This is how randomness creates variety from a small amount of content.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 7: THE MEME GENERATOR ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>The Meme Text Generator</h2>
+
+        <p>The same technique works for anything with a repeating pattern. Memes follow templates too — the same format, different content. Let's build a meme text generator:</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Meme Generator</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="36">import random
+
+print("MEME TEXT GENERATOR 😂")
+print("═" * 40)
+print()
+
+name = input("Enter a friend's name: ")
+thing_they_do = input("Something they always do: ")
+subject = input("A school subject they like: ")
+
+# Different meme formats
+memes = [
+    f"Nobody:\nAbsolutely nobody:\n{name}: *{thing_they_do}*",
+    
+    f"Teacher: Pay attention\n{name}: *thinking about {subject}*\nTeacher: ...\n{name}: *still thinking about {subject}*",
+    
+    f"POV: {name} just walked in and immediately started {thing_they_do}",
+    
+    f"{name}'s brain:\n10% — homework\n20% — food\n70% — {thing_they_do}",
+    
+    f"Roses are red,\nViolets are blue,\n{name} loves {subject},\nAnd {thing_they_do} too.",
+    
+    f"{name} before {subject}: 😴\n{name} during {subject}: 🤓\n{name} after {subject}: 😴"
+]
+
+# Pick and display 3 random memes
+print()
+print(f"MEMES ABOUT {name.upper()}")
+print("═" * 40)
+
+shown = []
+for i in range(3):
+    meme = random.choice(memes)
+    while meme in shown:
+        meme = random.choice(memes)
+    shown.append(meme)
+    
+    print()
+    print(f"--- Meme {i + 1} ---")
+    print(meme)
+
+print()
+print("═" * 40)
+print("Run again for different memes!")</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · Avoiding Repeats</p>
+          <p>We keep a list called <code>shown</code> to track which memes we've already displayed.</p>
+          <p><code>while meme in shown:</code> keeps picking a new random meme until it finds one we haven't shown yet.</p>
+          <p style="margin-bottom: 0;">This is a common pattern: using a <code>while</code> loop to keep trying until you get what you want. We learned <code>while</code> loops in Lesson 5 — here's a new use for them.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 8: THE BIGGER PICTURE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>Automation Is Everywhere</h2>
+
+        <p>What you just did — creating a template and filling it with different data automatically — is one of the most important ideas in programming. It's called <strong>automation</strong>, and it's the reason computers are useful.</p>
+
+        <p>Think about it:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Real-World Automation</p>
+          <p><strong>Email newsletters</strong> — the same template sent to thousands of people, each with their own name: "Hey {name}, check out our new…"</p>
+          <p><strong>Report cards</strong> — the same layout filled with each student's grades and comments</p>
+          <p><strong>Video game levels</strong> — the same basic patterns (enemies, platforms, coins) arranged differently each time</p>
+          <p style="margin-bottom: 0;"><strong>Social media feeds</strong> — the same card layout filled with different posts, images, and usernames</p>
+        </div>
+
+        <p>Every time you see the same structure with different content, someone automated it. They found the pattern, built a template, and let the computer fill in the details.</p>
+      </div>
+
+      <!-- ========== PART 9: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>What You Just Did</h2>
+
+        <p>You learned to spot the pattern in repetitive tasks ("the structure is the same, only the details change"), create templates that capture that structure, and use loops to fill in the details automatically.</p>
+
+        <p>This combines two thinking skills: <strong>pattern recognition</strong> (spotting the repeating structure) and <strong>abstraction</strong> (separating the template from the data). Together, they give you automation — the ability to do something once and have it work a thousand times.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">When you find yourself doing the same thing over and over with small variations, stop and ask: <em>"What's the pattern? What stays the same and what changes?"</em> Then build a template for the constant part and loop through the changing part. That's how you go from doing something 100 times to doing it once.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>Where else in your life do you see "the same pattern with different details"? (Hint: think about birthday cards, text messages, even your morning routine.)</li>
+          <li>Why is separating the template from the data useful? What happens when you want to change the message for everyone?</li>
+          <li>How does combining randomness with templates create variety? How many possible outputs can you get from small lists?</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Birthday Card Generator</p>
+          <p style="margin-bottom: 0;">Create a program that asks for a friend's name, age, and a hobby, then generates 3 different birthday card messages using templates. Use f-strings and include the age in a fun calculation (like "You've had {age * 365} days of being awesome!").</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · Mad Libs Generator</p>
+          <p style="margin-bottom: 0;">Ask the user for a noun, verb, adjective, and a place. Then fill them into 3 different story templates. Make the stories funny! Each template should use all four words.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Batch Message Sender</p>
+          <p style="margin-bottom: 0;">Build a program where the user can choose a message type (thank you / invitation / reminder), then enter a list of names. Generate the appropriate message for each person. Use different templates for each message type.</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Automation</strong> — spotting repetitive patterns and building templates that handle them automatically. Ask: <em>"Am I doing the same thing over and over? What stays the same and what changes?"</em></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><strong>f-strings</strong> — <code>f"Hello {name}"</code> — the clean way to plug variables into text</p>
+          <p><strong>Templates</strong> — a fixed structure with variable slots</p>
+          <p><strong>Parallel lists</strong> — multiple lists that line up by position</p>
+          <p><code>range(len(list))</code> — loop through positions to access multiple lists at once</p>
+          <p><strong>Combining randomness + templates</strong> — small lists, huge variety</p>
+          <p style="margin-bottom: 0;"><strong>Avoiding repeats</strong> — using a "shown" list to track what's been used</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Lessons 1–6</p>
+          <p><strong>Decomposition</strong> — break big problems into small steps</p>
+          <p><strong>Abstraction</strong> — decide what details matter</p>
+          <p><strong>Deductive Reasoning</strong> — design rules, gather facts, reach conclusions</p>
+          <p><strong>Categorization</strong> — organize related items into meaningful groups</p>
+          <p><strong>Pattern Recognition</strong> — spot what repeats, what stays the same, what changes</p>
+          <p style="margin-bottom: 0;"><strong>Automation</strong> — build templates that handle repetitive tasks</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-05.html" class="lesson-nav__link">← Lesson 5</a>
+        <a href="lesson-07.html" class="lesson-nav__link">Lesson 7 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 5: Pattern Detection – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 5 · Pattern Recognition</p>
+        <h1 class="lesson__title">Pattern Detection: The Superpower You Didn't Know You Had</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to spot patterns — what stays the same and what changes — and how to use Python to predict the future by following a pattern forward.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>You're Already a Pattern Machine</h2>
+        
+        <p>Your brain is constantly spotting patterns without you even noticing. You know that Monday comes after Sunday. You know that when your teacher says "OK, class…" in <em>that</em> tone, a test is coming.</p>
+
+        <p>Pattern recognition is <strong>noticing what repeats, what stays the same, and what changes</strong>. It's how you learned to read (letters make sounds, sounds make words). It's how you learned to catch a ball (it goes up, then it comes down). It's how you predict what's going to happen next.</p>
+
+        <p>Today we're going to use patterns to answer a question every kid has asked: <strong>"How long until I can afford that thing I want?"</strong> You know, things like 'Beats' headphones, a new PlayStation video game, 
+        or a new bicycle.</p>
+
+        <h3>The Saving Problem</h3>
+        <p>Imagine you want to buy a new game that costs $60. You get $10 per week in allowance. How many weeks until you can afford it?</p>
+
+        <p>You could figure this out in your head: 10, 20, 30, 40, 50, 60 — six weeks. But what if the numbers aren't so neat? What if you get $7.50 per week and the game costs $54.99? What if you already have some money saved?</p>
+
+        <p>That's where code comes in. Let's build a program that follows the pattern forward, week by week, until you reach your goal.</p>
+      </div>
+
+      <!-- ========== PART 2: SPOTTING THE PATTERN ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Spotting the Pattern</h2>
+
+        <p>Before we write any code, let's look at the pattern. If you start with $0 and save $10 per week:</p>
+
+        <table style="margin: 24px auto; border-collapse: collapse; font-family: 'Courier New', Courier, monospace;">
+          <tr>
+            <td style="width: 80px; padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center; font-weight: bold;">Week</td>
+            <td style="width: 80px; padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center; font-weight: bold;">Saved</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center;">0</td>
+            <td style="padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center;">$0</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center;">1</td>
+            <td style="padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center;">$10</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center;">2</td>
+            <td style="padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center;">$20</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center;">3</td>
+            <td style="padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center;">$30</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center;">4</td>
+            <td style="padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center;">$40</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center; color: rgba(0,0,0,0.45);">…</td>
+            <td style="padding: 8px 12px; border: 1px solid rgba(0,0,0,0.2); text-align: center; color: rgba(0,0,0,0.45);">…</td>
+          </tr>
+        </table>
+
+        <p>See the pattern? Two things are happening each week:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Pattern</p>
+          <p><strong>What stays the same:</strong> You add $10 every week. The <em>process</em> is identical each time.</p>
+          <p style="margin-bottom: 0;"><strong>What changes:</strong> The total amount saved. It grows by $10 each time.</p>
+        </div>
+
+        <p>This is what pattern recognition is: asking <em>"What repeats? What stays the same? What changes?"</em> Once you spot the pattern, you can follow it forward as far as you want.</p>
+
+        <p>Let's make Python follow this pattern with a <code>for</code> loop:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="10"># Follow the saving pattern week by week
+allowance = 10
+saved = 0
+
+print("SAVINGS TRACKER")
+print("─" * 25)
+
+for week in range(1, 7):
+    saved = saved + allowance
+    print("Week " + str(week) + ": $" + str(saved))</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · <code>range(1, 7)</code></p>
+          <p>In Lesson 4, we used <code>range(n)</code> which counts from 0. But <code>range(1, 7)</code> counts from 1 to 6 — it starts at the first number and stops <em>before</em> the second.</p>
+          <p style="margin-bottom: 0;">So <code>range(1, 7)</code> gives us: 1, 2, 3, 4, 5, 6. Perfect for week numbers.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 3: WHILE LOOPS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>When You Don't Know How Many Times to Repeat</h2>
+
+        <p>There's a problem with the code above: we told it to run for exactly 6 weeks. But what if we don't <em>know</em> how many weeks it'll take? What if the goal is $85 and the allowance is $12? You'd have to do the math first to figure out how many weeks — which defeats the purpose of having a computer do it for you.</p>
+
+        <p>What we really want to say is: <strong>"Keep going until the savings reach the goal."</strong> Python has a special loop for this: the <code>while</code> loop.</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · While Loop</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="14"># Keep saving UNTIL we reach the goal
+allowance = 10
+goal = 60
+saved = 0
+week = 0
+
+print("Goal: $" + str(goal))
+print("Weekly allowance: $" + str(allowance))
+print("─" * 25)
+
+while saved < goal:
+    week = week + 1
+    saved = saved + allowance
+    print("Week " + str(week) + ": $" + str(saved))
+
+print("─" * 25)
+print("You can afford it in " + str(week) + " weeks!")</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How <code>while</code> Works</p>
+          <p>A <code>for</code> loop runs a specific number of times: "do this 6 times."</p>
+          <p>A <code>while</code> loop keeps running <strong>as long as a condition is True</strong>: "keep going while savings are less than the goal."</p>
+          <p>Each time through the loop, Python checks the condition again. If it's still True, it runs the code inside again. If it's False, it stops and moves on.</p>
+          <p style="margin-bottom: 0;">This is perfect for patterns where you know the <em>rule</em> (add allowance each week) but not the <em>end point</em> (how many weeks).</p>
+        </div>
+
+        <p>Try changing the goal to <code>150</code> or the allowance to <code>7</code>. The program figures out the right number of weeks automatically because it follows the pattern until it reaches the answer.</p>
+      </div>
+
+      <!-- ========== PART 4: A DANGER WITH WHILE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>The Infinite Loop Trap</h2>
+
+        <p>There's one important thing to watch out with <code>while</code> loops. What if the condition <em>never</em> becomes False?</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Don't Actually Run This!</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="6"># THIS WOULD RUN FOREVER (but we've added a safety stop)
+# What's wrong? We never increase 'saved'!
+saved = 0
+goal = 60
+count = 0
+
+while saved < goal:
+    count = count + 1
+    print("Still saving... (stuck at $" + str(saved) + ")")
+    if count > 5:
+        print("STOPPED! This would go on forever.")
+        print("We forgot to add money each week!")
+        break</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">The Lesson</p>
+          <p>If <code>saved</code> never increases, it's always less than <code>goal</code>, so the loop <strong>never stops</strong>. This is called an <strong>infinite loop</strong>.</p>
+          <p>The fix is simple: make sure something inside your loop is <strong>moving toward the end condition</strong>. In our savings tracker, <code>saved = saved + allowance</code> makes <code>saved</code> grow, which eventually makes <code>saved < goal</code> become False.</p>
+          <p style="margin-bottom: 0;"><code>break</code> is an emergency exit — it forces the loop to stop immediately. We used it here as a safety net.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 5: MAKING IT VISUAL ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Visualizing the Pattern</h2>
+
+        <p>Numbers are good, but pictures are better. Let's use the string multiplication trick from Lesson 2 to make a visual progress bar each week:</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Visual Savings Tracker</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="23">allowance = 10
+goal = 60
+saved = 0
+week = 0
+
+print("SAVINGS TRACKER")
+print("Goal: $" + str(goal) + " | Allowance: $" + str(allowance) + "/week")
+print("═" * 40)
+
+while saved < goal:
+    week = week + 1
+    saved = saved + allowance
+    
+    # Calculate progress
+    percent = int((saved / goal) * 100)
+    bar_length = int((saved / goal) * 20)
+    bar = "█" * bar_length + "░" * (20 - bar_length)
+    
+    print("Wk " + str(week) + " [$" + str(saved) + "] " + bar + " " + str(percent) + "%")
+
+print("═" * 40)
+print("🎉 GOAL REACHED in " + str(week) + " weeks!")
+print("   You saved $" + str(saved) + " total.")</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How the Progress Bar Works</p>
+          <p><code>saved / goal</code> gives us how far along we are as a decimal (0.5 = halfway).</p>
+          <p>Multiply by 100 to get a percentage. Multiply by 20 to get the bar length (out of 20 blocks).</p>
+          <p><code>int()</code> rounds down to a whole number — you can't have half a block.</p>
+          <p style="margin-bottom: 0;">This is actually pattern recognition applied to <em>display</em> — we noticed that the progress fraction can be scaled to any visual size.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 6: MORE COMPLEX PATTERNS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Patterns With Surprises</h2>
+
+        <p>Real life isn't as neat as "$10 every week." What about birthday money? What if you spend some? Let's make our tracker handle a more realistic pattern:</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Savings With Extras</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="28">allowance = int(input("Weekly allowance: $"))
+goal = int(input("Savings goal: $"))
+already_saved = int(input("Already saved: $"))
+
+saved = already_saved
+week = 0
+
+print()
+print("SAVINGS PLAN")
+print("═" * 40)
+
+if saved >= goal:
+    print("You already have enough! Go buy it!")
+else:
+    while saved < goal:
+        week = week + 1
+        saved = saved + allowance
+        
+        # Birthday money in week 4!
+        if week == 4:
+            saved = saved + 25
+            print("Wk " + str(week) + ": $" + str(saved) + " (+ $25 birthday money! 🎂)")
+        else:
+            percent = int((saved / goal) * 100)
+            bar = "█" * int((saved / goal) * 20) + "░" * (20 - int((saved / goal) * 20))
+            print("Wk " + str(week) + ": $" + str(saved) + " " + bar + " " + str(percent) + "%")
+    
+    print("═" * 40)
+    print("🎉 GOAL REACHED in " + str(week) + " weeks!")
+    extra = saved - goal
+    if extra > 0:
+        print("   You'll have $" + str(extra) + " left over.")</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <p>The birthday money at week 4 breaks the simple pattern — but the <em>overall</em> pattern (savings grow each week) stays the same. This is an important insight: <strong>real patterns usually have exceptions</strong>. The skill is recognizing the overall pattern despite the noise.</p>
+      </div>
+
+      <!-- ========== PART 7: PATTERNS IN NUMBERS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Spotting Number Patterns</h2>
+
+        <p>Pattern recognition isn't just about savings. Let's practice spotting patterns in numbers — this is the same skill that helps in math, science, music, and everywhere else:</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Number Patterns</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="20"># Pattern 1: Counting by 3s
+print("Counting by 3s:")
+number = 3
+for i in range(8):
+    print(number, end=" ")
+    number = number + 3
+print()
+print()
+
+# Pattern 2: Doubling
+print("Doubling from 1:")
+number = 1
+for i in range(8):
+    print(number, end=" ")
+    number = number * 2
+print()
+print()
+
+# Pattern 3: What's this pattern?
+print("Mystery pattern:")
+number = 1
+for i in range(8):
+    print(number, end=" ")
+    number = number + i + 1</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · <code>end=" "</code></p>
+          <p>Normally, <code>print()</code> adds a new line after each output. Adding <code>end=" "</code> tells Python to put a space instead, so everything prints on the same line.</p>
+          <p style="margin-bottom: 0;">Can you figure out the mystery pattern? Run it and look at the numbers. What's the rule? Hint: look at the <em>gaps</em> between the numbers — what pattern do you see there?</p>
+        </div>
+
+        <p>The mystery pattern gives 1, 2, 4, 7, 11, 16, 22, 29. The gaps are 1, 2, 3, 4, 5, 6, 7 — each gap grows by 1. Patterns can be about the <em>change</em> itself, not just the numbers.</p>
+      </div>
+
+      <!-- ========== PART 8: THE COMPLETE MONEY TRACKER ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>The Complete Money Goal Tracker</h2>
+
+        <p>Let's put everything together into a polished program that tracks savings toward any goal:</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Complete Money Goal Tracker</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="52">import random
+
+# === MONEY GOAL TRACKER ===
+
+print("╔══════════════════════════════╗")
+print("  MONEY GOAL TRACKER")
+print("  How long until you can")
+print("  afford what you want?")
+print("╚══════════════════════════════╝")
+print()
+
+# Get the details
+item = input("What are you saving for? ")
+goal = int(input("How much does it cost? $"))
+saved = int(input("How much do you have now? $"))
+allowance = int(input("Weekly allowance: $"))
+
+if saved >= goal:
+    print()
+    print("You already have $" + str(saved) + "!")
+    print("Go get that " + item + "! 🎉")
+else:
+    week = 0
+    
+    # Fun motivational messages
+    messages = [
+        "Keep going!",
+        "You got this!",
+        "Almost there...",
+        "Saving is a superpower!",
+        "Future you says thanks!"
+    ]
+    
+    print()
+    print("SAVING FOR: " + item.upper() + " ($" + str(goal) + ")")
+    print("═" * 40)
+    
+    while saved < goal:
+        week = week + 1
+        saved = saved + allowance
+        
+        # Cap at goal for display
+        display_saved = saved
+        if display_saved > goal:
+            display_saved = goal
+        
+        # Progress bar
+        percent = int((display_saved / goal) * 100)
+        bar_len = int((display_saved / goal) * 20)
+        if bar_len > 20:
+            bar_len = 20
+        bar = "█" * bar_len + "░" * (20 - bar_len)
+        
+        print("Wk " + str(week).rjust(2) + ": $" + str(saved).rjust(4) + " " + bar + " " + str(percent) + "%")
+    
+    print("═" * 40)
+    print()
+    print("🎉 You can buy " + item + " in " + str(week) + " weeks!")
+    
+    extra = saved - goal
+    if extra > 0:
+        print("   You'll have $" + str(extra) + " left over.")
+    
+    print()
+    print("💡 " + random.choice(messages))</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · <code>.rjust()</code></p>
+          <p><code>str(week).rjust(2)</code> right-aligns the number in a space of 2 characters. So week <code>1</code> becomes <code>" 1"</code> and week <code>10</code> stays <code>"10"</code>. This makes the columns line up neatly.</p>
+          <p style="margin-bottom: 0;">It's a small thing, but it makes the output much easier to read — and noticing that the columns were misaligned is itself pattern recognition!</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 9: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>What You Just Did</h2>
+
+        <p>You spotted a pattern (savings grow by a fixed amount each week), expressed it in code (a <code>while</code> loop that adds allowance each time), and followed it forward to predict the future (how many weeks until you reach the goal).</p>
+
+        <p><strong>That's pattern recognition.</strong></p>
+
+        <p>This is how scientists predict weather (patterns in temperature and pressure), how musicians create songs (patterns in rhythm and melody), and how athletes improve (patterns in their performance data). Spotting patterns lets you understand the present and predict the future.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">When you see something happening repeatedly, ask: <em>"What stays the same? What changes? And if I follow this pattern forward, what happens next?"</em> That's how you turn observation into prediction — and prediction into power.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>What's the difference between a <code>for</code> loop and a <code>while</code> loop? When would you use each one?</li>
+          <li>Can you think of a pattern in your daily life that you could track with a program?</li>
+          <li>Why is it important to check that a <code>while</code> loop will eventually stop?</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Countdown Timer</p>
+          <p style="margin-bottom: 0;">Ask the user for a starting number, then count down to 0 using a <code>while</code> loop. At 0, print "BLASTOFF! 🚀". Bonus: print a warning when it reaches 3.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · Savings With Spending</p>
+          <p style="margin-bottom: 0;">Modify the money tracker so the user can also enter a weekly spending amount (like $3 on snacks). Subtract that each week. Does it take longer to reach the goal? How much longer?</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Growth Pattern</p>
+          <p style="margin-bottom: 0;">Start with 1 grain of rice. Each day, the amount doubles. Use a <code>while</code> loop to find out how many days until you have over 1,000,000 grains. Display each day's total. The answer might surprise you!</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Pattern Recognition</strong> — spotting what repeats, what stays the same, and what changes. Ask: <em>"What's the pattern here, and where does it lead?"</em></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><code>while</code> loops — repeat as long as a condition is True</p>
+          <p><code>for</code> vs <code>while</code> — use <code>for</code> when you know the count, <code>while</code> when you know the condition</p>
+          <p><code>range(start, stop)</code> — count from start to stop-1</p>
+          <p><strong>Infinite loops</strong> — what happens when the condition never becomes False</p>
+          <p><code>break</code> — emergency exit from a loop</p>
+          <p><code>end=" "</code> — print on the same line</p>
+          <p><code>.rjust(n)</code> — right-align text in a space of n characters</p>
+          <p style="margin-bottom: 0;"><strong>Accumulator pattern</strong> — building up a total inside a loop: <code>saved = saved + allowance</code></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Lessons 1–5</p>
+          <p><strong>Decomposition</strong> — break big problems into small steps</p>
+          <p><strong>Abstraction</strong> — decide what details matter</p>
+          <p><strong>Deductive Reasoning</strong> — design rules, gather facts, reach conclusions</p>
+          <p><strong>Categorization</strong> — organize related items into meaningful groups</p>
+          <p style="margin-bottom: 0;"><strong>Pattern Recognition</strong> — spot what repeats, what stays the same, what changes</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-04.html" class="lesson-nav__link">← Lesson 4</a>
+        <a href="lesson-06.html" class="lesson-nav__link">Lesson 6 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>
