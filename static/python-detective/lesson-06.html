@@ -46,9 +46,9 @@
         
         <p>Imagine it's the end of the school year and you want to write a nice message to each of your friends. You could write each one from scratch:</p>
 
-        <p><em>"Hey Alex, you're awesome at soccer and you always make me laugh. Have a great summer!"</em></p>
-        <p><em>"Hey Sam, you're awesome at drawing and you always share your snacks. Have a great summer!"</em></p>
-        <p><em>"Hey Jordan, you're awesome at coding and you always help with homework. Have a great summer!"</em></p>
+        <p><em>"Hey Paige, you're awesome at volleyball and you always make me laugh. Have a great summer!"</em></p>
+        <p><em>"Hey Sadie, you're awesome at dancing and you always share your snacks. Have a great summer!"</em></p>
+        <p><em>"Hey Sam, you're awesome at robotics and you always help with homework. Have a great summer!"</em></p>
 
         <p>See the problem? You're writing almost the same thing over and over, just changing a few details each time. With 3 friends, that's annoying. With 20 friends, that's painful. With 100? Forget it.</p>
 
@@ -75,8 +75,8 @@
             <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
           </div>
           <textarea class="code-cell__editor" id="editor-1" rows="8"># A message template with slots
-name = "Alex"
-skill = "soccer"
+name = "Lena"
+skill = "swimming"
 nice_thing = "make me laugh"
 
 message = "Hey " + name + ", you're awesome at " + skill + " and you always " + nice_thing + ". Have a great summer!"
@@ -93,8 +93,8 @@ print(message)</textarea>
             <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
           </div>
           <textarea class="code-cell__editor" id="editor-2" rows="8"># The same thing, but much easier to read
-name = "Alex"
-skill = "soccer"
+name = "Lena"
+skill = "swimming"
 nice_thing = "make me laugh"
 
 message = f"Hey {name}, you're awesome at {skill} and you always {nice_thing}. Have a great summer!"
@@ -126,7 +126,7 @@ print(message)</textarea>
             <span class="code-cell__label">Python</span>
             <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
           </div>
-          <textarea class="code-cell__editor" id="editor-3" rows="10">friends = ["Alex", "Sam", "Jordan", "Taylor", "Riley"]
+          <textarea class="code-cell__editor" id="editor-3" rows="10">friends = ["Paige", "Sam", "Sadie", "Arielle", "Kimberly"]
 
 print("SUMMER MESSAGES")
 print("═" * 40)
@@ -155,8 +155,8 @@ for name in friends:
             <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
           </div>
           <textarea class="code-cell__editor" id="editor-4" rows="18"># Lists that line up: position 0 matches position 0, etc.
-names =  ["Alex",   "Sam",     "Jordan",  "Taylor"]
-skills = ["soccer", "drawing", "coding",  "singing"]
+names =  ["Paige",   "Sam",     "Sadie",  "Oliver"]
+skills = ["golfing", "robotics", "dancing",  "boxing"]
 traits = ["make everyone laugh", "share your snacks", "help with homework", "stay calm under pressure"]
 
 print("PERSONALIZED MESSAGES")
@@ -180,8 +180,8 @@ for i in range(len(names)):
           <p class="info-box__label">How Parallel Lists Work</p>
           <p>We use <code>range(len(names))</code> to get the position numbers: 0, 1, 2, 3.</p>
           <p>Then <code>names[i]</code>, <code>skills[i]</code>, and <code>traits[i]</code> all use the same position number <code>i</code>.</p>
-          <p>When <code>i</code> is 0: we get "Alex", "soccer", "make everyone laugh".</p>
-          <p>When <code>i</code> is 1: we get "Sam", "drawing", "share your snacks".</p>
+          <p>When <code>i</code> is 0: we get "Paige", "golfing", "make everyone laugh".</p>
+          <p>When <code>i</code> is 1: we get "Sam", "robotics", "share your snacks".</p>
           <p style="margin-bottom: 0;">The lists must be the <strong>same length</strong> and in the <strong>same order</strong> for this to work. Position matters!</p>
         </div>
       </div>
@@ -200,7 +200,7 @@ for i in range(len(names)):
           </div>
           <textarea class="code-cell__editor" id="editor-5" rows="22">import random
 
-friends = ["Alex", "Sam", "Jordan", "Taylor", "Riley"]
+friends = ["Paige", "Sam", "Sadie", "Oliver", "Kimberly"]
 
 # A list of compliment templates
 compliments = [
