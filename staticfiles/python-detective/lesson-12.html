@@ -209,7 +209,7 @@ print("═" * 25)</textarea>
           </div>
           <textarea class="code-cell__editor" id="editor-5" rows="28"># A dictionary of friends, each with their own details
 friends = {
-    "Alex": {
+    "Lena": {
         "age": 11,
         "hobby": "soccer",
         "level": 9
@@ -219,7 +219,7 @@ friends = {
         "hobby": "drawing",
         "level": 7
     },
-    "Jordan": {
+    "Zoe": {
         "age": 11,
         "hobby": "coding",
         "level": 8
@@ -227,7 +227,7 @@ friends = {
 }
 
 # Access nested data
-print(f"Alex's hobby: {friends['Alex']['hobby']}")
+print(f"Lena's hobby: {friends['Lena']['hobby']}")
 print(f"Sam's age: {friends['Sam']['age']}")
 print()
 
@@ -240,9 +240,9 @@ for name, info in friends.items():
 
         <div class="info-box">
           <p class="info-box__label">Reading Nested Dictionaries</p>
-          <p><code>friends["Alex"]</code> gives us Alex's whole dictionary: <code>{"age": 11, "hobby": "soccer", "level": 9}</code></p>
-          <p><code>friends["Alex"]["hobby"]</code> goes one level deeper: <code>"soccer"</code></p>
-          <p style="margin-bottom: 0;">Think of it as drilling down: "In the friends dictionary, find Alex. In Alex's dictionary, find hobby." Each pair of square brackets goes one level deeper.</p>
+          <p><code>friends["Lena"]</code> gives us Lena's whole dictionary: <code>{"age": 11, "hobby": "soccer", "level": 9}</code></p>
+          <p><code>friends["Lena"]["hobby"]</code> goes one level deeper: <code>"soccer"</code></p>
+          <p style="margin-bottom: 0;">Think of it as drilling down: "In the friends dictionary, find Lena. In Lena's dictionary, find hobby." Each pair of square brackets goes one level deeper.</p>
         </div>
       </div>
 
@@ -513,7 +513,7 @@ header("Thanks for playing!", char="─")</textarea>
           <textarea class="code-cell__editor" id="editor-9" rows="30"># Model 1: Contact list (name → number)
 contacts = {
     "Mom": "555-0101",
-    "Alex": "555-0202",
+    "Lena": "555-0202",
     "Pizza Place": "555-0303"
 }
 print("Mom's number:", contacts["Mom"])
@@ -529,16 +529,16 @@ print(f"Potions left: {inventory['health_potion']}")
 
 # Model 3: Social network (person → list of friends)
 network = {
-    "Alex": ["Sam", "Jordan", "Taylor"],
-    "Sam": ["Alex", "Riley"],
-    "Jordan": ["Alex", "Taylor"]
+    "Lena": ["Sam", "Zoe", "Arielle"],
+    "Sam": ["Lena", "Aidan"],
+    "Zoe": ["Lena", "Arielle"]
 }
-print(f"Alex's friends: {network['Alex']}")
-print(f"Alex has {len(network['Alex'])} friends")
+print(f"Lena's friends: {network['Lena']}")
+print(f"Lena has {len(network['Lena'])} friends")
 
 # Check if two people are friends
-if "Sam" in network["Alex"]:
-    print("Alex and Sam are connected!")</textarea>
+if "Sam" in network["Lena"]:
+    print("Lena and Sam are connected!")</textarea>
           <div class="code-cell__output" id="output-9"></div>
         </div>
 
@@ -581,7 +581,7 @@ if "Sam" in network["Alex"]:
         
         <div class="info-box">
           <p class="info-box__label">Challenge 2 · Multi-Player Voting</p>
-          <p style="margin-bottom: 0;">Expand the "Would You Rather?" game to support multiple players. Track each player's choices in a dictionary: <code>{"Alex": ["A", "B", "A"], "Sam": ["B", "B", "A"]}</code>. At the end, show where players agreed and disagreed.</p>
+          <p style="margin-bottom: 0;">Expand the "Would You Rather?" game to support multiple players. Track each player's choices in a dictionary: <code>{"Lena": ["A", "B", "A"], "Sam": ["B", "B", "A"]}</code>. At the end, show where players agreed and disagreed.</p>
         </div>
         
         <div class="info-box">

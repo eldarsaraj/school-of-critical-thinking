@@ -121,11 +121,11 @@ def respond(name, message, style="friendly"):
         return f"{name}: That's cool! 😊"
 
 # ONE function, FIVE different behaviors
-print(respond("Alex", "I got an A", "enthusiastic"))
+print(respond("Lena", "I got an A", "enthusiastic"))
 print(respond("Sam", "I got an A", "sarcastic"))
-print(respond("Jordan", "I got an A", "supportive"))
-print(respond("Taylor", "I got an A", "chill"))
-print(respond("Riley", "I got an A"))  # uses default: "friendly"</textarea>
+print(respond("Zoe", "I got an A", "supportive"))
+print(respond("Arielle", "I got an A", "chill"))
+print(respond("Aidan", "I got an A"))  # uses default: "friendly"</textarea>
           <div class="code-cell__output" id="output-2"></div>
         </div>
 
@@ -175,9 +175,9 @@ def compliment(name, intensity="medium"):
     
     return random.choice(options)
 
-print(compliment("Alex", "mild"))
-print(compliment("Alex", "medium"))
-print(compliment("Alex", "spicy"))</textarea>
+print(compliment("Lena", "mild"))
+print(compliment("Lena", "medium"))
+print(compliment("Lena", "spicy"))</textarea>
           <div class="code-cell__output" id="output-3"></div>
         </div>
 
@@ -223,7 +223,7 @@ def roast(name, quirk, level="mild"):
     return random.choice(templates)
 
 # Test it out
-name = "Alex"
+name = "Lena"
 quirk = "talks to their plants"
 
 print("ROAST INTENSITY TEST")
@@ -240,7 +240,7 @@ print(roast(name, quirk, "spicy"))</textarea>
           <div class="code-cell__output" id="output-4"></div>
         </div>
 
-        <p>Try changing the name and quirk. "Sam" who "eats cereal for dinner." "Jordan" who "takes 200 selfies before posting one." The same function handles any combination.</p>
+        <p>Try changing the name and quirk. "Sam" who "eats cereal for dinner." "Zoe" who "takes 200 selfies before posting one." The same function handles any combination.</p>
       </div>
 
       <!-- ========== PART 6: COMPLIMENT MODE ========== -->
@@ -279,7 +279,7 @@ def generate(name, trait, mode="compliment", level="medium"):
     return random.choice(options)
 
 # Same function, different modes
-name = "Alex"
+name = "Lena"
 trait = "dancing"
 
 print(f"About {name}'s {trait}:")
@@ -490,7 +490,7 @@ header("Run again for different results! 🎲")</textarea>
 
         <h3>Thinking Questions</h3>
         <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
-          <li>What's the difference between a specific solution ("make Alex a birthday card") and a general solution ("make anyone a birthday card given their name and age")?</li>
+          <li>What's the difference between a specific solution ("make Lena a birthday card") and a general solution ("make anyone a birthday card given their name and age")?</li>
           <li>When is it better to have a specific function versus a general one? (Hint: sometimes simpler is better.)</li>
           <li>Can you think of a real-world tool that's "general purpose"? What makes it adaptable?</li>
         </ol>

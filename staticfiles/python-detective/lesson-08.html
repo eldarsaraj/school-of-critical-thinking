@@ -108,16 +108,16 @@ def greet(name):
     print()
 
 # Call it with different names
-greet("Alex")
+greet("Lena")
 greet("Sam")
-greet("Jordan")</textarea>
+greet("Zoe")</textarea>
           <div class="code-cell__output" id="output-2"></div>
         </div>
 
         <div class="info-box">
           <p class="info-box__label">What's a Parameter?</p>
           <p><code>def greet(name):</code> — the word <code>name</code> inside the parentheses is called a <strong>parameter</strong>. It's a placeholder — a blank slot that gets filled in when you call the function.</p>
-          <p><code>greet("Alex")</code> — <code>"Alex"</code> is the <strong>argument</strong> — the actual value that fills the slot. Inside the function, <code>name</code> becomes <code>"Alex"</code>.</p>
+          <p><code>greet("Lena")</code> — <code>"Lena"</code> is the <strong>argument</strong> — the actual value that fills the slot. Inside the function, <code>name</code> becomes <code>"Lena"</code>.</p>
           <p style="margin-bottom: 0;">Same function, different input, different output. The <em>structure</em> stays the same (that's abstraction!), but the <em>details</em> change.</p>
         </div>
 
@@ -135,9 +135,9 @@ def introduce(name, hobby):
     print(f"Ask {name} about {hobby} sometime!")
     print()
 
-introduce("Alex", "soccer")
+introduce("Lena", "soccer")
 introduce("Sam", "drawing")
-introduce("Taylor", "coding")</textarea>
+introduce("Arielle", "coding")</textarea>
           <div class="code-cell__output" id="output-3"></div>
         </div>
 
@@ -263,11 +263,11 @@ def show_profile(name, hobby, level):
     print()
 
 # Use it for any friend
-show_profile("Alex", "Soccer", 8)
+show_profile("Lena", "Soccer", 8)
 show_profile("Sam", "Drawing", 6)
-show_profile("Jordan", "Coding", 9)
-show_profile("Taylor", "Music", 7)
-show_profile("Riley", "Gaming", 10)</textarea>
+show_profile("Zoe", "Coding", 9)
+show_profile("Arielle", "Music", 7)
+show_profile("Aidan", "Gaming", 10)</textarea>
           <div class="code-cell__output" id="output-7"></div>
         </div>
 
@@ -353,10 +353,10 @@ def show_player(name, skill_level):
 
 print("PLAYER STATS:")
 print("─" * 40)
-show_player("Alex", 9)
+show_player("Lena", 9)
 show_player("Sam", 6)
-show_player("Jordan", 4)
-show_player("Taylor", 7)</textarea>
+show_player("Zoe", 4)
+show_player("Arielle", 7)</textarea>
           <div class="code-cell__output" id="output-9"></div>
         </div>
 
@@ -444,11 +444,11 @@ print()
 
 # Set up the group chat
 friends = [
-    ["Alex", enthusiastic],
+    ["Lena", enthusiastic],
     ["Sam", sarcastic],
-    ["Jordan", supportive],
-    ["Taylor", chill],
-    ["Riley", funny]
+    ["Zoe", supportive],
+    ["Arielle", chill],
+    ["Aidan", funny]
 ]
 
 print("GROUP CHAT: The Squad 🫶")
@@ -491,12 +491,12 @@ print("📱 You left the chat.")</textarea>
 
         <div class="info-box">
           <p class="info-box__label">How This Works</p>
-          <p>Each friend is stored as a list: <code>["Alex", enthusiastic]</code>. The second item is the <strong>function itself</strong> — not a call to the function (no parentheses), but a reference to it.</p>
-          <p><code>friend_style(friend_name, your_message)</code> calls whichever function is stored for that friend. Alex always gets <code>enthusiastic()</code>, Sam always gets <code>sarcastic()</code>, etc.</p>
+          <p>Each friend is stored as a list: <code>["Lena", enthusiastic]</code>. The second item is the <strong>function itself</strong> — not a call to the function (no parentheses), but a reference to it.</p>
+          <p><code>friend_style(friend_name, your_message)</code> calls whichever function is stored for that friend. Lena always gets <code>enthusiastic()</code>, Sam always gets <code>sarcastic()</code>, etc.</p>
           <p style="margin-bottom: 0;">This is a powerful idea: <strong>functions can be stored in variables and lists</strong>, just like numbers and text. This lets us treat behavior as data.</p>
         </div>
 
-        <p>Try sending a few messages. Type "quit" to exit. Notice how each friend's personality stays consistent — Alex is always hyped, Sam is always sarcastic. The functions define their character.</p>
+        <p>Try sending a few messages. Type "quit" to exit. Notice how each friend's personality stays consistent — Lena is always hyped, Sam is always sarcastic. The functions define their character.</p>
       </div>
 
       <!-- ========== PART 9: REFLECTION ========== -->
@@ -506,7 +506,7 @@ print("📱 You left the chat.")</textarea>
 
         <p>You learned to take a series of steps, give them a name, and reuse them whenever you want. That's what functions are — <strong>named, reusable shortcuts</strong>.</p>
 
-        <p>This is abstraction at its most powerful. When you use <code>show_profile("Alex", "Soccer", 8)</code>, you don't need to think about <em>how</em> the profile gets displayed — the bars, the formatting, the borders. You just say "show the profile" and it happens. The complexity is hidden behind a simple name.</p>
+        <p>This is abstraction at its most powerful. When you use <code>show_profile("Lena", "Soccer", 8)</code>, you don't need to think about <em>how</em> the profile gets displayed — the bars, the formatting, the borders. You just say "show the profile" and it happens. The complexity is hidden behind a simple name.</p>
 
         <p>This is how every big program in the world works. A video game isn't one giant block of code — it's thousands of functions, each handling one small task: <code>draw_player()</code>, <code>check_collision()</code>, <code>play_sound()</code>, <code>update_score()</code>. Each one is simple on its own. Together, they create something complex.</p>
 
@@ -558,7 +558,7 @@ print("📱 You left the chat.")</textarea>
           <p class="info-box__label">Python Concepts</p>
           <p><code>def function_name():</code> — define a function</p>
           <p><strong>Parameters</strong> — inputs a function receives: <code>def greet(name):</code></p>
-          <p><strong>Arguments</strong> — actual values you pass in: <code>greet("Alex")</code></p>
+          <p><strong>Arguments</strong> — actual values you pass in: <code>greet("Lena")</code></p>
           <p><code>return</code> — send a value back from a function</p>
           <p><strong>Calling functions</strong> — use the name with parentheses: <code>say_hello()</code></p>
           <p><strong>Functions calling functions</strong> — building complex behavior from simple pieces</p>

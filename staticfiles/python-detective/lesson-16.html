@@ -111,7 +111,7 @@ def show_stats(player):
     print(f"  ╚═══════════════════════════╝\n")
 
 # Test it
-player = create_player("Alex")
+player = create_player("Lena")
 show_stats(player)</textarea>
           <div class="code-cell__output" id="output-1"></div>
         </div>
@@ -163,7 +163,7 @@ show_stats(player)</textarea>
     return chosen
 
 # Test it
-player = {"name": "Alex", "energy": 10, "reputation": 5, "grades": 5, "friendship": 5, "choices_made": []}
+player = {"name": "Lena", "energy": 10, "reputation": 5, "grades": 5, "friendship": 5, "choices_made": []}
 
 make_choice(player, "Your alarm goes off. It's 6:30 AM.", [
     {"text": "Jump out of bed immediately", "effects": {"energy": -1}, "message": "Early bird! You have extra time."},
@@ -239,7 +239,7 @@ def scene_hallway(player):
         ])
 
 # Test two scenes
-player = {"name": "Alex", "energy": 8, "reputation": 5, "grades": 5, "friendship": 5, "choices_made": []}
+player = {"name": "Lena", "energy": 8, "reputation": 5, "grades": 5, "friendship": 5, "choices_made": []}
 
 scene_morning(player)
 scene_hallway(player)
@@ -520,8 +520,8 @@ time_of_day = 7  # starts at 7 AM
 
 # IDEA 3: Add NPC relationships (Lesson 12: nested dicts)
 npcs = {
-    "bestfriend": {"name": "Jordan", "trust": 8, "mood": "happy"},
-    "rival": {"name": "Blake", "trust": 2, "mood": "jealous"},
+    "bestfriend": {"name": "Zoe", "trust": 8, "mood": "happy"},
+    "rival": {"name": "Oliver", "trust": 2, "mood": "jealous"},
     "teacher": {"name": "Ms. Chen", "trust": 5, "mood": "neutral"}
 }
 
