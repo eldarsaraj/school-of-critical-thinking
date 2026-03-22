@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 11: Patterns Inside Patterns – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 11 · Hierarchical Thinking</p>
+        <h1 class="lesson__title">Patterns Inside Patterns: When Your Brain Goes Inception Mode</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to think in layers — patterns that contain other patterns — and use nested loops to create 2D art, grids, and text banners.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>Patterns All the Way Down</h2>
+        
+        <p>Think about your school. It has a structure:</p>
+
+        <p><em>School → Grades → Classes → Students</em></p>
+
+        <p>Each grade contains multiple classes. Each class contains multiple students. It's a <strong>pattern inside a pattern</strong> — a hierarchy.</p>
+
+        <p>Or think about a calendar: Year → Months → Weeks → Days. Or a video game: World → Levels → Rooms → Enemies. Or even a song: Album → Tracks → Verses → Lines.</p>
+
+        <p>When patterns are <em>nested inside</em> other patterns, we call that <strong>hierarchical thinking</strong>. And in code, we handle it with one of the most powerful tools in programming: <strong>loops inside loops</strong>.</p>
+      </div>
+
+      <!-- ========== PART 2: YOUR FIRST NESTED LOOP ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>A Loop Inside a Loop</h2>
+
+        <p>Let's start simple. What if we want to print a grid — rows and columns?</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="8"># A simple grid: 3 rows, 5 columns
+for row in range(3):
+    line = ""
+    for col in range(5):
+        line = line + "⬜ "
+    print(line)</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How Nested Loops Work</p>
+          <p>The <strong>outer loop</strong> (<code>for row in range(3)</code>) runs 3 times — once for each row.</p>
+          <p>For <strong>each row</strong>, the <strong>inner loop</strong> (<code>for col in range(5)</code>) runs 5 times — once for each column.</p>
+          <p>So the inner code runs 3 × 5 = <strong>15 times</strong> total.</p>
+          <p style="margin-bottom: 0;">Think of it like this: "For each row, build a line by going through each column. Then print that line and move to the next row."</p>
+        </div>
+
+        <p>Try changing <code>range(3)</code> and <code>range(5)</code> to different numbers. Try replacing <code>"⬜ "</code> with <code>"🟦 "</code> or <code>"★ "</code>.</p>
+      </div>
+
+      <!-- ========== PART 3: MAKING PATTERNS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>Patterns From Position</h2>
+
+        <p>A plain grid is boring. The magic happens when the <strong>content depends on the position</strong>. The <code>row</code> and <code>col</code> variables tell us exactly where we are:</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Checkerboard</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="10"># Checkerboard: alternate colors based on position
+for row in range(6):
+    line = ""
+    for col in range(6):
+        if (row + col) % 2 == 0:
+            line = line + "⬛ "
+        else:
+            line = line + "⬜ "
+    print(line)</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">The Trick</p>
+          <p><code>(row + col) % 2 == 0</code> checks whether the sum of row and column is even. If even → dark square. If odd → light square.</p>
+          <p style="margin-bottom: 0;">This creates the checkerboard pattern because adjacent squares always have different even/odd sums. Position 0,0 (sum 0, even) is dark. Position 0,1 (sum 1, odd) is light. And so on.</p>
+        </div>
+
+        <p>Let's try more patterns:</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Triangle</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="7"># Triangle: each row has one more block than the last
+for row in range(7):
+    line = ""
+    for col in range(row + 1):
+        line = line + "🟦 "
+    print(line)</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Diamond</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="13"># Diamond pattern
+size = 5
+
+# Top half (including middle)
+for row in range(size):
+    spaces = " " * (size - row - 1)
+    stars = "✦ " * (row * 2 + 1)
+    print(spaces + stars)
+
+# Bottom half
+for row in range(size - 2, -1, -1):
+    spaces = " " * (size - row - 1)
+    stars = "✦ " * (row * 2 + 1)
+    print(spaces + stars)</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · <code>range(start, stop, step)</code></p>
+          <p><code>range(size - 2, -1, -1)</code> counts <strong>backwards</strong>. The third number is the step: -1 means count down by 1.</p>
+          <p>So if size is 5, this gives: 3, 2, 1, 0 — perfect for the bottom half of the diamond.</p>
+          <p style="margin-bottom: 0;">The diamond is actually two triangles — one pointing down, one pointing up. Decomposition strikes again!</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 4: EMOJI ART ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Building Emoji Art</h2>
+
+        <p>Now let's use nested loops to create actual pictures. The trick is using a <strong>grid</strong> — a list of strings where each character represents one pixel:</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Pixel Art</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="24"># Define the art as a grid
+# Each character maps to an emoji
+heart = [
+    "..XX.XX..",
+    ".XXXXXXX.",
+    "XXXXXXXXX",
+    "XXXXXXXXX",
+    ".XXXXXXX.",
+    "..XXXXX..",
+    "...XXX...",
+    "....X....",
+]
+
+# Render it!
+colors = {
+    "X": "❤️",
+    ".": "  "
+}
+
+print("PIXEL ART:")
+print()
+for row in heart:
+    line = ""
+    for char in row:
+        line = line + colors.get(char, "  ")
+    print(line)</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <p>Each string in the list is a row. Each character in the string is a column. The nested loop goes through every single position: for each row, for each character in that row.</p>
+
+        <p>Try changing <code>"❤️"</code> to <code>"🟪"</code> or <code>"🔥"</code>. Or try designing your own shape by editing the grid.</p>
+      </div>
+
+      <!-- ========== PART 5: TEXT BANNER ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Block Letter Banners</h2>
+
+        <p>Let's build something you can actually show off — a program that turns any text into a giant block-letter banner. First, we need to define what each letter looks like:</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Block Letters</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="38"># Each letter is 5 rows tall, defined as a list of strings
+letters = {
+    "H": ["#   #", "#   #", "#####", "#   #", "#   #"],
+    "I": ["#####", "  #  ", "  #  ", "  #  ", "#####"],
+    "!": ["  #  ", "  #  ", "  #  ", "     ", "  #  "],
+    " ": ["     ", "     ", "     ", "     ", "     "],
+    "A": [" ### ", "#   #", "#####", "#   #", "#   #"],
+    "B": ["#### ", "#   #", "#### ", "#   #", "#### "],
+    "C": [" ####", "#    ", "#    ", "#    ", " ####"],
+    "E": ["#####", "#    ", "###  ", "#    ", "#####"],
+    "L": ["#    ", "#    ", "#    ", "#    ", "#####"],
+    "O": [" ### ", "#   #", "#   #", "#   #", " ### "],
+    "Y": ["#   #", " # # ", "  #  ", "  #  ", "  #  "],
+    "W": ["#   #", "#   #", "# # #", "## ##", "#   #"],
+    "R": ["#### ", "#   #", "#### ", "#  # ", "#   #"],
+    "D": ["#### ", "#   #", "#   #", "#   #", "#### "],
+}
+
+# The text to display
+text = "HI!"
+
+# Build the banner row by row
+# All letters are 5 rows tall, so we go through rows 0-4
+print()
+for row in range(5):
+    line = ""
+    for char in text:
+        if char.upper() in letters:
+            line = line + letters[char.upper()][row] + "  "
+        else:
+            line = line + "     " + "  "
+    print(line)
+print()</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How the Banner Works</p>
+          <p>The outer loop goes through rows 0 to 4 (since each letter is 5 rows tall).</p>
+          <p>The inner loop goes through each character in the text.</p>
+          <p>For each character at each row, we look up that letter's pattern and grab the right row: <code>letters[char][row]</code>.</p>
+          <p style="margin-bottom: 0;">This is hierarchical: for each <strong>row of the banner</strong>, we assemble pieces from each <strong>letter's corresponding row</strong>. Two levels of organization working together.</p>
+        </div>
+
+        <p>Try changing <code>text = "HI!"</code> to <code>"HELLO"</code> or <code>"WORLD"</code> or <code>"ACE"</code> (only letters that are defined will work).</p>
+      </div>
+
+      <!-- ========== PART 6: STYLED BANNERS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Adding Style</h2>
+
+        <p>The <code>#</code> characters work, but let's make it customizable — the user chooses what character to use:</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Styled Banner</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="40">letters = {
+    "H": ["#   #", "#   #", "#####", "#   #", "#   #"],
+    "I": ["#####", "  #  ", "  #  ", "  #  ", "#####"],
+    "!": ["  #  ", "  #  ", "  #  ", "     ", "  #  "],
+    " ": ["     ", "     ", "     ", "     ", "     "],
+    "A": [" ### ", "#   #", "#####", "#   #", "#   #"],
+    "B": ["#### ", "#   #", "#### ", "#   #", "#### "],
+    "C": [" ####", "#    ", "#    ", "#    ", " ####"],
+    "E": ["#####", "#    ", "###  ", "#    ", "#####"],
+    "L": ["#    ", "#    ", "#    ", "#    ", "#####"],
+    "O": [" ### ", "#   #", "#   #", "#   #", " ### "],
+    "Y": ["#   #", " # # ", "  #  ", "  #  ", "  #  "],
+    "W": ["#   #", "#   #", "# # #", "## ##", "#   #"],
+    "R": ["#### ", "#   #", "#### ", "#  # ", "#   #"],
+    "D": ["#### ", "#   #", "#   #", "#   #", "#### "],
+    "S": [" ####", "#    ", " ### ", "    #", "#### "],
+    "T": ["#####", "  #  ", "  #  ", "  #  ", "  #  "],
+    "N": ["#   #", "##  #", "# # #", "#  ##", "#   #"],
+    "G": [" ####", "#    ", "# ###", "#   #", " ### "],
+    "P": ["#### ", "#   #", "#### ", "#    ", "#    "],
+}
+
+def make_banner(text, fill="█", empty=" "):
+    """Turn text into a block letter banner."""
+    result = ""
+    for row in range(5):
+        line = ""
+        for char in text.upper():
+            if char in letters:
+                pattern = letters[char][row]
+                styled = pattern.replace("#", fill).replace(" ", empty)
+                line = line + styled + empty * 2
+            else:
+                line = line + empty * 7
+        result = result + line + "\n"
+    return result
+
+# Let the user customize it
+text = input("Enter text: ")
+fill = input("Fill character (or press enter for █): ")
+if fill == "":
+    fill = "█"
+
+print()
+print(make_banner(text, fill))</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <p>Try entering "HI" with fill character "🔥". Or "ACE" with "★". Or "BODY" with "X". The same function handles any text and any style.</p>
+      </div>
+
+      <!-- ========== PART 7: ANIMATED PATTERNS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Pattern Borders and Frames</h2>
+
+        <p>Let's use nested loops to build decorative frames around content:</p>
+
+        <div class="code-cell" id="cell-8">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Framed Message</span>
+            <button class="code-cell__run" onclick="runCode(8)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-8" rows="30">def framed_message(text, border_emoji="⭐", width=25):
+    """Display text inside a decorative emoji border."""
+    
+    # Top border
+    top = ""
+    for i in range(width):
+        top = top + border_emoji
+    print(top)
+    
+    # Empty border row
+    middle_empty = border_emoji + "  " * (width - 2) + "  " + border_emoji
+    print(middle_empty)
+    
+    # Text row — centered
+    padding = width * 2 - 4 - len(text)
+    left_pad = padding // 2
+    right_pad = padding - left_pad
+    text_row = border_emoji + " " * left_pad + text + " " * right_pad + border_emoji
+    print(text_row)
+    
+    # Empty border row
+    print(middle_empty)
+    
+    # Bottom border
+    print(top)
+
+framed_message("YOU ARE AWESOME", "⭐", 15)
+print()
+framed_message("HELLO WORLD", "🌟", 12)
+print()
+framed_message("PYTHON ROCKS", "🔥", 14)</textarea>
+          <div class="code-cell__output" id="output-8"></div>
+        </div>
+      </div>
+
+      <!-- ========== PART 8: THE COMPLETE ART GENERATOR ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>The Complete Emoji Art Studio</h2>
+
+        <div class="code-cell" id="cell-9">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Emoji Art Studio</span>
+            <button class="code-cell__run" onclick="runCode(9)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-9" rows="72">import random
+
+# === BLOCK LETTER DATA ===
+letters = {
+    "A": [" ### ", "#   #", "#####", "#   #", "#   #"],
+    "B": ["#### ", "#   #", "#### ", "#   #", "#### "],
+    "C": [" ####", "#    ", "#    ", "#    ", " ####"],
+    "D": ["#### ", "#   #", "#   #", "#   #", "#### "],
+    "E": ["#####", "#    ", "###  ", "#    ", "#####"],
+    "G": [" ####", "#    ", "# ###", "#   #", " ### "],
+    "H": ["#   #", "#   #", "#####", "#   #", "#   #"],
+    "I": ["#####", "  #  ", "  #  ", "  #  ", "#####"],
+    "L": ["#    ", "#    ", "#    ", "#    ", "#####"],
+    "N": ["#   #", "##  #", "# # #", "#  ##", "#   #"],
+    "O": [" ### ", "#   #", "#   #", "#   #", " ### "],
+    "P": ["#### ", "#   #", "#### ", "#    ", "#    "],
+    "R": ["#### ", "#   #", "#### ", "#  # ", "#   #"],
+    "S": [" ####", "#    ", " ### ", "    #", "#### "],
+    "T": ["#####", "  #  ", "  #  ", "  #  ", "  #  "],
+    "W": ["#   #", "#   #", "# # #", "## ##", "#   #"],
+    "Y": ["#   #", " # # ", "  #  ", "  #  ", "  #  "],
+    "!": ["  #  ", "  #  ", "  #  ", "     ", "  #  "],
+    " ": ["     ", "     ", "     ", "     ", "     "],
+}
+
+# === TOOLKIT FUNCTIONS ===
+
+def make_banner(text, fill="█", empty=" "):
+    result = ""
+    for row in range(5):
+        line = ""
+        for char in text.upper():
+            if char in letters:
+                pattern = letters[char][row]
+                line = line + pattern.replace("#", fill).replace(" ", empty) + empty * 2
+            else:
+                line = line + empty * 7
+        result = result + line + "\n"
+    return result
+
+def make_pattern(rows, cols, emoji1, emoji2, style="checker"):
+    result = ""
+    for r in range(rows):
+        line = ""
+        for c in range(cols):
+            if style == "checker":
+                line = line + (emoji1 if (r + c) % 2 == 0 else emoji2)
+            elif style == "stripes":
+                line = line + (emoji1 if r % 2 == 0 else emoji2)
+            elif style == "columns":
+                line = line + (emoji1 if c % 2 == 0 else emoji2)
+            elif style == "border":
+                if r == 0 or r == rows - 1 or c == 0 or c == cols - 1:
+                    line = line + emoji1
+                else:
+                    line = line + emoji2
+            else:
+                line = line + emoji1
+        result = result + line + "\n"
+    return result
+
+# === MAIN PROGRAM ===
+
+print("╔══════════════════════════════╗")
+print("  🎨 EMOJI ART STUDIO")
+print("╚══════════════════════════════╝")
+print()
+print("What do you want to create?")
+print("  1 — Block letter banner")
+print("  2 — Pattern art")
+print("  3 — Surprise me!")
+print()
+choice = input("Your choice (1/2/3): ")
+
+if choice == "1":
+    text = input("Text to display: ")
+    fill = input("Fill character (enter for █): ")
+    if fill == "":
+        fill = "█"
+    print()
+    print(make_banner(text, fill))
+
+elif choice == "2":
+    print("Styles: checker, stripes, columns, border")
+    style = input("Pattern style: ").lower()
+    e1 = input("Emoji 1 (e.g. 🟦): ")
+    e2 = input("Emoji 2 (e.g. ⬜): ")
+    if e1 == "": e1 = "🟦"
+    if e2 == "": e2 = "⬜"
+    print()
+    print(make_pattern(6, 10, e1, e2, style))
+
+elif choice == "3":
+    words = ["COOL", "EPIC", "WHOA", "NICE", "WOW"]
+    fills = ["★", "█", "●", "■", "#"]
+    emojis = ["🔥", "💜", "🟦", "⬛", "🟡", "🌟", "❤️"]
+    styles = ["checker", "stripes", "border", "columns"]
+    
+    print()
+    print(make_pattern(3, 12, random.choice(emojis), random.choice(emojis), random.choice(styles)))
+    print(make_banner(random.choice(words), random.choice(fills)))
+    print(make_pattern(3, 12, random.choice(emojis), random.choice(emojis), random.choice(styles)))
+
+else:
+    print("Unknown choice!")</textarea>
+          <div class="code-cell__output" id="output-9"></div>
+        </div>
+
+        <p>Try all three options. Option 3 generates random art every time — run it several times for different results.</p>
+      </div>
+
+      <!-- ========== PART 9: HOW NESTING SCALES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>Thinking in Layers</h2>
+
+        <p>Here's the key insight about nested loops: <strong>each level of nesting adds a dimension</strong>.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Nesting = Dimensions</p>
+          <p><strong>One loop</strong> — goes through a list (1D: a line of items)</p>
+          <p><strong>Two loops</strong> — rows × columns (2D: a grid, like the art we made)</p>
+          <p><strong>Three loops</strong> — pages × rows × columns (3D: like a book of grids)</p>
+          <p style="margin-bottom: 0;">Every level multiplies the work. 10 × 10 = 100 operations. 10 × 10 × 10 = 1,000. This is why nested loops are powerful — but also why you need to be careful about how many levels you use.</p>
+        </div>
+
+        <div class="code-cell" id="cell-10">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Three Levels</span>
+            <button class="code-cell__run" onclick="runCode(10)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-10" rows="15">import random
+
+# Three levels: sections → rows → columns
+emojis = ["🟥", "🟧", "🟨", "🟩", "🟦", "🟪"]
+
+for section in range(3):
+    color = emojis[section * 2]
+    alt = emojis[section * 2 + 1]
+    
+    print(f"Section {section + 1}:")
+    for row in range(3):
+        line = "  "
+        for col in range(8):
+            line = line + (color if (row + col) % 2 == 0 else alt)
+        print(line)
+    print()</textarea>
+          <div class="code-cell__output" id="output-10"></div>
+        </div>
+
+        <p>Three sections, each with 3 rows of 8 columns. The outer loop picks the section (and its colors). The middle loop handles rows. The inner loop handles columns. Three levels of pattern, all working together.</p>
+      </div>
+
+      <!-- ========== PART 10: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 10</p>
+        <h2>What You Just Did</h2>
+
+        <p>You learned to think in <strong>layers</strong> — patterns that contain other patterns. The outer loop controls the big structure (which row), the inner loop controls the details (which column in that row). Together, they create 2D patterns from 1D code.</p>
+
+        <p>This is how screens work (every image is a grid of pixels), how spreadsheets work (rows and columns), how game worlds are built (rooms in a grid), and how buildings are organized (floors × rooms × furniture).</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">When you see something complex, ask: <em>"Is this a pattern inside a pattern?"</em> Look for the layers. The outer layer controls the big structure. The inner layer handles the details. Once you see the hierarchy, the complexity becomes manageable.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>If a nested loop has an outer loop of 10 and inner loop of 20, how many times does the inner code run? What about 100 × 100?</li>
+          <li>Can you think of something in real life that has three levels of hierarchy? (Example: country → state → city)</li>
+          <li>Why does the outer loop control rows and the inner loop control columns? Could you reverse them? What would change?</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Multiplication Table</p>
+          <p style="margin-bottom: 0;">Use nested loops to print a multiplication table (1-10). The outer loop is rows, the inner loop is columns. Format it neatly with <code>.rjust(4)</code> so numbers line up.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · More Letters</p>
+          <p style="margin-bottom: 0;">Add at least 5 more letters to the block letter dictionary (try F, J, K, M, U). Test them by typing your full name in the banner generator.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Custom Pixel Art</p>
+          <p style="margin-bottom: 0;">Design your own pixel art by creating a grid (like the heart example) with at least 3 different characters that map to different emojis. Make something cool — a star, a face, your initial, or anything you can imagine on an 8×8 grid.</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Hierarchical Thinking</strong> — recognizing patterns within patterns. Understanding that complex structures have layers: outer structures contain inner structures. Ask: <em>"What's the big pattern, and what patterns are inside it?"</em></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><strong>Nested loops</strong> — a loop inside a loop (creates 2D grids)</p>
+          <p><strong>Building strings row by row</strong> — constructing each line in the inner loop, printing in the outer loop</p>
+          <p><code>range(start, stop, step)</code> — counting backwards with negative step</p>
+          <p><strong>Position-based logic</strong> — using <code>row</code> and <code>col</code> to determine content</p>
+          <p><code>(row + col) % 2</code> — the checkerboard trick</p>
+          <p><strong>Grid data</strong> — representing 2D art as lists of strings</p>
+          <p style="margin-bottom: 0;"><code>.replace()</code> — swapping characters in a string for styling</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-10.html" class="lesson-nav__link">← Lesson 10</a>
+        <a href="lesson-12.html" class="lesson-nav__link">Lesson 12 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>

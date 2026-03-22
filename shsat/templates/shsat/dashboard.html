@@ -1,0 +1,331 @@
+{% extends "shsat/base_shsat.html" %}
+{% load static %}
+
+{% block title %}Dashboard — SHSAT Workshop{% endblock %}
+{% block tab_dashboard %}active{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">
+  {% if parent.child_nickname %}{{ parent.child_nickname }}'s Dashboard{% else %}Dashboard{% endif %}
+</h1>
+<p class="shsat-page-subtitle">Track your progress toward your target schools.</p>
+
+<!-- Stat cards -->
+<div class="shsat-stat-grid">
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__value">{{ latest_composite|default:"—" }}</div>
+    <div class="shsat-stat-card__label">Latest composite</div>
+  </div>
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__value">{{ attempts|length }}</div>
+    <div class="shsat-stat-card__label">Tests completed</div>
+  </div>
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__value">{{ manual_scores|length }}</div>
+    <div class="shsat-stat-card__label">Scores logged</div>
+  </div>
+</div>
+
+<!-- Score chart -->
+{% if score_history %}
+<p class="shsat-section-title">Score history</p>
+<div class="shsat-chart-wrap">
+  <canvas id="scoreChart"></canvas>
+  <div class="shsat-cutoff-pills" id="cutoffPills">
+    <span class="shsat-cutoff-pills__label">Show cutoff for:</span>
+    {% for c in cutoffs %}
+    <button class="shsat-cutoff-pill"
+            data-cutoff="{{ c.cutoff_score }}"
+            data-school="{{ c.school_short }}">{{ c.school_short }}</button>
+    {% endfor %}
+  </div>
+</div>
+{{ score_history|json_script:"scoreChartData" }}
+{{ cutoffs_list|json_script:"cutoffsData" }}
+{% endif %}
+
+<!-- School placement heatmap -->
+<p class="shsat-section-title">School placement (2025 cutoffs)</p>
+{% if placement_data %}
+<p style="font-size:13px;color:rgba(0,0,0,0.4);margin:-8px 0 16px;">
+  Based on your latest composite score of <strong>{{ latest_composite }}</strong>. Colour indicates distance from cutoff.
+</p>
+<div class="shsat-heat-grid">
+  {% for p in placement_data %}
+  <div class="shsat-heat-tile" style="background:{{ p.heat_bg }};" title="{{ p.school_name }} — cutoff {{ p.cutoff }}">
+    <div class="shsat-heat-tile__school">{{ p.school_short }}</div>
+    <div class="shsat-heat-tile__gap">{% if p.gap >= 0 %}+{% endif %}{{ p.gap }}</div>
+    <div class="shsat-heat-tile__cutoff">cutoff {{ p.cutoff }}</div>
+  </div>
+  {% endfor %}
+</div>
+<p style="font-size:12px;color:rgba(0,0,0,0.35);margin:12px 0 36px;">
+  Estimated only. Actual SHSAT scaling varies by year and is not published by the DOE.
+</p>
+{% else %}
+<p style="color:rgba(0,0,0,0.5);font-size:15px;margin-bottom:36px;">
+  Complete a practice test or <a href="{% url 'shsat_log_score' %}">log a score</a> to see your placement.
+</p>
+{% endif %}
+
+<!-- Recent attempts bar chart -->
+{% if attempts_chart_data %}
+<p class="shsat-section-title" style="margin-top:32px;">Practice test scores</p>
+<div class="shsat-chart-wrap">
+  <canvas id="attemptsChart"></canvas>
+</div>
+{{ attempts_chart_data|json_script:"attemptsChartData" }}
+{% endif %}
+
+<!-- Recent manual scores -->
+{% if manual_scores %}
+<p class="shsat-section-title" style="margin-top:32px;">Logged scores</p>
+<table class="shsat-table">
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>Date</th>
+      <th>ELA</th>
+      <th>Math</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for m in manual_scores %}
+    <tr>
+      <td>{{ m.source_name }}</td>
+      <td>{{ m.date|date:"M d, Y" }}</td>
+      <td>{{ m.ela_correct }}/{{ m.ela_total }}</td>
+      <td>{{ m.math_correct }}/{{ m.math_total }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
+  <a href="{% url 'shsat_test_list' %}" class="shsat-btn">Take a practice test</a>
+  <a href="{% url 'shsat_log_score' %}" class="shsat-btn shsat-btn--outline">Log a score</a>
+</div>
+
+{% if score_history %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<script>
+(function () {
+  const history = JSON.parse(document.getElementById("scoreChartData").textContent);
+  const ctx = document.getElementById("scoreChart").getContext("2d");
+
+  const chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: history.map(d => d.date),
+      datasets: [
+        {
+          label: "Composite",
+          data: history.map(d => d.composite),
+          borderColor: "#161a1d",
+          backgroundColor: "transparent",
+          pointBackgroundColor: "#161a1d",
+          borderWidth: 2,
+          borderDash: [6, 3],
+          tension: 0.2,
+          pointRadius: 4,
+        },
+        {
+          label: "ELA",
+          data: history.map(d => d.ela),
+          borderColor: "#274c77",
+          backgroundColor: "transparent",
+          pointBackgroundColor: "#274c77",
+          borderWidth: 2,
+          tension: 0.2,
+          pointRadius: 4,
+        },
+        {
+          label: "Math",
+          data: history.map(d => d.math),
+          borderColor: "#a4161a",
+          backgroundColor: "transparent",
+          pointBackgroundColor: "#a4161a",
+          borderWidth: 2,
+          tension: 0.2,
+          pointRadius: 4,
+        },
+      ]
+    },
+    options: {
+      responsive: true,
+      aspectRatio: 2.5,
+      plugins: {
+        legend: {
+          display: true,
+          position: "top",
+          align: "end",
+          labels: { boxWidth: 14, font: { size: 12 }, padding: 18 }
+        },
+        annotation: { annotations: {} }
+      },
+      scales: {
+        y: {
+          min: 100,
+          max: 700,
+          grid: { color: "rgba(0,0,0,0.06)" },
+          ticks: { font: { size: 12 }, stepSize: 100 }
+        },
+        x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      }
+    }
+  });
+
+  // School cutoff pill buttons
+  let activeSchool = null;
+  document.querySelectorAll(".shsat-cutoff-pill").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const cutoff = parseInt(this.dataset.cutoff);
+      const school = this.dataset.school;
+
+      if (activeSchool === school) {
+        // Toggle off
+        activeSchool = null;
+        chart.options.plugins.annotation.annotations = {};
+        document.querySelectorAll(".shsat-cutoff-pill").forEach(b => b.classList.remove("active"));
+      } else {
+        activeSchool = school;
+        chart.options.plugins.annotation.annotations = {
+          cutoffLine: {
+            type: "line",
+            yMin: cutoff,
+            yMax: cutoff,
+            borderColor: "rgba(180,40,30,0.7)",
+            borderWidth: 2,
+            borderDash: [6, 4],
+            label: {
+              content: school + " " + cutoff,
+              display: true,
+              position: "end",
+              backgroundColor: "rgba(180,40,30,0.7)",
+              color: "#fff",
+              padding: { x: 6, y: 3 },
+              font: { size: 11, weight: "600" },
+            }
+          }
+        };
+        document.querySelectorAll(".shsat-cutoff-pill").forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+      }
+      chart.update();
+    });
+  });
+})();
+
+// ---------------------------------------------------------------------------
+// Attempts stacked bar chart
+// ---------------------------------------------------------------------------
+(function () {
+  const el = document.getElementById("attemptsChartData");
+  if (!el) return;
+  const data = JSON.parse(el.textContent);
+  if (!data.length) return;
+  const hasTime = data.some(d => d.minutes !== null);
+  const ctx2 = document.getElementById("attemptsChart").getContext("2d");
+  const datasets = [
+    {
+      label: "ELA",
+      data: data.map(d => d.ela),
+      backgroundColor: "#274c77",
+      borderWidth: 0,
+      barThickness: 48,
+      yAxisID: "y",
+      order: 2,
+    },
+    {
+      label: "Math",
+      data: data.map(d => d.math),
+      backgroundColor: "#a4161a",
+      borderWidth: 0,
+      barThickness: 48,
+      yAxisID: "y",
+      order: 2,
+    },
+  ];
+  if (hasTime) {
+    datasets.push({
+      label: "Time (min)",
+      type: "line",
+      data: data.map(d => d.minutes),
+      borderColor: "rgba(100,80,0,0.7)",
+      backgroundColor: "transparent",
+      pointBackgroundColor: "rgba(100,80,0,0.7)",
+      borderWidth: 2,
+      borderDash: [4, 3],
+      tension: 0.2,
+      pointRadius: 4,
+      yAxisID: "yTime",
+      order: 1,
+    });
+  }
+  new Chart(ctx2, {
+    type: "bar",
+    data: {
+      labels: data.map(d => d.label),
+      datasets,
+    },
+    options: {
+      responsive: true,
+      aspectRatio: 2.5,
+      plugins: {
+        legend: {
+          display: true,
+          position: "top",
+          align: "end",
+          labels: { boxWidth: 14, font: { size: 12 }, padding: 18 }
+        },
+        tooltip: {
+          callbacks: {
+            footer: (items) => {
+              const d = data[items[0].dataIndex];
+              const lines = ["Composite: " + d.composite];
+              if (d.minutes !== null) lines.push("Time: " + d.minutes + " min");
+              return lines.join("\n");
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          grid: { display: false },
+          ticks: { font: { size: 11 } }
+        },
+        y: {
+          stacked: true,
+          min: 0,
+          max: 700,
+          grid: { color: "rgba(0,0,0,0.06)" },
+          ticks: { font: { size: 12 }, stepSize: 100 }
+        },
+        yTime: {
+          display: hasTime,
+          position: "right",
+          min: 0,
+          max: 180,
+          grid: { display: false },
+          ticks: {
+            font: { size: 11 },
+            color: "rgba(100,80,0,0.7)",
+            callback: v => v + "m",
+          },
+          title: {
+            display: true,
+            text: "Time (min)",
+            color: "rgba(100,80,0,0.7)",
+            font: { size: 11 },
+          }
+        }
+      }
+    }
+  });
+})();
+</script>
+{% endif %}
+{% endblock %}

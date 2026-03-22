@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 13: When Things Break – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 13 · Debugging</p>
+        <h1 class="lesson__title">When Things Break: Becoming a Code Detective (and Life Problem-Solver)</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to read error messages, find bugs systematically, and fix broken code — using the same scientific thinking that solves mysteries in real life.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>Bugs Are Normal</h2>
+        
+        <p>Here's a secret that professional programmers won't always admit: <strong>code almost never works the first time</strong>. Even experts write code that breaks. The difference between a beginner and an expert isn't that experts make fewer mistakes — it's that experts are <strong>better at finding and fixing them</strong>.</p>
+
+        <p>Finding and fixing problems in code is called <strong>debugging</strong>. And it's actually one of the most important skills you can learn — not just for coding, but for life. Debugging is just applied problem-solving:</p>
+
+        <p><em>Something isn't working → Figure out what's wrong → Fix it → Check if it's fixed</em></p>
+
+        <p>That's the same process for fixing a bike chain, figuring out why your friend is upset, or diagnosing why your Wi-Fi is slow. Today, you're going to become a <strong>code detective</strong>.</p>
+      </div>
+
+      <!-- ========== PART 2: READING ERROR MESSAGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Error Messages Are Clues, Not Punishments</h2>
+
+        <p>When Python hits a problem, it gives you an error message. Most beginners panic when they see red text. But error messages are actually <strong>the most helpful thing Python does</strong> — they tell you exactly what went wrong and where.</p>
+
+        <p>Let's look at some common errors. Run each one and <strong>read the error message carefully</strong>:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Error 1: NameError</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="3"># Bug: using a variable that doesn't exist
+print("Hello " + nme)
+# Oops — we typed 'nme' instead of 'name'</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">NameError</p>
+          <p><strong>What it means:</strong> Python doesn't recognize a name. Usually a typo or a variable you forgot to create.</p>
+          <p style="margin-bottom: 0;"><strong>How to fix:</strong> Check spelling carefully. Did you define the variable before using it?</p>
+        </div>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Error 2: TypeError</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="3"># Bug: mixing types that don't go together
+age = 11
+print("I am " + age + " years old")</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">TypeError</p>
+          <p><strong>What it means:</strong> You tried to do something with the wrong type. Here, <code>+</code> can't join a string and a number.</p>
+          <p style="margin-bottom: 0;"><strong>How to fix:</strong> Convert the number to a string: <code>str(age)</code>. Or use an f-string: <code>f"I am {age} years old"</code>.</p>
+        </div>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Error 3: IndexError</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="3"># Bug: asking for a position that doesn't exist
+friends = ["Alex", "Sam", "Jordan"]
+print(friends[5])</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">IndexError</p>
+          <p><strong>What it means:</strong> You asked for position 5, but the list only goes up to position 2 (three items: 0, 1, 2).</p>
+          <p style="margin-bottom: 0;"><strong>How to fix:</strong> Check your list length with <code>len()</code>. Remember counting starts at 0!</p>
+        </div>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Error 4: SyntaxError</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="4"># Bug: Python can't understand the structure
+if True
+    print("hello")
+# Missing the colon after 'if True'!</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">SyntaxError</p>
+          <p><strong>What it means:</strong> Python can't parse your code — it doesn't follow the rules of the language. Like a sentence with missing punctuation.</p>
+          <p style="margin-bottom: 0;"><strong>Common causes:</strong> Missing colon <code>:</code> after <code>if</code>/<code>for</code>/<code>def</code>. Missing quotation mark. Mismatched parentheses. Wrong indentation.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 3: THE DEBUGGING PROCESS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>The Detective's Method</h2>
+
+        <p>Professional debuggers follow a systematic process. It's the same process a detective uses to solve a case:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The 4-Step Debugging Method</p>
+          <p><strong>1. Observe:</strong> What's happening? What did you expect? What actually occurred?</p>
+          <p><strong>2. Hypothesize:</strong> What could be causing this? Form a theory.</p>
+          <p><strong>3. Test:</strong> Add <code>print()</code> statements to check your theory. Is the data what you think it is?</p>
+          <p style="margin-bottom: 0;"><strong>4. Fix and verify:</strong> Make the change. Run the code. Did it work?</p>
+        </div>
+
+        <p>This is deductive reasoning (Lesson 3) + inductive reasoning (Lesson 7) working together. You use rules to narrow down where the problem could be, and you use observations to test your theories.</p>
+      </div>
+
+      <!-- ========== PART 4: FIX THE SCORE CALCULATOR ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Case 1: The Broken Score Calculator</h2>
+
+        <p>This program should calculate a student's average score, but it gives the wrong answer. <strong>Your mission: find and fix the bug.</strong></p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Find the Bug!</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="16"># BUG: This program says the average is wrong!
+# Scores are: 90, 85, 92, 78, 95
+# Expected average: 88
+# Actual output: something different...
+
+scores = [90, 85, 92, 78, 95]
+
+total = 0
+for score in scores:
+    total = score  # 🔍 Hmm... look closely at this line
+
+average = total / len(scores)
+
+print(f"Scores: {scores}")
+print(f"Total: {total}")
+print(f"Average: {average}")</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Detective Work</p>
+          <p><strong>Observe:</strong> The average should be 88, but it's not. The total looks wrong too.</p>
+          <p><strong>Hypothesize:</strong> The total isn't adding up correctly. Look at line 9.</p>
+          <p><strong>The bug:</strong> <code>total = score</code> <em>replaces</em> total each time instead of <em>adding</em> to it. After the loop, total just equals the last score (95).</p>
+          <p style="margin-bottom: 0;"><strong>The fix:</strong> Change <code>total = score</code> to <code>total = total + score</code>. Try it!</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 5: FIX THE NAME GENERATOR ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Case 2: The Nonsense Name Generator</h2>
+
+        <p>This program should create spy names by combining a random adjective with a random animal. But something's off...</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Find the Bug!</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="18">import random
+
+adjectives = ["Shadow", "Silent", "Crimson", "Phantom", "Storm"]
+animals = ["Wolf", "Hawk", "Cobra", "Fox", "Panther"]
+
+print("SPY NAME GENERATOR")
+print("═" * 25)
+
+# Generate 5 spy names
+for i in range(5):
+    adj = random.choice(adjectives)
+    animal = random.choice(adjectives)  # 🔍 Look at this line carefully
+    
+    name = f"Agent {adj} {animal}"
+    print(f"  {i + 1}. {name}")
+
+# Bug: the names look weird... "Agent Shadow Shadow"?
+# Both words seem to come from the same list!</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Detective Work</p>
+          <p><strong>Observe:</strong> The names look wrong. "Agent Shadow Silent"? Both parts are adjectives!</p>
+          <p><strong>Hypothesize:</strong> Maybe both random picks are from the same list.</p>
+          <p><strong>The bug:</strong> Line 12 says <code>random.choice(adjectives)</code> but it should say <code>random.choice(animals)</code>. A copy-paste mistake!</p>
+          <p style="margin-bottom: 0;"><strong>The fix:</strong> Change <code>adjectives</code> to <code>animals</code> on line 12. Fix it and run again!</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 6: FIX THE GUESSING GAME ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Case 3: The Impossible Guessing Game</h2>
+
+        <p>This number guessing game never lets you win, even when you guess correctly. What's going on?</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Find the Bug!</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="22">import random
+
+secret = random.randint(1, 10)
+attempts = 0
+max_attempts = 5
+
+print("GUESS THE NUMBER (1-10)")
+print(f"You have {max_attempts} attempts.")
+print(f"(Psst, for testing, the answer is {secret})")
+print()
+
+while attempts < max_attempts:
+    guess = input("Your guess: ")  # 🔍 Something about this line...
+    attempts = attempts + 1
+    
+    if guess == secret:
+        print(f"🎉 Correct! You got it in {attempts} tries!")
+        break
+    elif guess < secret:
+        print("Too low!")
+    else:
+        print("Too high!")
+else:
+    print(f"Out of attempts! The number was {secret}.")</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Detective Work</p>
+          <p><strong>Observe:</strong> Even when you type the right number, it never says "Correct!" Instead you might get a strange error or it just doesn't match.</p>
+          <p><strong>Hypothesize:</strong> Maybe the comparison isn't working. Let's think about types...</p>
+          <p><strong>The bug:</strong> <code>input()</code> gives you <strong>text</strong>. <code>secret</code> is a <strong>number</strong>. <code>"5" == 5</code> is <code>False</code> in Python — text and numbers are never equal!</p>
+          <p style="margin-bottom: 0;"><strong>The fix:</strong> Change <code>guess = input("Your guess: ")</code> to <code>guess = int(input("Your guess: "))</code>. We learned this in Lesson 2!</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 7: FIX THE QUIZ ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Case 4: The Unfair Quiz</h2>
+
+        <p>This quiz always says "Wrong!" even when you answer correctly. Multiple bugs this time!</p>
+
+        <div class="code-cell" id="cell-8">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Find Multiple Bugs!</span>
+            <button class="code-cell__run" onclick="runCode(8)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-8" rows="30"># QUIZ GAME — has at least 2 bugs!
+questions = [
+    {"q": "What planet is closest to the sun?", "a": "Mercury"},
+    {"q": "What is the largest ocean?", "a": "Pacific"},
+    {"q": "How many legs does a spider have?", "a": "8"},
+]
+
+score = 0
+
+print("QUIZ TIME!")
+print("═" * 30)
+print()
+
+for i in range(len(questions)):
+    question = questions[i]
+    print(f"Q{i + 1}: {question['q']}")
+    answer = input("Your answer: ")
+    
+    # 🔍 Bug 1: Think about capitalization...
+    if answer == question["a"]:
+        print("✓ Correct!")
+        score = score + 1
+    else:
+        print(f"✗ Wrong! The answer was {question['a']}")
+    print()
+
+print("═" * 30)
+# 🔍 Bug 2: Look at this percentage calculation...
+percentage = score / len(questions)
+print(f"Score: {score}/{len(questions)} ({percentage}%)")</textarea>
+          <div class="code-cell__output" id="output-8"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Detective Work — Two Bugs!</p>
+          <p><strong>Bug 1:</strong> If you type "mercury" instead of "Mercury", it says wrong. The comparison is case-sensitive. Fix: compare <code>answer.lower() == question["a"].lower()</code>.</p>
+          <p style="margin-bottom: 0;"><strong>Bug 2:</strong> The percentage shows <code>0.666...</code> instead of <code>66%</code>. Fix: multiply by 100 and convert to int: <code>int(score / len(questions) * 100)</code>.</p>
+        </div>
+
+        <p>Fix both bugs and run it again. The quiz should now accept answers in any capitalization and show proper percentages.</p>
+      </div>
+
+      <!-- ========== PART 8: LOGIC BUGS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>Case 5: The Backwards Logic</h2>
+
+        <p>This grade calculator gives everyone the wrong grade. The code runs without errors — but the <em>logic</em> is wrong. These are the hardest bugs to find because Python doesn't complain.</p>
+
+        <div class="code-cell" id="cell-9">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Find the Logic Bug!</span>
+            <button class="code-cell__run" onclick="runCode(9)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-9" rows="26"># GRADE CALCULATOR — logic is wrong!
+# 90+ should be A, 80-89 B, 70-79 C, 60-69 D, below 60 F
+
+def get_grade(score):
+    # 🔍 Think about the ORDER of these checks...
+    if score >= 60:
+        return "D"
+    elif score >= 70:
+        return "C"
+    elif score >= 80:
+        return "B"
+    elif score >= 90:
+        return "A"
+    else:
+        return "F"
+
+# Test it
+test_scores = [95, 85, 73, 62, 45]
+
+print("GRADE REPORT")
+print("═" * 25)
+for score in test_scores:
+    grade = get_grade(score)
+    print(f"  Score {score}: Grade {grade}")
+
+# A score of 95 should be an A, but it shows D!
+# A score of 85 should be a B, but it also shows D!</textarea>
+          <div class="code-cell__output" id="output-9"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Detective Work — Logic Bug</p>
+          <p><strong>Observe:</strong> Score 95 gets "D" instead of "A". Score 85 also gets "D".</p>
+          <p><strong>Hypothesize:</strong> Remember from Lesson 3 — <code>if/elif</code> checks from top to bottom and <strong>stops at the first match</strong>.</p>
+          <p><strong>The bug:</strong> 95 is >= 60, so the FIRST condition matches and it returns "D". It never even checks the others!</p>
+          <p style="margin-bottom: 0;"><strong>The fix:</strong> Reverse the order — check the highest grade first: <code>if score >= 90</code>, then <code>elif score >= 80</code>, etc. The most specific conditions must come before the more general ones.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 9: DEBUGGING TOOLKIT ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>Your Debugging Toolkit</h2>
+
+        <p>Here's a summary of techniques you can use anytime code isn't working:</p>
+
+        <div class="code-cell" id="cell-10">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Print Debugging</span>
+            <button class="code-cell__run" onclick="runCode(10)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-10" rows="22"># TECHNIQUE: Add print() to see what's happening inside
+
+def mystery_function(numbers):
+    result = 0
+    for i in range(len(numbers)):
+        print(f"  DEBUG: i={i}, numbers[i]={numbers[i]}, result before={result}")
+        
+        if numbers[i] > 0:
+            result = result + numbers[i]
+        
+        print(f"  DEBUG: result after={result}")
+    
+    return result
+
+data = [10, -5, 20, -3, 15]
+print("Input:", data)
+print()
+print("Processing:")
+answer = mystery_function(data)
+print()
+print(f"Final result: {answer}")
+print("(This function adds up only the positive numbers)")</textarea>
+          <div class="code-cell__output" id="output-10"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Debugging Techniques</p>
+          <p><strong>1. Read the error message</strong> — it tells you the error type and often the line number.</p>
+          <p><strong>2. Print debugging</strong> — add <code>print()</code> to see what variables contain at each step. Remove them when the bug is fixed.</p>
+          <p><strong>3. Test with simple data</strong> — if your code breaks with complex input, try the simplest possible input first.</p>
+          <p><strong>4. Check your assumptions</strong> — is that variable really a number? Is that list really the length you think?</p>
+          <p><strong>5. Rubber duck debugging</strong> — explain your code line by line to an imaginary duck (or a real friend). Often you'll spot the bug while explaining.</p>
+          <p style="margin-bottom: 0;"><strong>6. Undo and retry</strong> — if you changed something and it got worse, undo it and try a different approach.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 10: THE BIG CHALLENGE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 10</p>
+        <h2>The Final Case: Fix the Complete Game</h2>
+
+        <p>This Rock Paper Scissors game has <strong>4 bugs</strong>. Can you find and fix them all?</p>
+
+        <div class="code-cell" id="cell-11">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · 4 Bugs to Find!</span>
+            <button class="code-cell__run" onclick="runCode(11)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-11" rows="40">import random
+
+choices = ["rock", "paper", "scissors"]
+player_wins = 0
+computer_wins = 0
+
+print("ROCK PAPER SCISSORS — BUGGY EDITION")
+print("First to 3 wins! Type 'quit' to stop.")
+print()
+
+while player_wins < 3 and computer_wins < 3:
+    player = input("Rock, Paper, or Scissors? ")
+    # 🔍 Bug 1: What about capitalization?
+    
+    if player == "quit":
+        break
+    
+    if player not in choices:
+        print("Invalid choice!")
+        continue
+    
+    computer = random.choice(choices)
+    print(f"Computer chose: {computer}")
+    
+    if player == computer:
+        print("Tie!")
+    elif player == "rock" and computer == "scissors":
+        print("You win!")
+        player_wins = player_wins + 1
+    elif player == "scissors" and computer == "paper":
+        print("You win!")
+        player_wins = player_wins + 1
+    elif player == "paper" and computer == "rock":
+        print("You win!")
+        player_wins + 1  # 🔍 Bug 2: Look carefully...
+    else:
+        print("Computer wins!")
+        computer_wins = computer_wins + 1
+    
+    # 🔍 Bug 3: This should show CURRENT score, but...
+    print(f"Score — You: {player_wins} Computer: {computer_wins}")
+    print()
+
+print()
+# 🔍 Bug 4: This message might not always be right...
+print(f"GAME OVER! You won!")
+print(f"Final: You {player_wins} - {computer_wins} Computer")</textarea>
+          <div class="code-cell__output" id="output-11"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Hints (only look if you're stuck!)</p>
+          <p><strong>Bug 1:</strong> If you type "Rock" instead of "rock", what happens? The comparison is case-sensitive.</p>
+          <p><strong>Bug 2:</strong> Look at the line after "paper beats rock." Compare it to the other win lines. See the difference?</p>
+          <p><strong>Bug 3:</strong> This one is tricky — the score display actually works fine! Sometimes you think there's a bug but there isn't. Good detectives rule out false leads too.</p>
+          <p style="margin-bottom: 0;"><strong>Bug 4:</strong> The "You won!" message shows up even if the computer won. It should check who actually won.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 11: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 11</p>
+        <h2>What You Just Did</h2>
+
+        <p>You practiced the most underrated skill in programming: <strong>debugging</strong>. You read error messages, formed hypotheses, tested them, and fixed broken code — all using the thinking skills you've built across the entire course.</p>
+
+        <p>Debugging uses <em>every</em> thinking skill we've learned:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Every Skill in Action</p>
+          <p><strong>Decomposition:</strong> Break the problem into smaller questions. "Does the input work? Does the calculation work? Does the output work?"</p>
+          <p><strong>Abstraction:</strong> Ignore irrelevant code and focus on the part that's broken.</p>
+          <p><strong>Deductive reasoning:</strong> "If this variable is a string, then this comparison will fail."</p>
+          <p><strong>Pattern recognition:</strong> "This bug looks like the int/string confusion from Lesson 2."</p>
+          <p style="margin-bottom: 0;"><strong>Inductive reasoning:</strong> "It works for inputs A and B but fails for C. What's different about C?"</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">Bugs aren't failures — they're puzzles. Every bug you fix makes you a better programmer. The process of debugging — observe, hypothesize, test, fix — is the same process scientists use to understand the world. <strong>The skill isn't writing perfect code. It's knowing what to do when code isn't perfect.</strong></p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>Which type of bug is harder to find — an error that Python catches (like NameError) or a logic bug where the code runs but gives wrong results? Why?</li>
+          <li>Why is "print debugging" (adding print statements) so effective? What does it help you see?</li>
+          <li>Can you think of a time in real life when you debugged something? (Finding out why something wasn't working and fixing it step by step?)</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Bug Hunt</p>
+          <p style="margin-bottom: 0;">Go back to any project from a previous lesson (playlist manager, RPS tournament, friendship calculator) and intentionally break it in 3 different ways. Give the broken version to a friend and see if they can find all 3 bugs.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · Error-Proof Input</p>
+          <p style="margin-bottom: 0;">Write a function <code>safe_int_input(prompt)</code> that asks for a number, and if the user types something that isn't a number (like "abc"), it says "Please enter a number" and asks again instead of crashing. Use a <code>while True</code> loop with <code>try/except</code> (search for "Python try except" if curious!).</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Debug Log</p>
+          <p style="margin-bottom: 0;">Create a function <code>debug(message, variable)</code> that prints formatted debug info: <code>[DEBUG] message: variable (type: type)</code>. Use it to debug a program by tracking variables as they change. This is building your own debugging tool!</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Scientific Debugging</strong> — observe what's wrong, hypothesize a cause, test your theory, fix and verify. This combines deductive and inductive reasoning into a powerful problem-solving process.</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Common Bug Types</p>
+          <p><strong>NameError</strong> — typo in a variable name, or using a variable before defining it</p>
+          <p><strong>TypeError</strong> — mixing incompatible types (string + number)</p>
+          <p><strong>IndexError</strong> — accessing a list position that doesn't exist</p>
+          <p><strong>SyntaxError</strong> — missing colons, quotes, or parentheses</p>
+          <p><strong>Logic errors</strong> — code runs but gives wrong results (hardest to find!)</p>
+          <p style="margin-bottom: 0;"><strong>Off-by-one errors</strong> — loops running one too many or too few times</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Debugging Techniques</p>
+          <p>Read error messages carefully (they're clues!)</p>
+          <p>Add <code>print()</code> to see variable values at each step</p>
+          <p>Test with simple inputs first</p>
+          <p>Check types: <code>type(variable)</code></p>
+          <p>Rubber duck debugging — explain your code out loud</p>
+          <p style="margin-bottom: 0;">Check the order of <code>if/elif</code> conditions</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-12.html" class="lesson-nav__link">← Lesson 12</a>
+        <a href="lesson-14.html" class="lesson-nav__link">Lesson 14 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>

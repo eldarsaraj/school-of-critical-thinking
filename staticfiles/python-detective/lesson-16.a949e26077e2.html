@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 16: Survive the Day – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 16 · Integration</p>
+        <h1 class="lesson__title">Survive the Day: Your First Real Game (Where Every Choice Matters)</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to combine every skill you've learned — variables, lists, dictionaries, functions, loops, conditionals — into one complex, interactive game where your choices shape the story.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>Everything Comes Together</h2>
+        
+        <p>Over the past 15 lessons, you've built up an incredible set of tools. Variables, lists, dictionaries, functions, loops, conditionals, randomness, data analysis. Each one is powerful alone.</p>
+
+        <p>But the real magic happens when you <strong>combine them all</strong>.</p>
+
+        <p>Today, you're going to build the most ambitious project of the course: a <strong>Survive Middle School Simulator</strong>. It's a game where you navigate a school day making decisions — and every choice affects your stats, your relationships, and your ending.</p>
+
+        <p>This lesson is different from the others. Instead of learning new concepts one at a time, we're going to <strong>design and build a complete game</strong>, and I'll show you how every skill you've learned plays a role.</p>
+      </div>
+
+      <!-- ========== PART 2: DECOMPOSING THE GAME ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Step 1: Decompose the Game (Lesson 1)</h2>
+
+        <p>Every big project starts with decomposition — breaking it into parts. What does our game need?</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Game Components</p>
+          <p><strong>Player stats</strong> — energy, reputation, grades, friendship (Lesson 2: Abstraction — what matters?)</p>
+          <p><strong>Scenes</strong> — morning, hallway, class, lunch, after school (Lesson 4: Categorization)</p>
+          <p><strong>Choices</strong> — each scene offers 2-3 options (Lesson 3: Deductive Reasoning — rules for consequences)</p>
+          <p><strong>Consequences</strong> — choices change stats (Lesson 10: Systems Thinking — pipelines)</p>
+          <p><strong>Random events</strong> — surprise moments (Lesson 7: Inductive Reasoning)</p>
+          <p style="margin-bottom: 0;"><strong>Endings</strong> — different outcomes based on final stats (Lesson 9: Generalization)</p>
+        </div>
+
+        <p>Let's build each piece, then connect them.</p>
+      </div>
+
+      <!-- ========== PART 3: PLAYER STATS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>Step 2: The Player (Abstraction + Data Modeling)</h2>
+
+        <p>A real student has thousands of attributes. We need to abstract — pick only what matters for our game:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Player Setup</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="28">def create_player(name):
+    """Create a new player with starting stats."""
+    return {
+        "name": name,
+        "energy": 10,
+        "reputation": 5,
+        "grades": 5,
+        "friendship": 5,
+        "choices_made": []
+    }
+
+def show_stats(player):
+    """Display current player stats."""
+    def bar(val, max_val=10):
+        fill = int(val / max_val * 10)
+        fill = max(0, min(10, fill))
+        return "█" * fill + "░" * (10 - fill)
+    
+    print(f"\n  ╔═ {player['name'].upper()}'S STATS ═══════════╗")
+    print(f"  ║ Energy:     {bar(player['energy'])} {player['energy']:>2d}/10 ║")
+    print(f"  ║ Reputation: {bar(player['reputation'])} {player['reputation']:>2d}/10 ║")
+    print(f"  ║ Grades:     {bar(player['grades'])} {player['grades']:>2d}/10 ║")
+    print(f"  ║ Friendship: {bar(player['friendship'])} {player['friendship']:>2d}/10 ║")
+    print(f"  ╚═══════════════════════════╝\n")
+
+# Test it
+player = create_player("Alex")
+show_stats(player)</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <p>Dictionary for the player data (Lesson 12). Function to create the player (Lesson 8). Function to display stats with visual bars (Lessons 2 and 5). Everything we've learned is here.</p>
+      </div>
+
+      <!-- ========== PART 4: CHOICE ENGINE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Step 3: The Choice Engine (Functions + Conditionals)</h2>
+
+        <p>The core of our game: present a situation, let the player choose, and apply consequences. Let's build a general-purpose choice function:</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Choice Engine</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="36">def make_choice(player, situation, options):
+    """Present a choice and apply consequences.
+    
+    options is a list of dictionaries:
+    {"text": "Do this", "effects": {"energy": -2, "grades": +1}, "message": "You studied hard."}
+    """
+    print(f"\n{'─' * 40}")
+    print(f"  {situation}")
+    print(f"{'─' * 40}")
+    
+    for i, option in enumerate(options):
+        print(f"  {i + 1}. {option['text']}")
+    
+    choice = input(f"\n  Your choice (1-{len(options)}): ")
+    
+    while not choice.isdigit() or int(choice) < 1 or int(choice) > len(options):
+        choice = input(f"  Pick 1-{len(options)}: ")
+    
+    chosen = options[int(choice) - 1]
+    
+    # Apply effects
+    for stat, change in chosen["effects"].items():
+        player[stat] = player[stat] + change
+        # Keep stats between 0 and 10
+        player[stat] = max(0, min(10, player[stat]))
+    
+    player["choices_made"].append(chosen["text"])
+    
+    print(f"\n  → {chosen['message']}")
+    return chosen
+
+# Test it
+player = {"name": "Alex", "energy": 10, "reputation": 5, "grades": 5, "friendship": 5, "choices_made": []}
+
+make_choice(player, "Your alarm goes off. It's 6:30 AM.", [
+    {"text": "Jump out of bed immediately", "effects": {"energy": -1}, "message": "Early bird! You have extra time."},
+    {"text": "Hit snooze three times", "effects": {"energy": +1, "reputation": -1}, "message": "So cozy... but now you're rushing."},
+    {"text": "Set a trap for your sibling instead", "effects": {"friendship": -1, "energy": 0}, "message": "Chaotic but entertaining."}
+])
+
+print(f"\nEnergy is now: {player['energy']}")</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">The Design</p>
+          <p>Each option is a dictionary with three keys: what it says, what it does to your stats, and a flavor message.</p>
+          <p><code>max(0, min(10, player[stat]))</code> keeps stats between 0 and 10. <code>min(10, x)</code> caps at 10. <code>max(0, x)</code> floors at 0.</p>
+          <p style="margin-bottom: 0;">This is the generalization principle (Lesson 9): one function handles ANY choice, with ANY number of options, affecting ANY stats. We just change the data.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 5: SCENES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Step 4: Building the Scenes</h2>
+
+        <p>Now let's build the actual scenes of our school day. Each scene is a function that presents a situation and choices:</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Scene Functions</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="54">import random
+
+def make_choice(player, situation, options):
+    print(f"\n{'─' * 40}")
+    print(f"  {situation}")
+    print(f"{'─' * 40}")
+    for i, opt in enumerate(options):
+        print(f"  {i + 1}. {opt['text']}")
+    choice = input(f"\n  Your choice (1-{len(options)}): ")
+    while not choice.isdigit() or int(choice) < 1 or int(choice) > len(options):
+        choice = input(f"  Pick 1-{len(options)}: ")
+    chosen = options[int(choice) - 1]
+    for stat, change in chosen["effects"].items():
+        player[stat] = max(0, min(10, player[stat] + change))
+    player["choices_made"].append(chosen["text"])
+    print(f"\n  → {chosen['message']}")
+    return chosen
+
+def scene_morning(player):
+    print("\n🌅 MORNING — 7:00 AM")
+    make_choice(player, "Breakfast time. What do you eat?", [
+        {"text": "A full breakfast (eggs, toast, juice)", "effects": {"energy": +2}, "message": "Fueled up and ready to go!"},
+        {"text": "Grab a granola bar and run", "effects": {"energy": +1}, "message": "Quick but not very filling."},
+        {"text": "Skip breakfast entirely", "effects": {"energy": -2}, "message": "Your stomach growls loudly on the bus..."}
+    ])
+
+def scene_hallway(player):
+    print("\n🏫 HALLWAY — 8:15 AM")
+    
+    # Random event!
+    if random.random() < 0.5:
+        print("\n  ⚡ RANDOM EVENT: You find $5 on the ground!")
+        make_choice(player, "What do you do with it?", [
+            {"text": "Turn it in to the office", "effects": {"reputation": +2}, "message": "The secretary smiles. 'How honest!'"},
+            {"text": "Keep it (finders keepers!)", "effects": {"reputation": -1}, "message": "A kid nearby looks suspicious..."},
+        ])
+    else:
+        make_choice(player, "You see a kid struggling with a heavy backpack.", [
+            {"text": "Help them carry their stuff", "effects": {"friendship": +2, "energy": -1}, "message": "They're so grateful! You made a friend."},
+            {"text": "Walk past — you'll be late", "effects": {}, "message": "You make it to class on time."},
+            {"text": "Make a joke about their backpack", "effects": {"reputation": -2, "friendship": -1}, "message": "Nobody laughed. Awkward silence."}
+        ])
+
+# Test two scenes
+player = {"name": "Alex", "energy": 8, "reputation": 5, "grades": 5, "friendship": 5, "choices_made": []}
+
+scene_morning(player)
+scene_hallway(player)
+
+print(f"\nAfter 2 scenes — Energy: {player['energy']}, Rep: {player['reputation']}, Friend: {player['friendship']}")</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <p>Notice how <code>scene_hallway</code> has a random event — 50% chance of finding money, 50% chance of the backpack situation. This uses <code>random.random()</code> which gives a decimal between 0 and 1. The game is different every time you play.</p>
+      </div>
+
+      <!-- ========== PART 6: MORE SCENES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Step 5: The Full Day</h2>
+
+        <p>Let's add the remaining scenes and connect them into a complete game:</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · The Complete Game</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="160">import random
+
+# ═══════════════════════════════════════
+# SURVIVE MIDDLE SCHOOL SIMULATOR
+# ═══════════════════════════════════════
+
+# === CORE ENGINE ===
+
+def make_choice(player, situation, options):
+    print(f"\n{'─' * 40}")
+    print(f"  {situation}")
+    print(f"{'─' * 40}")
+    for i, opt in enumerate(options):
+        print(f"  {i + 1}. {opt['text']}")
+    choice = input(f"\n  Your choice (1-{len(options)}): ")
+    while not choice.isdigit() or int(choice) < 1 or int(choice) > len(options):
+        choice = input(f"  Pick 1-{len(options)}: ")
+    chosen = options[int(choice) - 1]
+    for stat, change in chosen["effects"].items():
+        player[stat] = max(0, min(10, player[stat] + change))
+    player["choices_made"].append(chosen["text"])
+    print(f"\n  → {chosen['message']}")
+    return chosen
+
+def show_stats(player):
+    def bar(val):
+        v = max(0, min(10, val))
+        return "█" * v + "░" * (10 - v)
+    print(f"\n  ┌─ {player['name']}'s Stats ──────────┐")
+    print(f"  │ ⚡ Energy:     {bar(player['energy'])} {player['energy']:>2d} │")
+    print(f"  │ 🌟 Reputation: {bar(player['reputation'])} {player['reputation']:>2d} │")
+    print(f"  │ 📚 Grades:     {bar(player['grades'])} {player['grades']:>2d} │")
+    print(f"  │ 🤝 Friendship: {bar(player['friendship'])} {player['friendship']:>2d} │")
+    print(f"  └───────────────────────────┘")
+
+# === SCENES ===
+
+def scene_morning(player):
+    print("\n🌅 CHAPTER 1: MORNING")
+    make_choice(player, "Your alarm goes off. It's way too early.", [
+        {"text": "Get up and eat a real breakfast", "effects": {"energy": +2}, "message": "Eggs, toast, juice. You feel great."},
+        {"text": "Snooze twice, grab a bar", "effects": {"energy": +1}, "message": "Cutting it close but you made it."},
+        {"text": "Sleep through the alarm", "effects": {"energy": -1, "reputation": -1}, "message": "Mom is NOT happy. You rush out the door."}
+    ])
+
+def scene_hallway(player):
+    print("\n🏫 CHAPTER 2: THE HALLWAY")
+    
+    events = [
+        lambda: make_choice(player, "A kid drops their books everywhere.", [
+            {"text": "Help pick them up", "effects": {"friendship": +2, "energy": -1}, "message": "They're super grateful. 'Thanks, you're the best!'"},
+            {"text": "Step over the mess", "effects": {}, "message": "Not your problem. You keep walking."},
+        ]),
+        lambda: make_choice(player, "The popular kids invite you to hang out before class.", [
+            {"text": "Join them", "effects": {"reputation": +2, "grades": -1}, "message": "Fun conversation! But you forgot to review your notes."},
+            {"text": "Politely decline — you need to study", "effects": {"grades": +1}, "message": "Smart move. You feel prepared."},
+        ]),
+        lambda: make_choice(player, "You overhear someone spreading a rumor about a friend.", [
+            {"text": "Defend your friend", "effects": {"friendship": +3, "reputation": +1, "energy": -1}, "message": "Your friend hears about it later. They're so thankful."},
+            {"text": "Stay out of it", "effects": {}, "message": "You keep your head down. Probably wise."},
+            {"text": "Listen in (it's kind of juicy...)", "effects": {"friendship": -2}, "message": "Your friend catches you listening. Yikes."}
+        ])
+    ]
+    random.choice(events)()
+
+def scene_class(player):
+    print("\n📚 CHAPTER 3: CLASS TIME")
+    make_choice(player, "The teacher asks a really hard question. Nobody raises their hand.", [
+        {"text": "Raise your hand and try", "effects": {"grades": +2, "reputation": +1, "energy": -1}, "message": "You got it right! The teacher beams."},
+        {"text": "Stay quiet and hope someone else answers", "effects": {}, "message": "Eventually the teacher just gives the answer."},
+        {"text": "Whisper the answer to your friend to say", "effects": {"friendship": +1, "grades": +1}, "message": "Your friend looks like a genius. You're a good teammate."}
+    ])
+
+def scene_lunch(player):
+    print("\n🍕 CHAPTER 4: LUNCH")
+    
+    make_choice(player, "Lunch time! Where do you sit?", [
+        {"text": "With your usual friend group", "effects": {"friendship": +1}, "message": "Comfortable and fun. Classic lunch."},
+        {"text": "At the table with the new kid", "effects": {"friendship": +2, "reputation": +1}, "message": "The new kid lights up. You made their whole week."},
+        {"text": "Alone with your headphones", "effects": {"energy": +2, "friendship": -1}, "message": "Recharging your batteries. Sometimes you need that."}
+    ])
+    
+    # Energy check
+    if player["energy"] <= 2:
+        print("\n  ⚠️ You're exhausted. Everything is harder now.")
+
+def scene_afternoon(player):
+    print("\n⏰ CHAPTER 5: AFTERNOON")
+    
+    # Different scenario based on current grades
+    if player["grades"] >= 7:
+        make_choice(player, "Your teacher pulls you aside: 'You're doing great! Want to enter the science fair?'", [
+            {"text": "Yes! Sign me up!", "effects": {"grades": +2, "energy": -2}, "message": "Extra work but extra credit. Worth it!"},
+            {"text": "Thanks, but I've got enough going on", "effects": {}, "message": "The teacher understands. No pressure."}
+        ])
+    else:
+        make_choice(player, "You realize you have a test tomorrow you forgot about.", [
+            {"text": "Start studying NOW", "effects": {"grades": +2, "energy": -2}, "message": "Panic studying, but at least you're trying."},
+            {"text": "Ask a friend for their notes", "effects": {"grades": +1, "friendship": -1}, "message": "They share, but seem a bit annoyed."},
+            {"text": "Wing it tomorrow", "effects": {"grades": -1}, "message": "Living dangerously. We'll see how that goes."}
+        ])
+
+def scene_afterschool(player):
+    print("\n🚶 CHAPTER 6: AFTER SCHOOL")
+    make_choice(player, "School's out! What do you do?", [
+        {"text": "Go to the park with friends", "effects": {"friendship": +2, "energy": -1}, "message": "Great time! You played until sunset."},
+        {"text": "Go home and do homework", "effects": {"grades": +2, "energy": -1}, "message": "Responsible choice. Tomorrow will be easier."},
+        {"text": "Go home and play video games", "effects": {"energy": +2, "grades": -1}, "message": "So relaxing. But that homework isn't going anywhere..."},
+        {"text": "Join a study group", "effects": {"grades": +1, "friendship": +1, "energy": -1}, "message": "Productive AND social. Best of both worlds."}
+    ])
+
+# === ENDING ===
+
+def get_ending(player):
+    total = player["energy"] + player["reputation"] + player["grades"] + player["friendship"]
+    
+    print("\n" + "═" * 40)
+    print("  📋 END OF DAY REPORT")
+    print("═" * 40)
+    show_stats(player)
+    
+    print(f"  Total score: {total}/40")
+    print()
+    
+    # Check for special endings
+    if player["friendship"] >= 9:
+        print("  🏆 THE SOCIAL BUTTERFLY")
+        print("  Everyone loves you. You're the glue")
+        print("  that holds your friend group together.")
+    elif player["grades"] >= 9:
+        print("  🏆 THE SCHOLAR")
+        print("  Teachers can't stop praising you.")
+        print("  College? You're basically already in.")
+    elif player["reputation"] >= 9:
+        print("  🏆 THE LEGEND")
+        print("  Everyone knows your name. You're")
+        print("  the talk of the school.")
+    elif total >= 30:
+        print("  🌟 THE BALANCED KID")
+        print("  You handled everything well. Good grades,")
+        print("  good friends, good vibes all around.")
+    elif total >= 20:
+        print("  👍 THE SURVIVOR")
+        print("  Not perfect, but you made it through.")
+        print("  Tomorrow's a fresh start!")
+    elif player["energy"] <= 1:
+        print("  😴 THE ZOMBIE")
+        print("  You're running on empty. Straight to")
+        print("  bed — don't even brush your teeth.")
+    else:
+        print("  🎲 THE WILDCARD")
+        print("  What a chaotic day. Nobody — including")
+        print("  you — knows what happened.")
+    
+    print()
+    print("  Choices you made:")
+    for i, choice in enumerate(player["choices_made"]):
+        print(f"    {i+1}. {choice}")
+    
+    print("\n" + "═" * 40)
+    print("  Play again for a different story!")
+    print("═" * 40)
+
+# === MAIN GAME ===
+
+print("╔══════════════════════════════════╗")
+print("║  SURVIVE MIDDLE SCHOOL          ║")
+print("║  A Day Where Every Choice       ║")
+print("║  Matters                         ║")
+print("╚══════════════════════════════════╝")
+print()
+
+name = input("What's your name? ")
+player = {
+    "name": name,
+    "energy": 8,
+    "reputation": 5,
+    "grades": 5,
+    "friendship": 5,
+    "choices_made": []
+}
+
+print(f"\nWelcome, {name}. You have one day.")
+print("Every choice affects your stats.")
+print("Try to survive with the best scores possible!")
+show_stats(player)
+
+# Play through each scene
+scene_morning(player)
+show_stats(player)
+
+scene_hallway(player)
+
+scene_class(player)
+show_stats(player)
+
+scene_lunch(player)
+
+scene_afternoon(player)
+
+scene_afterschool(player)
+
+# Ending
+get_ending(player)</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <p>Play it through! Then play again and make different choices — the story, the stats, and the ending will all change. Every playthrough is different because of the random events and your decisions.</p>
+      </div>
+
+      <!-- ========== PART 7: SKILLS USED ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Every Skill in One Game</h2>
+
+        <p>Let's count the skills this game uses:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Full Toolkit</p>
+          <p><strong>Lesson 1 — Decomposition:</strong> We broke the game into components: engine, scenes, stats, ending</p>
+          <p><strong>Lesson 2 — Abstraction:</strong> We modeled a student with just 4 stats out of infinite possibilities</p>
+          <p><strong>Lesson 3 — Deductive Reasoning:</strong> If/elif/else chains determine consequences and endings</p>
+          <p><strong>Lesson 4 — Categorization:</strong> Choices organized as lists of dictionaries</p>
+          <p><strong>Lesson 5 — Pattern Recognition:</strong> The choice→consequence→stats pattern repeats in every scene</p>
+          <p><strong>Lesson 6 — Automation:</strong> One <code>make_choice()</code> function handles ALL choices</p>
+          <p><strong>Lesson 7 — Inductive Reasoning:</strong> Random events make each playthrough different</p>
+          <p><strong>Lesson 8 — Functions:</strong> Scenes are functions. Stats display is a function. Everything is organized</p>
+          <p><strong>Lesson 9 — Generalization:</strong> <code>make_choice()</code> works for ANY situation with ANY options</p>
+          <p><strong>Lesson 10 — Systems Thinking:</strong> Input → choices → stats → ending is a pipeline</p>
+          <p><strong>Lesson 12 — Data Modeling:</strong> Player is a dictionary. Options are dicts. The game is structured data</p>
+          <p style="margin-bottom: 0;"><strong>Lesson 13 — Debugging:</strong> If something breaks, you know how to find and fix it!</p>
+        </div>
+
+        <p>Every single concept from the course appears in this game. You didn't just learn isolated skills — you built a toolkit that works together.</p>
+      </div>
+
+      <!-- ========== PART 8: EXTENDING THE GAME ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>Making It Your Own</h2>
+
+        <p>The game above is a foundation. Here's how to extend it — each modification uses skills you already have:</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Ideas for Expanding</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="32"># IDEA 1: Add an inventory system (Lesson 12: dictionaries)
+inventory = {"snacks": 1, "phone_charged": True, "homework_done": False}
+
+# IDEA 2: Add a "time" system (Lesson 5: patterns)
+time_of_day = 7  # starts at 7 AM
+# Each scene advances time by 1-2 hours
+
+# IDEA 3: Add NPC relationships (Lesson 12: nested dicts)
+npcs = {
+    "bestfriend": {"name": "Jordan", "trust": 8, "mood": "happy"},
+    "rival": {"name": "Blake", "trust": 2, "mood": "jealous"},
+    "teacher": {"name": "Ms. Chen", "trust": 5, "mood": "neutral"}
+}
+
+# IDEA 4: Conditional scenes (Lesson 3: deductive reasoning)
+# If reputation > 7, you get invited to a special event
+# If energy < 3, you can't do sports after school
+
+# IDEA 5: Track stats over time (Lesson 14: patterns)
+# Save energy at each checkpoint and show a chart at the end
+
+print("EXPANSION IDEAS:")
+print("═" * 35)
+print("  1. Inventory system")
+print("  2. Time tracking")
+print("  3. NPC relationships")
+print("  4. Conditional scenes")
+print("  5. Stat history charts")
+print()
+print("Each one uses skills you already have!")
+print("Pick one and add it to the game.")</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+      </div>
+
+      <!-- ========== PART 9: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>What You Just Did</h2>
+
+        <p>You built a complex, interactive game with multiple scenes, branching choices, stat tracking, random events, and multiple endings. And you did it by combining skills you've been learning one by one over 15 lessons.</p>
+
+        <p>This is how real software gets built. Not by knowing everything at once, but by knowing many small things and putting them together. A web app is just functions, data, and logic — organized well.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">Complex things are made of simple parts. You don't need to learn something "advanced" to build something impressive — you need to get good at combining the basics. The kid who knows variables, functions, loops, and dictionaries <strong>really well</strong> can build almost anything.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>Which thinking skill (decomposition, abstraction, etc.) did you use the most while building or playing this game?</li>
+          <li>If you could add one more scene to the game, what would it be? What choices would you offer?</li>
+          <li>How is building a game similar to solving any big problem? (Hint: break it down, build the pieces, connect them.)</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Add Two Scenes</p>
+          <p style="margin-bottom: 0;">Write two new scene functions (maybe "gym class" and "bus ride home") with at least 3 choices each. Add them to the game flow. Make sure the choices affect stats in interesting ways.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · More Endings</p>
+          <p style="margin-bottom: 0;">Add at least 3 more possible endings. Ideas: "The Class Clown" (high friendship, low grades), "The Mystery" (all stats exactly 5), "The Overachiever" (everything above 7). Make the ending messages fun and specific.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Two-Day Version</p>
+          <p style="margin-bottom: 0;">Make the game span two days. After Day 1, show a "night" scene where the player can rest (restore energy) or study late (boost grades but lose energy). Then Day 2's scenes should reference choices from Day 1. Use the <code>choices_made</code> list to check what happened earlier.</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Synthesis & Integration</strong> — combining multiple thinking skills and coding techniques to create something complex. The whole is greater than the sum of its parts.</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Game Architecture</p>
+          <p><strong>Player model</strong> — dictionary with stats</p>
+          <p><strong>Choice engine</strong> — one general function for all decisions</p>
+          <p><strong>Scene functions</strong> — each scene is self-contained</p>
+          <p><strong>Random events</strong> — different experiences each playthrough</p>
+          <p><strong>Conditional content</strong> — scenes adapt based on current stats</p>
+          <p><strong>Multiple endings</strong> — final state determines the story</p>
+          <p style="margin-bottom: 0;"><strong>Stat clamping</strong> — <code>max(0, min(10, value))</code> keeps numbers in range</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-15.html" class="lesson-nav__link">← Lesson 15</a>
+        <a href="lesson-17.html" class="lesson-nav__link">Lesson 17 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>

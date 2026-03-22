@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 14: Why Flipping a Coin 1000 Times Reveals the Truth – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 14 · Statistical Thinking</p>
+        <h1 class="lesson__title">Why Flipping a Coin 1000 Times Reveals the Truth</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How randomness becomes predictable when you repeat it enough times — and how to use Python to simulate thousands of experiments and discover hidden truths.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>Randomness Has a Secret</h2>
+        
+        <p>Flip a coin. You can't predict whether it'll be heads or tails. It's random. Totally unpredictable.</p>
+
+        <p>Now flip it 10 times. You might get 7 heads and 3 tails. That doesn't seem like 50/50 at all. Random, right?</p>
+
+        <p>But flip it 1,000 times. Something strange happens: you'll get <em>very close</em> to 500 heads and 500 tails. Flip it 10,000 times? Even closer to exactly 50/50.</p>
+
+        <p><strong>The more you repeat a random process, the closer the results get to the "true" probability.</strong> This is one of the most important ideas in all of mathematics. It's called the <strong>Law of Large Numbers</strong>, and it's why casinos always win in the long run, why polls can predict elections, and why insurance companies stay in business.</p>
+
+        <p>Today, we're going to see it happen with our own eyes — by making Python flip coins thousands of times.</p>
+      </div>
+
+      <!-- ========== PART 2: A FEW FLIPS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>A Few Flips: Chaos</h2>
+
+        <p>Let's start small. Flip a coin 10 times and see what happens:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="18">import random
+
+flips = 10
+heads = 0
+
+results = []
+for i in range(flips):
+    coin = random.choice(["H", "T"])
+    results.append(coin)
+    if coin == "H":
+        heads = heads + 1
+
+tails = flips - heads
+pct = int(heads / flips * 100)
+
+print(f"Flipped {flips} times: {' '.join(results)}")
+print(f"Heads: {heads} ({pct}%)")
+print(f"Tails: {tails} ({100 - pct}%)")
+print()
+print("Is it close to 50/50? Run it again and see!")</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <p>Run it 5 or 6 times. Sometimes you'll get 70% heads. Sometimes 30%. Sometimes exactly 50%. With only 10 flips, <strong>anything can happen</strong>. The results are all over the place.</p>
+
+        <p>This is what randomness looks like in small doses: unpredictable, messy, unreliable.</p>
+      </div>
+
+      <!-- ========== PART 3: MANY FLIPS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>A Thousand Flips: Order From Chaos</h2>
+
+        <p>Now let's go big. Same coin, same randomness — but way more flips:</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="24">import random
+
+# Try different numbers: 10, 100, 1000, 10000
+flips = 1000
+
+heads = 0
+for i in range(flips):
+    if random.choice(["H", "T"]) == "H":
+        heads = heads + 1
+
+tails = flips - heads
+pct_heads = heads / flips * 100
+
+print(f"COIN FLIP EXPERIMENT: {flips} flips")
+print("═" * 35)
+print(f"  Heads: {heads:5d} ({pct_heads:.1f}%)")
+print(f"  Tails: {tails:5d} ({100 - pct_heads:.1f}%)")
+print()
+
+# How far from 50%?
+distance = abs(pct_heads - 50)
+print(f"  Distance from 50%: {distance:.1f}%")
+print()
+
+if distance < 2:
+    print("  🎯 Very close to the true 50/50!")
+elif distance < 5:
+    print("  👍 Pretty close!")
+else:
+    print("  🤔 A bit off — try more flips!")</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Things</p>
+          <p><code>{pct_heads:.1f}</code> inside an f-string formats the number to 1 decimal place. So 49.7283 becomes 49.7.</p>
+          <p><code>{heads:5d}</code> pads the number to 5 characters wide, right-aligned. Makes columns line up.</p>
+          <p style="margin-bottom: 0;"><code>abs()</code> gives the <strong>absolute value</strong> — the distance from zero. <code>abs(-3.2)</code> is <code>3.2</code>. We use it to measure how far from 50% we are, regardless of direction.</p>
+        </div>
+
+        <p>Now try changing <code>flips</code> to <code>10</code>, then <code>100</code>, then <code>1000</code>, then <code>10000</code>. Watch the distance from 50% shrink as you add more flips. <strong>That's the Law of Large Numbers in action.</strong></p>
+      </div>
+
+      <!-- ========== PART 4: WATCHING CONVERGENCE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Watching It Converge</h2>
+
+        <p>Let's track the percentage after every batch of flips and watch it settle toward 50%:</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Convergence Tracker</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="26">import random
+
+total_flips = 0
+total_heads = 0
+
+checkpoints = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000]
+
+print("CONVERGENCE TRACKER")
+print("Watching heads% approach 50% as flips increase")
+print("═" * 50)
+print(f"{'Flips':>8s}  {'Heads%':>7s}  {'Distance':>8s}  Chart")
+print("─" * 50)
+
+for target in checkpoints:
+    # Flip until we reach this checkpoint
+    while total_flips < target:
+        if random.choice(["H", "T"]) == "H":
+            total_heads = total_heads + 1
+        total_flips = total_flips + 1
+    
+    pct = total_heads / total_flips * 100
+    dist = abs(pct - 50)
+    
+    # Visual: show where the percentage falls
+    # 0% on the left, 50% in the middle, 100% on the right
+    pos = int(pct / 100 * 30)
+    chart = "·" * pos + "●" + "·" * (30 - pos)
+    mid = "·" * 15 + "|" + "·" * 14
+    
+    print(f"{total_flips:>8d}  {pct:>6.1f}%  {dist:>7.1f}%  {chart}")
+
+print("─" * 50)
+print(f"{'':>8s}  {'':>7s}  {'':>8s}  0%{' ' * 12}50%{' ' * 11}100%")
+print()
+print("Notice how the ● gets closer to the | (50%) as flips increase!")</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <p>Run it several times. With 10 flips, the dot bounces all over. With 5000 flips, it's always right near the center line. <strong>More repetition = more truth.</strong></p>
+      </div>
+
+      <!-- ========== PART 5: BUILDING A CHART ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Drawing the Convergence</h2>
+
+        <p>Let's build an actual chart that shows the heads percentage over time. This is like a graph turned sideways:</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · ASCII Chart</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="38">import random
+
+heads = 0
+total = 0
+
+print("HEADS % OVER TIME")
+print("Each row = 50 more flips")
+print()
+print("  0%      25%       50%       75%     100%")
+print("  |········|·········|·········|········|")
+
+# Flip in batches of 50, chart after each batch
+for batch in range(20):
+    # Flip 50 coins
+    for i in range(50):
+        if random.choice(["H", "T"]) == "H":
+            heads = heads + 1
+        total = total + 1
+    
+    pct = heads / total * 100
+    
+    # Build the chart row
+    # The chart is 40 characters wide, representing 0-100%
+    pos = int(pct / 100 * 40)
+    
+    # Draw the 50% marker and the current position
+    row = ""
+    for col in range(41):
+        if col == pos:
+            row = row + "●"
+        elif col == 20:
+            row = row + "│"
+        else:
+            row = row + " "
+    
+    label = f"{total:>5d}"
+    print(f"{label} {row} {pct:.1f}%")
+
+print()
+print("  |········|·········|·········|········|")
+print("  0%      25%       50%       75%     100%")
+print()
+print("The ● should settle near the │ (50%) line!")
+print("Top rows (few flips) = wild. Bottom rows = stable.")</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <p>The top of the chart (fewer total flips) shows the dot jumping around. The bottom (more flips) shows it hugging the 50% line. That visual IS the Law of Large Numbers.</p>
+      </div>
+
+      <!-- ========== PART 6: DICE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Beyond Coins: Dice</h2>
+
+        <p>The Law of Large Numbers works for any random process, not just coins. Let's try dice — each face should show up about 1/6 of the time (16.67%):</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Dice Experiment</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="30">import random
+
+rolls = int(input("How many dice rolls? (try 100, then 10000) "))
+
+# Count each face
+counts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
+
+for i in range(rolls):
+    face = random.randint(1, 6)
+    counts[face] = counts[face] + 1
+
+# Display results
+expected = 100 / 6  # 16.67%
+
+print()
+print(f"DICE EXPERIMENT: {rolls} rolls")
+print(f"Expected each face: {expected:.1f}%")
+print("═" * 40)
+
+for face in range(1, 7):
+    count = counts[face]
+    pct = count / rolls * 100
+    dist = abs(pct - expected)
+    
+    # Bar chart
+    bar_len = int(pct / 100 * 40)
+    bar = "█" * bar_len
+    
+    # Color code: close to expected = good
+    marker = "✓" if dist < 2 else "~" if dist < 5 else "✗"
+    
+    print(f"  Face {face}: {bar} {pct:.1f}% ({count}) {marker}")
+
+print("═" * 40)
+print("  ✓ = within 2% of expected")
+print("  ~ = within 5%")
+print("  ✗ = more than 5% off")
+print()
+if rolls >= 1000:
+    print("  With enough rolls, everything converges!")
+else:
+    print("  Try more rolls to see convergence!")</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <p>Try 100 rolls — the faces will be uneven. Try 10000 — they'll all be close to 16.7%. The die isn't changing. The randomness isn't changing. But the <strong>larger sample reveals the truth</strong> that was there all along.</p>
+      </div>
+
+      <!-- ========== PART 7: UNFAIR COIN ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Discovering a Cheat</h2>
+
+        <p>Here's where it gets really interesting. What if the coin <em>isn't</em> fair? What if someone rigged it to land on heads 60% of the time? Could you detect that?</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Is This Coin Fair?</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="38">import random
+
+# SECRET: This coin is rigged!
+# It lands heads 60% of the time, not 50%
+def flip_rigged_coin():
+    if random.randint(1, 100) <= 60:
+        return "H"
+    else:
+        return "T"
+
+# Run the experiment at different sample sizes
+print("DETECTIVE CHALLENGE: Is this coin fair?")
+print("═" * 45)
+print()
+
+for num_flips in [10, 50, 100, 500, 2000, 10000]:
+    heads = 0
+    for i in range(num_flips):
+        if flip_rigged_coin() == "H":
+            heads = heads + 1
+    
+    pct = heads / num_flips * 100
+    dist_from_50 = abs(pct - 50)
+    
+    # Verdict
+    if dist_from_50 < 5:
+        verdict = "Looks fair 🤷"
+    elif dist_from_50 < 8:
+        verdict = "Suspicious... 🤔"
+    else:
+        verdict = "RIGGED! 🚨"
+    
+    bar_pos = int(pct / 100 * 20)
+    bar = " " * bar_pos + "●" + " " * (20 - bar_pos)
+    
+    print(f"  {num_flips:>6d} flips: {pct:5.1f}% heads  [{bar}]  {verdict}")
+
+print()
+print("─" * 45)
+print("With few flips, you can't tell.")
+print("With many flips, the truth becomes OBVIOUS.")
+print("The coin is biased toward heads (60%)!")
+print()
+print("This is how casinos, scientists, and")
+print("detectives discover hidden truths.")</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">The Power of Large Samples</p>
+          <p>With 10 flips, a rigged coin looks normal — you can't tell it from a fair one.</p>
+          <p>With 100 flips, it starts to look suspicious.</p>
+          <p>With 10,000 flips, the bias is unmistakable — it's clearly landing on heads way more than 50%.</p>
+          <p style="margin-bottom: 0;"><strong>More data = more truth.</strong> This is why scientists run experiments hundreds of times, why polls survey thousands of people, and why "I tried it once and it didn't work" isn't a reliable conclusion.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 8: THE BIRTHDAY PROBLEM ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>Simulation: The Birthday Surprise</h2>
+
+        <p>Here's a famous puzzle: in a class of 23 students, what's the probability that two students share a birthday? Most people guess around 5-10%. The real answer? <strong>Over 50%.</strong></p>
+
+        <p>That sounds wrong. Let's use simulation to check:</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Birthday Simulation</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="32">import random
+
+def has_shared_birthday(num_people):
+    """Simulate a room of people and check for shared birthdays."""
+    birthdays = []
+    for i in range(num_people):
+        birthday = random.randint(1, 365)
+        if birthday in birthdays:
+            return True
+        birthdays.append(birthday)
+    return False
+
+# Run the simulation many times
+num_people = 23
+experiments = 5000
+
+matches = 0
+for i in range(experiments):
+    if has_shared_birthday(num_people):
+        matches = matches + 1
+
+probability = matches / experiments * 100
+
+print(f"THE BIRTHDAY PROBLEM")
+print(f"═" * 35)
+print(f"  People in the room: {num_people}")
+print(f"  Simulations run:    {experiments}")
+print(f"  Shared birthday:    {matches} times")
+print(f"  Probability:        {probability:.1f}%")
+print()
+
+bar = "█" * int(probability / 5) + "░" * (20 - int(probability / 5))
+print(f"  [{bar}] {probability:.1f}%")
+print()
+
+if probability > 45:
+    print("  😲 More than 50%! Most people find this")
+    print("     hard to believe, but the math (and the")
+    print("     simulation) don't lie.")
+    print()
+    print("  With only 23 people, there's a BETTER")
+    print("  than even chance two share a birthday!")</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <p>We couldn't easily <em>calculate</em> this probability with basic math. But we can <strong>simulate</strong> it thousands of times and observe the answer. This is the power of combining programming with the Law of Large Numbers — you can discover truths that are hard to figure out any other way.</p>
+      </div>
+
+      <!-- ========== PART 9: THE COMPLETE SIMULATOR ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>The Probability Lab</h2>
+
+        <div class="code-cell" id="cell-8">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Probability Lab</span>
+            <button class="code-cell__run" onclick="runCode(8)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-8" rows="72">import random
+
+def header(text, char="═", width=45):
+    print(char * width)
+    print(f"  {text}")
+    print(char * width)
+
+def bar(pct, width=20):
+    fill = int(pct / 100 * width)
+    if fill > width: fill = width
+    if fill < 0: fill = 0
+    return "█" * fill + "░" * (width - fill)
+
+header("🔬 THE PROBABILITY LAB")
+print()
+print("Choose an experiment:")
+print("  1 — Coin flip (is it fair?)")
+print("  2 — Dice roll (equal faces?)")
+print("  3 — Birthday problem")
+print("  4 — Custom probability")
+print()
+choice = input("Your choice (1-4): ")
+
+if choice == "1":
+    flips = int(input("How many flips? "))
+    heads = sum(1 for _ in range(flips) if random.choice(["H", "T"]) == "H")
+    pct = heads / flips * 100
+    
+    print()
+    header(f"COIN FLIP: {flips} flips")
+    print()
+    print(f"  Heads: {bar(pct)} {pct:.1f}% ({heads})")
+    print(f"  Tails: {bar(100-pct)} {100-pct:.1f}% ({flips-heads})")
+    print()
+    
+    # Convergence chart
+    print("  CONVERGENCE:")
+    h = 0
+    for batch in range(min(20, flips // 10)):
+        for _ in range(flips // 20):
+            if random.choice(["H","T"]) == "H":
+                h += 1
+        t = (batch + 1) * (flips // 20)
+        p = h / t * 100
+        pos = int(p / 100 * 30)
+        row = " " * pos + "●" + " " * (30 - pos)
+        print(f"  {t:>6d} |{row}|")
+    print(f"         0%{' ' * 11}50%{' ' * 11}100%")
+
+elif choice == "2":
+    rolls = int(input("How many rolls? "))
+    counts = {i: 0 for i in range(1, 7)}
+    for _ in range(rolls):
+        counts[random.randint(1, 6)] += 1
+    
+    print()
+    header(f"DICE ROLL: {rolls} rolls")
+    print(f"  Expected: {100/6:.1f}% per face")
+    print()
+    for face, count in counts.items():
+        pct = count / rolls * 100
+        print(f"  Face {face}: {bar(pct, 15)} {pct:.1f}%")
+
+elif choice == "3":
+    people = int(input("People in room (try 23): "))
+    sims = 5000
+    matches = sum(1 for _ in range(sims) if has_birthday_match(people))
+    prob = matches / sims * 100
+    
+    print()
+    header(f"BIRTHDAY PROBLEM: {people} people")
+    print(f"  Simulations: {sims}")
+    print(f"  Matches:     {matches}")
+    print(f"  Probability: {bar(prob)} {prob:.1f}%")
+
+elif choice == "4":
+    prob = int(input("True probability % (e.g. 30 for 30%): "))
+    trials = int(input("How many trials? "))
+    
+    successes = sum(1 for _ in range(trials) if random.randint(1, 100) <= prob)
+    observed = successes / trials * 100
+    
+    print()
+    header(f"CUSTOM: {prob}% true, {trials} trials")
+    print(f"  Expected: {prob}%")
+    print(f"  Observed: {observed:.1f}%")
+    print(f"  Distance: {abs(observed - prob):.1f}%")
+    print(f"  {bar(observed)} observed")
+    print(f"  {bar(prob)} expected")
+
+print()
+header("More trials = closer to the truth!", char="─")</textarea>
+          <div class="code-cell__output" id="output-8"></div>
+        </div>
+
+        <p>Note: option 3 requires the birthday function from Part 8. If you want it to work standalone, you can copy the <code>has_shared_birthday</code> function to the top of this code cell and rename it <code>has_birthday_match</code>.</p>
+      </div>
+
+      <!-- ========== PART 10: WHY THIS MATTERS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 10</p>
+        <h2>Why This Matters in Real Life</h2>
+
+        <p>The Law of Large Numbers isn't just a math trick. It's one of the most important ideas for understanding the world:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Real-World Applications</p>
+          <p><strong>Medicine:</strong> A drug is tested on thousands of patients — not just one — because small samples are unreliable.</p>
+          <p><strong>Polls:</strong> Asking 1,000 people predicts an election better than asking 10 friends.</p>
+          <p><strong>Insurance:</strong> Companies can't predict when ONE person will get sick, but they can predict what percentage of a million people will.</p>
+          <p><strong>Games:</strong> One hand of poker is luck. A thousand hands reveal who's actually skilled.</p>
+          <p style="margin-bottom: 0;"><strong>Science:</strong> A single experiment proves nothing. Repeated experiments reveal the truth.</p>
+        </div>
+
+        <p>And the flip side is equally important: <strong>small samples are misleading</strong>. "I tried that diet for a week and it didn't work" is like flipping a coin 5 times and concluding it's biased. You need more data.</p>
+      </div>
+
+      <!-- ========== PART 11: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 11</p>
+        <h2>What You Just Did</h2>
+
+        <p>You used Python to simulate thousands of random experiments and watched something remarkable: <strong>chaos became order</strong>. Individual coin flips are unpredictable, but thousands of coin flips are almost perfectly predictable.</p>
+
+        <p>You also learned to use simulation as a tool for discovery — when you can't calculate an answer with math (like the birthday problem), you can run the experiment 10,000 times and <em>observe</em> the answer.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">Never draw big conclusions from small samples. One trial, one test, one experience doesn't tell you the truth. But repeat it enough times, and the truth <em>emerges</em>. The more data you have, the clearer reality becomes. That's the Law of Large Numbers — and it applies to everything from coin flips to life decisions.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>If you flip a coin 10 times and get 8 heads, does that prove the coin is unfair? What about 100 flips with 80 heads? Where do you draw the line?</li>
+          <li>Why do casinos always win in the long run, even though individual players sometimes win?</li>
+          <li>Can you think of a time someone drew a big conclusion from a small sample? ("I tried X once and it didn't work, so X is bad.")</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Monty Hall Problem</p>
+          <p style="margin-bottom: 0;">There are 3 doors. Behind one is a prize. You pick a door. The host opens a different door (one without the prize). Should you switch? Simulate 10,000 games — one where you always switch, one where you always stay. Compare win rates. The answer surprises everyone.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · Dice Unfairness Detector</p>
+          <p style="margin-bottom: 0;">Create a rigged die that favors the number 6 (30% instead of 16.7%). Then build a detector that rolls the die N times and reports whether it seems fair. How many rolls does it take to reliably detect the cheat?</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Convergence Racer</p>
+          <p style="margin-bottom: 0;">Run 5 separate coin flip experiments simultaneously. Track each one's heads percentage at checkpoints (100, 500, 1000, 5000 flips). Display all 5 converging toward 50%. It's like watching 5 runners all finish at the same place!</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Statistical Thinking</strong> — understanding that random events become predictable over many repetitions. Small samples are unreliable; large samples reveal truth. Ask: <em>"Is this based on enough data to be meaningful?"</em></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Key Concept</p>
+          <p style="margin-bottom: 0;"><strong>The Law of Large Numbers:</strong> The more times you repeat a random experiment, the closer the observed results get to the true underlying probability. 10 flips = chaos. 10,000 flips = truth.</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><strong>Simulation</strong> — using loops + randomness to run experiments thousands of times</p>
+          <p><code>random.randint(a, b)</code> — random integer between a and b</p>
+          <p><code>abs()</code> — absolute value (distance from zero)</p>
+          <p><code>f"{value:.1f}"</code> — format to 1 decimal place</p>
+          <p><code>f"{value:>5d}"</code> — right-align in 5 characters</p>
+          <p style="margin-bottom: 0;"><strong>ASCII charts</strong> — using position calculations to draw data visually</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-13.html" class="lesson-nav__link">← Lesson 13</a>
+        <a href="lesson-15.html" class="lesson-nav__link">Lesson 15 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>

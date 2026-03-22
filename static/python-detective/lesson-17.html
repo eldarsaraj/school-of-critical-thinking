@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 17: Build Whatever You Want – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 17 · Your Project</p>
+        <h1 class="lesson__title">Build Whatever You Want: You're Ready (Yes, Really)</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to plan, design, and build your own project from scratch — using the thinking skills and Python knowledge you've developed over 16 lessons.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>This Is Yours</h2>
+        
+        <p>For 16 lessons, I've told you what to build. Secret message encoders. Friend trackers. Rock Paper Scissors. Meme generators. A whole middle school simulator.</p>
+
+        <p>Not anymore. <strong>This lesson is yours.</strong></p>
+
+        <p>You're going to pick a project — something YOU want to make — and build it from scratch. No step-by-step instructions. No "type this code." Just you, your ideas, and the toolkit you've spent 16 lessons building.</p>
+
+        <p>Nervous? That's normal. But here's the truth: <strong>you already have everything you need.</strong> You know variables, lists, dictionaries, functions, loops, conditionals, randomness, and data analysis. That's enough to build almost anything a professional programmer builds — just on a smaller scale.</p>
+
+        <p>Let's plan it out.</p>
+      </div>
+
+      <!-- ========== PART 2: YOUR TOOLKIT ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>What You Know</h2>
+
+        <p>Before you pick a project, let's see your full toolkit. Run this to remind yourself what you can do:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Your Toolkit</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="40">skills = {
+    "Basics": [
+        "print() — display anything",
+        "input() — get info from the user",
+        "variables — store and reuse information",
+        "int(), str() — convert between types",
+        "f-strings — f'Hello {name}'",
+    ],
+    "Data Structures": [
+        "lists — ordered collections: [1, 2, 3]",
+        "dictionaries — named lookups: {'key': 'value'}",
+        "nested structures — dicts in dicts, lists of dicts",
+    ],
+    "Logic": [
+        "if / elif / else — make decisions",
+        "and, or, not — combine conditions",
+        "comparison: < > == != >= <=",
+    ],
+    "Loops": [
+        "for — repeat a known number of times",
+        "while — repeat until a condition is met",
+        "while True + break — game loops",
+        "continue — skip to next iteration",
+    ],
+    "Functions": [
+        "def — create reusable code blocks",
+        "parameters — inputs to functions",
+        "return — send values back",
+        "default parameters — backup values",
+    ],
+    "Extras": [
+        "random — random.choice(), randint(), shuffle()",
+        "string tricks — .lower(), .upper(), .join(), * repeat",
+        "math — +, -, *, /, %, abs(), min(), max(), sum()",
+    ]
+}
+
+print("YOUR COMPLETE PYTHON TOOLKIT")
+print("═" * 45)
+for category, items in skills.items():
+    print(f"\n  📦 {category}:")
+    for item in items:
+        print(f"     • {item}")
+print("\n" + "═" * 45)
+print(f"\n  That's {sum(len(v) for v in skills.values())} tools!")
+print("  More than enough to build something amazing.")</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+      </div>
+
+      <!-- ========== PART 3: PROJECT IDEAS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>Pick Your Project</h2>
+
+        <p>Here are some ideas. Pick one that excites you — or come up with your own. The best projects are ones <strong>you actually want to use or show your friends</strong>.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">🎮 Games</p>
+          <p><strong>Fantasy Team Manager</strong> — draft players with stats, simulate games, track standings across a season</p>
+          <p><strong>Room Escape Puzzle</strong> — describe a room, let the player examine objects, solve riddles to find the key</p>
+          <p><strong>Trivia Show</strong> — categories, point values, lifelines (50/50, skip), high score tracking</p>
+          <p style="margin-bottom: 0;"><strong>Pet Simulator</strong> — feed, play with, and train a virtual pet. Stats change over time. Different pet personalities.</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">🛠️ Useful Tools</p>
+          <p><strong>Outfit Decision Helper</strong> — weather + vibe check + what's clean = recommendation</p>
+          <p><strong>Study Planner</strong> — enter subjects and available hours, generate a balanced schedule</p>
+          <p><strong>Allowance Tracker</strong> — log income and spending, show balance, savings goals with progress bars</p>
+          <p style="margin-bottom: 0;"><strong>Password Generator</strong> — create strong passwords with custom length, include/exclude symbols</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">😂 Fun & Creative</p>
+          <p><strong>Excuse Generator</strong> — enter the situation (late homework, can't hang out), get a creative excuse rated by believability</p>
+          <p><strong>Roast Battle</strong> — two players enter names and quirks, the program generates roasts for both, audience votes on the winner</p>
+          <p><strong>Fortune Teller</strong> — ask a question, get a mysterious answer based on day of the week, mood, and randomness</p>
+          <p style="margin-bottom: 0;"><strong>Nickname Generator</strong> — enter your name and personality traits, get a unique nickname with backstory</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">📊 Data & Analysis</p>
+          <p><strong>Survey Analyzer</strong> — create a survey, collect responses, show results with charts</p>
+          <p><strong>Sports Stats Tracker</strong> — log game results, calculate averages, find streaks, predict outcomes</p>
+          <p style="margin-bottom: 0;"><strong>Benford Detector</strong> — expand the Lesson 15 tool into a full forensics lab with multiple tests</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 4: THE PLANNING PROCESS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Plan Before You Code</h2>
+
+        <p>The biggest mistake beginner programmers make is starting to code immediately. <strong>Planning first saves you hours of confusion later.</strong></p>
+
+        <p>Use this planning template. Run it, fill in the answers, and you'll have a roadmap:</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Project Planner</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="40">print("╔══════════════════════════════════╗")
+print("║    🗺️ PROJECT PLANNING SHEET    ║")
+print("╚══════════════════════════════════╝")
+print()
+
+# Step 1: What
+name = input("1. Project name: ")
+desc = input("2. One-sentence description: ")
+
+# Step 2: Who
+user = input("3. Who will use it? (me / friends / family): ")
+
+# Step 3: Decompose
+print()
+print("4. Break it into pieces.")
+print("   (What are the 3-5 main parts?)")
+parts = []
+for i in range(4):
+    part = input(f"   Part {i+1} (or press Enter to skip): ")
+    if part:
+        parts.append(part)
+
+# Step 4: Data
+print()
+print("5. What data does it need?")
+data = input("   (What info will you store? lists? dicts?): ")
+
+# Step 5: Interactions
+interactions = input("6. How does the user interact? (menu / questions / game loop): ")
+
+# Display the plan
+print()
+print("═" * 40)
+print(f"  PROJECT: {name}")
+print("═" * 40)
+print(f"  What: {desc}")
+print(f"  For: {user}")
+print(f"  Data: {data}")
+print(f"  Interaction: {interactions}")
+print()
+print("  COMPONENTS:")
+for i, part in enumerate(parts):
+    print(f"    {i+1}. {part}")
+print()
+print("═" * 40)
+print("  Now build each component one at a time!")
+print("  Start with the simplest piece first.")
+print("═" * 40)</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">The Planning Process</p>
+          <p><strong>1. Decompose</strong> (Lesson 1) — What are the pieces?</p>
+          <p><strong>2. Abstract</strong> (Lesson 2) — What data matters? What can you ignore?</p>
+          <p><strong>3. Model the data</strong> (Lesson 12) — What dictionaries and lists do you need?</p>
+          <p><strong>4. Design the functions</strong> (Lessons 8-9) — What reusable pieces do you need?</p>
+          <p style="margin-bottom: 0;"><strong>5. Build the simplest version first</strong> — Get something working, then add features.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 5: STARTER TEMPLATES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Starter Templates</h2>
+
+        <p>Here are three starter templates. Pick the one closest to your project idea and modify it:</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Template: Menu-Based Tool</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="30">import random
+
+# === YOUR TOOL NAME ===
+
+def header(text):
+    print("═" * 35)
+    print(f"  {text}")
+    print("═" * 35)
+
+def show_menu():
+    print("\nWhat would you like to do?")
+    print("  1 — [First option]")
+    print("  2 — [Second option]")
+    print("  3 — [Third option]")
+    print("  4 — Quit")
+
+# Your data goes here
+data = {}
+
+header("🛠️ YOUR TOOL NAME")
+
+while True:
+    show_menu()
+    choice = input("\nYour choice: ")
+    
+    if choice == "1":
+        print("  [Do the first thing]")
+    elif choice == "2":
+        print("  [Do the second thing]")
+    elif choice == "3":
+        print("  [Do the third thing]")
+    elif choice == "4":
+        print("\nGoodbye!")
+        break
+    else:
+        print("  Invalid choice!")</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Template: Story/Adventure Game</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="36">import random
+
+# === YOUR GAME NAME ===
+
+def make_choice(situation, options):
+    """Present choices and return the index chosen."""
+    print(f"\n{'─' * 35}")
+    print(f"  {situation}")
+    print(f"{'─' * 35}")
+    for i, opt in enumerate(options):
+        print(f"  {i+1}. {opt}")
+    choice = input(f"\n  Choose (1-{len(options)}): ")
+    while not choice.isdigit() or int(choice) < 1 or int(choice) > len(options):
+        choice = input(f"  Pick 1-{len(options)}: ")
+    return int(choice) - 1
+
+# Player data
+player = {
+    "name": input("Your name: "),
+    "stat1": 5,
+    "stat2": 5,
+    "inventory": []
+}
+
+print(f"\nWelcome, {player['name']}!")
+print("Your adventure begins...\n")
+
+# Scene 1
+idx = make_choice("You stand at a crossroads.", [
+    "Go left toward the forest",
+    "Go right toward the village",
+    "Stand still and think"
+])
+
+if idx == 0:
+    print("\n  The forest is dark and mysterious...")
+elif idx == 1:
+    print("\n  The village is bustling with activity...")
+else:
+    print("\n  Sometimes patience is the best move...")
+
+# Add more scenes here!
+print("\n[Continue building your adventure!]")</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Template: Generator/Analyzer</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="36">import random
+
+# === YOUR GENERATOR NAME ===
+
+def header(text):
+    print("═" * 35)
+    print(f"  {text}")
+    print("═" * 35)
+
+def bar(value, max_val=10, width=15):
+    fill = int(value / max_val * width)
+    fill = max(0, min(width, fill))
+    return "█" * fill + "░" * (width - fill)
+
+def generate(inputs):
+    """Your generation logic here."""
+    # Process the inputs
+    # Apply randomness
+    # Return results
+    result = {
+        "output1": "Something cool",
+        "score": random.randint(1, 10)
+    }
+    return result
+
+# Main
+header("🎲 YOUR GENERATOR")
+print()
+
+# Collect inputs
+name = input("Enter a name: ")
+trait = input("Enter a trait: ")
+
+# Generate
+result = generate({"name": name, "trait": trait})
+
+# Display
+print()
+header("RESULTS")
+print(f"  Output: {result['output1']}")
+print(f"  Score:  {bar(result['score'])} {result['score']}/10")
+
+print("\nRun again for different results!")</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+      </div>
+
+      <!-- ========== PART 6: THE BUILD PROCESS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>How to Build It</h2>
+
+        <p>Don't try to build everything at once. Follow this process:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Build Process</p>
+          <p><strong>Step 1: Get the skeleton working.</strong> Start with the most basic version. If it's a game, make one scene work. If it's a tool, make one feature work. Don't add any extras yet.</p>
+          <p><strong>Step 2: Test it.</strong> Run it. Does it work? Fix any bugs before moving on. (Lesson 13!)</p>
+          <p><strong>Step 3: Add one feature at a time.</strong> Each addition should be small. Add it, test it, then add the next thing.</p>
+          <p><strong>Step 4: Make it look nice.</strong> Add headers, bars, formatting, emoji. This comes LAST — after the logic works.</p>
+          <p style="margin-bottom: 0;"><strong>Step 5: Show someone.</strong> The whole point is to build something you're proud of. Show a friend, a parent, a teacher. Watch them use it.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 7: YOUR WORKSPACE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Your Workspace</h2>
+
+        <p>Here's your blank canvas. This is where you build your project. It's the biggest code cell in the course — because this is the biggest thing you'll build.</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · YOUR PROJECT</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="50">import random
+
+# ═══════════════════════════════════
+# YOUR PROJECT NAME
+# by [Your Name]
+# ═══════════════════════════════════
+
+# === DATA ===
+# (Your variables, lists, and dictionaries go here)
+
+
+# === FUNCTIONS ===
+# (Your reusable functions go here)
+
+def header(text):
+    print("═" * 35)
+    print(f"  {text}")
+    print("═" * 35)
+
+
+# === MAIN PROGRAM ===
+# (Your program logic goes here)
+
+header("MY PROJECT")
+print()
+print("Start building here!")
+print()
+print("Remember:")
+print("  1. Start simple — get basics working first")
+print("  2. Test often — run it after every change")
+print("  3. Add features one at a time")
+print("  4. Use print() to debug when confused")
+print("  5. Have fun!")
+</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+      </div>
+
+      <!-- ========== PART 8: WHEN YOU GET STUCK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>When You Get Stuck</h2>
+
+        <p>You WILL get stuck. Every programmer does. Here's what to do:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Unsticking Checklist</p>
+          <p><strong>Error message?</strong> Read it carefully. It tells you the type and usually the line. (Lesson 13)</p>
+          <p><strong>Wrong output?</strong> Add <code>print()</code> statements to see what your variables contain at each step.</p>
+          <p><strong>Don't know how?</strong> Look back at earlier lessons. You've probably done something similar before.</p>
+          <p><strong>Too complex?</strong> Break it into smaller pieces. Make each piece work alone first. (Lesson 1)</p>
+          <p><strong>Totally lost?</strong> Start over with the simplest possible version. One input, one output. Then build up.</p>
+          <p style="margin-bottom: 0;"><strong>Still stuck?</strong> Explain your problem out loud to someone (or a rubber duck). You'll often solve it mid-sentence.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 9: SHOWCASE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>Show It Off</h2>
+
+        <p>When your project works, it's time for the best part: showing it to someone else.</p>
+
+        <p>Here's a presentation template — fill it in and practice explaining your project:</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Project Showcase</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="32">print("╔══════════════════════════════════╗")
+print("║      🎤 PROJECT SHOWCASE        ║")
+print("╚══════════════════════════════════╝")
+print()
+
+name = input("Project name: ")
+creator = input("Created by: ")
+description = input("What does it do? (one sentence): ")
+favorite = input("What's your favorite part? ")
+hardest = input("What was the hardest part to build? ")
+skill = input("What thinking skill did you use most? ")
+
+print()
+print("═" * 40)
+print(f"  🏆 {name.upper()}")
+print(f"  by {creator}")
+print("═" * 40)
+print()
+print(f"  What it does:")
+print(f"  {description}")
+print()
+print(f"  💎 Best part: {favorite}")
+print()
+print(f"  🔧 Hardest part: {hardest}")
+print()
+print(f"  🧠 Key thinking skill: {skill}")
+print()
+print("═" * 40)
+print(f"  {creator} built this using Python and")
+print(f"  the skills from Python Detective.")
+print("═" * 40)</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+      </div>
+
+      <!-- ========== PART 10: THE FINAL REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 10</p>
+        <h2>What You've Become</h2>
+
+        <p>Let's step back and appreciate what happened over these 17 lessons.</p>
+
+        <p>You started knowing nothing about programming. Now you can:</p>
+
+        <div class="code-cell" id="cell-8">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Your Journey</span>
+            <button class="code-cell__run" onclick="runCode(8)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-8" rows="36">lessons = [
+    ("Decomposition",       "Break big problems into small steps"),
+    ("Abstraction",         "Decide what matters, ignore the rest"),
+    ("Deductive Reasoning", "Rules + facts = guaranteed conclusions"),
+    ("Categorization",      "Organize information into groups"),
+    ("Pattern Recognition", "Spot what repeats and what changes"),
+    ("Automation",          "Build templates for repetitive tasks"),
+    ("Inductive Reasoning", "Observe, test, conclude"),
+    ("Encapsulation",       "Package complexity into functions"),
+    ("Generalization",      "Build tools that adapt to any input"),
+    ("Systems Thinking",    "Connect parts into pipelines"),
+    ("Hierarchical Think.", "Patterns inside patterns"),
+    ("Data Modeling",       "Represent the world in data"),
+    ("Debugging",           "Find and fix problems systematically"),
+    ("Statistical Think.",  "Large samples reveal truth"),
+    ("Data Forensics",      "Detect fakes with math"),
+    ("Integration",         "Combine everything into real projects"),
+    ("Self-Direction",      "Plan and build your own ideas"),
+]
+
+print("YOUR PYTHON DETECTIVE JOURNEY")
+print("═" * 50)
+print()
+
+for i, (skill, desc) in enumerate(lessons):
+    num = str(i + 1).rjust(2)
+    bar = "█" * (i + 1)
+    print(f"  L{num} {skill:20s} {bar}")
+
+print()
+print("═" * 50)
+print()
+print("  17 lessons. 17 thinking skills.")
+print("  You didn't just learn to code.")
+print("  You learned to THINK.")
+print()
+print("  And that changes everything.")</textarea>
+          <div class="code-cell__output" id="output-8"></div>
+        </div>
+
+        <p>But here's the thing that matters most: these aren't just coding skills. <strong>They're thinking skills.</strong></p>
+
+        <p><strong>Decomposition</strong> helps you tackle any big project — a research paper, planning a trip, learning a new instrument. <strong>Pattern recognition</strong> helps you study for tests, understand trends, and make predictions. <strong>Debugging</strong> is how you troubleshoot anything that goes wrong — in code or in life.</p>
+
+        <p>You now think differently than you did before Lesson 1. You notice patterns. You break things down. You ask "what matters here?" before diving in. You test your ideas. You build things.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Final Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">Programming isn't really about computers. It's about <strong>thinking clearly</strong> — organizing ideas, solving problems, and building things that work. The computer is just a tool. The thinking skills are yours to keep — and they work everywhere, not just in code. You are a Python Detective. Now go detect, deduce, and build.</p>
+        </div>
+      </div>
+
+      <!-- ========== WHAT'S NEXT ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">What's Next</p>
+        <h2>Keep Going</h2>
+
+        <p>This course is over, but your journey isn't. Here's where to go from here:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Next Steps</p>
+          <p><strong>Build more projects.</strong> The best way to get better is to keep building. Pick a new project every week or two.</p>
+          <p><strong>Learn new Python features.</strong> There's more to discover: classes, file reading/writing, web scraping, graphics libraries. Each one unlocks new possibilities.</p>
+          <p><strong>Try other languages.</strong> JavaScript lets you build websites. Scratch is great for visual games. The thinking skills transfer to any language.</p>
+          <p><strong>Teach someone else.</strong> The best way to master something is to explain it. Teach a friend or sibling what you learned.</p>
+          <p style="margin-bottom: 0;"><strong>Stay curious.</strong> The world is full of problems to solve and things to build. You now have the tools. Go use them.</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-16.html" class="lesson-nav__link">← Lesson 16</a>
+        <a href="index.html" class="lesson-nav__link">All Lessons →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 10: The Assembly Line in Your Head – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 10 · Systems Thinking</p>
+        <h1 class="lesson__title">The Assembly Line in Your Head: Chaining Ideas Together</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to connect functions together like links in a chain — where the output of one becomes the input of the next — to solve complex problems step by step.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>Everything Is a Pipeline</h2>
+        
+        <p>Think about how a sandwich shop works. One person takes your order. Another slices the bread. Another adds the fillings. Another wraps it up. Each person does <em>one job</em>, then passes the result to the next person.</p>
+
+        <p>No single person makes the whole sandwich. Instead, the sandwich flows through a <strong>pipeline</strong> — a series of steps where each step transforms it a little and passes it along.</p>
+
+        <p>You think like this all the time. When someone asks "Is this a good day for a bike ride?" your brain runs a pipeline:</p>
+
+        <p><em>Check weather → Check energy level → Check if bike has air → Check schedule → Combine into a decision</em></p>
+
+        <p>Each step produces a result, and that result feeds into the next step. In code, this means <strong>the output of one function becomes the input of another</strong>. Today, we're going to master this technique — and use it to build a Friendship Score Calculator.</p>
+      </div>
+
+      <!-- ========== PART 2: OUTPUT → INPUT ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Connecting Functions Together</h2>
+
+        <p>We already know how to make functions that <code>return</code> values. The key insight is: <strong>you can use a function's return value anywhere you'd use a normal value</strong>.</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="18"># Step 1: A function that cleans up text
+def clean(text):
+    return text.strip().lower()
+
+# Step 2: A function that scores text length
+def score_length(text):
+    if len(text) > 20:
+        return 3
+    elif len(text) > 10:
+        return 2
+    else:
+        return 1
+
+# Chain them: clean FIRST, then score the RESULT
+raw_input = "  HELLO THERE FRIEND  "
+cleaned = clean(raw_input)
+score = score_length(cleaned)
+
+print(f"Raw:     '{raw_input}'")
+print(f"Cleaned: '{cleaned}'")
+print(f"Score:   {score}")</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">The Chain</p>
+          <p>Raw text → <code>clean()</code> → cleaned text → <code>score_length()</code> → score</p>
+          <p>Each function does one small job. The output of <code>clean()</code> becomes the input of <code>score_length()</code>.</p>
+          <p style="margin-bottom: 0;">You can even write it in one line: <code>score = score_length(clean(raw_input))</code>. Python reads from the inside out — it runs <code>clean()</code> first, then passes the result to <code>score_length()</code>.</p>
+        </div>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · One-Line Chaining</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="7">def clean(text):
+    return text.strip().lower()
+
+def score_length(text):
+    return 3 if len(text) > 20 else 2 if len(text) > 10 else 1
+
+# Chained in one line!
+print(score_length(clean("  HELLO THERE FRIEND  ")))</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+      </div>
+
+      <!-- ========== PART 3: BUILDING A SCORING SYSTEM ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>Breaking a Complex Problem Into Steps</h2>
+
+        <p>Let's think about the Friendship Score Calculator. How do you rate a friendship? It's complex — there's no single number. But we can <strong>decompose</strong> it into measurable parts:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Friendship Score Components</p>
+          <p><strong>Responsiveness</strong> — how quickly do they text back?</p>
+          <p><strong>Generosity</strong> — do they share snacks, help with homework?</p>
+          <p><strong>Fun Factor</strong> — how much fun do you have together?</p>
+          <p style="margin-bottom: 0;"><strong>Reliability</strong> — can you count on them?</p>
+        </div>
+
+        <p>Each component gets its own function. Then we chain them together into a final score. Let's build each one:</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Individual Score Functions</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="30">def score_responsiveness(reply_speed):
+    """Score based on typical reply time."""
+    if reply_speed == "instant":
+        return 10
+    elif reply_speed == "minutes":
+        return 8
+    elif reply_speed == "hours":
+        return 5
+    elif reply_speed == "days":
+        return 2
+    else:
+        return 0
+
+def score_generosity(shares_snacks, helps_homework):
+    """Score based on sharing behavior."""
+    score = 0
+    if shares_snacks == "yes":
+        score = score + 5
+    if helps_homework == "yes":
+        score = score + 5
+    return score
+
+def score_fun(fun_rating):
+    """Convert 1-5 fun rating to 0-10 scale."""
+    return fun_rating * 2
+
+def score_reliability(keeps_promises):
+    """Score based on reliability."""
+    if keeps_promises == "always":
+        return 10
+    elif keeps_promises == "usually":
+        return 7
+    elif keeps_promises == "sometimes":
+        return 4
+    else:
+        return 1
+
+# Test each one individually
+print("Responsiveness (instant):", score_responsiveness("instant"))
+print("Generosity (yes, yes):", score_generosity("yes", "yes"))
+print("Fun (4 out of 5):", score_fun(4))
+print("Reliability (usually):", score_reliability("usually"))</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <p>Each function handles one piece of the puzzle. They're simple on their own — the power comes from combining them.</p>
+      </div>
+
+      <!-- ========== PART 4: THE PIPELINE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>The Combining Function</h2>
+
+        <p>Now we need a function that <strong>takes all the individual scores and combines them</strong> into one final rating. This is the end of the pipeline:</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Combining Scores</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="24">def calculate_total(responsiveness, generosity, fun, reliability):
+    """Combine four scores into a final friendship rating."""
+    total = responsiveness + generosity + fun + reliability
+    max_possible = 40  # each category maxes at 10
+    percentage = int((total / max_possible) * 100)
+    return percentage
+
+def get_title(percentage):
+    """Turn a percentage into a friendship title."""
+    if percentage >= 90:
+        return "🏆 Legendary Best Friend"
+    elif percentage >= 75:
+        return "⭐ Solid Gold Friend"
+    elif percentage >= 60:
+        return "👍 Good Buddy"
+    elif percentage >= 40:
+        return "🤝 Casual Friend"
+    else:
+        return "👋 Acquaintance"
+
+# Test the pipeline
+score = calculate_total(10, 8, 6, 7)
+title = get_title(score)
+print(f"Score: {score}%")
+print(f"Title: {title}")</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <p>See the pipeline? Individual scores → <code>calculate_total()</code> → percentage → <code>get_title()</code> → label. Each function does one transformation.</p>
+      </div>
+
+      <!-- ========== PART 5: DATA FLOWS THROUGH ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Visualizing the Flow</h2>
+
+        <p>Let's add a display function and trace how data flows through the entire system:</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Tracing the Pipeline</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="36">def score_responsiveness(speed):
+    scores = {"instant": 10, "minutes": 8, "hours": 5, "days": 2}
+    return scores.get(speed, 0)
+
+def score_generosity(snacks, homework):
+    return (5 if snacks == "yes" else 0) + (5 if homework == "yes" else 0)
+
+def score_fun(rating):
+    return rating * 2
+
+def score_reliability(keeps_promises):
+    scores = {"always": 10, "usually": 7, "sometimes": 4}
+    return scores.get(keeps_promises, 1)
+
+def combine(r, g, f, rel):
+    return int(((r + g + f + rel) / 40) * 100)
+
+def get_title(pct):
+    if pct >= 90: return "🏆 Legendary Best Friend"
+    elif pct >= 75: return "⭐ Solid Gold Friend"
+    elif pct >= 60: return "👍 Good Buddy"
+    elif pct >= 40: return "🤝 Casual Friend"
+    else: return "👋 Acquaintance"
+
+def make_bar(val, max_val=10, width=10):
+    fill = int((val / max_val) * width)
+    return "█" * fill + "░" * (width - fill)
+
+# TRACE THE PIPELINE
+print("PIPELINE TRACE")
+print("═" * 40)
+r = score_responsiveness("minutes")
+print(f"  1. Responsiveness: 'minutes' → {r}/10 {make_bar(r)}")
+g = score_generosity("yes", "no")
+print(f"  2. Generosity:     yes/no    → {g}/10 {make_bar(g)}")
+f = score_fun(4)
+print(f"  3. Fun factor:     4/5       → {f}/10 {make_bar(f)}")
+rel = score_reliability("usually")
+print(f"  4. Reliability:    'usually' → {rel}/10 {make_bar(rel)}")
+print()
+pct = combine(r, g, f, rel)
+print(f"  5. Combined score: {pct}%")
+title = get_title(pct)
+print(f"  6. Final title:    {title}")</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">The Pipeline</p>
+          <p>Raw answers → 4 scoring functions → 4 individual scores → combine function → percentage → title function → label</p>
+          <p>Each step is simple. But chained together, they create something sophisticated — a system that takes messy human input and produces a clear, meaningful output.</p>
+          <p style="margin-bottom: 0;">This is <strong>systems thinking</strong> — understanding how independent parts work together in sequence, where each part transforms information before passing it on.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 6: THE MASTER FUNCTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>The Master Function</h2>
+
+        <p>We can wrap the entire pipeline in one "master" function that orchestrates everything:</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Master Function</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="28">def score_responsiveness(speed):
+    return {"instant": 10, "minutes": 8, "hours": 5, "days": 2}.get(speed, 0)
+
+def score_generosity(snacks, homework):
+    return (5 if snacks == "yes" else 0) + (5 if homework == "yes" else 0)
+
+def score_fun(rating):
+    return min(rating * 2, 10)
+
+def score_reliability(promises):
+    return {"always": 10, "usually": 7, "sometimes": 4}.get(promises, 1)
+
+def combine(scores):
+    return int((sum(scores) / (len(scores) * 10)) * 100)
+
+def get_title(pct):
+    if pct >= 90: return "🏆 Legendary Best Friend"
+    elif pct >= 75: return "⭐ Solid Gold Friend"
+    elif pct >= 60: return "👍 Good Buddy"
+    elif pct >= 40: return "🤝 Casual Friend"
+    else: return "👋 Acquaintance"
+
+# THE MASTER FUNCTION — orchestrates the whole pipeline
+def rate_friendship(speed, snacks, homework, fun, promises):
+    """Run the complete friendship scoring pipeline."""
+    scores = [
+        score_responsiveness(speed),
+        score_generosity(snacks, homework),
+        score_fun(fun),
+        score_reliability(promises)
+    ]
+    percentage = combine(scores)
+    title = get_title(percentage)
+    return scores, percentage, title
+
+# Use it — one call does everything!
+scores, pct, title = rate_friendship("minutes", "yes", "yes", 4, "usually")
+print(f"Scores: {scores}")
+print(f"Overall: {pct}%")
+print(f"Rating: {title}")</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Things</p>
+          <p><code>sum(scores)</code> adds up all the numbers in a list. So <code>sum([8, 10, 8, 7])</code> gives 33.</p>
+          <p><code>min(value, 10)</code> caps a value at 10 — if someone rates fun as 6, <code>6 * 2 = 12</code>, but <code>min(12, 10)</code> keeps it at 10.</p>
+          <p><code>scores, pct, title = rate_friendship(...)</code> — a function can return <strong>multiple values</strong>! Python unpacks them into separate variables.</p>
+          <p style="margin-bottom: 0;">The master function <code>rate_friendship()</code> doesn't do any scoring itself — it just calls the right functions in the right order. It's the conductor of the orchestra.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 7: MULTIPLE FRIENDS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Comparing Friends</h2>
+
+        <p>Now that the pipeline is wrapped in one function, we can easily run it for multiple friends and compare:</p>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Comparing Friends</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="42">def score_responsiveness(speed):
+    return {"instant": 10, "minutes": 8, "hours": 5, "days": 2}.get(speed, 0)
+
+def score_generosity(snacks, homework):
+    return (5 if snacks == "yes" else 0) + (5 if homework == "yes" else 0)
+
+def score_fun(rating):
+    return min(rating * 2, 10)
+
+def score_reliability(promises):
+    return {"always": 10, "usually": 7, "sometimes": 4}.get(promises, 1)
+
+def combine(scores):
+    return int((sum(scores) / (len(scores) * 10)) * 100)
+
+def get_title(pct):
+    if pct >= 90: return "🏆 Legendary"
+    elif pct >= 75: return "⭐ Solid Gold"
+    elif pct >= 60: return "👍 Good Buddy"
+    elif pct >= 40: return "🤝 Casual"
+    else: return "👋 Acquaintance"
+
+def make_bar(pct, width=15):
+    fill = int((pct / 100) * width)
+    return "█" * fill + "░" * (width - fill)
+
+def rate_friendship(speed, snacks, homework, fun, promises):
+    scores = [score_responsiveness(speed), score_generosity(snacks, homework),
+              score_fun(fun), score_reliability(promises)]
+    pct = combine(scores)
+    return pct, get_title(pct)
+
+# Rate several friends
+friends = {
+    "Alex":   ("instant", "yes", "yes", 5, "always"),
+    "Sam":    ("hours", "yes", "no", 4, "usually"),
+    "Jordan": ("minutes", "no", "yes", 3, "sometimes"),
+    "Taylor": ("minutes", "yes", "yes", 4, "usually"),
+}
+
+print("FRIENDSHIP SCOREBOARD")
+print("═" * 45)
+print()
+
+results = []
+for name, data in friends.items():
+    pct, title = rate_friendship(*data)
+    results.append((name, pct, title))
+
+# Sort by score (highest first)
+results.sort(key=lambda x: x[1], reverse=True)
+
+for rank, (name, pct, title) in enumerate(results, 1):
+    bar = make_bar(pct)
+    print(f"  {rank}. {name:8s} {bar} {pct}% {title}")
+
+print()
+print("═" * 45)</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Things</p>
+          <p><code>friends.items()</code> loops through a dictionary giving you both the key (name) and value (data) each time.</p>
+          <p><code>rate_friendship(*data)</code> — the <code>*</code> "unpacks" a tuple so each item becomes a separate argument. <code>("instant", "yes", "yes", 5, "always")</code> becomes five separate values.</p>
+          <p style="margin-bottom: 0;"><code>results.sort(key=lambda x: x[1], reverse=True)</code> sorts the results by the score (position 1) from highest to lowest. Don't worry about the <code>lambda</code> syntax yet — just know it tells Python which value to sort by.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 8: THE COMPLETE CALCULATOR ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>The Complete Friendship Score Calculator</h2>
+
+        <div class="code-cell" id="cell-8">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Complete Calculator</span>
+            <button class="code-cell__run" onclick="runCode(8)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-8" rows="80">import random
+
+# === SCORING FUNCTIONS (the pipeline pieces) ===
+
+def score_responsiveness(speed):
+    return {"instant": 10, "minutes": 8, "hours": 5, "days": 2}.get(speed, 0)
+
+def score_generosity(snacks, homework):
+    return (5 if snacks == "yes" else 0) + (5 if homework == "yes" else 0)
+
+def score_fun(rating):
+    return min(rating * 2, 10)
+
+def score_reliability(promises):
+    return {"always": 10, "usually": 7, "sometimes": 4}.get(promises, 1)
+
+# === COMBINING FUNCTIONS ===
+
+def combine(scores):
+    return int((sum(scores) / (len(scores) * 10)) * 100)
+
+def get_title(pct):
+    if pct >= 90: return "🏆 Legendary Best Friend"
+    elif pct >= 75: return "⭐ Solid Gold Friend"
+    elif pct >= 60: return "👍 Good Buddy"
+    elif pct >= 40: return "🤝 Casual Friend"
+    else: return "👋 Acquaintance"
+
+# === DISPLAY FUNCTIONS ===
+
+def make_bar(val, max_val=10, width=12):
+    fill = int((val / max_val) * width)
+    return "█" * fill + "░" * (width - fill)
+
+def header(text, char="═", width=40):
+    print(char * width)
+    print(f"  {text}")
+    print(char * width)
+
+# === MASTER FUNCTION ===
+
+def rate_friendship(speed, snacks, homework, fun, promises):
+    scores = {
+        "Responsiveness": score_responsiveness(speed),
+        "Generosity": score_generosity(snacks, homework),
+        "Fun Factor": score_fun(fun),
+        "Reliability": score_reliability(promises)
+    }
+    pct = combine(list(scores.values()))
+    title = get_title(pct)
+    return scores, pct, title
+
+# === MAIN PROGRAM ===
+
+header("📊 FRIENDSHIP SCORE CALCULATOR")
+print()
+
+# Collect data
+name = input("Friend's name: ")
+
+print()
+print("Answer these about " + name + ":")
+print()
+
+speed = input("Reply speed (instant/minutes/hours/days): ").lower()
+snacks = input("Shares snacks? (yes/no): ").lower()
+homework = input("Helps with homework? (yes/no): ").lower()
+fun = int(input("Fun level 1-5: "))
+promises = input("Keeps promises (always/usually/sometimes): ").lower()
+
+# Run the pipeline!
+scores, pct, title = rate_friendship(speed, snacks, homework, fun, promises)
+
+# Display results
+print()
+header(f"RESULTS FOR {name.upper()}")
+print()
+
+print("  Category Breakdown:")
+print("  ─" * 20)
+for category, score in scores.items():
+    print(f"  {category:16s} {make_bar(score)} {score}/10")
+
+print()
+pct_bar = make_bar(pct, 100, 20)
+print(f"  OVERALL: {pct_bar} {pct}%")
+print(f"  STATUS:  {title}")
+print()
+
+# Fun commentary
+comments = {
+    90: [f"{name} is basically family at this point.", f"Protect {name} at all costs."],
+    75: [f"{name} is a keeper!", f"You and {name} have something solid."],
+    60: [f"{name} is good people.", f"Your friendship with {name} has potential!"],
+    40: [f"You and {name} are getting there!", f"Give it time with {name}."],
+    0: [f"Maybe invite {name} to hang out more?", f"Every friendship starts somewhere!"]
+}
+
+for threshold in sorted(comments.keys(), reverse=True):
+    if pct >= threshold:
+        print(f"  💬 {random.choice(comments[threshold])}")
+        break
+
+print()
+header("Pipeline: answers → scores → combine → rate → display", char="─")</textarea>
+          <div class="code-cell__output" id="output-8"></div>
+        </div>
+      </div>
+
+      <!-- ========== PART 9: REAL-WORLD PIPELINES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>Pipelines Are Everywhere</h2>
+
+        <p>What you built is exactly how real software works:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Real-World Pipelines</p>
+          <p><strong>Instagram filters:</strong> take photo → adjust brightness → add color tint → apply blur → add frame → output</p>
+          <p><strong>Spell check:</strong> take text → split into words → check each word → mark misspelled → suggest corrections → display</p>
+          <p><strong>Grade calculator:</strong> take assignment scores → weight each one → calculate average → convert to letter grade → display</p>
+          <p style="margin-bottom: 0;"><strong>Video game damage:</strong> base attack → multiply by weapon → subtract armor → check for critical hit → apply to health → display</p>
+        </div>
+
+        <p>In every case, data flows through a series of transformations. Each step is a function. Each function does one thing well. Together, they create something complex and useful.</p>
+      </div>
+
+      <!-- ========== PART 10: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 10</p>
+        <h2>What You Just Did</h2>
+
+        <p>You learned to <strong>chain functions together</strong> — where the output of one becomes the input of the next. This is systems thinking: understanding how simple parts connect to create complex behavior.</p>
+
+        <p>The friendship calculator isn't one big, complicated function. It's a pipeline of small, simple functions that each do one job. Any single function is easy to understand, test, and change. But connected together, they solve a complex problem.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">Complex problems become manageable when you think of them as pipelines: <em>"What are the steps, and how does information flow from one step to the next?"</em> Each step is a function. Each function transforms the data and passes it along. Simple parts, complex results.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>Why is it better to have many small functions than one giant function? (Hint: think about changing, testing, and reusing.)</li>
+          <li>If you wanted to add a "Humor" category to the friendship score, what would you need to change? How many functions would you need to touch?</li>
+          <li>Can you think of a process in your life that works like a pipeline? What are the steps, and what flows through them?</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Movie Rating Pipeline</p>
+          <p style="margin-bottom: 0;">Build a movie rating system with functions for: <code>score_acting()</code>, <code>score_story()</code>, <code>score_visuals()</code>, <code>score_music()</code>. Combine them into an overall rating with a title like "Masterpiece", "Worth Watching", "Skip It". Rate 3 movies and display a ranked list.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · Text Transformer Pipeline</p>
+          <p style="margin-bottom: 0;">Build a text processing pipeline: <code>clean(text)</code> → <code>censor(text, banned_words)</code> → <code>emphasize(text, keyword)</code> → <code>format_output(text)</code>. Each function transforms the text and passes it to the next. Test it with a sentence that has bad words and important keywords.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Day Planner Pipeline</p>
+          <p style="margin-bottom: 0;">Build functions: <code>check_weather()</code> returns a weather score, <code>check_energy()</code> returns an energy score, <code>check_schedule()</code> returns a free-time score. Chain them into <code>plan_day()</code> that recommends activities based on the combined scores. Different combinations should give different recommendations.</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Systems Thinking</strong> — understanding how independent parts work together in sequence, each transforming data before passing it on. Ask: <em>"What are the steps, and how does information flow between them?"</em></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><strong>Function chaining</strong> — output of one function becomes input of next</p>
+          <p><strong>Nested calls</strong> — <code>f(g(x))</code> runs g first, then passes result to f</p>
+          <p><strong>Master/orchestrator functions</strong> — functions that call other functions in order</p>
+          <p><strong>Returning multiple values</strong> — <code>return a, b, c</code></p>
+          <p><code>sum()</code> — add up all items in a list</p>
+          <p><code>min()</code> — cap a value at a maximum</p>
+          <p><code>*data</code> — unpack a tuple into separate arguments</p>
+          <p><code>.items()</code> — loop through dictionary keys and values</p>
+          <p style="margin-bottom: 0;"><code>.sort()</code> with <code>key</code> — sort by a specific value</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Lessons 1–10: The Complete Toolkit</p>
+          <p><strong>Decomposition</strong> — break big problems into small steps</p>
+          <p><strong>Abstraction</strong> — decide what details matter</p>
+          <p><strong>Deductive Reasoning</strong> — rules + facts = conclusions</p>
+          <p><strong>Categorization</strong> — organize items into groups</p>
+          <p><strong>Pattern Recognition</strong> — spot what repeats and changes</p>
+          <p><strong>Automation</strong> — templates for repetitive tasks</p>
+          <p><strong>Inductive Reasoning</strong> — observations → conclusions</p>
+          <p><strong>Encapsulation</strong> — package complexity into functions</p>
+          <p><strong>Generalization</strong> — build solutions that adapt to any input</p>
+          <p style="margin-bottom: 0;"><strong>Systems Thinking</strong> — connect simple parts into complex pipelines</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-09.html" class="lesson-nav__link">← Lesson 9</a>
+        <a href="lesson-11.html" class="lesson-nav__link">Lesson 11 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>

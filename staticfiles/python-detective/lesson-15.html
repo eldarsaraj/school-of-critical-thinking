@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 15: How to Catch a Liar With Math – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 15 · Data Forensics</p>
+        <h1 class="lesson__title">How to Catch a Liar With Math</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">A bizarre mathematical law that lets you detect fake data — used by real fraud investigators, the IRS, and forensic accountants — and how to build your own lie detector in Python.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>A Strange Question</h2>
+        
+        <p>Quick — think of a number. Any number. The population of a city. The price of a house. The number of followers someone has. The distance to a star.</p>
+
+        <p>Now look at the <strong>first digit</strong> of that number. Is it a 1? A 5? A 9?</p>
+
+        <p>You'd think every digit (1 through 9) would show up equally often as the first digit — about 11% each. That seems logical, right?</p>
+
+        <p><strong>It's completely wrong.</strong></p>
+
+        <p>In the real world, the digit 1 appears as the first digit about <strong>30%</strong> of the time. The digit 2 appears about 17%. The digit 9? Only about 5%.</p>
+
+        <p>This isn't a coincidence. It's a mathematical law discovered over 100 years ago, and it's so reliable that <strong>investigators use it to catch people who fake their numbers</strong>. It's called <strong>Benford's Law</strong>.</p>
+      </div>
+
+      <!-- ========== PART 2: SEEING IT FOR YOURSELF ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Seeing It With Real Data</h2>
+
+        <p>Let's look at the first digits of real-world numbers. We'll start with country populations:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · First Digits of Populations</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="32"># Populations of 30 countries (approximate, in millions)
+populations = [
+    1412, 1408, 334, 277, 223, 216, 211, 171, 167, 149,
+    129, 127, 115, 112, 105, 99, 87, 84, 83, 70,
+    68, 67, 66, 60, 59, 55, 52, 47, 46, 45
+]
+
+# Count the first digits
+digit_counts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
+
+for pop in populations:
+    first_digit = int(str(pop)[0])
+    digit_counts[first_digit] = digit_counts[first_digit] + 1
+
+# Display
+total = len(populations)
+print(f"FIRST DIGITS OF {total} COUNTRY POPULATIONS")
+print("═" * 40)
+print()
+
+for digit in range(1, 10):
+    count = digit_counts[digit]
+    pct = count / total * 100
+    bar = "█" * int(pct / 3) + "░" * (12 - int(pct / 3))
+    print(f"  {digit}: {bar} {pct:5.1f}% ({count})")
+
+print()
+print("Notice: 1 appears WAY more than 9!")
+print("This isn't a coincidence...")</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">What Just Happened</p>
+          <p><code>str(pop)[0]</code> converts the number to text, then grabs the first character. So 1412 → "1412" → "1".</p>
+          <p><code>int(str(pop)[0])</code> converts it back to a number so we can use it as a dictionary key.</p>
+          <p style="margin-bottom: 0;">Look at the result: the digit 1 dominates. This is real data from real countries. The pattern is already visible.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 3: BENFORD'S LAW ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>The Law</h2>
+
+        <p>Benford's Law predicts exactly how often each first digit should appear:</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Benford's Expected Distribution</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="19"># Benford's Law: expected percentage for each first digit
+benford = {
+    1: 30.1, 2: 17.6, 3: 12.5, 4: 9.7, 5: 7.9,
+    6: 6.7,  7: 5.8,  8: 5.1,  9: 4.6
+}
+
+print("BENFORD'S LAW — Expected First Digits")
+print("═" * 40)
+print()
+
+for digit in range(1, 10):
+    pct = benford[digit]
+    bar = "█" * int(pct / 2) + "░" * (16 - int(pct / 2))
+    print(f"  {digit}: {bar} {pct:.1f}%")
+
+print()
+print("  1 appears 30% of the time!")
+print("  9 appears only 5% of the time!")
+print()
+print("  This pattern shows up in populations,")
+print("  prices, street addresses, river lengths,")
+print("  financial data, and much more.")</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <p>The pattern is dramatic — 1 is six times more likely than 9 to be the first digit. This seems impossible, but it shows up in data set after data set across every field imaginable.</p>
+
+        <h3>But Why?</h3>
+
+        <p>Here's the intuition: think about counting from 1 to 1000. You start at 1 and have to pass through <em>all</em> the 100s (100-199) before reaching the 200s. The numbers starting with 1 cover a huge range (1-1, 10-19, 100-199, 1000-1999). Numbers starting with 9 only barely exist before the next power of 10 (9, 90-99, 900-999). The digit 1 has more "room" to appear.</p>
+      </div>
+
+      <!-- ========== PART 4: BUILDING THE DETECTOR ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Building a Benford Detector</h2>
+
+        <p>Let's build a function that analyzes any list of numbers and checks if they follow Benford's Law:</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Benford Analyzer</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="38">def get_first_digits(numbers):
+    """Extract the first digit from each number."""
+    digits = []
+    for n in numbers:
+        n = abs(n)  # handle negative numbers
+        if n == 0:
+            continue
+        first = int(str(n)[0])
+        digits.append(first)
+    return digits
+
+def benford_analysis(numbers, label="Data"):
+    """Compare first-digit distribution to Benford's Law."""
+    benford = {1: 30.1, 2: 17.6, 3: 12.5, 4: 9.7, 5: 7.9,
+               6: 6.7,  7: 5.8,  8: 5.1,  9: 4.6}
+    
+    digits = get_first_digits(numbers)
+    total = len(digits)
+    
+    counts = {d: 0 for d in range(1, 10)}
+    for d in digits:
+        counts[d] = counts[d] + 1
+    
+    print(f"BENFORD ANALYSIS: {label}")
+    print(f"({total} numbers analyzed)")
+    print("═" * 45)
+    print(f"  {'Digit':>5s}  {'Observed':>8s}  {'Expected':>8s}  {'Diff':>6s}")
+    print("─" * 45)
+    
+    total_diff = 0
+    for d in range(1, 10):
+        observed = counts[d] / total * 100 if total > 0 else 0
+        expected = benford[d]
+        diff = abs(observed - expected)
+        total_diff = total_diff + diff
+        
+        flag = " ✓" if diff < 5 else " ⚠️" if diff < 10 else " 🚨"
+        print(f"  {d:>5d}  {observed:>7.1f}%  {expected:>7.1f}%  {diff:>5.1f}%{flag}")
+    
+    return total_diff
+
+# Test it with populations
+pops = [1412, 1408, 334, 277, 223, 216, 211, 171, 167, 149,
+        129, 127, 115, 112, 105, 99, 87, 84, 83, 70,
+        68, 67, 66, 60, 59, 55, 52, 47, 46, 45]
+
+diff = benford_analysis(pops, "Country Populations")
+print("─" * 45)
+print(f"  Total deviation: {diff:.1f}%")
+if diff < 30:
+    print("  ✅ VERDICT: Follows Benford's Law")
+else:
+    print("  🚨 VERDICT: Suspicious!")</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+      </div>
+
+      <!-- ========== PART 5: TESTING MORE DATA ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>Testing Different Data Sets</h2>
+
+        <p>Let's test Benford's Law on different kinds of numbers. Some should follow the law. Some shouldn't. Can we tell the difference?</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Multiple Data Sets</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="48">import random
+
+def get_first_digits(numbers):
+    digits = []
+    for n in numbers:
+        n = abs(n)
+        if n == 0: continue
+        digits.append(int(str(n)[0]))
+    return digits
+
+def quick_benford(numbers, label):
+    benford = {1: 30.1, 2: 17.6, 3: 12.5, 4: 9.7, 5: 7.9,
+               6: 6.7, 7: 5.8, 8: 5.1, 9: 4.6}
+    
+    digits = get_first_digits(numbers)
+    total = len(digits)
+    counts = {d: 0 for d in range(1, 10)}
+    for d in digits:
+        counts[d] = counts[d] + 1
+    
+    total_diff = 0
+    print(f"\n{label} ({total} numbers)")
+    print("─" * 40)
+    for d in range(1, 10):
+        obs = counts[d] / total * 100 if total > 0 else 0
+        exp = benford[d]
+        total_diff = total_diff + abs(obs - exp)
+        bar_obs = "█" * int(obs / 3)
+        bar_exp = "░" * int(exp / 3)
+        print(f"  {d}: {bar_obs:<12s} {obs:5.1f}% (expected {exp:.1f}%)")
+    
+    verdict = "✅ Follows Benford" if total_diff < 40 else "🚨 SUSPICIOUS"
+    print(f"  Deviation: {total_diff:.1f}% → {verdict}")
+    return total_diff
+
+# DATA SET 1: Powers of 2 (should follow Benford's!)
+powers = [2**i for i in range(1, 80)]
+quick_benford(powers, "Powers of 2")
+
+# DATA SET 2: House prices (realistic, follows Benford's)
+prices = []
+for i in range(200):
+    prices.append(random.randint(80000, 950000))
+quick_benford(prices, "Random House Prices")
+
+# DATA SET 3: Fibonacci numbers (follows Benford's!)
+fib = [1, 1]
+for i in range(60):
+    fib.append(fib[-1] + fib[-2])
+quick_benford(fib, "Fibonacci Numbers")
+
+# DATA SET 4: Made-up "random" data (WON'T follow Benford's)
+fake = [random.randint(100, 999) for _ in range(200)]
+quick_benford(fake, "Uniformly Random 100-999")</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">What Follows Benford's Law?</p>
+          <p><strong>Follows:</strong> Populations, financial transactions, street addresses, river lengths, powers of 2, Fibonacci numbers, stock prices, earthquake magnitudes, file sizes on your computer.</p>
+          <p><strong>Doesn't follow:</strong> Numbers assigned by humans (phone numbers, zip codes, ID numbers), numbers from a narrow range (test scores 0-100), truly uniform random numbers.</p>
+          <p style="margin-bottom: 0;">The key pattern: Benford's Law applies to data that <strong>spans many orders of magnitude</strong> (ones, tens, hundreds, thousands, etc.) and grows naturally.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 6: CATCHING FAKE DATA ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Catching a Liar</h2>
+
+        <p>Here's where it gets exciting. When people <strong>make up numbers</strong> — to fake financial records, cheat on taxes, or fabricate research — they usually pick digits roughly equally. They don't know about Benford's Law. And that's how they get caught.</p>
+
+        <p>Let's simulate this. We'll create "real" data and "fake" data, then see if our detector can tell the difference:</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Real vs. Fake</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="50">import random
+
+def get_first_digit(n):
+    return int(str(abs(n))[0])
+
+def benford_score(numbers):
+    """Return how well data matches Benford's Law (lower = better match)."""
+    benford = {1: 30.1, 2: 17.6, 3: 12.5, 4: 9.7, 5: 7.9,
+               6: 6.7, 7: 5.8, 8: 5.1, 9: 4.6}
+    counts = {d: 0 for d in range(1, 10)}
+    for n in numbers:
+        if n == 0: continue
+        counts[get_first_digit(n)] = counts[get_first_digit(n)] + 1
+    total = sum(counts.values())
+    deviation = 0
+    for d in range(1, 10):
+        observed = counts[d] / total * 100 if total > 0 else 0
+        deviation = deviation + abs(observed - benford[d])
+    return deviation
+
+# REAL company expenses (follows Benford's — natural growth)
+real_expenses = []
+for i in range(300):
+    # Real expenses span many magnitudes
+    magnitude = random.choice([10, 100, 1000, 10000])
+    expense = random.randint(1, 9) * magnitude + random.randint(0, magnitude - 1)
+    real_expenses.append(expense)
+
+# FAKE expenses (someone made them up — too uniform)
+fake_expenses = []
+for i in range(300):
+    # Faker picks "realistic looking" numbers but distributes digits evenly
+    fake_expenses.append(random.randint(100, 9999))
+
+print("🔍 FRAUD DETECTION CHALLENGE")
+print("═" * 40)
+print()
+print("Two companies submitted expense reports.")
+print("One is real. One is fabricated.")
+print("Can Benford's Law tell them apart?")
+print()
+
+score_a = benford_score(real_expenses)
+score_b = benford_score(fake_expenses)
+
+# Randomize which is shown first
+if random.choice([True, False]):
+    real_expenses, fake_expenses = fake_expenses, real_expenses
+    score_a, score_b = score_b, score_a
+
+print(f"COMPANY A — Deviation from Benford: {score_a:.1f}%")
+bar_a = "█" * int(score_a / 3)
+print(f"  [{bar_a}]")
+if score_a < 40:
+    print(f"  ✅ Matches Benford's Law — looks legitimate")
+else:
+    print(f"  🚨 Doesn't match — SUSPICIOUS")
+
+print()
+
+print(f"COMPANY B — Deviation from Benford: {score_b:.1f}%")
+bar_b = "█" * int(score_b / 3)
+print(f"  [{bar_b}]")
+if score_b < 40:
+    print(f"  ✅ Matches Benford's Law — looks legitimate")
+else:
+    print(f"  🚨 Doesn't match — SUSPICIOUS")
+
+print()
+print("═" * 40)
+print("The suspicious one has digits that are")
+print("too evenly distributed — a sign of")
+print("human-made numbers, not natural ones.")</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <p>Run it several times. The detector consistently flags the fake data. Real investigators at the IRS and FBI actually use this technique to flag suspicious tax returns and financial reports for further investigation.</p>
+      </div>
+
+      <!-- ========== PART 7: VISUAL COMPARISON ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Seeing the Difference</h2>
+
+        <p>Let's build a side-by-side visual that shows exactly where fake data deviates from Benford's Law:</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Visual Comparison</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="42">import random
+
+benford = {1: 30.1, 2: 17.6, 3: 12.5, 4: 9.7, 5: 7.9,
+           6: 6.7, 7: 5.8, 8: 5.1, 9: 4.6}
+
+def count_first_digits(numbers):
+    counts = {d: 0 for d in range(1, 10)}
+    for n in numbers:
+        if n == 0: continue
+        counts[int(str(abs(n))[0])] += 1
+    total = sum(counts.values())
+    return {d: counts[d] / total * 100 for d in range(1, 10)}
+
+# Generate data
+real_data = []
+for _ in range(500):
+    mag = random.choice([1, 10, 100, 1000, 10000, 100000])
+    real_data.append(random.randint(1, 9) * mag + random.randint(0, max(mag-1, 1)))
+
+fake_data = [random.randint(10, 99999) for _ in range(500)]
+
+real_dist = count_first_digits(real_data)
+fake_dist = count_first_digits(fake_data)
+
+print("SIDE-BY-SIDE: Real Data vs Fake Data vs Benford")
+print("═" * 55)
+print(f"  {'Digit':>5s}  {'Benford':>8s}  {'Real':>8s}  {'Fake':>8s}")
+print("─" * 55)
+
+for d in range(1, 10):
+    exp = benford[d]
+    real = real_dist[d]
+    fake = fake_dist[d]
+    
+    # Flags
+    real_ok = "✓" if abs(real - exp) < 5 else "⚠"
+    fake_ok = "✓" if abs(fake - exp) < 5 else "🚨"
+    
+    print(f"  {d:>5d}  {exp:>7.1f}%  {real:>6.1f}% {real_ok}  {fake:>6.1f}% {fake_ok}")
+
+print("─" * 55)
+print()
+print("  Notice: Real data's distribution matches Benford's.")
+print("  Fake data has digits that are too evenly spread.")
+print()
+print("  A fraudster who doesn't know Benford's Law")
+print("  will make numbers that look 'random' to them")
+print("  but scream 'FAKE!' to a mathematician.")</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+      </div>
+
+      <!-- ========== PART 8: THE COMPLETE FORENSICS TOOL ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>The Complete Data Forensics Tool</h2>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Data Forensics Tool</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="78">import random
+
+# === BENFORD'S LAW TOOLKIT ===
+
+BENFORD = {1: 30.1, 2: 17.6, 3: 12.5, 4: 9.7, 5: 7.9,
+           6: 6.7, 7: 5.8, 8: 5.1, 9: 4.6}
+
+def first_digit(n):
+    return int(str(abs(int(n)))[0])
+
+def analyze(numbers, label="Data"):
+    counts = {d: 0 for d in range(1, 10)}
+    clean = [n for n in numbers if n != 0]
+    for n in clean:
+        counts[first_digit(n)] += 1
+    total = len(clean)
+    
+    print(f"\n🔬 ANALYSIS: {label}")
+    print(f"   {total} numbers analyzed")
+    print("═" * 50)
+    
+    total_dev = 0
+    for d in range(1, 10):
+        obs = counts[d] / total * 100 if total > 0 else 0
+        exp = BENFORD[d]
+        diff = abs(obs - exp)
+        total_dev += diff
+        
+        # Visual bar comparison
+        obs_bar = "█" * int(obs / 2.5)
+        exp_bar = "░" * int(exp / 2.5)
+        
+        flag = "  " if diff < 3 else "⚠ " if diff < 7 else "🚨"
+        print(f"  {d}: {obs_bar:<13s} {obs:5.1f}% (expect {exp:4.1f}%) {flag}")
+    
+    print("═" * 50)
+    
+    # Verdict
+    if total_dev < 25:
+        verdict = "✅ CLEAN — Closely follows Benford's Law"
+    elif total_dev < 45:
+        verdict = "⚠️  UNCERTAIN — Some deviation detected"
+    else:
+        verdict = "🚨 SUSPICIOUS — Significant deviation from Benford's Law"
+    
+    print(f"  Total deviation: {total_dev:.1f}%")
+    print(f"  {verdict}")
+    return total_dev
+
+# === MAIN PROGRAM ===
+
+def header(text, char="═", width=50):
+    print(char * width)
+    print(f"  {text}")
+    print(char * width)
+
+header("🕵️ DATA FORENSICS LAB")
+print()
+print("Choose a dataset to investigate:")
+print("  1 — City populations (real)")
+print("  2 — Financial transactions (real)")
+print("  3 — Suspicious expense report (fake!)")
+print("  4 — Enter your own numbers")
+print("  5 — Generate real vs fake comparison")
+print()
+choice = input("Your choice (1-5): ")
+
+if choice == "1":
+    data = [8336, 3979, 2746, 2693, 2320, 1603, 1386, 1304, 998, 961,
+            936, 918, 906, 876, 873, 856, 839, 743, 689, 675,
+            641, 632, 617, 603, 585, 574, 567, 553, 535, 515,
+            504, 486, 467, 451, 429, 413, 398, 377, 362, 345]
+    analyze(data, "US City Populations (thousands)")
+
+elif choice == "2":
+    data = []
+    for _ in range(400):
+        mag = random.choice([10, 100, 1000, 10000])
+        data.append(random.randint(1, 9) * mag + random.randint(0, mag))
+    analyze(data, "Financial Transactions")
+
+elif choice == "3":
+    data = [random.randint(200, 8000) for _ in range(400)]
+    analyze(data, "Suspicious Expense Report")
+
+elif choice == "4":
+    print("Enter numbers separated by spaces:")
+    raw = input("> ")
+    nums = []
+    for item in raw.split():
+        try:
+            nums.append(int(item))
+        except:
+            pass
+    if len(nums) > 0:
+        analyze(nums, "Your Numbers")
+    else:
+        print("No valid numbers found!")
+
+elif choice == "5":
+    print()
+    real = []
+    for _ in range(400):
+        mag = random.choice([10, 100, 1000, 10000, 100000])
+        real.append(random.randint(1, 9) * mag + random.randint(0, mag))
+    
+    fake = [random.randint(100, 99999) for _ in range(400)]
+    
+    score_real = analyze(real, "Company A (Natural Data)")
+    score_fake = analyze(fake, "Company B (Fabricated Data)")
+    
+    print()
+    header("COMPARISON", char="─")
+    print(f"  Company A deviation: {score_real:.1f}%")
+    print(f"  Company B deviation: {score_fake:.1f}%")
+    if score_real < score_fake:
+        print("  → Company B's data looks fabricated!")
+    else:
+        print("  → Company A's data looks fabricated!")
+
+print()
+header("Benford's Law: the math that catches liars", char="─")</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <p>Try all five options. Option 4 lets you type your own numbers — try entering random numbers you make up and see if the detector catches you!</p>
+      </div>
+
+      <!-- ========== PART 9: REAL CASES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>Real-World Fraud Detection</h2>
+
+        <p>Benford's Law isn't just a math curiosity. It's used in real investigations:</p>
+
+        <div class="info-box">
+          <p class="info-box__label">Real Cases</p>
+          <p><strong>Tax fraud:</strong> The IRS uses Benford's Law as a screening tool. If someone's reported income, expenses, or deductions don't follow the expected distribution, the return gets flagged for an audit.</p>
+          <p><strong>Election fraud:</strong> Researchers have analyzed vote counts from elections worldwide. When vote totals don't follow Benford's Law, it can indicate manipulation — though this is just one piece of evidence, not proof by itself.</p>
+          <p><strong>Accounting fraud:</strong> Enron — one of the biggest corporate frauds in history — had financial statements that deviated significantly from Benford's Law. Forensic accountants now routinely use this technique.</p>
+          <p style="margin-bottom: 0;"><strong>Scientific fraud:</strong> Researchers who fabricate experimental data often get caught because their numbers are "too random" — they lack the natural patterns Benford's Law predicts.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 10: LIMITATIONS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 10</p>
+        <h2>When Benford's Law Doesn't Apply</h2>
+
+        <p>Like any tool, Benford's Law has limits. It's important to know when it works and when it doesn't:</p>
+
+        <div class="code-cell" id="cell-8">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Where It Fails</span>
+            <button class="code-cell__run" onclick="runCode(8)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-8" rows="28">import random
+
+def quick_check(numbers, label):
+    counts = {d: 0 for d in range(1, 10)}
+    clean = [n for n in numbers if n > 0]
+    for n in clean:
+        counts[int(str(n)[0])] += 1
+    total = len(clean)
+    print(f"\n{label}:")
+    for d in range(1, 10):
+        pct = counts[d] / total * 100 if total > 0 else 0
+        bar = "█" * int(pct / 3)
+        print(f"  {d}: {bar:<12s} {pct:.0f}%")
+
+# These DON'T follow Benford's — and that's OK!
+
+# Test scores (limited range: 0-100)
+scores = [random.randint(50, 100) for _ in range(200)]
+quick_check(scores, "Test Scores (50-100) — NOT expected to follow")
+
+# Phone numbers (assigned by humans)
+phones = [random.randint(2000000000, 9999999999) for _ in range(200)]
+quick_check(phones, "Phone Numbers — NOT expected to follow")
+
+print()
+print("═" * 40)
+print("Benford's Law only works for data that:")
+print("  • Spans multiple orders of magnitude")
+print("  • Grows naturally (not assigned)")
+print("  • Isn't limited to a narrow range")
+print("Using it on the wrong data = false alarms!")</textarea>
+          <div class="code-cell__output" id="output-8"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Critical Thinking</p>
+          <p>Benford's Law is a powerful tool, but it's <strong>not proof of fraud</strong> by itself. Data that deviates from Benford's could be fake — or it could just be the wrong kind of data.</p>
+          <p style="margin-bottom: 0;">A good data detective doesn't jump to conclusions. They use Benford's Law as a <strong>screening tool</strong> — a reason to investigate further, not a final verdict. This is the same caution scientists use: one piece of evidence is a clue, not a conclusion.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 11: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 11</p>
+        <h2>What You Just Did</h2>
+
+        <p>You learned a mathematical law that most adults don't know about — and you built a tool that applies it. You can now analyze any set of numbers and check if they follow the natural pattern of real-world data.</p>
+
+        <p>This lesson combines everything you've learned: lists and dictionaries to store data, loops to process it, functions to organize the analysis, and statistical thinking (from Lesson 14) to interpret the results.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">The real world has hidden patterns. Numbers that look random actually follow mathematical laws. When those patterns are broken — when someone makes up data — the math can catch them. <strong>The ability to spot what's real and what's fake is one of the most valuable skills you can have.</strong></p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>Why don't human-invented numbers follow Benford's Law? What does this tell us about how we think about randomness?</li>
+          <li>If someone knew about Benford's Law, could they fake data that passes the test? Would it be easy or hard?</li>
+          <li>Why is it important to know when Benford's Law does NOT apply? What could happen if you used it on the wrong kind of data?</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Test Your Friends</p>
+          <p style="margin-bottom: 0;">Ask 5 friends to each write down 20 "random" numbers between 1 and 10,000. Run each friend's numbers through the Benford analyzer. Do human-generated numbers follow the law? Compare their results to the computer's random numbers.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · Smart Faker</p>
+          <p style="margin-bottom: 0;">Write a program that generates <em>fake</em> data that actually follows Benford's Law. Hint: instead of picking numbers uniformly, weight your random choices so digit 1 appears 30% of the time, digit 2 appears 17.6%, etc. Then test it with the analyzer — can you fool your own detector?</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Second Digit Analysis</p>
+          <p style="margin-bottom: 0;">Benford's Law also predicts the distribution of the <em>second</em> digit (it's more even than the first, but still not uniform — 0 is most common at 12%). Build an analyzer for second digits and test it on the same data sets. Does it catch the same fake data?</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Data Forensics</strong> — using mathematical patterns to verify if data is genuine. Ask: <em>"Does this data follow the patterns we'd expect from real-world numbers?"</em></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Key Concept</p>
+          <p><strong>Benford's Law:</strong> In naturally occurring data, the first digit is 1 about 30% of the time, 2 about 17.6%, declining to 9 at about 4.6%.</p>
+          <p style="margin-bottom: 0;">Data that deviates from this pattern <em>may</em> be fabricated — but always investigate further before concluding fraud.</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><strong>Extracting digits</strong> — <code>int(str(number)[0])</code></p>
+          <p><strong>Distribution analysis</strong> — counting occurrences, calculating percentages</p>
+          <p><strong>Deviation scoring</strong> — measuring how far observed data is from expected</p>
+          <p><strong>Data forensics pipeline</strong> — extract → count → compare → verdict</p>
+          <p style="margin-bottom: 0;"><strong>Combining all skills</strong> — lists, dicts, loops, functions, f-strings, conditionals</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-14.html" class="lesson-nav__link">← Lesson 14</a>
+        <a href="lesson-16.html" class="lesson-nav__link">Lesson 16 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>

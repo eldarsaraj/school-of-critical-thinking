@@ -80,6 +80,7 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1000px; /* wider than content column so nav links don't wrap */
 }
 
 /* Make header links inherit the “paper” aesthetic */
@@ -98,9 +99,9 @@ header a {
 
 /* Primary nav links */
 .site-nav a {
-  margin-left: 10px;
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  margin-left: 12px;
+  font-size: 13px;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
@@ -123,7 +124,6 @@ main { padding: 48px 24px; }
 .home-problem,
 .home-explain,
 .home-offer,
-.home-workshop,
 .home-cta {
   margin-top: 64px;
   padding-top: 18px;
@@ -227,44 +227,6 @@ main { padding: 48px 24px; }
 }
 
 .home-cta__links a:hover { border-bottom-color: rgba(0,0,0,0.35); }
-
-/* Home Workshop card */
-.home-workshop__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.home-workshop__label {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.4);
-  margin: 0 0 8px;
-}
-
-.home-workshop__desc {
-  font-size: 16px;
-  color: rgba(0,0,0,0.7);
-  margin: 0;
-  max-width: 480px;
-  line-height: 1.6;
-}
-
-.home-workshop__link {
-  display: inline-block;
-  white-space: nowrap;
-  font-size: 14px;
-  font-weight: 600;
-  color: #111;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(0,0,0,0.25);
-  padding-bottom: 1px;
-}
-
-.home-workshop__link:hover { border-bottom-color: #111; }
 
 
 /* ======================================================
@@ -444,7 +406,7 @@ main { padding: 48px 24px; }
   width: 12px;
   height: 12px;
   margin-left: 6px;
-  background: url("/static/images/proof-mark.png") no-repeat center / contain;
+  background: url("/static/images/proof-mark.89aa18369fc0.png") no-repeat center / contain;
   vertical-align: middle;
   opacity: 0.9;
 }

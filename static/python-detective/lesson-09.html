@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 9: One Tool, Infinite Uses – Python Detective</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="https://schoolofcriticalthinking.org/" class="logo" aria-label="Home">
+        <img src="/static/images/logo.png" alt="The School of Critical Thinking">
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/about/">About</a>
+        <a href="/books/">Books</a>
+        <a href="/articles/">Articles</a>
+        <a href="/start/">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Lesson Header -->
+      <div class="lesson__header">
+        <p class="lesson__meta">Lesson 9 · Generalization</p>
+        <h1 class="lesson__title">One Tool, Infinite Uses: The Swiss Army Knife of Code</h1>
+        
+        <div class="lesson__objective">
+          <p class="lesson__objective-label">What You'll Learn</p>
+          <p class="lesson__objective-content">How to build functions that adapt to different situations — so one tool can handle many jobs, just like a Swiss Army knife.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 1: THE HOOK ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 1</p>
+        <h2>Specific vs. General</h2>
+        
+        <p>In Lesson 8, we built functions like <code>enthusiastic_reply()</code> and <code>sarcastic_reply()</code>. Each one did one specific thing. That's useful — but what if you could build <strong>one function</strong> that handles all response styles?</p>
+
+        <p>Think about a real Swiss Army knife. Instead of carrying a separate knife, screwdriver, bottle opener, and scissors, you carry <strong>one tool</strong> that adapts based on what you need. That's <em>generalization</em> — creating solutions that work across many situations.</p>
+
+        <p>You already do this in life. When someone asks "how do I get to the store?" you don't have a memorized script for every possible store. You have a <strong>general skill</strong> — giving directions — that works for any destination. You adapt the details (left on Main, right on Oak) but the process is always the same.</p>
+
+        <p>Today, we're going to make our functions general-purpose — one tool, infinite uses.</p>
+      </div>
+
+      <!-- ========== PART 2: DEFAULT PARAMETERS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 2</p>
+        <h2>Parameters With Backup Plans</h2>
+
+        <p>Sometimes you want a function to work even if the user doesn't provide every detail. That's what <strong>default parameters</strong> do — they give a parameter a backup value:</p>
+
+        <div class="code-cell" id="cell-1">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Default Parameters</span>
+            <button class="code-cell__run" onclick="runCode(1)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-1" rows="14"># width has a default value of 20
+def make_bar(value, max_value, width=20):
+    filled = int((value / max_value) * width)
+    return "█" * filled + "░" * (width - filled)
+
+# Use the default width (20)
+print("Default: " + make_bar(7, 10))
+
+# Override the default with a custom width
+print("Wide:    " + make_bar(7, 10, 30))
+print("Narrow:  " + make_bar(7, 10, 10))
+
+# The first two parameters are still required
+# make_bar(7) would cause an error — max_value has no default</textarea>
+          <div class="code-cell__output" id="output-1"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">How Default Parameters Work</p>
+          <p><code>def make_bar(value, max_value, width=20):</code> — the <code>=20</code> means "if nobody provides a width, use 20."</p>
+          <p><code>make_bar(7, 10)</code> — we didn't give a width, so Python uses the default: 20.</p>
+          <p><code>make_bar(7, 10, 30)</code> — we gave a width, so Python uses 30 instead of the default.</p>
+          <p style="margin-bottom: 0;">Default parameters must come <strong>after</strong> required parameters. You can't have <code>def f(a=1, b):</code> — Python wouldn't know which argument is which.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 3: ONE FUNCTION MANY BEHAVIORS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 3</p>
+        <h2>One Function, Many Behaviors</h2>
+
+        <p>In Lesson 8, we had separate functions for each response style. Let's generalize — one function that takes the <em>style</em> as a parameter:</p>
+
+        <div class="code-cell" id="cell-2">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python</span>
+            <button class="code-cell__run" onclick="runCode(2)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-2" rows="22">import random
+
+def respond(name, message, style="friendly"):
+    if style == "enthusiastic":
+        reactions = ["OMG", "NO WAY", "YESSS"]
+        return f"{name}: {random.choice(reactions)}!! 🔥🔥"
+    elif style == "sarcastic":
+        comebacks = ["wow how original", "cool story", "shocking"]
+        return f"{name}: ...{random.choice(comebacks)} 🙄"
+    elif style == "supportive":
+        support = ["So proud of you!", "You deserve it!", "Amazing!"]
+        return f"{name}: {random.choice(support)} 💙"
+    elif style == "chill":
+        return f"{name}: nice 👍"
+    else:
+        return f"{name}: That's cool! 😊"
+
+# ONE function, FIVE different behaviors
+print(respond("Alex", "I got an A", "enthusiastic"))
+print(respond("Sam", "I got an A", "sarcastic"))
+print(respond("Jordan", "I got an A", "supportive"))
+print(respond("Taylor", "I got an A", "chill"))
+print(respond("Riley", "I got an A"))  # uses default: "friendly"</textarea>
+          <div class="code-cell__output" id="output-2"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Why This Is Better</p>
+          <p>In Lesson 8, we had five separate functions. Now we have <strong>one function</strong> that handles all five styles.</p>
+          <p>Adding a new style? Just add another <code>elif</code>. No new function needed.</p>
+          <p style="margin-bottom: 0;">The default <code>style="friendly"</code> means you don't even have to specify a style if you just want the basic version. The function adapts to what you give it.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 4: THE INTENSITY IDEA ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 4</p>
+        <h2>Adding Levels of Intensity</h2>
+
+        <p>Let's take generalization further. What if a function could adjust how <em>intense</em> its output is? Think about how you adjust your communication based on the situation — you roast your best friend harder than someone you just met.</p>
+
+        <div class="code-cell" id="cell-3">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Intensity Levels</span>
+            <button class="code-cell__run" onclick="runCode(3)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-3" rows="22">import random
+
+def compliment(name, intensity="medium"):
+    if intensity == "mild":
+        options = [
+            f"{name} is pretty cool.",
+            f"{name}, you're alright!",
+            f"Hey {name}, nice job."
+        ]
+    elif intensity == "medium":
+        options = [
+            f"{name} is genuinely awesome!",
+            f"The world is better with {name} in it!",
+            f"{name}, you're a real one. 💯"
+        ]
+    elif intensity == "spicy":
+        options = [
+            f"{name} is literally the greatest human alive and I will not be taking questions!! 🔥🔥🔥",
+            f"If {name} isn't in your life, you're doing it WRONG!! 🏆✨💫",
+            f"EVERYONE STOP WHAT YOU'RE DOING AND APPRECIATE {name.upper()} RIGHT NOW!! 🎉🎉🎉"
+        ]
+    else:
+        return f"{name} is nice."
+    
+    return random.choice(options)
+
+print(compliment("Alex", "mild"))
+print(compliment("Alex", "medium"))
+print(compliment("Alex", "spicy"))</textarea>
+          <div class="code-cell__output" id="output-3"></div>
+        </div>
+
+        <p>Same function, same friend, but the intensity dial changes the output dramatically. This is generalization — one tool that adapts.</p>
+      </div>
+
+      <!-- ========== PART 5: THE ROAST GENERATOR ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 5</p>
+        <h2>The Friendly Roast Generator</h2>
+
+        <p>Now let's build the fun part — a roast generator that adjusts based on the target's name, their quirk, and how hard you want to go:</p>
+
+        <div class="code-cell" id="cell-4">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Roast Generator</span>
+            <button class="code-cell__run" onclick="runCode(4)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-4" rows="38">import random
+
+def roast(name, quirk, level="mild"):
+    if level == "mild":
+        templates = [
+            f"{name} is the kind of person who {quirk}... and honestly? We let it slide.",
+            f"We don't talk about {name}'s habit of {quirk}. It's fine. Everything's fine.",
+            f"{name} {quirk}. That's the whole joke."
+        ]
+    elif level == "medium":
+        templates = [
+            f"Imagine being {name} and thinking it's OK to {quirk}. Couldn't be me. 😂",
+            f"Scientists are still trying to figure out why {name} insists on {quirk}.",
+            f"{name} has two modes: {quirk}, and sleeping. That's it."
+        ]
+    elif level == "spicy":
+        templates = [
+            f"BREAKING NEWS: {name} caught {quirk} AGAIN. Area residents unsurprised. 📰",
+            f"If '{quirk}' was an Olympic sport, {name} wouldn't just win gold — they'd be the ENTIRE Olympics. 🥇",
+            f"Nobody: \nAbsolutely nobody: \n{name}: *{quirk} with full confidence* 😭😭😭"
+        ]
+    else:
+        return f"{name} does stuff. Whatever."
+    
+    return random.choice(templates)
+
+# Test it out
+name = "Alex"
+quirk = "talks to their plants"
+
+print("ROAST INTENSITY TEST")
+print("═" * 40)
+print()
+print("🟢 MILD:")
+print(roast(name, quirk, "mild"))
+print()
+print("🟡 MEDIUM:")
+print(roast(name, quirk, "medium"))
+print()
+print("🔴 SPICY:")
+print(roast(name, quirk, "spicy"))</textarea>
+          <div class="code-cell__output" id="output-4"></div>
+        </div>
+
+        <p>Try changing the name and quirk. "Sam" who "eats cereal for dinner." "Jordan" who "takes 200 selfies before posting one." The same function handles any combination.</p>
+      </div>
+
+      <!-- ========== PART 6: COMPLIMENT MODE ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 6</p>
+        <h2>Generalize Even Further: Mode Switch</h2>
+
+        <p>What if the same function could do both roasts AND compliments? We just add another parameter — a <strong>mode</strong>:</p>
+
+        <div class="code-cell" id="cell-5">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · Roast + Compliment</span>
+            <button class="code-cell__run" onclick="runCode(5)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-5" rows="36">import random
+
+def generate(name, trait, mode="compliment", level="medium"):
+    if mode == "compliment":
+        if level == "mild":
+            options = [f"{name} is good at {trait}.", f"{name}, solid {trait} skills."]
+        elif level == "medium":
+            options = [f"{name}'s {trait} game is seriously impressive!", f"Everyone wishes they could {trait} like {name}."]
+        else:
+            options = [f"IF YOU'RE NOT FOLLOWING {name} FOR THEIR {trait.upper()} YOU ARE MISSING OUT ON LIFE ITSELF 🔥🔥🔥", f"{name}'s {trait} is a gift to humanity and I WILL die on this hill!! 💯✨"]
+    
+    elif mode == "roast":
+        if level == "mild":
+            options = [f"{name} tries really hard at {trait}. Bless.", f"{name} and {trait}... it's a journey."]
+        elif level == "medium":
+            options = [f"Someone needs to tell {name} that {trait} isn't their calling. 😬", f"{name} thinks they're amazing at {trait}. The delusion is almost inspiring."]
+        else:
+            options = [f"BREAKING: {name} has been BANNED from {trait} for the safety of the general public 📰", f"{name}'s {trait} is so bad it should be classified as a war crime 😭😭"]
+    else:
+        return f"{name} exists. That's all we know."
+    
+    return random.choice(options)
+
+# Same function, different modes
+name = "Alex"
+trait = "dancing"
+
+print(f"About {name}'s {trait}:")
+print("═" * 40)
+print()
+print("😊 Compliment (mild):  " + generate(name, trait, "compliment", "mild"))
+print("😊 Compliment (spicy): " + generate(name, trait, "compliment", "spicy"))
+print()
+print("😈 Roast (mild):       " + generate(name, trait, "roast", "mild"))
+print("😈 Roast (spicy):      " + generate(name, trait, "roast", "spicy"))</textarea>
+          <div class="code-cell__output" id="output-5"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">The Power of Parameters</p>
+          <p>We now have <strong>one function</strong> that handles: 2 modes × 3 levels = 6 different behaviors, each with multiple random options.</p>
+          <p>The function signature tells us everything: <code>generate(name, trait, mode, level)</code> — give it a person, a trait, whether to roast or compliment, and how intense.</p>
+          <p style="margin-bottom: 0;">This is the heart of generalization: <strong>what changes?</strong> Those things become parameters. <strong>What stays the same?</strong> That's the function body.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 7: HELPER FUNCTIONS ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 7</p>
+        <h2>Building a Toolkit</h2>
+
+        <p>Good programmers build a <strong>toolkit</strong> of general-purpose functions they can reuse in any project. Let's build some:</p>
+
+        <div class="code-cell" id="cell-6">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · General Toolkit</span>
+            <button class="code-cell__run" onclick="runCode(6)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-6" rows="30">def header(text, char="═", width=35):
+    """Display a formatted header."""
+    line = char * width
+    print(line)
+    print(f"  {text}")
+    print(line)
+
+def bar(value, max_val, width=15, filled_char="█", empty_char="░"):
+    """Create a visual bar."""
+    fill = int((value / max_val) * width)
+    return filled_char * fill + empty_char * (width - fill)
+
+def stars(rating, max_rating=5):
+    """Convert a rating to stars."""
+    full = int(rating)
+    empty = max_rating - full
+    return "★" * full + "☆" * empty
+
+def center(text, width=35):
+    """Center text in a given width."""
+    spaces = (width - len(text)) // 2
+    return " " * spaces + text
+
+# Now use the toolkit!
+header("MY GAME CHARACTER")
+print(f"  Name: Shadow")
+print(f"  Health: {bar(8, 10)} 8/10")
+print(f"  Energy: {bar(5, 10)} 5/10")
+print(f"  Stealth: {stars(4)}")
+print(f"  Combat:  {stars(3)}")
+print()
+header("REVIEW", char="─")
+print(center("⭐ LEGENDARY PLAYER ⭐"))
+print()</textarea>
+          <div class="code-cell__output" id="output-6"></div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">New Thing · Docstrings</p>
+          <p>The text in triple quotes <code>"""..."""</code> right after <code>def</code> is called a <strong>docstring</strong>. It describes what the function does. Python ignores it when running the code, but it helps anyone reading your code understand the function's purpose.</p>
+          <p style="margin-bottom: 0;">Notice how <code>bar()</code> and <code>header()</code> have default parameters for everything except the essential values. You <em>can</em> customize them, but you don't <em>have</em> to. That's the Swiss Army knife principle — works out of the box, but adapts when you need it.</p>
+        </div>
+      </div>
+
+      <!-- ========== PART 8: THE COMPLETE GENERATOR ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 8</p>
+        <h2>The Complete Roast & Compliment Generator</h2>
+
+        <div class="code-cell" id="cell-7">
+          <div class="code-cell__header">
+            <span class="code-cell__label">Python · The Complete Generator</span>
+            <button class="code-cell__run" onclick="runCode(7)">▶ Run</button>
+          </div>
+          <textarea class="code-cell__editor" id="editor-7" rows="75">import random
+
+# === TOOLKIT ===
+
+def header(text, char="═", width=35):
+    print(char * width)
+    print(f"  {text}")
+    print(char * width)
+
+def generate(name, trait, mode="compliment", level="medium"):
+    if mode == "compliment":
+        mild = [
+            f"{name} is pretty good at {trait}.",
+            f"{name}, not bad at {trait}!"
+        ]
+        medium = [
+            f"{name}'s {trait} is genuinely impressive!",
+            f"Everyone could learn from {name}'s {trait}.",
+            f"{name} + {trait} = perfection."
+        ]
+        spicy = [
+            f"NOBODY on this PLANET does {trait} like {name}!! I said what I said!! 🔥🔥",
+            f"{name}'s {trait} brings me to TEARS of joy every single time 😭✨💯",
+            f"The fact that {name} exists and does {trait} is proof the universe is kind!! 🌟"
+        ]
+    else:
+        mild = [
+            f"{name} and {trait}... at least they try.",
+            f"Bless {name}'s heart for attempting {trait}."
+        ]
+        medium = [
+            f"Someone needs to stage an intervention for {name}'s {trait}. 😬",
+            f"{name} thinks they're great at {trait}. Nobody tell them.",
+            f"If {trait} was easy, {name} would still struggle. 💀"
+        ]
+        spicy = [
+            f"ALERT: {name} spotted doing {trait} AGAIN. This is not a drill. Run. 🚨🚨",
+            f"{name}'s {trait} is the reason aliens won't visit Earth 👽😭",
+            f"In a world of people who can {trait}, {name} chose chaos 💀💀💀"
+        ]
+    
+    if level == "mild":
+        return random.choice(mild)
+    elif level == "spicy":
+        return random.choice(spicy)
+    else:
+        return random.choice(medium)
+
+# === MAIN PROGRAM ===
+
+header("🎤 ROAST & COMPLIMENT GENERATOR")
+print()
+
+name = input("Enter a friend's name: ")
+trait = input("Something they do or are known for: ")
+
+print()
+header("CHOOSE YOUR MODE", char="─")
+print("  1 — Compliment 😊")
+print("  2 — Roast 😈")
+print("  3 — Both! 😊😈")
+mode_choice = input("Your choice (1/2/3): ")
+
+print()
+header("CHOOSE INTENSITY", char="─")
+print("  1 — Mild 🟢")
+print("  2 — Medium 🟡")
+print("  3 — Spicy 🔴")
+print("  4 — All levels!")
+level_choice = input("Your choice (1/2/3/4): ")
+
+levels = {"1": "mild", "2": "medium", "3": "spicy"}
+level_emojis = {"mild": "🟢", "medium": "🟡", "spicy": "🔴"}
+
+print()
+header(f"RESULTS FOR {name.upper()}")
+print()
+
+if level_choice == "4":
+    level_list = ["mild", "medium", "spicy"]
+else:
+    level_list = [levels.get(level_choice, "medium")]
+
+for level in level_list:
+    emoji = level_emojis[level]
+    
+    if mode_choice == "1" or mode_choice == "3":
+        print(f"  {emoji} Compliment ({level}):")
+        print(f"  {generate(name, trait, 'compliment', level)}")
+        print()
+    
+    if mode_choice == "2" or mode_choice == "3":
+        print(f"  {emoji} Roast ({level}):")
+        print(f"  {generate(name, trait, 'roast', level)}")
+        print()
+
+header("Run again for different results! 🎲")</textarea>
+          <div class="code-cell__output" id="output-7"></div>
+        </div>
+
+        <p>Try mode "3" (both) and intensity "4" (all levels) to see the full range. Same friend, same trait — six completely different outputs, all from one function.</p>
+      </div>
+
+      <!-- ========== PART 9: REFLECTION ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Part 9</p>
+        <h2>What You Just Did</h2>
+
+        <p>You learned to build functions that aren't locked into one specific behavior. By adding parameters — mode, intensity level, style — a single function can handle many different situations.</p>
+
+        <p><strong>That's generalization.</strong></p>
+
+        <p>This is one of the most important ideas in all of thinking: instead of creating a separate solution for every situation, ask <em>"What changes between situations?"</em> Make those things the inputs, and keep everything else the same.</p>
+
+        <p>It's how one recipe becomes infinite meals (change the protein, change the spice, change the sauce). It's how one formula in math works for any number. It's how one app serves millions of different users.</p>
+
+        <div class="info-box">
+          <p class="info-box__label">The Big Idea</p>
+          <p style="font-size: 19px; margin-bottom: 0;">When you build a solution, ask: <em>"What if the inputs were different? Would this still work?"</em> If not, figure out what would need to change and make those things <strong>parameters</strong>. The most powerful tools are the ones that adapt to any situation.</p>
+        </div>
+
+        <h3>Thinking Questions</h3>
+        <ol style="margin: 20px 0; padding-left: 28px; font-size: 17px; line-height: 2;">
+          <li>What's the difference between a specific solution ("make Alex a birthday card") and a general solution ("make anyone a birthday card given their name and age")?</li>
+          <li>When is it better to have a specific function versus a general one? (Hint: sometimes simpler is better.)</li>
+          <li>Can you think of a real-world tool that's "general purpose"? What makes it adaptable?</li>
+        </ol>
+      </div>
+
+      <!-- ========== CHALLENGES ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Challenges</p>
+        <h2>Level Up</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Challenge 1 · Universal Greeting</p>
+          <p style="margin-bottom: 0;">Create a <code>greet(name, language="english", formality="casual")</code> function that generates greetings in different languages (English, Spanish, French) at different formality levels (casual, polite, formal). One function, many combinations.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 2 · Story Generator</p>
+          <p style="margin-bottom: 0;">Build a <code>tell_story(hero, villain, setting, genre="adventure")</code> function that creates a short 3-sentence story. Different genres (adventure, mystery, comedy, sci-fi) should produce different styles. Use default parameters so it works even with just a hero name.</p>
+        </div>
+        
+        <div class="info-box">
+          <p class="info-box__label">Challenge 3 · Smart Display</p>
+          <p style="margin-bottom: 0;">Create a <code>display(data, style="simple")</code> function that takes a list of items and displays them in different formats: "simple" (numbered list), "fancy" (with borders and decorations), "compact" (all on one line separated by |). One function, three visual styles.</p>
+        </div>
+      </div>
+
+      <!-- ========== SUMMARY ========== -->
+      <div class="pd-section">
+        <p class="pd-section__label">Summary</p>
+        <h2>What You Learned</h2>
+
+        <div class="info-box">
+          <p class="info-box__label">Thinking Skill</p>
+          <p style="margin-bottom: 0;"><strong>Generalization</strong> — building solutions that work across many situations by identifying what changes (make it a parameter) and what stays the same (keep it in the function body). Ask: <em>"How can this work for any input?"</em></p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Python Concepts</p>
+          <p><strong>Default parameters</strong> — <code>def f(x, y=10):</code> — backup values when no argument is given</p>
+          <p><strong>Multiple parameters for behavior</strong> — using parameters like <code>mode</code> and <code>level</code> to change what a function does</p>
+          <p><strong>Docstrings</strong> — <code>"""Description"""</code> right after <code>def</code></p>
+          <p><strong>General-purpose toolkit</strong> — building reusable functions with sensible defaults</p>
+          <p style="margin-bottom: 0;"><code>.get()</code> on dictionaries — <code>d.get(key, fallback)</code> returns the fallback if the key doesn't exist</p>
+        </div>
+
+        <div class="info-box">
+          <p class="info-box__label">Lessons 1–9</p>
+          <p><strong>Decomposition</strong> — break big problems into small steps</p>
+          <p><strong>Abstraction</strong> — decide what details matter</p>
+          <p><strong>Deductive Reasoning</strong> — rules + facts = conclusions</p>
+          <p><strong>Categorization</strong> — organize items into groups</p>
+          <p><strong>Pattern Recognition</strong> — spot what repeats and changes</p>
+          <p><strong>Automation</strong> — templates for repetitive tasks</p>
+          <p><strong>Inductive Reasoning</strong> — observations → conclusions</p>
+          <p><strong>Encapsulation</strong> — package complexity into functions</p>
+          <p style="margin-bottom: 0;"><strong>Generalization</strong> — build solutions that adapt to any input</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lesson-nav">
+        <a href="lesson-08.html" class="lesson-nav__link">← Lesson 8</a>
+        <a href="lesson-10.html" class="lesson-nav__link">Lesson 10 →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container site-footer__inner">
+      <div class="site-footer__left">
+        <p class="site-footer__brand">The School of Critical Thinking</p>
+        <p class="site-footer__tagline">Rebuilding thinking for agency, from first principles.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer links">
+        <a href="https://schoolofcriticalthinking.org/contact/">Contact</a>
+        <a href="https://schoolofcriticalthinking.org/about/">About</a>
+        <a href="https://schoolofcriticalthinking.org/books/">Books</a>
+        <a href="https://schoolofcriticalthinking.org/articles/">Articles</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle -->
+  <script>
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const header = document.querySelector(".site-header");
+      if (!btn || !header) return;
+      btn.addEventListener("click", function () {
+        const isOpen = header.classList.toggle("nav-open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    })();
+  </script>
+
+  <!-- Pyodide Python Engine -->
+  <script>
+    let _pyodide = null;
+    let _pyodideLoadPromise = null;
+
+    function _ensurePyodide() {
+      if (_pyodide) return Promise.resolve(_pyodide);
+      if (_pyodideLoadPromise) return _pyodideLoadPromise;
+
+      _pyodideLoadPromise = new Promise(function(resolve, reject) {
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+          globalThis.loadPyodide({
+            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/'
+          }).then(function(py) {
+            _pyodide = py;
+            resolve(py);
+          }).catch(function(err) {
+            _pyodideLoadPromise = null;
+            reject(err);
+          });
+        };
+        script.onerror = function() {
+          _pyodideLoadPromise = null;
+          reject(new Error('Failed to load Pyodide. Check your internet connection.'));
+        };
+        document.head.appendChild(script);
+      });
+
+      return _pyodideLoadPromise;
+    }
+
+    async function runCode(cellId) {
+      var editor = document.getElementById('editor-' + cellId);
+      var outputDiv = document.getElementById('output-' + cellId);
+      var button = document.querySelector('#cell-' + cellId + ' .code-cell__run');
+      var code = editor.value;
+
+      button.textContent = '\u23F3 Loading\u2026';
+      button.disabled = true;
+      outputDiv.style.display = 'block';
+      outputDiv.className = 'code-cell__output';
+      outputDiv.textContent = 'Loading Python (first run takes a few seconds)\u2026';
+
+      try {
+        var py = await _ensurePyodide();
+
+        button.textContent = '\u25B6 Running\u2026';
+        outputDiv.textContent = '';
+
+        await py.runPythonAsync(
+          'import sys, io\n' +
+          'from js import prompt as _jsprompt\n' +
+          'def _input(msg=""):\n' +
+          '    r = _jsprompt(msg)\n' +
+          '    if r is None: raise KeyboardInterrupt("Cancelled")\n' +
+          '    print(msg + r)\n' +
+          '    return r\n' +
+          '__builtins__.input = _input\n' +
+          'sys.stdout = io.StringIO()\n' +
+          'sys.stderr = io.StringIO()\n'
+        );
+
+        await py.runPythonAsync(code);
+
+        var stdout = py.runPython('sys.stdout.getvalue()');
+        var stderr = py.runPython('sys.stderr.getvalue()');
+
+        if (stderr) {
+          outputDiv.textContent = stderr;
+          outputDiv.className = 'code-cell__output error';
+        } else if (stdout) {
+          outputDiv.textContent = stdout;
+        } else {
+          outputDiv.textContent = '(Code ran successfully \u2014 no output)';
+          outputDiv.className = 'code-cell__output no-output';
+        }
+
+        button.textContent = '\u25B6 Run Again';
+
+      } catch (err) {
+        var msg = String(err.message || err);
+        var lines = msg.split('\n').filter(function(l) { return l.trim(); });
+        var lastLine = lines[lines.length - 1] || msg;
+        outputDiv.textContent = 'Error: ' + lastLine;
+        outputDiv.className = 'code-cell__output error';
+        button.textContent = '\u25B6 Try Again';
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll('.code-cell__editor').forEach(function(textarea) {
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+      textarea.addEventListener('input', autoResize);
+
+      textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          var s = this.selectionStart;
+          var end = this.selectionEnd;
+          this.value = this.value.substring(0, s) + '    ' + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = s + 4;
+        }
+      });
+
+      textarea.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          var cellId = this.id.replace('editor-', '');
+          runCode(parseInt(cellId));
+        }
+      });
+
+      autoResize();
+    });
+  </script>
+
+</body>
+</html>

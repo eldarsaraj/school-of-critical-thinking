@@ -1,0 +1,578 @@
+/* =============================================================
+   SHSAT PREP — shsat.css
+   Extends site.css. New classes only. No overrides of globals.
+   ============================================================= */
+
+/* ----------------------------------------------------------
+   Wrapper
+   ---------------------------------------------------------- */
+.shsat-wrap {
+  padding: 32px 0 80px;
+}
+
+/* ----------------------------------------------------------
+   Tab bar
+   ---------------------------------------------------------- */
+.shsat-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  margin-bottom: 36px;
+}
+
+.shsat-tab {
+  display: inline-block;
+  padding: 10px 18px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.5);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.12s, border-color 0.12s;
+}
+
+.shsat-tab:hover {
+  color: #111;
+}
+
+.shsat-tab.active {
+  color: #111;
+  border-bottom-color: #111;
+}
+
+/* ----------------------------------------------------------
+   Flash messages
+   ---------------------------------------------------------- */
+.shsat-messages {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+}
+
+.shsat-message {
+  padding: 12px 16px;
+  font-size: 15px;
+  border-left: 3px solid #111;
+  background: rgba(0, 0, 0, 0.04);
+  margin-bottom: 8px;
+}
+
+/* ----------------------------------------------------------
+   Page headings
+   ---------------------------------------------------------- */
+.shsat-page-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+}
+
+.shsat-page-subtitle {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.55);
+  margin: 0 0 32px;
+}
+
+/* ----------------------------------------------------------
+   Cards / stat grid
+   ---------------------------------------------------------- */
+.shsat-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.shsat-stat-card {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 20px 18px;
+  background: #fff;
+}
+
+.shsat-stat-card__value {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.shsat-stat-card__label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* ----------------------------------------------------------
+   Section heading
+   ---------------------------------------------------------- */
+.shsat-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ----------------------------------------------------------
+   Tables
+   ---------------------------------------------------------- */
+.shsat-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  margin-bottom: 36px;
+}
+
+.shsat-table th {
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.45);
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shsat-table td {
+  padding: 10px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  vertical-align: middle;
+}
+
+.shsat-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Placement status colors */
+.placement-above { color: #1a7f3c; font-weight: 600; }
+.placement-close  { color: #8a6700; font-weight: 600; }
+.placement-below  { color: rgba(0, 0, 0, 0.4); }
+
+/* ----------------------------------------------------------
+   Chart area
+   ---------------------------------------------------------- */
+.shsat-chart-wrap {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-bottom: 36px;
+  background: #fff;
+}
+
+/* ----------------------------------------------------------
+   Button
+   ---------------------------------------------------------- */
+.shsat-btn {
+  display: inline-block;
+  padding: 11px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border: 1px solid #111;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background 0.12s, color 0.12s;
+}
+
+.shsat-btn:hover {
+  background: #333;
+}
+
+.shsat-btn--outline {
+  background: transparent;
+  color: #111;
+}
+
+.shsat-btn--outline:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.shsat-btn--danger {
+  background: transparent;
+  color: rgba(160, 30, 20, 0.9);
+  border-color: rgba(160, 30, 20, 0.4);
+}
+
+/* ----------------------------------------------------------
+   Auth forms
+   ---------------------------------------------------------- */
+.shsat-auth {
+  max-width: 420px;
+  margin: 60px auto;
+}
+
+.shsat-auth__title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.shsat-auth__sub {
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 28px;
+}
+
+/* ----------------------------------------------------------
+   Test list
+   ---------------------------------------------------------- */
+.shsat-test-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.shsat-test-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  gap: 12px;
+}
+
+.shsat-test-item__title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.shsat-test-item__meta {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: 2px;
+}
+
+.shsat-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.shsat-badge--done {
+  border-color: #1a7f3c;
+  color: #1a7f3c;
+}
+
+/* ----------------------------------------------------------
+   Test intro
+   ---------------------------------------------------------- */
+.shsat-intro {
+  max-width: 600px;
+}
+
+.shsat-intro__rule {
+  display: flex;
+  gap: 32px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 15px;
+}
+
+.shsat-intro__rule-label {
+  min-width: 140px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.45);
+  padding-top: 2px;
+}
+
+/* ----------------------------------------------------------
+   Test-taking layout
+   ---------------------------------------------------------- */
+.shsat-test-layout {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 32px;
+  align-items: start;
+  max-width: 1000px;
+}
+
+@media (max-width: 720px) {
+  .shsat-test-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Timer */
+.shsat-timer {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.shsat-timer--overtime {
+  color: rgba(180, 40, 30, 0.8);
+}
+
+/* Question display */
+.shsat-question-panel {
+  padding-bottom: 40px;
+}
+
+.shsat-question-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.shsat-passage {
+  background: rgba(0, 0, 0, 0.025);
+  border-left: 3px solid rgba(0, 0, 0, 0.12);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.shsat-passage__title {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+  margin-bottom: 10px;
+}
+
+.shsat-question-text {
+  font-size: 17px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.shsat-choices {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+}
+
+.shsat-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+  transition: border-color 0.1s, background 0.1s;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.shsat-choice:hover {
+  border-color: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.shsat-choice.selected {
+  border-color: #111;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.shsat-choice__letter {
+  font-weight: 700;
+  min-width: 20px;
+  padding-top: 1px;
+}
+
+/* Question map (sidebar) */
+.shsat-qmap {
+  position: sticky;
+  top: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  background: #fff;
+}
+
+.shsat-qmap__section {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+  margin-bottom: 8px;
+}
+
+.shsat-qmap__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.shsat-qmap__dot {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+  transition: background 0.1s;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.shsat-qmap__dot.answered {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+.shsat-qmap__dot.flagged {
+  border-color: rgba(180, 40, 30, 0.6);
+  color: rgba(180, 40, 30, 0.8);
+}
+
+.shsat-qmap__dot.current {
+  outline: 2px solid #111;
+  outline-offset: 1px;
+}
+
+/* ----------------------------------------------------------
+   Results page
+   ---------------------------------------------------------- */
+.shsat-score-display {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+@media (max-width: 600px) {
+  .shsat-score-display {
+    grid-template-columns: 1fr;
+  }
+}
+
+.shsat-score-box {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 20px;
+  text-align: center;
+  background: #fff;
+}
+
+.shsat-score-box__value {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.shsat-score-box__label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.shsat-score-box--composite .shsat-score-box__value {
+  font-size: 56px;
+}
+
+/* Answer review */
+.shsat-answer-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 60px 60px;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 14px;
+}
+
+.shsat-answer-row--correct .shsat-answer-given {
+  color: #1a7f3c;
+  font-weight: 700;
+}
+
+.shsat-answer-row--wrong .shsat-answer-given {
+  color: rgba(160, 30, 20, 0.9);
+  font-weight: 700;
+  text-decoration: line-through;
+}
+
+.shsat-answer-row--unanswered {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* ----------------------------------------------------------
+   Resources page
+   ---------------------------------------------------------- */
+.shsat-resource-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+}
+
+.shsat-resource-item {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 15px;
+}
+
+.shsat-resource-item a {
+  color: #111;
+  font-weight: 600;
+}
+
+.shsat-resource-item__type {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+  margin-top: 3px;
+}
+
+/* ----------------------------------------------------------
+   Landing hero
+   ---------------------------------------------------------- */
+.shsat-landing-hero {
+  padding: 60px 0 48px;
+  max-width: 600px;
+}
+
+.shsat-landing-hero h1 {
+  font-size: 38px;
+  margin-bottom: 16px;
+}
+
+.shsat-landing-hero p {
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.65);
+  margin-bottom: 28px;
+}
+
+.shsat-landing-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 36px;
+}
+
+.shsat-landing-features li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 16px;
+}
+
+.shsat-landing-features li::before {
+  content: "✓  ";
+  font-weight: 700;
+}
