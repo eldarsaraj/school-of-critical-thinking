@@ -1,0 +1,37 @@
+{% extends "shsat/base_shsat.html" %}
+{% load static %}
+
+{% block title %}Sign up — SHSAT Workshop{% endblock %}
+
+{% block shsat_content %}
+<div class="shsat-auth">
+  <h1 class="shsat-auth__title">Create your account</h1>
+  <p class="shsat-auth__sub">Free to start. One full practice test included.</p>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div class="contact-form__error" style="margin-bottom:16px;">
+      {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+    </div>
+    {% endif %}
+
+    {% for field in form %}
+    <div class="contact-form__field">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+      {% if field.errors %}
+      <span class="contact-form__error">{{ field.errors|join:" " }}</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <button type="submit" class="shsat-btn" style="width:100%;">Create account</button>
+  </form>
+
+  <p style="margin-top:20px; font-size:14px; color:rgba(0,0,0,0.5);">
+    Already have an account? <a href="{% url 'shsat_login' %}" style="color:#111;">Log in</a>
+  </p>
+</div>
+{% endblock %}

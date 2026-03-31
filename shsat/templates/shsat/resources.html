@@ -1,0 +1,77 @@
+{% extends "shsat/base_shsat.html" %}
+
+{% block title %}Resources — SHSAT Workshop{% endblock %}
+{% block tab_resources %}active{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">SHSAT Resources</h1>
+<p class="shsat-page-subtitle">Free materials to supplement your practice tests.</p>
+
+<p class="shsat-section-title">Official DOE resources</p>
+<ul class="shsat-resource-list">
+  <li class="shsat-resource-item">
+    <a href="https://www.schools.nyc.gov/enrollment/high-schools/specialized-high-school-admissions" target="_blank" rel="noopener">
+      NYC DOE — Specialized High School Admissions
+    </a>
+    <div class="shsat-resource-item__type">Official website</div>
+  </li>
+  <li class="shsat-resource-item">
+    <a href="https://www.schools.nyc.gov/enrollment/high-schools/specialized-high-school-admissions/shsat" target="_blank" rel="noopener">
+      SHSAT official handbook (download from DOE)
+    </a>
+    <div class="shsat-resource-item__type">PDF handbook</div>
+  </li>
+</ul>
+
+<p class="shsat-section-title">ELA preparation</p>
+<ul class="shsat-resource-list">
+  <li class="shsat-resource-item">
+    Revising/Editing passages — focus on grammar, sentence structure, and logic flow.
+    <div class="shsat-resource-item__type">Practice type</div>
+  </li>
+  <li class="shsat-resource-item">
+    Literary and informational reading — practice identifying main idea, evidence, and inference.
+    <div class="shsat-resource-item__type">Practice type</div>
+  </li>
+</ul>
+
+<p class="shsat-section-title">Math preparation</p>
+<ul class="shsat-resource-list">
+  <li class="shsat-resource-item">
+    Grid-in problems — no answer choices, must compute exactly. Practice with NYS Math standards.
+    <div class="shsat-resource-item__type">Practice type</div>
+  </li>
+  <li class="shsat-resource-item">
+    Algebra, geometry, statistics, and number theory appear most on recent tests.
+    <div class="shsat-resource-item__type">Topic overview</div>
+  </li>
+</ul>
+
+<p class="shsat-section-title">About the scoring</p>
+<div style="background:rgba(0,0,0,0.025);border-left:3px solid rgba(0,0,0,0.12);padding:16px 20px;font-size:15px;line-height:1.7;margin-bottom:32px;">
+  <p style="margin:0 0 12px;">The SHSAT has 57 ELA questions and 57 Math questions, but only <strong>47 of each are scored</strong>. The rest are unscored field-test items — you won't know which ones. Scores range from 200 to 800 (composite 400–1600, then re-scaled to 200–800).</p>
+  <p style="margin:0;">Our platform uses a <strong>conservative scaling table</strong>. Scores shown are estimates. Actual SHSAT scaling varies by year and is not published by the NYC DOE.</p>
+</div>
+
+<p class="shsat-section-title">2025 Admissions cutoff scores</p>
+<table class="shsat-table">
+  <thead>
+    <tr>
+      <th>School</th>
+      <th>Cutoff score</th>
+      <th>Approx. seats</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Stuyvesant High School</td><td>562</td><td>762</td></tr>
+    <tr><td>Bronx High School of Science</td><td>522</td><td>749</td></tr>
+    <tr><td>Staten Island Technical HS</td><td>527</td><td>387</td></tr>
+    <tr><td>HS of American Studies at Lehman College</td><td>514</td><td>144</td></tr>
+    <tr><td>HS of Math, Science & Engineering at City College</td><td>493</td><td>135</td></tr>
+    <tr><td>Brooklyn Technical HS</td><td>478</td><td>1766</td></tr>
+    <tr><td>Queens HS for the Sciences at York College</td><td>472</td><td>111</td></tr>
+    <tr><td>The Brooklyn Latin School</td><td>437</td><td>262</td></tr>
+  </tbody>
+</table>
+<p style="font-size:13px;color:rgba(0,0,0,0.4);">Source: NYC DOE 2025 admissions cycle. Cutoffs vary annually.</p>
+{% endblock %}

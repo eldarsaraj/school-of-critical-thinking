@@ -1,0 +1,32 @@
+{% extends "shsat/base_shsat.html" %}
+
+{% block title %}Log Score — SHSAT Workshop{% endblock %}
+{% block tab_log %}active{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">Log a score</h1>
+<p class="shsat-page-subtitle">Record a score from any practice test book or printout.</p>
+
+<form method="post" novalidate style="max-width:520px;">
+  {% csrf_token %}
+
+  {% if form.non_field_errors %}
+  <div class="contact-form__error" style="margin-bottom:16px;">
+    {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+  </div>
+  {% endif %}
+
+  {% for field in form %}
+  <div class="contact-form__field">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.errors %}
+    <span class="contact-form__error">{{ field.errors|join:" " }}</span>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <button type="submit" class="shsat-btn">Save score</button>
+  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline" style="margin-left:8px;">Cancel</a>
+</form>
+{% endblock %}

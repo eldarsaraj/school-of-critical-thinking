@@ -1,0 +1,1886 @@
+title: "Practice Test 4"
+source: "School of Critical Thinking"
+is_free: false
+is_published: true
+order: 4
+
+ela:
+
+  # ================================================================
+  # PART 1 — REVISING / EDITING (Questions 1–20)
+  # ================================================================
+
+  - number: 1
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below. Which underlined word is the most specific and precise choice?
+
+      "The dog made a (A) noise when the stranger approached the (B) house, causing everyone inside to (C) look toward the (D) door."
+    choices:
+      A: "Replace 'noise' with 'growled'"
+      B: "Replace 'house' with 'dwelling'"
+      C: "Replace 'look' with 'glance'"
+      D: "Replace 'door' with 'entrance'"
+    answer: A
+    explanation: |
+      'Growled' is more specific and precise than 'made a noise' because it tells the reader exactly what kind of sound the dog produced and conveys the dog's warning reaction to the stranger. 'Dwelling,' 'glance,' and 'entrance' are not more precise — they are either synonyms or slightly more formal but equally vague.
+
+  - number: 2
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below and choose the best revision.
+
+      "She only wanted to borrow two books from the library."
+
+      The word "only" is misplaced. Which revision corrects the sentence?
+    choices:
+      A: "Only she wanted to borrow two books from the library."
+      B: "She wanted to borrow only two books from the library."
+      C: "She wanted only to borrow two books from the library."
+      D: "She wanted to borrow two books only from the library."
+    answer: B
+    explanation: |
+      The adverb "only" should be placed immediately before the word or phrase it modifies. The intended meaning is that the number of books is limited to two, so "only" should directly precede "two books." Choice A suggests she alone wanted books; Choice C suggests borrowing is the only thing she wanted to do; Choice D suggests the library is the only source.
+
+  - number: 3
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below and choose the best revision to correct the parallelism error.
+
+      "Her goals were to travel the world, learning new languages, and to meet interesting people."
+    choices:
+      A: "Her goals were to travel the world, to learn new languages, and to meet interesting people."
+      B: "Her goals were traveling the world, learning new languages, and to meet interesting people."
+      C: "Her goals were to travel the world, learning new languages, and meeting interesting people."
+      D: "Her goals were to travel the world, learn new languages, and she wanted to meet interesting people."
+    answer: A
+    explanation: |
+      Parallel structure requires that items in a list follow the same grammatical form. The sentence uses infinitives ("to travel" and "to meet"), so the middle item must also be an infinitive: "to learn new languages." Choice A correctly makes all three items parallel infinitive phrases.
+
+  - number: 4
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below. Choose the revision that correctly adds punctuation.
+
+      "After spending nearly three hours hiking through the dense forest and crossing two narrow streams the group finally reached the summit."
+    choices:
+      A: "After spending nearly three hours hiking through the dense forest, and crossing two narrow streams, the group finally reached the summit."
+      B: "After spending nearly three hours hiking through the dense forest and crossing two narrow streams, the group finally reached the summit."
+      C: "After spending nearly three hours, hiking through the dense forest and crossing two narrow streams the group finally reached the summit."
+      D: "After spending nearly three hours hiking through the dense forest and crossing two narrow streams; the group finally reached the summit."
+    answer: B
+    explanation: |
+      A comma is required after a long introductory phrase before the main clause. The entire introductory phrase is "After spending nearly three hours hiking through the dense forest and crossing two narrow streams," and the main clause begins with "the group." A single comma at the end of the introductory phrase is correct. Choice A adds an unnecessary comma inside the phrase; Choice D incorrectly uses a semicolon.
+
+  - number: 5
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the following. Choose the revision that correctly joins the two sentences with a semicolon.
+
+      "The library closes at nine o'clock on weeknights. It stays open until midnight on Fridays."
+    choices:
+      A: "The library closes at nine o'clock on weeknights, it stays open until midnight on Fridays."
+      B: "The library closes at nine o'clock on weeknights; it stays open until midnight on Fridays."
+      C: "The library closes at nine o'clock on weeknights; however it stays open until midnight on Fridays."
+      D: "The library closes at nine o'clock on weeknights: it stays open until midnight on Fridays."
+    answer: B
+    explanation: |
+      A semicolon correctly joins two independent clauses. Choice A is a comma splice. Choice C is missing a comma after "however" (a conjunctive adverb requires a comma after it). Choice D uses a colon, which introduces a list or explanation, not a contrasting independent clause.
+
+  - number: 6
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the following two sentences. Choose the best way to combine them into one sentence using "although."
+
+      "Marcus had never played chess before. He won the tournament."
+    choices:
+      A: "Marcus had never played chess before, although he won the tournament."
+      B: "Although Marcus had never played chess before, he won the tournament."
+      C: "He won the tournament although Marcus had never played chess before."
+      D: "Although winning the tournament, Marcus had never played chess before."
+    answer: B
+    explanation: |
+      The most natural and grammatically correct combination puts the concessive "although" clause first, followed by the main clause. Choice B is clear and correctly structured. Choice A reverses the logic, making the winning seem like the concession rather than the surprising result. Choice C is grammatically acceptable but awkward. Choice D creates a dangling modifier.
+
+  - number: 7
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Choose the revision that correctly addresses the pronoun-antecedent agreement.
+
+      "Everyone on the girls' soccer team must bring their own shin guards to practice."
+    choices:
+      A: "Everyone on the girls' soccer team must bring her own shin guards to practice."
+      B: "Everyone on the girls' soccer team must bring its own shin guards to practice."
+      C: "Everyone on the girls' soccer team must bring our own shin guards to practice."
+      D: "No revision needed."
+    answer: D
+    explanation: |
+      The indefinite pronoun "everyone" is singular in form, but using "their" as a singular gender-neutral pronoun is now widely accepted in standard written English. Since all team members are girls, "her" would also be technically correct (Choice A), but "their" is acceptable and requires no revision. Choice B ("its") incorrectly treats a person as an object; Choice C ("our") shifts to first person.
+
+  - number: 8
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below. Choose the revision that eliminates the redundant phrase.
+
+      "The committee came to a final and conclusive decision about the new policy."
+    choices:
+      A: "The committee came to a final decision about the new policy."
+      B: "The committee came to a conclusive and definitive decision about the new policy."
+      C: "The committee finally and conclusively made a decision about the new policy."
+      D: "The committee came to a final, conclusive, and definitive decision about the new policy."
+    answer: A
+    explanation: |
+      "Final" and "conclusive" mean the same thing — a decision that ends deliberation. Using both is redundant. Choice A eliminates the redundancy by keeping only "final." Choices B, C, and D add more redundant words rather than reducing them.
+
+  - number: 9
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the following. Which option identifies the fragment and provides the best correction?
+
+      "The award-winning chef who trained in Paris for six years."
+    choices:
+      A: "This is not a fragment; no correction is needed."
+      B: "The award-winning chef, who trained in Paris for six years, opened a new restaurant downtown."
+      C: "The award-winning chef trained in Paris for six years."
+      D: "Who trained in Paris for six years, the chef won an award."
+    answer: B
+    explanation: |
+      The original is a sentence fragment — it has a noun phrase ("the award-winning chef") and a relative clause ("who trained in Paris for six years") but no main verb and no complete thought. Choice B adds a main predicate ("opened a new restaurant downtown"), making it a complete sentence while preserving the appositive structure. Choice C changes the meaning by removing the relative clause; Choice D is awkward and unclear.
+
+  - number: 10
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Choose the revision that corrects the subject-verb agreement error.
+
+      "At the end of the long corridor stands several old portraits."
+    choices:
+      A: "At the end of the long corridor stand several old portraits."
+      B: "At the end of the long corridor stands a few old portraits."
+      C: "Several old portraits at the end of the long corridor stands."
+      D: "No revision needed."
+    answer: A
+    explanation: |
+      The sentence is in inverted order — the verb ("stands") appears before the subject ("several old portraits"). The true subject is plural ("several old portraits"), so the verb must be plural: "stand." Choice B changes the determiner unnecessarily; Choice C creates a new agreement error; Choice D accepts the original error.
+
+  - number: 11
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the paragraph below. Choose the transition word or phrase that best fits in the blank to show concession.
+
+      "Training for a marathon takes months of disciplined effort. _______, even experienced runners sometimes struggle with the mental demands of long-distance racing."
+    choices:
+      A: "As a result"
+      B: "For instance"
+      C: "Admittedly"
+      D: "Similarly"
+    answer: C
+    explanation: |
+      The second sentence concedes a difficulty ("even experienced runners struggle") within the broader context of marathon training. "Admittedly" is a concession transition — it acknowledges a point that might seem to undercut the main argument. "As a result" implies cause and effect; "For instance" introduces an example; "Similarly" signals comparison.
+
+  - number: 12
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the paragraph below. Choose the transition word or phrase that best fits in the blank to show a result.
+
+      "The city installed new streetlights along the main boulevard. _______, the number of nighttime accidents dropped by 40 percent in the first year."
+    choices:
+      A: "Nevertheless"
+      B: "Consequently"
+      C: "In contrast"
+      D: "For example"
+    answer: B
+    explanation: |
+      The second sentence describes what happened as a direct result of installing streetlights. "Consequently" (meaning "as a result" or "therefore") is the correct result transition. "Nevertheless" shows contrast or concession; "In contrast" shows opposition; "For example" introduces an illustration.
+
+  - number: 13
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below. Choose the correct word to complete the sentence.
+
+      "The new medication had little _______ on the patients in the clinical trial."
+    choices:
+      A: "affect"
+      B: "effect"
+      C: "effecting"
+      D: "affecting"
+    answer: B
+    explanation: |
+      "Effect" is a noun meaning "result" or "impact," which is what the sentence requires after "little." "Affect" is typically a verb meaning "to influence." The sentence needs a noun after the article-adjective combination "little," so "effect" is correct.
+
+  - number: 14
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below. Choose the correct word to complete the sentence.
+
+      "There are _______ students enrolled this semester than last semester."
+    choices:
+      A: "less"
+      B: "fewer"
+      C: "lesser"
+      D: "amount of"
+    answer: B
+    explanation: |
+      "Fewer" is used with countable nouns (students can be counted individually). "Less" is used with uncountable or mass nouns (less water, less time). Since "students" is a countable noun, "fewer" is correct.
+
+  - number: 15
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Choose the revision that places the modifier next to what it modifies for maximum clarity.
+
+      "Running through the park, the squirrels were nearly impossible to catch for the dog."
+    choices:
+      A: "The squirrels, running through the park, were nearly impossible for the dog to catch."
+      B: "For the dog running through the park, catching the squirrels was nearly impossible."
+      C: "Running through the park, it was nearly impossible for the dog to catch the squirrels."
+      D: "The squirrels were nearly impossible to catch, running through the park, for the dog."
+    answer: B
+    explanation: |
+      In the original, "Running through the park" is a dangling modifier — it appears to modify "the squirrels," but the dog was the one running. Choice B correctly places "running through the park" immediately after "the dog," making the modifier clearly refer to the dog.
+
+  - number: 16
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the paragraph below. Choose the sentence that best concludes it.
+
+      "Urban farming has grown rapidly in cities across the world. Community gardens now occupy empty lots in major metropolitan areas, providing fresh produce to local residents. Rooftop gardens and vertical farms have also emerged as innovative solutions to the challenge of growing food in dense urban environments."
+    choices:
+      A: "Farming has existed for thousands of years in rural communities."
+      B: "Together, these initiatives are reshaping how cities think about food production and sustainability."
+      C: "Some people prefer to buy their vegetables at a supermarket."
+      D: "Urban farmers must contend with problems like limited sunlight and poor soil quality."
+    answer: B
+    explanation: |
+      A concluding sentence should tie together the ideas in the paragraph and provide a sense of closure. Choice B does this by summarising the significance of the urban farming trend described in the paragraph. Choice A introduces unrelated history; Choice C introduces a contrasting point that would need development; Choice D raises a new problem that belongs in the body, not the conclusion.
+
+  - number: 17
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the paragraph below. Choose the sentence that best introduces a counter-argument to the main claim.
+
+      Main claim: "Schools should require students to learn a second language starting in elementary school."
+
+      Which sentence best introduces a counter-argument?
+    choices:
+      A: "Learning a second language improves cognitive flexibility and memory."
+      B: "Students who are bilingual often perform better on standardised tests."
+      C: "Critics argue that limited classroom time is better spent reinforcing core subjects like reading and mathematics."
+      D: "Many countries in Europe require children to study multiple languages from an early age."
+    answer: C
+    explanation: |
+      A counter-argument presents the opposing view — a reason someone might disagree with the main claim. Choice C directly challenges the claim by suggesting that the school day has limited time and that other subjects may be more important. Choices A, B, and D all support the main claim rather than challenging it.
+
+  - number: 18
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Choose the revision that uses the correct verb form.
+
+      "She suggested _______ the meeting until everyone had a chance to review the report."
+    choices:
+      A: "to postpone"
+      B: "postponing"
+      C: "postponed"
+      D: "to have postponed"
+    answer: B
+    explanation: |
+      The verb "suggest" is followed by a gerund (the -ing form), not an infinitive. You suggest doing something, not suggest to do something. Therefore, "postponing" is correct. Verbs like suggest, recommend, enjoy, avoid, and consider all take gerunds as their objects.
+
+  - number: 19
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the following run-on sentence. Choose the revision that correctly fixes it using a semicolon.
+
+      "The storm knocked out the power the entire neighbourhood was dark for twelve hours."
+    choices:
+      A: "The storm knocked out the power, the entire neighbourhood was dark for twelve hours."
+      B: "The storm knocked out the power; the entire neighbourhood was dark for twelve hours."
+      C: "The storm knocked out the power: the entire neighbourhood was dark for twelve hours."
+      D: "The storm knocked out the power although the entire neighbourhood was dark for twelve hours."
+    answer: B
+    explanation: |
+      The run-on joins two independent clauses without any punctuation. A semicolon correctly separates two closely related independent clauses. Choice A is a comma splice; Choice C uses a colon, which implies the second clause explains or lists what is in the first; Choice D introduces "although," which creates a concession and changes the meaning.
+
+  - number: 20
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Read the following three sentences. Choose the option that best combines them into one concise sentence.
+
+      "The scientist conducted the experiment. She recorded her observations carefully. She presented her findings to the committee."
+    choices:
+      A: "The scientist conducted the experiment, and she recorded her observations carefully, and she presented her findings to the committee."
+      B: "After conducting the experiment and carefully recording her observations, the scientist presented her findings to the committee."
+      C: "The scientist, who conducted the experiment and recorded her observations carefully, she presented her findings to the committee."
+      D: "The scientist conducted the experiment carefully and recorded observations before her findings were presented."
+    answer: B
+    explanation: |
+      Choice B is the most concise and grammatically correct combination. It uses a participial phrase ("After conducting the experiment and carefully recording her observations") to compress two of the three actions, leaving the main clause to state the final action. Choice A repeats "and she" awkwardly; Choice C has an extra pronoun ("she") after the relative clause; Choice D is unclear and changes the meaning slightly.
+
+  # ================================================================
+  # PART 2 — READING COMPREHENSION (Questions 21–57)
+  # ================================================================
+
+  # --- PASSAGE 1: Fiction — "The Beekeeper's Lesson" (Questions 21–27) ---
+
+  - number: 21
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    passage_title: "The Beekeeper's Lesson"
+    passage_text: |
+      Samuel had always avoided the far corner of his uncle's yard, where the white wooden boxes sat
+      in a neat row beneath the apple trees. The buzzing that rose from them in summer was low and
+      constant, like a current of electricity he could feel in his teeth. His uncle, Desmond, never
+      seemed to notice it — or if he did, it didn't bother him at all.
+
+      "You want to come with me this morning?" Uncle Desmond asked one Saturday, lifting a mesh veil
+      from a hook by the barn door. Samuel's first instinct was to say no. But something — curiosity,
+      perhaps, or the desire to seem brave — made him say yes.
+
+      They walked slowly across the damp grass. Uncle Desmond handed Samuel a pair of thick gloves
+      and explained what they were about to do. "The most important thing," he said, "is not speed.
+      It's stillness. Bees don't attack motion — they react to sudden motion. Move like you have
+      all the time in the world."
+
+      At the hive, Samuel's heart was pounding so hard he was certain the bees could hear it. But he
+      watched his uncle's hands — unhurried, deliberate, almost gentle — and he tried to copy them.
+      A bee landed on his glove. He froze. It walked in a small circle, paused, and flew away.
+
+      "Did you see that?" Desmond said softly. "She checked you out and decided you were furniture."
+
+      On the walk back, Samuel was quieter than usual. He kept looking at his gloved hands. The hive
+      had hummed around him and he had not run. Something had shifted. By the time they reached
+      the barn, he had already begun to imagine what it would be like to have a hive of his own.
+    question: |
+      At the beginning of the story, how does Samuel feel about the beehives in his uncle's yard?
+    choices:
+      A: "Curious and eager to learn more about them"
+      B: "Frightened and determined to avoid them"
+      C: "Indifferent — he has never thought about them"
+      D: "Excited because he has always wanted to be a beekeeper"
+    answer: B
+    explanation: |
+      The passage opens by stating that Samuel "had always avoided the far corner of his uncle's yard, where the white wooden boxes sat." The buzzing felt to him like electricity "in his teeth" — a physical, visceral discomfort. His "first instinct" when asked to join was to say no. All of this points to fear and avoidance, not curiosity or indifference.
+
+  - number: 22
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    question: |
+      Based on the passage, why does Samuel agree to go with his uncle despite his fear?
+    choices:
+      A: "His uncle insists and he feels he has no choice."
+      B: "He wants to prove to himself that he is brave, or at least appear brave."
+      C: "He is excited by the chance to learn a new skill."
+      D: "He has been planning to ask his uncle about beekeeping for a long time."
+    answer: B
+    explanation: |
+      The passage states: "something — curiosity, perhaps, or the desire to seem brave — made him say yes." The word "perhaps" before curiosity and the emphasis on "the desire to seem brave" suggest that appearing courageous is a key motivator. There is no indication his uncle insisted or that Samuel had long-planned interest.
+
+  - number: 23
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    question: |
+      What does the word "deliberate" mean as used in the sentence: "he watched his uncle's hands — unhurried, deliberate, almost gentle"?
+    choices:
+      A: "Accidental and careless"
+      B: "Slow and done with full intention"
+      C: "Nervous and shaking"
+      D: "Powerful and commanding"
+    answer: B
+    explanation: |
+      In context, "deliberate" is listed alongside "unhurried" and "almost gentle" to describe the quality of Uncle Desmond's movements at the hive. The word means done with careful, conscious intention — purposeful and controlled, not rushed or accidental.
+
+  - number: 24
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_1
+    question: |
+      Uncle Desmond says the bee "checked you out and decided you were furniture." What does this figurative comparison mean?
+    choices:
+      A: "The bee was confused by the smell of the gloves."
+      B: "Samuel stood so still and calmly that the bee treated him as a harmless, inanimate object."
+      C: "Bees are naturally drawn to wooden objects like furniture."
+      D: "Samuel was so frightened he became stiff and rigid like a piece of furniture."
+    answer: B
+    explanation: |
+      Uncle Desmond's comment is a compliment. By comparing Samuel to furniture — something non-threatening and motionless — he is saying that Samuel successfully followed the instruction to move with stillness. The bee investigated, found no threat, and departed. The comparison is about Samuel's calm, not his fear.
+
+  - number: 25
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    question: |
+      What does the word "instinct" mean as used in the sentence: "Samuel's first instinct was to say no"?
+    choices:
+      A: "A calculated decision reached after careful thought"
+      B: "A feeling or impulse that arises automatically, without thinking"
+      C: "A memory from a past experience"
+      D: "A rule or habit he had been taught"
+    answer: B
+    explanation: |
+      An instinct is an automatic, innate reaction — the opposite of a deliberate decision. Samuel's immediate impulse was to refuse, but then something else caused him to override that impulse and agree. The contrast between his "first instinct" and his actual choice is central to the sentence.
+
+  - number: 26
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_1
+    question: |
+      Which sentence from the passage best shows that a change has occurred in Samuel by the end of the story?
+    choices:
+      A: "He kept looking at his gloved hands."
+      B: "The hive had hummed around him and he had not run."
+      C: "By the time they reached the barn, he had already begun to imagine what it would be like to have a hive of his own."
+      D: "Something had shifted."
+    answer: C
+    explanation: |
+      While all four choices suggest change, Choice C provides the most concrete evidence of transformation: Samuel is already imagining owning his own hive. This is a complete reversal from the boy who avoided the beehives entirely. Choice D is vague; Choice A shows reflection; Choice B notes he survived but does not show forward desire.
+
+  - number: 27
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_1
+    question: |
+      Which of the following best states the theme of "The Beekeeper's Lesson"?
+    choices:
+      A: "Beekeeping requires years of training and should not be attempted by beginners."
+      B: "Facing a fear with patience and guidance can transform that fear into interest."
+      C: "Children learn best by watching adults perform dangerous tasks."
+      D: "Nature is unpredictable, and it is wise to keep a safe distance from wild animals."
+    answer: B
+    explanation: |
+      Samuel begins the story afraid and avoidant, but with Uncle Desmond's calm guidance — "move like you have all the time in the world" — he faces his fear and discovers not just that he can survive it, but that he wants to pursue the very thing he feared. This arc of fear to guided encounter to transformed interest is the story's central theme.
+
+  # --- PASSAGE 2: Nonfiction/Science — "Training the Body's Defenders" (Questions 28–34) ---
+
+  - number: 28
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    passage_title: "Training the Body's Defenders"
+    passage_text: |
+      Every time a foreign substance — a bacterium, virus, or other pathogen — enters the body, the
+      immune system responds. It identifies the invader using distinctive proteins on its surface called
+      antigens. White blood cells known as B cells then produce antibodies: proteins precisely shaped
+      to lock onto those antigens and neutralise the threat. Once the infection is defeated, the body
+      retains memory B cells that can recognise the same antigen if it reappears, launching a faster
+      and stronger response the second time.
+
+      Vaccines exploit this memory system. Rather than exposing a person to a dangerous pathogen, a
+      vaccine introduces a harmless version of the antigen — it may be a weakened or inactivated
+      pathogen, a fragment of its surface protein, or, in the case of mRNA vaccines, instructions that
+      direct the body's own cells to produce the antigen temporarily. In each case, the immune system
+      mounts a response and stores the memory, without the person ever becoming seriously ill.
+
+      The concept was pioneered by Edward Jenner in 1796, when he observed that milkmaids who had
+      contracted the mild disease cowpox seemed immune to the far more deadly smallpox. He tested
+      the theory by inoculating a boy with cowpox material and later exposing him to smallpox — a
+      procedure that would be considered ethically unacceptable today, but that laid the foundation
+      for modern immunology.
+
+      When a large enough proportion of a population is immune — whether through vaccination or
+      prior infection — a pathogen struggles to find new hosts. This is called herd immunity, and it
+      protects even those who cannot be vaccinated, such as newborns or people with certain medical
+      conditions. The threshold for herd immunity varies by disease: for measles, which spreads
+      easily, roughly 95% of the population must be immune to interrupt transmission.
+    question: |
+      According to the passage, what are antigens?
+    choices:
+      A: "Antibodies produced by white blood cells to fight infection"
+      B: "Memory cells that recognise a pathogen the second time it appears"
+      C: "Distinctive proteins on the surface of a pathogen that the immune system identifies"
+      D: "Harmless versions of a pathogen introduced by a vaccine"
+    answer: C
+    explanation: |
+      The passage states: "It identifies the invader using distinctive proteins on its surface called antigens." Antigens are the identifying proteins on pathogens, not the antibodies produced in response (Choice A), the memory cells retained after infection (Choice B), or the vaccine itself (Choice D).
+
+  - number: 29
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    question: |
+      According to the passage, what makes mRNA vaccines different from earlier types of vaccines?
+    choices:
+      A: "They expose the patient to a weakened but live version of the pathogen."
+      B: "They instruct the body's own cells to temporarily produce the antigen."
+      C: "They introduce a fragment of the pathogen's surface protein directly."
+      D: "They prevent the immune system from forming antibodies."
+    answer: B
+    explanation: |
+      The passage explains that mRNA vaccines work by providing "instructions that direct the body's own cells to produce the antigen temporarily." This distinguishes them from vaccines that use a weakened pathogen (Choice A) or a surface protein fragment (Choice C). Choice D contradicts the purpose of any vaccine.
+
+  - number: 30
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    question: |
+      What does the word "neutralise" mean as used in the passage?
+    choices:
+      A: "Identify and catalogue for future reference"
+      B: "Weaken or render harmless"
+      C: "Destroy completely and permanently"
+      D: "Copy and reproduce"
+    answer: B
+    explanation: |
+      In context, antibodies "lock onto those antigens and neutralise the threat." To neutralise something means to counteract it or make it harmless — not necessarily destroy it permanently. The word comes from "neutral" (neither active nor harmful).
+
+  - number: 31
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    question: |
+      Based on the passage, what causes herd immunity to protect people who have not been vaccinated?
+    choices:
+      A: "Unvaccinated people develop partial immunity through daily exposure to harmless antigens."
+      B: "When most of the population is immune, a pathogen cannot find enough new hosts to spread widely."
+      C: "Vaccines work better when given to large groups simultaneously."
+      D: "Unvaccinated people inherit immune memory from others in their community."
+    answer: B
+    explanation: |
+      The passage states: "When a large enough proportion of a population is immune ... a pathogen struggles to find new hosts." This is precisely the mechanism of herd immunity — the pathogen cannot circulate because too few susceptible individuals remain. None of the other choices are supported by the passage.
+
+  - number: 32
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: easy
+    passage_id: passage_2
+    question: |
+      What does the word "inoculating" most nearly mean as used in the passage?
+    choices:
+      A: "Infecting with a deadly disease to study the outcome"
+      B: "Introducing a substance into the body to stimulate immunity"
+      C: "Curing a disease through the use of antibodies"
+      D: "Surgically removing a pathogen from the bloodstream"
+    answer: B
+    explanation: |
+      Jenner "inoculated a boy with cowpox material" — he introduced the cowpox substance into the boy's body in order to build immunity against smallpox. "Inoculating" means introducing an agent (typically harmless or weakened) to produce an immune response. Choice A mischaracterises the purpose; Choices C and D describe different procedures.
+
+  - number: 33
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    question: |
+      What is the central idea of this passage?
+    choices:
+      A: "The immune system is still poorly understood, despite centuries of scientific research."
+      B: "Edward Jenner is the most important figure in the history of medicine."
+      C: "Vaccines work by training the immune system to recognise and remember a threat without causing serious illness."
+      D: "Herd immunity is achievable only if every person in a community receives a vaccination."
+    answer: C
+    explanation: |
+      The passage traces the full arc from how the immune system works (antigens, antibodies, memory) to how vaccines exploit that system, the history of vaccination, and the population-level effect of herd immunity. The unifying idea across all paragraphs is that vaccines train the immune system safely. Choice D contradicts the passage (the herd immunity threshold is not 100%); Choices A and B are too narrow or unsupported.
+
+  - number: 34
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2
+    question: |
+      Why does the author mention that Jenner's 1796 experiment "would be considered ethically unacceptable today"?
+    choices:
+      A: "To suggest that Jenner should not be credited with the discovery of vaccines."
+      B: "To acknowledge the moral complexity of Jenner's methods while recognising their historical significance."
+      C: "To argue that early medical experiments were always irresponsible."
+      D: "To explain why modern vaccines no longer use Jenner's techniques."
+    answer: B
+    explanation: |
+      The author's phrasing is balanced: Jenner's method "would be considered ethically unacceptable today, but ... laid the foundation for modern immunology." The "but" signals that the author is not dismissing Jenner's contribution, only noting that standards have changed. This is a nuanced acknowledgment of both the ethical problem and the historical value — not a condemnation or a dismissal.
+
+  # --- PASSAGE 3: Poetry — "The City at Dawn" (Questions 35–39) ---
+
+  - number: 35
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_3
+    passage_title: "The City at Dawn"
+    passage_text: |
+      Before the buses groan and the coffee carts wake,
+      the city belongs to no one — and to all.
+      The pigeons own the corner of Fifth and Blake,
+      and shadows lean against the empty hall.
+
+      I watch from glass, four floors above the street,
+      where silence settles like a held-in breath.
+      The lampposts fade, the pavement starts to meet
+      the first soft light — not quite alive, not quite death.
+
+      A man below is folding up his night,
+      a collar turned against the morning chill.
+      The scaffolding across the way holds light
+      the way a palm holds water — briefly, still.
+
+      And then the sirens, engines, voices rise.
+      The city shakes itself and claims the day.
+      I stay a moment longer at the glass and eyes
+      the seam between what was and what will be.
+    question: |
+      Which of the following best describes the imagery in the line "silence settles like a held-in breath"?
+    choices:
+      A: "The silence is deep and permanent, like death."
+      B: "The silence is fragile and temporary, full of tension before something breaks."
+      C: "The city is noisy and chaotic early in the morning."
+      D: "The speaker is holding their breath out of fear."
+    answer: B
+    explanation: |
+      A "held-in breath" is a moment of suspension — silence that exists in the pause before something happens. It is fragile (a breath must eventually be released) and full of tension. The simile captures the transient, poised quality of the pre-dawn quiet. Choice A over-interprets; Choice C contradicts the image; Choice D makes it too literal.
+
+  - number: 36
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_3
+    question: |
+      What is the overall tone of this poem?
+    choices:
+      A: "Celebratory and energetic"
+      B: "Angry and critical"
+      C: "Quiet, contemplative, and slightly melancholy"
+      D: "Frightened and uneasy"
+    answer: C
+    explanation: |
+      The speaker observes from a window, watches a lone man below, and lingers at "the seam between what was and what will be." The poem is reflective and unhurried, with images of fading lampposts, held breath, and the brief stillness before the city's noise resumes. The mood is contemplative with a touch of wistfulness — not celebratory, angry, or frightened.
+
+  - number: 37
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_3
+    question: |
+      In the third stanza, the speaker compares scaffolding holding light to "a palm holds water — briefly, still." What does this figurative language convey?
+    choices:
+      A: "Light is a physical substance that can be stored in metal structures."
+      B: "The scaffolding is wet from the morning dew."
+      C: "The early light resting on the scaffolding is beautiful but cannot last."
+      D: "The speaker is thirsty and thinking about water."
+    answer: C
+    explanation: |
+      The simile "the way a palm holds water" captures impermanence — water always slips through a cupped hand. Applied to light on scaffolding, it conveys that this moment of early light catching on the metal is beautiful and precise, but fleeting. The word "briefly" reinforces the temporary nature of the image.
+
+  - number: 38
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_3
+    question: |
+      The speaker describes the early morning light as "not quite alive, not quite death." What effect does this word choice create?
+    choices:
+      A: "It suggests the speaker is frightened of the dark."
+      B: "It places the moment in an in-between state — liminal, neither one thing nor another."
+      C: "It signals that the speaker believes morning light is dangerous."
+      D: "It implies the sun is rising slowly because of bad weather."
+    answer: B
+    explanation: |
+      "Not quite alive, not quite death" uses paradox to describe the threshold quality of early dawn — it is neither the full darkness of night nor the full brightness of day. This liminal quality (being on the threshold between two states) is central to the poem's meditation on transition. The poem is about the seam between night and day, between stillness and noise.
+
+  - number: 39
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_3
+    question: |
+      Which statement best expresses the theme of "The City at Dawn"?
+    choices:
+      A: "Cities are most beautiful when they are quiet and empty."
+      B: "Urban life is exhausting and the speaker longs to escape."
+      C: "There is value in pausing to witness the brief moments of transition between states of being."
+      D: "Dawn is dangerous because it causes disorientation and confusion."
+    answer: C
+    explanation: |
+      The speaker chooses to stay "a moment longer at the glass" to witness the threshold between night and day — "the seam between what was and what will be." The poem's value is not in celebrating emptiness or longing for escape, but in the act of attention itself: noticing and honouring a fleeting, in-between moment. This is the poem's central insight.
+
+  # --- PASSAGE 4: Nonfiction/History — "Harlem's Flowering" (Questions 40–47) ---
+
+  - number: 40
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: easy
+    passage_id: passage_4
+    passage_title: "Harlem's Flowering"
+    passage_text: |
+      In the years following the First World War, something extraordinary was happening in a single
+      neighbourhood in upper Manhattan. Black writers, artists, musicians, and thinkers were converging
+      on Harlem in unprecedented numbers, drawn by the promise of community, creative freedom, and
+      distance from the suffocating racial violence of the American South. What emerged from this
+      convergence became known as the Harlem Renaissance — a cultural explosion that would reshape
+      American art and literature for generations.
+
+      The Great Migration had begun before the war, as hundreds of thousands of Black Americans left
+      the rural South for northern cities. Harlem, once a white middle-class enclave, had shifted
+      dramatically as Black residents, often arriving via railroad from Georgia, the Carolinas, and
+      Mississippi, filled its streets and brownstones. By the early 1920s, Harlem had become the
+      unofficial capital of Black America.
+
+      The writers who gathered there were among the most talented of the century. Langston Hughes
+      brought jazz rhythms and blues vernacular into poetry, insisting that Black working-class life
+      was worthy of serious art. Zora Neale Hurston documented the folklore and speech of Black
+      Southern communities in novels and anthropological studies. These were not writers seeking
+      approval from white audiences; they were building a literature for and about their own people.
+
+      Music flowed just as powerfully. Duke Ellington's orchestra performed at the Cotton Club, an
+      irony-laden venue (Black musicians played for white audiences only) that nonetheless broadcast
+      his sound to a national radio audience. His compositions elevated jazz to the level of serious
+      orchestral art. Meanwhile, visual artist Jacob Lawrence would later chronicle the Great Migration
+      itself in a sixty-panel series of paintings — one of the most ambitious artistic projects in
+      American history.
+
+      The Harlem Renaissance did not end neatly. The Great Depression of the 1930s drained the
+      economic conditions that had sustained it, and many of its leading figures scattered or fell
+      into obscurity. But its influence proved durable. The literature, music, and visual art produced
+      in Harlem in the 1920s and 30s established that Black culture was not marginal to American
+      culture — it was central to it.
+    question: |
+      According to the passage, what was one primary reason Black Americans moved to Harlem during and after the First World War?
+    choices:
+      A: "They were recruited by Harlem's white residents to fill vacant factory jobs."
+      B: "They were seeking distance from racial violence in the American South."
+      C: "They came specifically to attend universities and art schools in New York City."
+      D: "They were displaced by flooding and drought in the rural South."
+    answer: B
+    explanation: |
+      The passage states that artists and thinkers were "drawn by the promise of community, creative freedom, and distance from the suffocating racial violence of the American South." Choice B directly reflects the passage. The other choices are not mentioned or supported by the text.
+
+  - number: 41
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      What does the word "vernacular" mean as used in the sentence about Langston Hughes?
+    choices:
+      A: "Formal, literary language used in academic writing"
+      B: "A style of architecture common to a particular region"
+      C: "The ordinary spoken language of a particular group of people"
+      D: "Musical notation developed during the Harlem Renaissance"
+    answer: C
+    explanation: |
+      "Vernacular" refers to the everyday spoken language of a community — as opposed to formal or literary language. Langston Hughes brought "blues vernacular" into poetry, meaning he used the natural speech patterns, slang, and rhythm of Black working-class communities as his poetic material. This was a deliberate artistic and political choice.
+
+  - number: 42
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      What does the word "converging" mean as used in the first paragraph?
+    choices:
+      A: "Scattering in different directions"
+      B: "Competing against one another"
+      C: "Coming together in the same place"
+      D: "Working together on a single creative project"
+    answer: C
+    explanation: |
+      "Converging on Harlem" means moving toward the same point — gathering from different places into one location. The passage emphasises that writers, artists, musicians, and thinkers arrived from across the country. To converge is to come together, not scatter (Choice A) or compete (Choice B).
+
+  - number: 43
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      According to the passage, what sequence of events led to the Harlem Renaissance?
+    choices:
+      A: "The Great Depression weakened rural economies, forcing Black Americans to seek artistic work in cities."
+      B: "The Great Migration brought Black Americans to northern cities, and Harlem became their cultural capital before the creative explosion occurred."
+      C: "Harlem became a cultural capital first, which then attracted Black Americans from the South."
+      D: "Black artists were invited by New York City institutions to create a new American literary movement."
+    answer: B
+    explanation: |
+      The passage traces the sequence explicitly: the Great Migration began before the war, Harlem shifted demographically, by the 1920s it was the unofficial capital of Black America, and the cultural flowering followed. Choice C reverses the order; Choices A and D are not supported by the text.
+
+  - number: 44
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_4
+    question: |
+      The author describes the Cotton Club as an "irony-laden venue." Why is this description appropriate?
+    choices:
+      A: "The venue charged high prices that most Black residents of Harlem could not afford."
+      B: "Black musicians performed there but were not permitted to be in the audience."
+      C: "Duke Ellington refused to play there but was forced to by his record label."
+      D: "The club was located in Harlem but was run by people from outside the neighbourhood."
+    answer: B
+    explanation: |
+      The passage states: "Black musicians played for white audiences only." The irony is that the venue was located in the heart of Black Harlem, featured Black musicians whose artistry was central to its appeal, yet excluded Black audience members. The creators were denied the right to attend as guests in their own neighbourhood's cultural space.
+
+  - number: 45
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_4
+    question: |
+      Based on the passage, what can be inferred about why the Harlem Renaissance ended?
+    choices:
+      A: "The leading figures decided to pursue careers in other countries."
+      B: "The government shut down the arts organisations that funded their work."
+      C: "The economic conditions that had allowed it to flourish were destroyed by the Great Depression."
+      D: "Younger artists rejected the ideas of the Harlem Renaissance and created a competing movement."
+    answer: C
+    explanation: |
+      The passage states: "The Great Depression of the 1930s drained the economic conditions that had sustained it, and many of its leading figures scattered or fell into obscurity." Choice C directly reflects this. The other choices are not mentioned in the passage.
+
+  - number: 46
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      What can be inferred about Langston Hughes's and Zora Neale Hurston's attitude toward their audience?
+    choices:
+      A: "They wrote primarily for white publishers and academics who controlled the literary world."
+      B: "They were indifferent to their audience and created art only for their own satisfaction."
+      C: "They were building a body of literature that centred and celebrated their own communities."
+      D: "They imitated European literary traditions in order to gain international recognition."
+    answer: C
+    explanation: |
+      The passage states explicitly: "These were not writers seeking approval from white audiences; they were building a literature for and about their own people." This is a direct statement of intentional audience — their work was aimed at and derived from their own communities. Choice A is the opposite of what the passage says; Choices B and D are not supported.
+
+  - number: 47
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_4
+    question: |
+      What is the author's main purpose in writing this passage?
+    choices:
+      A: "To compare the Harlem Renaissance favourably to the European art movements of the same period"
+      B: "To argue that the Harlem Renaissance was the most important cultural movement in American history"
+      C: "To explain what the Harlem Renaissance was, how it emerged, who shaped it, and why it matters"
+      D: "To criticise the economic conditions that caused the Harlem Renaissance to end prematurely"
+    answer: C
+    explanation: |
+      The passage is primarily informational and explanatory. It covers origins (the Great Migration), geography (Harlem), key figures (Hughes, Hurston, Ellington, Lawrence), and lasting influence. The author is not making a comparative argument (Choice A), a superlative claim (Choice B), or a primarily critical argument (Choice D). The purpose is to inform and contextualise.
+
+  # --- PASSAGE 5: Fiction — "What She Made" (Questions 48–57) ---
+
+  - number: 48
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    passage_title: "What She Made"
+    passage_text: |
+      Every year at Thanksgiving, the Chen family held what their grandmother called the "Showing."
+      Each grandchild was expected to stand in the living room and present something they were proud of
+      from the year — a grade, an award, a skill, a piece of work. It had started as a joke, but it had
+      become, over a decade, the most anticipated hour of the holiday.
+
+      This year, Marcus went first. He was sixteen, and his record this semester was perfect — straight
+      A's, a trophy from the regional science competition, a letter of commendation from his school
+      principal. He set the trophy on the coffee table and spoke for three minutes about his project:
+      a water filtration system he had designed to work without electricity. The adults murmured
+      admiringly. His aunts asked questions. His grandfather nodded slowly, the way he did when he
+      was genuinely impressed.
+
+      Then it was Lily's turn. She was twelve, and she had brought a box. Inside the box was a quilt.
+      She had spent eight months sewing it — not from a kit, not with instructions, but from her own
+      pattern, pieced together from scraps of clothing: their grandfather's work shirts, their
+      grandmother's aprons, an old Halloween costume, one of Marcus's baby blankets. She spread it
+      across the carpet without saying much, and let the family look.
+
+      The room went quiet in a different way than it had for Marcus. His silence had been the silence
+      of respect and attention. Hers was something else entirely — recognition. One by one, their
+      relatives leaned in and began to find themselves in the quilt: a square of blue flannel, a
+      triangle of yellow cotton, a strip of faded red. Their grandmother pressed a hand to her mouth.
+
+      Marcus watched his sister from across the room. He understood, in a way he hadn't expected,
+      that his trophy — polished and specific — had recorded a moment. Lily's quilt had preserved
+      something more patient and harder to name. He picked up his trophy from the coffee table and
+      quietly set it to one side.
+    question: |
+      How do Marcus and Lily differ in what they bring to the Showing?
+    choices:
+      A: "Marcus brings a handmade object; Lily brings an academic award."
+      B: "Marcus presents an institutional achievement; Lily presents a personal, handmade creation."
+      C: "Marcus is nervous and Lily is confident."
+      D: "Marcus is older and therefore expected to present something more impressive."
+    answer: B
+    explanation: |
+      Marcus brings a trophy and letter of commendation — recognition from external institutions (school, competition). Lily brings a quilt she made herself, from her own pattern, using personal materials. The contrast is between formal, institutional achievement and personal, creative expression. The story's meaning turns on this difference.
+
+  - number: 49
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      Based on the passage, why does the room react differently to Lily's quilt than to Marcus's presentation?
+    choices:
+      A: "The family is unfamiliar with science projects and finds the quilt easier to understand."
+      B: "The quilt contains pieces of clothing belonging to family members, creating personal recognition."
+      C: "The family is biased against Marcus because he has always been the favourite."
+      D: "Lily speaks more confidently and persuasively than Marcus."
+    answer: B
+    explanation: |
+      The passage specifies exactly why the reaction is different: the quilt is made from "their grandfather's work shirts, their grandmother's aprons, an old Halloween costume, one of Marcus's baby blankets." When family members look at the quilt, they find pieces of their own shared history — they literally find themselves in it. That personal recognition produces the deeper emotional response.
+
+  - number: 50
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      What does the word "commendation" mean as used in the passage?
+    choices:
+      A: "A written criticism of a student's behaviour"
+      B: "A formal statement of praise or approval"
+      C: "A list of academic requirements for graduation"
+      D: "A request to attend a special academic programme"
+    answer: B
+    explanation: |
+      A "letter of commendation" is a letter praising someone for their achievements or conduct. "Commendation" comes from the same root as "commend" — to praise or recommend. The context confirms this: Marcus has straight A's, a trophy, and the letter — all markers of recognition and praise.
+
+  - number: 51
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      What does the word "preserved" mean as used in the sentence: "Lily's quilt had preserved something more patient and harder to name"?
+    choices:
+      A: "Protected from decay or loss"
+      B: "Created from raw materials"
+      C: "Identified and catalogued"
+      D: "Wrapped in protective material"
+    answer: A
+    explanation: |
+      To "preserve" something means to keep it from being lost or forgotten. Marcus recognises that his trophy recorded a specific moment in time, but the quilt has kept something alive — the texture, memory, and presence of the family across time. The quilt "preserved" the family's shared past in a tangible form.
+
+  - number: 52
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      Which of the following best states the theme of "What She Made"?
+    choices:
+      A: "Academic achievement is less valuable than artistic skill."
+      B: "Creative work that connects people to shared memory can carry meaning that formal achievement cannot."
+      C: "Older siblings are usually more successful than younger ones."
+      D: "Handmade gifts are always more appreciated than store-bought ones."
+    answer: B
+    explanation: |
+      The story does not argue that Marcus is wrong or that academia is worthless — Marcus's grandfather "nodded slowly, the way he did when he was genuinely impressed." The point is that the quilt does something the trophy cannot: it weaves family history into a tangible object, producing recognition and emotion. The theme is about a particular kind of meaning that personal, memory-laden creative work can hold.
+
+  - number: 53
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      Which of the following best describes the difference between the silence that greeted Marcus and the silence that greeted Lily's quilt?
+    choices:
+      A: "Both silences are the same — they both indicate approval of the presenter."
+      B: "Marcus's silence is polite but passive; Lily's silence is active recognition that involves the audience personally."
+      C: "Marcus's silence is uncomfortable; Lily's silence is sad."
+      D: "Both silences indicate that the family is bored by the Showing."
+    answer: B
+    explanation: |
+      The passage carefully distinguishes the two silences: Marcus's is "the silence of respect and attention" — polite, appreciative, but detached. Lily's produces a different quality: "recognition." The family leans in; their grandmother covers her mouth. One silence is the audience being an audience; the other collapses the distance between presenter and observers.
+
+  - number: 54
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      What does Marcus's act of quietly setting the trophy to one side at the end of the story reveal about him?
+    choices:
+      A: "He is jealous of Lily's success and wants to hide his own achievement."
+      B: "He is embarrassed by his trophy and regrets entering the science competition."
+      C: "He has arrived at a new understanding — that his trophy's meaning is smaller than he thought, compared to what the quilt represents."
+      D: "He wants to give the trophy to Lily as a gift."
+    answer: C
+    explanation: |
+      The passage frames the gesture with: "He understood ... that his trophy — polished and specific — had recorded a moment. Lily's quilt had preserved something more patient and harder to name." Moving the trophy aside is a physical enactment of a shift in understanding, not jealousy or embarrassment. Marcus is not diminished by this — he has learned something.
+
+  - number: 55
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      The author describes Marcus's trophy as "polished and specific." What is the significance of these word choices?
+    choices:
+      A: "The words praise the trophy's craftsmanship and material value."
+      B: "The words suggest the trophy is shiny but limited — it marks one precise achievement, not the full complexity of a life."
+      C: "The words are neutral descriptions with no deeper meaning."
+      D: "The words suggest Marcus is a shallow person who cares only about appearances."
+    answer: B
+    explanation: |
+      "Polished" suggests something surface-level and impressive-looking, while "specific" means it commemorates a single, defined event. Together, these words contrast with the quilt's "patient" and "harder to name" quality — broader, deeper, woven from many lives over time. The trophy's precision is both its value and its limitation.
+
+  - number: 56
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      How does the author's choice to show the family's physical reactions rather than state their feelings directly serve the story?
+    choices:
+      A: "The author tells the reader directly that Lily is more creative than Marcus, which makes the theme clear."
+      B: "By showing the family's physical reactions to the quilt rather than explaining them, the author lets the reader experience the same recognition the family feels."
+      C: "The author keeps the reader in suspense by never revealing how the family reacts."
+      D: "The author relies on dialogue to convey the theme, which makes the story more realistic."
+    answer: B
+    explanation: |
+      The story never states "the quilt was more meaningful than the trophy." Instead, it shows: the grandmother pressing a hand to her mouth, relatives leaning in to find their own fabric, the quality of the silence shifting. The reader participates in the recognition rather than being told to. This "show, don't tell" technique mirrors the quilt's own effect on its audience.
+
+  - number: 57
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      Which detail from the passage best supports the idea that Lily's work required sustained commitment?
+    choices:
+      A: "She spread it across the carpet without saying much."
+      B: "She had spent eight months sewing it — not from a kit, not with instructions, but from her own pattern."
+      C: "Inside the box was a quilt."
+      D: "The room went quiet in a different way than it had for Marcus."
+    answer: B
+    explanation: |
+      Choice B provides explicit evidence of sustained commitment: eight months of work, without a kit or instructions, from an original pattern. This is the passage's clearest and most direct statement about how much effort the quilt required. The other choices describe the quilt's presentation and the audience's reaction, not the effort involved.
+
+math:
+
+  # ================================================================
+  # PART 3 — MATHEMATICS (Questions 1–57)
+  # ================================================================
+
+  # --- Q1–5: Integers — Absolute Value, Number Lines, Ordering ---
+
+  - number: 1
+    type: multiple_choice
+    topic: Integers
+    difficulty: easy
+    question: "What is the value of |−7|?"
+    choices:
+      A: "7"
+      B: "−7"
+      C: "0"
+      D: "49"
+    answer: A
+    explanation: "The absolute value of a number is its distance from zero on the number line. |−7| = 7 because −7 is 7 units from zero."
+
+  - number: 2
+    type: multiple_choice
+    topic: Integers
+    difficulty: easy
+    question: "On a number line, which number is farthest to the right?"
+    choices:
+      A: "−3"
+      B: "−8"
+      C: "−1"
+      D: "−6"
+    answer: C
+    explanation: "On a number line, numbers increase from left to right. Among negative numbers, the one closest to zero is the greatest. −1 is closest to zero, so it is farthest to the right."
+
+  - number: 3
+    type: multiple_choice
+    topic: Integers
+    difficulty: easy
+    question: "Which list shows the numbers in order from least to greatest?"
+    choices:
+      A: "0, −4, −10, 3, 7"
+      B: "7, 3, 0, −4, −10"
+      C: "−10, −4, 0, 3, 7"
+      D: "−4, −10, 0, 3, 7"
+    answer: C
+    explanation: "Least to greatest means from the most negative (farthest left on the number line) to the most positive. −10 < −4 < 0 < 3 < 7, so Choice C is correct."
+
+  - number: 4
+    type: multiple_choice
+    topic: Integers
+    difficulty: easy
+    question: "What is |−5| + |3|?"
+    choices:
+      A: "2"
+      B: "8"
+      C: "−2"
+      D: "−8"
+    answer: B
+    explanation: "|−5| = 5 and |3| = 3. Adding: 5 + 3 = 8."
+
+  - number: 5
+    type: multiple_choice
+    topic: Integers
+    difficulty: easy
+    question: "What is the value of (−6) × (−4)?"
+    choices:
+      A: "−24"
+      B: "10"
+      C: "24"
+      D: "−10"
+    answer: C
+    explanation: "The product of two negative numbers is positive. (−6) × (−4) = +24."
+
+  # --- Q6–10: Fractions ---
+
+  - number: 6
+    type: multiple_choice
+    topic: Fractions
+    difficulty: easy
+    question: "What is the least common denominator (LCD) of the fractions 1/4 and 1/6?"
+    choices:
+      A: "10"
+      B: "24"
+      C: "12"
+      D: "8"
+    answer: C
+    explanation: "The LCD is the smallest number that both 4 and 6 divide into evenly. Multiples of 4: 4, 8, 12 ... Multiples of 6: 6, 12 ... The smallest common multiple is 12."
+
+  - number: 7
+    type: multiple_choice
+    topic: Fractions
+    difficulty: easy
+    question: "Which of the following is true?"
+    choices:
+      A: "3/4 < 5/7"
+      B: "3/4 > 5/7"
+      C: "3/4 = 5/7"
+      D: "5/7 > 3/4"
+    answer: B
+    explanation: "Convert to decimals: 3/4 = 0.75 and 5/7 ≈ 0.714. Since 0.75 > 0.714, we have 3/4 > 5/7. Alternatively, use a common denominator of 28: 3/4 = 21/28 and 5/7 = 20/28, so 3/4 > 5/7."
+
+  - number: 8
+    type: multiple_choice
+    topic: Fractions
+    difficulty: medium
+    question: "A class has 180 students. If 2/3 of the students chose math as their favourite subject, how many students chose math?"
+    choices:
+      A: "90"
+      B: "60"
+      C: "120"
+      D: "135"
+    answer: C
+    explanation: "2/3 of 180 = (2 × 180) / 3 = 360 / 3 = 120 students."
+
+  - number: 9
+    type: multiple_choice
+    topic: Fractions
+    difficulty: easy
+    question: "What is 1/2 + 1/3?"
+    choices:
+      A: "5/6"
+      B: "2/5"
+      C: "2/6"
+      D: "1/6"
+    answer: A
+    explanation: "Find a common denominator of 6. 1/2 = 3/6 and 1/3 = 2/6. Adding: 3/6 + 2/6 = 5/6."
+
+  - number: 10
+    type: multiple_choice
+    topic: Fractions
+    difficulty: medium
+    question: "A recipe that makes 12 cookies calls for 3/4 cup of sugar. How many cups of sugar are needed to make 36 cookies?"
+    choices:
+      A: "1 1/2"
+      B: "2"
+      C: "1 3/4"
+      D: "2 1/4"
+    answer: D
+    explanation: "36 cookies is 3 times the original recipe of 12 cookies. Multiply the sugar: 3 × (3/4) = 9/4 = 2 1/4 cups."
+
+  # --- Q11–15: Percents ---
+
+  - number: 11
+    type: multiple_choice
+    topic: Percents
+    difficulty: easy
+    question: "A dinner bill is $48.00. If you leave a 15% tip, how much is the tip?"
+    choices:
+      A: "$6.40"
+      B: "$7.20"
+      C: "$4.80"
+      D: "$9.60"
+    answer: B
+    explanation: "15% of $48 = 0.15 × 48 = $7.20."
+
+  - number: 12
+    type: multiple_choice
+    topic: Percents
+    difficulty: easy
+    question: "A jacket originally costs $65.00. It is on sale for 20% off. What is the sale price?"
+    choices:
+      A: "$52.00"
+      B: "$45.00"
+      C: "$55.00"
+      D: "$13.00"
+    answer: A
+    explanation: "20% of $65 = 0.20 × 65 = $13. Sale price = $65 − $13 = $52."
+
+  - number: 13
+    type: multiple_choice
+    topic: Percents
+    difficulty: medium
+    question: "A store sold a lamp for $40 last month. This month the same lamp sells for $52. What is the percent increase in price?"
+    choices:
+      A: "20%"
+      B: "25%"
+      C: "30%"
+      D: "12%"
+    answer: C
+    explanation: "Percent increase = (change / original) × 100 = (52 − 40) / 40 × 100 = 12/40 × 100 = 30%."
+
+  - number: 14
+    type: multiple_choice
+    topic: Percents
+    difficulty: medium
+    question: "What is 35% of 120?"
+    choices:
+      A: "35"
+      B: "42"
+      C: "48"
+      D: "30"
+    answer: B
+    explanation: "35% of 120 = 0.35 × 120 = 42."
+
+  - number: 15
+    type: multiple_choice
+    topic: Percents
+    difficulty: medium
+    question: "A pair of sneakers costs $75.00. Sales tax is 8%. What is the total cost including tax?"
+    choices:
+      A: "$80.00"
+      B: "$83.00"
+      C: "$75.80"
+      D: "$81.00"
+    answer: D
+    explanation: "Tax = 8% of $75 = 0.08 × 75 = $6. Total = $75 + $6 = $81."
+
+  # --- Q16–20: Algebra — Equations ---
+
+  - number: 16
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: "Solve for x: 3(x + 4) = 27"
+    choices:
+      A: "3"
+      B: "4"
+      C: "5"
+      D: "7"
+    answer: C
+    explanation: "3(x + 4) = 27 → Divide both sides by 3: x + 4 = 9 → Subtract 4: x = 5."
+
+  - number: 17
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: "Solve for x: 2x − 7 = 15"
+    choices:
+      A: "4"
+      B: "11"
+      C: "8"
+      D: "7"
+    answer: B
+    explanation: "2x − 7 = 15 → Add 7 to both sides: 2x = 22 → Divide by 2: x = 11."
+
+  - number: 18
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: "Which expression is equivalent to 4x + 3 − x + 2?"
+    choices:
+      A: "3x + 5"
+      B: "4x + 5"
+      C: "3x + 1"
+      D: "5x + 5"
+    answer: A
+    explanation: "Combine like terms: 4x − x = 3x, and 3 + 2 = 5. Result: 3x + 5."
+
+  - number: 19
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: "Solve for x: 5(2x − 1) = 3x + 9"
+    choices:
+      A: "2"
+      B: "4"
+      C: "1"
+      D: "3"
+    answer: A
+    explanation: "Distribute: 10x − 5 = 3x + 9 → Subtract 3x from both sides: 7x − 5 = 9 → Add 5: 7x = 14 → x = 2."
+
+  - number: 20
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: "Solve for x: (x + 3) / 2 = 7"
+    choices:
+      A: "8"
+      B: "11"
+      C: "14"
+      D: "17"
+    answer: B
+    explanation: "Multiply both sides by 2: x + 3 = 14 → Subtract 3: x = 11."
+
+  # --- Q21–25: Algebra — Inequalities ---
+
+  - number: 21
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: "Solve for x: 3x − 4 > 8"
+    choices:
+      A: "x > 3"
+      B: "x > 4"
+      C: "x > 2"
+      D: "x > 12"
+    answer: B
+    explanation: "3x − 4 > 8 → Add 4: 3x > 12 → Divide by 3: x > 4."
+
+  - number: 22
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: "Solve for x: −2x ≤ 10"
+    choices:
+      A: "x ≤ −5"
+      B: "x ≤ 5"
+      C: "x ≥ −5"
+      D: "x ≥ 5"
+    answer: C
+    explanation: "Divide both sides by −2, remembering to flip the inequality sign when dividing by a negative number: x ≥ −5."
+
+  - number: 23
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      A student has scored 60 points on a project so far. She needs at least 75 points total to earn a B.
+      Which inequality represents the number of additional points (p) she needs?
+    choices:
+      A: "p ≥ 15"
+      B: "p > 15"
+      C: "p ≤ 15"
+      D: "p ≥ 75"
+    answer: A
+    explanation: "She needs 60 + p ≥ 75. Subtract 60: p ≥ 15. She needs at least 15 more points (the word 'at least' corresponds to the ≥ symbol)."
+
+  - number: 24
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: "How many positive integer values of x satisfy both conditions: 2x + 1 < 9 and x > 0?"
+    choices:
+      A: "2"
+      B: "4"
+      C: "3"
+      D: "1"
+    answer: C
+    explanation: "From 2x + 1 < 9: subtract 1 to get 2x < 8, then divide to get x < 4. Combined with x > 0, we need 0 < x < 4. The positive integers in this range are 1, 2, and 3 — three values."
+
+  - number: 25
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      A box can hold at most 50 pounds. A stack of books weighs 32 pounds.
+      Which inequality represents the additional weight w (in pounds) that can still be added?
+    choices:
+      A: "w + 32 < 50"
+      B: "w > 18"
+      C: "w ≤ 18"
+      D: "w + 50 ≤ 32"
+    answer: C
+    explanation: "The total weight must be at most 50 pounds: 32 + w ≤ 50. Subtract 32: w ≤ 18."
+
+  # --- Q26–30: Geometry — Triangles ---
+
+  - number: 26
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      In a triangle, two interior angles measure 55° and 70°. A student draws an exterior angle at the third vertex.
+      What is the measure of that exterior angle?
+    choices:
+      A: "55°"
+      B: "70°"
+      C: "125°"
+      D: "110°"
+    answer: C
+    explanation: "The Exterior Angle Theorem states that an exterior angle of a triangle equals the sum of the two non-adjacent interior angles. The two non-adjacent interior angles are 55° and 70°, so the exterior angle = 55° + 70° = 125°."
+
+  - number: 27
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: "An isosceles triangle has a vertex angle of 40°. What is the measure of each base angle?"
+    choices:
+      A: "40°"
+      B: "70°"
+      C: "80°"
+      D: "140°"
+    answer: B
+    explanation: "In an isosceles triangle, the two base angles are equal. The sum of all angles = 180°. So: 40° + 2b = 180° → 2b = 140° → b = 70°."
+
+  - number: 28
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      An equilateral triangle has a perimeter of 36 cm. What is the area of this triangle?
+      (Use the formula: Area = (√3 / 4) × side²)
+    choices:
+      A: "18√3 cm²"
+      B: "9√3 cm²"
+      C: "36 cm²"
+      D: "36√3 cm²"
+    answer: D
+    explanation: "Perimeter = 36 cm, so each side = 36/3 = 12 cm. Area = (√3/4) × 12² = (√3/4) × 144 = 36√3 cm²."
+
+  - number: 29
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: "The angles of a triangle are in the ratio 3:4:5. What is the measure of the largest angle?"
+    choices:
+      A: "75°"
+      B: "60°"
+      C: "90°"
+      D: "45°"
+    answer: A
+    explanation: "Let the angles be 3x, 4x, and 5x. They sum to 180°: 12x = 180° → x = 15°. The largest angle is 5x = 5 × 15° = 75°."
+
+  - number: 30
+    type: multiple_choice
+    topic: Geometry
+    difficulty: easy
+    question: "A right triangle has one acute angle of 35°. What is the measure of the other acute angle?"
+    choices:
+      A: "45°"
+      B: "65°"
+      C: "55°"
+      D: "35°"
+    answer: C
+    explanation: "The angles of a triangle sum to 180°. One angle is 90° and another is 35°. Third angle = 180° − 90° − 35° = 55°."
+
+  # --- Q31–35: Geometry — Area of Composite Figures and Shaded Regions ---
+
+  - number: 31
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      A rectangle measures 10 cm by 8 cm. A circle with radius 2 cm is cut out from the rectangle.
+      Which expression represents the area of the remaining shaded region?
+    choices:
+      A: "80 − 2π cm²"
+      B: "80 − 4π cm²"
+      C: "80 + 4π cm²"
+      D: "10π cm²"
+    answer: B
+    explanation: "Area of rectangle = 10 × 8 = 80 cm². Area of circle = π × r² = π × 4 = 4π cm². Shaded area = 80 − 4π cm²."
+
+  - number: 32
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      An L-shaped figure is formed by taking a 12 cm × 9 cm rectangle and removing a 4 cm × 3 cm
+      rectangular notch from one corner. What is the area of the L-shaped figure?
+    choices:
+      A: "108 cm²"
+      B: "100 cm²"
+      C: "96 cm²"
+      D: "84 cm²"
+    answer: C
+    explanation: "Area of full rectangle = 12 × 9 = 108 cm². Area of notch removed = 4 × 3 = 12 cm². Area of L-shape = 108 − 12 = 96 cm²."
+
+  - number: 33
+    type: multiple_choice
+    topic: Geometry
+    difficulty: hard
+    question: |
+      A square has side length 10 cm. A right triangle with legs of 3 cm each is cut from each of
+      the four corners to form an octagon shape. What is the area of the octagon?
+    choices:
+      A: "100 cm²"
+      B: "82 cm²"
+      C: "64 cm²"
+      D: "78 cm²"
+    answer: B
+    explanation: "Area of square = 10² = 100 cm². Each corner triangle has legs of 3 cm, so area of one triangle = (1/2)(3)(3) = 4.5 cm². Four triangles total = 4 × 4.5 = 18 cm². Octagon area = 100 − 18 = 82 cm²."
+
+  - number: 34
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      Two concentric circles share the same centre. The larger circle has radius 6 cm and the smaller
+      has radius 3 cm. What is the area of the ring (shaded region) between the two circles?
+    choices:
+      A: "9π cm²"
+      B: "18π cm²"
+      C: "36π cm²"
+      D: "27π cm²"
+    answer: D
+    explanation: "Area of large circle = π × 6² = 36π cm². Area of small circle = π × 3² = 9π cm². Shaded ring = 36π − 9π = 27π cm²."
+
+  - number: 35
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: "A trapezoid has parallel bases of length 8 cm and 14 cm, and a height of 6 cm. What is its area?"
+    choices:
+      A: "66 cm²"
+      B: "48 cm²"
+      C: "84 cm²"
+      D: "132 cm²"
+    answer: A
+    explanation: "Area of trapezoid = (1/2)(b₁ + b₂)(h) = (1/2)(8 + 14)(6) = (1/2)(22)(6) = 66 cm²."
+
+  # --- Q36–38: Coordinate Geometry ---
+
+  - number: 36
+    type: multiple_choice
+    topic: Coordinate Geometry
+    difficulty: medium
+    question: "A line passes through the points (0, 3) and (4, 11). What is the equation of the line?"
+    choices:
+      A: "y = 3x + 2"
+      B: "y = 2x + 3"
+      C: "y = 2x − 3"
+      D: "y = 4x + 3"
+    answer: B
+    explanation: "Slope = (11 − 3) / (4 − 0) = 8/4 = 2. The y-intercept is 3 (the line passes through (0, 3)). Equation: y = 2x + 3."
+
+  - number: 37
+    type: multiple_choice
+    topic: Coordinate Geometry
+    difficulty: medium
+    question: "What is the slope of the line y = −3x + 5?"
+    choices:
+      A: "5"
+      B: "3"
+      C: "−5"
+      D: "−3"
+    answer: D
+    explanation: "In slope-intercept form y = mx + b, the coefficient of x is the slope. Here m = −3. The y-intercept is 5."
+
+  - number: 38
+    type: multiple_choice
+    topic: Coordinate Geometry
+    difficulty: hard
+    question: "A line is parallel to y = 2x − 1 and passes through the point (1, 5). What is the equation of this line?"
+    choices:
+      A: "y = 2x + 1"
+      B: "y = −2x + 7"
+      C: "y = 2x + 3"
+      D: "y = 2x − 4"
+    answer: C
+    explanation: "Parallel lines have the same slope. The slope of y = 2x − 1 is 2. Using point-slope form: y − 5 = 2(x − 1) → y − 5 = 2x − 2 → y = 2x + 3."
+
+  # --- Q39–43: Statistics and Probability ---
+
+  - number: 39
+    type: multiple_choice
+    topic: Statistics
+    difficulty: medium
+    question: |
+      A student has two quiz scores of 80 and 90, and a final exam score of 75. The final exam counts
+      twice as much as each quiz. What is the student's weighted average?
+    choices:
+      A: "80"
+      B: "82"
+      C: "78"
+      D: "85"
+    answer: A
+    explanation: "Weights: each quiz counts 1, final counts 2. Weighted sum = (80 × 1) + (90 × 1) + (75 × 2) = 80 + 90 + 150 = 320. Total weight = 1 + 1 + 2 = 4. Weighted average = 320/4 = 80."
+
+  - number: 40
+    type: multiple_choice
+    topic: Probability
+    difficulty: medium
+    question: |
+      The probability that Event A occurs is 3/10. The probability that independent Event B occurs is 2/5.
+      What is the probability that both A and B occur?
+    choices:
+      A: "1/2"
+      B: "7/10"
+      C: "3/25"
+      D: "1/5"
+    answer: C
+    explanation: "For independent events, P(A and B) = P(A) × P(B) = (3/10) × (2/5) = 6/50 = 3/25."
+
+  - number: 41
+    type: multiple_choice
+    topic: Probability
+    difficulty: hard
+    question: |
+      A bag contains 4 red marbles and 6 blue marbles. Two marbles are drawn one at a time without replacement.
+      What is the probability of drawing a red marble first and then a blue marble?
+    choices:
+      A: "6/25"
+      B: "4/15"
+      C: "2/5"
+      D: "1/6"
+    answer: B
+    explanation: "P(red first) = 4/10. After removing one red, 9 marbles remain: 3 red and 6 blue. P(blue second) = 6/9 = 2/3. P(red then blue) = (4/10) × (6/9) = 24/90 = 4/15."
+
+  - number: 42
+    type: multiple_choice
+    topic: Combinations
+    difficulty: medium
+    question: |
+      A teacher wants to choose 2 students from a group of 7 to represent the class at a school event.
+      How many different pairs of students are possible?
+    choices:
+      A: "14"
+      B: "42"
+      C: "7"
+      D: "21"
+    answer: D
+    explanation: "Order does not matter, so use combinations. C(7,2) = 7! / (2! × 5!) = (7 × 6) / (2 × 1) = 42/2 = 21."
+
+  - number: 43
+    type: multiple_choice
+    topic: Statistics
+    difficulty: medium
+    question: "The data set is: 5, 8, 10, 12, 15. What is the difference between the mean and the median?"
+    choices:
+      A: "0"
+      B: "1"
+      C: "2"
+      D: "5"
+    answer: A
+    explanation: "Mean = (5 + 8 + 10 + 12 + 15) / 5 = 50 / 5 = 10. Median (middle value of 5 numbers in order) = 10. Difference = 10 − 10 = 0."
+
+  # --- Q44–49: Word Problems ---
+
+  - number: 44
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: medium
+    question: "A train travels 240 miles in 4 hours. At the same speed, how long will it take the train to travel 390 miles?"
+    choices:
+      A: "5.5 hours"
+      B: "6 hours"
+      C: "7 hours"
+      D: "6.5 hours"
+    answer: D
+    explanation: "Speed = 240/4 = 60 mph. Time for 390 miles = 390/60 = 6.5 hours."
+
+  - number: 45
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: medium
+    question: |
+      An account earns simple interest at a rate of 5% per year. If $2,000 is deposited, what is
+      the total amount in the account after 3 years?
+    choices:
+      A: "$2,100"
+      B: "$2,150"
+      C: "$2,300"
+      D: "$2,600"
+    answer: C
+    explanation: "Simple interest = Principal × Rate × Time = $2,000 × 0.05 × 3 = $300. Total = $2,000 + $300 = $2,300."
+
+  - number: 46
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: medium
+    question: "The sum of three consecutive integers is 87. What is the largest of the three integers?"
+    choices:
+      A: "28"
+      B: "30"
+      C: "29"
+      D: "31"
+    answer: B
+    explanation: "Let the integers be n, n+1, n+2. Then n + (n+1) + (n+2) = 87 → 3n + 3 = 87 → 3n = 84 → n = 28. The three integers are 28, 29, 30. The largest is 30."
+
+  - number: 47
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: medium
+    question: |
+      A car travelling at 45 mph covers a certain distance in exactly 4 hours. How many hours would
+      the same trip take if the car travelled at 60 mph instead?
+    choices:
+      A: "5 hours"
+      B: "3 hours"
+      C: "2.5 hours"
+      D: "3.5 hours"
+    answer: B
+    explanation: "Distance = 45 × 4 = 180 miles. At 60 mph: time = 180/60 = 3 hours."
+
+  - number: 48
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      Worker A can complete a job in 6 hours. Worker B can complete the same job in 3 hours.
+      If they work together, how long will it take them to complete the job?
+    choices:
+      A: "4.5 hours"
+      B: "1.5 hours"
+      C: "2 hours"
+      D: "4 hours"
+    answer: C
+    explanation: "Worker A's rate = 1/6 job per hour. Worker B's rate = 1/3 job per hour. Combined rate = 1/6 + 2/6 = 3/6 = 1/2 job per hour. Time = 1 ÷ (1/2) = 2 hours."
+
+  - number: 49
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: medium
+    question: "A store purchases a shirt for $24 and marks it up by 25%. What is the selling price of the shirt?"
+    choices:
+      A: "$30.00"
+      B: "$28.00"
+      C: "$32.00"
+      D: "$26.00"
+    answer: A
+    explanation: "Mark-up = 25% of $24 = 0.25 × 24 = $6. Selling price = $24 + $6 = $30."
+
+  # --- Q50–52: Hard Problems ---
+
+  - number: 50
+    type: multiple_choice
+    topic: Number Patterns
+    difficulty: hard
+    question: "What is the next number in the pattern: 2, 5, 10, 17, 26, ___?"
+    choices:
+      A: "35"
+      B: "33"
+      C: "37"
+      D: "36"
+    answer: C
+    explanation: "Find the differences between consecutive terms: 5−2=3, 10−5=5, 17−10=7, 26−17=9. The differences increase by 2 each time (3, 5, 7, 9, ...). The next difference is 11. So the next term is 26 + 11 = 37."
+
+  - number: 51
+    type: multiple_choice
+    topic: Algebraic Reasoning
+    difficulty: hard
+    question: "If f(x) = x² − 3x + 1, what is the value of f(4)?"
+    choices:
+      A: "3"
+      B: "5"
+      C: "9"
+      D: "13"
+    answer: B
+    explanation: "f(4) = (4)² − 3(4) + 1 = 16 − 12 + 1 = 5."
+
+  - number: 52
+    type: multiple_choice
+    topic: Algebraic Reasoning
+    difficulty: hard
+    question: |
+      The length of a rectangle is 3 more than twice its width. The perimeter of the rectangle is 48 cm.
+      What is the area of the rectangle?
+    choices:
+      A: "108 cm²"
+      B: "84 cm²"
+      C: "96 cm²"
+      D: "119 cm²"
+    answer: D
+    explanation: |
+      Let width = w and length = 2w + 3.
+      Perimeter: 2(w + 2w + 3) = 48 → 2(3w + 3) = 48 → 6w + 6 = 48 → 6w = 42 → w = 7.
+      Length = 2(7) + 3 = 17.
+      Area = 7 × 17 = 119 cm².
+
+  # --- Q53–57: Grid-In ---
+
+  - number: 53
+    type: grid_in
+    topic: Algebra
+    difficulty: easy
+    question: "Solve for x: 3x + 4 = 19"
+    choices: {}
+    answer: "5"
+    explanation: "3x + 4 = 19 → Subtract 4: 3x = 15 → Divide by 3: x = 5."
+
+  - number: 54
+    type: grid_in
+    topic: Percents
+    difficulty: easy
+    question: "What is 15% of 80?"
+    choices: {}
+    answer: "12"
+    explanation: "15% of 80 = 0.15 × 80 = 12."
+
+  - number: 55
+    type: grid_in
+    topic: Geometry
+    difficulty: easy
+    question: "A right triangle has legs of length 6 cm and 8 cm. What is the area of the triangle in square centimetres?"
+    choices: {}
+    answer: "24"
+    explanation: "Area = (1/2) × base × height = (1/2) × 6 × 8 = 24 cm²."
+
+  - number: 56
+    type: grid_in
+    topic: Geometry
+    difficulty: easy
+    question: "A square has a perimeter of 36 cm. What is the area of the square in square centimetres?"
+    choices: {}
+    answer: "81"
+    explanation: "Perimeter = 4 × side → side = 36/4 = 9 cm. Area = 9² = 81 cm²."
+
+  - number: 57
+    type: grid_in
+    topic: Algebra
+    difficulty: medium
+    question: "Two numbers have a sum of 44 and differ by 8. What is the value of the larger number?"
+    choices: {}
+    answer: "26"
+    explanation: |
+      Let the two numbers be x and y, with x > y.
+      x + y = 44 and x − y = 8.
+      Add the equations: 2x = 52 → x = 26.
+      Check: y = 44 − 26 = 18, and 26 − 18 = 8.

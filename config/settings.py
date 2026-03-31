@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "pages",
     "articles",
     "diagnostic",
+    "shsat",
 ]
 
 SITE_ID = 1
@@ -159,6 +160,15 @@ CLOUDINARY_STORAGE = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# --- SHSAT Prep ---
+SHSAT_FREE_TEST_LIMIT = 1
+SHSAT_TEST_DURATION_SECONDS = 10800  # 3 hours
+
+AUTHENTICATION_BACKENDS = [
+    "shsat.backends.EmailBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
 # --- Email ---
 # In development: emails are printed to the terminal (no real email sent).
 # In production: set these environment variables on Heroku.
@@ -201,9 +211,9 @@ DJANGO_SECURE_SSL_REDIRECT = (
 )
 SECURE_SSL_REDIRECT = DJANGO_SECURE_SSL_REDIRECT
 
-# Cookie protection (only send cookies over HTTPS)
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# Cookie protection (only send cookies over HTTPS in production)
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 
 # HSTS (tell browsers: always use HTTPS)
 SECURE_HSTS_SECONDS = 60  # start small; once you’re confident, raise to 31536000

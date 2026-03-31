@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ test.title }} — SHSAT Workshop{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'shsat/css/shsat.css' %}">
+
+<div class="shsat-wrap" style="padding-top:16px;">
+
+  <!-- Top bar -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+    <div>
+      <div style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:4px;">{{ test.title }}</div>
+      <div id="timer" class="shsat-timer">0:00:00</div>
+      <div style="font-size:12px;color:rgba(0,0,0,0.4);">Time elapsed</div>
+    </div>
+    <form method="post" action="{% url 'shsat_test_submit' test.id %}" id="submitForm">
+      {% csrf_token %}
+      <button type="button" onclick="confirmSubmit()" class="shsat-btn">Submit test</button>
+    </form>
+  </div>
+
+  <div class="shsat-test-layout">
+
+    <!-- Question panel -->
+    <div class="shsat-question-panel" id="questionPanel"></div>
+
+    <!-- Sidebar: question map -->
+    <div class="shsat-qmap">
+      <div id="timerSidebar" style="text-align:center;font-size:22px;font-weight:700;margin-bottom:12px;"></div>
+
+      <div class="shsat-qmap__section">ELA</div>
+      <div class="shsat-qmap__grid" id="elaMap"></div>
+
+      <div class="shsat-qmap__section" style="margin-top:12px;">Math</div>
+      <div class="shsat-qmap__grid" id="mathMap"></div>
+
+      <div style="margin-top:16px;font-size:12px;color:rgba(0,0,0,0.4);line-height:2;">
+        <span style="display:inline-block;width:12px;height:12px;background:#111;vertical-align:middle;margin-right:4px;"></span>Answered<br>
+        <span style="display:inline-block;width:12px;height:12px;border:1px solid rgba(180,40,30,0.6);vertical-align:middle;margin-right:4px;"></span>Flagged
+      </div>
+    </div>
+  </div>
+</div>
+
+{{ q_list|json_script:"questionData" }}
+
+<script>
+const ATTEMPT_ID = {{ attempt.id }};
+const CSRF_TOKEN = "{{ csrf_token }}";
+const INITIAL_ELAPSED = {{ duration_seconds }} - {{ remaining_seconds }};
+
+const questions = JSON.parse(document.getElementById("questionData").textContent);
+let currentIdx = 0;
+
+// State maps keyed by question id
+const answers = {};
+const flags = {};
+questions.forEach(q => {
+  answers[q.id] = q.selected || "";
+  flags[q.id] = q.is_flagged || false;
+});
+
+// ---------------------------------------------------------------------------
+// Timer (counts up from elapsed)
+// ---------------------------------------------------------------------------
+let elapsed = INITIAL_ELAPSED;
+const timerEl = document.getElementById("timer");
+const timerSidebar = document.getElementById("timerSidebar");
+
+function formatTime(s) {
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  return [h, m, sec].map(n => String(n).padStart(2, "0")).join(":");
+}
+
+setInterval(() => {
+  elapsed++;
+  const disp = formatTime(elapsed);
+  timerEl.textContent = disp;
+  timerSidebar.textContent = disp;
+  if (elapsed > {{ duration_seconds }}) {
+    timerEl.classList.add("shsat-timer--overtime");
+    timerSidebar.style.color = "rgba(180,40,30,0.8)";
+  }
+}, 1000);
+
+// ---------------------------------------------------------------------------
+// Render question
+// ---------------------------------------------------------------------------
+function esc(s) {
+  return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function renderQuestion(idx) {
+  currentIdx = idx;
+  const q = questions[idx];
+
+  let html = `<div class="shsat-question-nav">
+    <span style="font-weight:700;">Q${idx + 1} of ${questions.length}</span>
+    <span style="color:rgba(0,0,0,0.4);">${esc(q.section)} · Q${q.question_number}</span>
+    <button type="button" onclick="toggleFlag(${q.id})" id="flagBtn_${q.id}"
+      style="margin-left:auto;background:none;border:1px solid rgba(0,0,0,0.2);padding:4px 10px;cursor:pointer;font-size:12px;">
+      ${flags[q.id] ? "🚩 Flagged" : "Flag"}
+    </button>
+  </div>`;
+
+  if (q.passage_text) {
+    html += `<div class="shsat-passage">`;
+    if (q.passage_title) html += `<div class="shsat-passage__title">${esc(q.passage_title)}</div>`;
+    html += `<div>${esc(q.passage_text).replace(/\n/g, "<br>")}</div></div>`;
+  }
+
+  html += `<div class="shsat-question-text">${esc(q.question_text)}</div>`;
+
+  if (q.question_type === "grid_in") {
+    const val = esc(answers[q.id] || "");
+    html += `<div class="shsat-gridin">
+      <label class="shsat-gridin__label">Enter your answer:</label>
+      <input type="text" class="shsat-gridin__input" id="gridinInput_${q.id}"
+             value="${val}" maxlength="10" autocomplete="off"
+             oninput="saveGridIn(${q.id}, this.value)">
+      <span class="shsat-gridin__hint">Numbers only. Fractions: write as decimal or fraction (e.g. 1.5 or 3/2).</span>
+    </div>`;
+  } else {
+    const choices = [
+      ["A", q.choice_a],
+      ["B", q.choice_b],
+      ["C", q.choice_c],
+      ["D", q.choice_d],
+    ].filter(([, text]) => text);
+
+    html += `<ul class="shsat-choices">`;
+    choices.forEach(([letter, text]) => {
+      const sel = answers[q.id] === letter ? "selected" : "";
+      html += `<li class="shsat-choice ${sel}" onclick="selectAnswer(${q.id}, '${letter}', this)">
+        <span class="shsat-choice__letter">${letter}</span>
+        <span>${esc(text)}</span>
+      </li>`;
+    });
+    html += `</ul>`;
+  }
+
+  html += `<div style="display:flex;gap:12px;margin-top:8px;">`;
+  if (idx > 0)
+    html += `<button type="button" onclick="goTo(${idx - 1})" class="shsat-btn shsat-btn--outline">← Previous</button>`;
+  if (idx < questions.length - 1)
+    html += `<button type="button" onclick="goTo(${idx + 1})" class="shsat-btn">Next →</button>`;
+  html += `</div>`;
+
+  document.getElementById("questionPanel").innerHTML = html;
+  updateMap();
+  window.scrollTo(0, 0);
+}
+
+function goTo(idx) { renderQuestion(idx); }
+
+// ---------------------------------------------------------------------------
+// Answer selection
+// ---------------------------------------------------------------------------
+function selectAnswer(qId, letter, el) {
+  answers[qId] = letter;
+  el.closest(".shsat-choices").querySelectorAll(".shsat-choice").forEach(li => li.classList.remove("selected"));
+  el.classList.add("selected");
+  updateMap();
+  fetch("/shsat/api/save-answer/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
+    body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, selected_answer: letter }),
+  }).catch(console.error);
+}
+
+// ---------------------------------------------------------------------------
+// Grid-in answer saving (debounced)
+// ---------------------------------------------------------------------------
+let gridInTimer = null;
+function saveGridIn(qId, value) {
+  answers[qId] = value;
+  updateMap();
+  clearTimeout(gridInTimer);
+  gridInTimer = setTimeout(() => {
+    fetch("/shsat/api/save-answer/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
+      body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, selected_answer: value }),
+    }).catch(console.error);
+  }, 600);
+}
+
+// ---------------------------------------------------------------------------
+// Flagging
+// ---------------------------------------------------------------------------
+function toggleFlag(qId) {
+  flags[qId] = !flags[qId];
+  const btn = document.getElementById(`flagBtn_${qId}`);
+  if (btn) btn.textContent = flags[qId] ? "🚩 Flagged" : "Flag";
+  updateMap();
+  fetch("/shsat/api/flag-question/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
+    body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, flagged: flags[qId] }),
+  }).catch(console.error);
+}
+
+// ---------------------------------------------------------------------------
+// Question map
+// ---------------------------------------------------------------------------
+function updateMap() {
+  ["ela", "math"].forEach(section => {
+    const el = document.getElementById(`${section}Map`);
+    if (!el) return;
+    const sqs = questions.filter(q => q.section.toLowerCase() === section);
+    el.innerHTML = sqs.map(q => {
+      const globalIdx = questions.indexOf(q);
+      let cls = "shsat-qmap__dot";
+      if (answers[q.id]) cls += " answered";
+      if (flags[q.id]) cls += " flagged";
+      if (globalIdx === currentIdx) cls += " current";
+      return `<div class="${cls}" onclick="goTo(${globalIdx})" title="Q${q.question_number}">${q.question_number}</div>`;
+    }).join("");
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Submit
+// ---------------------------------------------------------------------------
+function confirmSubmit() {
+  const answered = questions.filter(q => answers[q.id]).length;
+  if (answered < questions.length) {
+    if (!confirm(`You have answered ${answered} of ${questions.length} questions. Submit anyway?`)) return;
+  }
+  document.getElementById("submitForm").submit();
+}
+
+// Init
+renderQuestion(0);
+timerEl.textContent = formatTime(elapsed);
+timerSidebar.textContent = formatTime(elapsed);
+</script>
+{% endblock %}

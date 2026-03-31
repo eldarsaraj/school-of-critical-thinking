@@ -1,0 +1,2284 @@
+title: "Practice Test 5"
+source: "School of Critical Thinking"
+is_free: false
+is_published: true
+order: 5
+
+ela:
+
+  # ============================================================
+  # REVISING/EDITING — Q1–20 (standalone, no passage)
+  # ============================================================
+
+  - number: 1
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below. Which word best replaces the underlined word to make the meaning more precise?
+
+      The detective said that the suspect had been at the scene of the crime.
+    choices:
+      A: "confirmed"
+      B: "mentioned"
+      C: "whispered"
+      D: "implied"
+    answer: A
+    explanation: |
+      "Said" is vague. "Confirmed" conveys that the detective established this as
+      a fact, which is the most precise meaning in the context of a detective's
+      statement. "Mentioned" is casual, "whispered" adds an unintended physical
+      detail, and "implied" means the opposite of a direct statement.
+
+  - number: 2
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below. Which revision corrects the error?
+
+      She didn't see nobody waiting outside the library.
+    choices:
+      A: "She didn't see anybody waiting outside the library."
+      B: "She didn't see nobody who waited outside the library."
+      C: "She saw nobody that wasn't waiting outside the library."
+      D: "She didn't see nobody, not ever, outside the library."
+    answer: A
+    explanation: |
+      The original sentence contains a double negative: "didn't" and "nobody."
+      In standard English, a single negative is correct. Replacing "nobody"
+      with "anybody" eliminates the double negative while preserving the meaning.
+
+  - number: 3
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision corrects the error in parallel structure?
+
+      Every morning, Priya enjoys running, to read the newspaper, and a cup of tea.
+    choices:
+      A: "Every morning, Priya enjoys running, reading the newspaper, and drinking a cup of tea."
+      B: "Every morning, Priya enjoys to run, to read the newspaper, and to drink a cup of tea."
+      C: "Every morning, Priya enjoys running, reading, and then to drink a cup of tea."
+      D: "Every morning, Priya enjoys a run, the newspaper being read, and a cup of tea."
+    answer: A
+    explanation: |
+      Items in a series must use the same grammatical form. The first item,
+      "running," is a gerund (verb + -ing), so all items must be gerunds:
+      "running," "reading the newspaper," and "drinking a cup of tea."
+
+  - number: 4
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision best corrects the error?
+
+      The experiment produced surprising results, the researchers celebrated immediately.
+    choices:
+      A: "The experiment produced surprising results; the researchers celebrated immediately."
+      B: "The experiment produced surprising results, however the researchers celebrated immediately."
+      C: "The experiment produced surprising results and the researchers celebrated, immediately."
+      D: "The experiment produced surprising results: the researchers celebrated immediately."
+    answer: A
+    explanation: |
+      The original is a comma splice — two independent clauses joined only by a
+      comma. The correct fix is to replace the comma with a semicolon, which
+      properly joins two related independent clauses. Option B uses "however"
+      incorrectly without a semicolon before it.
+
+  - number: 5
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision best corrects the error?
+
+      Running to catch the bus, my backpack fell off my shoulder.
+    choices:
+      A: "Running to catch the bus, I felt my backpack fall off my shoulder."
+      B: "While running, my backpack fell off my shoulder while I caught the bus."
+      C: "My backpack, running to catch the bus, fell off my shoulder."
+      D: "To run and catch the bus, my backpack fell off my shoulder."
+    answer: A
+    explanation: |
+      The original has a dangling modifier. The participial phrase "Running to
+      catch the bus" must refer to the grammatical subject of the main clause.
+      The subject must be "I," not "my backpack," since backpacks do not run.
+      Only option A correctly makes "I" the subject being modified.
+
+  - number: 6
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the paragraph below. Which revision best fixes the underlined pronoun?
+
+      The coach told the player that they needed to change their strategy before the final quarter.
+    choices:
+      A: "The coach told the player that the player needed to change the player's strategy before the final quarter."
+      B: "The coach told the player that he or she needed to change the strategy before the final quarter."
+      C: "The coach told the player that they both needed to change strategy before the final quarter."
+      D: "The coach told the player, who needed to change their strategy, before the final quarter."
+    answer: B
+    explanation: |
+      "They" is ambiguous — it could refer to the coach or the player. Option B
+      clarifies that the pronoun refers to the player by using "he or she" and
+      specifies "the strategy" to remove any remaining ambiguity.
+
+  - number: 7
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision corrects the error in subject-verb agreement?
+
+      The collection of rare stamps, along with several handwritten letters, are stored in the vault.
+    choices:
+      A: "The collection of rare stamps, along with several handwritten letters, is stored in the vault."
+      B: "The collection of rare stamps, along with several handwritten letters, were stored in the vault."
+      C: "The collection of rare stamps and several handwritten letters is stored in the vault."
+      D: "The collections of rare stamps, along with several handwritten letters, are stored in the vault."
+    answer: A
+    explanation: |
+      The subject is "collection" (singular), not "stamps" or "letters."
+      Phrases beginning with "along with" are parenthetical and do not change
+      the number of the subject. A singular subject requires the singular verb
+      "is stored."
+
+  - number: 8
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the paragraph below. Which transition word or phrase best fills the blank?
+
+      Scientists collected samples from three different sites. _______, they brought the samples to a laboratory for analysis.
+    choices:
+      A: "Meanwhile"
+      B: "Afterward"
+      C: "Nevertheless"
+      D: "In contrast"
+    answer: B
+    explanation: |
+      The paragraph describes events in time sequence: first collecting samples,
+      then bringing them to a lab. "Afterward" is the correct transition to show
+      that the second action followed the first. "Meanwhile" implies simultaneous
+      events; "Nevertheless" and "In contrast" imply opposition.
+
+  - number: 9
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision eliminates the circular reasoning?
+
+      This novel is the best book ever written because no other book is as good as this novel.
+    choices:
+      A: "This novel is the best book ever written because its characters, themes, and prose style have been praised by critics for decades."
+      B: "This novel is the best book ever written because it is simply better than other books."
+      C: "No book is as good as this novel, so this novel must therefore be better than all other books."
+      D: "This novel is the best because it has been called the best by those who say it is the best."
+    answer: A
+    explanation: |
+      Circular reasoning uses the conclusion as its own justification. The
+      original simply restates "best" in different words. Option A replaces
+      the circular claim with genuine supporting reasons: critical praise,
+      character, theme, and prose quality.
+
+  - number: 10
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which of the following best combines the two sentences using a subordinating clause?
+
+      The thunderstorm knocked out the power. The game was delayed for an hour.
+    choices:
+      A: "The thunderstorm knocked out the power, and the game was delayed for an hour."
+      B: "Because the thunderstorm knocked out the power, the game was delayed for an hour."
+      C: "Although the thunderstorm knocked out the power, the game was delayed for an hour."
+      D: "The game was delayed for an hour, moreover the thunderstorm knocked out the power."
+    answer: B
+    explanation: |
+      The relationship between the two events is cause and effect: the storm
+      caused the delay. The subordinating conjunction "because" creates this
+      causal relationship correctly. "Although" implies contrast, which
+      misrepresents the relationship.
+
+  - number: 11
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the group of words below. Which revision best corrects the error?
+
+      Although the library closed early on Sunday.
+    choices:
+      A: "The library closed early on Sunday."
+      B: "Although the library closed early on Sunday, many students had already finished their work."
+      C: "Although the library closed early, on Sunday."
+      D: "Although the library, closing early on Sunday."
+    answer: B
+    explanation: |
+      The original is a sentence fragment — a dependent clause with no
+      independent clause to complete it. Adding an independent clause ("many
+      students had already finished their work") makes it a complete sentence.
+      Option A removes "although" to create a simple sentence, which is also
+      grammatically correct, but option B is the only one that completes the
+      subordinating structure correctly.
+
+  - number: 12
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which version uses the apostrophe correctly?
+
+      The _______ lounge has been renovated with new furniture.
+    choices:
+      A: "teacher's"
+      B: "teachers'"
+      C: "teachers's"
+      D: "teacher's'"
+    answer: B
+    explanation: |
+      The lounge belongs to multiple teachers (plural possessive). To form the
+      possessive of a regular plural noun ending in -s, add only an apostrophe
+      after the -s: teachers'. "Teacher's" is singular possessive (one teacher);
+      "teachers's" and "teacher's'" are not standard forms.
+
+  - number: 13
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentences below. Which version uses the underlined word correctly?
+
+      (A) The speaker seemed to imply that the policy would change.
+      (B) From the chart, we can imply that sales improved last quarter.
+      (C) She inferred her disapproval clearly through her tone.
+      (D) The data inferring that more research is needed.
+    choices:
+      A: "Sentence A"
+      B: "Sentence B"
+      C: "Sentence C"
+      D: "Sentence D"
+    answer: A
+    explanation: |
+      "Imply" means to suggest something without stating it directly — done by
+      the speaker or writer. "Infer" means to draw a conclusion from evidence —
+      done by the listener or reader. Only Sentence A uses "imply" correctly:
+      the speaker is the one suggesting something indirectly.
+
+  - number: 14
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the paragraph below. Which sentence does NOT belong in the paragraph?
+
+      (1) The Amazon rainforest is home to more than three million species of plants and animals.
+      (2) Deforestation threatens this biodiversity by destroying habitats.
+      (3) Scientists estimate that dozens of species are lost to extinction every day.
+      (4) Brazil's football team has won the FIFA World Cup five times.
+      (5) Conservation efforts require international cooperation and funding.
+    choices:
+      A: "Sentence 1"
+      B: "Sentence 2"
+      C: "Sentence 3"
+      D: "Sentence 4"
+    answer: D
+    explanation: |
+      The paragraph is about biodiversity in the Amazon and the threat of
+      deforestation. Sentence 4 — about Brazil's football victories — is
+      entirely off-topic and does not support the paragraph's central idea.
+
+  - number: 15
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision is the most concise without losing meaning?
+
+      Due to the fact that it was raining outside, the students who were in the school decided to remain inside the building and not go out.
+    choices:
+      A: "Because it was raining, the students stayed inside."
+      B: "Due to the fact that rain was falling, students chose to remain inside."
+      C: "Because of the rain outside, the students inside the school did not leave."
+      D: "Since it was raining outside, students made the decision to stay inside the building."
+    answer: A
+    explanation: |
+      "Due to the fact that" can be replaced by "Because." "Students who were
+      in the school" simplifies to "the students," and "remain inside the
+      building and not go out" simplifies to "stayed inside." Option A conveys
+      the full meaning in the fewest words.
+
+  - number: 16
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Read the paragraph below. A student wants to add a sentence to support the claim in the second sentence. Which sentence best does this?
+
+      Urban parks benefit city residents in many ways. Regular access to green space has been shown to reduce stress. _______.
+    choices:
+      A: "Many cities are replacing parks with parking lots to meet growing demand."
+      B: "Studies have found that people who visit parks at least twice a week report lower levels of anxiety than those who do not."
+      C: "Trees in urban areas can also help lower air temperatures during hot summers."
+      D: "Some parks are designed specifically for dogs, with dedicated off-leash areas."
+    answer: B
+    explanation: |
+      The claim is that "regular access to green space has been shown to reduce
+      stress." The supporting sentence must provide evidence for this specific
+      claim. Option B directly supports it with a concrete study finding about
+      park visits and lower anxiety. Options C and D discuss different benefits
+      that do not directly address stress reduction.
+
+  - number: 17
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which version correctly uses a colon to introduce a list?
+    choices:
+      A: "The kit contained: a map, a compass, and a flashlight."
+      B: "The kit contained the following items: a map, a compass, and a flashlight."
+      C: "The kit: contained a map, a compass, and a flashlight."
+      D: "The kit contained a map: a compass and a flashlight."
+    answer: B
+    explanation: |
+      A colon should follow a complete independent clause before introducing a
+      list. Option B is correct: "The kit contained the following items" is a
+      complete clause. In option A, the colon interrupts the verb "contained" —
+      a colon should not come directly after a verb.
+
+  - number: 18
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Read the paragraph below. Which sentence makes the strongest conclusion?
+
+      Throughout history, maps have done more than show where things are. They reflect the priorities and biases of those who made them. Ancient maps placed the mapmaker's homeland at the centre. Colonial-era maps emphasized European territories while leaving others blank or distorted.
+    choices:
+      A: "Maps are a very useful tool for navigating unfamiliar places."
+      B: "In short, a map is never a neutral document — it is always a view of the world shaped by power."
+      C: "Modern GPS technology has replaced the need for traditional maps."
+      D: "Mapmakers today are more careful than those in the past."
+    answer: B
+    explanation: |
+      A strong concluding sentence synthesizes the paragraph's ideas rather than
+      introducing a new one or restating the obvious. Option B draws together the
+      paragraph's evidence — bias, centrism, colonial distortion — into a unifying
+      insight about maps and power. Options C and D introduce unrelated ideas.
+
+  - number: 19
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Read the sentence below. Which revision uses the correct verb mood?
+
+      If the committee votes in favour, the plan will go into effect immediately. But if I were in charge, I would restructure the proposal entirely.
+    choices:
+      A: "But if I was in charge, I would restructure the proposal entirely."
+      B: "But if I were in charge, I would restructure the proposal entirely."
+      C: "But if I am in charge, I would restructure the proposal entirely."
+      D: "But if I be in charge, I would restructure the proposal entirely."
+    answer: B
+    explanation: |
+      When expressing a condition contrary to fact (the speaker is not in
+      charge), the subjunctive mood requires "were" regardless of the subject.
+      Using "was" is informal and nonstandard in this context; "am" uses the
+      indicative mood, which implies the condition may be true.
+
+  - number: 20
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which of the following best combines the two short sentences into one fluent sentence?
+
+      The fog was thick. The hikers could barely see the trail ahead.
+    choices:
+      A: "The fog was thick and the hikers could barely see the trail ahead."
+      B: "So thick was the fog that the hikers could barely see the trail ahead."
+      C: "The fog was thick, the hikers could barely see the trail ahead."
+      D: "The fog was thick, but the hikers could barely see the trail ahead."
+    answer: B
+    explanation: |
+      Option B uses an inverted construction ("So thick was the fog that...")
+      that is both fluent and expressive of the causal relationship. It avoids
+      the comma splice of option C and the misleading contrast of option D
+      ("but" implies the hikers saw well despite the fog, which is wrong).
+
+  # ============================================================
+  # READING COMPREHENSION — PASSAGE 1: Fiction (Q21–27)
+  # ============================================================
+
+  - number: 21
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    passage_title: "Something True"
+    passage_text: |
+      Sofia had won three school art competitions in two years, and she still could not
+      paint anything she believed in. She could render a vase of flowers with photographic
+      accuracy — petals in shadow, stems bending under their own weight — but standing
+      back from a finished canvas, she always felt the same hollow disappointment: it looked
+      like a photograph of something beautiful, not like something beautiful itself.
+
+      Her teacher, Mr. Okonkwo, noticed. "You have more technique than students twice your
+      age," he told her one afternoon. "But technique is a starting point, not a destination.
+      You have to find something you need to say, and then find out whether your technique is
+      good enough to say it."
+
+      Sofia thought about this for weeks. She made false starts: a skyline, a self-portrait,
+      a bowl of fruit. Each one felt like a performance. Then, one rainy Saturday, she
+      thought about her grandmother's kitchen — the yellow walls, the dented pot always on
+      the stove, the way afternoon light fell across the table and made the ordinary things
+      look briefly sacred. She had not visited that kitchen in three years. Her grandmother
+      had died, and the house had been sold.
+
+      She painted from memory, and it was the hardest thing she had ever done. Memory does
+      not hold still. The yellow walls kept shifting; she had to decide what shade they
+      really were, and in deciding, she understood that it didn't matter. What mattered was
+      what the yellow meant — warmth, safety, a particular kind of peace she had not felt
+      since. When she finished, the painting was technically imperfect. The proportions
+      were slightly off. But she stood in front of it and felt nothing hollow.
+
+      She brought it to Mr. Okonkwo. He looked at it for a long time without speaking.
+      "Yes," he said finally. "That's what I meant."
+    question: |
+      What is Sofia's primary motivation for continuing to paint despite her dissatisfaction?
+    choices:
+      A: "She wants to impress Mr. Okonkwo and earn his approval."
+      B: "She is searching for a way to paint something she genuinely believes in."
+      C: "She hopes to win a fourth art competition and break her school's record."
+      D: "She wants to paint a perfect reproduction of her grandmother's kitchen."
+    answer: B
+    explanation: |
+      The opening paragraph establishes Sofia's motivation: despite winning competitions,
+      she feels "hollow disappointment" because her paintings don't feel genuine.
+      Her goal is to produce something she "believed in," not to win awards or
+      please her teacher. Option D misrepresents the final painting — she paints
+      from memory, knowing it won't be technically perfect.
+
+  - number: 22
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    question: |
+      What can be inferred about why Sofia's earlier attempts — the skyline, the self-portrait,
+      the bowl of fruit — all failed to satisfy her?
+    choices:
+      A: "They were technically too difficult for her current skill level."
+      B: "They were subjects she chose for their visual appeal rather than personal meaning."
+      C: "Mr. Okonkwo told her those subjects were not interesting enough."
+      D: "She completed them too quickly without thinking about composition."
+    answer: B
+    explanation: |
+      Sofia describes each earlier attempt as feeling "like a performance" —
+      implying she was showing skill rather than expressing something personal.
+      The passage never says the subjects were too difficult (she is technically
+      advanced) or that Mr. Okonkwo rejected them.
+
+  - number: 23
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_1
+    question: |
+      As used in paragraph 3, the word "sacred" most nearly means:
+    choices:
+      A: "religious and holy"
+      B: "worthy of reverence and meaning"
+      C: "bright and colourful"
+      D: "ancient and unchanged"
+    answer: B
+    explanation: |
+      In context, "sacred" describes how afternoon light made ordinary objects
+      look "briefly sacred." Sofia is not describing a religious scene; she is
+      describing how the light gave mundane things a quality of significance
+      and beauty. "Worthy of reverence and meaning" captures this secular use
+      of the word most accurately.
+
+  - number: 24
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_1
+    question: |
+      In paragraph 4, Sofia realizes that "it didn't matter" what exact shade the walls were.
+      What does this realisation reveal about her development as an artist?
+    choices:
+      A: "She has decided that accuracy in painting is less important than speed."
+      B: "She understands that emotional truth matters more than literal accuracy."
+      C: "She has given up trying to remember her grandmother's kitchen correctly."
+      D: "She believes that abstract art is superior to realistic painting."
+    answer: B
+    explanation: |
+      Sofia's realization is the story's turning point. She stops trying to
+      reproduce exact physical reality and instead asks what the yellow "meant."
+      The shift is from literal accuracy to emotional truth — which is the
+      insight Mr. Okonkwo was pointing toward when he told her to "find
+      something you need to say."
+
+  - number: 25
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    question: |
+      Which of the following best describes the figurative meaning of Mr. Okonkwo's final
+      words: "Yes. That's what I meant."
+    choices:
+      A: "He confirms that the painting's technique has finally met professional standards."
+      B: "He acknowledges that Sofia has understood and acted on his earlier advice."
+      C: "He is surprised that Sofia painted her grandmother instead of a still life."
+      D: "He is telling Sofia that she should enter this painting in the next competition."
+    answer: B
+    explanation: |
+      Mr. Okonkwo earlier told Sofia that technique is a starting point and
+      that she must "find something you need to say." His final response —
+      after a long, silent look — confirms that Sofia's painting demonstrates
+      exactly that: art driven by genuine feeling, not technical display.
+      His words refer back to his own earlier lesson.
+
+  - number: 26
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    question: |
+      The phrase "Memory does not hold still" (paragraph 4) is best understood as:
+    choices:
+      A: "a literal observation that human memory is scientifically inaccurate"
+      B: "a figurative expression meaning that memory shifts and is hard to pin down"
+      C: "a criticism of Sofia's inability to concentrate while painting"
+      D: "a suggestion that Sofia should have taken photographs of her grandmother's kitchen"
+    answer: B
+    explanation: |
+      The phrase is figurative. Sofia uses "hold still" — language usually
+      applied to a physical object being posed or photographed — to describe
+      memory's instability. She cannot fix the yellow walls at a single shade
+      because memory is fluid, not static. This is a metaphor, not a literal
+      scientific claim.
+
+  - number: 27
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_1
+    question: |
+      Which of the following best expresses the central theme of the story?
+    choices:
+      A: "Natural talent is more important than years of practice and hard work."
+      B: "True artistic expression requires personal meaning, not just technical skill."
+      C: "Grief over lost loved ones can inspire great works of art."
+      D: "Art competitions are not a reliable measure of a painter's ability."
+    answer: B
+    explanation: |
+      The story follows Sofia's journey from technical competence but emotional
+      emptiness to genuine artistic expression through personal meaning. Mr.
+      Okonkwo's advice and Sofia's breakthrough both point to the same insight:
+      technique serves expression, not the other way around. Option C is a
+      partial reading — grief is the occasion, not the theme.
+
+  # ============================================================
+  # READING COMPREHENSION — PASSAGE 2: Nonfiction/Science (Q28–34)
+  # ============================================================
+
+  - number: 28
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    passage_title: "The Point of No Return"
+    passage_text: |
+      A black hole is a region of space where gravity is so intense that nothing — not even
+      light — can escape. They form most commonly when a massive star exhausts its nuclear
+      fuel and collapses under its own weight. If the star is large enough, the collapse
+      continues until the matter is compressed into an infinitely dense point called a
+      singularity. Surrounding this singularity is the event horizon: the boundary beyond
+      which escape is impossible.
+
+      The event horizon is not a physical surface. If you crossed it, you would not feel a
+      wall or a change in temperature. You would simply be unable to return. Scientists
+      calculate that, for a sufficiently large black hole, the gravitational forces at the
+      event horizon would be mild enough that you might not notice the crossing at all —
+      at least for a while. The trouble comes later. As you fall inward, the difference in
+      gravitational pull between your head and your feet grows larger. This difference
+      stretches the body lengthwise and compresses it sideways. Scientists call this process
+      spaghettification.
+
+      Because no light escapes a black hole, they cannot be observed directly. Instead,
+      scientists detect them indirectly. One method involves watching nearby stars. When a
+      star orbits an invisible massive object — behaving as if something is pulling it
+      with extraordinary force — scientists infer that a black hole is present. Another
+      method examines the radiation produced when matter falls into a black hole. As gas
+      and dust spiral inward, they heat up to enormous temperatures and emit X-rays that
+      telescopes can detect.
+
+      In 2019, the first direct image of a black hole's shadow was produced by a global
+      network of radio telescopes working as a single virtual telescope the size of Earth.
+      The image showed the glowing ring of heated matter surrounding the dark centre of a
+      black hole 6.5 billion times more massive than our sun.
+    question: |
+      According to the passage, what is the event horizon?
+    choices:
+      A: "The physical wall at the centre of a black hole that traps all matter."
+      B: "The infinitely dense point at the core of a black hole."
+      C: "The boundary beyond which nothing, including light, can escape."
+      D: "The zone where spaghettification begins to affect the human body."
+    answer: C
+    explanation: |
+      The passage defines the event horizon explicitly in paragraph 1: "the
+      boundary beyond which escape is impossible." Option B describes the
+      singularity, not the event horizon. Option A is contradicted by the
+      passage, which states the event horizon is not a physical surface.
+
+  - number: 29
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    question: |
+      According to the passage, how do scientists most commonly detect black holes?
+    choices:
+      A: "By photographing the light that black holes emit from their cores."
+      B: "By measuring the temperature changes at the event horizon."
+      C: "By observing the behaviour of nearby matter and the radiation it produces."
+      D: "By listening for radio waves emitted directly by the singularity."
+    answer: C
+    explanation: |
+      Paragraph 3 describes two indirect detection methods: observing stars
+      that orbit invisible massive objects, and detecting X-rays from heated
+      matter spiralling into the black hole. Both methods rely on observing
+      matter near the black hole, not light from the black hole itself (which
+      cannot escape).
+
+  - number: 30
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    question: |
+      As used in paragraph 2, the word "mild" most nearly means:
+    choices:
+      A: "warm and pleasant"
+      B: "moderate and not extreme"
+      C: "slow and gradual"
+      D: "difficult to detect"
+    answer: B
+    explanation: |
+      In context, "mild" describes the gravitational forces at the event horizon
+      of a large black hole — they would not be violent enough for a person to
+      notice the crossing immediately. "Moderate and not extreme" captures this
+      meaning. The word is used in its general sense of "not severe," not its
+      temperature-related meaning.
+
+  - number: 31
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    question: |
+      As used in paragraph 3, the word "infer" most nearly means:
+    choices:
+      A: "prove with absolute certainty"
+      B: "observe with a telescope"
+      C: "conclude from indirect evidence"
+      D: "measure with scientific instruments"
+    answer: C
+    explanation: |
+      Scientists "infer" that a black hole is present by watching a star orbit
+      an invisible object — they do not see the black hole directly. To infer
+      means to reach a conclusion based on indirect evidence or reasoning,
+      which is precisely what is described here.
+
+  - number: 32
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2
+    question: |
+      What is the most likely reason the author describes spaghettification in detail in
+      paragraph 2?
+    choices:
+      A: "To warn readers about the dangers of space travel near black holes."
+      B: "To make an abstract scientific concept more vivid and understandable."
+      C: "To explain why scientists cannot send probes into black holes."
+      D: "To argue that black holes are the most dangerous objects in the universe."
+    answer: B
+    explanation: |
+      The passage is explanatory, not cautionary or argumentative. The author
+      uses the striking term "spaghettification" and the concrete image of a
+      body being stretched and compressed to help readers visualise an otherwise
+      abstract gravitational effect. The purpose is clarity and engagement,
+      not to issue a warning or make a comparative claim.
+
+  - number: 33
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2
+    question: |
+      Based on the passage, what can be inferred about why the 2019 black hole image
+      required a global network of telescopes?
+    choices:
+      A: "No single country had the funding to build a telescope large enough."
+      B: "The image required a virtual telescope as large as Earth to achieve sufficient detail."
+      C: "Scientists needed telescopes on different continents to capture different wavelengths."
+      D: "The black hole was moving too quickly for any single telescope to track."
+    answer: B
+    explanation: |
+      The passage states the network functioned as "a single virtual telescope
+      the size of Earth." This implies the resolution required was achievable
+      only with a baseline as large as Earth itself. The passage makes no
+      mention of funding, multiple wavelengths, or the black hole's movement.
+
+  - number: 34
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    question: |
+      Which of the following best expresses the central idea of the passage?
+    choices:
+      A: "Black holes are the most massive and dangerous objects in space."
+      B: "The 2019 black hole photograph was the greatest achievement in modern astronomy."
+      C: "Black holes are invisible but can be defined, understood, and detected through indirect methods."
+      D: "Scientists still have no reliable way to study black holes because no light escapes them."
+    answer: C
+    explanation: |
+      The passage covers what black holes are, how they form, their key features
+      (event horizon, spaghettification), and how scientists study them despite
+      their invisibility. The unifying idea is that black holes — though unseen —
+      can be understood through careful indirect observation. Option D contradicts
+      the passage's description of successful detection methods and the 2019 photograph.
+
+  # ============================================================
+  # READING COMPREHENSION — PASSAGE 3: Poetry (Q35–39)
+  # ============================================================
+
+  - number: 35
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_3
+    passage_title: "What I Kept"
+    passage_text: |
+      I stood at the gate where the marigolds used to be,
+      Now concrete and car and a stranger's clean porch.
+      I did not go in. There was nothing left for me
+      Except the map I carried, which no one else could torch.
+
+      I kept the creak of the third step on the stair,
+      The smell of rain caught in the curtains overnight,
+      My mother's voice calling up through dusty air,
+      The angle of November's early, sideways light.
+
+      The house was sold. The house was someone else's now.
+      But houses, I decided, are the wrong things to keep.
+      What stays is not the wall, the window, or the bough —
+      What stays is what we chose to store, before our sleep.
+
+      I turned and walked. I carried nothing you could weigh.
+      I carried everything that mattered, all the way.
+    question: |
+      What is the overall tone of the poem?
+    choices:
+      A: "Bitter and resentful toward those who bought the house."
+      B: "Sad but ultimately accepting, with a sense of quiet resolve."
+      C: "Joyful and celebratory about the memories of the past."
+      D: "Anxious and uncertain about the speaker's future."
+    answer: B
+    explanation: |
+      The speaker feels the loss of the childhood home but does not dwell in
+      bitterness or despair. The final stanza — "I turned and walked. I carried
+      everything that mattered" — suggests acceptance and resolution. The tone
+      is elegiac (mourning something lost) but balanced by the speaker's
+      deliberate choice to preserve what truly matters: memory.
+
+  - number: 36
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_3
+    question: |
+      The phrase "the map I carried, which no one else could torch" (stanza 1) is best
+      understood as a metaphor for:
+    choices:
+      A: "a physical map of the neighbourhood that the speaker brought on the visit"
+      B: "the speaker's personal memories, which cannot be destroyed"
+      C: "the legal documents proving the speaker once owned the house"
+      D: "the speaker's plan for rebuilding a home elsewhere"
+    answer: B
+    explanation: |
+      "Map" is used figuratively to represent the mental landscape of memories
+      the speaker carries of the childhood home. "Which no one else could torch"
+      means that unlike a physical structure, these memories cannot be burned
+      or taken away by new owners. The stanza establishes the central contrast:
+      the physical house is gone, but the internal map of memory endures.
+
+  - number: 37
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_3
+    question: |
+      In stanza 2, the speaker lists specific sensory memories. What is the effect of
+      using these particular details rather than more general descriptions?
+    choices:
+      A: "They show that the speaker has an unusually strong sense of smell."
+      B: "They make the speaker's memories feel vivid and personally specific."
+      C: "They prove that the speaker visited the house many times as a child."
+      D: "They suggest that the speaker prefers autumn and winter seasons."
+    answer: B
+    explanation: |
+      By listing specific, concrete sensory details — "the creak of the third
+      step," "rain caught in the curtains," a mother's voice, the "angle of
+      November's early, sideways light" — the poet creates the impression of
+      real, lived memory rather than generalised nostalgia. The specificity
+      is what makes the memories feel genuine and emotionally resonant.
+
+  - number: 38
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_3
+    question: |
+      In line 11 of the poem, the word "bough" most likely refers to:
+    choices:
+      A: "a large branch of a tree that once stood near the house"
+      B: "the bow of a ship, suggesting the speaker is about to sail away"
+      C: "a bow, as in bending down in respect before leaving"
+      D: "a loud sound the speaker heard when the door closed"
+    answer: A
+    explanation: |
+      "Bough" is a standard English word for a large branch of a tree. In
+      context ("the wall, the window, or the bough"), the poet lists three
+      physical features of the property to argue that none of these material
+      things are what we truly keep. The tree's branch, like the wall and
+      window, is a concrete feature of the lost home.
+
+  - number: 39
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_3
+    question: |
+      Which of the following best states the central theme of the poem?
+    choices:
+      A: "Physical places are easily destroyed, so we should not grow attached to them."
+      B: "What we truly possess is not the places themselves but the memories we choose to hold."
+      C: "Selling a childhood home is always a painful mistake that cannot be undone."
+      D: "Memory is unreliable and fades over time, leaving us with nothing."
+    answer: B
+    explanation: |
+      The poem's argument builds toward the conclusion in stanza 3: "houses
+      are the wrong things to keep" and "what stays is what we chose to store."
+      The final couplet reinforces this — the speaker carries "nothing you
+      could weigh" but "everything that mattered." The theme is that genuine
+      possession is memory and meaning, not physical property.
+
+  # ============================================================
+  # READING COMPREHENSION — PASSAGE 4: Nonfiction/History (Q40–47)
+  # ============================================================
+
+  - number: 40
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    passage_title: "More Than Silk"
+    passage_text: |
+      The term "Silk Road" conjures images of camel caravans crossing vast deserts,
+      laden with bolts of glittering fabric. The image is not wrong, but it is
+      incomplete. The Silk Road was not one road, and silk was not its only cargo.
+      It was a shifting network of overland and maritime routes connecting China in
+      the east to the Mediterranean world in the west, threading through Central
+      Asia, Persia, and the Arabian Peninsula along the way. At its height, between
+      roughly 100 BCE and 1450 CE, it linked more civilisations more continuously
+      than any other exchange network in the ancient and medieval world.
+
+      The goods that moved along these routes were extraordinarily diverse. Chinese
+      merchants exported silk, porcelain, and tea; they imported glass, gold, and
+      silver from the west. Spices — pepper, cinnamon, and nutmeg — travelled from
+      South and Southeast Asia into both Chinese and European markets. Cotton and
+      indigo moved from India. Horses from Central Asia were so prized in China
+      that Chinese rulers traded enormous quantities of silk to obtain them. The
+      exchange was never simply a transfer of luxury goods; it was the movement of
+      entire material cultures.
+
+      Ideas and beliefs travelled alongside goods. Buddhism spread from India into
+      Central Asia and China largely through Silk Road merchants and pilgrims. Islam
+      followed trade routes westward from Arabia and eastward into Central Asia. The
+      mathematical concept of zero, developed in India, reached the Arab world and
+      eventually Europe through these same channels. Paper and printing, Chinese
+      inventions, moved westward; astronomical knowledge moved in multiple directions
+      at once.
+
+      Disease travelled too. The Black Death — the bubonic plague pandemic that killed
+      between one-third and one-half of Europe's population in the fourteenth century —
+      is believed to have spread westward along Silk Road routes from Central Asia.
+      Trade that connected the world also made the world vulnerable in new ways.
+
+      The Silk Road declined as maritime trade expanded in the fifteenth and sixteenth
+      centuries. Portuguese and later Dutch navigators found ocean routes to Asia that
+      were faster, cheaper, and capable of carrying larger volumes of goods. The great
+      overland network did not disappear overnight; it faded, route by route, as the
+      sea became the new highway of global commerce.
+    question: |
+      According to the passage, which of the following goods did China import from the west?
+    choices:
+      A: "Silk, porcelain, and spices"
+      B: "Glass, gold, and silver"
+      C: "Cotton, indigo, and horses"
+      D: "Paper, pepper, and nutmeg"
+    answer: B
+    explanation: |
+      Paragraph 2 states: "Chinese merchants exported silk, porcelain, and tea;
+      they imported glass, gold, and silver from the west." The other options
+      mix up the direction of trade or describe goods from other regions.
+
+  - number: 41
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      According to the passage, what caused the Silk Road to decline?
+    choices:
+      A: "The Black Death killed too many merchants for trade to continue."
+      B: "China stopped producing silk and other export goods."
+      C: "Maritime trade routes proved faster, cheaper, and higher-capacity."
+      D: "European rulers banned trade with Central Asia for political reasons."
+    answer: C
+    explanation: |
+      Paragraph 5 states that maritime routes "were faster, cheaper, and
+      capable of carrying larger volumes of goods," which drew trade away
+      from the overland network. The passage does not attribute the decline
+      to the plague, a shortage of goods, or political bans.
+
+  - number: 42
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      As used in paragraph 2, the word "prized" most nearly means:
+    choices:
+      A: "captured as a prize in war"
+      B: "highly valued"
+      C: "given as a reward"
+      D: "unexpectedly discovered"
+    answer: B
+    explanation: |
+      "Prized" in this context describes how Central Asian horses were regarded
+      by Chinese rulers — they were valued so highly that rulers traded large
+      quantities of silk to obtain them. "Highly valued" is the correct meaning.
+
+  - number: 43
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      As used in paragraph 3, the word "channels" most nearly means:
+    choices:
+      A: "television or radio stations"
+      B: "rivers or waterways"
+      C: "pathways or means of transmission"
+      D: "official diplomatic agreements"
+    answer: C
+    explanation: |
+      "Through these same channels" refers to the routes and networks through
+      which ideas spread. "Channels" here is used figuratively to mean pathways
+      of transmission, not bodies of water or media broadcasts.
+
+  - number: 44
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      What is the author's primary purpose in paragraph 4, which discusses disease?
+    choices:
+      A: "To argue that trade causes more harm than good."
+      B: "To show that global connection has costs as well as benefits."
+      C: "To explain why the Silk Road declined in the fourteenth century."
+      D: "To criticise the merchants who spread plague unknowingly."
+    answer: B
+    explanation: |
+      The final sentence of paragraph 4 states the purpose explicitly: "Trade
+      that connected the world also made the world vulnerable in new ways."
+      The author is not arguing that trade is net harmful, nor attributing the
+      Silk Road's decline to the plague (that is discussed in paragraph 5).
+
+  - number: 45
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_4
+    question: |
+      Based on the passage, what can be inferred about why the author opens with the
+      phrase "The image is not wrong, but it is incomplete"?
+    choices:
+      A: "To correct a common misconception that the Silk Road never existed."
+      B: "To acknowledge a popular image of the Silk Road before broadening the reader's understanding."
+      C: "To argue that historians have deliberately misrepresented the Silk Road."
+      D: "To introduce the reader to the difficulty of studying ancient trade routes."
+    answer: B
+    explanation: |
+      The author begins by acknowledging the familiar, romantic image of camel
+      caravans carrying silk — and then uses "not wrong, but incomplete" as a
+      pivot to introduce a richer account. This rhetorical move respects the
+      reader's existing knowledge while signalling that the passage will expand
+      on it.
+
+  - number: 46
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_4
+    question: |
+      Which statement can be inferred from the passage about the role of merchants and
+      pilgrims on the Silk Road?
+    choices:
+      A: "They were primarily motivated by a desire to spread religious and scientific ideas."
+      B: "They served as unintentional carriers of both cultural exchange and disease."
+      C: "They were employed directly by the governments of China and Persia."
+      D: "They were aware of the long-term historical significance of their journeys."
+    answer: B
+    explanation: |
+      The passage describes merchants and pilgrims as conduits for goods, ideas,
+      beliefs, and disease — but never suggests they intended to spread ideas or
+      that they were government employees. The most that can be inferred is that
+      their movement along the routes incidentally transmitted both culture and
+      pathogens.
+
+  - number: 47
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      Which of the following best expresses the central idea of the entire passage?
+    choices:
+      A: "Silk was the most important commodity traded on the ancient Silk Road."
+      B: "The Silk Road was a vast network that facilitated the exchange of goods, ideas, and disease across civilisations."
+      C: "The decline of the Silk Road was the most significant event in the history of global trade."
+      D: "The Silk Road connected China and Rome, allowing the two empires to grow wealthy."
+    answer: B
+    explanation: |
+      The passage covers goods, ideas, religion, scientific concepts, disease,
+      and the road's eventual decline — all to show that the Silk Road was far
+      more than a trade route. Option B is the only choice that captures this breadth.
+
+  # ============================================================
+  # READING COMPREHENSION — PASSAGE 5: Fiction (Q48–57)
+  # ============================================================
+
+  - number: 48
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    passage_title: "Darius Explains"
+    passage_text: |
+      His father had arrived in January with one suitcase, a degree in civil engineering
+      that no one here seemed to care about, and exactly zero experience with smartphones.
+      Darius had been assigned — by no one officially, but by the obvious logic of being
+      fourteen and American-born — as the family's designated explainer.
+
+      He started with the basics. "This is the home screen. These are apps. You press
+      this one to call someone." His father, Kaveh, listened with the focused expression
+      he used for difficult problems — the same face he made over crosswords, or when
+      Darius's mother asked him something he needed to think about carefully. He nodded
+      but asked nothing. Darius took the nodding as understanding. It was not.
+
+      Three days later, Darius found his father staring at the phone with the same
+      expression, this time holding it sideways. "It stopped," Kaveh said. "I was looking
+      at the — " he searched for the word " — the map. And it stopped." Darius looked.
+      The phone had run out of battery. He had not told his father about charging.
+
+      He slowed down. He drew pictures. He made a list on paper. His father studied
+      the list as if it were a circuit diagram. He asked, now, many careful questions:
+      Why does the map know where I am? Why does this number disappear when I press
+      the wrong thing? If I delete a photograph, does it disappear from everywhere?
+      Darius found that answering these questions was harder than he expected. He had
+      never had to know why. He had only ever known how.
+
+      One evening his father looked up from the phone and said, "You are teaching me
+      quickly. I am learning slowly. Please do not match your speed to my slowness."
+      Darius said nothing, because the sentence had caught him in something he could not
+      name. He had been going faster, he realized. He had been going faster and calling
+      it help.
+
+      Weeks passed. His father learned — not quickly, but thoroughly. And one afternoon,
+      when Darius was struggling with a geometry proof that would not resolve, Kaveh sat
+      down beside him without being asked. He said nothing for several minutes. Then he
+      pointed at the diagram and showed Darius an approach that had not occurred to him.
+      Patient. Unhurried. Exactly the teacher he had needed.
+
+      Darius thought about what his father had said about learning slowly. He had
+      thought, at the time, that it was a request. Only now did he understand it was
+      a lesson.
+    question: |
+      What is the relationship between Darius and Kaveh at the start of the story?
+    choices:
+      A: "Darius is a professional technology tutor and Kaveh is his client."
+      B: "Darius is an American-born son who has taken on the informal role of teaching his immigrant father."
+      C: "Darius and Kaveh are brothers, with Darius being the younger and more tech-savvy one."
+      D: "Kaveh is a teacher by profession who is learning new skills from his student Darius."
+    answer: B
+    explanation: |
+      The opening paragraph establishes that Kaveh is Darius's father, recently
+      arrived as an immigrant with no smartphone experience. Darius has been
+      designated "the family's designated explainer" by "the obvious logic of
+      being fourteen and American-born." This is an informal, family role, not
+      a professional arrangement.
+
+  - number: 49
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      What can be inferred about Darius from the detail that "He had never had to know
+      why. He had only ever known how"?
+    choices:
+      A: "Darius is less intelligent than his father and cannot explain complex ideas."
+      B: "Darius has an intuitive relationship with technology but lacks the conceptual understanding to explain it."
+      C: "Darius deliberately withholds explanations because he finds teaching frustrating."
+      D: "Darius is too young to understand the engineering principles behind smartphones."
+    answer: B
+    explanation: |
+      The phrase reveals that Darius uses technology fluently but has never
+      been required to explain or understand the underlying reasons. When his
+      father asks careful, analytical questions, Darius discovers a gap between
+      his procedural knowledge (how) and his conceptual knowledge (why). This
+      is not a matter of intelligence or deliberate withholding.
+
+  - number: 50
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      What does Kaveh's statement — "Please do not match your speed to my slowness" —
+      reveal about his character?
+    choices:
+      A: "He is frustrated with Darius and wants him to teach faster."
+      B: "He is self-aware about his pace of learning and is protecting his own dignity."
+      C: "He is asking Darius to stop teaching him and find someone more qualified."
+      D: "He is boasting that his slowness is actually a form of superiority."
+    answer: B
+    explanation: |
+      Kaveh's statement is careful and self-possessed. He has noticed that
+      Darius has been speeding up, and rather than accepting the implicit
+      judgment that implies, he asks Darius not to let his own pace dictate
+      the teaching. This shows Kaveh is self-aware about his learning pace
+      while asserting his dignity.
+
+  - number: 51
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      As used in paragraph 5, the phrase "caught him in something he could not name"
+      most nearly means that Darius:
+    choices:
+      A: "was confused by his father's use of English and could not understand the sentence"
+      B: "was surprised by an emotion or realisation he was unable to fully articulate"
+      C: "was caught off guard because his father spoke too quickly"
+      D: "was embarrassed to admit that he had made a mistake"
+    answer: B
+    explanation: |
+      "Caught him in something he could not name" is figurative language
+      describing the moment of sudden self-recognition. Darius has just been
+      told, gently, that he has been rushing — which makes him realise he has
+      been prioritising speed over genuine helpfulness. The phrase captures
+      the feeling of being stopped by an insight you can feel but haven't yet
+      put into words.
+
+  - number: 52
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      As used in paragraph 6, the word "thoroughly" most nearly means:
+    choices:
+      A: "slowly and reluctantly"
+      B: "completely and with attention to depth"
+      C: "partially but with great enthusiasm"
+      D: "rapidly and without error"
+    answer: B
+    explanation: |
+      "His father learned — not quickly, but thoroughly" contrasts speed with
+      depth of understanding. "Thoroughly" here means learning something fully
+      and completely, not just learning it fast. It implies mastery over
+      efficiency — consistent with Kaveh's careful, questioning approach
+      throughout the story.
+
+  - number: 53
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      Which of the following best states the central theme of the story?
+    choices:
+      A: "Immigrant parents need their children to help them adapt to new technology."
+      B: "True teaching requires patience, and those who teach may discover they have more to learn."
+      C: "Being born in a country gives young people a permanent advantage over their parents."
+      D: "Technology is a barrier between generations that cannot truly be overcome."
+    answer: B
+    explanation: |
+      The story's arc traces Darius's transformation from impatient, intuitive
+      technician to someone who understands what genuine teaching requires. His
+      father, in turn, teaches him patience by example — first through his
+      request, then through the geometry scene. The theme is mutual learning:
+      Darius teaches Kaveh, but Kaveh teaches Darius something more important.
+
+  - number: 54
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      In the final paragraph, Darius reflects that his father's words "were a lesson,
+      not a request." What does this distinction reveal?
+    choices:
+      A: "Darius finally understands that his father was angry with him."
+      B: "Darius realises that his father was modelling the patience Darius himself lacked as a teacher."
+      C: "Darius decides to take a formal class in teaching methods."
+      D: "Darius concludes that his father already knew how to use the smartphone."
+    answer: B
+    explanation: |
+      When Darius first heard the words, he interpreted them as a request —
+      an instruction about pacing. Later, after watching his father patiently
+      help him with geometry, he understands the words were a lesson: Kaveh
+      was demonstrating, through his own unhurried approach, what good
+      teaching looks like.
+
+  - number: 55
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      Which detail from the passage most directly supports the idea that Darius did not
+      initially understand what effective teaching required?
+    choices:
+      A: "He drew pictures and made a list on paper for his father."
+      B: "He had been going faster and calling it help."
+      C: "He found that answering his father's questions was harder than expected."
+      D: "His father arrived with no experience with smartphones."
+    answer: B
+    explanation: |
+      The sentence "He had been going faster and calling it help" is Darius's
+      own realisation, in paragraph 5, that he had been confusing speed for
+      effective teaching. It is the clearest direct evidence that he had not
+      understood what genuine help required.
+
+  - number: 56
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      The author uses the detail that Kaveh holds the phone "sideways" (paragraph 3)
+      primarily to:
+    choices:
+      A: "Show that Kaveh is stubborn and refuses to follow Darius's instructions."
+      B: "Create humour by depicting Kaveh as completely helpless with technology."
+      C: "Illustrate the gap in shared knowledge between Kaveh and Darius without mocking Kaveh."
+      D: "Suggest that Kaveh is trying to use the phone as a map by turning it to match north."
+    answer: C
+    explanation: |
+      The detail is specific and visual, but the passage treats it without
+      condescension. Kaveh is described as having "the focused expression he
+      used for difficult problems." The sideways-phone image shows that Kaveh
+      lacks the intuitive frame for smartphones, but the passage frames this
+      as an absence of context, not a lack of intelligence or stubbornness.
+
+  - number: 57
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      Which of the following pieces of textual evidence best supports the inference that
+      Kaveh is an intelligent and capable person, despite his struggles with the phone?
+    choices:
+      A: "He had arrived with one suitcase and a degree in civil engineering."
+      B: "He held the phone sideways and said 'It stopped.'"
+      C: "He asked Darius why the map knew where he was."
+      D: "He sat beside Darius and showed him an approach to the geometry proof that had not occurred to him."
+    answer: D
+    explanation: |
+      The geometry scene in paragraph 6 is the clearest evidence of Kaveh's
+      capability. Without being asked, he sits beside his son, waits patiently,
+      then reveals an approach to a proof that Darius had not thought of. This
+      demonstrates analytical intelligence, patience, and competence in his own
+      domain. The engineering degree (option A) establishes credentials but is
+      asserted, not demonstrated; option D shows it in action.
+
+math:
+
+  # ============================================================
+  # MATH — Q1–52: Multiple Choice
+  # ============================================================
+
+  - number: 1
+    type: multiple_choice
+    topic: Number Theory
+    difficulty: easy
+    question: |
+      What is the prime factorization of 84?
+    choices:
+      A: "2 x 3 x 14"
+      B: "2^2 x 3 x 7"
+      C: "2^2 x 21"
+      D: "4 x 3 x 7"
+    answer: B
+    explanation: |
+      84 / 2 = 42; 42 / 2 = 21; 21 / 3 = 7; 7 is prime.
+      So 84 = 2^2 x 3 x 7. Options A, C, and D are not fully factored into
+      prime factors only.
+
+  - number: 2
+    type: multiple_choice
+    topic: Number Theory
+    difficulty: easy
+    question: |
+      What is the Greatest Common Factor (GCF) of 48 and 72?
+    choices:
+      A: "12"
+      B: "16"
+      C: "24"
+      D: "36"
+    answer: C
+    explanation: |
+      Factors of 48: 1, 2, 3, 4, 6, 8, 12, 16, 24, 48.
+      Factors of 72: 1, 2, 3, 4, 6, 8, 9, 12, 18, 24, 36, 72.
+      The greatest common factor is 24.
+
+  - number: 3
+    type: multiple_choice
+    topic: Number Theory
+    difficulty: easy
+    question: |
+      What is the Least Common Multiple (LCM) of 48 and 72?
+    choices:
+      A: "96"
+      B: "120"
+      C: "144"
+      D: "216"
+    answer: C
+    explanation: |
+      LCM(48, 72) = (48 x 72) / GCF(48, 72) = 3456 / 24 = 144.
+      Alternatively: 48 = 2^4 x 3; 72 = 2^3 x 3^2. LCM = 2^4 x 3^2 = 16 x 9 = 144.
+
+  - number: 4
+    type: multiple_choice
+    topic: Number Theory
+    difficulty: medium
+    question: |
+      Which of the following is NOT a perfect square?
+    choices:
+      A: "144"
+      B: "169"
+      C: "196"
+      D: "210"
+    answer: D
+    explanation: |
+      144 = 12^2, 169 = 13^2, 196 = 14^2. 210 falls between 14^2 = 196 and
+      15^2 = 225, so it is not a perfect square.
+
+  - number: 5
+    type: multiple_choice
+    topic: Number Theory
+    difficulty: medium
+    question: |
+      What is the only perfect square between 50 and 70?
+    choices:
+      A: "54"
+      B: "60"
+      C: "64"
+      D: "68"
+    answer: C
+    explanation: |
+      7^2 = 49 (too small), 8^2 = 64 (between 50 and 70), 9^2 = 81 (too large).
+      The only perfect square in the range is 64.
+
+  - number: 6
+    type: multiple_choice
+    topic: Rational Numbers
+    difficulty: easy
+    question: |
+      What is the value of -3 + (-8)?
+    choices:
+      A: "5"
+      B: "-5"
+      C: "11"
+      D: "-11"
+    answer: D
+    explanation: |
+      Adding two negative numbers: -3 + (-8) = -(3 + 8) = -11.
+
+  - number: 7
+    type: multiple_choice
+    topic: Rational Numbers
+    difficulty: medium
+    question: |
+      What is the value of |(-4)^2 - 3 x (-4)|?
+    choices:
+      A: "4"
+      B: "16"
+      C: "28"
+      D: "-28"
+    answer: C
+    explanation: |
+      (-4)^2 = 16. 3 x (-4) = -12. 16 - (-12) = 16 + 12 = 28.
+      |28| = 28.
+
+  - number: 8
+    type: multiple_choice
+    topic: Rational Numbers
+    difficulty: medium
+    question: |
+      What is (-2/3) x (-9/4)?
+    choices:
+      A: "-3/2"
+      B: "3/2"
+      C: "-6"
+      D: "6/7"
+    answer: B
+    explanation: |
+      Negative x negative = positive.
+      (2/3) x (9/4) = 18/12 = 3/2.
+      So (-2/3) x (-9/4) = 3/2.
+
+  - number: 9
+    type: multiple_choice
+    topic: Rational Numbers
+    difficulty: easy
+    question: |
+      What is |-7| + |3| - |-2|?
+    choices:
+      A: "2"
+      B: "6"
+      C: "8"
+      D: "12"
+    answer: C
+    explanation: |
+      |-7| = 7, |3| = 3, |-2| = 2.
+      7 + 3 - 2 = 8.
+
+  - number: 10
+    type: multiple_choice
+    topic: Rational Numbers
+    difficulty: medium
+    question: |
+      What is the value of (-5)^3?
+    choices:
+      A: "125"
+      B: "-15"
+      C: "15"
+      D: "-125"
+    answer: D
+    explanation: |
+      (-5)^3 = (-5) x (-5) x (-5) = 25 x (-5) = -125.
+      An odd power of a negative number is negative.
+
+  - number: 11
+    type: multiple_choice
+    topic: Ratio and Proportion
+    difficulty: medium
+    question: |
+      A recipe uses 3 cups of flour for every 4 cups of sugar. If a baker uses 60 cups of
+      sugar, how many cups of flour are needed?
+    choices:
+      A: "40"
+      B: "45"
+      C: "48"
+      D: "80"
+    answer: B
+    explanation: |
+      Set up the proportion: 3/4 = x/60.
+      Cross-multiply: 4x = 180, so x = 45 cups of flour.
+
+  - number: 12
+    type: multiple_choice
+    topic: Ratio and Proportion
+    difficulty: easy
+    question: |
+      A car travels 120 miles in 2.5 hours. What is its average speed in miles per hour?
+    choices:
+      A: "42 mph"
+      B: "46 mph"
+      C: "48 mph"
+      D: "50 mph"
+    answer: C
+    explanation: |
+      Speed = distance / time = 120 / 2.5 = 48 miles per hour.
+
+  - number: 13
+    type: multiple_choice
+    topic: Ratio and Proportion
+    difficulty: medium
+    question: |
+      A map uses a scale of 1 cm : 250 cm. A measurement on the map is 3.2 cm.
+      What is the actual distance in meters?
+    choices:
+      A: "6 m"
+      B: "8 m"
+      C: "32 m"
+      D: "80 m"
+    answer: B
+    explanation: |
+      Actual distance = 3.2 x 250 = 800 cm = 8 metres.
+
+  - number: 14
+    type: multiple_choice
+    topic: Ratio and Proportion
+    difficulty: medium
+    question: |
+      Two groups of students have a ratio of 5:3. Together there are 40 students.
+      How many students are in the larger group?
+    choices:
+      A: "15"
+      B: "20"
+      C: "25"
+      D: "30"
+    answer: C
+    explanation: |
+      Total parts = 5 + 3 = 8. Each part = 40 / 8 = 5 students.
+      Larger group = 5 x 5 = 25 students.
+
+  - number: 15
+    type: multiple_choice
+    topic: Ratio and Proportion
+    difficulty: medium
+    question: |
+      A bag of rice weighs 2.5 kg. Each portion requires 125 g. How many portions can
+      be made from one bag?
+    choices:
+      A: "10"
+      B: "16"
+      C: "20"
+      D: "25"
+    answer: C
+    explanation: |
+      2.5 kg = 2500 g. Number of portions = 2500 / 125 = 20.
+
+  - number: 16
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      If 3x - 7 = 14, what is the value of x?
+    choices:
+      A: "5"
+      B: "6"
+      C: "7"
+      D: "9"
+    answer: C
+    explanation: |
+      3x - 7 = 14 -> 3x = 21 -> x = 7.
+
+  - number: 17
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      If 2(3x + 1) = 4x + 10, what is the value of x?
+    choices:
+      A: "2"
+      B: "3"
+      C: "4"
+      D: "5"
+    answer: C
+    explanation: |
+      Expand: 6x + 2 = 4x + 10. Subtract 4x: 2x + 2 = 10.
+      Subtract 2: 2x = 8. Divide: x = 4.
+
+  - number: 18
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      If y = 2x - 3 and x = 5, what is the value of x + y?
+    choices:
+      A: "10"
+      B: "11"
+      C: "12"
+      D: "14"
+    answer: C
+    explanation: |
+      Substitute x = 5: y = 2(5) - 3 = 10 - 3 = 7.
+      x + y = 5 + 7 = 12.
+
+  - number: 19
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Which of the following is the simplified form of (4x^2 y) / (2xy)?
+    choices:
+      A: "2x^2"
+      B: "2x"
+      C: "2y"
+      D: "2xy"
+    answer: B
+    explanation: |
+      (4x^2 y) / (2xy) = (4/2) x (x^2/x) x (y/y) = 2 x x x 1 = 2x.
+
+  - number: 20
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      If a = -2, what is the value of 3a^2 - a?
+    choices:
+      A: "10"
+      B: "12"
+      C: "14"
+      D: "16"
+    answer: C
+    explanation: |
+      a^2 = (-2)^2 = 4. So 3a^2 = 12.
+      -a = -(-2) = 2.
+      3a^2 - a = 12 + 2 = 14.
+
+  - number: 21
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      The sum of two numbers is 20 and their difference is 6. What is the product of the
+      two numbers?
+    choices:
+      A: "84"
+      B: "88"
+      C: "91"
+      D: "96"
+    answer: C
+    explanation: |
+      Let the numbers be x and y. x + y = 20 and x - y = 6.
+      Adding: 2x = 26, so x = 13. Then y = 20 - 13 = 7.
+      Product = 13 x 7 = 91.
+
+  - number: 22
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      If 2x + 3y = 18 and x = 3, what is the value of y?
+    choices:
+      A: "2"
+      B: "4"
+      C: "6"
+      D: "8"
+    answer: B
+    explanation: |
+      Substitute x = 3: 2(3) + 3y = 18 -> 6 + 3y = 18 -> 3y = 12 -> y = 4.
+
+  - number: 23
+    type: multiple_choice
+    topic: Algebra
+    difficulty: hard
+    question: |
+      A store sells pens and notebooks. 3 pens and 2 notebooks cost $26. 2 pens and
+      3 notebooks cost $24. What is the combined cost of 1 pen and 1 notebook?
+    choices:
+      A: "$8"
+      B: "$9"
+      C: "$10"
+      D: "$11"
+    answer: C
+    explanation: |
+      Let p = pen cost, n = notebook cost.
+      3p + 2n = 26 (1)
+      2p + 3n = 24 (2)
+      Multiply (1) by 3: 9p + 6n = 78.
+      Multiply (2) by 2: 4p + 6n = 48.
+      Subtract: 5p = 30, so p = 6.
+      Substitute: 3(6) + 2n = 26 -> 2n = 8 -> n = 4.
+      p + n = 6 + 4 = $10.
+
+  - number: 24
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      If n = 7, what is the value of n^2 - n?
+    choices:
+      A: "36"
+      B: "40"
+      C: "42"
+      D: "49"
+    answer: C
+    explanation: |
+      n^2 - n = 7^2 - 7 = 49 - 7 = 42.
+
+  - number: 25
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Three consecutive even integers have a sum of 78. What is the largest of the three?
+    choices:
+      A: "24"
+      B: "26"
+      C: "28"
+      D: "30"
+    answer: C
+    explanation: |
+      Let the integers be n, n+2, n+4.
+      n + (n+2) + (n+4) = 78 -> 3n + 6 = 78 -> 3n = 72 -> n = 24.
+      The three integers are 24, 26, 28. The largest is 28.
+
+  - number: 26
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      Two parallel lines are cut by a transversal. One of the angles formed measures 115
+      degrees. What is the measure of the co-interior angle (same-side interior angle)
+      on the same side of the transversal?
+    choices:
+      A: "65"
+      B: "75"
+      C: "115"
+      D: "125"
+    answer: A
+    explanation: |
+      Co-interior angles (same-side interior angles) are supplementary when lines
+      are parallel: they add up to 180 degrees.
+      180 - 115 = 65 degrees.
+
+  - number: 27
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      Two vertical angles are formed by intersecting lines. One angle measures (3x + 15)
+      degrees and its vertical angle measures (5x - 7) degrees. What is the value of x?
+    choices:
+      A: "9"
+      B: "11"
+      C: "13"
+      D: "15"
+    answer: B
+    explanation: |
+      Vertical angles are equal: 3x + 15 = 5x - 7.
+      15 + 7 = 5x - 3x -> 22 = 2x -> x = 11.
+
+  - number: 28
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      The angles of a triangle are in the ratio 1:2:3. What is the measure of the largest
+      angle in degrees?
+    choices:
+      A: "60"
+      B: "80"
+      C: "90"
+      D: "120"
+    answer: C
+    explanation: |
+      The angles are x, 2x, and 3x. Their sum is 180 degrees.
+      x + 2x + 3x = 180 -> 6x = 180 -> x = 30.
+      Largest angle = 3 x 30 = 90 degrees.
+
+  - number: 29
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      Two supplementary angles are (4x + 10) degrees and (2x + 2) degrees.
+      What is the value of x?
+    choices:
+      A: "24"
+      B: "26"
+      C: "28"
+      D: "30"
+    answer: C
+    explanation: |
+      Supplementary angles sum to 180 degrees.
+      (4x + 10) + (2x + 2) = 180 -> 6x + 12 = 180 -> 6x = 168 -> x = 28.
+
+  - number: 30
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      Two parallel lines are cut by a transversal. Alternate interior angles satisfy
+      (2x + 30) = (3x - 10). What is the measure of each angle in degrees?
+    choices:
+      A: "100"
+      B: "105"
+      C: "110"
+      D: "120"
+    answer: C
+    explanation: |
+      Alternate interior angles are equal: 2x + 30 = 3x - 10.
+      30 + 10 = 3x - 2x -> 40 = x.
+      Angle = 2(40) + 30 = 80 + 30 = 110 degrees.
+
+  - number: 31
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      What is the surface area of a rectangular prism with length 6, width 4, and height 3?
+    choices:
+      A: "72"
+      B: "96"
+      C: "108"
+      D: "120"
+    answer: C
+    explanation: |
+      SA = 2(lw + lh + wh) = 2(6x4 + 6x3 + 4x3) = 2(24 + 18 + 12) = 2(54) = 108.
+
+  - number: 32
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      A triangular prism has a triangular base with base 6 and height 4, and the prism
+      has a length of 10. What is the volume of the prism?
+    choices:
+      A: "100"
+      B: "110"
+      C: "120"
+      D: "240"
+    answer: C
+    explanation: |
+      Volume = base area x length.
+      Base area (triangle) = (1/2) x 6 x 4 = 12.
+      Volume = 12 x 10 = 120.
+
+  - number: 33
+    type: multiple_choice
+    topic: Geometry
+    difficulty: hard
+    question: |
+      A square pyramid has a square base with side length 8 and a slant height of 5.
+      What is the total surface area of the pyramid?
+    choices:
+      A: "124"
+      B: "134"
+      C: "144"
+      D: "160"
+    answer: C
+    explanation: |
+      Total SA = base area + lateral area.
+      Base area = 8^2 = 64.
+      Lateral area = 4 x (1/2 x 8 x 5) = 4 x 20 = 80.
+      Total SA = 64 + 80 = 144.
+
+  - number: 34
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      A cube has a total surface area of 150 square units. What is its volume?
+    choices:
+      A: "25"
+      B: "75"
+      C: "100"
+      D: "125"
+    answer: D
+    explanation: |
+      SA = 6s^2 = 150 -> s^2 = 25 -> s = 5.
+      Volume = s^3 = 5^3 = 125.
+
+  - number: 35
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      A rectangular prism has a volume of 840 cubic units. Its length is 10 and its
+      width is 7. What is its height?
+    choices:
+      A: "10"
+      B: "12"
+      C: "14"
+      D: "16"
+    answer: B
+    explanation: |
+      Volume = l x w x h -> 840 = 10 x 7 x h -> 840 = 70h -> h = 12.
+
+  - number: 36
+    type: multiple_choice
+    topic: Coordinate Geometry
+    difficulty: medium
+    question: |
+      What is the midpoint of the line segment connecting (2, 8) and (6, 4)?
+    choices:
+      A: "(3, 5)"
+      B: "(4, 6)"
+      C: "(4, 5)"
+      D: "(5, 6)"
+    answer: B
+    explanation: |
+      Midpoint = ((x1 + x2)/2, (y1 + y2)/2) = ((2+6)/2, (8+4)/2) = (4, 6).
+
+  - number: 37
+    type: multiple_choice
+    topic: Coordinate Geometry
+    difficulty: medium
+    question: |
+      What is the distance between the points (1, 2) and (4, 6)?
+    choices:
+      A: "4"
+      B: "5"
+      C: "6"
+      D: "7"
+    answer: B
+    explanation: |
+      Distance = sqrt((4-1)^2 + (6-2)^2) = sqrt(9 + 16) = sqrt(25) = 5.
+
+  - number: 38
+    type: multiple_choice
+    topic: Coordinate Geometry
+    difficulty: medium
+    question: |
+      The point (3, -5) is reflected over the x-axis. What are the coordinates of
+      the reflected point?
+    choices:
+      A: "(-3, 5)"
+      B: "(3, 5)"
+      C: "(-3, -5)"
+      D: "(5, -3)"
+    answer: B
+    explanation: |
+      Reflecting a point over the x-axis changes the sign of the y-coordinate
+      while the x-coordinate remains the same. (3, -5) -> (3, 5).
+
+  - number: 39
+    type: multiple_choice
+    topic: Probability
+    difficulty: medium
+    question: |
+      Events A and B are independent. P(A) = 1/3 and P(B) = 1/4.
+      What is P(A and B)?
+    choices:
+      A: "1/12"
+      B: "1/7"
+      C: "7/12"
+      D: "1/6"
+    answer: A
+    explanation: |
+      For independent events, P(A and B) = P(A) x P(B) = (1/3) x (1/4) = 1/12.
+
+  - number: 40
+    type: multiple_choice
+    topic: Probability
+    difficulty: medium
+    question: |
+      A spinner is divided into 4 equal sections labelled 1, 2, 3, and 4. What is the
+      probability of spinning a prime number?
+    choices:
+      A: "1/4"
+      B: "1/2"
+      C: "3/4"
+      D: "1"
+    answer: B
+    explanation: |
+      Prime numbers among {1, 2, 3, 4}: 2 and 3 are prime. (1 is not prime; 4 is not prime.)
+      P(prime) = 2/4 = 1/2.
+
+  - number: 41
+    type: multiple_choice
+    topic: Probability
+    difficulty: hard
+    question: |
+      A bag contains cards numbered 1 through 5. Two cards are drawn without replacement.
+      What is the probability that both cards show even numbers?
+    choices:
+      A: "1/20"
+      B: "1/10"
+      C: "2/5"
+      D: "4/25"
+    answer: B
+    explanation: |
+      Even numbers in {1, 2, 3, 4, 5}: {2, 4} -- two cards.
+      P(first even) = 2/5.
+      P(second even | first was even) = 1/4 (one even card left, four remaining).
+      P(both even) = (2/5) x (1/4) = 2/20 = 1/10.
+
+  - number: 42
+    type: multiple_choice
+    topic: Probability
+    difficulty: hard
+    question: |
+      A game pays $6 if you win and you lose $2 if you lose. The probability of winning
+      is 1/3. What is the expected value of one play of the game?
+    choices:
+      A: "$2/3"
+      B: "$1"
+      C: "$2"
+      D: "$4"
+    answer: A
+    explanation: |
+      Expected value = (6 x 1/3) + (-2 x 2/3) = 2 - 4/3 = 6/3 - 4/3 = 2/3.
+      The expected value is $2/3 per play.
+
+  - number: 43
+    type: multiple_choice
+    topic: Probability
+    difficulty: medium
+    question: |
+      A fair coin is flipped twice. What is the probability of getting at least one head?
+    choices:
+      A: "1/4"
+      B: "1/2"
+      C: "3/4"
+      D: "1"
+    answer: C
+    explanation: |
+      Sample space: HH, HT, TH, TT (4 equally likely outcomes).
+      Outcomes with at least one head: HH, HT, TH (3 outcomes).
+      P(at least one head) = 3/4.
+      Alternatively: 1 - P(no heads) = 1 - 1/4 = 3/4.
+
+  - number: 44
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      A chemist has 40 litres of a 25% salt solution. How many litres of a 55% salt
+      solution must be added to produce a 35% salt solution?
+    choices:
+      A: "10"
+      B: "15"
+      C: "20"
+      D: "25"
+    answer: C
+    explanation: |
+      Let x = litres of 55% solution to add.
+      0.25(40) + 0.55x = 0.35(40 + x).
+      10 + 0.55x = 14 + 0.35x.
+      0.20x = 4 -> x = 20 litres.
+
+  - number: 45
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      A father is four times as old as his son. In 6 years, the father will be three times
+      as old as his son. What is the sum of their current ages?
+    choices:
+      A: "48"
+      B: "54"
+      C: "58"
+      D: "60"
+    answer: D
+    explanation: |
+      Let son's age = s, father's age = 4s.
+      In 6 years: 4s + 6 = 3(s + 6) -> 4s + 6 = 3s + 18 -> s = 12.
+      Father = 4 x 12 = 48. Sum = 12 + 48 = 60.
+
+  - number: 46
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      Worker A can complete a job in 6 hours. Worker B can complete the same job in
+      4 hours. How long will it take them working together?
+    choices:
+      A: "5 hours"
+      B: "12/5 hours"
+      C: "5/12 hours"
+      D: "2 hours"
+    answer: B
+    explanation: |
+      Combined rate = 1/6 + 1/4 = 2/12 + 3/12 = 5/12 of the job per hour.
+      Time = 1 / (5/12) = 12/5 hours.
+
+  - number: 47
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: medium
+    question: |
+      A shipment of 120 items is split into two boxes. Box A contains 3 more than twice
+      the number in Box B. How many items are in Box A?
+    choices:
+      A: "78"
+      B: "79"
+      C: "81"
+      D: "82"
+    answer: C
+    explanation: |
+      Let Box B = b. Then Box A = 2b + 3.
+      b + (2b + 3) = 120 -> 3b + 3 = 120 -> 3b = 117 -> b = 39.
+      Box A = 2(39) + 3 = 78 + 3 = 81.
+
+  - number: 48
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      A train travels 240 miles. It covers the first 120 miles at 60 mph and the
+      remaining 120 miles at 80 mph. What is the total travel time in hours?
+    choices:
+      A: "3 hours"
+      B: "3.5 hours"
+      C: "4 hours"
+      D: "4.5 hours"
+    answer: B
+    explanation: |
+      Time for first half = 120 / 60 = 2 hours.
+      Time for second half = 120 / 80 = 1.5 hours.
+      Total time = 2 + 1.5 = 3.5 hours.
+
+  - number: 49
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      A jacket's price is increased by 20%, then reduced by 20%. What is the net
+      percentage change from the original price?
+    choices:
+      A: "0%"
+      B: "-2%"
+      C: "-4%"
+      D: "-6%"
+    answer: C
+    explanation: |
+      Net factor = 1.20 x 0.80 = 0.96.
+      This is a 4% decrease from the original price (100% - 96% = 4%).
+
+  - number: 50
+    type: multiple_choice
+    topic: Exponent Rules
+    difficulty: hard
+    question: |
+      What is the value of (2^3)^2 x 2^(-1)?
+    choices:
+      A: "16"
+      B: "24"
+      C: "32"
+      D: "64"
+    answer: C
+    explanation: |
+      (2^3)^2 = 2^6 = 64. Then 64 x 2^(-1) = 64 / 2 = 32.
+      Alternatively: 2^6 x 2^(-1) = 2^(6-1) = 2^5 = 32.
+
+  - number: 51
+    type: multiple_choice
+    topic: Number Patterns
+    difficulty: hard
+    question: |
+      A sequence begins: 3, 5, 8, 12, 17, 23, 30, ...
+      The differences between consecutive terms increase by 1 each time.
+      What is the 8th term?
+    choices:
+      A: "36"
+      B: "38"
+      C: "40"
+      D: "42"
+    answer: B
+    explanation: |
+      Differences: 2, 3, 4, 5, 6, 7, 8, ...
+      Term 1: 3
+      Term 2: 3 + 2 = 5
+      Term 3: 5 + 3 = 8
+      Term 4: 8 + 4 = 12
+      Term 5: 12 + 5 = 17
+      Term 6: 17 + 6 = 23
+      Term 7: 23 + 7 = 30
+      Term 8: 30 + 8 = 38.
+
+  - number: 52
+    type: multiple_choice
+    topic: Percent Chains
+    difficulty: hard
+    question: |
+      An item costs $80. A store marks it up 50%, then offers a 25% discount, then adds
+      a 10% sales tax. What is the final price?
+    choices:
+      A: "$90.00"
+      B: "$95.00"
+      C: "$99.00"
+      D: "$105.00"
+    answer: C
+    explanation: |
+      After 50% markup: $80 x 1.50 = $120.
+      After 25% discount: $120 x 0.75 = $90.
+      After 10% tax: $90 x 1.10 = $99.
+
+  # ============================================================
+  # MATH — Q53–57: Grid-In (no choices)
+  # ============================================================
+
+  - number: 53
+    type: grid_in
+    topic: Algebra
+    difficulty: medium
+    question: |
+      If 3x + 5 = 23, what is the value of x?
+    choices: {}
+    answer: "6"
+    explanation: |
+      3x + 5 = 23 -> 3x = 18 -> x = 6.
+
+  - number: 54
+    type: grid_in
+    topic: Geometry
+    difficulty: medium
+    question: |
+      A triangle has a base of 14 units and a height of 9 units. What is its area?
+    choices: {}
+    answer: "63"
+    explanation: |
+      Area = (1/2) x base x height = (1/2) x 14 x 9 = 7 x 9 = 63.
+
+  - number: 55
+    type: grid_in
+    topic: Percent
+    difficulty: easy
+    question: |
+      What is 15% of 160?
+    choices: {}
+    answer: "24"
+    explanation: |
+      15% of 160 = 0.15 x 160 = 24.
+
+  - number: 56
+    type: grid_in
+    topic: Geometry
+    difficulty: medium
+    question: |
+      What is the sum of the interior angles of a regular hexagon, in degrees?
+    choices: {}
+    answer: "720"
+    explanation: |
+      Sum of interior angles = (n - 2) x 180 = (6 - 2) x 180 = 4 x 180 = 720 degrees.
+
+  - number: 57
+    type: grid_in
+    topic: Number Theory
+    difficulty: easy
+    question: |
+      What is the Least Common Multiple (LCM) of 8 and 12?
+    choices: {}
+    answer: "24"
+    explanation: |
+      Multiples of 8: 8, 16, 24, 32, ...
+      Multiples of 12: 12, 24, 36, ...
+      The least common multiple is 24.

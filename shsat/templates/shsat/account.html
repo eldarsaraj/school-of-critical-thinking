@@ -1,0 +1,43 @@
+{% extends "shsat/base_shsat.html" %}
+
+{% block title %}Account — SHSAT Workshop{% endblock %}
+{% block tab_account %}active{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">Account settings</h1>
+<p class="shsat-page-subtitle">{{ user.email }}</p>
+
+<form method="post" novalidate style="max-width:520px;">
+  {% csrf_token %}
+
+  {% if form.non_field_errors %}
+  <div class="contact-form__error" style="margin-bottom:16px;">
+    {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+  </div>
+  {% endif %}
+
+  {% for field in form %}
+  {% if field.name != "target_schools" %}
+  <div class="contact-form__field">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.errors %}
+    <span class="contact-form__error">{{ field.errors|join:" " }}</span>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% endfor %}
+
+  <button type="submit" class="shsat-btn">Save changes</button>
+</form>
+
+<div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
+  <p class="shsat-section-title">Subscription</p>
+  <p style="font-size:15px;">Status: <strong>{{ parent.subscription_status|capfirst }}</strong></p>
+  <p style="font-size:14px;color:rgba(0,0,0,0.5);">Premium features coming soon.</p>
+</div>
+
+<div style="margin-top:36px;">
+  <a href="{% url 'shsat_logout' %}" class="shsat-btn shsat-btn--danger">Log out</a>
+</div>
+{% endblock %}

@@ -1,0 +1,2367 @@
+title: "Practice Test 3"
+source: "School of Critical Thinking"
+is_free: false
+is_published: true
+order: 3
+
+ela:
+
+  # ================================================================
+  # PART 1 — REVISING / EDITING (Questions 1–20)
+  # ================================================================
+
+  - number: 1
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below and choose the best revision.
+
+      "The library closes at nine o'clock tonight it will reopen tomorrow at eight in the morning."
+    choices:
+      A: "The library closes at nine o'clock tonight, it will reopen tomorrow at eight in the morning."
+      B: "The library closes at nine o'clock tonight. It will reopen tomorrow at eight in the morning."
+      C: "The library closes at nine o'clock tonight but it will reopen tomorrow at eight in the morning."
+      D: "The library closes at nine o'clock tonight, however it will reopen tomorrow at eight in the morning."
+    answer: B
+    explanation: |
+      The original is a fused (run-on) sentence — two independent clauses joined with no
+      punctuation or conjunction. Choice B correctly separates them into two complete
+      sentences. Choice A creates a comma splice. Choice C needs a comma before "but."
+      Choice D needs a semicolon before "however."
+
+  - number: 2
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below and choose the best revision of the underlined portion.
+
+      "Maya loves to read mystery novels[, she finishes] one almost every week."
+    choices:
+      A: "mystery novels she finishes"
+      B: "mystery novels; she finishes"
+      C: "mystery novels, and she finishes"
+      D: "mystery novels, but she finishes"
+    answer: C
+    explanation: |
+      The original sentence is a comma splice — two independent clauses joined only by a
+      comma. Choice C correctly adds the coordinating conjunction "and" after the comma,
+      making it a proper compound sentence. Choice B (semicolon alone) would also be
+      grammatically correct but is not offered as a clean option here. Choice D implies
+      contrast where none exists.
+
+  - number: 3
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which word best replaces the underlined word?
+
+      "The award will be given to [whomever] scores the highest on the exam."
+    choices:
+      A: "whoever"
+      B: "who"
+      C: "whom"
+      D: "No revision needed."
+    answer: A
+    explanation: |
+      The pronoun is the subject of the clause "scores the highest on the exam," so the
+      subjective case "whoever" is correct. "Whomever" is the objective case. The entire
+      clause "whoever scores the highest" serves as the object of the preposition "to,"
+      but the pronoun itself is the subject within that clause.
+
+  - number: 4
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision best corrects the error in parallel structure?
+
+      "The new employee was praised for being punctual, her dedication, and because she worked efficiently."
+    choices:
+      A: "for being punctual, her dedication, and her efficient work"
+      B: "for being punctual, being dedicated, and working efficiently"
+      C: "for punctual, dedicated, and efficient"
+      D: "for punctuality, dedication, and because she was efficient"
+    answer: B
+    explanation: |
+      For parallel structure, all items in a list must use the same grammatical form. The
+      original mixes a gerund phrase, a noun phrase, and a subordinate clause. Choice B
+      uses three parallel gerund phrases: "being punctual, being dedicated, and working
+      efficiently."
+
+  - number: 5
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision best corrects the misplaced modifier?
+
+      "Covered in chocolate frosting, the children eagerly ate the birthday cake."
+    choices:
+      A: "The children, covered in chocolate frosting, eagerly ate the birthday cake."
+      B: "Eagerly, the children ate the birthday cake covered in chocolate frosting."
+      C: "The children eagerly ate the birthday cake, which was covered in chocolate frosting."
+      D: "Covered in chocolate frosting, the birthday cake was eagerly eaten by the children."
+    answer: D
+    explanation: |
+      As written, the modifier "covered in chocolate frosting" incorrectly appears to
+      describe "the children." Choice D places the modifier immediately next to "birthday
+      cake," which is what was actually covered in frosting, while keeping the participial
+      phrase in the opening position.
+
+  - number: 6
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision best corrects the dangling participle?
+
+      "Having practiced for months, the audition felt easy to the young singer."
+    choices:
+      A: "Having practiced for months, the young singer found the audition easy."
+      B: "The young singer, having practiced for months, the audition felt easy."
+      C: "After months of practice, the audition that the young singer took felt easy."
+      D: "The audition felt easy, having practiced for months, to the young singer."
+    answer: A
+    explanation: |
+      A dangling participle occurs when the participial phrase does not logically connect
+      to the subject of the main clause. "Having practiced for months" must describe the
+      young singer, not the audition. Choice A corrects this by making "the young singer"
+      the subject immediately after the participial phrase.
+
+  - number: 7
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision best corrects the verb error?
+
+      "The committee have not yet reached a decision on the new budget proposal."
+    choices:
+      A: "has not yet reached"
+      B: "had not yet reached"
+      C: "were not yet reaching"
+      D: "No revision needed."
+    answer: A
+    explanation: |
+      Collective nouns like "committee," "team," and "jury" take singular verbs in
+      standard American English when the group acts as a single unit. Since the committee
+      is acting as one body, "has" (singular) is correct.
+
+  - number: 8
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below. Which revision best eliminates the redundancy?
+
+      "The biography told the life story of the author's entire life from birth to death."
+    choices:
+      A: "The biography told the life story of the author from birth to death."
+      B: "The biography told the story of the author's entire life from birth to death."
+      C: "The biography told the entire life story of the author's life."
+      D: "The biography told the complete story of the author's entire life."
+    answer: B
+    explanation: |
+      The original redundantly says both "life story" and "the author's entire life."
+      Choice B removes "life" from "life story," yielding "the story of the author's
+      entire life" — concise and non-redundant. Choice D adds another redundancy
+      ("complete" and "entire").
+
+  - number: 9
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which word best completes it with the most precise connotation?
+
+      "The politician's speech was __________ because it shifted positions depending on the audience."
+    choices:
+      A: "flexible"
+      B: "adaptable"
+      C: "calculating"
+      D: "duplicitous"
+    answer: D
+    explanation: |
+      "Duplicitous" means deliberately deceptive — saying different things to different
+      people to gain favor. This precisely captures the meaning. "Flexible" and "adaptable"
+      are positive in connotation and do not carry the dishonesty implied. "Calculating"
+      suggests strategy but lacks the specific sense of two-faced deception.
+
+  - number: 10
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the passage below. Which revision best corrects the underlined sentence fragment?
+
+      "The school's new science lab. [Filled with state-of-the-art equipment donated by local businesses.]"
+    choices:
+      A: "The school's new science lab, filled with state-of-the-art equipment donated by local businesses."
+      B: "The school's new science lab is filled with state-of-the-art equipment donated by local businesses."
+      C: "The school's new science lab; filled with state-of-the-art equipment donated by local businesses."
+      D: "No revision needed."
+    answer: B
+    explanation: |
+      The underlined portion is a fragment — it lacks a main verb. Choice B adds the verb
+      "is," creating a complete sentence. Choices A and C attach the fragment to the
+      preceding sentence but still lack a main verb for the overall construction.
+
+  - number: 11
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the passage below. Which transition word or phrase best fills the blank to show contrast?
+
+      "Solar energy is growing in popularity. __________, many households still rely primarily on fossil fuels."
+    choices:
+      A: "Furthermore"
+      B: "As a result"
+      C: "Nevertheless"
+      D: "In addition"
+    answer: C
+    explanation: |
+      The second sentence presents information that contrasts with the first — even though
+      solar energy is growing, fossil fuels remain dominant. "Nevertheless" signals this
+      contrast correctly. "Furthermore" and "In addition" signal addition; "As a result"
+      signals a consequence.
+
+  - number: 12
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the passage below. Which transition word best fills the blank to show addition?
+
+      "Regular exercise improves cardiovascular health. __________, it has been shown to reduce symptoms of anxiety and depression."
+    choices:
+      A: "However"
+      B: "Moreover"
+      C: "Therefore"
+      D: "On the contrary"
+    answer: B
+    explanation: |
+      The second sentence adds another benefit of exercise. "Moreover" signals the
+      addition of a closely related point. "However" and "On the contrary" signal
+      contrast; "Therefore" signals a logical conclusion.
+
+  - number: 13
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the two sentences below. Which option best combines them using a participial phrase?
+
+      "Sentence 1: The students completed their research projects."
+      "Sentence 2: They submitted them before the Friday deadline."
+    choices:
+      A: "The students completed their research projects, and they submitted them before the Friday deadline."
+      B: "Having completed their research projects, the students submitted them before the Friday deadline."
+      C: "After the students completed their research projects, they submitted them before the Friday deadline."
+      D: "The students completed their research projects; they submitted them before the Friday deadline."
+    answer: B
+    explanation: |
+      A participial phrase begins with a participle and modifies the subject of the main
+      clause. Choice B correctly uses the participial phrase "Having completed their
+      research projects" to modify "the students." Choices A, C, and D use conjunctions
+      or semicolons, not participial phrases.
+
+  - number: 14
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision most effectively changes it to active voice?
+
+      "The experiment was conducted by the research team over a period of three years."
+    choices:
+      A: "Over three years, the experiment had been conducted by the research team."
+      B: "The research team conducted the experiment over three years."
+      C: "The experiment, conducted by the research team, took three years."
+      D: "Over a period of three years, the experiment was being conducted."
+    answer: B
+    explanation: |
+      In active voice, the subject performs the action. Choice B makes "the research
+      team" the subject performing "conducted." Choices A and D remain in passive voice.
+      Choice C uses a participial phrase but the main verb "took" still makes the
+      experiment the grammatical subject.
+
+  - number: 15
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below. Which revision best corrects the apostrophe error?
+
+      "The dog wagged it's tail enthusiastically when its owner returned home."
+    choices:
+      A: "The dog wagged its tail enthusiastically when it's owner returned home."
+      B: "The dog wagged its tail enthusiastically when its owner returned home."
+      C: "The dog wagged it's tail enthusiastically when it's owner returned home."
+      D: "No revision needed."
+    answer: B
+    explanation: |
+      "It's" is a contraction meaning "it is." The possessive pronoun is "its" (no
+      apostrophe). In the original, "it's tail" incorrectly uses the contraction where
+      the possessive is needed. The second "its" is already correct. Choice B fixes
+      only the one error that exists.
+
+  - number: 16
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the paragraph below. Which sentence should be removed to improve focus?
+
+      "(1) Photosynthesis is the process by which plants convert sunlight into food.
+      (2) Plants absorb carbon dioxide through tiny pores called stomata.
+      (3) Chlorophyll, the pigment that makes plants green, captures light energy.
+      (4) Many plants are also used in traditional medicine around the world.
+      (5) The plant then uses this energy to turn carbon dioxide and water into glucose."
+    choices:
+      A: "Sentence 2"
+      B: "Sentence 3"
+      C: "Sentence 4"
+      D: "Sentence 5"
+    answer: C
+    explanation: |
+      The paragraph is about the process of photosynthesis. Sentence 4 — about plants
+      being used in traditional medicine — is off-topic and disrupts the paragraph's
+      focus. All other sentences directly describe steps or components of photosynthesis.
+
+  - number: 17
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the paragraph below. Which sentence best serves as its topic sentence?
+
+      "__________ First, the city installed hundreds of new bike lanes along major roads.
+      Then, it launched a public bike-share program so residents could rent bicycles cheaply.
+      Finally, it ran a public awareness campaign encouraging people to cycle to work."
+    choices:
+      A: "Cycling is a popular form of exercise in many countries around the world."
+      B: "The city took several steps to make cycling a practical choice for commuters."
+      C: "Bike lanes are an important safety feature for urban cyclists."
+      D: "The bike-share program was the most successful initiative the city launched."
+    answer: B
+    explanation: |
+      A good topic sentence introduces the paragraph's main idea without being too broad
+      or too specific. Choice B accurately previews all three initiatives described.
+      Choice A is too broad. Choice C focuses only on bike lanes. Choice D focuses on
+      only one initiative and makes a comparative claim the paragraph does not support.
+
+  - number: 18
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the passage below. Which revision best corrects the verb tense error?
+
+      "Last summer, Priya [visits] her grandparents in India for the first time. She was
+      overwhelmed by the heat but quickly adjusted. By the end of the trip, she had fallen
+      in love with the food and the culture."
+    choices:
+      A: "Last summer, Priya will visit her grandparents in India for the first time."
+      B: "Last summer, Priya visited her grandparents in India for the first time."
+      C: "Last summer, Priya has visited her grandparents in India for the first time."
+      D: "No revision needed."
+    answer: B
+    explanation: |
+      "Last summer" signals past tense. The verb "visits" (present tense) is inconsistent
+      with both the time marker and the other verbs in the passage ("was," "adjusted,"
+      "had fallen"). Choice B corrects it to "visited" (simple past), matching the rest
+      of the passage.
+
+  - number: 19
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision best eliminates the ambiguous pronoun reference?
+
+      "After the coach spoke with James and David, he told him to stay after practice."
+    choices:
+      A: "After the coach spoke with James and David, he told them to stay after practice."
+      B: "After speaking with James and David, the coach told James to stay after practice."
+      C: "He told him to stay after practice after the coach spoke with James and David."
+      D: "After the coach spoke with James and David, the coach told James and David to stay."
+    answer: B
+    explanation: |
+      The original is ambiguous because "he" and "him" could refer to either James, David,
+      or the coach. Choice B removes ambiguity by naming the subject ("the coach") and
+      specifying who was told to stay ("James"). Choice A replaces "him" with "them" but
+      still leaves "he" ambiguous.
+
+  - number: 20
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the sentence below. Which revision is the most concise?
+
+      "Due to the fact that the roads were icy, the school district made the decision to cancel classes."
+    choices:
+      A: "Because the roads were icy, the school district cancelled classes."
+      B: "The roads were icy, and due to this fact, the decision was made to cancel classes."
+      C: "The school district cancelled classes on account of the icy road conditions that existed."
+      D: "Because of the fact that roads were icy, the school district decided to cancel classes."
+    answer: A
+    explanation: |
+      "Due to the fact that" is wordy and should be replaced with "Because." Similarly,
+      "made the decision to cancel" is wordier than "cancelled." Choice A is the most
+      concise revision: "Because the roads were icy, the school district cancelled classes."
+
+  # ================================================================
+  # PART 2 — READING COMPREHENSION (Questions 21–57)
+  # ================================================================
+
+  # ----------------------------------------------------------------
+  # PASSAGE 1: Fiction — Marcus and Coach Rivera (Q21–27)
+  # ----------------------------------------------------------------
+
+  - number: 21
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_1
+    passage_title: "Racing the Track"
+    passage_text: |
+      Marcus had been the fastest eighth-grader at Jefferson Middle School — until the
+      injury. A torn ligament in his left knee had kept him off the track for seven months,
+      and when he finally returned to practice, nothing felt right. His legs felt heavy.
+      His lungs burned after half a lap. Worst of all, every time he rounded a corner, he
+      checked the stopwatch on his wrist, and the numbers were always wrong.
+
+      Coach Rivera watched him for two weeks before she said anything. Then one afternoon,
+      after the rest of the team had gone home, she sat next to him on the bleachers.
+
+      "You're racing your old self," she said. "And your old self isn't here anymore."
+
+      Marcus stared at the track. "So I'm just supposed to give up?"
+
+      "No," said Coach Rivera. "You're supposed to race the track. Not a memory. Not a
+      number. Just the four hundred meters in front of you."
+
+      He didn't understand at first. But the next day, he left his stopwatch in his bag.
+      He ran the first lap without looking at anything except the red line of the lane ahead.
+      His lungs still burned. His knee ached. But somewhere in the back stretch, something
+      shifted. He wasn't trailing a ghost anymore. He was just running.
+
+      By the end of the month, his times had not returned to where they once were. But he
+      had stopped dreading practice. He had stopped flinching when he rounded the corner.
+      And Coach Rivera — who had watched hundreds of athletes recover from setbacks — said
+      quietly to herself that this was always the hardest part: not the injury, but the
+      moment a young athlete chose to stop measuring themselves against the person they
+      used to be.
+    question: |
+      Which of the following best describes Marcus's primary motivation at the beginning
+      of the passage?
+    choices:
+      A: "To impress Coach Rivera with his athletic dedication"
+      B: "To return to his pre-injury level of performance as quickly as possible"
+      C: "To accept that he will never be as fast as he once was"
+      D: "To compete against his teammates for the fastest time"
+    answer: B
+    explanation: |
+      At the beginning of the passage, Marcus checks his stopwatch constantly and is
+      upset that "the numbers were always wrong." Coach Rivera confirms this when she
+      says, "You're racing your old self." His primary motivation is to recapture his
+      previous speed. He has not yet given up (C), and there is no mention of competing
+      with teammates (D) or impressing the coach (A).
+
+  - number: 22
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_1
+    question: |
+      Based on the passage, which of the following can be inferred about Coach Rivera?
+    choices:
+      A: "She was frustrated with Marcus for not recovering faster."
+      B: "She believed Marcus needed to work harder in practice."
+      C: "She understood that psychological recovery is as important as physical recovery."
+      D: "She thought Marcus should switch to a different sport."
+    answer: C
+    explanation: |
+      Coach Rivera waits two weeks before intervening and then addresses Marcus's mental
+      state, not his physical technique. Her final observation — that the hardest part is
+      "the moment a young athlete chose to stop measuring themselves against the person
+      they used to be" — confirms she sees the psychological challenge as the critical
+      obstacle. There is no evidence she was frustrated or thought he should switch sports.
+
+  - number: 23
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: easy
+    passage_id: passage_ela_3_1
+    question: |
+      As it is used in paragraph 7, the word "flinching" most nearly means:
+    choices:
+      A: "accelerating suddenly"
+      B: "recoiling from anticipated pain or fear"
+      C: "stopping to rest"
+      D: "looking backward"
+    answer: B
+    explanation: |
+      "Flinching" means pulling back or recoiling from something feared or painful. In
+      context, Marcus had been dreading the corners of the track — they reminded him of
+      his injury and his slower times. By the end of the month, he had stopped recoiling
+      from that anticipated disappointment.
+
+  - number: 24
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_1
+    question: |
+      As it is used in paragraph 6, the phrase "trailing a ghost" most nearly means:
+    choices:
+      A: "running alone in an empty stadium"
+      B: "being haunted by a frightening memory"
+      C: "trying to keep pace with his former self"
+      D: "falling behind his teammates during a race"
+    answer: C
+    explanation: |
+      In context, Marcus has just left his stopwatch behind and stopped comparing himself
+      to his old times. "He wasn't trailing a ghost anymore" means he was no longer trying
+      to catch up to an image of himself that no longer existed — his pre-injury self.
+      The "ghost" is a metaphor for that former version of Marcus.
+
+  - number: 25
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_ela_3_1
+    question: |
+      What is the most likely theme of this passage?
+    choices:
+      A: "Physical talent is more important than mental toughness in athletic recovery."
+      B: "Injuries are best overcome by tracking performance data carefully."
+      C: "True progress requires releasing the pressure of past achievements."
+      D: "A good coach is more valuable than any amount of personal effort."
+    answer: C
+    explanation: |
+      The central message — illustrated by Coach Rivera's advice and Marcus's gradual
+      shift — is that Marcus cannot move forward while measuring himself against who he
+      used to be. Once he stops comparing, something positive shifts. Choice A is
+      contradicted by the passage's emphasis on mental recovery. Choice B is the opposite
+      of what works for Marcus — he improves after abandoning his stopwatch.
+
+  - number: 26
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_ela_3_1
+    question: |
+      Which sentence from the passage best supports the idea that Marcus's mental state
+      was holding back his recovery more than his physical condition?
+    choices:
+      A: "A torn ligament in his left knee had kept him off the track for seven months."
+      B: "His legs felt heavy. His lungs burned after half a lap."
+      C: "Every time he rounded a corner, he checked the stopwatch on his wrist, and the numbers were always wrong."
+      D: "By the end of the month, his times had not returned to where they once were."
+    answer: C
+    explanation: |
+      The detail about constantly checking his stopwatch — and being distressed by the
+      results — demonstrates that Marcus's mental habit of comparing himself to the past
+      was the source of his frustration. Choice A describes the physical injury itself.
+      Choice B describes physical symptoms only. Choice D shows his times were still
+      slower even after his attitude improved, which does not specifically isolate mental
+      block as the cause.
+
+  - number: 27
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_1
+    question: |
+      How does the structure of the passage contribute to its meaning?
+    choices:
+      A: "By beginning with Marcus's injury and ending with his championship win, the passage shows the reward of persistence."
+      B: "By alternating between the present and the past, the passage shows how memories can distort reality."
+      C: "By moving from Marcus's frustration through Coach Rivera's advice to a gradual shift in his outlook, the passage traces an emotional journey."
+      D: "By using multiple points of view, the passage allows the reader to understand both coach and athlete equally."
+    answer: C
+    explanation: |
+      The passage follows a clear emotional arc: Marcus's post-injury frustration, Coach
+      Rivera's intervention, and Marcus's gradual psychological shift. The resolution is
+      not a championship but a change in attitude. Choice A is wrong — Marcus does not
+      win a championship. Choice B is wrong — the passage does not alternate timelines.
+      Choice D is wrong — Rivera's perspective appears only briefly at the very end.
+
+  # ----------------------------------------------------------------
+  # PASSAGE 2: Nonfiction/Science — How Sound Works (Q28–34)
+  # ----------------------------------------------------------------
+
+  - number: 28
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: easy
+    passage_id: passage_ela_3_2
+    passage_title: "The Science of Sound"
+    passage_text: |
+      Sound begins with vibration. When an object vibrates — a guitar string, a drum
+      membrane, or even a person's vocal cords — it pushes the air around it back and
+      forth, creating waves of pressure. These pressure waves travel outward in all
+      directions until they reach your ears, where tiny structures convert them into
+      signals that your brain interprets as sound.
+
+      The speed at which an object vibrates is called its frequency, measured in hertz
+      (Hz). One hertz equals one vibration per second. High-frequency vibrations produce
+      high-pitched sounds; low-frequency vibrations produce low-pitched sounds. Humans
+      can typically hear sounds between 20 Hz and 20,000 Hz. Dogs can hear much higher
+      frequencies — up to 65,000 Hz — which is why dog whistles, inaudible to humans,
+      are perfectly clear to dogs.
+
+      The loudness of a sound is determined not by its frequency but by the amplitude of
+      the wave — the size of the pressure change. A large amplitude means a loud sound; a
+      small amplitude means a quiet one. Loudness is measured in decibels (dB). A whisper
+      registers around 30 dB, a normal conversation around 60 dB, and a rock concert can
+      reach 110 dB or more. Prolonged exposure to sounds above 85 dB can cause permanent
+      hearing loss.
+
+      Different instruments produce different tones even when playing the same note
+      because of a quality called timbre (pronounced "TAM-ber"). When a violin and a
+      flute both play an A note at 440 Hz, you can still tell them apart. This is because
+      each instrument produces not just the main frequency but also a series of higher
+      frequencies called overtones. The specific blend of overtones gives each instrument
+      its unique sound quality — its timbre.
+
+      Understanding sound as a physical phenomenon — waves of pressure moving through a
+      medium — also explains why there is no sound in space. Space is a near-perfect
+      vacuum: there is no air, and therefore no medium for sound waves to travel through.
+      The explosive destruction of a star would be completely silent to any observer
+      floating nearby.
+    question: |
+      According to the passage, what causes a sound to be high-pitched rather than low-pitched?
+    choices:
+      A: "A greater amplitude of the sound wave"
+      B: "A higher frequency of vibration"
+      C: "A louder volume measured in decibels"
+      D: "A greater number of overtones produced"
+    answer: B
+    explanation: |
+      The passage states directly: "High-frequency vibrations produce high-pitched sounds;
+      low-frequency vibrations produce low-pitched sounds." Amplitude determines loudness
+      (A and C), not pitch. Overtones determine timbre (D), not pitch.
+
+  - number: 29
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: easy
+    passage_id: passage_ela_3_2
+    question: |
+      As it is used in paragraph 4, the word "timbre" most nearly means:
+    choices:
+      A: "the volume at which an instrument plays"
+      B: "the pitch of the main note an instrument produces"
+      C: "the unique sound quality that distinguishes one instrument from another"
+      D: "the speed at which sound travels through the air"
+    answer: C
+    explanation: |
+      The passage defines timbre as the quality that lets you distinguish a violin from a
+      flute even when they play the same note at the same frequency. It is the "unique
+      sound quality" determined by the blend of overtones, not volume, pitch, or speed.
+
+  - number: 30
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_2
+    question: |
+      As it is used in paragraph 3, the word "amplitude" most nearly means:
+    choices:
+      A: "the speed of a sound wave"
+      B: "the number of vibrations per second"
+      C: "the size of the pressure change in a sound wave"
+      D: "the range of frequencies a human can hear"
+    answer: C
+    explanation: |
+      The passage provides a direct definition: "the amplitude of the wave — the size of
+      the pressure change." Frequency measures vibrations per second (B); amplitude
+      specifically refers to the size of the wave's pressure variation.
+
+  - number: 31
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_2
+    question: |
+      According to the passage, why can a dog hear a dog whistle but a human cannot?
+    choices:
+      A: "Dog whistles produce sounds at very high amplitudes beyond human tolerance."
+      B: "Dogs have larger ear structures that capture more sound waves."
+      C: "Dog whistles vibrate at frequencies above the range of human hearing."
+      D: "Dogs interpret sound signals in a different part of the brain than humans."
+    answer: C
+    explanation: |
+      The passage explains that humans can hear up to 20,000 Hz, while dogs can hear up
+      to 65,000 Hz. Dog whistles operate at frequencies above human hearing range but
+      within the range dogs can detect. This is a frequency difference, not an amplitude
+      or structural difference.
+
+  - number: 32
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_2
+    question: |
+      What is the central idea of this passage?
+    choices:
+      A: "Sound is a dangerous phenomenon that must be regulated to protect human hearing."
+      B: "Sound is a physical phenomenon created by vibrations, with properties that explain how we experience it."
+      C: "Musical instruments are designed to produce specific overtones that create pleasing sounds."
+      D: "Humans are less sensitive to sound than most other animals in the animal kingdom."
+    answer: B
+    explanation: |
+      The passage covers vibration, frequency, amplitude, timbre, and the absence of
+      sound in space — all organized around explaining the physical nature of sound and
+      how its properties determine what we hear. Choice A is too narrow. Choice C is
+      too narrow. Choice D is inaccurate — only dogs are mentioned, and the comparison
+      is limited.
+
+  - number: 33
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_ela_3_2
+    question: |
+      Based on the passage, which of the following can be inferred about sound in water?
+    choices:
+      A: "Sound cannot travel through water because water molecules are too dense."
+      B: "Sound travels through water because water, like air, is a medium through which pressure waves can move."
+      C: "Sound travels faster in water than in space, but slower than in air."
+      D: "Sound cannot be heard underwater because there is no air for sound waves to use."
+    answer: B
+    explanation: |
+      The passage explains that sound requires a medium — it cannot travel through space
+      because space is a vacuum with no air. By this logic, water (which is not a vacuum
+      and is a physical medium) would allow sound to travel. Choice A incorrectly implies
+      density prevents sound. Choice D misapplies the passage's logic — the issue is the
+      absence of any medium, not the absence of air specifically.
+
+  - number: 34
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_2
+    question: |
+      What is the author's most likely purpose in including the detail about an exploding
+      star being "completely silent" in the final paragraph?
+    choices:
+      A: "To warn readers about the dangers of space exploration"
+      B: "To provide a dramatic and memorable illustration of a scientific principle"
+      C: "To suggest that space is a more peaceful environment than Earth"
+      D: "To compare the volume of a star explosion to a rock concert"
+    answer: B
+    explanation: |
+      The detail about a silent star explosion is counterintuitive and striking —
+      explosions are normally associated with enormous noise. The author uses this extreme
+      example to make the scientific principle (no medium = no sound) vivid and memorable
+      for the reader.
+
+  # ----------------------------------------------------------------
+  # PASSAGE 3: Poetry — "Roots" (Q35–39)
+  # ----------------------------------------------------------------
+
+  - number: 35
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_3
+    passage_title: "Roots"
+    passage_text: |
+      "Where do we come from?" I asked one night,
+      my grandmother's hands busy with bread,
+      flour drifting like snow across the table,
+      her silver hair catching the kitchen light.
+
+      She did not name a country or a town,
+      did not trace a line on any map.
+      She pressed the dough and said, "We come from
+      those who rose before the sun came up."
+
+      "We come from those who shared the last of what they had.
+      From those who kept their word when it cost them something.
+      From those who sang while carrying heavy things,
+      and never asked the world to call it courage."
+
+      I wanted borders. I wanted something I could point to —
+      a village, a river, a hill with a name.
+      She gave me something older, harder to hold:
+      a way of being in the world, not a place.
+    question: |
+      Which of the following best describes the figurative language used in line 3
+      ("flour drifting like snow across the table")?
+    choices:
+      A: "Metaphor, comparing flour to snow to suggest harshness"
+      B: "Simile, comparing the movement of flour to falling snow to create a vivid visual image"
+      C: "Personification, giving the flour human qualities"
+      D: "Hyperbole, exaggerating the amount of flour for comic effect"
+    answer: B
+    explanation: |
+      The line uses "like" to compare flour to snow, making it a simile. The comparison is
+      visual — both flour and snow drift gently through the air. There is no suggestion of
+      harshness (A), no human qualities given to the flour (C), and no exaggeration (D).
+
+  - number: 36
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_3
+    question: |
+      Which of the following best describes the overall tone of the grandmother's words
+      in stanzas 2 and 3?
+    choices:
+      A: "Bitter and resentful"
+      B: "Proud and instructive"
+      C: "Sad and nostalgic"
+      D: "Impatient and dismissive"
+    answer: B
+    explanation: |
+      The grandmother's words celebrate the values of her ancestors — rising early,
+      sharing, keeping promises, enduring hardship with dignity. The tone is one of quiet
+      pride. She is also teaching the speaker something important. There is no bitterness,
+      sadness, or impatience in her words.
+
+  - number: 37
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_ela_3_3
+    question: |
+      In the final stanza, why does the speaker say she "wanted borders" and "something
+      I could point to"?
+    choices:
+      A: "She is interested in cartography and would like to study geography."
+      B: "She wants a concrete, geographic answer to her question about identity."
+      C: "She is frustrated that her grandmother does not speak her language."
+      D: "She believes that knowing a specific place would make her grandmother happy."
+    answer: B
+    explanation: |
+      "Borders," "a village, a river, a hill with a name" are all geographic, concrete
+      things — specific places on a map. The speaker expected a geographic answer to
+      "where do we come from?" Her grandmother's answer was instead abstract and
+      value-based. The final lines make this contrast explicit.
+
+  - number: 38
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_ela_3_3
+    question: |
+      What is the central theme of this poem?
+    choices:
+      A: "A family's identity is rooted in values and character, not in a geographic place of origin."
+      B: "Grandparents often refuse to discuss the past because it is too painful to remember."
+      C: "Geography is less important to young people than it is to older generations."
+      D: "Cooking and household routines connect us to our ancestors."
+    answer: A
+    explanation: |
+      The grandmother explicitly refuses to answer with a place, instead describing how
+      her ancestors lived and what they valued. The final two lines state the theme
+      directly: she gave the speaker "a way of being in the world, not a place." Choice B
+      misreads the grandmother's motivation. Choice D is too narrow.
+
+  - number: 39
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_3
+    question: |
+      Based on the poem, what can be inferred about the relationship between the speaker
+      and her grandmother?
+    choices:
+      A: "They rarely speak and do not understand each other."
+      B: "The speaker is disappointed in her grandmother and no longer respects her."
+      C: "The grandmother's answer, though not what the speaker expected, carries deep wisdom."
+      D: "The speaker will forget the grandmother's words as she grows older."
+    answer: C
+    explanation: |
+      The speaker acknowledges the grandmother gave her "something older, harder to hold."
+      "Harder to hold" suggests the answer is profound and difficult to fully grasp — not
+      dismissible or disappointing. The poem's respectful, careful rendering of the
+      grandmother's words supports the inference that the speaker values what she heard,
+      even if it was not the answer she expected.
+
+  # ----------------------------------------------------------------
+  # PASSAGE 4: Nonfiction/History — Women's Suffrage (Q40–47)
+  # ----------------------------------------------------------------
+
+  - number: 40
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: easy
+    passage_id: passage_ela_3_4
+    passage_title: "The Long Road to the Ballot Box"
+    passage_text: |
+      On July 19–20, 1848, approximately three hundred people gathered at a small
+      Methodist church in Seneca Falls, New York, for the first women's rights convention
+      in American history. Organized primarily by Elizabeth Cady Stanton and Lucretia
+      Mott, the convention produced a document modeled on the Declaration of Independence:
+      the Declaration of Sentiments. It opened with a bold revision of the founding
+      document: "We hold these truths to be self-evident: that all men and women are
+      created equal." Among the document's resolutions was a call for women's suffrage —
+      the right to vote. Even some of the convention's own organizers considered this
+      demand too radical.
+
+      Over the following decades, the suffragette movement grew. Susan B. Anthony, who
+      became one of its most prominent leaders, was arrested in 1872 for voting
+      illegally in a presidential election. She was found guilty and fined — but she
+      never paid the fine. Anthony and Stanton co-founded the National Woman Suffrage
+      Association (NWSA) in 1869, which focused on winning voting rights through a
+      constitutional amendment.
+
+      The movement was not monolithic. While Anthony and Stanton focused on a national
+      strategy, other activists pushed for state-by-state victories. Wyoming granted
+      women the right to vote in 1869, the first territory or state to do so. By 1900,
+      several western states had followed. Meanwhile, the national amendment remained
+      stalled in Congress for decades.
+
+      The suffragette movement also had significant internal divisions along racial lines.
+      Ida B. Wells, a Black journalist and activist, fought for suffrage while also
+      leading an anti-lynching campaign. She and other Black women suffragists found
+      that the mainstream movement sometimes excluded or sidelined them, particularly in
+      the South, where organizers feared that including Black women would alienate white
+      Southern voters.
+
+      On August 18, 1920, the Nineteenth Amendment was ratified, granting women the
+      right to vote. It had taken seventy-two years — from Seneca Falls to ratification.
+      Yet for many Black women in the South, practical access to the ballot would remain
+      blocked by discriminatory laws until the Voting Rights Act of 1965.
+    question: |
+      According to the passage, what event took place at Seneca Falls in 1848?
+    choices:
+      A: "The founding of the National Woman Suffrage Association"
+      B: "The first women's rights convention in American history"
+      C: "The ratification of the Nineteenth Amendment"
+      D: "The arrest of Susan B. Anthony for illegal voting"
+    answer: B
+    explanation: |
+      The passage states clearly: "approximately three hundred people gathered ... for
+      the first women's rights convention in American history." The NWSA was founded in
+      1869 (A), the Nineteenth Amendment was ratified in 1920 (C), and Anthony's arrest
+      was in 1872 (D).
+
+  - number: 41
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_4
+    question: |
+      According to the passage, which of the following events happened most recently?
+    choices:
+      A: "Susan B. Anthony was arrested for voting."
+      B: "Wyoming granted women the right to vote."
+      C: "The National Woman Suffrage Association was founded."
+      D: "The Nineteenth Amendment was ratified."
+    answer: D
+    explanation: |
+      Anthony's arrest was in 1872 (A). Wyoming and the NWSA both occurred in 1869
+      (B and C). The Nineteenth Amendment was ratified in 1920 (D) — the most recent
+      of the four events listed.
+
+  - number: 42
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_4
+    question: |
+      As it is used in paragraph 3, the word "monolithic" most nearly means:
+    choices:
+      A: "unified and acting as a single whole"
+      B: "confined to a single state or region"
+      C: "dominated by a single powerful leader"
+      D: "slow-moving and resistant to change"
+    answer: A
+    explanation: |
+      The passage says "The movement was not monolithic" and immediately explains that
+      different activists used different strategies. In context, "monolithic" means
+      unified or acting as one coordinated body.
+
+  - number: 43
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_4
+    question: |
+      As it is used in paragraph 4, the word "sidelined" most nearly means:
+    choices:
+      A: "celebrated publicly"
+      B: "deliberately excluded from full participation"
+      C: "persuaded to change their positions"
+      D: "relocated to a different region"
+    answer: B
+    explanation: |
+      The passage describes how Black women suffragists "found that the mainstream
+      movement sometimes excluded or sidelined them." Since "excluded" and "sidelined"
+      appear together as near-synonyms, "sidelined" means pushed to the margins or
+      kept from full participation.
+
+  - number: 44
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_ela_3_4
+    question: |
+      Based on the passage, what can be inferred about why mainstream suffragette
+      organizations sometimes excluded Black women?
+    choices:
+      A: "Black women had different political goals that were incompatible with women's suffrage."
+      B: "Movement leaders believed political compromise was necessary to secure broader support, even at the cost of racial inclusion."
+      C: "There were no prominent Black women involved in the suffragette movement."
+      D: "The Nineteenth Amendment required the exclusion of Black women to gain enough votes for ratification."
+    answer: B
+    explanation: |
+      The passage states that mainstream organizers "feared that including Black women
+      would alienate white Southern voters." This reveals a strategic compromise: leaders
+      sacrificed racial inclusion to gain political support. Choice A is wrong — Ida B.
+      Wells fought for suffrage. Choice C is wrong — Wells is mentioned as prominent.
+      Choice D is factually incorrect and unsupported by the passage.
+
+  - number: 45
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_4
+    question: |
+      What is the author's most likely purpose in ending the passage with a reference to
+      the Voting Rights Act of 1965?
+    choices:
+      A: "To argue that the Nineteenth Amendment was a complete failure"
+      B: "To suggest that women should not have celebrated the amendment's ratification"
+      C: "To show that legal victory did not immediately translate into equal access for all women"
+      D: "To compare the strategies of the suffragette movement with the Civil Rights movement"
+    answer: C
+    explanation: |
+      The final sentence notes that for many Black women in the South, practical ballot
+      access was blocked until 1965 despite the 1920 amendment. This shows the gap
+      between legal rights and actual access. The author is not arguing the amendment
+      failed entirely (A), only that it was incomplete for some women.
+
+  - number: 46
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_4
+    question: |
+      What is the central idea of this passage?
+    choices:
+      A: "Elizabeth Cady Stanton and Susan B. Anthony were the only important leaders of the suffragette movement."
+      B: "The suffragette movement was a unified effort that succeeded because all women worked together."
+      C: "The fight for women's voting rights in America was a long, complex, and internally divided struggle."
+      D: "The Nineteenth Amendment was the most important legal achievement in American history."
+    answer: C
+    explanation: |
+      The passage covers 72 years of activism, multiple competing strategies, racial
+      divisions within the movement, and the incomplete impact of the amendment. This
+      complexity is best summarized by Choice C. Choice B directly contradicts the
+      passage. Choice A ignores Ida B. Wells. Choice D is an opinion the passage does
+      not state.
+
+  - number: 47
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_ela_3_4
+    question: |
+      How did the strategy of Anthony and Stanton differ from that of activists who
+      pursued state-by-state voting rights?
+    choices:
+      A: "Anthony and Stanton focused on winning a federal constitutional amendment, while others sought victories in individual states."
+      B: "Anthony and Stanton focused on Southern states, while others focused on Western states."
+      C: "Anthony and Stanton opposed cooperation with Black women, while other activists supported it."
+      D: "Anthony and Stanton worked only through the courts, while others used public protests."
+    answer: A
+    explanation: |
+      The passage explicitly states that the NWSA "focused on winning voting rights
+      through a constitutional amendment," while "other activists pushed for state-by-state
+      victories." Wyoming is given as the example of a state-level win. There is no
+      evidence about Anthony and Stanton focusing on Southern states or working only
+      through the courts.
+
+  # ----------------------------------------------------------------
+  # PASSAGE 5: Fiction — The Two Sisters (Q48–57)
+  # ----------------------------------------------------------------
+
+  - number: 48
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_5
+    passage_title: "The Gift and the Work"
+    passage_text: |
+      Everyone said that Celine had a gift. She could pick up a pencil and, with almost
+      no effort, produce a sketch that looked exactly like whatever was in front of her.
+      Trees, faces, buildings — her hand seemed to know what to do before her mind
+      finished thinking. Her younger sister, Adaeze, had no such ease. She struggled with
+      proportion. She erased and redrew. She filled her wastebasket with crumpled attempts
+      and came back to the table the next morning and tried again.
+
+      When the school announced its annual art competition, both sisters entered. Celine
+      submitted a charcoal portrait she had completed in an afternoon. It was technically
+      perfect — the shading was flawless, the likeness undeniable. Adaeze had worked on
+      her piece for three weeks: a mixed-media collage about their grandmother's journey
+      from Nigeria, assembled from fabric swatches, dried flowers, old photographs, and
+      hand-lettered captions in both English and Igbo.
+
+      The judges announced their decision on a Friday afternoon. First prize: Adaeze.
+
+      Celine stood very still when she heard it. She was not crying, but her face had
+      gone a particular kind of blank — the blankness of someone recalculating everything
+      they thought they knew. She walked over to her sister's collage and stood in front
+      of it for a long time.
+
+      It was not just a picture. It was a world — layered, textured, full of decisions
+      that asked you to look more than once. Every element had been chosen. Every caption
+      had been considered. There was a dried rose pinned near a photograph of a woman
+      Celine recognized as their grandmother at twenty. Next to it, in Adaeze's careful
+      handwriting: "She carried this from Lagos."
+
+      That night, Celine said nothing about the competition at dinner. But afterward, she
+      went to her room, took out a blank sketchbook, and began to draw — not from what
+      was in front of her, but from memory. From feeling. She drew their grandmother's
+      hands. She drew them three times before she felt she had them right.
+    question: |
+      How are Celine and Adaeze different in their approaches to making art?
+    choices:
+      A: "Celine uses mixed media while Adaeze uses only pencil and charcoal."
+      B: "Celine produces technically skilled work with apparent ease, while Adaeze struggles but works persistently."
+      C: "Celine enters competitions frequently while Adaeze usually avoids them."
+      D: "Celine draws from memory while Adaeze draws only from observation."
+    answer: B
+    explanation: |
+      The passage contrasts the two sisters directly: Celine's hand "seemed to know what
+      to do" and her work required minimal effort, while Adaeze "struggled with
+      proportion," erased and redrew, and filled her wastebasket with failed attempts
+      before returning the next morning. Choice A reverses the media used in the
+      competition. Choice D describes what Celine does at the very end of the story.
+
+  - number: 49
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_5
+    question: |
+      Based on the passage, why did Adaeze's collage win first prize over Celine's portrait?
+    choices:
+      A: "The judges preferred collage as an art form over charcoal drawing."
+      B: "Adaeze's work showed greater personal meaning, layered decision-making, and depth than Celine's technically perfect but less expressive portrait."
+      C: "Celine made several technical errors in her portrait that disqualified it."
+      D: "The competition rules required entrants to use more than one material."
+    answer: B
+    explanation: |
+      The passage describes Adaeze's collage as "a world — layered, textured, full of
+      decisions that asked you to look more than once." Every element was chosen and
+      considered. Celine's portrait was "technically perfect" but the passage implies it
+      lacked the depth and intentionality of Adaeze's work. The judges are not said to
+      prefer collage in principle (A). Celine made no technical errors (C). There are no
+      material requirements mentioned (D).
+
+  - number: 50
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_5
+    question: |
+      As it is used in paragraph 1, the word "ease" most nearly means:
+    choices:
+      A: "laziness and lack of ambition"
+      B: "natural effortlessness and ability"
+      C: "comfort with failure and mistakes"
+      D: "freedom from school obligations"
+    answer: B
+    explanation: |
+      The passage describes how Celine's hand "seemed to know what to do before her mind
+      finished thinking." The word "ease" captures this natural, effortless ability.
+      Her younger sister "had no such ease" and struggled. The word carries a positive
+      connotation here, referring to innate talent, not laziness.
+
+  - number: 51
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_ela_3_5
+    question: |
+      Based on the passage, which of the following can be inferred about Celine after
+      the competition?
+    choices:
+      A: "She decided to quit art because she was too embarrassed by her loss."
+      B: "She felt that the judging was unfair and planned to appeal the decision."
+      C: "She began to reconsider what makes art meaningful beyond technical skill."
+      D: "She asked Adaeze to teach her how to make collages."
+    answer: C
+    explanation: |
+      The passage describes Celine's "blankness of someone recalculating everything they
+      thought they knew." She then studies Adaeze's collage carefully, noticing its layers
+      and intention. That night, she begins drawing from memory and feeling rather than
+      observation — a significant shift from her earlier approach. This strongly implies
+      she is reconsidering what makes art valuable. There is no evidence of quitting (A),
+      appealing (B), or asking for lessons (D).
+
+  - number: 52
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_5
+    question: |
+      As it is used in paragraph 4, the phrase "gone a particular kind of blank" most
+      nearly means:
+    choices:
+      A: "Celine fainted from the shock of the announcement."
+      B: "Celine's expression showed that she was stunned and processing something unexpected."
+      C: "Celine was deliberately hiding her emotions from the judges."
+      D: "Celine felt no emotion because she had expected to lose."
+    answer: B
+    explanation: |
+      The passage immediately explains the blankness: "the blankness of someone
+      recalculating everything they thought they knew." This is a cognitive and emotional
+      response to an unexpected outcome — stunned processing, not fainting (A), deliberate
+      concealment (C), or apathy from low expectations (D).
+
+  - number: 53
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_ela_3_5
+    question: |
+      What is the theme of this passage?
+    choices:
+      A: "Natural talent is always more valuable than hard work in creative fields."
+      B: "Competitions are the best way to determine who is the most skilled artist."
+      C: "Art that comes from personal meaning and deliberate effort can surpass technically perfect work."
+      D: "Younger siblings are often more creative than older ones."
+    answer: C
+    explanation: |
+      The passage's central contrast is between Celine's effortless technical gift and
+      Adaeze's intentional, meaning-laden work. Adaeze wins not despite her struggle but
+      because her struggle produced something with depth and personal significance.
+      Choice A is the opposite of the theme. Choice B is not supported. Choice D is a
+      superficial reading with no textual support.
+
+  - number: 54
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_ela_3_5
+    question: |
+      The author describes Adaeze's collage as "a world — layered, textured, full of
+      decisions that asked you to look more than once." What does this description reveal
+      about the author's view of what great art should do?
+    choices:
+      A: "Great art should be technically flawless and instantly recognizable."
+      B: "Great art should reward close and repeated attention with new layers of meaning."
+      C: "Great art should be created using many different materials."
+      D: "Great art should always tell the story of a person's cultural heritage."
+    answer: B
+    explanation: |
+      The phrase "asked you to look more than once" suggests that depth and layering are
+      what make art great — not immediate perfection. This contrasts with Celine's
+      portrait, which is instantly impressive but less demanding of sustained attention.
+      Choice A describes Celine's portrait, which did not win. Choices C and D are too
+      literal and specific.
+
+  - number: 55
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_ela_3_5
+    question: |
+      Which detail from the passage best supports the idea that Adaeze put significant
+      personal thought into every element of her collage?
+    choices:
+      A: "Adaeze had worked on her piece for three weeks."
+      B: "She filled her wastebasket with crumpled attempts."
+      C: "There was a dried rose pinned near a photograph of a woman Celine recognized as their grandmother at twenty."
+      D: "Next to it, in Adaeze's careful handwriting: 'She carried this from Lagos.'"
+    answer: D
+    explanation: |
+      The hand-lettered caption "She carried this from Lagos" is the most specific
+      example of a deliberate choice: Adaeze chose to include a caption, chose what it
+      said, and wrote it carefully. It links a physical object to a specific story about
+      their grandmother. This is the clearest evidence of intentional personal meaning.
+      Choice A shows effort in time. Choice B shows persistence. Choice C describes an
+      element but not the intention behind it.
+
+  - number: 56
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_ela_3_5
+    question: |
+      Based on the passage, which of the following inferences about Adaeze is best
+      supported by the text?
+    choices:
+      A: "She resented her sister's natural talent and entered the competition to prove herself."
+      B: "She was surprised that she won because she did not think her work was good enough."
+      C: "She used the competition as an opportunity to honor her grandmother's story."
+      D: "She had entered many previous competitions but had never won before."
+    answer: C
+    explanation: |
+      Adaeze's collage is described as being "about their grandmother's journey from
+      Nigeria," using photographs, fabric, flowers, and handwritten captions. The caption
+      "She carried this from Lagos" confirms personal, memorial intention. The passage
+      offers no evidence of resentment (A), self-doubt about her work (B), or a history
+      of entering competitions (D).
+
+  - number: 57
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_ela_3_5
+    question: |
+      In the final paragraph, Celine draws their grandmother's hands "three times before
+      she felt she had them right." What does this action most likely suggest about her
+      character at this point in the story?
+    choices:
+      A: "She has become frustrated with her sister's success and is trying to copy her style."
+      B: "She has begun to adopt the same kind of intentional, feeling-driven approach to art that made Adaeze's work meaningful."
+      C: "She is practicing her technical skills so she can do better in the next competition."
+      D: "She is drawing from memory because she cannot find a photograph of her grandmother."
+    answer: B
+    explanation: |
+      Drawing "from memory" and "from feeling" — and revising until it feels right —
+      mirrors the intentional, emotionally invested approach that made Adaeze's work
+      meaningful. This is a direct shift from Celine's earlier habit of drawing whatever
+      was in front of her with technical ease. The passage frames this as a change in
+      how she understands art, not merely technical practice (C) or imitation (A).
+
+math:
+
+  # ================================================================
+  # MATH — Questions 1–52: Multiple Choice
+  # ================================================================
+
+  # ----------------------------------------------------------------
+  # Q1–5: Number Properties
+  # ----------------------------------------------------------------
+
+  - number: 1
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: easy
+    question: |
+      How many positive factors does 36 have?
+    choices:
+      A: "7"
+      B: "8"
+      C: "9"
+      D: "10"
+    answer: C
+    explanation: |
+      The factors of 36 are: 1, 2, 3, 4, 6, 9, 12, 18, 36. That is 9 factors.
+      Using the formula: 36 = 2^2 x 3^2, so the number of factors = (2+1)(2+1) = 9.
+
+  - number: 2
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: easy
+    question: |
+      What is the least common multiple (LCM) of 8 and 12?
+    choices:
+      A: "16"
+      B: "20"
+      C: "24"
+      D: "48"
+    answer: C
+    explanation: |
+      Multiples of 8: 8, 16, 24 ...
+      Multiples of 12: 12, 24 ...
+      The smallest number in both lists is 24.
+      Using the formula: LCM(8,12) = 8 x 12 / GCF(8,12) = 96 / 4 = 24.
+
+  - number: 3
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: easy
+    question: |
+      How many prime numbers are there between 20 and 30 (not including 20 or 30)?
+    choices:
+      A: "1"
+      B: "2"
+      C: "3"
+      D: "4"
+    answer: B
+    explanation: |
+      Check each number: 21 = 3x7, 22 = 2x11, 23 (prime), 24 = 2x12, 25 = 5x5,
+      26 = 2x13, 27 = 3x9, 28 = 4x7, 29 (prime).
+      The primes are 23 and 29 — that is 2 prime numbers.
+
+  - number: 4
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: easy
+    question: |
+      Which of the following numbers is divisible by 9?
+    choices:
+      A: "124"
+      B: "135"
+      C: "146"
+      D: "152"
+    answer: B
+    explanation: |
+      A number is divisible by 9 if the sum of its digits is divisible by 9.
+      124: 1+2+4 = 7. Not divisible.
+      135: 1+3+5 = 9. Divisible by 9.
+      146: 1+4+6 = 11. Not divisible.
+      152: 1+5+2 = 8. Not divisible.
+
+  - number: 5
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: easy
+    question: |
+      What is the greatest common factor (GCF) of 48 and 36?
+    choices:
+      A: "6"
+      B: "8"
+      C: "12"
+      D: "18"
+    answer: C
+    explanation: |
+      48 = 2^4 x 3 and 36 = 2^2 x 3^2.
+      GCF = 2^2 x 3 = 4 x 3 = 12.
+      Check: 48 / 12 = 4 and 36 / 12 = 3. Both are integers, confirming 12 is the GCF.
+
+  # ----------------------------------------------------------------
+  # Q6–10: Fractions and Mixed Numbers
+  # ----------------------------------------------------------------
+
+  - number: 6
+    type: multiple_choice
+    topic: Fractions
+    difficulty: easy
+    question: |
+      What is 3/4 + 5/6?
+    choices:
+      A: "8/10"
+      B: "1 5/12"
+      C: "1 7/12"
+      D: "2 1/12"
+    answer: C
+    explanation: |
+      Find a common denominator: LCD(4, 6) = 12.
+      3/4 = 9/12 and 5/6 = 10/12.
+      9/12 + 10/12 = 19/12 = 1 7/12.
+
+  - number: 7
+    type: multiple_choice
+    topic: Fractions
+    difficulty: medium
+    question: |
+      What is 2 1/3 - 1 3/4?
+    choices:
+      A: "7/12"
+      B: "1/2"
+      C: "2/3"
+      D: "1 1/12"
+    answer: A
+    explanation: |
+      Convert to improper fractions: 2 1/3 = 7/3 and 1 3/4 = 7/4.
+      LCD(3, 4) = 12.
+      7/3 = 28/12 and 7/4 = 21/12.
+      28/12 - 21/12 = 7/12.
+
+  - number: 8
+    type: multiple_choice
+    topic: Fractions
+    difficulty: easy
+    question: |
+      What is 3/5 x 10/9?
+    choices:
+      A: "1/3"
+      B: "1/2"
+      C: "2/3"
+      D: "6/5"
+    answer: C
+    explanation: |
+      3/5 x 10/9 = (3 x 10) / (5 x 9) = 30/45 = 2/3.
+      Cross-cancel shortcut: 3 and 9 share a factor of 3, and 10 and 5 share a factor
+      of 5, giving (1 x 2) / (1 x 3) = 2/3.
+
+  - number: 9
+    type: multiple_choice
+    topic: Fractions
+    difficulty: medium
+    question: |
+      What is 5/8 divided by 15/16?
+    choices:
+      A: "1/2"
+      B: "2/3"
+      C: "3/4"
+      D: "4/3"
+    answer: B
+    explanation: |
+      Dividing by a fraction means multiplying by its reciprocal.
+      5/8 / (15/16) = 5/8 x 16/15 = (5 x 16) / (8 x 15) = 80/120 = 2/3.
+
+  - number: 10
+    type: multiple_choice
+    topic: Fractions
+    difficulty: medium
+    question: |
+      What is 1 2/5 x 2 1/2?
+    choices:
+      A: "2 1/2"
+      B: "3"
+      C: "3 1/2"
+      D: "4"
+    answer: C
+    explanation: |
+      Convert to improper fractions: 1 2/5 = 7/5 and 2 1/2 = 5/2.
+      7/5 x 5/2 = 35/10 = 7/2 = 3 1/2.
+      The fives cancel: 7/1 x 1/2 = 7/2 = 3 1/2.
+
+  # ----------------------------------------------------------------
+  # Q11–15: Percent Problems
+  # ----------------------------------------------------------------
+
+  - number: 11
+    type: multiple_choice
+    topic: Percents
+    difficulty: easy
+    question: |
+      What is 35% of 80?
+    choices:
+      A: "24"
+      B: "26"
+      C: "28"
+      D: "32"
+    answer: C
+    explanation: |
+      35% of 80 = 0.35 x 80 = 28.
+      Alternative: 10% of 80 = 8, so 30% = 24 and 5% = 4. Total = 24 + 4 = 28.
+
+  - number: 12
+    type: multiple_choice
+    topic: Percents
+    difficulty: medium
+    question: |
+      A jacket originally cost $75. It now costs $90. What is the percent increase?
+    choices:
+      A: "15%"
+      B: "17%"
+      C: "20%"
+      D: "25%"
+    answer: C
+    explanation: |
+      Percent change = (new - old) / old x 100 = (90 - 75) / 75 x 100 = 15/75 x 100 = 20%.
+
+  - number: 13
+    type: multiple_choice
+    topic: Percents
+    difficulty: medium
+    question: |
+      After a 20% discount, a pair of shoes costs $56. What was the original price?
+    choices:
+      A: "$62"
+      B: "$67.20"
+      C: "$70"
+      D: "$72"
+    answer: C
+    explanation: |
+      A 20% discount means the customer pays 80% of the original price.
+      0.80 x p = 56, so p = 56 / 0.80 = $70.
+
+  - number: 14
+    type: multiple_choice
+    topic: Percents
+    difficulty: medium
+    question: |
+      15% of a number is 9. What is the number?
+    choices:
+      A: "45"
+      B: "54"
+      C: "60"
+      D: "75"
+    answer: C
+    explanation: |
+      0.15 x n = 9, so n = 9 / 0.15 = 60.
+      Check: 15% of 60 = 0.15 x 60 = 9. Correct.
+
+  - number: 15
+    type: multiple_choice
+    topic: Percents
+    difficulty: hard
+    question: |
+      A store increases a price by 20%, then decreases the new price by 10%.
+      What is the overall percent change from the original price?
+    choices:
+      A: "10% increase"
+      B: "8% increase"
+      C: "2% decrease"
+      D: "No change"
+    answer: B
+    explanation: |
+      Start with $100.
+      After 20% increase: $100 x 1.20 = $120.
+      After 10% decrease: $120 x 0.90 = $108.
+      Net change: $8 increase on a $100 original = 8% overall increase.
+
+  # ----------------------------------------------------------------
+  # Q16–20: Algebra — Solving Equations
+  # ----------------------------------------------------------------
+
+  - number: 16
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Solve for x: 3x + 7 = x + 19
+    choices:
+      A: "4"
+      B: "6"
+      C: "8"
+      D: "12"
+    answer: B
+    explanation: |
+      3x + 7 = x + 19
+      3x - x = 19 - 7
+      2x = 12
+      x = 6.
+      Check: 3(6) + 7 = 25 and 6 + 19 = 25. Correct.
+
+  - number: 17
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Solve for x: 4(x - 3) = 2x + 6
+    choices:
+      A: "6"
+      B: "7"
+      C: "9"
+      D: "12"
+    answer: C
+    explanation: |
+      4(x - 3) = 2x + 6
+      4x - 12 = 2x + 6
+      2x = 18
+      x = 9.
+      Check: 4(9-3) = 4(6) = 24 and 2(9)+6 = 24. Correct.
+
+  - number: 18
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Solve for x: 5x - 2 = 3x + 10
+    choices:
+      A: "4"
+      B: "6"
+      C: "7"
+      D: "8"
+    answer: B
+    explanation: |
+      5x - 2 = 3x + 10
+      5x - 3x = 10 + 2
+      2x = 12
+      x = 6.
+      Check: 5(6) - 2 = 28 and 3(6) + 10 = 28. Correct.
+
+  - number: 19
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Solve for x: 2(3x + 1) = 5x + 8
+    choices:
+      A: "5"
+      B: "6"
+      C: "7"
+      D: "8"
+    answer: B
+    explanation: |
+      2(3x + 1) = 5x + 8
+      6x + 2 = 5x + 8
+      x = 6.
+      Check: 2(3(6)+1) = 2(19) = 38 and 5(6)+8 = 38. Correct.
+
+  - number: 20
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Solve for x: x/3 + 5 = 11
+    choices:
+      A: "12"
+      B: "15"
+      C: "18"
+      D: "21"
+    answer: C
+    explanation: |
+      x/3 + 5 = 11
+      x/3 = 6
+      x = 18.
+      Check: 18/3 + 5 = 6 + 5 = 11. Correct.
+
+  # ----------------------------------------------------------------
+  # Q21–25: Algebra — Word Problems and Systems
+  # ----------------------------------------------------------------
+
+  - number: 21
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Twice a number decreased by 7 is equal to 15. What is the number?
+    choices:
+      A: "8"
+      B: "9"
+      C: "11"
+      D: "14"
+    answer: C
+    explanation: |
+      Let n = the number. 2n - 7 = 15, so 2n = 22, and n = 11.
+      Check: 2(11) - 7 = 22 - 7 = 15. Correct.
+
+  - number: 22
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Two numbers have a sum of 20 and a difference of 6. What is the larger number?
+    choices:
+      A: "11"
+      B: "12"
+      C: "13"
+      D: "14"
+    answer: C
+    explanation: |
+      Let x = larger and y = smaller. x + y = 20 and x - y = 6.
+      Adding both equations: 2x = 26, so x = 13.
+      Then y = 20 - 13 = 7.
+      Check: 13 + 7 = 20 and 13 - 7 = 6. Correct.
+
+  - number: 23
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Three times one number plus twice another number equals 24.
+      The first number is 3 more than the second. What is the first number?
+    choices:
+      A: "5"
+      B: "6"
+      C: "8"
+      D: "9"
+    answer: B
+    explanation: |
+      Let the second number = y, so the first number = y + 3.
+      3(y + 3) + 2y = 24
+      3y + 9 + 2y = 24
+      5y = 15, so y = 3.
+      First number = 3 + 3 = 6.
+      Check: 3(6) + 2(3) = 18 + 6 = 24. Correct.
+
+  - number: 24
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Maria is 4 years older than twice Jake's current age. In 3 years, Maria will be
+      25 years old. How old is Jake now?
+    choices:
+      A: "7"
+      B: "8"
+      C: "9"
+      D: "10"
+    answer: C
+    explanation: |
+      If Maria will be 25 in 3 years, Maria is currently 25 - 3 = 22.
+      22 = 2 x (Jake's age) + 4
+      18 = 2 x (Jake's age)
+      Jake's age = 9.
+      Check: 2(9) + 4 = 22. Correct.
+
+  - number: 25
+    type: multiple_choice
+    topic: Algebra
+    difficulty: hard
+    question: |
+      Solve the system of equations: 2x + 3y = 16 and x + y = 7. What is the value of x?
+    choices:
+      A: "3"
+      B: "4"
+      C: "5"
+      D: "6"
+    answer: C
+    explanation: |
+      From x + y = 7: x = 7 - y.
+      Substitute into 2x + 3y = 16:
+      2(7 - y) + 3y = 16
+      14 - 2y + 3y = 16
+      y = 2, so x = 7 - 2 = 5.
+      Check: 2(5) + 3(2) = 10 + 6 = 16. Correct.
+
+  # ----------------------------------------------------------------
+  # Q26–30: Geometry — Angle Relationships
+  # ----------------------------------------------------------------
+
+  - number: 26
+    type: multiple_choice
+    topic: Geometry
+    difficulty: easy
+    question: |
+      Two lines intersect, forming vertical angles. One angle measures 65 degrees.
+      What is the measure of the vertical angle across from it?
+    choices:
+      A: "25 degrees"
+      B: "35 degrees"
+      C: "65 degrees"
+      D: "115 degrees"
+    answer: C
+    explanation: |
+      Vertical angles are always equal. If one angle is 65 degrees, its vertical angle
+      (directly across the intersection) also measures 65 degrees.
+
+  - number: 27
+    type: multiple_choice
+    topic: Geometry
+    difficulty: easy
+    question: |
+      Two angles are supplementary. One angle measures 112 degrees.
+      What is the measure of the other angle?
+    choices:
+      A: "58 degrees"
+      B: "68 degrees"
+      C: "72 degrees"
+      D: "78 degrees"
+    answer: B
+    explanation: |
+      Supplementary angles sum to 180 degrees.
+      180 - 112 = 68 degrees.
+
+  - number: 28
+    type: multiple_choice
+    topic: Geometry
+    difficulty: easy
+    question: |
+      A triangle has angles measuring 40 degrees and 75 degrees.
+      What is the measure of the third angle?
+    choices:
+      A: "55 degrees"
+      B: "60 degrees"
+      C: "65 degrees"
+      D: "75 degrees"
+    answer: C
+    explanation: |
+      The angles of a triangle sum to 180 degrees.
+      180 - 40 - 75 = 65 degrees.
+
+  - number: 29
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      An exterior angle of a triangle measures 130 degrees. One of the two non-adjacent
+      interior angles measures 55 degrees. What is the measure of the other non-adjacent
+      interior angle?
+    choices:
+      A: "50 degrees"
+      B: "65 degrees"
+      C: "75 degrees"
+      D: "80 degrees"
+    answer: C
+    explanation: |
+      The Exterior Angle Theorem states that an exterior angle of a triangle equals the
+      sum of the two non-adjacent interior angles.
+      130 = 55 + x, so x = 75 degrees.
+
+  - number: 30
+    type: multiple_choice
+    topic: Geometry
+    difficulty: easy
+    question: |
+      Two angles are complementary. One angle measures 37 degrees.
+      What is the measure of the other angle?
+    choices:
+      A: "43 degrees"
+      B: "53 degrees"
+      C: "63 degrees"
+      D: "143 degrees"
+    answer: B
+    explanation: |
+      Complementary angles sum to 90 degrees.
+      90 - 37 = 53 degrees.
+
+  # ----------------------------------------------------------------
+  # Q31–35: Geometry — Area and Perimeter
+  # ----------------------------------------------------------------
+
+  - number: 31
+    type: multiple_choice
+    topic: Geometry
+    difficulty: easy
+    question: |
+      A triangle has a base of 14 cm and a height of 9 cm. What is its area?
+    choices:
+      A: "46 sq cm"
+      B: "54 sq cm"
+      C: "63 sq cm"
+      D: "126 sq cm"
+    answer: C
+    explanation: |
+      Area of a triangle = (1/2) x base x height = (1/2) x 14 x 9 = 63 sq cm.
+
+  - number: 32
+    type: multiple_choice
+    topic: Geometry
+    difficulty: easy
+    question: |
+      A right triangle has legs of 8 m and 15 m. What is the perimeter of the triangle?
+    choices:
+      A: "30 m"
+      B: "36 m"
+      C: "40 m"
+      D: "46 m"
+    answer: C
+    explanation: |
+      Find the hypotenuse: sqrt(8^2 + 15^2) = sqrt(64 + 225) = sqrt(289) = 17 m.
+      Perimeter = 8 + 15 + 17 = 40 m.
+
+  - number: 33
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      A trapezoid has parallel bases of 10 cm and 16 cm and a height of 8 cm.
+      What is the area of the trapezoid?
+    choices:
+      A: "96 sq cm"
+      B: "100 sq cm"
+      C: "104 sq cm"
+      D: "112 sq cm"
+    answer: C
+    explanation: |
+      Area of trapezoid = (1/2) x (b1 + b2) x h = (1/2) x (10 + 16) x 8
+      = (1/2) x 26 x 8 = 104 sq cm.
+
+  - number: 34
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      A composite figure consists of a rectangle 10 m long and 6 m wide, with a right
+      triangle cut out from one corner. The triangle has legs of 4 m and 3 m.
+      What is the area of the remaining figure?
+    choices:
+      A: "50 sq m"
+      B: "54 sq m"
+      C: "56 sq m"
+      D: "60 sq m"
+    answer: B
+    explanation: |
+      Area of rectangle = 10 x 6 = 60 sq m.
+      Area of triangle removed = (1/2) x 4 x 3 = 6 sq m.
+      Remaining area = 60 - 6 = 54 sq m.
+
+  - number: 35
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      A trapezoid has four sides measuring 10 cm, 9 cm, 16 cm, and 7 cm.
+      What is its perimeter?
+    choices:
+      A: "38 cm"
+      B: "40 cm"
+      C: "42 cm"
+      D: "44 cm"
+    answer: C
+    explanation: |
+      Perimeter = sum of all four sides = 10 + 9 + 16 + 7 = 42 cm.
+
+  # ----------------------------------------------------------------
+  # Q36–38: Geometry — Circles, Cylinders, Coordinates
+  # ----------------------------------------------------------------
+
+  - number: 36
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      A circle has a radius of 7 cm. Which of the following correctly expresses its area?
+    choices:
+      A: "14pi sq cm"
+      B: "49pi sq cm"
+      C: "98pi sq cm"
+      D: "196pi sq cm"
+    answer: B
+    explanation: |
+      Area = pi x r^2 = pi x 7^2 = 49pi sq cm.
+      Using pi approximately equal to 3.14 gives approximately 153.86 sq cm.
+
+  - number: 37
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      A circle has a diameter of 10 cm. Which of the following correctly expresses
+      its circumference?
+    choices:
+      A: "5pi cm"
+      B: "10pi cm"
+      C: "20pi cm"
+      D: "100pi cm"
+    answer: B
+    explanation: |
+      Circumference = pi x diameter = pi x 10 = 10pi cm.
+      Using pi approximately equal to 3.14 gives approximately 31.4 cm.
+
+  - number: 38
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      What is the distance between the points (1, 2) and (4, 6) on a coordinate plane?
+    choices:
+      A: "4"
+      B: "5"
+      C: "6"
+      D: "7"
+    answer: B
+    explanation: |
+      Distance = sqrt((x2 - x1)^2 + (y2 - y1)^2)
+      = sqrt((4-1)^2 + (6-2)^2)
+      = sqrt(3^2 + 4^2)
+      = sqrt(9 + 16)
+      = sqrt(25) = 5.
+
+  # ----------------------------------------------------------------
+  # Q39–43: Statistics and Probability
+  # ----------------------------------------------------------------
+
+  - number: 39
+    type: multiple_choice
+    topic: Statistics
+    difficulty: easy
+    question: |
+      What is the mean of the data set {4, 7, 8, 9, 12}?
+    choices:
+      A: "7"
+      B: "8"
+      C: "9"
+      D: "10"
+    answer: B
+    explanation: |
+      Mean = sum / count = (4 + 7 + 8 + 9 + 12) / 5 = 40 / 5 = 8.
+
+  - number: 40
+    type: multiple_choice
+    topic: Statistics
+    difficulty: easy
+    question: |
+      What is the median of the data set {3, 5, 7, 9, 11}?
+    choices:
+      A: "5"
+      B: "6"
+      C: "7"
+      D: "9"
+    answer: C
+    explanation: |
+      The data set is already in order: 3, 5, 7, 9, 11. With 5 values, the median is
+      the 3rd value, which is 7.
+
+  - number: 41
+    type: multiple_choice
+    topic: Statistics
+    difficulty: easy
+    question: |
+      What is the range of the data set {12, 5, 18, 3, 9}?
+    choices:
+      A: "13"
+      B: "14"
+      C: "15"
+      D: "16"
+    answer: C
+    explanation: |
+      Range = maximum - minimum = 18 - 3 = 15.
+
+  - number: 42
+    type: multiple_choice
+    topic: Statistics
+    difficulty: medium
+    question: |
+      The mean of five numbers is 10. Four of the numbers are 8, 12, 9, and 7.
+      What is the fifth number?
+    choices:
+      A: "12"
+      B: "13"
+      C: "14"
+      D: "15"
+    answer: C
+    explanation: |
+      Sum of all 5 numbers = mean x count = 10 x 5 = 50.
+      Sum of known four = 8 + 12 + 9 + 7 = 36.
+      Fifth number = 50 - 36 = 14.
+
+  - number: 43
+    type: multiple_choice
+    topic: Statistics
+    difficulty: medium
+    question: |
+      A bag contains 4 red marbles, 5 blue marbles, and 3 green marbles. One marble is
+      chosen at random. What is the probability that it is NOT blue?
+    choices:
+      A: "5/12"
+      B: "7/12"
+      C: "5/7"
+      D: "7/9"
+    answer: B
+    explanation: |
+      Total marbles = 4 + 5 + 3 = 12.
+      Non-blue marbles = 4 + 3 = 7.
+      P(not blue) = 7/12.
+
+  # ----------------------------------------------------------------
+  # Q44–49: Word Problems — Ratio, Rate, Mixture, Work
+  # ----------------------------------------------------------------
+
+  - number: 44
+    type: multiple_choice
+    topic: Ratios and Rates
+    difficulty: medium
+    question: |
+      The ratio of boys to girls in a class is 3:5. If there are 40 students total,
+      how many are boys?
+    choices:
+      A: "12"
+      B: "15"
+      C: "20"
+      D: "24"
+    answer: B
+    explanation: |
+      Total parts = 3 + 5 = 8. Each part = 40 / 8 = 5 students.
+      Boys = 3 x 5 = 15.
+
+  - number: 45
+    type: multiple_choice
+    topic: Ratios and Rates
+    difficulty: easy
+    question: |
+      A car travels 180 miles in 3 hours. At this rate, how many miles will it travel
+      in 5 hours?
+    choices:
+      A: "240 miles"
+      B: "280 miles"
+      C: "300 miles"
+      D: "360 miles"
+    answer: C
+    explanation: |
+      Rate = 180 / 3 = 60 miles per hour.
+      In 5 hours: 60 x 5 = 300 miles.
+
+  - number: 46
+    type: multiple_choice
+    topic: Mixtures
+    difficulty: hard
+    question: |
+      A chemist has a 30% acid solution and a 50% acid solution. She wants to make
+      20 liters of a 40% acid solution. How many liters of the 30% solution should she use?
+    choices:
+      A: "8 liters"
+      B: "10 liters"
+      C: "12 liters"
+      D: "14 liters"
+    answer: B
+    explanation: |
+      Let x = liters of 30% solution. Then (20 - x) = liters of 50% solution.
+      0.30x + 0.50(20 - x) = 0.40 x 20
+      0.30x + 10 - 0.50x = 8
+      -0.20x = -2
+      x = 10 liters.
+      Check: 0.30(10) + 0.50(10) = 3 + 5 = 8 = 0.40 x 20. Correct.
+
+  - number: 47
+    type: multiple_choice
+    topic: Work Rate
+    difficulty: hard
+    question: |
+      Pipe A can fill a tank in 6 hours. Pipe B can fill the same tank in 4 hours.
+      If both pipes work together, how long will it take to fill the tank?
+    choices:
+      A: "2 hours"
+      B: "2 hours 24 minutes"
+      C: "3 hours"
+      D: "5 hours"
+    answer: B
+    explanation: |
+      Combined rate = 1/6 + 1/4 = 2/12 + 3/12 = 5/12 of the tank per hour.
+      Time = 1 / (5/12) = 12/5 = 2.4 hours = 2 hours 24 minutes.
+
+  - number: 48
+    type: multiple_choice
+    topic: Ratios and Rates
+    difficulty: medium
+    question: |
+      The ratio of boys to girls in a school is 5:3. If the total number of students
+      is 160, how many are boys?
+    choices:
+      A: "60"
+      B: "80"
+      C: "100"
+      D: "120"
+    answer: C
+    explanation: |
+      Total parts = 5 + 3 = 8. Each part = 160 / 8 = 20.
+      Boys = 5 x 20 = 100.
+
+  - number: 49
+    type: multiple_choice
+    topic: Ratios and Rates
+    difficulty: medium
+    question: |
+      A recipe calls for 2 cups of flour for every 3 cups of oats. If you want to use
+      9 cups of oats, how many cups of flour do you need?
+    choices:
+      A: "4"
+      B: "5"
+      C: "6"
+      D: "7"
+    answer: C
+    explanation: |
+      Set up a proportion: 2/3 = x/9.
+      Cross-multiply: 3x = 18, so x = 6 cups of flour.
+
+  # ----------------------------------------------------------------
+  # Q50–52: Hard Mixed Problems
+  # ----------------------------------------------------------------
+
+  - number: 50
+    type: multiple_choice
+    topic: Number Theory
+    difficulty: hard
+    question: |
+      When a positive integer n is divided by 7, the remainder is 4. When 3n is divided
+      by 7, what is the remainder?
+    choices:
+      A: "3"
+      B: "5"
+      C: "6"
+      D: "12"
+    answer: B
+    explanation: |
+      Since n divided by 7 gives remainder 4, write n = 7k + 4 for some integer k.
+      Then 3n = 3(7k + 4) = 21k + 12.
+      21k is divisible by 7. Find the remainder of 12 / 7: 12 = 7(1) + 5.
+      So 3n divided by 7 has remainder 5.
+      Verify with n = 4: 3(4) = 12; 12 / 7 = 1 remainder 5. Correct.
+
+  - number: 51
+    type: multiple_choice
+    topic: Sequences
+    difficulty: hard
+    question: |
+      The first term of a sequence is 3. Each term after the first is 5 more than twice
+      the previous term. What is the 4th term of the sequence?
+    choices:
+      A: "51"
+      B: "59"
+      C: "65"
+      D: "71"
+    answer: B
+    explanation: |
+      Term 1 = 3.
+      Term 2 = 2(3) + 5 = 11.
+      Term 3 = 2(11) + 5 = 27.
+      Term 4 = 2(27) + 5 = 59.
+
+  - number: 52
+    type: multiple_choice
+    topic: Percents
+    difficulty: hard
+    question: |
+      A store first increases the price of an item by 25%, then increases the new price
+      by another 20%. What is the overall percent increase from the original price?
+    choices:
+      A: "40%"
+      B: "45%"
+      C: "50%"
+      D: "55%"
+    answer: C
+    explanation: |
+      Start with $100.
+      After 25% increase: $100 x 1.25 = $125.
+      After 20% increase: $125 x 1.20 = $150.
+      Overall increase = $50 on a $100 original = 50% increase.
+
+  # ================================================================
+  # MATH — Questions 53–57: Grid-In
+  # ================================================================
+
+  - number: 53
+    type: grid_in
+    topic: Number Properties
+    difficulty: medium
+    question: |
+      What is the value of 2^5 + 3^2?
+    choices: {}
+    answer: "41"
+    explanation: |
+      2^5 = 2 x 2 x 2 x 2 x 2 = 32.
+      3^2 = 9.
+      32 + 9 = 41.
+
+  - number: 54
+    type: grid_in
+    topic: Geometry
+    difficulty: medium
+    question: |
+      A rectangle has a length of 12 cm and a width of 5 cm.
+      What is the length of its diagonal, in centimeters?
+    choices: {}
+    answer: "13"
+    explanation: |
+      The diagonal is the hypotenuse of a right triangle with legs 12 and 5.
+      d = sqrt(12^2 + 5^2) = sqrt(144 + 25) = sqrt(169) = 13 cm.
+
+  - number: 55
+    type: grid_in
+    topic: Algebra
+    difficulty: medium
+    question: |
+      If 3(2x - 4) = 2(x + 6), what is the value of x?
+    choices: {}
+    answer: "6"
+    explanation: |
+      3(2x - 4) = 2(x + 6)
+      6x - 12 = 2x + 12
+      4x = 24
+      x = 6.
+      Check: 3(2(6)-4) = 3(8) = 24 and 2(6+6) = 2(12) = 24. Correct.
+
+  - number: 56
+    type: grid_in
+    topic: Counting
+    difficulty: hard
+    question: |
+      A student must choose 2 different subjects from a list of 7 subjects.
+      How many different pairs of subjects are possible?
+    choices: {}
+    answer: "21"
+    explanation: |
+      The number of ways to choose 2 subjects from 7 where order does not matter is:
+      C(7,2) = 7! / (2! x 5!) = (7 x 6) / (2 x 1) = 42 / 2 = 21.
+
+  - number: 57
+    type: grid_in
+    topic: Algebra
+    difficulty: hard
+    question: |
+      The sum of three consecutive even integers is 78. What is the largest of the
+      three integers?
+    choices: {}
+    answer: "28"
+    explanation: |
+      Let the three consecutive even integers be n, n+2, and n+4.
+      n + (n+2) + (n+4) = 78
+      3n + 6 = 78
+      3n = 72
+      n = 24.
+      The three integers are 24, 26, and 28. The largest is 28.
+      Check: 24 + 26 + 28 = 78. Correct.

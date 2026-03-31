@@ -1,0 +1,46 @@
+{% extends "shsat/base_shsat.html" %}
+
+{% block title %}{{ test.title }} — SHSAT Workshop{% endblock %}
+{% block tab_tests %}active{% endblock %}
+
+{% block shsat_content %}
+<div class="shsat-intro">
+  <h1 class="shsat-page-title">{{ test.title }}</h1>
+  <p class="shsat-page-subtitle">Read the rules below before you begin.</p>
+
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">ELA questions</div>
+    <div>{{ ela_count }}</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Math questions</div>
+    <div>{{ math_count }}</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Time allowed</div>
+    <div>{{ duration_hours }} hours (timer shown; no hard cutoff)</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Scoring</div>
+    <div>Only 47 of 57 questions per section are scored. All 57 shown; conservative scaling applied.</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Saving answers</div>
+    <div>Answers save automatically as you click. You can pause and return at any time.</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Flagging</div>
+    <div>Click the flag button on any question to mark it for review.</div>
+  </div>
+
+  <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;">
+    {% if in_progress %}
+    <a href="{% url 'shsat_test_take' test.id %}" class="shsat-btn">Resume test</a>
+    <span style="font-size:13px;color:rgba(0,0,0,0.5);align-self:center;">In-progress attempt found</span>
+    {% else %}
+    <a href="{% url 'shsat_test_take' test.id %}" class="shsat-btn">Begin test</a>
+    {% endif %}
+    <a href="{% url 'shsat_test_list' %}" class="shsat-btn shsat-btn--outline">Back to tests</a>
+  </div>
+</div>
+{% endblock %}

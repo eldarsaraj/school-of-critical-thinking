@@ -1,0 +1,123 @@
+# SHSAT Question File Format
+# ============================================================
+# Run:  python manage.py import_test questions_format.yaml
+# Use:  python manage.py import_test path/to/your_test.yaml
+#
+# Rules:
+#   - question numbers must be 1-57 for each section
+#   - answer must be A, B, C, or D
+#   - for passage questions, set passage_id on each question
+#     that shares the passage; define the passage once (first q)
+#   - difficulty: easy | medium | hard
+#   - type: multiple_choice | grid_in (grid_in has no choices)
+# ============================================================
+
+title: "Practice Test 1"
+source: "School of Critical Thinking"
+is_free: true
+order: 1
+
+ela:
+  # --- Standalone question (no passage) ---
+  - number: 1
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Which of the following is the best way to combine the two sentences?
+
+      The team trained hard. They won the championship.
+    choices:
+      A: "The team trained hard, so they won the championship."
+      B: "The team trained hard they won the championship."
+      C: "The team trained hard; however, they won the championship."
+      D: "Although the team trained hard, they won the championship."
+    answer: A
+    explanation: |
+      The two ideas have a cause-and-effect relationship. "So" correctly
+      joins them. "However" implies contrast, which is wrong here.
+
+  # --- Passage-based questions ---
+  # Define the passage text on the FIRST question that uses it.
+  # All subsequent questions with the same passage_id share it.
+  - number: 2
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    passage_title: "The Quiet Revolution"
+    passage_text: |
+      For decades, scientists dismissed the idea that trees could
+      communicate. Then, in the 1980s, a series of studies showed
+      that trees under attack by insects release chemical signals
+      that neighbouring trees detect and respond to by producing
+      defensive compounds. Critics called it coincidence. It wasn't.
+
+      Today, researchers speak of the "wood wide web" — a network
+      of underground fungi that connects tree roots across an entire
+      forest. Through this network, trees share nutrients and send
+      warning signals. Older trees, it turns out, preferentially
+      support their own offspring. The forest, once thought of as
+      a collection of competing individuals, is better understood
+      as a cooperative community.
+    question: |
+      According to the passage, what did early studies in the 1980s show?
+    choices:
+      A: "Trees compete aggressively with neighbouring plants for nutrients."
+      B: "Fungi form underground networks that connect tree roots."
+      C: "Trees release chemicals that warn nearby trees of insect attacks."
+      D: "Older trees send extra nutrients to their youngest offspring."
+    answer: C
+    explanation: |
+      The passage states: "trees under attack by insects release chemical
+      signals that neighbouring trees detect and respond to." Choice B
+      describes a later discovery; D is a detail about preference, not
+      the 1980s finding.
+
+  - number: 3
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_1   # same passage — no need to repeat text
+    question: |
+      The author's use of the phrase "wood wide web" (paragraph 2)
+      primarily serves to:
+    choices:
+      A: "Introduce a technical term used by mycologists."
+      B: "Suggest that the forest's network resembles the internet in its reach and function."
+      C: "Criticise scientists who ignored early evidence of tree communication."
+      D: "Describe the appearance of fungal threads under a microscope."
+    answer: B
+    explanation: |
+      The phrase is a metaphor comparing the underground fungal network
+      to the World Wide Web — implying interconnection and information-
+      sharing across the whole forest. It's evocative, not technical.
+
+math:
+  - number: 1
+    type: multiple_choice
+    topic: Algebra
+    difficulty: easy
+    question: "If 5x + 3 = 28, what is the value of x?"
+    choices:
+      A: "3"
+      B: "4"
+      C: "5"
+      D: "6"
+    answer: C
+    explanation: "5x + 3 = 28 → 5x = 25 → x = 5."
+
+  - number: 2
+    type: multiple_choice
+    topic: Geometry
+    difficulty: medium
+    question: |
+      A right triangle has legs of length 8 and 15.
+      What is the length of its hypotenuse?
+    choices:
+      A: "16"
+      B: "17"
+      C: "18"
+      D: "19"
+    answer: B
+    explanation: "√(8² + 15²) = √(64 + 225) = √289 = 17."

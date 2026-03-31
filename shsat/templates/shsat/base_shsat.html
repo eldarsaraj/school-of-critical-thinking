@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}SHSAT Workshop — {{ block.super }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'shsat/css/shsat.css' %}">
+
+<div class="shsat-wrap">
+
+  {% if user.is_authenticated %}
+  <nav class="shsat-tabs" aria-label="SHSAT Workshop sections">
+    <a href="{% url 'shsat_dashboard' %}" class="shsat-tab {% block tab_dashboard %}{% endblock %}">Dashboard</a>
+    <a href="{% url 'shsat_test_list' %}" class="shsat-tab {% block tab_tests %}{% endblock %}">Practice Tests</a>
+    <a href="{% url 'shsat_log_score' %}" class="shsat-tab {% block tab_log %}{% endblock %}">Log Score</a>
+    <a href="{% url 'shsat_resources' %}" class="shsat-tab {% block tab_resources %}{% endblock %}">Resources</a>
+    <a href="{% url 'shsat_account' %}" class="shsat-tab {% block tab_account %}{% endblock %}">Account</a>
+  </nav>
+  {% endif %}
+
+  {% if messages %}
+  <ul class="shsat-messages">
+    {% for message in messages %}
+    <li class="shsat-message shsat-message--{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% block shsat_content %}{% endblock %}
+
+</div>
+{% endblock %}

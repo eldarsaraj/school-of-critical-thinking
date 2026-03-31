@@ -1,0 +1,30 @@
+{% extends "shsat/base_shsat.html" %}
+{% load static %}
+
+{% block title %}SHSAT Workshop — The School of Critical Thinking{% endblock %}
+
+{% block shsat_content %}
+<link rel="stylesheet" href="{% static 'shsat/css/shsat.css' %}">
+<div class="shsat-landing-hero">
+  <h1>SHSAT Practice. Built for serious prep.</h1>
+  <p>Full-length practice tests with instant scoring, school placement estimates, and a progress dashboard — all in one place.</p>
+
+  <ul class="shsat-landing-features">
+    <li>Full-length ELA + Math practice tests (57 questions each)</li>
+    <li>Instant scaled scores with conservative, honest estimates</li>
+    <li>School placement table — see where you stand vs. 2025 cutoffs</li>
+    <li>Progress dashboard and score history</li>
+    <li>Log scores from any test book</li>
+    <li>One free test. No credit card required.</li>
+  </ul>
+
+  <div style="display:flex; gap:12px; flex-wrap:wrap;">
+    <a href="{% url 'shsat_signup' %}" class="shsat-btn">Start free — create account</a>
+    <a href="{% url 'shsat_login' %}" class="shsat-btn shsat-btn--outline">Log in</a>
+  </div>
+
+  <p style="font-size:13px; color:rgba(0,0,0,0.4); margin-top:20px;">
+    Scores labelled "Estimated score. Actual SHSAT scaling varies by year and is not published by the DOE."
+  </p>
+</div>
+{% endblock %}

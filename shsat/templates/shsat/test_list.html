@@ -1,0 +1,40 @@
+{% extends "shsat/base_shsat.html" %}
+
+{% block title %}Practice Tests — SHSAT Workshop{% endblock %}
+{% block tab_tests %}active{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">Practice Tests</h1>
+<p class="shsat-page-subtitle">Full-length ELA + Math tests. Each test takes up to 3 hours.</p>
+
+{% if not tests %}
+<p style="color:rgba(0,0,0,0.5);">No tests published yet. Check back soon.</p>
+{% else %}
+<ul class="shsat-test-list">
+  {% for test in tests %}
+  <li class="shsat-test-item">
+    <div>
+      <div class="shsat-test-item__title">{{ test.title }}</div>
+      <div class="shsat-test-item__meta">
+        {{ test.total_questions }} questions
+        {% if test.source %} · {{ test.source }}{% endif %}
+        {% if not test.is_free %} · <span style="color:rgba(0,0,0,0.4);">Premium</span>{% endif %}
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      {% if test.id in completed_ids %}
+        <span class="shsat-badge shsat-badge--done">Done</span>
+      {% endif %}
+      {% if test.is_free or tests_taken < free_limit %}
+        <a href="{% url 'shsat_test_intro' test.id %}" class="shsat-btn shsat-btn--outline">
+          {% if test.id in completed_ids %}Retake{% else %}Start{% endif %}
+        </a>
+      {% else %}
+        <span class="shsat-badge">Upgrade required</span>
+      {% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

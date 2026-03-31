@@ -1,0 +1,1812 @@
+title: "Practice Test 1"
+source: "School of Critical Thinking"
+is_free: true
+is_published: true
+order: 1
+
+ela:
+  # ================================================================
+  # PART 1 — REVISING / EDITING (Questions 1–20)
+  # ================================================================
+
+  - number: 1
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below and choose the best revision.
+
+      "The students was excited about the upcoming science fair."
+    choices:
+      A: "The students was exciting about the upcoming science fair."
+      B: "The students were excited about the upcoming science fair."
+      C: "The student was excited about the upcoming science fair."
+      D: "The students are excited about the upcoming science fair, now."
+    answer: B
+    explanation: "The plural subject 'students' requires the plural verb 'were.' Choice C changes the number of students, and D shifts to present tense unnecessarily."
+
+  - number: 2
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Which revision best corrects the underlined portion?
+
+      "Each of the players must bring their own equipment to practice."
+    choices:
+      A: "his or her own equipment"
+      B: "its own equipment"
+      C: "our own equipment"
+      D: "No revision needed."
+    answer: D
+    explanation: "Using 'their' as a singular gender-neutral pronoun is widely accepted in standard usage and matches 'each of the players.' No revision is needed."
+
+  - number: 3
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Select the best way to combine the following two sentences into one.
+
+      "The river flooded overnight. Many roads became impassable."
+    choices:
+      A: "The river flooded overnight, but many roads became impassable."
+      B: "The river flooded overnight, so many roads became impassable."
+      C: "The river flooded overnight; however, many roads became impassable."
+      D: "The river flooded overnight because many roads became impassable."
+    answer: B
+    explanation: "The two ideas have a cause-and-effect relationship. 'So' correctly links them. 'But' implies contrast, 'however' implies contrast, and D reverses cause and effect."
+
+  - number: 4
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which of the following is a an incorrectly structured sentence?
+    choices:
+      A: "The cat sat on the mat, and it watched the birds outside."
+      B: "Although it was raining, she went for a run."
+      C: "He studied for hours he still failed the test."
+      D: "The storm passed quickly, leaving clear skies behind."
+    answer: C
+    explanation: "Choice C joins two independent clauses ('He studied for hours' and 'he still failed the test') without any punctuation or conjunction — a run-on sentence."
+
+  - number: 5
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which revision best improves the sentence?
+
+      "She enjoys hiking, to swim, and cooking on weekends."
+    choices:
+      A: "hiking, swimming, and cooking"
+      B: "to hike, to swim, and cooking"
+      C: "hikes, swims, and cooks"
+      D: "hiking, to swim, and to cook"
+    answer: A
+    explanation: "For parallel structure, all items in a list must use the same grammatical form. Choice A uses three gerunds: hiking, swimming, cooking."
+
+  - number: 6
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Identify the poorly written sentence.
+    choices:
+      A: "The chef carefully arranged the plates before serving dinner."
+      B: "Running down the street, the keys fell out of her pocket."
+      C: "The dog barked loudly at every car that passed."
+      D: "After finishing his homework, Marcus watched television."
+    answer: B
+    explanation: "The phrase 'Running down the street' must modify the subject of the main clause. 'Keys' cannot run — the sentence implies a person was running but does not name one."
+
+  - number: 7
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Choose the transition word or phrase that best fills the blank.
+
+      "The experiment initially appeared to fail. _______, the results turned out to be groundbreaking."
+    choices:
+      A: "Therefore"
+      B: "For example"
+      C: "However"
+      D: "Similarly"
+    answer: C
+    explanation: "'However' signals a contrast or reversal, matching the contrast between initial failure and eventual success. 'Therefore' implies a logical consequence in the same direction."
+
+  - number: 8
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Which of the following is a sentence fragment?
+    choices:
+      A: "The tall oak tree swayed in the wind."
+      B: "Although the sky turned dark and the thunder rumbled loudly."
+      C: "She quietly left the room before the meeting ended."
+      D: "The train arrived ten minutes late."
+    answer: B
+    explanation: "Choice B begins with a subordinating conjunction ('Although') but has no independent clause — it cannot stand alone as a complete sentence."
+
+  - number: 9
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which word best replaces the underlined word to make the sentence more precise?
+
+      "The scientist made an important discovery about the behaviour of black holes."
+    choices:
+      A: "created"
+      B: "found"
+      C: "achieved"
+      D: "produced"
+    answer: B
+    explanation: "'Found' (or 'discovered') is the most precise word for identifying something previously unknown. 'Made' is vague, 'achieved' implies effort toward a goal, and 'produced' implies manufacturing."
+
+  - number: 10
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Choose the option that correctly uses an apostrophe.
+    choices:
+      A: "The dog wagged it's tail."
+      B: "The childrens' playground was rebuilt last year."
+      C: "The captain's quarters were on the upper deck."
+      D: "The three student's projects were displayed."
+    answer: C
+    explanation: "'Captain's' correctly shows singular possession. 'It's' means 'it is' (should be 'its'). 'Childrens'' is wrong — the irregular plural 'children' takes 'children's.' 'Student's' should be 'students'' for plural."
+
+  - number: 11
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Which revision eliminates the redundancy in the sentence below?
+
+      "In my personal opinion, the film was too long and overly drawn out."
+    choices:
+      A: "In my opinion, the film was too long."
+      B: "In my personal opinion, the film was overly long."
+      C: "Personally, I think the film was long and drawn out in my view."
+      D: "The film, in my personal view and opinion, was too long."
+    answer: A
+    explanation: "'In my opinion' already implies a personal view, so 'personal' is redundant. 'Too long' and 'overly drawn out' say the same thing — eliminating one tightens the sentence."
+
+  - number: 12
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which sentence is the clearest and most concise?
+    choices:
+      A: "Due to the fact that it was raining, the event was postponed."
+      B: "Because it was raining, the event was postponed."
+      C: "Owing to the rainy conditions that were present, a postponement of the event occurred."
+      D: "The event, due to rain falling, had its date postponed to a later time."
+    answer: B
+    explanation: "'Because' is a single word that replaces the wordy phrase 'due to the fact that.' Choice B is direct, grammatically correct, and avoids unnecessary padding."
+
+  - number: 13
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which revision corrects the inconsistent verb tense in the sentence below?
+
+      "She opened the door, stepped inside, and greets her grandmother warmly."
+    choices:
+      A: "She opens the door, stepped inside, and greeted her grandmother warmly."
+      B: "She opened the door, stepped inside, and greeted her grandmother warmly."
+      C: "She has opened the door, stepped inside, and greets her grandmother warmly."
+      D: "She was opening the door, stepped inside, and greeted her grandmother warmly."
+    answer: B
+    explanation: "All three verbs should be in the simple past tense to maintain consistency: 'opened,' 'stepped,' and 'greeted.'"
+
+  - number: 14
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the following paragraph and choose the sentence that does NOT belong.
+
+      (1) The Amazon rainforest is one of the most biodiverse places on Earth. (2) Scientists estimate it contains roughly 10% of all species on the planet. (3) The Mississippi River is the longest river in North America. (4) Deforestation threatens thousands of these species every year.
+    choices:
+      A: "Sentence 1"
+      B: "Sentence 2"
+      C: "Sentence 3"
+      D: "Sentence 4"
+    answer: C
+    explanation: "Sentence 3 introduces a completely unrelated topic (the Mississippi River) and breaks the paragraph's focus on the Amazon rainforest and its biodiversity."
+
+  - number: 15
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Which revision best corrects the dangling modifier in the sentence below?
+
+      "Determined to finish on time, the project deadline was moved up by the manager."
+    choices:
+      A: "Determined to finish on time, the manager moved up the project deadline."
+      B: "The project deadline was moved up, determined to finish on time, by the manager."
+      C: "Being determined, the project's deadline was moved up on time."
+      D: "Determined was the manager, moving up the project deadline on time."
+    answer: A
+    explanation: "The participial phrase 'Determined to finish on time' must modify the subject of the main clause — the manager, not the deadline. Only Choice A places 'the manager' immediately after the comma."
+
+  - number: 16
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Choose the sentence that best combines the three sentences below into one clear, concise sentence.
+
+      "Marcus trained every morning. He trained even when it rained. He wanted to qualify for the championship."
+    choices:
+      A: "Marcus trained every morning even when it rained, wanting to qualify for the championship."
+      B: "Even though it rained, Marcus trained every morning because he wanted to qualify for the championship."
+      C: "Marcus trained every morning, and he trained even when it rained, and he wanted to qualify."
+      D: "Wanting to qualify for the championship, Marcus trained every morning, rain or shine."
+    answer: D
+    explanation: "Choice D is the most concise — it eliminates redundancy, uses a participial phrase for the motivation, and captures 'even when it rained' with the idiom 'rain or shine.'"
+
+  - number: 17
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which sentence uses the correct pronoun case?
+    choices:
+      A: "The award was given to she and her partner."
+      B: "Between you and I, the decision was wrong."
+      C: "Her and Marcus finished the race together."
+      D: "The judges gave the highest score to him and his partner."
+    answer: D
+    explanation: "After the preposition 'to,' objective case pronouns are required: 'him,' not 'he.' Choices A and C use subjective pronouns where objective are needed; B incorrectly uses 'I' after 'between.'"
+
+  - number: 18
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Which revision best improves the following sentence by making it more specific and vivid?
+
+      "The old building was in bad condition."
+    choices:
+      A: "The old building was very bad."
+      B: "The building, which was old, had a bad condition that was noticeable."
+      C: "The century-old factory sagged under rotting beams and shattered windows."
+      D: "The old building had many problems that made it seem bad."
+    answer: C
+    explanation: "Choice C replaces vague language ('old,' 'bad condition') with specific, concrete details ('century-old,' 'rotting beams,' 'shattered windows'), making the description vivid and precise."
+
+  - number: 19
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Read the paragraph below and choose the best sentence to add at the beginning to serve as a topic sentence.
+
+      "_______ Studies show that students who read for pleasure score higher on standardised tests. Reading also builds vocabulary that benefits every school subject. Moreover, regular readers tend to develop stronger empathy by inhabiting the perspectives of characters unlike themselves."
+    choices:
+      A: "Books can be found in libraries and bookstores around the world."
+      B: "Reading for fun is one of the most valuable habits a student can develop."
+      C: "Many students do not enjoy reading because it takes time and effort."
+      D: "Schools should require students to read at least one book each month."
+    answer: B
+    explanation: "The paragraph lists academic and personal benefits of recreational reading. Choice B introduces this idea directly and sets up the supporting evidence that follows."
+
+  - number: 20
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Which transition best fills the blank to show logical contrast?
+
+      "The new policy was praised by economists for its efficiency. _______, many community groups argued it would harm vulnerable residents."
+    choices:
+      A: "Furthermore"
+      B: "As a result"
+      C: "Nevertheless"
+      D: "In other words"
+    answer: C
+    explanation: "'Nevertheless' signals that a contrasting point follows despite what was said before. 'Furthermore' adds information in the same direction, 'as a result' implies consequence, and 'in other words' signals restatement."
+
+  # ================================================================
+  # PART 2 — READING COMPREHENSION
+  # ================================================================
+
+  # --- PASSAGE 1: Fiction — "The Last Chair" (Questions 21–27) ---
+
+  - number: 21
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    passage_title: "The Last Chair"
+    passage_text: |
+      Maya had been playing the violin since she was four years old. She loved it in the way
+      children love things they have never chosen — completely, without question. But at thirteen,
+      a new feeling had crept in: doubt.
+
+      The regional orchestra audition was two weeks away. Every night, Maya practised the
+      Brahms concerto until her fingers cramped. She could play every note. She knew that.
+      What she could not control was the trembling that seized her bow arm the moment she
+      stepped onto a stage.
+
+      On the night before the audition, her grandmother sat beside her on the bench.
+      "Play it for me," she said simply.
+
+      "But I keep making mistakes in front of people," Maya said.
+
+      "Then make your mistakes in front of me," her grandmother replied. "I am people too."
+
+      Maya played. She stumbled on the third passage, the same place she always stumbled.
+      Her grandmother said nothing. When the piece ended, she placed her hand over Maya's.
+
+      "The mistake is part of you now," she grandmother said. "When you walk on that stage,
+      you will not be trying to avoid it. You will have already lived through it."
+
+      The next day, Maya sat in the audition hall, bow in hand. When the trembling came, she
+      did not fight it. She thought of her grandmother's hand over hers and played straight
+      through the passage that had always stopped her.
+
+      She did not know if she had won a chair. What she knew was that she had played.
+    question: |
+      What does the phrase "love things they have never chosen" (paragraph 1) suggest about Maya's relationship with the violin?
+    choices:
+      A: "She regrets having been forced to play violin by her parents."
+      B: "Her love for the violin is natural and unquestioned, not the result of a deliberate decision."
+      C: "She wishes she had chosen to play a different instrument."
+      D: "She has always struggled with the discipline required to practise."
+    answer: B
+    explanation: "The phrase describes unconditional, instinctive love — the kind children feel before they analyse their choices. It implies her connection to the violin is deep and untested, not forced or regretted."
+
+  - number: 22
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    question: |
+      What is Maya's main problem in the story?
+    choices:
+      A: "She does not know the notes of the Brahms concerto."
+      B: "Her grandmother refuses to listen to her practise."
+      C: "She becomes physically tense and makes mistakes when performing in front of others."
+      D: "She is not old enough to compete in the regional orchestra audition."
+    answer: C
+    explanation: "The story explicitly states Maya 'could play every note' but that a 'trembling seized her bow arm' on stage. Her problem is performance anxiety, not technical skill."
+
+  - number: 23
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_1
+    question: |
+      What does the grandmother mean when she says, "The mistake is part of you now"?
+    choices:
+      A: "Maya will always make the same mistake and should accept failure."
+      B: "By living through the mistake in a low-stakes setting, Maya has made it familiar and less frightening."
+      C: "Mistakes are permanent and cannot be corrected with more practice."
+      D: "The grandmother believes Maya played perfectly and made no real mistake."
+    answer: B
+    explanation: "The grandmother's logic is that experiencing the mistake in front of her — in a safe environment — means Maya has already survived it. She won't be avoiding the unknown; she'll be replaying something she has already handled."
+
+  - number: 24
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    question: |
+      How does Maya's behaviour at the audition differ from her behaviour during previous performances?
+    choices:
+      A: "She plays faster and with more technical precision."
+      B: "She ignores the trembling instead of letting it stop her."
+      C: "She asks the judges if she can start again after stumbling."
+      D: "She refuses to play the difficult passage."
+    answer: B
+    explanation: "The story says 'When the trembling came, she did not fight it' — she acknowledged it and continued playing. Previously, the trembling had 'seized' her and caused stumbles she could not recover from."
+
+  - number: 25
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    question: |
+      The sentence "She did not know if she had won a chair" most likely means:
+    choices:
+      A: "Maya forgot to bring a chair to the audition hall."
+      B: "Maya was uncertain whether she had earned a seat in the orchestra."
+      C: "Maya was confused about the rules of the competition."
+      D: "Maya performed so well that the result no longer mattered."
+    answer: B
+    explanation: "In orchestral auditions, 'winning a chair' means earning a place (a seat) in the orchestra. The sentence means Maya did not know if she had been selected."
+
+  - number: 26
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_1
+    question: |
+      Which best describes the theme of this story?
+    choices:
+      A: "Natural talent is more important than practice."
+      B: "Competition brings out the worst in young musicians."
+      C: "Facing your fears in a safe space prepares you to face them in high-stakes situations."
+      D: "Grandparents are always the best source of advice for young people."
+    answer: C
+    explanation: "The story's central arc is Maya practising failure — not success — with her grandmother, so that she can face the same moment on stage with familiarity rather than dread. This is the core lesson."
+
+  - number: 27
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_1
+    question: |
+      What does Maya's final realisation — "What she knew was that she had played" — reveal about her?
+    choices:
+      A: "She has given up on the dream of winning and will quit violin."
+      B: "She has shifted her measure of success from outcome to participation."
+      C: "She believes she played poorly and is trying to comfort herself."
+      D: "She realises the audition was unfair and the result would be wrong."
+    answer: B
+    explanation: "The final line signals a shift in Maya's values: completing the performance — playing through her fear — has become the achievement, regardless of whether she won a seat."
+
+  # --- PASSAGE 2: Nonfiction/Science — "Light in the Dark" (Questions 28–34) ---
+
+  - number: 28
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    passage_title: "Light in the Dark"
+    passage_text: |
+      At depths beyond 200 metres, sunlight cannot penetrate the ocean. The water is near-freezing,
+      pressure is crushing, and food is scarce. It seems an impossible environment for life. Yet the
+      deep sea is teeming with creatures that have solved these challenges in the most spectacular
+      way possible: they make their own light.
+
+      This biological ability to produce and emit light is called bioluminescence. It is far more
+      common than most people realise. Scientists estimate that over 76% of deep-sea species are
+      bioluminescent. The mechanism relies on a chemical reaction between a compound called luciferin
+      and an enzyme called luciferase. When the two interact in the presence of oxygen, light is
+      released — no heat, no wasted energy. Engineers have called it "cold light."
+
+      The purposes bioluminescence serves are as varied as the creatures that use it. Some species
+      use light to attract prey: the anglerfish dangles a glowing lure above its mouth, drawing
+      smaller fish toward it. Others use light to escape predators — the vampire squid, when
+      threatened, releases a cloud of glowing mucus that disorients attackers. A few species use
+      synchronised flashing to find mates, turning the dark ocean floor into a living light show.
+
+      Bioluminescence has inspired technology far beyond the ocean. Researchers have used luciferase
+      to make cancer cells glow in laboratory settings, making tumours far easier to locate and study.
+      The same chemical process has been adapted to detect bacterial contamination in food and water.
+      What evolved over millions of years as a survival strategy in the deep sea has become one of
+      biotechnology's most powerful tools.
+    question: |
+      According to the passage, what percentage of deep-sea species are bioluminescent?
+    choices:
+      A: "More than 50%"
+      B: "Exactly 76%"
+      C: "Over 76%"
+      D: "Fewer than 76%"
+    answer: C
+    explanation: "The passage states 'over 76% of deep-sea species are bioluminescent.' 'Over' means more than, not exactly 76%."
+
+  - number: 29
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    question: |
+      Why do engineers call bioluminescence "cold light"?
+    choices:
+      A: "Because it is found only in cold, deep-sea environments."
+      B: "Because the chemical reaction produces light without generating heat."
+      C: "Because the light is blue and appears cold compared to sunlight."
+      D: "Because it is created at near-freezing temperatures."
+    answer: B
+    explanation: "The passage explains that the luciferin–luciferase reaction produces light with 'no heat, no wasted energy,' which is why engineers call it cold light. It is about thermal efficiency, not colour or temperature of the environment."
+
+  - number: 30
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2
+    question: |
+      How does the anglerfish's use of bioluminescence differ from the vampire squid's use?
+    choices:
+      A: "The anglerfish uses light to find mates; the vampire squid uses it for camouflage."
+      B: "The anglerfish uses light to attract prey; the vampire squid uses it to escape predators."
+      C: "The anglerfish uses light to escape; the vampire squid uses it to attract prey."
+      D: "Both use light for the same purpose but in different parts of the ocean."
+    answer: B
+    explanation: "The passage explicitly states the anglerfish uses a 'glowing lure' to draw prey, while the vampire squid releases glowing mucus to 'disorient attackers' — a defensive escape mechanism."
+
+  - number: 31
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    question: |
+      What is the main purpose of the final paragraph?
+    choices:
+      A: "To introduce new deep-sea creatures not mentioned earlier."
+      B: "To explain how bioluminescence works chemically."
+      C: "To show how a natural adaptation has been applied to human technology."
+      D: "To argue that ocean conservation is important for medical research."
+    answer: C
+    explanation: "The final paragraph shifts from describing bioluminescence in animals to describing its applications in biotechnology — cancer research and food safety testing — illustrating how nature's invention has been adopted by humans."
+
+  - number: 32
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2
+    question: |
+      The passage states that the deep sea "seems an impossible environment for life." What writing technique does this represent?
+    choices:
+      A: "A factual claim that the author later contradicts."
+      B: "An exaggeration meant to frighten readers."
+      C: "A counterargument that the author dismisses."
+      D: "A deliberate contrast to set up the surprising evidence that follows."
+    answer: D
+    explanation: "By calling it 'impossible,' the author creates a dramatic contrast. The paragraph then immediately reveals that the sea is 'teeming with creatures' — the surprise is more effective because of the setup."
+
+  - number: 33
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2
+    question: |
+      As used in the passage, the word "mechanism" (paragraph 2) most nearly means:
+    choices:
+      A: "A machine used to produce electricity."
+      B: "A natural process or system by which something works."
+      C: "A strategy developed by scientists in a laboratory."
+      D: "A type of organ found only in deep-sea creatures."
+    answer: B
+    explanation: "In context, 'mechanism' refers to the chemical process (luciferin + luciferase + oxygen → light) that produces bioluminescence. It describes a natural system, not a human-made machine."
+
+  - number: 34
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2
+    question: |
+      Which statement best expresses the central idea of the entire passage?
+    choices:
+      A: "Deep-sea creatures are more dangerous than surface-dwelling animals."
+      B: "Bioluminescence is a remarkable natural adaptation with wide-ranging applications beyond the ocean."
+      C: "Biotechnology would not exist without the study of marine life."
+      D: "The deep sea is an unexplored environment that science has only begun to study."
+    answer: B
+    explanation: "The passage covers what bioluminescence is, how it works, and why creatures use it — then pivots to its technological applications. The connecting idea across all four paragraphs is the breadth and significance of bioluminescence."
+
+  # --- PASSAGE 3: Poetry — "Inheritance" (Questions 35–39) ---
+
+  - number: 35
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_3
+    passage_title: "Inheritance"
+    passage_text: |
+      My grandmother's hands were rivers,
+      always moving, always giving,
+      kneading bread and ironing seams,
+      folding letters no one reads.
+
+      She left me her copper pot,
+      heavy as a Sunday morning,
+      and a habit of watching the sky
+      before the rain decides to fall.
+
+      I do not look like her.
+      My face holds other histories.
+      But when I knead the dough,
+      I feel her knuckles in mine.
+
+      Some things skip the explanation,
+      pass through blood and bone,
+      arriving whole,
+      like a word you always knew.
+    question: |
+      What does the speaker most likely mean by "My grandmother's hands were rivers" (line 1)?
+    choices:
+      A: "Her grandmother's hands were always wet from washing dishes."
+      B: "Her grandmother's hands were constantly moving and productive, like water in flow."
+      C: "Her grandmother worked near a river for most of her life."
+      D: "Her grandmother's hands were long and narrow in shape."
+    answer: B
+    explanation: "The metaphor compares hands to rivers to emphasise constant motion and generosity ('always moving, always giving'). The following lines reinforce this with specific actions: kneading, ironing, folding."
+
+  - number: 36
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_3
+    question: |
+      What does the phrase "heavy as a Sunday morning" (stanza 2) suggest about the copper pot?
+    choices:
+      A: "The pot was only used on Sundays for religious meals."
+      B: "The pot was old and tarnished from years of use."
+      C: "The pot carries emotional weight and a sense of slow, meaningful time."
+      D: "The pot was difficult to carry because of its large size."
+    answer: C
+    explanation: "The simile links the pot's physical weight to the emotional weight of Sunday mornings — a time associated with memory, family ritual, and slowness. The line conveys significance, not just size."
+
+  - number: 37
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_3
+    question: |
+      The line "My face holds other histories" (stanza 3) most likely means:
+    choices:
+      A: "The speaker has studied many different historical periods."
+      B: "The speaker does not physically resemble her grandmother but shares other inherited traits."
+      C: "The speaker is adopted and has no biological connection to her grandmother."
+      D: "The speaker's grandmother came from a different country."
+    answer: B
+    explanation: "The stanza contrasts outer appearance ('I do not look like her') with inner inheritance ('I feel her knuckles in mine'). 'Other histories' refers to the different lineages visible in the speaker's face, while the deeper inheritance passes through action and habit."
+
+  - number: 38
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_3
+    question: |
+      In the final stanza, the speaker compares inherited traits to "a word you always knew." What idea does this comparison convey?
+    choices:
+      A: "Vocabulary is an important part of cultural inheritance."
+      B: "Some things feel so familiar and instinctive that they seem to have been part of you before you learned them."
+      C: "The grandmother taught the speaker many words and phrases."
+      D: "Language is the most powerful form of inheritance."
+    answer: B
+    explanation: "The simile describes something that arrives 'whole' — not learned step by step but known completely and immediately. It suggests inherited traits feel like something you always had, not something you acquired."
+
+  - number: 39
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_3
+    question: |
+      What is the central theme of the poem?
+    choices:
+      A: "The sadness of losing a loved one."
+      B: "The importance of preserving cultural traditions."
+      C: "Inheritance as something felt and lived, not just seen or told."
+      D: "The difficulty of understanding one's own family history."
+    answer: C
+    explanation: "The poem moves from objects (copper pot) and habits (watching the sky) to physical sensation (feeling the grandmother's knuckles) to abstract knowing. The central insight is that inheritance is not just objects or stories — it lives in the body and in instinct."
+
+  # --- PASSAGE 4: Nonfiction/History — "Building the Bridge" (Questions 40–47) ---
+
+  - number: 40
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    passage_title: "Building the Bridge"
+    passage_text: |
+      When the Brooklyn Bridge opened in May 1883, it was the longest suspension bridge in the
+      world. Its two stone towers rose higher than any other structure in New York City. To the
+      crowds who gathered to watch President Chester Arthur lead the opening procession, it must
+      have seemed like a miracle — a slender ribbon of steel spanning a body of water that had
+      separated two great cities for more than two centuries.
+
+      The miracle had taken fourteen years and an enormous human cost to achieve. The project's
+      chief engineer, John Roebling, was injured in an accident at the start of construction and
+      died of tetanus weeks later. His son Washington Roebling took over, but he too was struck
+      down — by caisson disease, now called decompression sickness, contracted while inspecting
+      underwater foundations in pressurised chambers called caissons. Washington became permanently
+      disabled and never again visited the construction site.
+
+      For the next eleven years, the bridge was effectively managed from a window. Washington's
+      wife, Emily Warren Roebling, studied engineering, mathematics, and materials science so
+      that she could relay her husband's instructions to the construction teams below. She visited
+      the site daily, communicating his decisions and solving problems as they arose. When the
+      bridge opened, Emily was the first person to cross it — carrying a rooster, a symbol of
+      victory, in her arms.
+
+      The bridge required approximately 14,000 miles of wire wound into its cables. Each cable
+      contains 5,434 individual wires. Workers called "wire men" crossed the bridge hundreds of
+      times each day at dizzying heights, in all weathers. Twenty-seven people died during
+      construction. The final cost was $15.5 million — roughly $450 million today.
+
+      What opened in 1883 was not merely a crossing. It was proof that human ingenuity, persistence,
+      and cooperation could conquer what geography had made impossible.
+    question: |
+      Which event happened FIRST in the construction of the Brooklyn Bridge?
+    choices:
+      A: "Emily Warren Roebling began studying engineering."
+      B: "Washington Roebling contracted decompression sickness."
+      C: "John Roebling was injured and later died of tetanus."
+      D: "The bridge's cables were wound with 14,000 miles of wire."
+    answer: C
+    explanation: "The passage states John Roebling was injured 'at the start of construction' and died weeks later. Washington then took over before being disabled himself. Emily's role followed after Washington became incapacitated."
+
+  - number: 41
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      According to the passage, what was Emily Warren Roebling's primary role during construction?
+    choices:
+      A: "She designed the bridge's cable system from scratch."
+      B: "She acted as a link between her disabled husband and the construction teams."
+      C: "She replaced her husband as chief engineer after he died."
+      D: "She raised funds from the public to complete the project."
+    answer: B
+    explanation: "The passage describes Emily studying technical subjects so she could 'relay her husband's instructions to the construction teams.' She was the bridge between Washington's knowledge and the workers on site."
+
+  - number: 42
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_4
+    question: |
+      The passage says the bridge was "effectively managed from a window" for eleven years. What does this phrase mean?
+    choices:
+      A: "The construction was managed by watching it through a telescope."
+      B: "Washington Roebling directed the project from his home, unable to visit the site himself."
+      C: "Supervisors worked in a glass-walled office overlooking the construction."
+      D: "The building design was revised based on observations made through windows."
+    answer: B
+    explanation: "This phrase describes Washington's situation: disabled and unable to leave his home, he directed the bridge's construction by observing it through a window and communicating through Emily."
+
+  - number: 43
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      Why did Emily Roebling carry a rooster when she was the first to cross the bridge?
+    choices:
+      A: "It was a family pet she brought on all important occasions."
+      B: "Roosters were commonly used in engineering ceremonies at the time."
+      C: "The rooster was a symbol of victory, marking the successful completion of the bridge."
+      D: "The rooster was meant to represent John Roebling's original vision."
+    answer: C
+    explanation: "The passage directly states the rooster was 'a symbol of victory.' Emily's crossing first was itself symbolic — a recognition of her indispensable role in completing the bridge."
+
+  - number: 44
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_4
+    question: |
+      How does the author use numbers and statistics in paragraph 4?
+    choices:
+      A: "To argue that the bridge was too expensive to build."
+      B: "To contrast the bridge's costs with modern construction methods."
+      C: "To give readers a concrete sense of the scale and human effort involved."
+      D: "To prove that the Brooklyn Bridge was an engineering failure."
+    answer: C
+    explanation: "Details like '14,000 miles of wire,' '5,434 individual wires per cable,' and '27 people died' make abstract scale tangible. The statistics are not used to make arguments but to create a vivid sense of the project's magnitude and human cost."
+
+  - number: 45
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      What is "caisson disease" as described in the passage?
+    choices:
+      A: "A lung disease caused by inhaling concrete dust."
+      B: "A condition now called decompression sickness, contracted in pressurised underwater chambers."
+      C: "An infectious disease that killed multiple workers during the project."
+      D: "A type of structural failure caused by defects in the bridge's foundations."
+    answer: B
+    explanation: "The passage defines it directly: 'caisson disease, now called decompression sickness, contracted while inspecting underwater foundations in pressurised chambers called caissons.'"
+
+  - number: 46
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_4
+    question: |
+      What is the author's main purpose in writing this passage?
+    choices:
+      A: "To argue that women should receive more credit in engineering history."
+      B: "To provide a technical guide to suspension bridge construction."
+      C: "To tell the story of the bridge's construction as a human achievement requiring sacrifice and ingenuity."
+      D: "To compare the Brooklyn Bridge to other suspension bridges around the world."
+    answer: C
+    explanation: "The passage covers engineering challenges, personal sacrifice, and human determination — framing the bridge as a testament to human capability. The closing paragraph makes this explicit: it was 'proof that human ingenuity, persistence, and cooperation could conquer' the impossible."
+
+  - number: 47
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_4
+    question: |
+      As used in paragraph 1, the word "slender" most nearly means:
+    choices:
+      A: "Fragile and easily broken"
+      B: "Thin and narrow in proportion to its length"
+      C: "Short and lightweight"
+      D: "Elegant and expensive"
+    answer: B
+    explanation: "The author uses 'slender' to contrast the bridge's physical narrowness against the vast water it crosses — emphasising the seeming improbability that such a thin structure could span such a distance."
+
+  # --- PASSAGE 5: Fiction — "The First Winter" (Questions 48–57) ---
+
+  - number: 48
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    passage_title: "The First Winter"
+    passage_text: |
+      The snow surprised Amara. Back home, people spoke of it with longing, as though it were
+      something sacred — white and clean and soft. Nobody had mentioned the cold that came with
+      it, or the way it soaked through the shoes she had brought from Accra, or the grey slush
+      that lined the gutters of her new street in Queens.
+
+      Her mother had started working two weeks after they arrived. Her father was still trying
+      to get his nursing certificate recognised. At school, Amara was placed in a class where
+      nobody pronounced her name correctly and the teacher smiled at her the way adults smile
+      at things they do not understand.
+
+      One morning in January, a girl named Priya sat beside her in the cafeteria without asking.
+      She put a plastic container of rice on the table between them. "My mom made too much," she
+      said, which Amara suspected was not true.
+
+      They ate without talking for a while. Then Priya said: "I've been here three years and I
+      still hate winter."
+
+      Amara looked up. "How long until you stop feeling like a mistake?"
+
+      Priya thought about it. "I don't think it's that. I think you start to feel like you belong
+      somewhere that doesn't exist yet. Like a place that's still being made."
+
+      Amara looked out at the cafeteria — the noise, the trays, the people who moved through it
+      all like they had never needed to learn it. She did not feel like she belonged. But she
+      thought she understood what Priya meant. She was not a mistake. She was early.
+    question: |
+      What does the opening paragraph reveal about Amara's expectations of snow?
+    choices:
+      A: "She expected snow to be dangerous and had prepared carefully."
+      B: "She had heard positive, romanticised descriptions that did not match reality."
+      C: "She had never heard of snow before arriving in New York."
+      D: "She had experienced snow before and was not surprised by the cold."
+    answer: B
+    explanation: "The passage says people back home described snow 'as though it were something sacred — white and clean and soft.' Nobody described the cold, the wet shoes, or the grey slush. Amara's experience contradicts the idealised version she had heard."
+
+  - number: 49
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      The phrase "the teacher smiled at her the way adults smile at things they do not understand" suggests:
+    choices:
+      A: "The teacher was kind and did her best to make Amara feel welcome."
+      B: "The teacher was confused by Amara's academic work."
+      C: "The teacher responded to Amara with polite condescension rather than genuine understanding."
+      D: "The teacher was new and unsure of her own teaching methods."
+    answer: C
+    explanation: "The simile describes a specific kind of smile — one that masks incomprehension behind politeness. It implies the teacher treats Amara as a puzzle rather than engaging with her as an individual."
+
+  - number: 50
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      Why does Amara suspect that Priya's claim that her mother "made too much" rice is not true?
+    choices:
+      A: "Amara can see that the container is exactly the right size for one person."
+      B: "She suspects Priya brought the extra food intentionally as a gesture of kindness."
+      C: "Priya later admits she lied about the amount of rice."
+      D: "Amara knows Priya's mother from the neighbourhood."
+    answer: B
+    explanation: "The detail 'which Amara suspected was not true' is a quiet signal that Priya deliberately brought food to share — an act of deliberate kindness disguised as accident to avoid embarrassing Amara."
+
+  - number: 51
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      When Amara asks "How long until you stop feeling like a mistake?" she is expressing:
+    choices:
+      A: "Anger at the people who treated her badly at school."
+      B: "A fear that she does not belong and perhaps should not have come."
+      C: "Confusion about the school's rules and expectations."
+      D: "A question about American culture that she wants Priya to answer directly."
+    answer: B
+    explanation: "The question reveals Amara's deepest fear — not that others are wrong about her, but that she herself is somehow out of place, as if her presence in this new world is an error."
+
+  - number: 52
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      What does Priya mean when she says you start to feel "like a place that's still being made"?
+    choices:
+      A: "Immigrants must wait for the government to create space for them."
+      B: "Your sense of belonging does not return to what it was before — it forms into something new."
+      C: "You will eventually feel at home in both your old country and your new one."
+      D: "Belonging is something you build for yourself by working hard."
+    answer: B
+    explanation: "Priya reframes the question entirely — belonging doesn't mean returning to the certainty you had before. It means becoming part of something still forming. The 'place' is an identity or community in the process of being created, not an existing one you join."
+
+  - number: 53
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      What does the final line — "She was not a mistake. She was early." — mean?
+    choices:
+      A: "Amara arrived too soon and should have waited before moving."
+      B: "Amara's belonging is not impossible, only ahead of her — she has arrived before the place she fits into has fully formed."
+      C: "Amara realises she made a mistake coming to school before she was ready."
+      D: "Amara is told she arrived early to the cafeteria by accident."
+    answer: B
+    explanation: "This line directly applies Priya's metaphor to Amara's situation. A 'mistake' has no place; someone who is 'early' is in the right place at the wrong time — meaning the place will catch up. It is a hopeful, reframing thought."
+
+  - number: 54
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      What is the role of Priya in the story?
+    choices:
+      A: "An antagonist who initially rejects Amara."
+      B: "A mirror for what Amara might become after more time in New York."
+      C: "A guide who offers Amara a new framework for understanding her experience."
+      D: "A character whose role is mainly to provide comic relief."
+    answer: C
+    explanation: "Priya has been through what Amara is experiencing. She doesn't solve the problem, but she reframes it — giving Amara a new way to understand her situation that makes it bearable and even meaningful."
+
+  - number: 55
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      The description "people who moved through it all like they had never needed to learn it" refers to:
+    choices:
+      A: "Students who were excellent athletes."
+      B: "Students who seemed effortlessly at ease in the cafeteria environment."
+      C: "Teachers who patrolled the cafeteria without interacting with students."
+      D: "Students who had grown up speaking English as their first language."
+    answer: B
+    explanation: "The phrase emphasises Amara's sense of being an outsider: others navigate the cafeteria with a naturalness that she cannot yet access. For them, it requires no effort — it was never learned because it was always assumed."
+
+  - number: 56
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_5
+    question: |
+      Which of the following best describes the tone of the story overall?
+    choices:
+      A: "Angry and bitter"
+      B: "Humorous and light-hearted"
+      C: "Melancholy but ultimately hopeful"
+      D: "Detached and clinical"
+    answer: C
+    explanation: "The story deals with loss, disorientation, and loneliness — but ends with a moment of connection and a reframing that offers hope. The tone is emotionally honest about difficulty without being despairing."
+
+  - number: 57
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_5
+    question: |
+      What does the detail about Amara's shoes getting soaked symbolise?
+    choices:
+      A: "That Amara was too poor to buy appropriate winter clothing."
+      B: "That the practical realities of her new life were harder than the romanticised image she had been given."
+      C: "That Amara made a mistake by choosing to walk to school."
+      D: "That New York winters are unusually harsh."
+    answer: B
+    explanation: "The wet shoes are a concrete, physical embodiment of the gap between expectation and reality — the idealised image of snow versus its cold, wet, grey actuality. It stands in for the broader experience of immigration: the dream doesn't match the arrival."
+
+# ================================================================
+# MATH (Questions 1–57)
+# ================================================================
+
+math:
+  # === Numbers and Operations ===
+
+  - number: 1
+    type: multiple_choice
+    topic: Numbers and Operations
+    difficulty: easy
+    question: "What is the value of −3 + (−8) − (−5)?"
+    choices:
+      A: "−6"
+      B: "−16"
+      C: "6"
+      D: "0"
+    answer: A
+    explanation: "−3 + (−8) = −11. Then −11 − (−5) = −11 + 5 = −6."
+
+  - number: 2
+    type: multiple_choice
+    topic: Numbers and Operations
+    difficulty: easy
+    question: "Which of the following is equivalent to 3/4?"
+    choices:
+      A: "0.34"
+      B: "0.75"
+      C: "0.43"
+      D: "0.7"
+    answer: B
+    explanation: "3 ÷ 4 = 0.75."
+
+  - number: 3
+    type: multiple_choice
+    topic: Numbers and Operations
+    difficulty: easy
+    question: "What is 15% of 80?"
+    choices:
+      A: "10"
+      B: "12"
+      C: "15"
+      D: "20"
+    answer: B
+    explanation: "15% of 80 = 0.15 × 80 = 12."
+
+  - number: 4
+    type: multiple_choice
+    topic: Numbers and Operations
+    difficulty: medium
+    question: "A store marks up an item by 25% and then offers a 20% discount. What is the net change from the original price?"
+    choices:
+      A: "0% change"
+      B: "5% increase"
+      C: "5% decrease"
+      D: "45% increase"
+    answer: A
+    explanation: "Multiply the factors: 1.25 × 0.80 = 1.00. The net effect is no change from the original price."
+
+  - number: 5
+    type: multiple_choice
+    topic: Numbers and Operations
+    difficulty: medium
+    question: "Which expression equals 2^3 × 2^4?"
+    choices:
+      A: "2^7"
+      B: "2^12"
+      C: "4^7"
+      D: "2^1"
+    answer: A
+    explanation: "When multiplying powers with the same base, add the exponents: 2^3 × 2^4 = 2^(3+4) = 2^7."
+
+  - number: 6
+    type: multiple_choice
+    topic: Numbers and Operations
+    difficulty: medium
+    question: "The ratio of boys to girls in a class is 3:5. If there are 24 boys, how many students are in the class total?"
+    choices:
+      A: "40"
+      B: "56"
+      C: "64"
+      D: "72"
+    answer: C
+    explanation: "If 3 parts = 24 boys, each part = 8. Total parts = 3 + 5 = 8. Total students = 8 × 8 = 64."
+
+  - number: 7
+    type: multiple_choice
+    topic: Numbers and Operations
+    difficulty: medium
+    question: "What is the least common multiple (LCM) of 12 and 18?"
+    choices:
+      A: "6"
+      B: "24"
+      C: "36"
+      D: "216"
+    answer: C
+    explanation: "12 = 2² × 3; 18 = 2 × 3². LCM = 2² × 3² = 4 × 9 = 36."
+
+  - number: 8
+    type: multiple_choice
+    topic: Numbers and Operations
+    difficulty: medium
+    question: "A recipe calls for 2/3 cup of flour. If you want to make 1.5 times the recipe, how much flour do you need?"
+    choices:
+      A: "3/4 cup"
+      B: "1 cup"
+      C: "1 1/6 cups"
+      D: "4/3 cups"
+    answer: B
+    explanation: "2/3 × 3/2 = 6/6 = 1 cup."
+
+  - number: 9
+    type: multiple_choice
+    topic: Numbers and Operations
+    difficulty: hard
+    question: "If n is a positive integer and 2^n + 2^n + 2^n + 2^n = 2^10, what is the value of n?"
+    choices:
+      A: "6"
+      B: "7"
+      C: "8"
+      D: "9"
+    answer: C
+    explanation: "4 × 2^n = 2^10. Since 4 = 2^2, this becomes 2^2 × 2^n = 2^(n+2) = 2^10. So n + 2 = 10, and n = 8."
+
+  - number: 10
+    type: multiple_choice
+    topic: Numbers and Operations
+    difficulty: hard
+    question: "A number is decreased by 30% and then increased by 50%. The result is what percent of the original number?"
+    choices:
+      A: "95%"
+      B: "100%"
+      C: "105%"
+      D: "120%"
+    answer: C
+    explanation: "Multiply the factors: 0.70 × 1.50 = 1.05. The result is 105% of the original."
+
+  # === Algebra ===
+
+  - number: 11
+    type: multiple_choice
+    topic: Algebra
+    difficulty: easy
+    question: "If 4x − 7 = 21, what is the value of x?"
+    choices:
+      A: "5"
+      B: "6"
+      C: "7"
+      D: "8"
+    answer: C
+    explanation: "4x = 21 + 7 = 28. x = 28 ÷ 4 = 7."
+
+  - number: 12
+    type: multiple_choice
+    topic: Algebra
+    difficulty: easy
+    question: "Which value of x makes the inequality 3x − 4 > 11 true?"
+    choices:
+      A: "4"
+      B: "5"
+      C: "6"
+      D: "3"
+    answer: C
+    explanation: "3x > 15, so x > 5. Only 6 is greater than 5."
+
+  - number: 13
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: "What is the value of the expression 2a² − 3b when a = 3 and b = −2?"
+    choices:
+      A: "12"
+      B: "18"
+      C: "24"
+      D: "6"
+    answer: C
+    explanation: "2(3²) − 3(−2) = 2(9) + 6 = 18 + 6 = 24."
+
+  - number: 14
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Solve the system of equations:
+      x + y = 10
+      x − y = 4
+    choices:
+      A: "x = 6, y = 4"
+      B: "x = 7, y = 3"
+      C: "x = 8, y = 2"
+      D: "x = 5, y = 5"
+    answer: B
+    explanation: "Add the equations: 2x = 14, so x = 7. Substituting: 7 + y = 10, y = 3."
+
+  - number: 15
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: "If f(x) = 3x² − 2x + 1, what is f(−1)?"
+    choices:
+      A: "2"
+      B: "4"
+      C: "6"
+      D: "0"
+    answer: C
+    explanation: "f(−1) = 3(−1)² − 2(−1) + 1 = 3(1) + 2 + 1 = 3 + 2 + 1 = 6."
+
+  - number: 16
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: "A taxi charges a flat fee of $3.50 plus $2.25 per mile. Which equation represents the total cost C for m miles?"
+    choices:
+      A: "C = 3.50m + 2.25"
+      B: "C = 2.25m + 3.50"
+      C: "C = 5.75m"
+      D: "C = 3.50 + 2.25 + m"
+    answer: B
+    explanation: "The flat fee is the y-intercept and the per-mile charge is the slope: C = 2.25m + 3.50."
+
+  - number: 17
+    type: multiple_choice
+    topic: Algebra
+    difficulty: hard
+    question: "For which value of k does the equation 2x + k = 3x − 5 have the solution x = 8?"
+    choices:
+      A: "3"
+      B: "8"
+      C: "11"
+      D: "−3"
+    answer: A
+    explanation: "Substitute x = 8: 2(8) + k = 3(8) − 5 → 16 + k = 24 − 5 → 16 + k = 19 → k = 3."
+
+  - number: 18
+    type: multiple_choice
+    topic: Algebra
+    difficulty: hard
+    question: |
+      A train travels from City A to City B at 60 mph and returns at 40 mph.
+      What is the average speed for the entire round trip?
+    choices:
+      A: "48 mph"
+      B: "50 mph"
+      C: "52 mph"
+      D: "45 mph"
+    answer: A
+    explanation: "Use the harmonic mean: 2/(1/60 + 1/40) = 2/((2+3)/120) = 2 × 120/5 = 48 mph."
+
+  - number: 19
+    type: multiple_choice
+    topic: Algebra
+    difficulty: hard
+    question: "If 3(2x − 1) − 2(x + 4) = 5, what is the value of x?"
+    choices:
+      A: "3"
+      B: "4"
+      C: "5"
+      D: "6"
+    answer: B
+    explanation: "6x − 3 − 2x − 8 = 5 → 4x − 11 = 5 → 4x = 16 → x = 4."
+
+  - number: 20
+    type: multiple_choice
+    topic: Algebra
+    difficulty: hard
+    question: |
+      Two consecutive even integers have a product of 168. What is the smaller integer?
+    choices:
+      A: "10"
+      B: "12"
+      C: "14"
+      D: "16"
+    answer: B
+    explanation: "Let the integers be n and n+2. n(n+2) = 168. Try n = 12: 12 × 14 = 168. ✓ The smaller integer is 12."
+
+  # === Geometry and Measurement ===
+
+  - number: 21
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: easy
+    question: "Two angles are supplementary. One angle measures 67°. What is the measure of the other angle?"
+    choices:
+      A: "23°"
+      B: "103°"
+      C: "113°"
+      D: "123°"
+    answer: C
+    explanation: "Supplementary angles sum to 180°. 180° − 67° = 113°."
+
+  - number: 22
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: easy
+    question: "A right triangle has legs of length 9 and 40. What is the length of the hypotenuse?"
+    choices:
+      A: "39"
+      B: "40"
+      C: "41"
+      D: "49"
+    answer: C
+    explanation: "√(9² + 40²) = √(81 + 1600) = √1681 = 41."
+
+  - number: 23
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: "Triangle ABC has angles measuring (4x)°, (5x)°, and (x + 60)°. What is the value of x?"
+    choices:
+      A: "12"
+      B: "16"
+      C: "18"
+      D: "20"
+    answer: A
+    explanation: "4x + 5x + (x + 60) = 180 → 10x + 60 = 180 → 10x = 120 → x = 12. Angles are 48°, 60°, and 72°, which sum to 180°."
+
+  - number: 24
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: |
+      In a triangle, the exterior angle at one vertex measures 130°. The two non-adjacent interior angles are equal.
+      What is the measure of each non-adjacent interior angle?
+    choices:
+      A: "50°"
+      B: "60°"
+      C: "65°"
+      D: "75°"
+    answer: C
+    explanation: "The exterior angle equals the sum of the two non-adjacent interior angles: 130° = 2x, so x = 65°."
+
+  - number: 25
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: "A rectangle has a length of 14 cm and a width of 9 cm. What is its area?"
+    choices:
+      A: "46 cm²"
+      B: "112 cm²"
+      C: "126 cm²"
+      D: "136 cm²"
+    answer: C
+    explanation: "Area = length × width = 14 × 9 = 126 cm²."
+
+  - number: 26
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: "A square has a perimeter of 52 cm. What is its area?"
+    choices:
+      A: "144 cm²"
+      B: "169 cm²"
+      C: "196 cm²"
+      D: "225 cm²"
+    answer: B
+    explanation: "Side length = 52 ÷ 4 = 13 cm. Area = 13² = 169 cm²."
+
+  - number: 27
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: |
+      A parallelogram has a base of 18 cm and a height of 11 cm. What is its area?
+    choices:
+      A: "99 cm²"
+      B: "164 cm²"
+      C: "198 cm²"
+      D: "58 cm²"
+    answer: C
+    explanation: "Area of parallelogram = base × height = 18 × 11 = 198 cm²."
+
+  - number: 28
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: hard
+    question: |
+      A circle has a circumference of 20π cm. What is its area?
+    choices:
+      A: "25π cm²"
+      B: "100π cm²"
+      C: "400π cm²"
+      D: "10π cm²"
+    answer: B
+    explanation: "Circumference = 2πr = 20π, so r = 10. Area = πr² = π(10²) = 100π cm²."
+
+  - number: 29
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: hard
+    question: |
+      A cylinder has a radius of 5 cm and a height of 12 cm. What is its volume?
+      (Use π ≈ 3.14)
+    choices:
+      A: "300π cm³"
+      B: "942 cm³"
+      C: "188.4 cm³"
+      D: "1,884 cm³"
+    answer: B
+    explanation: "Volume = πr²h = π(25)(12) = 300π ≈ 300 × 3.14 = 942 cm³."
+
+  - number: 30
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: hard
+    question: |
+      A rectangular prism has a volume of 360 cm³. Its length is 12 cm and its width is 5 cm.
+      What is its height?
+    choices:
+      A: "4 cm"
+      B: "5 cm"
+      C: "6 cm"
+      D: "7 cm"
+    answer: C
+    explanation: "Volume = l × w × h → 360 = 12 × 5 × h → 360 = 60h → h = 6 cm."
+
+  # === Coordinate Geometry ===
+
+  - number: 31
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: "What is the distance between the points (1, 2) and (4, 6)?"
+    choices:
+      A: "3"
+      B: "4"
+      C: "5"
+      D: "7"
+    answer: C
+    explanation: "Distance = √((4−1)² + (6−2)²) = √(9 + 16) = √25 = 5."
+
+  - number: 32
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: "A line passes through (0, 3) and (4, 11). What is its slope?"
+    choices:
+      A: "1"
+      B: "2"
+      C: "3"
+      D: "4"
+    answer: B
+    explanation: "Slope = (11 − 3) / (4 − 0) = 8/4 = 2."
+
+  - number: 33
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: hard
+    question: |
+      Line m has the equation y = 3x − 2. Line n is parallel to line m and passes through the
+      point (0, 5). What is the equation of line n?
+    choices:
+      A: "y = 3x + 5"
+      B: "y = −(1/3)x + 5"
+      C: "y = 3x − 5"
+      D: "y = 5x + 3"
+    answer: A
+    explanation: "Parallel lines have the same slope. Line m has slope 3. Line n passes through (0, 5) (y-intercept = 5) with slope 3: y = 3x + 5."
+
+  # === Probability and Statistics ===
+
+  - number: 34
+    type: multiple_choice
+    topic: Probability and Statistics
+    difficulty: easy
+    question: |
+      The scores on a quiz are: 72, 85, 90, 68, 85, 92, 78.
+      What is the median score?
+    choices:
+      A: "78"
+      B: "85"
+      C: "81.4"
+      D: "82"
+    answer: B
+    explanation: "Arrange in order: 68, 72, 78, 85, 85, 90, 92. The middle value (4th of 7) is 85."
+
+  - number: 35
+    type: multiple_choice
+    topic: Probability and Statistics
+    difficulty: easy
+    question: |
+      A bag contains 4 red marbles, 6 blue marbles, and 2 green marbles.
+      If one marble is chosen at random, what is the probability it is blue?
+    choices:
+      A: "1/2"
+      B: "1/3"
+      C: "3/6"
+      D: "6/12"
+    answer: A
+    explanation: "6 blue out of 12 total = 6/12 = 1/2. Choices A and D are both correct values but A is in simplest form."
+
+  - number: 36
+    type: multiple_choice
+    topic: Probability and Statistics
+    difficulty: medium
+    question: |
+      The mean of five numbers is 18. Four of the numbers are 12, 20, 15, and 22.
+      What is the fifth number?
+    choices:
+      A: "17"
+      B: "20"
+      C: "21"
+      D: "18"
+    answer: C
+    explanation: "Sum = 5 × 18 = 90. Sum of known four = 12 + 20 + 15 + 22 = 69. Fifth number = 90 − 69 = 21."
+
+  - number: 37
+    type: multiple_choice
+    topic: Probability and Statistics
+    difficulty: medium
+    question: |
+      A standard six-sided die is rolled twice. What is the probability of rolling a 4 on the first roll
+      and a number greater than 4 on the second roll?
+    choices:
+      A: "1/9"
+      B: "1/18"
+      C: "1/6"
+      D: "2/9"
+    answer: B
+    explanation: "P(4 on first roll) = 1/6. Numbers greater than 4 on a d6 are 5 and 6, so P(>4) = 2/6 = 1/3. Combined probability = 1/6 × 1/3 = 1/18."
+
+  - number: 38
+    type: multiple_choice
+    topic: Probability and Statistics
+    difficulty: medium
+    question: |
+      In a class of 30 students, 18 play sport and 12 play an instrument. 6 students play both.
+      How many students play neither sport nor instrument?
+    choices:
+      A: "0"
+      B: "4"
+      C: "6"
+      D: "10"
+    answer: C
+    explanation: "Using inclusion-exclusion: sport or instrument = 18 + 12 − 6 = 24. Neither = 30 − 24 = 6."
+
+  - number: 39
+    type: multiple_choice
+    topic: Probability and Statistics
+    difficulty: hard
+    question: |
+      The ages of participants in a workshop are: 14, 16, 14, 18, 20, 16, 14, 22.
+      What is the mode of this data set?
+    choices:
+      A: "14"
+      B: "16"
+      C: "18"
+      D: "14 and 16"
+    answer: A
+    explanation: "14 appears three times; 16 appears twice. All others appear once. The mode is 14."
+
+  - number: 40
+    type: multiple_choice
+    topic: Probability and Statistics
+    difficulty: hard
+    question: |
+      A spinner has sections numbered 1 through 8, each equally likely. What is the probability
+      of spinning a prime number?
+    choices:
+      A: "3/8"
+      B: "1/2"
+      C: "5/8"
+      D: "4/8"
+    answer: B
+    explanation: "Primes from 1 to 8: 2, 3, 5, 7 — four primes out of 8 = 4/8 = 1/2."
+
+  # === Word Problems ===
+
+  - number: 41
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: easy
+    question: |
+      Marcus earns $14 per hour. He works 32 hours one week and 28 hours the next.
+      How much does he earn over the two weeks?
+    choices:
+      A: "$756"
+      B: "$840"
+      C: "$980"
+      D: "$560"
+    answer: B
+    explanation: "Total hours = 32 + 28 = 60. Total pay = 60 × $14 = $840."
+
+  - number: 42
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: medium
+    question: |
+      A 240-litre water tank is 3/4 full. How many litres are needed to fill it completely?
+    choices:
+      A: "60 litres"
+      B: "80 litres"
+      C: "180 litres"
+      D: "160 litres"
+    answer: A
+    explanation: "3/4 of 240 = 180 litres already in the tank. Needed = 240 − 180 = 60 litres."
+
+  - number: 43
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: medium
+    question: |
+      A car travels 270 miles in 4.5 hours. At the same speed, how long will it take to travel 420 miles?
+    choices:
+      A: "6 hours"
+      B: "7 hours"
+      C: "7.5 hours"
+      D: "8 hours"
+    answer: B
+    explanation: "Speed = 270 / 4.5 = 60 mph. Time for 420 miles = 420 / 60 = 7 hours."
+
+  - number: 44
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: medium
+    question: |
+      A store has 450 items. After a sale, 30% are sold. How many items remain?
+    choices:
+      A: "135"
+      B: "315"
+      C: "320"
+      D: "300"
+    answer: B
+    explanation: "Sold = 30% of 450 = 135. Remaining = 450 − 135 = 315."
+
+  - number: 45
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: medium
+    question: |
+      Two friends share a prize in the ratio 2:3. The total prize is $750.
+      How much does the person with the larger share receive?
+    choices:
+      A: "$250"
+      B: "$300"
+      C: "$450"
+      D: "$500"
+    answer: C
+    explanation: "Total parts = 5. Each part = $150. Larger share (3 parts) = 3 × $150 = $450."
+
+  - number: 46
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      A pipe can fill a tank in 6 hours. A second pipe can fill the same tank in 4 hours.
+      If both pipes are open, how long does it take to fill the tank?
+    choices:
+      A: "2 hours"
+      B: "2.4 hours"
+      C: "5 hours"
+      D: "3 hours"
+    answer: B
+    explanation: "Combined rate = 1/6 + 1/4 = 2/12 + 3/12 = 5/12 of the tank per hour. Time = 12/5 = 2.4 hours."
+
+  - number: 47
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      The price of a jacket was reduced by 20% to $96. What was the original price?
+    choices:
+      A: "$108"
+      B: "$115.20"
+      C: "$120"
+      D: "$116"
+    answer: C
+    explanation: "If 80% of the original price = $96, then original price = $96 / 0.80 = $120."
+
+  - number: 48
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      A school trip costs $45 per student. The school has collected $1,350. If 8 more students sign up,
+      how much more money is needed to cover all costs?
+    choices:
+      A: "$360"
+      B: "$315"
+      C: "$270"
+      D: "$180"
+    answer: A
+    explanation: "Additional cost = 8 × $45 = $360. The $1,350 already collected covers existing students; the 8 new sign-ups require an additional $360."
+
+  - number: 49
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      A rectangular garden has a perimeter of 60 m. Its length is 10 m more than its width.
+      What is the area of the garden?
+    choices:
+      A: "150 m²"
+      B: "175 m²"
+      C: "200 m²"
+      D: "225 m²"
+    answer: C
+    explanation: "Let width = w, length = w + 10. Perimeter: 2(w + w + 10) = 60 → 4w + 20 = 60 → 4w = 40 → w = 10. Length = 20. Area = 10 × 20 = 200 m²."
+
+  - number: 50
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      At 9:00 AM, two trains leave stations 420 km apart, travelling toward each other.
+      Train A travels at 80 km/h and Train B at 60 km/h. At what time do they meet?
+    choices:
+      A: "11:00 AM"
+      B: "12:00 PM"
+      C: "1:00 PM"
+      D: "2:00 PM"
+    answer: B
+    explanation: "Combined speed = 80 + 60 = 140 km/h. Time = 420 / 140 = 3 hours. They meet at 9:00 AM + 3 hours = 12:00 PM."
+
+  # === Mixed Hard + Grid-In ===
+
+  - number: 51
+    type: multiple_choice
+    topic: Algebra
+    difficulty: hard
+    question: |
+      A sequence has a first term of 3. Each subsequent term is 9 more than the previous term.
+      What is the fourth term?
+    choices:
+      A: "21"
+      B: "24"
+      C: "27"
+      D: "30"
+    answer: D
+    explanation: "Term 1 = 3. Term 2 = 3 + 9 = 12. Term 3 = 12 + 9 = 21. Term 4 = 21 + 9 = 30."
+
+  - number: 52
+    type: multiple_choice
+    topic: Numbers and Operations
+    difficulty: hard
+    question: |
+      The product of two integers is −36 and their sum is −5.
+      What is the larger of the two integers?
+    choices:
+      A: "9"
+      B: "4"
+      C: "−4"
+      D: "−9"
+    answer: B
+    explanation: "We need two integers with product −36 and sum −5. Try 4 and −9: 4 × (−9) = −36 ✓ and 4 + (−9) = −5 ✓. The larger integer is 4."
+
+  - number: 53
+    type: grid_in
+    topic: Algebra
+    difficulty: medium
+    question: "If 7x − 4 = 3x + 20, what is the value of x?"
+    choices: {}
+    answer: "6"
+    explanation: "4x = 24 → x = 6."
+
+  - number: 54
+    type: grid_in
+    topic: Numbers and Operations
+    difficulty: medium
+    question: "What is the value of 4³ − 5² + 10?"
+    choices: {}
+    answer: "49"
+    explanation: "4³ = 64. 5² = 25. 64 − 25 + 10 = 49."
+
+  - number: 55
+    type: grid_in
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: |
+      A right triangle has a hypotenuse of 25 cm and one leg of 7 cm.
+      What is the length of the other leg?
+    choices: {}
+    answer: "24"
+    explanation: "Other leg = √(25² − 7²) = √(625 − 49) = √576 = 24 cm."
+
+  - number: 56
+    type: grid_in
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      A number is increased by 40% and then decreased by 40%. If the result is 42, what was the original number?
+    choices: {}
+    answer: "50"
+    explanation: "Net effect: 1.40 × 0.60 = 0.84. So 0.84 × n = 42 → n = 42 / 0.84 = 50."
+
+  - number: 57
+    type: grid_in
+    topic: Probability and Statistics
+    difficulty: hard
+    question: |
+      The mean of 8 numbers is 15. When a 9th number is added, the mean becomes 16.
+      What is the 9th number?
+    choices: {}
+    answer: "24"
+    explanation: "Sum of 8 numbers = 8 × 15 = 120. New sum = 9 × 16 = 144. The 9th number = 144 − 120 = 24."

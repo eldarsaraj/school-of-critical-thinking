@@ -10,6 +10,8 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path("start/", views.start, name="start"),
     path("curriculum/", views.curriculum, name="curriculum"),
+    path("curriculum/download-sample/", views.download_sample, name="download_sample"),
+    path("curriculum/<slug:slug>/", views.module_detail, name="module_detail"),
     path("books/<slug:slug>/", views.book_detail, name="book_detail"),
     path("robots.txt", robots_txt, name="robots_txt"),
 ]

@@ -1,0 +1,112 @@
+{% extends "shsat/base_shsat.html" %}
+
+{% block title %}Results — {{ attempt.test.title }} — SHSAT Workshop{% endblock %}
+{% block tab_tests %}active{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">Results — {{ attempt.test.title }}</h1>
+<p class="shsat-page-subtitle">{{ attempt.submitted_at|date:"F j, Y" }}
+  {% if attempt.total_seconds %}
+  · {{ attempt.total_seconds|floatformat:0 }} seconds elapsed
+  {% endif %}
+</p>
+
+<!-- Score display -->
+<div class="shsat-score-display">
+  <div class="shsat-score-box">
+    <div class="shsat-score-box__value">{{ attempt.ela_scaled }}</div>
+    <div class="shsat-score-box__label">ELA scaled</div>
+    <div style="font-size:13px;color:rgba(0,0,0,0.4);margin-top:6px;">{{ attempt.ela_correct }} correct of 57</div>
+  </div>
+  <div class="shsat-score-box">
+    <div class="shsat-score-box__value">{{ attempt.math_scaled }}</div>
+    <div class="shsat-score-box__label">Math scaled</div>
+    <div style="font-size:13px;color:rgba(0,0,0,0.4);margin-top:6px;">{{ attempt.math_correct }} correct of 57</div>
+  </div>
+  <div class="shsat-score-box shsat-score-box--composite">
+    <div class="shsat-score-box__value">{{ attempt.composite_score }}</div>
+    <div class="shsat-score-box__label">Composite</div>
+  </div>
+</div>
+<p style="font-size:12px;color:rgba(0,0,0,0.35);margin-top:-24px;margin-bottom:32px;">
+  Estimated score. Actual SHSAT scaling varies by year and is not published by the DOE.
+</p>
+
+<!-- School placement -->
+{% if placement_data %}
+<p class="shsat-section-title">School placement (2025 cutoffs)</p>
+<table class="shsat-table" style="margin-bottom:36px;">
+  <thead>
+    <tr>
+      <th>School</th>
+      <th>Cutoff</th>
+      <th>Gap</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in placement_data %}
+    <tr>
+      <td>{{ p.school_short }}</td>
+      <td>{{ p.cutoff }}</td>
+      <td>{% if p.gap >= 0 %}+{% endif %}{{ p.gap }}</td>
+      <td class="placement-{{ p.status }}">
+        {% if p.status == "above" %}Above cutoff
+        {% elif p.status == "close" %}Within range
+        {% else %}Below cutoff{% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+<!-- Notes -->
+<p class="shsat-section-title">Notes</p>
+<form method="post" style="max-width:520px;margin-bottom:36px;">
+  {% csrf_token %}
+  <div class="contact-form__field">
+    {{ notes_form.notes }}
+  </div>
+  <button type="submit" class="shsat-btn shsat-btn--outline">Save notes</button>
+</form>
+
+<!-- ELA review -->
+<p class="shsat-section-title">ELA — answer review</p>
+<div style="margin-bottom:8px;font-size:12px;color:rgba(0,0,0,0.4);display:grid;grid-template-columns:40px 1fr 60px 60px;gap:8px;padding:0 0 6px;border-bottom:1px solid rgba(0,0,0,0.1);">
+  <span>#</span><span>Question</span><span>Given</span><span>Correct</span>
+</div>
+{% for ans in ela_answers %}
+<div class="shsat-answer-row
+  {% if not ans.selected_answer %}shsat-answer-row--unanswered
+  {% elif ans.is_correct %}shsat-answer-row--correct
+  {% else %}shsat-answer-row--wrong{% endif %}">
+  <span>{{ ans.question.question_number }}</span>
+  <span style="font-size:13px;color:rgba(0,0,0,0.6);">{{ ans.question.question_text|truncatechars:60 }}</span>
+  <span class="shsat-answer-given">{{ ans.selected_answer|default:"—" }}</span>
+  <span>{% if not ans.is_correct %}{{ ans.question.correct_answer }}{% endif %}</span>
+</div>
+{% endfor %}
+
+<!-- Math review -->
+<p class="shsat-section-title" style="margin-top:32px;">Math — answer review</p>
+<div style="margin-bottom:8px;font-size:12px;color:rgba(0,0,0,0.4);display:grid;grid-template-columns:40px 1fr 60px 60px;gap:8px;padding:0 0 6px;border-bottom:1px solid rgba(0,0,0,0.1);">
+  <span>#</span><span>Question</span><span>Given</span><span>Correct</span>
+</div>
+{% for ans in math_answers %}
+<div class="shsat-answer-row
+  {% if not ans.selected_answer %}shsat-answer-row--unanswered
+  {% elif ans.is_correct %}shsat-answer-row--correct
+  {% else %}shsat-answer-row--wrong{% endif %}">
+  <span>{{ ans.question.question_number }}</span>
+  <span style="font-size:13px;color:rgba(0,0,0,0.6);">{{ ans.question.question_text|truncatechars:60 }}</span>
+  <span class="shsat-answer-given">{{ ans.selected_answer|default:"—" }}</span>
+  <span>{% if not ans.is_correct %}{{ ans.question.correct_answer }}{% endif %}</span>
+</div>
+{% endfor %}
+
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;">
+  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn">Back to dashboard</a>
+  <a href="{% url 'shsat_test_list' %}" class="shsat-btn shsat-btn--outline">Practice tests</a>
+</div>
+{% endblock %}

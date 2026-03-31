@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Module {{ module.number }}: {{ module.title }} – The School of Critical Thinking{% endblock %}
+
+{% block content %}
+
+<p class="module-breadcrumb">
+  <a href="/curriculum/">Curriculum</a>
+  <span class="module-breadcrumb__sep">→</span>
+  Level {{ module.level }}
+</p>
+
+<p class="module-eyebrow">Level {{ module.level }} · Module {{ module.number }} · Ages {{ module.ages }}</p>
+<h1 class="module-title">{{ module.title }}</h1>
+<p class="module-core">{{ module.core }}</p>
+
+{% if module.is_available %}
+  <p class="module-available-badge">Available now</p>
+{% else %}
+  <p class="module-coming-soon-badge">In development</p>
+{% endif %}
+
+<hr class="module-rule">
+
+{% if module.is_available %}
+
+  <!-- Description -->
+  <p class="module-description">{{ module.description }}</p>
+
+  <!-- Units -->
+  <h2 class="module-section-title">What's inside</h2>
+  <p class="module-units-meta">5 units · 52 lessons · one lesson per week</p>
+
+  <div class="module-units">
+    {% for unit in module.units %}
+    <div class="module-unit">
+      <p class="module-unit__number">Unit {{ unit.number }}</p>
+      <h3 class="module-unit__title">{{ unit.title }}</h3>
+      <p class="module-unit__desc">{{ unit.description }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- How it works -->
+  <h2 class="module-section-title" style="margin-top: 48px;">How it works</h2>
+  <ul class="module-how-list">
+    {% for item in module.how_it_works %}
+    <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+
+  <hr class="module-rule">
+
+  <!-- Sample download -->
+  <div class="module-sample" id="sample">
+    <p class="module-sample__label">Free sample</p>
+    <h2 class="module-sample__title">Download a lesson</h2>
+    <p class="module-sample__desc">
+      Enter your email and we'll send you a complete lesson from this module —
+      no commitment, no follow-up unless you ask for it.
+    </p>
+
+    {% if downloaded %}
+    <p class="module-sample__success">Your download has started. Check your downloads folder.</p>
+    {% else %}
+    <form class="module-sample__form" method="post" action="{% url 'download_sample' %}">
+      {% csrf_token %}
+      <input type="hidden" name="source" value="module-{{ module.number }}-sample">
+      <input class="module-sample__input" type="email" name="email"
+             placeholder="Your email address" required autocomplete="email">
+      <button class="module-sample__btn" type="submit">Download sample lesson</button>
+    </form>
+    <p class="module-sample__note">One email address. One PDF. Nothing else.</p>
+    {% endif %}
+  </div>
+
+  {% if module.amazon_url %}
+  <hr class="module-rule">
+  <div style="margin-top: 32px;">
+    <p class="module-eyebrow">Buy the full module</p>
+    <a href="{{ module.amazon_url }}" class="module-buy-btn" target="_blank" rel="noopener">
+      Buy on Amazon →
+    </a>
+  </div>
+  {% endif %}
+
+{% else %}
+
+  <!-- Coming soon state -->
+  <p class="module-description">
+    This module is currently in development. It will be available as part of
+    Level {{ module.level }}: {{ module.level_title }}.
+  </p>
+
+  <h2 class="module-section-title">Topics covered</h2>
+  <ul class="module-how-list">
+    {% for topic in module.topics %}
+    <li>{{ topic }}</li>
+    {% endfor %}
+  </ul>
+
+  <p style="margin-top: 32px; font-size: 14px; color: rgba(0,0,0,0.5);">
+    To be notified when this module is available,
+    <a href="/contact/" style="color: inherit; border-bottom: 0.5px solid rgba(0,0,0,0.3); text-decoration: none;">get in touch</a>.
+  </p>
+
+{% endif %}
+
+<!-- Navigation -->
+<hr class="module-rule" style="margin-top: 56px;">
+<div class="module-nav">
+  {% if module.prev_slug %}
+  <a class="module-nav__link module-nav__link--prev" href="{% url 'module_detail' module.prev_slug %}">
+    ← Module {{ module.number|add:"-1" }}: {{ module.prev_title }}
+  </a>
+  {% else %}
+  <span></span>
+  {% endif %}
+  {% if module.next_slug %}
+  <a class="module-nav__link module-nav__link--next" href="{% url 'module_detail' module.next_slug %}">
+    Module {{ module.number|add:"1" }}: {{ module.next_title }} →
+  </a>
+  {% endif %}
+</div>
+
+{% endblock %}

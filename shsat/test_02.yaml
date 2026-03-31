@@ -1,0 +1,1840 @@
+title: "Practice Test 2"
+source: "School of Critical Thinking"
+is_free: false
+is_published: true
+order: 2
+
+ela:
+
+  # ================================================================
+  # PART 1 — REVISING / EDITING (Questions 1–20)
+  # ================================================================
+
+  - number: 1
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Read the sentence below and choose the best revision.
+
+      "The team of scientists were unable to agree on the next experiment."
+    choices:
+      A: "The team of scientists was unable to agree on the next experiment."
+      B: "The team of scientists were unable to agree about the next experiment."
+      C: "The team of scientist were unable to agree on the next experiment."
+      D: "The teams of scientists were unable to agree on the next experiment."
+    answer: A
+    explanation: "The subject is 'team' (singular collective noun), so it requires the singular verb 'was.' The prepositional phrase 'of scientists' does not change the number of the subject."
+
+  - number: 2
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Which revision best corrects the underlined portion?
+
+      "Neither the students nor the teacher are prepared for the fire drill."
+    choices:
+      A: "is prepared for the fire drill."
+      B: "were prepared for the fire drill."
+      C: "are preparing for the fire drill."
+      D: "No revision needed."
+    answer: A
+    explanation: "With 'neither...nor,' the verb agrees with the nearest subject. 'Teacher' is singular, so the verb should be 'is.' Choice A correctly makes this change."
+
+  - number: 3
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Select the best way to combine the following two sentences into one.
+
+      "The museum opened a new exhibit last week. Thousands of visitors came on the first day."
+    choices:
+      A: "The museum opened a new exhibit last week, but thousands of visitors came on the first day."
+      B: "When the museum opened a new exhibit last week, thousands of visitors came on the first day."
+      C: "The museum opened a new exhibit last week, so thousands of visitors came on the first day."
+      D: "The museum opened a new exhibit last week, thousands of visitors came on the first day."
+    answer: B
+    explanation: "'When' correctly shows that the opening triggered the visitors. Choice C implies a causal link but is weaker. Choice D creates a comma splice. Choice A uses 'but,' which implies contrast where there is none."
+
+  - number: 4
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which of the following is a run-on sentence?
+    choices:
+      A: "The library was quiet, and everyone studied in silence."
+      B: "After the game ended, the players celebrated on the field."
+      C: "She locked the door she forgot to close the windows."
+      D: "Running late, he grabbed his bag and dashed out."
+    answer: C
+    explanation: "Choice C joins two independent clauses ('She locked the door' and 'she forgot to close the windows') without punctuation or a conjunction — a run-on sentence."
+
+  - number: 5
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which revision best improves the parallelism of the underlined phrase?
+
+      "The coach asked the players to stretch, running laps, and practice drills."
+    choices:
+      A: "to stretch, to run laps, and to practice drills"
+      B: "stretching, running laps, and to practice drills"
+      C: "to stretch, running laps, and practicing drills"
+      D: "stretch, ran laps, and practiced drills"
+    answer: A
+    explanation: "For parallel structure, all items in a list must use the same grammatical form. Because the sentence uses 'to stretch,' each item should follow the infinitive pattern: 'to stretch, to run laps, and to practice drills.'"
+
+  - number: 6
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Identify the sentence with a misplaced modifier.
+    choices:
+      A: "The artist carefully painted the mural during the afternoon."
+      B: "Covered in mud, the children ran into the house."
+      C: "Flying over the city, the buildings looked tiny from the airplane."
+      D: "After eating dinner, the family played board games."
+    answer: C
+    explanation: "The participial phrase 'Flying over the city' modifies 'the buildings,' making it sound as though the buildings were flying. The intended subject — the person in the airplane — is missing from the main clause."
+
+  - number: 7
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Choose the transition word or phrase that best fills the blank.
+
+      "The new park includes a playground and walking trails. _______, it features a community garden where residents can grow vegetables."
+    choices:
+      A: "However"
+      B: "In addition"
+      C: "On the other hand"
+      D: "As a result"
+    answer: B
+    explanation: "'In addition' signals that the sentence is adding another feature to the list. 'However' and 'on the other hand' imply contrast, and 'as a result' implies a consequence."
+
+  - number: 8
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Which of the following is a sentence fragment?
+    choices:
+      A: "The concert began at seven o'clock sharp."
+      B: "Because the road was closed due to construction and heavy equipment."
+      C: "Several students volunteered to clean the park."
+      D: "He finished the race in under four minutes."
+    answer: B
+    explanation: "Choice B begins with the subordinating conjunction 'because' and has no independent clause to complete the thought. It cannot stand alone as a sentence."
+
+  - number: 9
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which word best replaces the underlined word to make the sentence more precise?
+
+      "The firefighters went into the burning building to save the trapped residents."
+    choices:
+      A: "walked"
+      B: "rushed"
+      C: "moved"
+      D: "traveled"
+    answer: B
+    explanation: "'Rushed' conveys urgency and speed, which fits the emergency context of a burning building. 'Went' is vague, 'walked' implies a casual pace, and 'traveled' suggests a longer journey."
+
+  - number: 10
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Choose the option that correctly uses a semicolon.
+    choices:
+      A: "I need to buy eggs; milk, and bread at the store."
+      B: "She studied all night; however, she still felt unprepared."
+      C: "The park was beautiful; and the flowers were blooming."
+      D: "He ran fast; because he was late for class."
+    answer: B
+    explanation: "A semicolon correctly joins two independent clauses when followed by a conjunctive adverb ('however'). Choice A uses a semicolon in a list incorrectly. Choices C and D place a semicolon before a conjunction or subordinating conjunction."
+
+  - number: 11
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: easy
+    question: |
+      Which revision eliminates the redundancy in the sentence below?
+
+      "The two twins both share an identical resemblance to each other."
+    choices:
+      A: "The twins resemble each other."
+      B: "The two twins both look identical to each other."
+      C: "The twins share an identical and similar resemblance."
+      D: "Both of the two twins are identical in resemblance to each other."
+    answer: A
+    explanation: "'Twins' already implies two people, 'both' is redundant with 'twins,' and 'identical resemblance' is redundant with 'share.' Choice A captures the meaning concisely."
+
+  - number: 12
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which sentence is the clearest and most concise?
+    choices:
+      A: "At this point in time, we are currently in the process of reviewing the applications."
+      B: "We are reviewing the applications."
+      C: "At this current moment, all of the applications are being reviewed by us."
+      D: "The applications, at this time, are in the midst of being reviewed."
+    answer: B
+    explanation: "Choice B conveys the same information as all other options in the fewest words, with no padding or passive voice. 'At this point in time' and 'currently in the process of' are wordy fillers."
+
+  - number: 13
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which revision corrects the inconsistent verb tense in the sentence below?
+
+      "The hikers crossed the river, climbed the ridge, and are setting up camp before dark."
+    choices:
+      A: "The hikers crossed the river, climbed the ridge, and set up camp before dark."
+      B: "The hikers cross the river, climbed the ridge, and are setting up camp before dark."
+      C: "The hikers are crossing the river, climbed the ridge, and set up camp."
+      D: "The hikers crossed the river, are climbing the ridge, and set up camp before dark."
+    answer: A
+    explanation: "The first two verbs ('crossed,' 'climbed') are in the simple past tense. The third verb should match: 'set up.' Choice A maintains consistent past tense throughout."
+
+  - number: 14
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Read the following paragraph and choose the sentence that does NOT belong.
+
+      (1) Solar panels convert sunlight into electricity using photovoltaic cells. (2) The technology has become significantly cheaper over the past decade. (3) Wind turbines are often placed on hilltops where winds are strongest. (4) Many homeowners now install solar panels to reduce their energy bills.
+    choices:
+      A: "Sentence 1"
+      B: "Sentence 2"
+      C: "Sentence 3"
+      D: "Sentence 4"
+    answer: C
+    explanation: "Sentence 3 introduces wind turbines, which is a different topic from the paragraph's focus on solar panels and their growing adoption."
+
+  - number: 15
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Which revision best corrects the dangling modifier in the sentence below?
+
+      "After reviewing the evidence, the verdict was delivered by the jury."
+    choices:
+      A: "After reviewing the evidence, the jury delivered the verdict."
+      B: "The verdict was delivered after reviewing the evidence by the jury."
+      C: "Reviewing the evidence, the verdict was delivered by the jury after."
+      D: "The jury's verdict, after reviewing, was delivered on the evidence."
+    answer: A
+    explanation: "The participial phrase 'After reviewing the evidence' must modify the subject doing the reviewing — the jury. Only Choice A places 'the jury' as the subject immediately after the phrase."
+
+  - number: 16
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Choose the sentence that best combines the three sentences below into one clear, concise sentence.
+
+      "The bridge was built in 1903. It has survived two major earthquakes. Engineers say it is still structurally sound."
+    choices:
+      A: "The bridge was built in 1903, and it survived two major earthquakes, and engineers say it is still structurally sound."
+      B: "Built in 1903, the bridge has survived two major earthquakes and remains structurally sound according to engineers."
+      C: "Engineers say the bridge, which was built in 1903, has survived earthquakes, two major ones, and is still sound."
+      D: "The 1903 bridge survived two earthquakes, and the engineers have said it is sound structurally."
+    answer: B
+    explanation: "Choice B uses a past-participial opener to compress the first sentence, combines the second and third with 'and remains,' and flows naturally. The other options are wordy or awkward."
+
+  - number: 17
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: medium
+    question: |
+      Which sentence uses the correct pronoun case?
+    choices:
+      A: "Me and my sister went to the park after school."
+      B: "The teacher gave the awards to Marcus and I."
+      C: "Whoever finishes first may leave the room."
+      D: "Us students should organise a fundraiser."
+    answer: C
+    explanation: "'Whoever' is correct as the subject of the clause 'whoever finishes first.' Choice A should be 'My sister and I,' Choice B should be 'Marcus and me' (objective case after 'to'), and Choice D should be 'We students.'"
+
+  - number: 18
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Which revision best improves the following sentence by making it more specific and vivid?
+
+      "The weather was really bad during our trip."
+    choices:
+      A: "The weather was extremely bad during our trip to the coast."
+      B: "We experienced bad weather that was not good during the trip."
+      C: "Freezing rain hammered the windshield for three straight hours as we drove along the coast."
+      D: "The weather during our trip was the worst weather we had ever seen."
+    answer: C
+    explanation: "Choice C replaces vague words ('really bad') with concrete, sensory details ('freezing rain hammered the windshield,' 'three straight hours,' 'drove along the coast'), creating a vivid image."
+
+  - number: 19
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Read the paragraph below and choose the best sentence to add at the beginning to serve as a topic sentence.
+
+      "_______ A single colony can contain up to 60,000 bees, each with a specific role. Worker bees collect nectar and pollen, nurse bees care for the young, and the queen's sole purpose is to reproduce. This division of labour allows the hive to function as a single, efficient organism."
+    choices:
+      A: "Honey is used in many recipes around the world."
+      B: "Bees are one of nature's most organised societies."
+      C: "Scientists have studied insects for hundreds of years."
+      D: "Some people are allergic to bee stings and must carry medication."
+    answer: B
+    explanation: "The paragraph describes the organisational structure of a bee colony — roles, division of labour, and efficiency. Choice B introduces this theme directly."
+
+  - number: 20
+    type: multiple_choice
+    topic: Revising/Editing
+    difficulty: hard
+    question: |
+      Which transition best fills the blank to show a cause-and-effect relationship?
+
+      "The factory released toxic chemicals into the river for years. _______, fish populations downstream declined by nearly 80%."
+    choices:
+      A: "Meanwhile"
+      B: "In contrast"
+      C: "Consequently"
+      D: "For instance"
+    answer: C
+    explanation: "'Consequently' signals that what follows is a direct result of what came before. 'Meanwhile' indicates simultaneous events, 'in contrast' signals opposition, and 'for instance' introduces an example."
+
+  # ================================================================
+  # PART 2 — READING COMPREHENSION
+  # ================================================================
+
+  # --- PASSAGE 1: Fiction — "The Map Maker's Daughter" (Questions 21–27) ---
+
+  - number: 21
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_1
+    passage_title: "The Map Maker's Daughter"
+    passage_text: |
+      Lena's father drew maps for a living. Not the kind produced by satellites and software — his
+      were hand-drawn, inked on heavy paper with lines so precise they looked printed. He mapped
+      rivers that no longer flowed the way they once did, boundaries that had shifted, towns that
+      had changed their names. People came from across the country to buy his work, not because
+      the maps were accurate, but because they remembered.
+
+      Lena had grown up watching his hands move across the paper. She knew the smell of the ink,
+      the sound of the nib scratching, the way he would hold the page up to the window to check
+      the evenness of his lines. She had assumed, without thinking, that she would one day take
+      over the shop.
+
+      But at fifteen, Lena could not draw a straight line. She had tried for years. Her rivers
+      wobbled. Her borders drifted. Her father said nothing about it, which was worse than
+      criticism.
+
+      One evening, a customer returned a map her father had made of a village in the mountains.
+      "The church is on the wrong side of the square," the man said flatly. Her father examined
+      the map, then looked up.
+
+      "The church was moved in 1987," he said. "I drew it where it stood."
+
+      The man left without buying anything. After he was gone, Lena asked, "Why didn't you just
+      fix it?"
+
+      Her father set the map down carefully. "Because a map that only shows what is there now
+      tells you nothing about where you have been."
+
+      That night, Lena picked up a pen. She did not try to draw a straight line. Instead, she
+      drew her street as she remembered it from when she was five — the crooked fence, the tree
+      that had since been cut down, the pothole her mother used to swerve around. The lines
+      were uneven, but the map was true.
+    question: |
+      What does the phrase "not because the maps were accurate, but because they remembered" (paragraph 1) suggest about the father's maps?
+    choices:
+      A: "The maps contain factual errors that reduce their usefulness."
+      B: "The maps capture historical details that standard maps no longer show."
+      C: "The maps are popular because they are less expensive than digital ones."
+      D: "The customers buy the maps as decorative art, not for navigation."
+    answer: B
+    explanation: "The phrase indicates that the value of the father's maps lies in preserving what places once looked like — historical memory — rather than reflecting current geography."
+
+  - number: 22
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_1
+    question: |
+      What is Lena's main struggle in the story?
+    choices:
+      A: "She cannot afford to buy the supplies needed to make maps."
+      B: "She lacks the precise drawing skill her father possesses."
+      C: "She disagrees with her father's philosophy about map-making."
+      D: "She wants to use digital tools, but her father forbids it."
+    answer: B
+    explanation: "The story explicitly states that 'Lena could not draw a straight line' and that her rivers 'wobbled' and borders 'drifted.' Her struggle is a lack of technical precision."
+
+  - number: 23
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_1
+    question: |
+      What does the father mean when he says, "A map that only shows what is there now tells you nothing about where you have been"?
+    choices:
+      A: "Maps should never be updated because old versions are always better."
+      B: "Recording only the present erases the history and meaning of a place."
+      C: "Customers prefer to buy maps that are inaccurate."
+      D: "The father is confused about modern geography."
+    answer: B
+    explanation: "The father's statement reflects his belief that maps should preserve the past. A purely current map would lose the layers of history — the moved church, the old boundaries — that give a place its story."
+
+  - number: 24
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_1
+    question: |
+      Why does the father's silence about Lena's drawing trouble her more than criticism would?
+    choices:
+      A: "She interprets his silence as a sign that he has given up on her."
+      B: "She wants him to yell at her so she can argue back."
+      C: "She believes he is secretly selling her drawings without telling her."
+      D: "His silence means he has not noticed her attempts."
+    answer: A
+    explanation: "Criticism would at least suggest her father believes she can improve. Silence implies he sees no path forward for her — or that the gap is too wide to address — which feels like abandonment of hope."
+
+  - number: 25
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_1
+    question: |
+      How does Lena's final drawing differ from her earlier attempts?
+    choices:
+      A: "She uses a ruler and produces perfectly straight lines."
+      B: "She draws from memory rather than trying to replicate her father's precision."
+      C: "She traces one of her father's maps and adds her own details."
+      D: "She draws a map of a place she has never visited."
+    answer: B
+    explanation: "Instead of trying to draw precise geographic lines, Lena draws her street as she remembers it — the crooked fence, the missing tree, the pothole. She embraces imperfection and personal memory."
+
+  - number: 26
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_1
+    question: |
+      Which best describes the theme of this story?
+    choices:
+      A: "Children should always follow exactly in their parents' footsteps."
+      B: "Technical skill is the only measure of artistic talent."
+      C: "Finding your own voice in a craft may mean redefining what that craft can be."
+      D: "Maps are more valuable than digital technology."
+    answer: C
+    explanation: "Lena cannot replicate her father's precise style, but she discovers she can carry forward his philosophy — preserving memory — in her own imperfect way. She redefines what map-making means for her."
+
+  - number: 27
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_1
+    question: |
+      The sentence "The lines were uneven, but the map was true" most likely means:
+    choices:
+      A: "The map was factually accurate and could be used for navigation."
+      B: "Lena's drawing was technically flawed but emotionally and historically honest."
+      C: "The pen Lena used produced uneven ink but the map was still readable."
+      D: "Lena had finally learned to draw perfectly straight lines."
+    answer: B
+    explanation: "The contrast between 'uneven' and 'true' signals that truth, in this story, is not about geometric precision but about faithfully representing lived experience and memory."
+
+  # --- PASSAGE 2: Nonfiction/Science — "The Hidden Power of Soil" (Questions 28–34) ---
+
+  - number: 28
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_2
+    passage_title: "The Hidden Power of Soil"
+    passage_text: |
+      Beneath every forest, field, and garden lies a world more complex than most people imagine.
+      A single teaspoon of healthy soil contains more microorganisms than there are people on
+      Earth — roughly 8 billion bacteria, fungi, protozoa, and other microscopic life forms. These
+      organisms are not merely inhabitants of the soil; they are its architects.
+
+      The most important relationship in soil is the partnership between plant roots and fungi
+      known as mycorrhizal networks. The fungi extend thread-like filaments called hyphae deep
+      into the soil, reaching water and nutrients that roots alone could never access. In return,
+      the plant provides the fungi with sugars produced through photosynthesis. This exchange is
+      so efficient that approximately 90% of all land plants depend on mycorrhizal partnerships
+      to survive.
+
+      What scientists have discovered more recently is that these fungal networks do not serve
+      just one plant. The hyphae connect multiple trees and plants underground, forming what
+      researchers have called the "Wood Wide Web." Through this network, a mature tree can
+      transfer carbon and nutrients to a struggling seedling nearby. Some scientists believe
+      that older trees preferentially support their own offspring, though this remains debated.
+
+      The implications for agriculture are significant. Industrial farming practices — tilling,
+      monoculture, and heavy use of chemical fertilisers — destroy mycorrhizal networks. When
+      these networks collapse, plants become entirely dependent on artificial inputs to grow.
+      A growing number of farmers are now adopting regenerative practices that protect soil
+      biology: minimal tilling, cover crops, and crop rotation. The goal is not just to grow
+      food, but to rebuild the living systems beneath it.
+    question: |
+      According to the passage, approximately how many microorganisms are found in a single teaspoon of healthy soil?
+    choices:
+      A: "8 million"
+      B: "8 billion"
+      C: "80 billion"
+      D: "8 trillion"
+    answer: B
+    explanation: "The passage states 'roughly 8 billion bacteria, fungi, protozoa, and other microscopic life forms' in a single teaspoon of healthy soil."
+
+  - number: 29
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_2
+    question: |
+      What do plants provide to mycorrhizal fungi in exchange for water and nutrients?
+    choices:
+      A: "Carbon dioxide from respiration"
+      B: "Sugars produced through photosynthesis"
+      C: "Nitrogen absorbed from the atmosphere"
+      D: "Minerals extracted from rocks"
+    answer: B
+    explanation: "The passage states that 'the plant provides the fungi with sugars produced through photosynthesis.' This is the plant's side of the mycorrhizal exchange."
+
+  - number: 30
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_2
+    question: |
+      Why do researchers call the underground fungal network the "Wood Wide Web"?
+    choices:
+      A: "Because the network was first discovered using internet technology."
+      B: "Because the fungal filaments connect multiple plants, similar to how the internet connects computers."
+      C: "Because the network only exists in forests with very old trees."
+      D: "Because the fungi resemble the structure of a spider's web."
+    answer: B
+    explanation: "The term is a play on 'World Wide Web.' Just as the internet connects computers, the mycorrhizal hyphae connect multiple trees and plants, enabling resource sharing across a network."
+
+  - number: 31
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_2
+    question: |
+      What is the main purpose of the final paragraph?
+    choices:
+      A: "To describe the chemical composition of soil."
+      B: "To explain why industrial farming practices harm soil biology and what alternatives exist."
+      C: "To argue that all chemical fertilisers should be banned immediately."
+      D: "To introduce the topic of mycorrhizal networks for the first time."
+    answer: B
+    explanation: "The final paragraph identifies how industrial farming destroys mycorrhizal networks, then describes regenerative practices that protect soil biology. It connects the science to practical consequences."
+
+  - number: 32
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_2
+    question: |
+      The passage describes mycorrhizal organisms as "architects" of the soil. What does this word choice suggest?
+    choices:
+      A: "The organisms build physical structures like buildings inside the soil."
+      B: "The organisms passively exist in the soil without affecting it."
+      C: "The organisms actively shape and construct the soil environment."
+      D: "The organisms are intelligent beings that plan their actions."
+    answer: C
+    explanation: "Calling organisms 'architects' implies they are not passive occupants but active builders and shapers of the soil ecosystem. The word elevates their role from inhabitants to creators."
+
+  - number: 33
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_2
+    question: |
+      As used in the passage, the word "regenerative" (paragraph 4) most nearly means:
+    choices:
+      A: "Producing higher crop yields than conventional methods."
+      B: "Designed to restore and renew natural systems."
+      C: "Using advanced technology to monitor soil health."
+      D: "Eliminating all human intervention in farming."
+    answer: B
+    explanation: "In context, 'regenerative practices' are those that 'protect soil biology' and 'rebuild the living systems beneath it.' The word describes restoration and renewal, not just productivity."
+
+  - number: 34
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_2
+    question: |
+      Which statement best expresses the central idea of the entire passage?
+    choices:
+      A: "Soil is a complex living system whose microscopic networks sustain plant life and are threatened by modern farming."
+      B: "Fungi are more important than plants in every ecosystem on Earth."
+      C: "Chemical fertilisers are the only effective way to grow food at scale."
+      D: "Scientists have recently discovered that soil contains bacteria."
+    answer: A
+    explanation: "The passage moves from describing soil's microscopic complexity, to explaining mycorrhizal networks and their importance, to showing how farming threatens them. The central idea connects all three threads."
+
+  # --- PASSAGE 3: Poetry — "What the River Knows" (Questions 35–39) ---
+
+  - number: 35
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_3
+    passage_title: "What the River Knows"
+    passage_text: |
+      The river does not rush because it is late.
+      It does not slow because the day is done.
+      It moves at the only pace it has ever known,
+      which is the pace of everything beneath the sun.
+
+      It carries what falls in — the leaf, the stone,
+      the branch that snapped in last night's storm —
+      and does not sort the weight of what it bears
+      or ask if what it holds should change its form.
+
+      I stood beside it once when I was young
+      and thought it weak because it would not fight
+      the rocks that broke its current into foam.
+      I know now it was wearing them from sight.
+
+      They say that time is like a river's flow,
+      but I think rivers understand it best:
+      you do not conquer what you carry — no,
+      you simply move, and let the moving rest.
+    question: |
+      In the first stanza, what does the speaker suggest about the river's movement?
+    choices:
+      A: "The river is always in a hurry to reach the ocean."
+      B: "The river moves at a constant, natural pace unaffected by external pressures."
+      C: "The river changes speed depending on the time of day."
+      D: "The river has been slowing down over many years."
+    answer: B
+    explanation: "The speaker emphasises that the river does not 'rush' or 'slow' — it moves 'at the only pace it has ever known.' This suggests a constant, unhurried, natural rhythm."
+
+  - number: 36
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_3
+    question: |
+      What does the second stanza reveal about the river's character?
+    choices:
+      A: "The river rejects anything that falls into it."
+      B: "The river accepts whatever it receives without judgment or resistance."
+      C: "The river is destructive and breaks apart everything it touches."
+      D: "The river only carries lightweight objects downstream."
+    answer: B
+    explanation: "The river 'carries what falls in' and 'does not sort the weight' or 'ask if what it holds should change its form.' It accepts everything equally, without resistance or judgment."
+
+  - number: 37
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_3
+    question: |
+      In the third stanza, what did the speaker once believe about the river, and how has that belief changed?
+    choices:
+      A: "The speaker thought the river was powerful but now thinks it is weak."
+      B: "The speaker thought the river was dangerous but now thinks it is safe."
+      C: "The speaker thought the river was weak for not fighting rocks, but now understands it was gradually wearing them away."
+      D: "The speaker thought the river was beautiful but now finds it ordinary."
+    answer: C
+    explanation: "As a child, the speaker 'thought it weak because it would not fight the rocks.' Now the speaker realises the river 'was wearing them from sight' — a slow, quiet power that outlasts resistance."
+
+  - number: 38
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_3
+    question: |
+      What is the meaning of the final two lines: "you do not conquer what you carry — no, / you simply move, and let the moving rest"?
+    choices:
+      A: "You should stop moving when you feel tired."
+      B: "Fighting against life's burdens is pointless; peace comes from continuing forward without struggle."
+      C: "Rivers always stop flowing eventually."
+      D: "Conquering your problems is the only way to find peace."
+    answer: B
+    explanation: "The speaker's lesson from the river is that endurance — not combat — brings peace. 'Let the moving rest' suggests that the act of continuing forward is itself a form of relief, not a battle to be won."
+
+  - number: 39
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_3
+    question: |
+      Which literary device is most prominent throughout the poem?
+    choices:
+      A: "Onomatopoeia — words that imitate sounds"
+      B: "Extended metaphor — the river represents a way of living"
+      C: "Hyperbole — extreme exaggeration for effect"
+      D: "Alliteration — repetition of consonant sounds"
+    answer: B
+    explanation: "The entire poem uses the river as an extended metaphor for how to live — accepting burdens, moving steadily, not fighting what cannot be conquered. Every stanza reinforces this comparison."
+
+  # --- PASSAGE 4: Nonfiction/History — "The Forgotten Engineers" (Questions 40–47) ---
+
+  - number: 40
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_4
+    passage_title: "The Forgotten Engineers"
+    passage_text: |
+      When people think of the construction of the transcontinental railroad, they often picture
+      the golden spike ceremony at Promontory Summit, Utah, on May 10, 1869 — the moment the
+      Central Pacific and Union Pacific lines were joined. Photographs from that day show rows
+      of well-dressed officials and executives shaking hands. What the photographs do not show
+      are the roughly 12,000 Chinese labourers who built the most dangerous section of the
+      railroad.
+
+      The Central Pacific Railroad hired Chinese workers beginning in 1865, initially out of
+      desperation. White labourers refused the most hazardous assignments or demanded higher
+      wages. The Chinese workers, many of whom had immigrated during the California Gold Rush,
+      accepted lower pay — roughly $26 to $35 per month — and were not provided food or shelter,
+      unlike their white counterparts who received both in addition to wages.
+
+      The work was extraordinarily dangerous. Chinese labourers were lowered in woven baskets
+      over the sides of cliffs to drill holes and place explosives in the granite walls of the
+      Sierra Nevada mountains. Many died in avalanches, rockslides, and premature explosions.
+      Exact death tolls were never recorded; historians estimate between 1,000 and 1,500
+      Chinese workers perished during the construction.
+
+      Despite this, Chinese workers set records that astonished their employers. They laid ten
+      miles of track in a single day during the final push — a feat that has never been
+      equalled in manual railroad construction. Charles Crocker, one of the Central Pacific's
+      founders, later admitted that without the Chinese labourers, the railroad could not have
+      been completed.
+
+      Yet when the golden spike was driven, not a single Chinese worker was invited to the
+      ceremony. It was not until 2014 — 145 years later — that the U.S. Department of Labor
+      inducted Chinese railroad workers into its Hall of Honor, acknowledging their contribution
+      for the first time at a federal level.
+    question: |
+      According to the passage, why did the Central Pacific Railroad first begin hiring Chinese workers?
+    choices:
+      A: "Chinese workers had special training in railroad construction."
+      B: "White labourers refused dangerous tasks or demanded higher pay."
+      C: "The U.S. government required companies to hire immigrant workers."
+      D: "Chinese workers volunteered to work without any compensation."
+    answer: B
+    explanation: "The passage states the company hired Chinese workers 'initially out of desperation' because 'white labourers refused the most hazardous assignments or demanded higher wages.'"
+
+  - number: 41
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_4
+    question: |
+      How did the pay and benefits of Chinese workers compare to those of white workers?
+    choices:
+      A: "Chinese workers received higher wages but no food or shelter."
+      B: "Chinese workers received lower wages and were not provided food or shelter."
+      C: "Both groups received equal pay and benefits."
+      D: "Chinese workers received the same wages but had to pay for their own tools."
+    answer: B
+    explanation: "The passage states Chinese workers accepted 'lower pay — roughly $26 to $35 per month — and were not provided food or shelter, unlike their white counterparts who received both.'"
+
+  - number: 42
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_4
+    question: |
+      What made the work on the Sierra Nevada section particularly dangerous?
+    choices:
+      A: "The workers had to cross deep rivers without bridges."
+      B: "Workers were lowered in baskets over cliffs to drill and place explosives in granite."
+      C: "The area was inhabited by hostile wildlife that attacked workers."
+      D: "Extreme heat caused frequent dehydration and illness."
+    answer: B
+    explanation: "The passage describes workers being 'lowered in woven baskets over the sides of cliffs to drill holes and place explosives in the granite walls of the Sierra Nevada mountains.'"
+
+  - number: 43
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_4
+    question: |
+      Why does the author mention that "exact death tolls were never recorded"?
+    choices:
+      A: "To suggest that the deaths were not real and may be exaggerated."
+      B: "To highlight the indifference with which Chinese workers' lives were treated."
+      C: "To show that record-keeping technology did not exist at the time."
+      D: "To argue that the work was not actually dangerous."
+    answer: B
+    explanation: "The failure to record deaths underscores how disposable these workers were considered. The author uses this detail to emphasise systemic disregard for Chinese labourers' lives and contributions."
+
+  - number: 44
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_4
+    question: |
+      What record did Chinese workers set during the final push of construction?
+    choices:
+      A: "They completed a bridge in under 24 hours."
+      B: "They laid ten miles of track in a single day."
+      C: "They tunnelled through an entire mountain in one week."
+      D: "They built 100 miles of track in a single month."
+    answer: B
+    explanation: "The passage states 'They laid ten miles of track in a single day during the final push — a feat that has never been equalled in manual railroad construction.'"
+
+  - number: 45
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_4
+    question: |
+      What is the significance of the opening and closing paragraphs both referencing the golden spike ceremony?
+    choices:
+      A: "It shows that the ceremony was the most important event in American history."
+      B: "It creates a frame that contrasts the public celebration with the erasure of the workers who made it possible."
+      C: "It suggests that the author attended the ceremony personally."
+      D: "It proves that the ceremony was poorly organised."
+    answer: B
+    explanation: "The opening shows the ceremony's public face (executives shaking hands, no Chinese workers visible); the closing reveals the exclusion was deliberate. The frame exposes the gap between celebration and justice."
+
+  - number: 46
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_4
+    question: |
+      As used in the passage, the word "feat" (paragraph 4) most nearly means:
+    choices:
+      A: "A dangerous risk taken without planning."
+      B: "A remarkable achievement requiring great effort."
+      C: "A type of celebration held after completing a task."
+      D: "A failure that was later reinterpreted as a success."
+    answer: B
+    explanation: "In context, 'feat' describes the ten-miles-in-a-day record — an extraordinary accomplishment. It connotes remarkable achievement, not risk or failure."
+
+  - number: 47
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_4
+    question: |
+      Which statement best expresses the central argument of the passage?
+    choices:
+      A: "The transcontinental railroad was completed ahead of schedule thanks to efficient management."
+      B: "Chinese labourers were essential to building the railroad yet were systematically excluded from recognition."
+      C: "Railroad construction in the 1800s was dangerous for all workers regardless of race."
+      D: "The golden spike ceremony was the most significant event in the history of American transportation."
+    answer: B
+    explanation: "Every paragraph supports this argument: the workers' hiring, their unequal treatment, the dangerous work, their record-setting achievement, and their exclusion from both the ceremony and historical recognition for over a century."
+
+  # --- PASSAGE 5: Fiction — "The Weight of Glass" (Questions 48–57) ---
+
+  - number: 48
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_5
+    passage_title: "The Weight of Glass"
+    passage_text: |
+      Jonas had been staring at the glass jar on the top shelf for as long as he could remember.
+      It was not beautiful — cloudy, with a crack running along the rim like a scar — but his
+      mother treated it as if it were made of something more precious than glass. She dusted it
+      every Sunday morning. She never moved it to a lower shelf. She never spoke about it.
+
+      When Jonas was ten, he asked about the jar. His mother paused mid-sweep and said, "It
+      belonged to your grandmother." That was all. Jonas learned early that some sentences were
+      doors that had been closed on purpose.
+
+      At twelve, Jonas's best friend Tomás came over and spotted the jar. "What's inside?" he
+      asked. Jonas shrugged. He had never looked. The jar had always been something you left
+      alone, like the corner of the attic where the roof leaked or the photograph on the hallway
+      wall that made his mother go quiet.
+
+      It was not until Jonas turned fourteen and his mother was admitted to the hospital that he
+      finally reached for the jar. Standing on a chair, he lifted it down. It was heavier than
+      he expected. Inside, folded tight, were dozens of small pieces of paper. Each one bore a
+      single sentence in handwriting he did not recognise.
+
+      "Today we planted tomatoes, and Marta laughed so hard the neighbours complained."
+      "Marta's first word was 'bird,' and she pointed at a cloud."
+      "I am afraid I will forget her voice."
+
+      Marta was his mother's name. The handwriting belonged to his grandmother. The jar held
+      the small, ordinary moments of his mother's childhood — captured one sentence at a time
+      by a woman who must have known that memory fades.
+
+      Jonas sat on the kitchen floor, reading every slip. When he was done, he folded them back
+      exactly as he had found them and returned the jar to the top shelf. Then he found a pen
+      and a scrap of paper and wrote: "Mam went to the hospital today, and I read Grandmother's
+      jar." He folded the paper, opened the jar, and placed it on top.
+    question: |
+      Why does Jonas's mother treat the jar with such care?
+    choices:
+      A: "The jar is financially valuable and could be sold for a large sum."
+      B: "The jar contains memories of her childhood preserved by her own mother."
+      C: "The jar is fragile and she is afraid it will break if moved."
+      D: "The jar was given to her by Jonas's father before he left."
+    answer: B
+    explanation: "The story reveals that the jar holds slips of paper written by Jonas's grandmother, documenting moments from his mother's (Marta's) childhood. The mother treats it with care because it holds irreplaceable personal memories."
+
+  - number: 49
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_5
+    question: |
+      What does the sentence "Jonas learned early that some sentences were doors that had been closed on purpose" mean?
+    choices:
+      A: "Jonas's mother frequently locked the doors in their house."
+      B: "Jonas understood that certain topics were deliberately off-limits for discussion."
+      C: "Jonas's mother did not speak English well and often gave short answers."
+      D: "Jonas was not allowed to open doors in the house without permission."
+    answer: B
+    explanation: "The metaphor compares short, deflecting answers to closed doors — signals that the topic is not open for further conversation. Jonas recognised that his mother's brief reply was intentional, not incomplete."
+
+  - number: 50
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_5
+    question: |
+      Why does Jonas compare the jar to "the corner of the attic where the roof leaked" and "the photograph on the hallway wall"?
+    choices:
+      A: "All three are broken objects that need to be repaired."
+      B: "All three are things in the house that are treated as untouchable or emotionally charged."
+      C: "All three are Jonas's favourite things in the house."
+      D: "All three were gifts from Jonas's grandmother."
+    answer: B
+    explanation: "Jonas groups these items as things 'you left alone' — not because they are unimportant, but because they carry emotional weight or unspoken significance. They are off-limits by silent agreement."
+
+  - number: 51
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_5
+    question: |
+      What event finally causes Jonas to reach for the jar?
+    choices:
+      A: "His friend Tomás dares him to open it."
+      B: "His mother gives him permission on his birthday."
+      C: "His mother is admitted to the hospital."
+      D: "He accidentally knocks it off the shelf."
+    answer: C
+    explanation: "The passage states 'It was not until Jonas turned fourteen and his mother was admitted to the hospital that he finally reached for the jar.' Her absence gives him both the opportunity and emotional need to open it."
+
+  - number: 52
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_5
+    question: |
+      What do the slips of paper reveal about the grandmother?
+    choices:
+      A: "She was a professional writer who kept a journal."
+      B: "She recorded small daily moments because she feared losing her memories of her daughter."
+      C: "She wrote down her worries about money and health."
+      D: "She left instructions for Jonas about how to care for his mother."
+    answer: B
+    explanation: "The slips capture tiny moments — planting tomatoes, a first word, a fear of forgetting. The sentence 'I am afraid I will forget her voice' reveals the grandmother's motivation: preserving memory against the inevitability of forgetting."
+
+  - number: 53
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_5
+    question: |
+      Why does Jonas fold the papers back "exactly as he had found them"?
+    choices:
+      A: "He is afraid his mother will punish him for touching the jar."
+      B: "He wants to preserve the jar's contents with the same respect his mother shows."
+      C: "He does not think the papers are important."
+      D: "He plans to sell the jar and wants it to look untouched."
+    answer: B
+    explanation: "Jonas's careful handling mirrors his mother's reverence. He now understands the jar's significance and restores it with the same care, showing respect for both the contents and his mother's relationship to them."
+
+  - number: 54
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_5
+    question: |
+      What is the significance of Jonas adding his own slip of paper to the jar at the end?
+    choices:
+      A: "He is continuing the tradition his grandmother started — recording ordinary moments to preserve memory."
+      B: "He is writing a letter to his grandmother to communicate with her spirit."
+      C: "He wants to prove to his mother that he opened the jar."
+      D: "He is filling the jar with paper because it was nearly empty."
+    answer: A
+    explanation: "By writing his own sentence and adding it to the jar, Jonas extends the chain his grandmother began. He becomes the next keeper of small moments, continuing the family practice of fighting forgetting."
+
+  - number: 55
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: medium
+    passage_id: passage_2_5
+    question: |
+      The story describes the jar as "not beautiful — cloudy, with a crack running along the rim like a scar." What effect does this description create?
+    choices:
+      A: "It suggests the jar is worthless and should be thrown away."
+      B: "It emphasises that the jar's value lies not in its appearance but in what it holds."
+      C: "It foreshadows that the jar will break before Jonas can open it."
+      D: "It shows that Jonas's family cannot afford to buy new things."
+    answer: B
+    explanation: "The description of the jar's physical flaws contrasts with the reverence the mother shows it. This contrast signals that its value is emotional, not material — it is precious because of its contents, not its appearance."
+
+  - number: 56
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_5
+    question: |
+      Which word best describes the overall tone of this story?
+    choices:
+      A: "Suspenseful"
+      B: "Humorous"
+      C: "Tender"
+      D: "Bitter"
+    answer: C
+    explanation: "The story handles themes of memory, loss, and family connection with gentleness and warmth. The grandmother's notes, the mother's care, and Jonas's decision to continue the tradition all contribute to a tender tone."
+
+  - number: 57
+    type: multiple_choice
+    topic: Reading Comprehension
+    difficulty: hard
+    passage_id: passage_2_5
+    question: |
+      Which best describes the theme of this story?
+    choices:
+      A: "Material possessions are the most important part of family life."
+      B: "Children should never disobey their parents' unspoken rules."
+      C: "Memory is fragile, and preserving small moments is an act of love that can span generations."
+      D: "Hospitals are places where families come together during difficult times."
+    answer: C
+    explanation: "The story's core is about how the grandmother's fear of forgetting led her to capture moments, how the mother guarded those memories, and how Jonas chose to continue the practice. The theme is intergenerational preservation of memory as love."
+
+
+math:
+
+  # ================================================================
+  # MATH — Questions 1–57
+  # ================================================================
+
+  # === Integers & Number Properties (Q1–8) ===
+
+  - number: 1
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: easy
+    question: |
+      What is the value of (−3) × (−4) × (−2)?
+    choices:
+      A: "24"
+      B: "−24"
+      C: "12"
+      D: "−12"
+    answer: B
+    explanation: "(−3) × (−4) = 12. Then 12 × (−2) = −24. Three negative factors give a negative product."
+
+  - number: 2
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: easy
+    question: |
+      Which of the following numbers is divisible by both 3 and 4?
+    choices:
+      A: "18"
+      B: "28"
+      C: "36"
+      D: "45"
+    answer: C
+    explanation: "36 ÷ 3 = 12 ✓ and 36 ÷ 4 = 9 ✓. 18 is divisible by 3 but not 4. 28 is divisible by 4 but not 3. 45 is divisible by 3 but not 4."
+
+  - number: 3
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: easy
+    question: |
+      What is the greatest common factor (GCF) of 48 and 36?
+    choices:
+      A: "6"
+      B: "8"
+      C: "12"
+      D: "24"
+    answer: C
+    explanation: "Factors of 48: 1, 2, 3, 4, 6, 8, 12, 16, 24, 48. Factors of 36: 1, 2, 3, 4, 6, 9, 12, 18, 36. The greatest common factor is 12."
+
+  - number: 4
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: medium
+    question: |
+      What is the least common multiple (LCM) of 8 and 14?
+    choices:
+      A: "28"
+      B: "56"
+      C: "112"
+      D: "48"
+    answer: B
+    explanation: "8 = 2³ and 14 = 2 × 7. LCM = 2³ × 7 = 56."
+
+  - number: 5
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: medium
+    question: |
+      Which expression is equivalent to 2⁵ × 2³?
+    choices:
+      A: "2¹⁵"
+      B: "2⁸"
+      C: "4⁸"
+      D: "2²"
+    answer: B
+    explanation: "When multiplying powers with the same base, add the exponents: 2⁵ × 2³ = 2⁽⁵⁺³⁾ = 2⁸."
+
+  - number: 6
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: medium
+    question: |
+      What is the value of |−7| + |3| − |−2|?
+    choices:
+      A: "8"
+      B: "12"
+      C: "6"
+      D: "−6"
+    answer: A
+    explanation: "|−7| = 7, |3| = 3, |−2| = 2. So 7 + 3 − 2 = 8."
+
+  - number: 7
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: easy
+    question: |
+      Which list shows the numbers in order from least to greatest?
+
+      −5, 2, −3, 0, 4
+    choices:
+      A: "−5, −3, 0, 2, 4"
+      B: "−3, −5, 0, 2, 4"
+      C: "0, 2, −3, −5, 4"
+      D: "4, 2, 0, −3, −5"
+    answer: A
+    explanation: "On the number line, −5 is farthest left, then −3, then 0, then 2, then 4. Choice A lists them from least to greatest."
+
+  - number: 8
+    type: multiple_choice
+    topic: Number Properties
+    difficulty: medium
+    question: |
+      If n is an odd integer, which of the following must also be odd?
+    choices:
+      A: "n + 1"
+      B: "2n"
+      C: "n²"
+      D: "n + 3"
+    answer: C
+    explanation: "An odd number squared is always odd (odd × odd = odd). n + 1 is even, 2n is always even, and n + 3 is even (odd + odd = even)."
+
+  # === Fractions & Decimals (Q9–14) ===
+
+  - number: 9
+    type: multiple_choice
+    topic: Fractions and Decimals
+    difficulty: easy
+    question: |
+      What is ³⁄₄ + ²⁄₃?
+    choices:
+      A: "⁵⁄₇"
+      B: "¹⁷⁄₁₂"
+      C: "¹⁄₁₂"
+      D: "⁶⁄₇"
+    answer: B
+    explanation: "Common denominator is 12. ³⁄₄ = ⁹⁄₁₂ and ²⁄₃ = ⁸⁄₁₂. Sum = ⁹⁄₁₂ + ⁸⁄₁₂ = ¹⁷⁄₁₂."
+
+  - number: 10
+    type: multiple_choice
+    topic: Fractions and Decimals
+    difficulty: medium
+    question: |
+      What is ⁵⁄₆ ÷ ²⁄₃?
+    choices:
+      A: "⁵⁄₉"
+      B: "¹⁰⁄₁₈"
+      C: "⁵⁄₄"
+      D: "¹⁵⁄₁₂"
+    answer: C
+    explanation: "Dividing by a fraction means multiplying by its reciprocal: ⁵⁄₆ × ³⁄₂ = ¹⁵⁄₁₂ = ⁵⁄₄."
+
+  - number: 11
+    type: multiple_choice
+    topic: Fractions and Decimals
+    difficulty: medium
+    question: |
+      Which fraction is equivalent to 0.375?
+    choices:
+      A: "¹⁄₃"
+      B: "³⁄₈"
+      C: "⁵⁄₁₂"
+      D: "⁷⁄₂₀"
+    answer: B
+    explanation: "0.375 = 375/1000 = 3/8."
+
+  - number: 12
+    type: multiple_choice
+    topic: Fractions and Decimals
+    difficulty: medium
+    question: |
+      What is 2¹⁄₃ × 1¹⁄₂?
+    choices:
+      A: "2¹⁄₆"
+      B: "3¹⁄₂"
+      C: "3¹⁄₆"
+      D: "4"
+    answer: B
+    explanation: "Convert to improper fractions: 2¹⁄₃ = ⁷⁄₃ and 1¹⁄₂ = ³⁄₂. Multiply: ⁷⁄₃ × ³⁄₂ = ²¹⁄₆ = ⁷⁄₂ = 3¹⁄₂."
+
+  - number: 13
+    type: multiple_choice
+    topic: Fractions and Decimals
+    difficulty: easy
+    question: |
+      Which decimal is equal to ⁷⁄₂₀?
+    choices:
+      A: "0.35"
+      B: "0.7"
+      C: "3.5"
+      D: "0.37"
+    answer: A
+    explanation: "⁷⁄₂₀ = 7 ÷ 20 = 0.35."
+
+  - number: 14
+    type: multiple_choice
+    topic: Fractions and Decimals
+    difficulty: hard
+    question: |
+      If ²⁄₅ of a number is 18, what is ³⁄₄ of the same number?
+    choices:
+      A: "27"
+      B: "30"
+      C: "33.75"
+      D: "45"
+    answer: C
+    explanation: "²⁄₅ × n = 18, so n = 18 × ⁵⁄₂ = 45. Then ³⁄₄ × 45 = 135/4 = 33.75."
+
+  # === Percents (Q15–19) ===
+
+  - number: 15
+    type: multiple_choice
+    topic: Percents
+    difficulty: easy
+    question: |
+      What is 15% of 240?
+    choices:
+      A: "24"
+      B: "36"
+      C: "48"
+      D: "30"
+    answer: B
+    explanation: "15% × 240 = 0.15 × 240 = 36."
+
+  - number: 16
+    type: multiple_choice
+    topic: Percents
+    difficulty: medium
+    question: |
+      A jacket originally costs $80. It is on sale for 25% off. What is the sale price?
+    choices:
+      A: "$55"
+      B: "$60"
+      C: "$65"
+      D: "$20"
+    answer: B
+    explanation: "Discount = 25% × $80 = $20. Sale price = $80 − $20 = $60."
+
+  - number: 17
+    type: multiple_choice
+    topic: Percents
+    difficulty: medium
+    question: |
+      A student scored 42 out of 60 on a test. What percentage is this?
+    choices:
+      A: "65%"
+      B: "70%"
+      C: "72%"
+      D: "75%"
+    answer: B
+    explanation: "42 ÷ 60 = 0.70 = 70%."
+
+  - number: 18
+    type: multiple_choice
+    topic: Percents
+    difficulty: hard
+    question: |
+      The price of a computer increased from $600 to $750. What was the percent increase?
+    choices:
+      A: "20%"
+      B: "25%"
+      C: "30%"
+      D: "15%"
+    answer: B
+    explanation: "Increase = $750 − $600 = $150. Percent increase = 150/600 = 0.25 = 25%."
+
+  - number: 19
+    type: multiple_choice
+    topic: Percents
+    difficulty: hard
+    question: |
+      After a 20% discount, a pair of shoes costs $56. What was the original price?
+    choices:
+      A: "$67.20"
+      B: "$70"
+      C: "$72"
+      D: "$75"
+    answer: B
+    explanation: "After 20% off, the customer pays 80% of the original price. So 0.80 × original = $56. Original = $56 ÷ 0.80 = $70."
+
+  # === Ratios and Proportions (Q20–23) ===
+
+  - number: 20
+    type: multiple_choice
+    topic: Ratios and Proportions
+    difficulty: easy
+    question: |
+      The ratio of boys to girls in a class is 3:5. If there are 24 students in total, how many are girls?
+    choices:
+      A: "9"
+      B: "12"
+      C: "15"
+      D: "18"
+    answer: C
+    explanation: "Total parts = 3 + 5 = 8. Each part = 24 ÷ 8 = 3 students. Girls = 5 × 3 = 15."
+
+  - number: 21
+    type: multiple_choice
+    topic: Ratios and Proportions
+    difficulty: medium
+    question: |
+      A recipe requires 2 cups of flour for every 3 cups of sugar. If you use 9 cups of sugar, how many cups of flour do you need?
+    choices:
+      A: "4"
+      B: "5"
+      C: "6"
+      D: "8"
+    answer: C
+    explanation: "Set up the proportion: 2/3 = x/9. Cross-multiply: 3x = 18, so x = 6."
+
+  - number: 22
+    type: multiple_choice
+    topic: Ratios and Proportions
+    difficulty: medium
+    question: |
+      A map has a scale of 1 cm : 25 km. If two cities are 7.5 cm apart on the map, what is the actual distance between them?
+    choices:
+      A: "150 km"
+      B: "175 km"
+      C: "187.5 km"
+      D: "200 km"
+    answer: C
+    explanation: "7.5 cm × 25 km/cm = 187.5 km."
+
+  - number: 23
+    type: multiple_choice
+    topic: Ratios and Proportions
+    difficulty: hard
+    question: |
+      Three friends split a bill in the ratio 2:3:5. If the total bill is $120, how much does the person who pays the most contribute?
+    choices:
+      A: "$24"
+      B: "$36"
+      C: "$48"
+      D: "$60"
+    answer: D
+    explanation: "Total parts = 2 + 3 + 5 = 10. Each part = $120 ÷ 10 = $12. The largest share = 5 × $12 = $60."
+
+  # === Algebra (Q24–33) ===
+
+  - number: 24
+    type: multiple_choice
+    topic: Algebra
+    difficulty: easy
+    question: |
+      Solve for x: 3x + 7 = 22
+    choices:
+      A: "3"
+      B: "5"
+      C: "7"
+      D: "15"
+    answer: B
+    explanation: "3x + 7 = 22 → 3x = 15 → x = 5."
+
+  - number: 25
+    type: multiple_choice
+    topic: Algebra
+    difficulty: easy
+    question: |
+      Simplify: 4(2x − 3) + 5x
+    choices:
+      A: "13x − 12"
+      B: "8x − 12"
+      C: "13x − 3"
+      D: "8x − 7"
+    answer: A
+    explanation: "4(2x − 3) + 5x = 8x − 12 + 5x = 13x − 12."
+
+  - number: 26
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Solve for y: 2(y − 4) = 3y + 6
+    choices:
+      A: "−14"
+      B: "14"
+      C: "−2"
+      D: "2"
+    answer: A
+    explanation: "2y − 8 = 3y + 6 → −8 − 6 = 3y − 2y → y = −14."
+
+  - number: 27
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Which inequality represents the solution to 5x − 3 > 17?
+    choices:
+      A: "x > 4"
+      B: "x > 2.8"
+      C: "x < 4"
+      D: "x > 20"
+    answer: A
+    explanation: "5x − 3 > 17 → 5x > 20 → x > 4."
+
+  - number: 28
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      If f(x) = 3x² − 2x + 1, what is f(−2)?
+    choices:
+      A: "9"
+      B: "13"
+      C: "17"
+      D: "21"
+    answer: C
+    explanation: "f(−2) = 3(−2)² − 2(−2) + 1 = 3(4) + 4 + 1 = 12 + 4 + 1 = 17."
+
+  - number: 29
+    type: multiple_choice
+    topic: Algebra
+    difficulty: hard
+    question: |
+      What is the slope of the line that passes through the points (2, 5) and (6, 13)?
+    choices:
+      A: "½"
+      B: "2"
+      C: "4"
+      D: "8"
+    answer: B
+    explanation: "Slope = (y₂ − y₁)/(x₂ − x₁) = (13 − 5)/(6 − 2) = 8/4 = 2."
+
+  - number: 30
+    type: multiple_choice
+    topic: Algebra
+    difficulty: hard
+    question: |
+      A line has the equation y = −3x + 12. At what point does it cross the x-axis?
+    choices:
+      A: "(4, 0)"
+      B: "(0, 12)"
+      C: "(−3, 0)"
+      D: "(12, 0)"
+    answer: A
+    explanation: "The x-intercept occurs when y = 0: 0 = −3x + 12 → 3x = 12 → x = 4. The point is (4, 0)."
+
+  - number: 31
+    type: multiple_choice
+    topic: Algebra
+    difficulty: medium
+    question: |
+      Which expression is equivalent to (x + 5)(x − 3)?
+    choices:
+      A: "x² + 2x − 15"
+      B: "x² − 2x − 15"
+      C: "x² + 8x − 15"
+      D: "x² − 15"
+    answer: A
+    explanation: "(x + 5)(x − 3) = x² − 3x + 5x − 15 = x² + 2x − 15."
+
+  - number: 32
+    type: multiple_choice
+    topic: Algebra
+    difficulty: hard
+    question: |
+      Solve the system of equations:
+      x + y = 10
+      2x − y = 5
+    choices:
+      A: "x = 3, y = 7"
+      B: "x = 5, y = 5"
+      C: "x = 7, y = 3"
+      D: "x = 4, y = 6"
+    answer: B
+    explanation: "Add the two equations: x + y + 2x − y = 10 + 5 → 3x = 15 → x = 5. Then y = 10 − 5 = 5."
+
+  - number: 33
+    type: multiple_choice
+    topic: Algebra
+    difficulty: hard
+    question: |
+      A taxi charges a flat fee of $3.50 plus $0.75 per mile. If the total fare is $12.50, how many miles was the trip?
+    choices:
+      A: "10"
+      B: "11"
+      C: "12"
+      D: "16"
+    answer: C
+    explanation: "$3.50 + $0.75m = $12.50 → $0.75m = $9.00 → m = 12 miles."
+
+  # === Geometry (Q34–42) ===
+
+  - number: 34
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: easy
+    question: |
+      What is the area of a triangle with a base of 12 cm and a height of 9 cm?
+    choices:
+      A: "54 cm²"
+      B: "108 cm²"
+      C: "36 cm²"
+      D: "21 cm²"
+    answer: A
+    explanation: "Area = ½ × base × height = ½ × 12 × 9 = 54 cm²."
+
+  - number: 35
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: easy
+    question: |
+      What is the circumference of a circle with a radius of 7 cm? (Use π ≈ 22/7)
+    choices:
+      A: "22 cm"
+      B: "44 cm"
+      C: "154 cm"
+      D: "88 cm"
+    answer: B
+    explanation: "Circumference = 2πr = 2 × (22/7) × 7 = 44 cm."
+
+  - number: 36
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: |
+      A rectangular prism has dimensions 5 cm × 4 cm × 3 cm. What is its volume?
+    choices:
+      A: "12 cm³"
+      B: "24 cm³"
+      C: "60 cm³"
+      D: "94 cm³"
+    answer: C
+    explanation: "Volume = length × width × height = 5 × 4 × 3 = 60 cm³."
+
+  - number: 37
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: |
+      Two angles are supplementary. If one angle measures 115°, what is the measure of the other angle?
+    choices:
+      A: "55°"
+      B: "65°"
+      C: "75°"
+      D: "245°"
+    answer: B
+    explanation: "Supplementary angles sum to 180°. The other angle = 180° − 115° = 65°."
+
+  - number: 38
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: |
+      A right triangle has legs of length 5 cm and 12 cm. What is the length of the hypotenuse?
+    choices:
+      A: "13 cm"
+      B: "15 cm"
+      C: "17 cm"
+      D: "14 cm"
+    answer: A
+    explanation: "By the Pythagorean theorem: c² = 5² + 12² = 25 + 144 = 169. c = √169 = 13 cm."
+
+  - number: 39
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: hard
+    question: |
+      A cylinder has a radius of 3 cm and a height of 10 cm. What is its volume? (Use π ≈ 3.14)
+    choices:
+      A: "94.2 cm³"
+      B: "188.4 cm³"
+      C: "282.6 cm³"
+      D: "314 cm³"
+    answer: C
+    explanation: "Volume = πr²h = 3.14 × 9 × 10 = 282.6 cm³."
+
+  - number: 40
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: |
+      In a parallelogram, one angle measures 70°. What are the measures of the other three angles?
+    choices:
+      A: "70°, 110°, 110°"
+      B: "70°, 70°, 150°"
+      C: "110°, 110°, 70°"
+      D: "90°, 110°, 90°"
+    answer: A
+    explanation: "In a parallelogram, opposite angles are equal and consecutive angles are supplementary. So the angles are 70°, 110°, 70°, 110°. The other three angles are 70°, 110°, 110° (but since one 70° is already given, the remaining are 110°, 70°, 110°). Choice A lists the three other angles."
+
+  - number: 41
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: hard
+    question: |
+      A square and a circle have the same perimeter. The square has a side length of 11 cm. Which is closest to the radius of the circle? (Use π ≈ 3.14)
+    choices:
+      A: "5 cm"
+      B: "7 cm"
+      C: "9 cm"
+      D: "11 cm"
+    answer: B
+    explanation: "Perimeter of the square = 4 × 11 = 44 cm. Circumference of the circle = 44 cm. 2πr = 44 → r = 44/(2 × 3.14) = 44/6.28 ≈ 7.0 cm."
+
+  - number: 42
+    type: multiple_choice
+    topic: Geometry and Measurement
+    difficulty: hard
+    question: |
+      A triangle has vertices at (1, 2), (1, 8), and (9, 2). What is the area of the triangle?
+    choices:
+      A: "18 square units"
+      B: "24 square units"
+      C: "36 square units"
+      D: "48 square units"
+    answer: B
+    explanation: "The triangle has a vertical leg from (1,2) to (1,8) of length 6 and a horizontal leg from (1,2) to (9,2) of length 8. It is a right triangle. Area = ½ × 6 × 8 = 24 square units."
+
+  # === Probability & Statistics (Q43–47) ===
+
+  - number: 43
+    type: multiple_choice
+    topic: Probability and Statistics
+    difficulty: easy
+    question: |
+      A bag contains 4 red, 6 blue, and 5 green marbles. What is the probability of randomly selecting a blue marble?
+    choices:
+      A: "⁴⁄₁₅"
+      B: "⁶⁄₁₅"
+      C: "⁵⁄₁₅"
+      D: "⁶⁄₁₀"
+    answer: B
+    explanation: "Total marbles = 4 + 6 + 5 = 15. Probability of blue = 6/15 = 2/5."
+
+  - number: 44
+    type: multiple_choice
+    topic: Probability and Statistics
+    difficulty: medium
+    question: |
+      The test scores for 7 students are: 72, 85, 88, 90, 93, 95, 100. What is the median score?
+    choices:
+      A: "88"
+      B: "89"
+      C: "90"
+      D: "91"
+    answer: C
+    explanation: "The scores are already in order. With 7 values, the median is the 4th value: 90."
+
+  - number: 45
+    type: multiple_choice
+    topic: Probability and Statistics
+    difficulty: medium
+    question: |
+      A spinner has 8 equal sections numbered 1 through 8. What is the probability of spinning a number greater than 5?
+    choices:
+      A: "¹⁄₈"
+      B: "³⁄₈"
+      C: "¹⁄₂"
+      D: "⁵⁄₈"
+    answer: B
+    explanation: "Numbers greater than 5 are 6, 7, and 8 — that is 3 out of 8 sections. Probability = 3/8."
+
+  - number: 46
+    type: multiple_choice
+    topic: Probability and Statistics
+    difficulty: hard
+    question: |
+      The mean of five numbers is 24. Four of the numbers are 18, 22, 26, and 30. What is the fifth number?
+    choices:
+      A: "20"
+      B: "24"
+      C: "26"
+      D: "28"
+    answer: B
+    explanation: "Sum of all five = 5 × 24 = 120. Sum of the four known numbers = 18 + 22 + 26 + 30 = 96. Fifth number = 120 − 96 = 24."
+
+  - number: 47
+    type: multiple_choice
+    topic: Probability and Statistics
+    difficulty: hard
+    question: |
+      Two dice are rolled. What is the probability that the sum is exactly 9?
+    choices:
+      A: "¹⁄₁₂"
+      B: "¹⁄₉"
+      C: "⁴⁄₃₆"
+      D: "⁵⁄₃₆"
+    answer: B
+    explanation: "Combinations that sum to 9: (3,6), (4,5), (5,4), (6,3) — that is 4 outcomes out of 36. Probability = 4/36 = 1/9."
+
+  # === Word Problems (Q48–52) ===
+
+  - number: 48
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: medium
+    question: |
+      Sarah is 4 years older than twice her brother's age. If her brother is 7 years old, how old is Sarah?
+    choices:
+      A: "14"
+      B: "16"
+      C: "18"
+      D: "22"
+    answer: C
+    explanation: "Sarah's age = 2(7) + 4 = 14 + 4 = 18."
+
+  - number: 49
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: medium
+    question: |
+      A store sells notebooks for $4 each and pens for $2 each. If Marco buys 5 notebooks and some pens and spends a total of $34, how many pens did he buy?
+    choices:
+      A: "5"
+      B: "6"
+      C: "7"
+      D: "8"
+    answer: C
+    explanation: "Cost of notebooks = 5 × $4 = $20. Remaining = $34 − $20 = $14. Number of pens = $14 ÷ $2 = 7."
+
+  - number: 50
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      A train travels at 60 km/h for 2.5 hours and then at 80 km/h for 1.5 hours. What is the total distance the train travels?
+    choices:
+      A: "240 km"
+      B: "260 km"
+      C: "270 km"
+      D: "280 km"
+    answer: C
+    explanation: "Distance at 60 km/h = 60 × 2.5 = 150 km. Distance at 80 km/h = 80 × 1.5 = 120 km. Total = 150 + 120 = 270 km."
+
+  - number: 51
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      A tank is ¹⁄₄ full. After adding 30 litres, it is ³⁄₄ full. What is the total capacity of the tank?
+    choices:
+      A: "40 litres"
+      B: "50 litres"
+      C: "60 litres"
+      D: "80 litres"
+    answer: C
+    explanation: "The 30 litres fills ³⁄₄ − ¹⁄₄ = ²⁄₄ = ¹⁄₂ of the tank. So ¹⁄₂ × capacity = 30. Capacity = 60 litres."
+
+  - number: 52
+    type: multiple_choice
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      Working alone, Pipe A can fill a pool in 6 hours. Pipe B can fill the same pool in 4 hours.
+      If both pipes work together, how long will it take to fill the pool?
+    choices:
+      A: "2 hours"
+      B: "2 hours 24 minutes"
+      C: "2 hours 30 minutes"
+      D: "3 hours"
+    answer: B
+    explanation: "Rate of A = ¹⁄₆ per hour. Rate of B = ¹⁄₄ per hour. Combined rate = ¹⁄₆ + ¹⁄₄ = ²⁄₁₂ + ³⁄₁₂ = ⁵⁄₁₂ per hour. Time = 12/5 = 2.4 hours = 2 hours 24 minutes."
+
+  # === Grid-In (Q53–57) ===
+
+  - number: 53
+    type: grid_in
+    topic: Algebra
+    difficulty: medium
+    question: "If 5x + 8 = 3x + 22, what is the value of x?"
+    choices: {}
+    answer: "7"
+    explanation: "5x + 8 = 3x + 22 → 2x = 14 → x = 7."
+
+  - number: 54
+    type: grid_in
+    topic: Numbers and Operations
+    difficulty: medium
+    question: "What is the value of 3⁴ − 2⁵ + 7?"
+    choices: {}
+    answer: "56"
+    explanation: "3⁴ = 81. 2⁵ = 32. 81 − 32 + 7 = 56."
+
+  - number: 55
+    type: grid_in
+    topic: Geometry and Measurement
+    difficulty: medium
+    question: |
+      A right triangle has a hypotenuse of 17 cm and one leg of 8 cm.
+      What is the length of the other leg?
+    choices: {}
+    answer: "15"
+    explanation: "Other leg = √(17² − 8²) = √(289 − 64) = √225 = 15 cm."
+
+  - number: 56
+    type: grid_in
+    topic: Word Problems
+    difficulty: hard
+    question: |
+      A number is tripled and then increased by 12. The result is 5 times the original number. What is the original number?
+    choices: {}
+    answer: "6"
+    explanation: "3n + 12 = 5n → 12 = 2n → n = 6."
+
+  - number: 57
+    type: grid_in
+    topic: Probability and Statistics
+    difficulty: hard
+    question: |
+      The mean of 10 numbers is 18. When an 11th number is added, the mean becomes 20.
+      What is the 11th number?
+    choices: {}
+    answer: "40"
+    explanation: "Sum of 10 numbers = 10 × 18 = 180. New sum = 11 × 20 = 220. The 11th number = 220 − 180 = 40."

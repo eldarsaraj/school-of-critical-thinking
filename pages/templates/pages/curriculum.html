@@ -34,8 +34,8 @@
 
   <div class="curriculum-books">
 
-    <article class="curriculum-book">
-      <p class="curriculum-book__number">Module 1</p>
+    <a class="curriculum-book curriculum-book--available" href="{% url 'module_detail' 'seeing-patterns' %}">
+      <p class="curriculum-book__number">Module 1 <span class="curriculum-book__badge">Available now</span></p>
       <h3 class="curriculum-book__title">Seeing Patterns</h3>
       <p class="curriculum-book__core">
         The world contains patterns — but not every pattern is real.
@@ -47,9 +47,10 @@
         <li>Patterns in nature and behavior</li>
         <li>False patterns and superstition</li>
       </ul>
-    </article>
+      <p class="curriculum-book__cta">View module →</p>
+    </a>
 
-    <article class="curriculum-book">
+    <a class="curriculum-book" href="{% url 'module_detail' 'cause-and-effect' %}">
       <p class="curriculum-book__number">Module 2</p>
       <h3 class="curriculum-book__title">Cause and Effect</h3>
       <p class="curriculum-book__core">
@@ -62,9 +63,9 @@
         <li>Chain reactions and multiple causes</li>
         <li>Testing ideas</li>
       </ul>
-    </article>
+    </a>
 
-    <article class="curriculum-book">
+    <a class="curriculum-book" href="{% url 'module_detail' 'chance-and-uncertainty' %}">
       <p class="curriculum-book__number">Module 3</p>
       <h3 class="curriculum-book__title">Chance and Uncertainty</h3>
       <p class="curriculum-book__core">
@@ -77,7 +78,7 @@
         <li>Luck vs skill</li>
         <li>Thinking under uncertainty</li>
       </ul>
-    </article>
+    </a>
 
   </div>
 </section>
@@ -98,7 +99,7 @@
 
   <div class="curriculum-books">
 
-    <article class="curriculum-book">
+    <a class="curriculum-book" href="{% url 'module_detail' 'models-and-explanations' %}">
       <p class="curriculum-book__number">Module 4</p>
       <h3 class="curriculum-book__title">Models and Explanations</h3>
       <p class="curriculum-book__core">
@@ -111,9 +112,9 @@
         <li>Limits of models</li>
         <li>Competing explanations</li>
       </ul>
-    </article>
+    </a>
 
-    <article class="curriculum-book">
+    <a class="curriculum-book" href="{% url 'module_detail' 'systems-and-feedback' %}">
       <p class="curriculum-book__number">Module 5</p>
       <h3 class="curriculum-book__title">Systems and Feedback</h3>
       <p class="curriculum-book__core">
@@ -126,11 +127,11 @@
         <li>Ecosystems, traffic, social systems</li>
         <li>Complex systems</li>
       </ul>
-    </article>
+    </a>
 
-    <article class="curriculum-book">
+    <a class="curriculum-book" href="{% url 'module_detail' 'human-behaviour' %}">
       <p class="curriculum-book__number">Module 6</p>
-      <h3 class="curriculum-book__title">Human Behavior</h3>
+      <h3 class="curriculum-book__title">Human Behaviour</h3>
       <p class="curriculum-book__core">
         People respond to incentives and environments.
       </p>
@@ -140,7 +141,7 @@
         <li>Social norms</li>
         <li>Decision psychology</li>
       </ul>
-    </article>
+    </a>
 
   </div>
 </section>
@@ -161,7 +162,7 @@
 
   <div class="curriculum-books">
 
-    <article class="curriculum-book">
+    <a class="curriculum-book" href="{% url 'module_detail' 'decisions-and-tradeoffs' %}">
       <p class="curriculum-book__number">Module 7</p>
       <h3 class="curriculum-book__title">Decisions and Tradeoffs</h3>
       <p class="curriculum-book__core">
@@ -173,9 +174,9 @@
         <li>Risk vs reward</li>
         <li>Long-term thinking</li>
       </ul>
-    </article>
+    </a>
 
-    <article class="curriculum-book">
+    <a class="curriculum-book" href="{% url 'module_detail' 'truth-and-evidence' %}">
       <p class="curriculum-book__number">Module 8</p>
       <h3 class="curriculum-book__title">Truth and Evidence</h3>
       <p class="curriculum-book__core">
@@ -187,9 +188,9 @@
         <li>Evidence vs opinion</li>
         <li>Prediction vs explanation</li>
       </ul>
-    </article>
+    </a>
 
-    <article class="curriculum-book">
+    <a class="curriculum-book" href="{% url 'module_detail' 'understanding-the-world' %}">
       <p class="curriculum-book__number">Module 9</p>
       <h3 class="curriculum-book__title">Understanding the World</h3>
       <p class="curriculum-book__core">
@@ -197,11 +198,11 @@
       </p>
       <ul class="curriculum-book__topics">
         <li>Predicting outcomes</li>
-        <li>Analyzing systems</li>
+        <li>Analysing systems</li>
         <li>Evaluating policies</li>
         <li>Solving real problems</li>
       </ul>
-    </article>
+    </a>
 
   </div>
 </section>
@@ -229,16 +230,22 @@
 <hr class="curriculum-divider">
 
 <section class="curriculum-cta">
-  <p class="curriculum-cta__label">Get started</p>
-  <p>
-    Curriculum materials, lesson plans, and books are in development.
-    Get in touch to be notified when they are available or to ask about
-    live instruction and consultation.
+  <p class="curriculum-cta__label">Start here</p>
+  <h2 class="curriculum-cta__title">Try a lesson before you commit</h2>
+  <p class="curriculum-cta__desc">
+    Module 1 is available now. Download a complete sample lesson from
+    <em>Seeing Patterns</em> — no purchase required.
   </p>
-  <p class="curriculum-cta__links">
-    <a href="/contact/">Contact us</a>
-    &nbsp;&nbsp;·&nbsp;&nbsp;
-    <a href="/books/">Books</a>
+  <form class="curriculum-cta__form" method="post" action="{% url 'download_sample' %}">
+    {% csrf_token %}
+    <input type="hidden" name="source" value="curriculum-page">
+    <input class="curriculum-cta__input" type="email" name="email"
+           placeholder="Your email address" required autocomplete="email">
+    <button class="curriculum-cta__btn" type="submit">Download sample lesson</button>
+  </form>
+  <p class="curriculum-cta__note">
+    Or <a href="{% url 'module_detail' 'seeing-patterns' %}">read more about Module 1</a>
+    before downloading.
   </p>
 </section>
 
