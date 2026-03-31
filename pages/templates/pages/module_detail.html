@@ -29,12 +29,12 @@
 
   <!-- Units -->
   <h2 class="module-section-title">What's inside</h2>
-  <p class="module-units-meta">5 units · 52 lessons · one lesson per week</p>
+  <p class="module-units-meta">5 parts · 52 lessons · one lesson per week</p>
 
   <div class="module-units">
     {% for unit in module.units %}
     <div class="module-unit">
-      <p class="module-unit__number">Unit {{ unit.number }}</p>
+      <p class="module-unit__number">Part {{ unit.number }}{% if unit.lessons %} · {{ unit.lessons }}{% endif %}</p>
       <h3 class="module-unit__title">{{ unit.title }}</h3>
       <p class="module-unit__desc">{{ unit.description }}</p>
     </div>

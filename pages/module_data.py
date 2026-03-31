@@ -22,45 +22,53 @@ MODULES = [
         "units": [
             {
                 "number": 1,
-                "title": "Patterns Everywhere",
+                "title": "Discovering Patterns",
+                "lessons": "Lessons 1–10",
                 "description": (
-                    "What a pattern actually is, and why the brain is so eager to find them. "
-                    "Students survey patterns in numbers, shapes, language, and daily life."
+                    "Patterns are hiding everywhere — in forests, in music, in the way people "
+                    "behave, even in the shapes of snowflakes. These ten lessons train students "
+                    "to notice the hidden order in the world around them for the first time."
                 ),
             },
             {
                 "number": 2,
-                "title": "Classification and Sequences",
+                "title": "Recognising Patterns",
+                "lessons": "Lessons 11–20",
                 "description": (
-                    "Grouping things by shared properties and ordering them by a rule. "
-                    "Students practise sorting, labelling, and predicting the next item in a sequence."
+                    "Now things get sharper. Students learn how patterns are actually built: "
+                    "how to sort and classify, find sequences, spot growth and cycles, and "
+                    "predict what comes next with increasing precision."
                 ),
             },
             {
                 "number": 3,
-                "title": "Analogies",
+                "title": "Hidden Patterns",
+                "lessons": "Lessons 21–30",
                 "description": (
-                    "Recognising that two different things share the same structural relationship. "
-                    "Students learn to read analogies, construct their own, and use them to reason "
-                    "about unfamiliar situations."
+                    "The patterns found so far were sitting on the surface. Now students learn "
+                    "to find patterns that are hidden — buried beneath appearances, encoded in "
+                    "games and language, embedded in group behaviour and markets."
                 ),
             },
             {
                 "number": 4,
-                "title": "Patterns in Nature and Behaviour",
+                "title": "When Patterns Mislead",
+                "lessons": "Lessons 31–40",
                 "description": (
-                    "Patterns in living things, seasons, growth, and how people act. "
-                    "Students observe and record, then distinguish reliable patterns from "
-                    "one-off observations."
+                    "The most important section of the book. The brain is so good at finding "
+                    "patterns that it regularly invents ones that aren't there. Students learn "
+                    "to recognise coincidences, superstitions, confirmation bias, and the "
+                    "difference between correlation and causation."
                 ),
             },
             {
                 "number": 5,
-                "title": "False Patterns and Superstition",
+                "title": "Using Patterns to Think",
+                "lessons": "Lessons 41–52",
                 "description": (
-                    "Why the brain invents patterns that aren't there, and what to do about it. "
-                    "Students examine superstitions, lucky streaks, and apophenia — and learn "
-                    "to ask for more evidence before trusting a pattern."
+                    "The payoff. Students learn to use patterns as active thinking tools: "
+                    "to predict outcomes, learn faster from mistakes, build better habits, "
+                    "and see the world with the kind of structural clarity most people never develop."
                 ),
             },
         ],

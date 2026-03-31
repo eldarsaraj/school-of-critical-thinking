@@ -54,7 +54,10 @@ def download_sample(request):
     if email:
         CurriculumLead.objects.get_or_create(email=email, defaults={"source": slug})
     import os
-    pdf_path = os.path.join(settings.BASE_DIR, "static", "Lessons", "Lesson_1.pdf")
+    # staticfiles/ is where WhiteNoise serves from in production; fall back to static/ in dev
+    pdf_path = os.path.join(settings.BASE_DIR, "staticfiles", "Lessons", "Lesson_1.pdf")
+    if not os.path.exists(pdf_path):
+        pdf_path = os.path.join(settings.BASE_DIR, "static", "Lessons", "Lesson_1.pdf")
     response = FileResponse(open(pdf_path, "rb"), content_type="application/pdf")
     response["Content-Disposition"] = 'attachment; filename="Seeing_Patterns_Sample_Lesson.pdf"'
     return response
