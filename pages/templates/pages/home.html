@@ -1,125 +1,207 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}The School of Critical Thinking{% endblock %}
 
 {% block content %}
 
-  <h1>Teaching children how the world actually works.</h1>
-
-  <p>
-    If you are a parent, you want the best for your kids. You want them to grow up smart, 
-    capable, and ready to take on the world. You want them to be able to think clearly, 
-    make good decisions, and navigate a complex world with confidence.
-  </p>
-
-  <p>But, how to do that?</p>
-
-  <p>What should you teach them?
-      How do you prepare them for a future that is uncertain and rapidly changing?
-  </p>
-    
-    
-  <p>Both public and private school curricula emphasize facts and memorization. If you're
-    lucky enough to be homeschooling, you have more freedom, but you still have to figure out what to teach and how to teach it.
-    Almost none of the existing curricula teach children about how the world really works: how patterns permeate reality, 
-    how causes produce effects, how explanations simplify (and sometimes distort) the world, and how decisions involve tradeoffs.
-  </p>
-    
-  <p>The School of Critical Thinking aims to change that.</p>
- 
-
-  <section class="home-problem">
-    <p class="home-problem__label">A quick test</p>
-
-    <p class="home-problem__prompt">
-      Can your child explain the difference between:
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+<section class="home-hero">
+  <div class="home-hero__text">
+    <h1 class="home-hero__title">Teaching children how the world actually works.</h1>
+    <p class="home-hero__sub">
+      A structured curriculum for families who take thinking seriously.
+      Ages 8–16. No specialist background required.
     </p>
+    <div class="home-hero__actions">
+      <a href="{% url 'module_detail' 'seeing-patterns' %}#sample" class="home-hero__btn">Download a sample lesson</a>
+      <a href="{% url 'curriculum' %}" class="home-hero__btn home-hero__btn--ghost">Browse the curriculum</a>
+    </div>
+  </div>
+  <div class="home-hero__book">
+    <img src="{% static 'images/books/Seeing Patterns_COVER-SINGLE.jpg' %}"
+         alt="Seeing Patterns — Book 1 of the School of Critical Thinking curriculum"
+         class="home-hero__cover">
+    <p class="home-hero__cover-caption">Module 1: Seeing Patterns — Available now</p>
+  </div>
+</section>
 
-    <ul class="home-problem__list">
+<!-- ── The gap ───────────────────────────────────────────────────────────── -->
+<section class="home-gap">
+  <p class="home-section-label">The problem</p>
+  <h2 class="home-gap__title">Most curricula teach facts. This one teaches structure.</h2>
+  <div class="home-gap__cols">
+    <p>
+      Public and private school curricula emphasise facts, memorisation, and test performance.
+      If you're homeschooling, you have more freedom — but you still need to know what to teach.
+    </p>
+    <p>
+      Almost none of the existing curricula teach children how the world actually works:
+      how patterns permeate reality, how causes produce effects, how explanations simplify (and distort),
+      and how every decision involves a tradeoff.
+    </p>
+  </div>
+
+  <div class="home-gap__test">
+    <p class="home-gap__test-prompt">Can your child explain the difference between:</p>
+    <ul class="home-gap__test-list">
       <li>A coincidence and a cause?</li>
       <li>A good guess and a lucky one?</li>
-      <li>A rule and an exception?</li>
+      <li>A model and the thing it describes?</li>
     </ul>
-
-    <p class="home-reveal" hidden>
-      These aren't trick questions. They're the foundations of clear thinking, and almost no curriculum teaches them.
+    <p class="home-gap__test-note">
+      These aren't trick questions. They're the foundations of clear thinking —
+      and almost no curriculum teaches them explicitly.
     </p>
-  </section>
+  </div>
+</section>
 
-  <section class="home-explain">
-    <p>
-      Most people believe that critical thinking is about riddles or logic puzzles. But, it's not. 
-      It is about understanding the structures that govern reality: patterns, causes, randomness,
-      and complexity. These may sound complicated, but they're not. They are learnable, intuitive skills
-      most eight-year-olds can grasp. 
+<!-- ── The 5 structures ──────────────────────────────────────────────────── -->
+<section class="home-structures">
+  <p class="home-section-label">What we teach</p>
+  <h2 class="home-structures__title">Five structures that govern reality</h2>
+  <p class="home-structures__intro">
+    Every module in the curriculum is built around one of these five ideas.
+    A child who understands all five will think differently — about science, history,
+    their own decisions, and other people's arguments.
+  </p>
+  <div class="home-structures__grid">
+    <div class="home-structure">
+      <p class="home-structure__name">Patterns</p>
+      <p class="home-structure__desc">The world has structure. Knowing how to spot it — and when apparent patterns are noise — is the first cognitive skill.</p>
+    </div>
+    <div class="home-structure">
+      <p class="home-structure__name">Causality</p>
+      <p class="home-structure__desc">Understanding something means understanding what produces it. Causes, mechanisms, chain reactions, and the difference from coincidence.</p>
+    </div>
+    <div class="home-structure">
+      <p class="home-structure__name">Uncertainty</p>
+      <p class="home-structure__desc">The future is not predictable — but some guesses are better than others. Probability, risk, and thinking clearly under incomplete information.</p>
+    </div>
+    <div class="home-structure">
+      <p class="home-structure__name">Models</p>
+      <p class="home-structure__desc">Every explanation is a simplification of reality. Learning to build, test, and critique models is how good reasoning works.</p>
+    </div>
+    <div class="home-structure">
+      <p class="home-structure__name">Decisions</p>
+      <p class="home-structure__desc">Every choice forecloses other choices. Tradeoffs, incentives, long-term thinking, and how to make decisions that hold up under pressure.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Curriculum overview ───────────────────────────────────────────────── -->
+<section class="home-curriculum">
+  <p class="home-section-label">The curriculum</p>
+  <h2 class="home-curriculum__title">Three levels, nine modules, 52 lessons each</h2>
+  <p class="home-curriculum__sub">One lesson per week. Each module is a standalone book.</p>
+
+  <div class="home-levels">
+
+    <div class="home-level">
+      <div class="home-level__header">
+        <span class="home-level__tag">Level 1</span>
+        <span class="home-level__ages">Ages 8–11</span>
+      </div>
+      <p class="home-level__title">Discovering How the World Works</p>
+      <ul class="home-level__modules">
+        <li><a href="{% url 'module_detail' 'seeing-patterns' %}">Module 1 — Seeing Patterns <span class="home-level__badge">Available now</span></a></li>
+        <li><a href="{% url 'module_detail' 'cause-and-effect' %}">Module 2 — Cause and Effect</a></li>
+        <li><a href="{% url 'module_detail' 'chance-and-uncertainty' %}">Module 3 — Chance and Uncertainty</a></li>
+      </ul>
+    </div>
+
+    <div class="home-level">
+      <div class="home-level__header">
+        <span class="home-level__tag">Level 2</span>
+        <span class="home-level__ages">Ages 11–13</span>
+      </div>
+      <p class="home-level__title">Understanding Systems and Reasoning</p>
+      <ul class="home-level__modules">
+        <li><a href="{% url 'module_detail' 'models-and-explanations' %}">Module 4 — Models and Explanations</a></li>
+        <li><a href="{% url 'module_detail' 'systems-and-feedback' %}">Module 5 — Systems and Feedback</a></li>
+        <li><a href="{% url 'module_detail' 'human-behaviour' %}">Module 6 — Human Behaviour</a></li>
+      </ul>
+    </div>
+
+    <div class="home-level">
+      <div class="home-level__header">
+        <span class="home-level__tag">Level 3</span>
+        <span class="home-level__ages">Ages 14–16</span>
+      </div>
+      <p class="home-level__title">Applying Thinking to Real Decisions</p>
+      <ul class="home-level__modules">
+        <li><a href="{% url 'module_detail' 'decisions-and-tradeoffs' %}">Module 7 — Decisions and Tradeoffs</a></li>
+        <li><a href="{% url 'module_detail' 'truth-and-evidence' %}">Module 8 — Truth and Evidence</a></li>
+        <li><a href="{% url 'module_detail' 'understanding-the-world' %}">Module 9 — Understanding the World</a></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Who this is for ───────────────────────────────────────────────────── -->
+<section class="home-for">
+  <p class="home-section-label">Who this is for</p>
+  <div class="home-for__grid">
+    <div class="home-for__item">
+      <p class="home-for__heading">Homeschooling families</p>
+      <p class="home-for__desc">You've taken charge of your child's education. This is the curriculum most schools don't have — structured, progressive, and ready to teach.</p>
+    </div>
+    <div class="home-for__item">
+      <p class="home-for__heading">Parents supplementing school</p>
+      <p class="home-for__desc">One lesson per week sits alongside any existing school schedule. The material doesn't overlap with what school teaches — it fills the gap.</p>
+    </div>
+    <div class="home-for__item">
+      <p class="home-for__heading">Tutors and educational coaches</p>
+      <p class="home-for__desc">Full lesson plans with discussion questions and exercises. No specialist background in philosophy or logic required to teach.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Founder ───────────────────────────────────────────────────────────── -->
+<section class="home-founder">
+  <div class="home-founder__photo-wrap">
+    <img src="{% static 'images/founder-photo.png' %}" alt="Eldar Sarajlic, founder" class="home-founder__photo">
+  </div>
+  <div class="home-founder__text">
+    <p class="home-section-label">The founder</p>
+    <p class="home-founder__quote">
+      "I designed this curriculum because I couldn't find one that taught my child
+      how the world actually works — not facts about it, but the structures that explain it."
     </p>
-
-    <p>
-      A child who understands these structures will grow up to think differently.
-      They will ask better questions, spot weak reasoning,
-      and make decisions that hold up under pressure.
+    <p class="home-founder__bio">
+      Eldar Sarajlic is a philosopher, academic, and parent. He has taught logic,
+      critical thinking, and political philosophy at the university level for over a decade.
+      The School of Critical Thinking is built on the same rigorous foundations —
+      made accessible for children from age 8.
     </p>
-  </section>
+    <a href="/about/" class="home-founder__link">More about the School →</a>
+  </div>
+</section>
 
-  <section class="home-offer">
-    <h2>What we offer</h2>
-
-    <p>
-      The School provides a structured curriculum for families that take charge of their children's education
-      in thinking and reasoning. 
-      The curriculum is built around five core structures of reality. 
-      Three progressive levels (with three separate modules each) take children from ages 8 to 16 
-      through a series of structured lessons that teach them how reality really works. 
-      The syllabus is free of ideology, controversy and politics.
-      Our aim is to help your child understand the world as it is, not as we wish it were. 
-      It is designed (by a parent) to be taught by other parents, with no specialist background required.
-    </p>
-
-    <ul class="home-offer__list">
-      <li><strong>Curriculum and lesson materials</strong> — structured, ready to teach, no prior knowledge required</li>
-      <li><strong>Books</strong> — written companions to each level of the curriculum</li>
-      <li><strong>Live instruction</strong> — sessions taught directly by the School's founder</li>
-      <li><strong>Consultation</strong> — for parents who want guidance on teaching critical thinking at home</li>
-    </ul>
-  </section>
-
-  <section class="home-cta" aria-label="Next steps">
-    <h2>Start here</h2>
-
-    <p>
-      Browse the curriculum to see what your child would learn, or get in touch
-      to ask about live instruction and consultation.
-      Parents can also take the <strong><a href="{% url 'diagnostic_intro' %}">Thinking Diagnostic</a></strong> —
-      a free self-assessment that identifies your own reasoning blindspots
-      and produces a personalized improvement plan.
-    </p>
-
-    <p class="home-cta__links">
-      <a href="/contact/">Curriculum</a>
-      &nbsp;&nbsp;·&nbsp;&nbsp;
-      <a href="/books/">Books</a>
-      &nbsp;&nbsp;·&nbsp;&nbsp;
-      <a href="/articles/">Articles</a>
-      &nbsp;&nbsp;·&nbsp;&nbsp;
-      <a href="{% url 'diagnostic_intro' %}">Thinking Diagnostic</a>
-    </p>
-  </section>
-
-  <script>
-    (function () {
-      const list = document.querySelector(".home-problem__list");
-      const reveal = document.querySelector(".home-reveal");
-      if (!list || !reveal) return;
-
-      list.addEventListener("click", function () {
-        reveal.hidden = false;
-      });
-
-      // Also reveal after a short delay so non-interactive readers still see it
-      setTimeout(function () {
-        if (reveal) reveal.hidden = false;
-      }, 4000);
-    })();
-  </script>
+<!-- ── Final CTA ─────────────────────────────────────────────────────────── -->
+<section class="home-final-cta">
+  <p class="home-section-label">Start here</p>
+  <h2 class="home-final-cta__title">Try a lesson before you commit</h2>
+  <p class="home-final-cta__desc">
+    Module 1 is available now. Enter your email and download a complete sample lesson
+    from <em>Seeing Patterns</em> — free, no obligation.
+  </p>
+  <form class="home-final-cta__form" method="post" action="{% url 'download_sample' %}">
+    {% csrf_token %}
+    <input type="hidden" name="source" value="home-page">
+    <input class="home-final-cta__input" type="email" name="email"
+           placeholder="Your email address" required autocomplete="email">
+    <button class="home-final-cta__btn" type="submit">Download sample lesson</button>
+  </form>
+  <p class="home-final-cta__alts">
+    Or explore:
+    <a href="{% url 'curriculum' %}">Full curriculum</a>
+    &nbsp;·&nbsp;
+    <a href="/books/">Books</a>
+    &nbsp;·&nbsp;
+    <a href="{% url 'diagnostic_intro' %}">Thinking Diagnostic (free, for adults)</a>
+  </p>
+</section>
 
 {% endblock %}
