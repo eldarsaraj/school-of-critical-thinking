@@ -240,6 +240,8 @@ main { padding: 48px 24px; }
 
 @media (max-width: 600px) {
   .home-gap__cols { grid-template-columns: 1fr; gap: 16px; }
+  .home-hero__btn,
+  .home-hero__btn--ghost { display: block; width: 100%; text-align: center; box-sizing: border-box; }
 }
 
 .home-gap__cols p {
