@@ -183,6 +183,8 @@ main { padding: 48px 24px; }
   background: transparent;
   color: #161a1d;
   border: 0.5px solid rgba(0,0,0,0.3);
+  box-sizing: border-box;
+  padding: 11px 22px;
 }
 
 .home-hero__btn--ghost:hover {
@@ -202,11 +204,19 @@ main { padding: 48px 24px; }
 }
 
 .home-hero__cover-caption {
+  display: block;
+  width: 180px;
   margin: 10px 0 0 0;
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(0,0,0,0.4);
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.home-hero__cover-caption:hover {
+  color: rgba(0,0,0,0.7);
 }
 
 /* Gap / problem */
@@ -403,6 +413,7 @@ main { padding: 48px 24px; }
 .home-level__modules a {
   color: rgba(0,0,0,0.65);
   text-decoration: none;
+  font-weight: 600;
 }
 
 .home-level__modules a:hover {
