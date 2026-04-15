@@ -84,7 +84,7 @@ MODULES = [
                 "The complete Seeing Patterns module in book form — "
                 "52 structured lessons for ages 8–11, ready to use at home or in the classroom."
             ),
-            "buy_url": "https://www.amazon.com/dp/B0D8YM1L5X",
+            "buy_url": "https://www.amazon.com/dp/B0GX6NJ22H",
         },
         "prev_slug": None,
         "prev_title": None,

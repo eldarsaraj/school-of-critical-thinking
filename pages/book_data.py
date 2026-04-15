@@ -25,7 +25,7 @@ BOOKS = [
         "status": "published",
         "cover": "images/books/seeing-patterns-single-cover.jpg",
         "cover_fit": "contain",
-        "buy_url": "https://www.amazon.com/dp/B0D8YM1L5X",
+        "buy_url": "https://www.amazon.com/dp/B0GX6NJ22H",
     },
     {
         "slug": "resisting-entropy",
