@@ -5,11 +5,29 @@
 #
 # Rules:
 #   - question numbers must be 1-57 for each section
-#   - answer must be A, B, C, or D
+#   - answer must be A/B/C/D  OR  E/F/G/H (both accepted; normalised
+#     to A/B/C/D on import — E=A F=B G=C H=D)
+#   - Official SHSAT alternates A-D (odd Qs) and E-H (even Qs).
+#     The site renders the correct set automatically based on the
+#     question number; you don't need to track it yourself.
 #   - for passage questions, set passage_id on each question
 #     that shares the passage; define the passage once (first q)
 #   - difficulty: easy | medium | hard
-#   - type: multiple_choice | grid_in (grid_in has no choices)
+#   - type: multiple_choice | grid_in (grid_in has no choices/answer)
+#
+# Official structure to follow:
+#   ELA  — 57 questions total
+#          Q1–9 (or up to Q15): Revising/Editing standalone sentences
+#          Q10–57 (or similar): Reading Comprehension (5-6 passages)
+#   Math — 57 questions total
+#          Q1–5:  grid_in  (no answer choices; student enters a number)
+#          Q6–57: multiple_choice
+#
+# Revising/Editing passage format — number sentences explicitly:
+#   passage_text: |
+#     (1) The factory opened in 1902. (2) Workers arrived early.
+#     (3) Machines hummed through the night.
+#   Then questions can reference: "Which sentence should follow sentence 2?"
 # ============================================================
 
 title: "Practice Test 1"

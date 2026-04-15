@@ -210,6 +210,7 @@ def test_take(request, test_id):
             "section": q.section,
             "question_number": q.question_number,
             "question_type": q.question_type,
+            "use_efgh": q.question_number % 2 == 0,
             "passage_title": q.passage_title,
             "passage_text": q.passage_text,
             "question_text": q.question_text,

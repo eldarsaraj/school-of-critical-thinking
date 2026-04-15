@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Module {{ module.number }}: {{ module.title }} – The School of Critical Thinking{% endblock %}
 
@@ -74,7 +75,26 @@
     {% endif %}
   </div>
 
-  {% if module.amazon_url %}
+  {% if module.book %}
+  <hr class="module-rule">
+  <div class="module-book">
+    <p class="module-eyebrow">The book</p>
+    <div class="module-book__inner">
+      <a href="{{ module.book.buy_url }}" target="_blank" rel="noopener" class="module-book__cover-link">
+        <img class="module-book__cover" src="{% static module.book.cover %}" alt="Cover: {{ module.book.title }}">
+      </a>
+      <div class="module-book__body">
+        <h2 class="module-book__title">{{ module.book.title }}</h2>
+        <p class="module-book__tagline">{{ module.book.tagline }}</p>
+        {% if module.book.buy_url %}
+        <a href="{{ module.book.buy_url }}" class="module-buy-btn" target="_blank" rel="noopener">
+          Buy on Amazon →
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% elif module.amazon_url %}
   <hr class="module-rule">
   <div style="margin-top: 32px;">
     <p class="module-eyebrow">Buy the full module</p>

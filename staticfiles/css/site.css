@@ -1093,6 +1093,50 @@ main { padding: 48px 24px; }
 
 .continuation__link:hover { border-bottom-color: rgba(0,0,0,0.55); }
 
+.continuation__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.continuation__card {
+  display: block;
+  padding: 18px 20px;
+  border: 0.5px solid rgba(0,0,0,0.12);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s;
+}
+
+.continuation__card:hover {
+  border-color: rgba(0,0,0,0.35);
+}
+
+.continuation__card-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+}
+
+.continuation__card-desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(0,0,0,0.6);
+  margin: 0 0 10px 0;
+}
+
+.continuation__card-link {
+  font-size: 13px;
+  color: rgba(0,0,0,0.55);
+  border-bottom: 0.5px solid rgba(0,0,0,0.2);
+  padding-bottom: 1px;
+}
+
+@media (max-width: 540px) {
+  .continuation__cards { grid-template-columns: 1fr; }
+}
+
 /* Pagination (site-wide style) */
 .pagination {
   margin-top: 32px;
@@ -1731,6 +1775,54 @@ a.curriculum-book:hover .curriculum-book__title {
   background: #2a3035;
 }
 
+/* Module book promo section */
+.module-book {
+  margin-top: 32px;
+}
+
+.module-book__inner {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  margin-top: 14px;
+  padding: 24px;
+  background: rgba(0,0,0,0.02);
+  border: 0.5px solid rgba(0,0,0,0.08);
+}
+
+.module-book__cover-link {
+  flex-shrink: 0;
+}
+
+.module-book__cover {
+  width: 110px;
+  display: block;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+.module-book__body {
+  flex: 1;
+}
+
+.module-book__title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.01em;
+}
+
+.module-book__tagline {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(0,0,0,0.65);
+  margin: 0 0 14px 0;
+}
+
+@media (max-width: 480px) {
+  .module-book__inner { flex-direction: column; }
+  .module-book__cover { width: 90px; }
+}
+
 /* Module prev/next navigation */
 .module-nav {
   display: flex;
@@ -1873,6 +1965,21 @@ a.curriculum-book:hover .curriculum-book__title {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(0,0,0,0.55);
+}
+
+.book-card__buy {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  background: #161a1d;
+  color: #fff;
+  text-decoration: none;
+}
+
+.book-card__buy:hover {
+  background: #2a3035;
 }
 
 /* Books mobile layout */

@@ -73,20 +73,24 @@
 
     <!-- Continuation block -->
     <section class="continuation" aria-label="Context">
-      <p class="continuation__label">Context</p>
+      <p class="continuation__label">What next?</p>
       <p class="continuation__text">
-        This article is part of the School of Critical Thinking's unique curriculum.
-      </p>
-      <p class="continuation__text continuation__text--secondary">
-        Some ideas are developed further in books. Others through guided instruction.
+        This article is part of the School of Critical Thinking's curriculum.
+        There are two ways to go deeper.
       </p>
 
-      <p class="continuation__close">
-        If this way of thinking feels unfamiliar, there is a reason for that.
-      </p>
-      <p class="continuation__action">
-        <a class="continuation__link" href="{% url 'start' %}">Start here →</a>
-      </p>
+      <div class="continuation__cards">
+        <a class="continuation__card" href="/diagnostic/">
+          <p class="continuation__card-title">Take the diagnostic</p>
+          <p class="continuation__card-desc">A free 15-minute assessment that identifies your specific thinking gaps and recommends where to start.</p>
+          <span class="continuation__card-link">Start the diagnostic →</span>
+        </a>
+        <a class="continuation__card" href="/curriculum/">
+          <p class="continuation__card-title">Browse the curriculum</p>
+          <p class="continuation__card-desc">52 lessons per level. Ages 8–16. Built around the five structures that govern how the world actually works.</p>
+          <span class="continuation__card-link">See the curriculum →</span>
+        </a>
+      </div>
     </section>
 
     <nav class="pagination" aria-label="Article navigation">

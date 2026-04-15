@@ -88,6 +88,16 @@ setInterval(() => {
 }, 1000);
 
 // ---------------------------------------------------------------------------
+// Alternating A-D / E-H label scheme (mirrors official SHSAT answer sheet)
+// ---------------------------------------------------------------------------
+const EFGH_MAP = {A: "E", B: "F", C: "G", D: "H"};
+const ABCD_MAP = {E: "A", F: "B", G: "C", H: "D"};
+
+function displayLetter(internal, useEfgh) {
+  return useEfgh ? (EFGH_MAP[internal] || internal) : internal;
+}
+
+// ---------------------------------------------------------------------------
 // Render question
 // ---------------------------------------------------------------------------
 function esc(s) {
@@ -134,9 +144,10 @@ function renderQuestion(idx) {
 
     html += `<ul class="shsat-choices">`;
     choices.forEach(([letter, text]) => {
+      const disp = displayLetter(letter, q.use_efgh);
       const sel = answers[q.id] === letter ? "selected" : "";
       html += `<li class="shsat-choice ${sel}" onclick="selectAnswer(${q.id}, '${letter}', this)">
-        <span class="shsat-choice__letter">${letter}</span>
+        <span class="shsat-choice__letter">${disp}</span>
         <span>${esc(text)}</span>
       </li>`;
     });

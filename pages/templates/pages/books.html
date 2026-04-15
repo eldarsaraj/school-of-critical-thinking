@@ -92,6 +92,10 @@
                 {% if b.format %}{{ b.format }}{% endif %}
                 {% if b.status %}{% if b.format %} · {% endif %}{{ b.status }}{% endif %}
               </p>
+
+              {% if b.buy_url %}
+                <a href="{{ b.buy_url }}" class="book-card__buy" target="_blank" rel="noopener">Buy on Amazon →</a>
+              {% endif %}
             </div>
           </article>
         {% endif %}

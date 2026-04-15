@@ -1,5 +1,33 @@
 BOOKS = [
     {
+        "slug": "seeing-patterns",
+        "title": "Seeing Patterns",
+        "author": "Eldar Sarajlic",
+        "shelf": "tools",
+        "short_promise": (
+            "The complete Module 1 curriculum in book form — 52 structured lessons "
+            "that teach children ages 8–11 to find, test, and use patterns as thinking tools."
+        ),
+        "description": (
+            "Seeing Patterns is the printed edition of the School of Critical Thinking's "
+            "first curriculum module. It covers the full arc of pattern recognition: from "
+            "noticing structure in the world, to classifying and predicting, to understanding "
+            "when patterns mislead — and how to use them deliberately as cognitive tools.\n\n"
+            "The book contains 52 complete lessons organised into five parts, each building "
+            "on the last. Lessons run 20–30 minutes each and include exercises, discussion "
+            "prompts, and short assessments. No specialist background is needed — full "
+            "lesson plans are included for home educators and classroom teachers alike.\n\n"
+            "This is Module 1 of Level 1: Discovering How the World Works. The curriculum "
+            "continues in Cause and Effect, Chance and Uncertainty, Models and Explanations, "
+            "and Systems and Feedback."
+        ),
+        "format": "Paperback · 52 lessons · ages 8–11",
+        "status": "published",
+        "cover": "images/books/seeing-patterns-single-cover.jpg",
+        "cover_fit": "contain",
+        "buy_url": "https://www.amazon.com/dp/B0D8YM1L5X",
+    },
+    {
         "slug": "resisting-entropy",
         "title": "Resisting Entropy: Critical Thinking in the Age of AI",
         "author": "Eldar Sarajlic",

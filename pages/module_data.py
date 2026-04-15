@@ -77,6 +77,15 @@ MODULES = [
             "No specialist background required. Full lesson plans are included.",
             "Every unit includes exercises, discussion questions, and a short assessment.",
         ],
+        "book": {
+            "title": "Seeing Patterns",
+            "cover": "images/books/seeing-patterns-single-cover.jpg",
+            "tagline": (
+                "The complete Seeing Patterns module in book form — "
+                "52 structured lessons for ages 8–11, ready to use at home or in the classroom."
+            ),
+            "buy_url": "https://www.amazon.com/dp/B0D8YM1L5X",
+        },
         "prev_slug": None,
         "prev_title": None,
         "next_slug": "cause-and-effect",

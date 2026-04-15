@@ -49,6 +49,19 @@ def _import_section(test, section_key, rows):
 
         choices = row.get("choices", {})
 
+        # Normalise E/F/G/H → A/B/C/D so YAML authors can write either set.
+        # Official SHSAT alternates A-D (odd questions) and E-H (even questions);
+        # we store everything internally as A/B/C/D.
+        _efgh_to_abcd = {"E": "A", "F": "B", "G": "C", "H": "D"}
+
+        def _norm_choice(key):
+            val = choices.get(key) or choices.get(_efgh_to_abcd.get(key, ""), "")
+            return str(val).strip()
+
+        def _norm_answer(ans):
+            a = str(ans).strip().upper()
+            return _efgh_to_abcd.get(a, a)
+
         Question.objects.create(
             test=test,
             section=section_key,
@@ -60,11 +73,11 @@ def _import_section(test, section_key, rows):
             passage_title=passage_title,
             passage_text=passage_text,
             question_text=row["question"].strip(),
-            choice_a=str(choices.get("A", "")).strip(),
-            choice_b=str(choices.get("B", "")).strip(),
-            choice_c=str(choices.get("C", "")).strip(),
-            choice_d=str(choices.get("D", "")).strip(),
-            correct_answer=str(row["answer"]).strip().upper(),
+            choice_a=_norm_choice("A"),
+            choice_b=_norm_choice("B"),
+            choice_c=_norm_choice("C"),
+            choice_d=_norm_choice("D"),
+            correct_answer=_norm_answer(row["answer"]),
             explanation=row.get("explanation", "").strip(),
         )
         count += 1
