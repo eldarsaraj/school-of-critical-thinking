@@ -748,9 +748,11 @@ main { padding: 48px 24px; }
 .articles-intro h1 { margin-bottom: 14px; }        /* tighten title block */
 .articles-intro p  { margin-bottom: 14px; }        /* tighten subtitle */
 
-/* Cards container */
+/* Cards container: clear visual break from intro */
 .cards {
-  margin-top: 22px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1.5px solid rgba(0,0,0,0.12);
   display: grid;
   gap: 0;
 }
@@ -759,10 +761,10 @@ main { padding: 48px 24px; }
 .card {
   display: grid;
   grid-template-columns: 1fr 140px;
-  gap: 18px;
-  align-items: start;
-  padding-bottom: 20px;
-  border-bottom: 0.5px solid rgba(0,0,0,0.07);
+  gap: 24px;
+  align-items: center;
+  padding: 22px 0;
+  border-bottom: 0.5px solid rgba(0,0,0,0.08);
 }
 
 /* No cover image: full-width single column */
@@ -770,14 +772,12 @@ main { padding: 48px 24px; }
   grid-template-columns: 1fr;
 }
 
-.card__body { grid-column: 1; }                      /* text flush-left */
-
 .card__thumb {
-  grid-column: 2;
   display: block;
   width: 140px;
   height: 92px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .card__thumb img {
@@ -805,15 +805,7 @@ main { padding: 48px 24px; }
 .card__meta {
   margin: 0 0 10px 0;
   font-size: 13px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.5);
-}
-
-.card__meta time {
-  font-variant-numeric: tabular-nums;
-  text-transform: none;
-  letter-spacing: 0;
+  color: rgba(0,0,0,0.45);
 }
 
 /* Summary: never truncate */
