@@ -36,6 +36,17 @@ class ArticleAdmin(admin.ModelAdmin):
     filter_horizontal = ("related",)
     inlines = [ArticleImageInline]
 
+    class Media:
+        css = {
+            "all": [
+                "https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css",
+            ]
+        }
+        js = [
+            "https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js",
+            "admin/js/easymde_init.js",
+        ]
+
     fieldsets = (
         (None, {"fields": ("title", "slug", "author", "status", "published_at")}),
         (
