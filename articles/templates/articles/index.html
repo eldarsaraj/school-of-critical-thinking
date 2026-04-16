@@ -6,24 +6,28 @@
 
   <section class="articles-intro">
     <h1>Articles</h1>
-    <p>Long-form studies and working notes.</p>
+    <p>Writing on thinking, learning, and how the mind makes sense of the world.</p>
   </section>
 
   <section class="cards">
     {% for a in page_obj %}
-      <article class="card">
-        <a
-          class="card__thumb"
-          href="{% url 'articles_detail' a.slug %}"
-          aria-label="Read: {{ a.title }}"
-        ></a>
+      <article class="card{% if not a.cover_image %} card--no-thumb{% endif %}">
+        {% if a.cover_image %}
+          <a
+            class="card__thumb"
+            href="{% url 'articles_detail' a.slug %}"
+            aria-label="Read: {{ a.title }}"
+          ><img src="{{ a.cover_image.url }}" alt="{{ a.title }}"></a>
+        {% endif %}
 
         <div class="card__body">
           <h2 class="card__title">
             <a href="{% url 'articles_detail' a.slug %}">{{ a.title }}</a>
           </h2>
 
-          <p class="card__meta">{{ a.author }}</p>
+          <p class="card__meta">
+            {{ a.author }}{% if a.published_at %} &nbsp;·&nbsp; <time datetime="{{ a.published_at|date:'Y-m-d' }}">{{ a.published_at|date:"F j, Y" }}</time>{% endif %}
+          </p>
 
           {% if a.summary %}
             <p class="card__summary">{{ a.summary }}</p>
