@@ -59,20 +59,7 @@
       {% endif %}
     </header>
 
-    {% if toc_items %}
-      <nav class="toc" aria-label="Table of contents">
-        <div class="toc__label">Contents</div>
-        <ol class="toc__list">
-          {% for item in toc_items %}
-            <li class="toc__item toc__item--{{ item.level }}">
-              <a href="#{{ item.id }}">{{ item.text }}</a>
-            </li>
-          {% endfor %}
-        </ol>
-      </nav>
-    {% endif %}
-
-    <section class="essay__body">
+<section class="essay__body">
       <div class="essay__content">
         {% if article.content_markdown %}
           {{ article_html|safe }}

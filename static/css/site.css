@@ -994,12 +994,12 @@ main { padding: 48px 24px; }
 
 .essay__content h3 {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1.4;
   margin: 40px 0 12px 0;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: #111;
 }
 
