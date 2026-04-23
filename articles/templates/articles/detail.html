@@ -139,7 +139,6 @@
           {% for r in article.related.all %}
             <li class="related__item">
               <a href="{% url 'articles_detail' r.slug %}">{{ r.title }}</a>
-              <span class="related__meta">— {{ r.author }}</span>
             </li>
           {% endfor %}
         </ul>
