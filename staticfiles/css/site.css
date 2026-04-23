@@ -2816,80 +2816,50 @@ a.curriculum-book:hover .curriculum-book__title {
 }
 
 /* ======================================================
-   FOOTER EMAIL STRIP
+   FOOTER EMAIL CAPTURE (inline, compact)
    ====================================================== */
 
-.footer-email-strip {
-  background: #111;
-  color: #fff;
-  padding: 20px 0;
-}
-
-.footer-email-strip__inner {
+.footer-capture {
   display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 12px;
 }
 
-.footer-email-strip__text {
-  margin: 0;
-  font-size: 14px;
-  color: rgba(255,255,255,0.8);
-  white-space: nowrap;
-}
-
-.footer-email-strip__form {
-  display: flex;
-  gap: 8px;
+.footer-capture__input {
   flex: 1;
-  min-width: 260px;
-}
-
-.footer-email-strip__input {
-  flex: 1;
-  padding: 8px 12px;
-  font-size: 13px;
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 3px;
-  background: rgba(255,255,255,0.08);
-  color: #fff;
+  max-width: 220px;
+  padding: 6px 10px;
+  font-size: 12px;
+  border: 1px solid rgba(0,0,0,0.18);
+  border-right: none;
+  border-radius: 2px 0 0 2px;
+  background: rgba(255,255,255,0.7);
+  color: #111;
   outline: none;
 }
 
-.footer-email-strip__input::placeholder {
-  color: rgba(255,255,255,0.4);
+.footer-capture__input::placeholder {
+  color: rgba(0,0,0,0.38);
 }
 
-.footer-email-strip__input:focus {
-  border-color: rgba(255,255,255,0.5);
-  background: rgba(255,255,255,0.12);
-}
-
-.footer-email-strip__btn {
-  padding: 8px 16px;
-  font-size: 13px;
+.footer-capture__input:focus {
+  border-color: rgba(0,0,0,0.4);
   background: #fff;
+}
+
+.footer-capture__btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  background: rgba(0,0,0,0.08);
   color: #111;
-  border: none;
-  border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.18);
+  border-radius: 0 2px 2px 0;
   cursor: pointer;
-  white-space: nowrap;
-  font-weight: 500;
+  line-height: 1;
 }
 
-.footer-email-strip__btn:hover {
-  background: rgba(255,255,255,0.88);
-}
-
-@media (max-width: 520px) {
-  .footer-email-strip__inner {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .footer-email-strip__text {
-    white-space: normal;
-  }
+.footer-capture__btn:hover {
+  background: rgba(0,0,0,0.14);
 }
 
 

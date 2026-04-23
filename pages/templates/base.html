@@ -67,23 +67,17 @@
 
     <footer class="site-footer" aria-label="Footer">
 
-      <div class="footer-email-strip">
-        <div class="container footer-email-strip__inner">
-          <p class="footer-email-strip__text">Try a free sample lesson from <em>Seeing Patterns</em></p>
-          <form class="footer-email-strip__form" method="post" action="{% url 'download_sample' %}">
-            {% csrf_token %}
-            <input type="hidden" name="source" value="footer-strip">
-            <input class="footer-email-strip__input" type="email" name="email"
-                   placeholder="Your email address" required autocomplete="email">
-            <button class="footer-email-strip__btn" type="submit">Download free lesson</button>
-          </form>
-        </div>
-      </div>
-
       <div class="container site-footer__inner">
         <div class="site-footer__left">
           <p class="site-footer__brand">The School of Critical Thinking</p>
           <p class="site-footer__tagline">Teaching children how the world actually works.</p>
+          <form class="footer-capture" method="post" action="{% url 'download_sample' %}">
+            {% csrf_token %}
+            <input type="hidden" name="source" value="footer">
+            <input class="footer-capture__input" type="email" name="email"
+                   placeholder="Email for free sample lesson" required autocomplete="email">
+            <button class="footer-capture__btn" type="submit">→</button>
+          </form>
         </div>
 
         <nav class="site-footer__nav" aria-label="Footer links">
