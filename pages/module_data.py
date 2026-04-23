@@ -27,9 +27,9 @@ MODULES = [
             ("Format", "Paperback and ebook"),
             ("Who teaches it", "Parent-led · no specialist background required"),
             ("Independent use", "Lessons can be read by the child, but exercises and discussion questions are designed for parent–child dialogue"),
-            ("Viewpoint", "Secular · no religious content"),
+            ("Viewpoint", "Worldview-neutral · compatible with any religious or secular core curriculum"),
             ("Intended use", "Weekly supplement · works alongside any core curriculum"),
-            ("Grade equivalent", "Roughly grades 3–5, but skill-based rather than grade-locked"),
+            ("Grade equivalent", "Roughly grades 3–6, but skill-based rather than grade-locked"),
         ],
         "who_it_is_for": (
             "This module is designed for children aged 8–11, whether they are homeschooled "
