@@ -42,11 +42,14 @@
       <h1 class="essay__title">{{ article.title }}</h1>
 
       {% if article.author or article.published_at %}
-        <p class="essay__meta">
-          {% if article.author %}{{ article.author }}{% endif %}
-          {% if article.author and article.published_at %} &nbsp;·&nbsp; {% endif %}
-          {% if article.published_at %}<time datetime="{{ article.published_at|date:'Y-m-d' }}">{{ article.published_at|date:"F j, Y" }}</time>{% endif %}
-        </p>
+        <div class="essay__meta">
+          <img class="essay__meta-photo" src="{% static 'images/founder-photo.png' %}" alt="Eldar Sarajlic">
+          <span>
+            {% if article.author %}{{ article.author }}{% endif %}
+            {% if article.author and article.published_at %}&nbsp;·&nbsp;{% endif %}
+            {% if article.published_at %}<time datetime="{{ article.published_at|date:'Y-m-d' }}">{{ article.published_at|date:"F j, Y" }}</time>{% endif %}
+          </span>
+        </div>
       {% endif %}
 
       {% if article.cover_image %}
@@ -78,6 +81,14 @@
         {% endif %}
       </div>
     </section>
+
+    <!-- Social sharing -->
+    <div class="article-share">
+      <span class="article-share__label">Share</span>
+      <a class="article-share__btn" href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ article.title|urlencode }}" target="_blank" rel="noopener">X&thinsp;/&thinsp;Twitter</a>
+      <a class="article-share__btn" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}" target="_blank" rel="noopener">Facebook</a>
+      <a class="article-share__btn" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode }}&title={{ article.title|urlencode }}" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
 
     <!-- Continuation block -->
     <section class="continuation" aria-label="Context">

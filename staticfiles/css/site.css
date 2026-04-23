@@ -879,12 +879,24 @@ main { padding: 48px 24px; }
 
 /* Author / date line */
 .essay__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin: 14px 0 0 0;
   font-size: 12px;
   line-height: 1.4;
   color: rgba(0,0,0,0.4);
   letter-spacing: 0.07em;
   text-transform: uppercase;
+}
+
+.essay__meta-photo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  opacity: 0.85;
 }
 
 /* Body: serif for long-form reading */
@@ -899,11 +911,15 @@ main { padding: 48px 24px; }
   margin: 0 0 26px 0;
 }
 
-/* Lead paragraph: slightly larger opening */
+/* Lead paragraph: larger, italic, separated */
 .essay__content > p:first-child {
   font-size: 20px;
   line-height: 1.75;
-  color: rgba(0,0,0,0.85);
+  color: rgba(0,0,0,0.65);
+  font-style: italic;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  margin-bottom: 32px;
 }
 
 /* Markdown images */
@@ -978,13 +994,13 @@ main { padding: 48px 24px; }
 
 .essay__content h3 {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   line-height: 1.4;
-  margin: 36px 0 10px 0;
+  margin: 40px 0 12px 0;
   text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: rgba(0,0,0,0.5);
+  letter-spacing: 0.12em;
+  color: #111;
 }
 
 /* Lists */
@@ -3126,5 +3142,47 @@ a.curriculum-book:hover .curriculum-book__title {
 
 .author-bio__link:hover {
   border-bottom-color: #111;
+}
+
+
+
+/* ======================================================
+   SOCIAL SHARING
+   ====================================================== */
+
+.article-share {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 40px 0 0 0;
+  padding: 20px 0;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.article-share__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-right: 4px;
+}
+
+.article-share__btn {
+  display: inline-block;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: rgba(0,0,0,0.55);
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 2px;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.article-share__btn:hover {
+  border-color: rgba(0,0,0,0.4);
+  color: #111;
 }
 
