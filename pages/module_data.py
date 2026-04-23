@@ -13,11 +13,39 @@ MODULES = [
         "has_sample": True,
         "description": (
             "Children encounter patterns constantly — in sequences, in nature, in other "
-            "people's behaviour — but rarely stop to ask whether those patterns are real "
+            "people's behavior — but rarely stop to ask whether those patterns are real "
             "or imagined. This module builds the first cognitive skill: seeing structure "
             "before explaining it. Students learn to spot genuine patterns, classify what "
-            "they observe, and recognise when an apparent pattern is noise, coincidence, "
-            "or wishful thinking."
+            "they observe, and recognize when an apparent pattern is noise, coincidence, "
+            "or wishful thinking. Designed as a weekly supplement — one lesson fits "
+            "alongside any existing homeschool or after-school curriculum without displacing it."
+        ),
+        "at_a_glance": [
+            ("Age range", "8–11"),
+            ("Duration", "52 lessons · one per week · one full school year"),
+            ("Lesson length", "20–30 minutes"),
+            ("Format", "Paperback and ebook"),
+            ("Who teaches it", "Parent-led · no specialist background required"),
+            ("Independent use", "Lessons can be read by the child, but exercises and discussion questions are designed for parent–child dialogue"),
+            ("Viewpoint", "Secular · no religious content"),
+            ("Intended use", "Weekly supplement · works alongside any core curriculum"),
+            ("Grade equivalent", "Roughly grades 3–5, but skill-based rather than grade-locked"),
+        ],
+        "who_it_is_for": (
+            "This module is designed for children aged 8–11, whether they are homeschooled "
+            "full-time or studying at home after school. It works as a standalone course or "
+            "as part of the full nine-module curriculum. Parents with no background in "
+            "philosophy, logic, or education can teach it directly from the book. It is "
+            "equally suited to children who are advanced readers and those who prefer to "
+            "work through lessons with a parent."
+        ),
+        "how_you_teach_it": (
+            "Each lesson opens with a short story or real-world example that the parent "
+            "reads aloud or the child reads independently. A thinking question follows, "
+            "designed to spark a conversation — not to be answered in a workbook. "
+            "Exercises and discussion questions complete each lesson; these are where the "
+            "parent's role matters most. Total preparation time per lesson is minimal: "
+            "the lesson plan is built into the book."
         ),
         "units": [
             {
@@ -32,7 +60,7 @@ MODULES = [
             },
             {
                 "number": 2,
-                "title": "Recognising Patterns",
+                "title": "Recognizing Patterns",
                 "lessons": "Lessons 11–20",
                 "description": (
                     "Now things get sharper. Students learn how patterns are actually built: "
@@ -47,7 +75,7 @@ MODULES = [
                 "description": (
                     "The patterns found so far were sitting on the surface. Now students learn "
                     "to find patterns that are hidden — buried beneath appearances, encoded in "
-                    "games and language, embedded in group behaviour and markets."
+                    "games and language, embedded in group behavior and markets."
                 ),
             },
             {
@@ -57,7 +85,7 @@ MODULES = [
                 "description": (
                     "The most important section of the book. The brain is so good at finding "
                     "patterns that it regularly invents ones that aren't there. Students learn "
-                    "to recognise coincidences, superstitions, confirmation bias, and the "
+                    "to recognize coincidences, superstitions, confirmation bias, and the "
                     "difference between correlation and causation."
                 ),
             },
@@ -75,6 +103,7 @@ MODULES = [
         "how_it_works": [
             "Each lesson is 20–30 minutes — one per week fits naturally into a school schedule.",
             "No specialist background required. Full lesson plans are included.",
+            "Lessons are built around stories and discussion questions, not worksheets. The exercises require thinking and conversation — not fill-in-the-blank answers.",
             "Every unit includes exercises, discussion questions, and a short assessment.",
         ],
         "book": {

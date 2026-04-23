@@ -28,9 +28,51 @@
   <!-- Description -->
   <p class="module-description">{{ module.description }}</p>
 
+  <!-- At a Glance -->
+  {% if module.at_a_glance %}
+  <div class="module-glance">
+    <p class="module-section-title module-section-title--inline">At a glance</p>
+    <dl class="module-glance__list">
+      {% for label, value in module.at_a_glance %}
+      <div class="module-glance__row">
+        <dt class="module-glance__label">{{ label }}</dt>
+        <dd class="module-glance__value">{{ value }}</dd>
+      </div>
+      {% endfor %}
+    </dl>
+  </div>
+  {% endif %}
+
+  <!-- Who it's for -->
+  {% if module.who_it_is_for %}
+  <h2 class="module-section-title" style="margin-top: 48px;">Who this is for</h2>
+  <p class="module-description">{{ module.who_it_is_for }}</p>
+  {% endif %}
+
   <!-- Units -->
-  <h2 class="module-section-title">What's inside</h2>
+  <h2 class="module-section-title" style="margin-top: 48px;">What's inside</h2>
   <p class="module-units-meta">5 parts · 52 lessons · one lesson per week</p>
+
+  {% if module.units %}
+  <table class="module-parts-table">
+    <thead>
+      <tr>
+        <th>Part</th>
+        <th>Focus</th>
+        <th>Lessons</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for unit in module.units %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ unit.title }}</td>
+        <td>{{ unit.lessons }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
 
   <div class="module-units">
     {% for unit in module.units %}
@@ -41,6 +83,12 @@
     </div>
     {% endfor %}
   </div>
+
+  <!-- How you teach it -->
+  {% if module.how_you_teach_it %}
+  <h2 class="module-section-title" style="margin-top: 48px;">How you teach it</h2>
+  <p class="module-description">{{ module.how_you_teach_it }}</p>
+  {% endif %}
 
   <!-- How it works -->
   <h2 class="module-section-title" style="margin-top: 48px;">How it works</h2>

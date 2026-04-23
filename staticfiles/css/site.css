@@ -1651,10 +1651,86 @@ a.curriculum-book:hover .curriculum-book__title {
 }
 
 .module-units-meta {
-  margin: 0 0 20px 0;
+  margin: 0 0 16px 0;
   font-size: 13px;
   color: rgba(0,0,0,0.45);
   letter-spacing: 0.04em;
+}
+
+/* At a Glance block */
+.module-glance {
+  margin: 0 0 40px 0;
+  padding: 20px 24px;
+  background: rgba(0,0,0,0.025);
+  border-left: 2px solid rgba(0,0,0,0.12);
+  max-width: 640px;
+}
+
+.module-glance__list {
+  margin: 12px 0 0 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0;
+}
+
+.module-glance__row {
+  display: contents;
+}
+
+.module-glance__label {
+  padding: 5px 20px 5px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(0,0,0,0.55);
+  white-space: nowrap;
+  border-top: 0.5px solid rgba(0,0,0,0.07);
+}
+
+.module-glance__value {
+  padding: 5px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(0,0,0,0.8);
+  border-top: 0.5px solid rgba(0,0,0,0.07);
+}
+
+/* Part arc summary table */
+.module-parts-table {
+  width: 100%;
+  max-width: 560px;
+  border-collapse: collapse;
+  margin: 0 0 28px 0;
+  font-size: 13px;
+}
+
+.module-parts-table th {
+  text-align: left;
+  padding: 6px 16px 6px 0;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.module-parts-table td {
+  padding: 7px 16px 7px 0;
+  color: rgba(0,0,0,0.75);
+  border-bottom: 0.5px solid rgba(0,0,0,0.06);
+  vertical-align: top;
+}
+
+.module-parts-table td:first-child {
+  font-weight: 600;
+  color: rgba(0,0,0,0.4);
+  white-space: nowrap;
+}
+
+/* Supplement note on curriculum overview */
+.curriculum-supplement-note {
+  font-size: 14px;
+  color: rgba(0,0,0,0.55);
+  font-style: italic;
 }
 
 .module-units {
