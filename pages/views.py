@@ -53,6 +53,14 @@ def download_sample(request):
     slug = (request.POST.get("source") or "module-1-sample").strip()
     if email:
         CurriculumLead.objects.get_or_create(email=email, defaults={"source": slug})
+    return redirect("thank_you")
+
+
+def thank_you(request):
+    return render(request, "pages/thank-you.html")
+
+
+def sample_pdf(request):
     import os
     # staticfiles/ is where WhiteNoise serves from in production; fall back to static/ in dev
     pdf_path = os.path.join(settings.BASE_DIR, "staticfiles", "Lessons", "Lesson_1.pdf")

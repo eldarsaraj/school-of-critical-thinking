@@ -3,6 +3,29 @@
 
 {% block title %}Module {{ module.number }}: {{ module.title }} – The School of Critical Thinking{% endblock %}
 
+{% block meta_description %}<meta name="description" content="{% if module.description %}{{ module.description|truncatechars:155 }}{% else %}{{ module.core }} Part of the School of Critical Thinking curriculum, ages {{ module.ages }}.{% endif %}">{% endblock %}
+
+{% block social_meta %}
+  <meta property="og:site_name" content="The School of Critical Thinking" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Module {{ module.number }}: {{ module.title }} – The School of Critical Thinking" />
+  <meta property="og:description" content="{{ module.core }}" />
+  <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+  {% if module.book and module.book.cover %}
+  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static module.book.cover %}" />
+  {% else %}
+  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+  {% endif %}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Module {{ module.number }}: {{ module.title }} – The School of Critical Thinking" />
+  <meta name="twitter:description" content="{{ module.core }}" />
+  {% if module.book and module.book.cover %}
+  <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static module.book.cover %}" />
+  {% else %}
+  <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+  {% endif %}
+{% endblock %}
+
 {% block content %}
 
 <p class="module-breadcrumb">

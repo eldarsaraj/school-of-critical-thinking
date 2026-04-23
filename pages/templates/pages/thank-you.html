@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Thank You – The School of Critical Thinking{% endblock %}
+
+{% block meta_description %}<meta name="description" content="Your sample lesson is on its way. Thank you for your interest in the School of Critical Thinking.">{% endblock %}
+
+{% block content %}
+
+<section class="thankyou">
+  <p class="thankyou__label">You're in</p>
+  <h1 class="thankyou__title">Your lesson is on its way.</h1>
+  <p class="thankyou__desc">
+    Check your inbox — the sample lesson from <em>Seeing Patterns</em> will arrive shortly.
+    If you don't see it within a few minutes, check your spam folder.
+  </p>
+
+  <a class="thankyou__download" href="{% url 'sample_pdf' %}">
+    Download now if it hasn't arrived →
+  </a>
+
+  <hr class="thankyou__rule">
+
+  <p class="thankyou__next-label">While you wait</p>
+  <div class="thankyou__cards">
+    <a class="thankyou__card" href="{% url 'module_detail' 'seeing-patterns' %}">
+      <p class="thankyou__card-title">Read about Module 1</p>
+      <p class="thankyou__card-desc">See the full scope of <em>Seeing Patterns</em> — all five parts, 52 lessons, and what children learn.</p>
+      <span class="thankyou__card-link">Explore the module →</span>
+    </a>
+    <a class="thankyou__card" href="{% url 'curriculum' %}">
+      <p class="thankyou__card-title">Browse the full curriculum</p>
+      <p class="thankyou__card-desc">Three levels, nine modules, ages 8–16. See where Module 1 fits in the bigger picture.</p>
+      <span class="thankyou__card-link">See the curriculum →</span>
+    </a>
+    <a class="thankyou__card" href="/articles/">
+      <p class="thankyou__card-title">Read an article</p>
+      <p class="thankyou__card-desc">Writing on thinking, learning, and how the mind makes sense of the world.</p>
+      <span class="thankyou__card-link">Browse articles →</span>
+    </a>
+  </div>
+</section>
+
+{% endblock %}

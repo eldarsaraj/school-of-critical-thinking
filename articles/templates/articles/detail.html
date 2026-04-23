@@ -135,5 +135,35 @@
       </section>
     {% endif %}
 
+    <!-- Article email CTA -->
+    <section class="article-cta" aria-label="Free sample lesson">
+      <p class="article-cta__label">Free resource</p>
+      <p class="article-cta__text">
+        If this article interests you, download a free sample lesson from
+        <em>Seeing Patterns</em> — the first module of the School's curriculum.
+      </p>
+      <form class="article-cta__form" method="post" action="{% url 'download_sample' %}">
+        {% csrf_token %}
+        <input type="hidden" name="source" value="article-cta">
+        <input class="article-cta__input" type="email" name="email"
+               placeholder="Your email address" required autocomplete="email">
+        <button class="article-cta__btn" type="submit">Download sample lesson</button>
+      </form>
+    </section>
+
+    <!-- Author bio -->
+    <section class="author-bio" aria-label="About the author">
+      <img class="author-bio__photo" src="{% static 'images/founder-photo.png' %}" alt="Eldar Sarajlic">
+      <div class="author-bio__text">
+        <p class="author-bio__name">Eldar Sarajlic</p>
+        <p class="author-bio__desc">
+          Philosopher, parent, and founder of the School of Critical Thinking.
+          He has taught logic, critical thinking, and philosophy at the university level for over a decade.
+          The School is built on the same rigorous foundations — made accessible for children from age 8.
+        </p>
+        <a class="author-bio__link" href="/about/">About the School →</a>
+      </div>
+    </section>
+
   </article>
 {% endblock %}

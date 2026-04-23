@@ -2814,3 +2814,299 @@ a.curriculum-book:hover .curriculum-book__title {
 .diagnostic-list li {
   margin: 8px 0;
 }
+
+/* ======================================================
+   FOOTER EMAIL STRIP
+   ====================================================== */
+
+.footer-email-strip {
+  background: #111;
+  color: #fff;
+  padding: 20px 0;
+}
+
+.footer-email-strip__inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-email-strip__text {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+  white-space: nowrap;
+}
+
+.footer-email-strip__form {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  min-width: 260px;
+}
+
+.footer-email-strip__input {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 13px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 3px;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  outline: none;
+}
+
+.footer-email-strip__input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+.footer-email-strip__input:focus {
+  border-color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.12);
+}
+
+.footer-email-strip__btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.footer-email-strip__btn:hover {
+  background: rgba(255,255,255,0.88);
+}
+
+@media (max-width: 520px) {
+  .footer-email-strip__inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .footer-email-strip__text {
+    white-space: normal;
+  }
+}
+
+
+/* ======================================================
+   THANK-YOU PAGE
+   ====================================================== */
+
+.thankyou {
+  padding: 56px 0 80px;
+  max-width: 600px;
+}
+
+.thankyou__label {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+}
+
+.thankyou__title {
+  margin: 0 0 16px;
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.thankyou__desc {
+  margin: 0 0 24px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(0,0,0,0.7);
+}
+
+.thankyou__download {
+  display: inline-block;
+  font-size: 14px;
+  color: #111;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+  text-decoration: none;
+}
+
+.thankyou__download:hover {
+  border-bottom-color: #111;
+}
+
+.thankyou__rule {
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  margin: 40px 0 32px;
+}
+
+.thankyou__next-label {
+  margin: 0 0 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+}
+
+.thankyou__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.thankyou__card {
+  display: block;
+  padding: 20px;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s;
+}
+
+.thankyou__card:hover {
+  border-color: rgba(0,0,0,0.35);
+}
+
+.thankyou__card-title {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.thankyou__card-desc {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(0,0,0,0.6);
+}
+
+.thankyou__card-link {
+  font-size: 12px;
+  color: rgba(0,0,0,0.45);
+}
+
+@media (max-width: 600px) {
+  .thankyou__cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ======================================================
+   ARTICLE EMAIL CTA
+   ====================================================== */
+
+.article-cta {
+  margin-top: 48px;
+  padding: 28px 32px;
+  background: rgba(0,0,0,0.03);
+  border-left: 3px solid #111;
+}
+
+.article-cta__label {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+}
+
+.article-cta__text {
+  margin: 0 0 16px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(0,0,0,0.75);
+}
+
+.article-cta__form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.article-cta__input {
+  flex: 1;
+  min-width: 220px;
+  padding: 9px 12px;
+  font-size: 14px;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  background: #fff;
+  outline: none;
+}
+
+.article-cta__input:focus {
+  border-color: #111;
+}
+
+.article-cta__btn {
+  padding: 9px 18px;
+  font-size: 14px;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.article-cta__btn:hover {
+  background: #333;
+}
+
+
+/* ======================================================
+   AUTHOR BIO
+   ====================================================== */
+
+.author-bio {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.author-bio__photo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.author-bio__text {
+  flex: 1;
+}
+
+.author-bio__name {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.author-bio__desc {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(0,0,0,0.65);
+}
+
+.author-bio__link {
+  font-size: 13px;
+  color: #111;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+}
+
+.author-bio__link:hover {
+  border-bottom-color: #111;
+}
+
