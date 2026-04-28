@@ -1,54 +1,35 @@
-{% extends "base.html" %}
+{% extends “base.html” %}
+{% load static %}
 
 {% block title %}Contact – The School of Critical Thinking{% endblock %}
 
+{% block meta_description %}<meta name=”description” content=”Get in touch with the School of Critical Thinking. Questions about the curriculum, books, or live instruction.”>{% endblock %}
+
+{% block social_meta %}
+  <meta property=”og:site_name” content=”The School of Critical Thinking” />
+  <meta property=”og:type” content=”website” />
+  <meta property=”og:title” content=”Contact – The School of Critical Thinking” />
+  <meta property=”og:description” content=”Questions about the curriculum, books, or live instruction.” />
+  <meta property=”og:url” content=”{{ request.build_absolute_uri }}” />
+  <meta property=”og:image” content=”{{ request.scheme }}://{{ request.get_host }}{% static ‘images/og-default.png’ %}” />
+  <meta name=”twitter:card” content=”summary” />
+  <meta name=”twitter:title” content=”Contact – The School of Critical Thinking” />
+  <meta name=”twitter:description” content=”Questions about the curriculum, books, or live instruction.” />
+{% endblock %}
+
 {% block content %}
-  <h1>Contact</h1>
+  <h1>Get in touch</h1>
 
-  {% if path == "adult" %}
-    <p class="contact-context">
-      If you have the sense that something important is missing, you’re not imagining it.
-      Modern life gives you infinite information, and fewer reliable ways to decide.
-      AI makes this sharper: answers are cheap, but responsibility is not.
-    </p>
+  <p class=”contact-context”>
+    Use this form to ask about the curriculum, books, or live instruction.
+    Whether you’re a homeschooling parent looking for a starting point, or you have a specific question about
+    a module — one short paragraph is enough.
+  </p>
 
-    <p class="contact-context">
-      The School teaches critical thinking for agency.
-      Not as abstract “smartness,” but as a practical ability to choose well under uncertainty:
-      to frame problems correctly, spot the real constraint, see tradeoffs, and commit to action.
-    </p>
-
-    <p class="contact-context">
-      Send a short note with one situation where you want better judgment (career, money, relationships, risk).
-      If the goal is clearer decisions and more control over outcomes, you’re in the right place.
-    </p>
-
-  {% elif path == "parent" %}
-    <p class="contact-context">
-      If you’re here as a parent, you’re likely aiming higher than grades and test scores.
-      In an AI-dominated future, the advantage won’t be “knowing more,” but thinking better:
-      asking sharper questions, reasoning across domains, and acting with confidence.
-    </p>
-
-    <p class="contact-context">
-      The School teaches critical thinking for agency.
-      We don’t train students to perform for a rubric. Instead, we train them to take intellectual control:
-      to write clearly, reason under pressure, handle evidence and probability, and make decisions that hold up.
-      That is why we are different from ordinary tutoring centers.
-    </p>
-
-    <p class="contact-context">
-      Send a short note with your child’s age and what you want them to become able to do.
-      We’ll suggest a starting point.
-    </p>
-
-  {% else %}
-    <p class="contact-context">
-      The School of Critical Thinking is a small intellectual school.
-      We teach critical thinking for agency: the kind that changes decisions, not just opinions.
-      If you’re unsure where you fit, send a short note and we’ll route you.
-    </p>
-  {% endif %}
+  <p class=”contact-context”>
+    Live instruction and consultation are available for both children and adults.
+    If you’re interested in working directly, mention your child’s age and what you’d like them to get better at.
+  </p>
 
   {# ---------------- STATUS ---------------- #}
 
