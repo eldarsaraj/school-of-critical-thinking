@@ -7,17 +7,17 @@ MODULES = [
         "level": 1,
         "level_title": "Discovering How the World Works",
         "ages": "8–11",
-        "core": "The world contains patterns — but not every pattern is real.",
+        "core": "The world contains patterns, but not every pattern is real.",
         "is_available": True,
         "amazon_url": None,   # fill once the Amazon listing is live
         "has_sample": True,
         "description": (
-            "Children encounter patterns constantly — in sequences, in nature, in other "
-            "people's behavior — but rarely stop to ask whether those patterns are real "
+            "Children encounter patterns constantly, in sequences, in nature, in other "
+            "people's behavior, but rarely stop to ask whether those patterns are real "
             "or imagined. This module builds the first cognitive skill: seeing structure "
             "before explaining it. Students learn to spot genuine patterns, classify what "
             "they observe, and recognize when an apparent pattern is noise, coincidence, "
-            "or wishful thinking. Designed as a weekly supplement — one lesson fits "
+            "or wishful thinking. Designed as a weekly supplement: one lesson fits "
             "alongside any existing homeschool or after-school curriculum without displacing it."
         ),
         "at_a_glance": [
@@ -42,7 +42,7 @@ MODULES = [
         "how_you_teach_it": (
             "Each lesson opens with a short story or real-world example that the parent "
             "reads aloud or the child reads independently. A thinking question follows, "
-            "designed to spark a conversation — not to be answered in a workbook. "
+            "designed to spark a conversation, not to be answered in a workbook. "
             "Exercises and discussion questions complete each lesson; these are where the "
             "parent's role matters most. Total preparation time per lesson is minimal: "
             "the lesson plan is built into the book."
@@ -53,7 +53,7 @@ MODULES = [
                 "title": "Discovering Patterns",
                 "lessons": "Lessons 1–10",
                 "description": (
-                    "Patterns are hiding everywhere — in forests, in music, in the way people "
+                    "Patterns are hiding everywhere: in forests, in music, in the way people "
                     "behave, even in the shapes of snowflakes. These ten lessons train students "
                     "to notice the hidden order in the world around them for the first time."
                 ),
@@ -74,7 +74,7 @@ MODULES = [
                 "lessons": "Lessons 21–30",
                 "description": (
                     "The patterns found so far were sitting on the surface. Now students learn "
-                    "to find patterns that are hidden — buried beneath appearances, encoded in "
+                    "to find patterns that are hidden, buried beneath appearances, encoded in "
                     "games and language, embedded in group behavior and markets."
                 ),
             },
@@ -101,17 +101,17 @@ MODULES = [
             },
         ],
         "how_it_works": [
-            "Each lesson is 20–30 minutes — one per week fits naturally into a school schedule.",
+            "Each lesson is 20-30 minutes; one per week fits naturally into a school schedule.",
             "No specialist background required. Full lesson plans are included.",
-            "Lessons are built around stories and discussion questions, not worksheets. The exercises require thinking and conversation — not fill-in-the-blank answers.",
+            "Lessons are built around stories and discussion questions, not worksheets. The exercises require thinking and conversation, not fill-in-the-blank answers.",
             "Every unit includes exercises, discussion questions, and a short assessment.",
         ],
         "book": {
             "title": "Seeing Patterns",
             "cover": "images/books/seeing-patterns-single-cover.jpg",
             "tagline": (
-                "The complete Seeing Patterns module in book form — "
-                "52 structured lessons for ages 8–11, ready to use at home or in the classroom."
+                "The complete Seeing Patterns module in book form: "
+                "52 structured lessons for ages 8-11, ready to use at home or in the classroom."
             ),
             "buy_url": "https://www.amazon.com/dp/B0GX6NJ22H",
         },
