@@ -3625,17 +3625,19 @@ a.curriculum-book:hover .curriculum-book__title {
   margin-top: 48px;
 }
 
-.about-narrative__name {
-  font-size: 12px;
-  color: rgba(0,0,0,0.55);
+.about-narrative .about-narrative__name {
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(0,0,0,0.38);
   margin: 0 0 3px 0;
 }
 
-.about-narrative__role {
+.about-narrative .about-narrative__role {
   font-size: 10px;
+  font-style: normal;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(0,0,0,0.35);
+  color: rgba(0,0,0,0.3);
   margin: 0 0 20px 0;
 }
 
