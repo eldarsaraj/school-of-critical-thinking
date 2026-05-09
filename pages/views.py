@@ -19,15 +19,42 @@ def about(request):
 
 
 def books(request):
-    return render(request, "pages/books.html", {"books": BOOKS})
+    return redirect("home")
 
 
 def book_detail(request, slug):
-    book = next((b for b in BOOKS if b.get("slug") == slug), None)
-    if book is None:
-        raise Http404("Book not found")
+    return redirect("home")
 
-    return render(request, "pages/book_detail.html", {"book": book})
+
+def families(request):
+    return render(request, "pages/families.html")
+
+
+def organizations(request):
+    sent = request.GET.get("sent") == "1"
+    if request.method == "POST":
+        name = (request.POST.get("name") or "").strip()
+        email = (request.POST.get("email") or "").strip()
+        message = (request.POST.get("message") or "").strip()
+        errors = {}
+        if not name:
+            errors["name"] = "Name is required."
+        if not email:
+            errors["email"] = "Email is required."
+        if not message:
+            errors["message"] = "Message is required."
+        if not errors:
+            ContactMessage.objects.create(name=name, email=email, message=message)
+            return redirect("/organizations/?sent=1")
+        return render(request, "pages/organizations.html", {
+            "errors": errors,
+            "form": {"name": name, "email": email, "message": message},
+        })
+    return render(request, "pages/organizations.html", {"sent": sent})
+
+
+def learners(request):
+    return render(request, "pages/learners.html")
 
 
 def start(request):
@@ -71,10 +98,7 @@ def sample_pdf(request):
     return response
 
 
-from django.shortcuts import render, redirect
 from django.urls import reverse
-
-from .models import ContactMessage
 
 
 def contact(request):

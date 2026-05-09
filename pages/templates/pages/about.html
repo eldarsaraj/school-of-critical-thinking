@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}About – The School of Critical Thinking{% endblock %}
+{% block title %}About - The School of Critical Thinking{% endblock %}
 
-{% block meta_description %}<meta name="description" content="Founded by a philosopher and parent. The School fills the gap schools don't: teaching children how reality actually works. Ages 8–16.">{% endblock %}
+{% block meta_description %}<meta name="description" content="Founded by a philosopher and parent. The School of Critical Thinking teaches people at every age to resist entropy: to bring order to chaos through better thinking.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="The School of Critical Thinking" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="About – The School of Critical Thinking" />
-  <meta property="og:description" content="Founded by a philosopher and parent. The School fills the gap schools don't: teaching children how reality actually works." />
+  <meta property="og:title" content="About - The School of Critical Thinking" />
+  <meta property="og:description" content="Founded by a philosopher and parent. Teaching people at every age to bring order to chaos through better thinking." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="About – The School of Critical Thinking" />
-  <meta name="twitter:description" content="Founded by a philosopher and parent. The School fills the gap schools don't: teaching children how reality actually works." />
+  <meta name="twitter:title" content="About - The School of Critical Thinking" />
+  <meta name="twitter:description" content="Founded by a philosopher and parent. Teaching people at every age to bring order to chaos through better thinking." />
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 {% endblock %}
 
@@ -23,82 +23,68 @@
 <h1>About the School</h1>
 
 <p class="about-intro">
-  You've taken your child's education into your own hands. That matters.
-
-  Children are our most precious responsibility, and we owe it to them to give them the best possible education.
-  We can't rely on schools to do that, unfortunately, no matter how good those schools might be.
-  
-  We have to do it ourselves.
+  The School of Critical Thinking exists to teach people, at every age and in every context,
+  how to think well in a world that increasingly does the thinking for them.
 </p>
 
 
-
-<section class="about-block">
-  <p class="about-block__label">The problem</p>
-
-  <p class="about-block__text">
-    This problem is obvious to any parent.
-    Most schools, be they public or private, teach facts, skills, and subject knowledge. 
-    They almost never teach children how reality
-    actually behaves in all its complexity. They are rarely taught real critical thinking,
-    the kind of thinking that helps us understand how the world works, how to make good decisions, and how to navigate a complexity.
-  </p>
-
-  <p class="about-block__text">
-    Children are left to figure this out on their own. Usually as adults, and often after costly mistakes.
-  </p>
-
-  <p class="about-block__text">
-    But, it shouldn't be that way. These are learnable skills; they can be taught to an eight-year-old.
-    And they transfer to every subject, every decision, and every challenge a child will face in the future.
-  </p>
-
-  <p class="about-block__text">
-    Most "critical thinking" curricula respond to this problem with riddles, logic puzzles, and lists of fallacies.
-    These are useful, but they are not the same as teaching children how the world actually works. 
-    In life, they will never be faced with a clean-cut logic puzzle. They will be faced with messy, complex problems that require real-world thinking skills.
-  </p>
-
-  <p class="about-block__text">
-    This School fills that gap.
-  </p>
-
-</section>
-
-
 <section class="about-founder" aria-label="Founder perspective">
-  <p class="about-founder__label">Founder perspective</p>
+  <p class="about-founder__label">Why I built this</p>
 
   <p class="about-founder__text">
-    I have spent years studying how people think, and how education shapes, or fails to shape, that capacity.
-    My academic work in philosophy of education, which started in 2014 right after I got my PhD, led me to a conclusion that is hard to argue with once you see it:
-    formal schooling teaches children what to think, almost never how.
+    I have spent years studying how people think, and how education shapes or fails to shape that capacity.
+    My academic work in philosophy, which started in 2014 right after I got my PhD,
+    led me to a conclusion that is hard to argue with once you see it: formal schooling teaches children
+    what to think, almost never how.
   </p>
 
   <p class="about-founder__text">
     That conclusion became personal when my daughter started school.
-    Watching her move through a curriculum that was rich in content but thin on thinking confirmed my conclusion.
+    Watching her move through a curriculum that was rich in content but thin on thinking confirmed everything.
     If I wanted her to learn how to reason clearly, about causes, about uncertainty, about tradeoffs,
-    I would have to teach her myself. That's what I've been doing for the past several years.
+    I would have to teach her myself. That is what I have been doing for the past several years.
   </p>
 
   <p class="about-founder__text">
-    The School of Critical Thinking grew out of that effort, as well as my desire to share this approach with other parents.
-    It is the curriculum I wish had existed when I was a kid. It is built on years of research and refined through the most honest test I know: teaching my own child.
+    The School of Critical Thinking grew out of that effort. But as I built the curriculum,
+    I kept noticing the same gap in a different place: in the organizations where adults spend their working lives.
+    The same people who never learned to reason clearly as children are now making decisions
+    under pressure, evaluating AI-generated output, and navigating uncertainty at real stakes.
+    The problem doesn't go away when school ends. It just gets more expensive.
   </p>
 
   <p class="about-founder__text">
-    My background is in philosophy, which is useful here because philosophy forces first-principles thinking
-    about what education really should be. But this is not a philosophy class.
-    My goal here is practical: to give children the mental tools to reason clearly,
-    decide well, and navigate a world that does not come with instructions.
+    So the School now serves both. A curriculum for children, ages 8 to 16, built from the ground up.
+    And talks, workshops, and training programs for organizations that recognize critical thinking
+    as the most undervalued professional skill they have.
+    The same intellectual foundation, applied at every stage of life.
   </p>
 
   <p class="about-founder__signature">
     Eldar Sarajlic<br>
-    <span class="about-founder__role">
-      Founder, The School of Critical Thinking
-    </span>
+    <span class="about-founder__role">Founder, The School of Critical Thinking</span>
+  </p>
+</section>
+
+
+<section class="about-block">
+  <p class="about-block__label">One idea</p>
+
+  <p class="about-block__text">
+    All the work here is organized around a single governing idea: critical thinking as resistance to entropy.
+  </p>
+
+  <p class="about-block__text">
+    The world tends toward disorder. Information arrives unstructured. Confident-sounding nonsense spreads
+    faster than careful argument. AI systems generate plausible text at near-zero cost, accelerating everything.
+    Thinking critically is the act of pushing back: making sense of what is chaotic, naming what is unnamed,
+    modeling what is opaque.
+  </p>
+
+  <p class="about-block__text">
+    Entropy is not used here as merely decorative language. It is the conceptual engine of the entire curriculum, present in
+    the children's books, in the adult work, and in every corporate program. It gives the School a
+    single coherent identity across audiences.
   </p>
 </section>
 
@@ -107,81 +93,71 @@
   <p class="about-block__label">The framework</p>
 
   <p class="about-block__text">
-    The curriculum is built around five structures of reality: the patterns that govern how the world actually behaves.
-    This is not conventional wisdom about critical thinking. 
-    
-    It's not something you'd see on TikTok, Instagram, or even in a typical critical thinking class.
-    
-    It is something different.
+    The curriculum is built around five structures: the patterns that govern how the world actually behaves.
+    These are taught from first principles. The same five foundations operate at every age; the examples,
+    the register, and the stakes change, but the underlying skills do not.
   </p>
 
   <ul class="about-list">
-    <li><strong>Patterns</strong>: recognizing structure in the world</li>
-    <li><strong>Causality</strong>: understanding cause and effect</li>
-    <li><strong>Uncertainty</strong>: reasoning under probability</li>
-    <li><strong>Models</strong>: how representations simplify reality</li>
-    <li><strong>Decisions</strong>: incentives, tradeoffs, and consequences</li>
+    <li><strong>Patterns</strong>: recognizing structure in the world, and knowing when an apparent pattern is noise</li>
+    <li><strong>Causality</strong>: understanding what produces what, not just what follows what</li>
+    <li><strong>Uncertainty</strong>: reasoning clearly when you can't know the outcome in advance</li>
+    <li><strong>Models</strong>: how every explanation simplifies reality, and how to use that usefully</li>
+    <li><strong>Decisions</strong>: incentives, tradeoffs, and how to make choices that hold up under pressure</li>
   </ul>
 
   <p class="about-block__text">
-    A child who understands these structures will grow up to think differently.
-    They will be more competitive in the future job market, make better decisions about their health,
-    relationships, or finance, or anything else that comes their way. 
-    They will think with clarity and won't easily fall prey to propaganda or misinformation.
+    A nine-year-old learning to spot a false pattern and a leadership team learning to decompose
+    a complex strategic problem are doing the same thing at different scales.
+    That is what makes this a school, not a collection of separate products.
+  </p>
 </section>
 
 
 <section class="about-block">
-  <p class="about-block__label">Who it is for</p>
+  <p class="about-block__label">Who we serve</p>
 
   <p class="about-block__text">
-    The School's primary focus are families who are active in educating their own children. 
-    You can be a homeschooling family, or you can be supplementing your child's education with after-school lessons. 
-    Either way, the School's curriculum is designed to fit into your existing educational efforts. <br/>
-    The curriculum is designed to be taught by parents: no specialist background required.
+    The School serves three distinct audiences, each with its own offer and register,
+    but all on the same intellectual foundation.
   </p>
 
   <p class="about-block__text">
-    There are three progressive levels (9 modules in total) that take children from ages 8 through 16,
-    with 52 lessons per module, each 20–30 minutes long. 
-    They can be read by children on their own, but they are designed to be taught by parents, with discussion and exercises that make the material come alive.
+    <strong>Families.</strong>
+    Parents who want to give their children the thinking skills schools rarely teach directly.
+    A three-level book series spanning ages 8 to 16, with 52 lessons per module, designed for
+    parent-led weekly instruction. No specialist background required.
   </p>
 
   <p class="about-block__text">
-    The School also works with adults. We can help parents to prepare critical thinking lessons, 
-    but we also offer direct instruction and consultation for adults who want to improve their own reasoning skills.
-    The <a href="{% url 'diagnostic_intro' %}">Thinking Diagnostic</a>
-    is a free self-assessment that identifies your own reasoning blindspots
-    and produces a personalized improvement plan.
-    Also, live instruction and consultation are available for both children and adults.
+    <strong>Learners.</strong>
+    Students preparing for high-stakes exams like the SHSAT, children learning analytical thinking
+    through Python Detective, and adults who want to understand where their own reasoning breaks down.
+    The free Thinking Diagnostic is the entry point for the adult learner.
   </p>
 
-  <ul class="about-list">
-    <li>Curriculum and lesson materials for homeschooling families</li>
-    <li>Books written as companions to each curriculum level</li>
-    <li>Live instruction taught directly by the School's founder</li>
-    <li>Consultation for parents teaching critical thinking at home</li>
-    <li>The Thinking Diagnostic, a free self-assessment for adults</li>
-  </ul>
+  <p class="about-block__text">
+    <strong>Organizations.</strong>
+    Companies, leadership teams, and L&D departments that recognize critical thinking as the most
+    undervalued skill in their workforce. Talks, half-day workshops, and multi-session programs
+    built on the same foundations as the books and curriculum.
+  </p>
 </section>
 
 
 <section class="about-block">
-  <p class="about-block__label">Get in touch</p>
-
-  <p class="about-block__text">
-    To ask about curriculum materials, live instruction, or consultation,
-    use the contact form. For the adult self-assessment, take the <a href="{% url 'diagnostic_intro' %}">Thinking Diagnostic</a>.
-  </p>
+  <p class="about-block__label">Explore</p>
 
   <p class="about-cta__links">
-    <a href="/contact/">Contact</a>
-    &nbsp;&nbsp;·&nbsp;&nbsp;
-    <a href="{% url 'curriculum' %}">Curriculum</a>
-    &nbsp;&nbsp;·&nbsp;&nbsp;
-    <a href="/books/">Books</a>
-    &nbsp;&nbsp;·&nbsp;&nbsp;
+    <a href="/families/">For Families</a>
+    &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+    <a href="/organizations/">For Organizations</a>
+    &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+    <a href="/learners/">For Learners</a>
+    &nbsp;&nbsp;&middot;&nbsp;&nbsp;
     <a href="{% url 'diagnostic_intro' %}">Thinking Diagnostic</a>
+    &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+    <a href="/contact/">Contact</a>
   </p>
 </section>
 

@@ -861,104 +861,72 @@ main { padding: 48px 24px; }
   padding: 0;
 }
 
-/* Header */
+/* Header rule */
 .essay__header {
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid rgba(0,0,0,0.12);
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 0.5px solid rgba(0,0,0,0.10);
 }
 
 /* Title */
 .essay__title {
   margin: 0;
-  font-size: 38px;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.2;
 }
 
-/* Author / date line */
+/* Author line (below title, quieter) */
 .essay__meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 14px 0 0 0;
-  font-size: 12px;
+  margin: 12px 0 0 0;
+  font-size: 14px;
   line-height: 1.4;
-  color: rgba(0,0,0,0.4);
-  letter-spacing: 0.07em;
+  color: rgba(0,0,0,0.45);
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-}
-
-.essay__meta-photo {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-  opacity: 0.85;
-}
-
-/* Body: serif for long-form reading */
-.essay__body {
-  font-family: Georgia, "Times New Roman", serif;
 }
 
 /* Body paragraphs */
 .essay__body p {
-  font-size: 18px;
-  line-height: 1.8;
-  margin: 0 0 26px 0;
-}
-
-/* Lead paragraph: larger, italic, separated */
-.essay__content > p:first-child {
-  font-size: 20px;
+  font-size: 19px;
   line-height: 1.75;
-  color: rgba(0,0,0,0.65);
-  font-style: italic;
-  padding-bottom: 28px;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  margin-bottom: 32px;
+  margin: 0 0 24px 0;
 }
 
-/* Markdown images */
+/* Markdown images: flush-left with text column */
 .essay__content img {
   display: block;
   width: 100%;
   max-width: 100%;
   height: auto;
-  margin: 36px 0 12px 0;
+  margin: 32px 0 40px 0;
 }
 
-/* Captions */
+/* Captions: italic line right after image */
 .essay__content img + em,
 .essay__content img + p em {
   display: block;
-  margin-top: 0;
+  margin-top: -24px;
   margin-bottom: 36px;
   font-size: 12px;
-  line-height: 1.5;
-  color: rgba(0,0,0,0.45);
-  font-style: italic;
-  font-family: Helvetica, Arial, sans-serif;
+  line-height: 1.4;
+  color: rgba(0,0,0,0.55);
+  text-align: left;
 }
 
+/* If caption is wrapped in a <p>, remove extra spacing */
 .essay__content img + p { margin: 0; }
 
-/* Blockquotes: pull-quote style */
+/* Blockquotes */
 .essay__content blockquote {
-  margin: 40px 0;
-  padding: 0 0 0 24px;
-  border-left: 3px solid rgba(0,0,0,0.2);
+  margin: 32px 0;
+  padding-left: 18px;
+  border-left: 2px solid rgba(0,0,0,0.15);
   font-style: italic;
-  color: rgba(0,0,0,0.7);
-  font-size: 19px;
-  line-height: 1.75;
+  color: rgba(0,0,0,0.8);
 }
 
 .essay__content blockquote p { margin: 0; }
-.essay__content blockquote p + p { margin-top: 14px; }
+.essay__content blockquote p + p { margin-top: 10px; }
 
 /* End mark icon */
 .end-mark {
@@ -966,76 +934,44 @@ main { padding: 48px 24px; }
   width: 12px;
   height: 12px;
   margin-left: 6px;
-  background: url("/static/images/proof-mark.png") no-repeat center / contain;
+  background: url("/static/images/proof-mark.89aa18369fc0.png") no-repeat center / contain;
   vertical-align: middle;
   opacity: 0.9;
 }
 
 /* Markdown headings inside essay body */
 .essay__content h1 {
-  font-family: Helvetica, Arial, sans-serif;
   font-size: 26px;
   line-height: 1.25;
-  margin: 52px 0 16px 0;
-  letter-spacing: -0.01em;
-  font-weight: 700;
-}
-
-.essay__content h2 {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 19px;
-  font-weight: 700;
-  line-height: 1.3;
-  margin: 48px 0 14px 0;
-  padding-top: 20px;
-  border-top: 1px solid rgba(0,0,0,0.1);
+  margin: 28px 0 12px 0;
   letter-spacing: -0.005em;
 }
 
-.essay__content h3 {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.4;
-  margin: 40px 0 12px 0;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #111;
+.essay__content h2 {
+  font-size: 20px;
+  line-height: 1.35;
+  margin: 26px 0 10px 0;
 }
 
-/* Lists */
+.essay__content h3 {
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 22px 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Lists: match surrounding text size */
 .essay__content ul,
 .essay__content ol {
-  margin: 0 0 26px 0;
-  padding-left: 24px;
+  margin: 0 0 24px 0;
+  padding-left: 22px;
 }
 
 .essay__content li {
-  font-size: 18px;
-  line-height: 1.75;
-  margin-bottom: 6px;
+  font-size: 1em;
+  line-height: 1.65;
 }
-
-/* Horizontal rule inside essay */
-.essay__content hr {
-  border: none;
-  border-top: 1px solid rgba(0,0,0,0.12);
-  margin: 48px auto;
-  width: 40%;
-}
-
-/* Inline code */
-.essay__content code {
-  font-size: 0.87em;
-  background: rgba(0,0,0,0.05);
-  padding: 1px 5px;
-  border-radius: 2px;
-  font-family: "Courier New", monospace;
-}
-
-/* Strong and em inside serif body */
-.essay__content strong { font-weight: 700; }
-.essay__content em { font-style: italic; }
 
 /* Cover block (if you render a cover image above content later) */
 .essay__cover {
@@ -3144,451 +3080,3 @@ a.curriculum-book:hover .curriculum-book__title {
   border-bottom-color: #111;
 }
 
-
-
-/* ======================================================
-   SOCIAL SHARING
-   ====================================================== */
-
-.article-share {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 40px 0 0 0;
-  padding: 20px 0;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  font-family: Helvetica, Arial, sans-serif;
-}
-
-.article-share__label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.35);
-  margin-right: 4px;
-}
-
-.article-share__btn {
-  display: inline-block;
-  padding: 5px 12px;
-  font-size: 12px;
-  color: rgba(0,0,0,0.55);
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 2px;
-  text-decoration: none;
-  letter-spacing: 0.02em;
-  transition: border-color 0.15s, color 0.15s;
-}
-
-.article-share__btn:hover {
-  border-color: rgba(0,0,0,0.4);
-  color: #111;
-}
-
-
-/* ======================================================
-   HOME: THESIS SECTION
-   ====================================================== */
-
-.home-thesis {
-  margin: 64px 0;
-}
-
-.home-thesis__title {
-  font-size: clamp(20px, 3vw, 26px);
-  font-weight: 600;
-  color: #111;
-  margin: 12px 0 24px 0;
-  line-height: 1.3;
-}
-
-.home-thesis__cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-}
-
-.home-thesis__cols p {
-  font-size: 15px;
-  line-height: 1.7;
-  color: rgba(0,0,0,0.65);
-  margin: 0;
-}
-
-@media (max-width: 640px) {
-  .home-thesis__cols {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-}
-
-/* ======================================================
-   HOME: THREE PATHWAYS
-   ====================================================== */
-
-.home-pathways {
-  margin: 64px 0;
-}
-
-.home-pathways__title {
-  font-size: clamp(20px, 3vw, 26px);
-  font-weight: 600;
-  color: #111;
-  margin: 12px 0 32px 0;
-}
-
-.home-pathways__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-@media (max-width: 768px) {
-  .home-pathways__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.pathway-card {
-  display: flex;
-  flex-direction: column;
-  padding: 28px 24px;
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 3px;
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-
-.pathway-card:hover {
-  border-color: rgba(0,0,0,0.3);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-}
-
-.pathway-card__label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.4);
-  margin: 0 0 10px 0;
-}
-
-.pathway-card__title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #111;
-  margin: 0 0 12px 0;
-  line-height: 1.35;
-}
-
-.pathway-card__desc {
-  font-size: 14px;
-  line-height: 1.65;
-  color: rgba(0,0,0,0.6);
-  margin: 0 0 20px 0;
-  flex: 1;
-}
-
-.pathway-card__cta {
-  font-size: 13px;
-  font-weight: 600;
-  color: #111;
-  margin: 0;
-}
-
-/* ======================================================
-   FAMILIES PAGE
-   ====================================================== */
-
-.families-intro-note {
-  font-size: 15px;
-  line-height: 1.7;
-  color: rgba(0,0,0,0.65);
-  margin-bottom: 0;
-}
-
-.families-why {
-  margin: 48px 0;
-}
-
-.families-why__title {
-  font-size: clamp(18px, 2.5vw, 22px);
-  font-weight: 600;
-  color: #111;
-  margin: 12px 0 24px 0;
-}
-
-.families-why__cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-}
-
-.families-why__cols p {
-  font-size: 15px;
-  line-height: 1.7;
-  color: rgba(0,0,0,0.65);
-  margin: 0;
-}
-
-@media (max-width: 640px) {
-  .families-why__cols {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-}
-
-/* ======================================================
-   ORGANIZATIONS PAGE
-   ====================================================== */
-
-.orgs-intro {
-  font-size: 16px;
-  line-height: 1.75;
-  color: rgba(0,0,0,0.7);
-  max-width: 680px;
-  margin-bottom: 20px;
-}
-
-.orgs-offerings {
-  margin: 48px 0;
-}
-
-.orgs-offerings__title {
-  font-size: clamp(18px, 2.5vw, 22px);
-  font-weight: 600;
-  color: #111;
-  margin: 12px 0 28px 0;
-}
-
-.orgs-offerings__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-@media (max-width: 768px) {
-  .orgs-offerings__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.orgs-offering {
-  padding: 24px;
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 3px;
-}
-
-.orgs-offering__name {
-  font-size: 15px;
-  font-weight: 700;
-  color: #111;
-  margin: 0 0 4px 0;
-}
-
-.orgs-offering__duration {
-  font-size: 11px;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.4);
-  margin: 0 0 14px 0;
-}
-
-.orgs-offering__desc {
-  font-size: 14px;
-  line-height: 1.65;
-  color: rgba(0,0,0,0.6);
-  margin: 0;
-}
-
-.orgs-themes {
-  margin: 48px 0;
-}
-
-.orgs-themes__title {
-  font-size: clamp(18px, 2.5vw, 22px);
-  font-weight: 600;
-  color: #111;
-  margin: 12px 0 10px 0;
-}
-
-.orgs-themes__sub {
-  font-size: 15px;
-  line-height: 1.65;
-  color: rgba(0,0,0,0.55);
-  margin: 0 0 28px 0;
-  max-width: 600px;
-}
-
-.orgs-themes__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.orgs-theme {
-  padding: 20px 0;
-  border-top: 1px solid rgba(0,0,0,0.08);
-}
-
-.orgs-theme:last-child {
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-}
-
-.orgs-theme__title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #111;
-  margin: 0 0 6px 0;
-}
-
-.orgs-theme__desc {
-  font-size: 14px;
-  line-height: 1.65;
-  color: rgba(0,0,0,0.6);
-  margin: 0;
-  max-width: 620px;
-}
-
-.orgs-about {
-  margin: 48px 0;
-}
-
-.orgs-about__inner {
-  display: flex;
-  gap: 32px;
-  align-items: flex-start;
-}
-
-@media (max-width: 600px) {
-  .orgs-about__inner {
-    flex-direction: column;
-    gap: 20px;
-  }
-}
-
-.orgs-about__photo-wrap {
-  flex-shrink: 0;
-}
-
-.orgs-about__photo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
-
-.orgs-about__name {
-  font-size: 17px;
-  font-weight: 600;
-  color: #111;
-  margin: 0 0 12px 0;
-}
-
-.orgs-about__text p {
-  font-size: 14px;
-  line-height: 1.7;
-  color: rgba(0,0,0,0.65);
-  margin: 0 0 12px 0;
-}
-
-.orgs-about__link {
-  font-size: 13px;
-  font-weight: 600;
-  color: #111;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(0,0,0,0.2);
-}
-
-.orgs-about__link:hover {
-  border-bottom-color: rgba(0,0,0,0.5);
-}
-
-.orgs-contact {
-  margin: 48px 0;
-}
-
-.orgs-contact__title {
-  font-size: clamp(18px, 2.5vw, 22px);
-  font-weight: 600;
-  color: #111;
-  margin: 12px 0 10px 0;
-}
-
-.orgs-contact__desc {
-  font-size: 15px;
-  line-height: 1.65;
-  color: rgba(0,0,0,0.6);
-  margin: 0 0 28px 0;
-  max-width: 560px;
-}
-
-.orgs-contact__success {
-  font-size: 15px;
-  color: #2a7a2a;
-  padding: 16px 20px;
-  background: rgba(42,122,42,0.07);
-  border-radius: 3px;
-  margin: 0;
-}
-
-.orgs-contact__form {
-  max-width: 540px;
-}
-
-/* ======================================================
-   LEARNERS PAGE
-   ====================================================== */
-
-.learners-section {
-  margin: 48px 0;
-}
-
-.learners-section--muted {
-  opacity: 0.7;
-}
-
-.learners-section__title {
-  font-size: clamp(18px, 2.5vw, 22px);
-  font-weight: 600;
-  color: #111;
-  margin: 12px 0 14px 0;
-}
-
-.learners-section__desc {
-  font-size: 15px;
-  line-height: 1.7;
-  color: rgba(0,0,0,0.65);
-  margin: 0 0 20px 0;
-  max-width: 620px;
-}
-
-.learners-cta-btn {
-  display: inline-block;
-  padding: 11px 22px;
-  font-size: 14px;
-  font-weight: 600;
-  background: #111;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 2px;
-  transition: background 0.15s;
-}
-
-.learners-cta-btn:hover {
-  background: #333;
-}
-
-.learners-cta-btn--ghost {
-  background: transparent;
-  color: #111;
-  border: 1px solid rgba(0,0,0,0.25);
-}
-
-.learners-cta-btn--ghost:hover {
-  background: transparent;
-  border-color: rgba(0,0,0,0.5);
-}

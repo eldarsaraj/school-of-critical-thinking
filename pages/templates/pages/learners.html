@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}For Learners - The School of Critical Thinking{% endblock %}
+
+{% block meta_description %}<meta name="description" content="SHSAT test preparation, Python Detective coding for kids, and a free thinking diagnostic for adults. Real critical thinking skills, not rote drilling.">{% endblock %}
+
+{% block social_meta %}
+  <meta property="og:site_name" content="The School of Critical Thinking" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="For Learners - The School of Critical Thinking" />
+  <meta property="og:description" content="SHSAT preparation, Python Detective for kids, and a thinking diagnostic for adults." />
+  <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="For Learners - The School of Critical Thinking" />
+  <meta name="twitter:description" content="SHSAT preparation, Python Detective for kids, and a thinking diagnostic for adults." />
+  <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+{% endblock %}
+
+{% block content %}
+
+<h1>For Learners</h1>
+
+<p>
+  Whether you are preparing for a high-stakes exam, learning to code,
+  or an adult who wants to think more clearly about the world: this is where to start.
+  The tools here are built on the same foundations as the curriculum, applied to
+  specific problems that learners actually face.
+</p>
+
+<hr class="curriculum-divider">
+
+<!-- ── SHSAT ─────────────────────────────────────────────────────────────── -->
+<section class="learners-section">
+  <p class="home-section-label">For students, ages 12-14</p>
+  <h2 class="learners-section__title">SHSAT Preparation</h2>
+  <p class="learners-section__desc">
+    The SHSAT, New York City's entrance exam for specialized high schools, rewards
+    exactly the skills the curriculum teaches: pattern recognition, logical reasoning,
+    decomposition, and reasoning under uncertainty. Most test prep treats it as a puzzle
+    to be gamed through rote drilling. This one treats it as an application of real
+    critical thinking skills.
+  </p>
+  <p class="learners-section__desc">
+    The dashboard includes full practice tests, worked solutions, and performance
+    tracking tied to specific thinking skills rather than just right and wrong answers.
+  </p>
+  <a class="learners-cta-btn" href="/shsat/">Go to the SHSAT Dashboard &rarr;</a>
+</section>
+
+<hr class="curriculum-divider">
+
+<!-- ── Python Detective ──────────────────────────────────────────────────── -->
+<section class="learners-section">
+  <p class="home-section-label">For children, ages 10+</p>
+  <h2 class="learners-section__title">Python Detective</h2>
+  <p class="learners-section__desc">
+    An introductory coding course that teaches children analytical thinking through
+    the programming language Python. Students learn to think analytically by writing
+    real code, solving puzzles, and doing projects that require reasoning, not just
+    typing. Free, browser-based, no installation required.
+  </p>
+  <a class="learners-cta-btn" href="/static/python-detective/index.html">Start Python Detective &rarr;</a>
+</section>
+
+<hr class="curriculum-divider">
+
+<!-- ── Diagnostic ────────────────────────────────────────────────────────── -->
+<section class="learners-section">
+  <p class="home-section-label">For adults</p>
+  <h2 class="learners-section__title">Thinking Diagnostic</h2>
+  <p class="learners-section__desc">
+    A free diagnostic that identifies the specific ways your reasoning breaks down.
+    Not a general quiz. It maps your answers against 16 named thinking patterns and
+    produces a personalized report showing where you are strongest and where you have
+    the most room to improve. Takes about fifteen minutes.
+  </p>
+  <a class="learners-cta-btn" href="{% url 'diagnostic_intro' %}">Take the Thinking Diagnostic &rarr;</a>
+</section>
+
+<hr class="curriculum-divider">
+
+<!-- ── More coming ────────────────────────────────────────────────────────── -->
+<section class="learners-section learners-section--muted">
+  <p class="home-section-label">Coming</p>
+  <h2 class="learners-section__title">More tools for self-directed learners</h2>
+  <p class="learners-section__desc">
+    Additional test-prep dashboards, self-paced courses, and structured practice sets
+    are in development. If you want to be notified when new tools are available,
+    download a sample lesson from the curriculum and you will be on the list.
+  </p>
+  <a class="learners-cta-btn learners-cta-btn--ghost" href="{% url 'module_detail' 'seeing-patterns' %}#sample">Download a free sample lesson</a>
+</section>
+
+{% endblock %}

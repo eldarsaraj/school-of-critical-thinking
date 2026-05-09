@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}For Families - The School of Critical Thinking{% endblock %}
+
+{% block meta_description %}<meta name="description" content="A structured critical thinking curriculum for homeschool families and parents supplementing school. Ages 8-16. Nine modules. One lesson per week. No specialist background required.">{% endblock %}
+
+{% block social_meta %}
+  <meta property="og:site_name" content="The School of Critical Thinking" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="For Families - The School of Critical Thinking" />
+  <meta property="og:description" content="A structured critical thinking curriculum for homeschool families and parents supplementing school. Ages 8-16." />
+  <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="For Families - The School of Critical Thinking" />
+  <meta name="twitter:description" content="A structured critical thinking curriculum for homeschool families. Ages 8-16." />
+  <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+{% endblock %}
+
+{% block content %}
+
+<h1>For Families</h1>
+
+<p>
+  Most curricula teach children what to think. History dates, scientific facts,
+  grammar rules. These matter. But they leave out something more fundamental:
+  how to think. How to spot a real pattern versus a coincidence. How to tell a
+  cause from a correlation. How to reason when you don't have all the information.
+</p>
+
+<p class="families-intro-note">
+  The School of Critical Thinking was built to fill that gap.
+  A structured curriculum for ages 8 to 16, designed for families who take thinking seriously.
+  One lesson per week, alongside any existing curriculum, no specialist background required.
+</p>
+
+<!-- ── The curriculum ────────────────────────────────────────────────────── -->
+<section class="home-curriculum" style="margin-top: 48px;">
+  <p class="home-section-label">The curriculum</p>
+  <h2 class="home-curriculum__title">Three levels, nine modules, 52 lessons each</h2>
+  <p class="home-curriculum__sub">One lesson per week. Each module is a standalone book.</p>
+
+  <div class="home-levels">
+
+    <div class="home-level">
+      <div class="home-level__header">
+        <span class="home-level__tag">Level 1</span>
+        <span class="home-level__ages">Ages 8-11</span>
+      </div>
+      <p class="home-level__title">Discovering How the World Works</p>
+      <ul class="home-level__modules">
+        <li><a href="{% url 'module_detail' 'seeing-patterns' %}"><strong>Module 1</strong>: Seeing Patterns <span class="home-level__badge">Available now</span></a></li>
+        <li><a href="{% url 'module_detail' 'chance-and-uncertainty' %}"><strong>Module 2</strong>: Chance and Uncertainty</a></li>
+        <li><a href="{% url 'module_detail' 'cause-and-effect' %}"><strong>Module 3</strong>: Cause and Effect</a></li>
+      </ul>
+    </div>
+
+    <div class="home-level">
+      <div class="home-level__header">
+        <span class="home-level__tag">Level 2</span>
+        <span class="home-level__ages">Ages 11-13</span>
+      </div>
+      <p class="home-level__title">Understanding Systems and Reasoning</p>
+      <ul class="home-level__modules">
+        <li><a href="{% url 'module_detail' 'models-and-explanations' %}"><strong>Module 4</strong>: Models and Explanations</a></li>
+        <li><a href="{% url 'module_detail' 'systems-and-feedback' %}"><strong>Module 5</strong>: Systems and Feedback</a></li>
+        <li><a href="{% url 'module_detail' 'human-behaviour' %}"><strong>Module 6</strong>: Human Behaviour</a></li>
+      </ul>
+    </div>
+
+    <div class="home-level">
+      <div class="home-level__header">
+        <span class="home-level__tag">Level 3</span>
+        <span class="home-level__ages">Ages 14-16</span>
+      </div>
+      <p class="home-level__title">Applying Thinking to Real Decisions</p>
+      <ul class="home-level__modules">
+        <li><a href="{% url 'module_detail' 'decisions-and-tradeoffs' %}"><strong>Module 7</strong>: Decisions and Tradeoffs</a></li>
+        <li><a href="{% url 'module_detail' 'truth-and-evidence' %}"><strong>Module 8</strong>: Truth and Evidence</a></li>
+        <li><a href="{% url 'module_detail' 'understanding-the-world' %}"><strong>Module 9</strong>: Understanding the World</a></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<hr class="curriculum-divider">
+
+<!-- ── What's distinctive ────────────────────────────────────────────────── -->
+<section class="families-why">
+  <p class="home-section-label">What makes this different</p>
+  <h2 class="families-why__title">Not riddles. Not fallacy lists. Not logic puzzles.</h2>
+  <div class="families-why__cols">
+    <p>
+      Most critical thinking curricula teach children to spot bad arguments or solve lateral
+      thinking puzzles. These are fine exercises. But they don't teach children how the world
+      actually works. Can your child explain the difference between a coincidence and a cause?
+      Between a good guess and a lucky one? Between a model and the thing it describes?
+    </p>
+    <p>
+      These aren't trick questions. They're the foundations of clear thinking, and almost no
+      curriculum teaches them explicitly. The School of Critical Thinking does. Starting at
+      age 8 and building through 16, children learn the five structures that govern reality:
+      Patterns, Causality, Uncertainty, Models, and Decisions.
+    </p>
+  </div>
+</section>
+
+<hr class="curriculum-divider">
+
+<!-- ── Who it's for ──────────────────────────────────────────────────────── -->
+<section class="home-for">
+  <p class="home-section-label">Who this is for</p>
+  <div class="home-for__grid">
+    <div class="home-for__item">
+      <p class="home-for__heading">Homeschooling families</p>
+      <p class="home-for__desc">You've taken charge of your child's education. This is the curriculum most schools don't have: structured, serious, and ready to teach.</p>
+    </div>
+    <div class="home-for__item">
+      <p class="home-for__heading">Parents supplementing school</p>
+      <p class="home-for__desc">One lesson per week sits alongside any existing school schedule. The material doesn't overlap with what school teaches; it fills the gap.</p>
+    </div>
+    <div class="home-for__item">
+      <p class="home-for__heading">Tutors and educational coaches</p>
+      <p class="home-for__desc">Full lesson plans with discussion questions and exercises. No specialist background in philosophy or logic required to teach.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="curriculum-divider">
+
+<!-- ── Python Detective ──────────────────────────────────────────────────── -->
+<section class="curriculum-level">
+  <div class="curriculum-level__header">
+    <p class="curriculum-level__tag">Free resource</p>
+    <h2 class="curriculum-level__title">Python Detective</h2>
+    <p class="curriculum-level__meta">Ages 10+ &middot; Analytical thinking with code</p>
+    <p class="curriculum-level__goal">
+      An introductory coding course that teaches children (10 years of age and up) analytical thinking
+      through the programming language Python. Children learn to think analytically by writing real code,
+      solving puzzles and doing fun projects. Free, browser-based, no installation required.
+    </p>
+    <p>
+      <a href="/static/python-detective/index.html" style="color: inherit; border-bottom: 0.5px solid rgba(0,0,0,0.3); text-decoration: none;">
+        Start Python Detective &rarr;
+      </a>
+    </p>
+  </div>
+</section>
+
+<hr class="curriculum-divider">
+
+<!-- ── CTA ───────────────────────────────────────────────────────────────── -->
+<section class="curriculum-cta">
+  <p class="curriculum-cta__label">Start here</p>
+  <h2 class="curriculum-cta__title">Try a lesson before you commit</h2>
+  <p class="curriculum-cta__desc">
+    Module 1 is available now. Download a complete sample lesson from
+    <em>Seeing Patterns</em>, no purchase required.
+  </p>
+  <form class="curriculum-cta__form" method="post" action="{% url 'download_sample' %}">
+    {% csrf_token %}
+    <input type="hidden" name="source" value="families-page">
+    <input class="curriculum-cta__input" type="email" name="email"
+           placeholder="Your email address" required autocomplete="email">
+    <button class="curriculum-cta__btn" type="submit">Download sample lesson</button>
+  </form>
+  <p class="curriculum-cta__note">
+    Or <a href="{% url 'module_detail' 'seeing-patterns' %}">read more about Module 1</a>
+    before downloading.
+  </p>
+</section>
+
+{% endblock %}

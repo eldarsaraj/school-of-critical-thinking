@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}For Organizations - The School of Critical Thinking{% endblock %}
+
+{% block meta_description %}<meta name="description" content="Talks, workshops, and training programs on critical thinking for teams and leadership. Built on real intellectual foundations, not generic soft-skills content.">{% endblock %}
+
+{% block social_meta %}
+  <meta property="og:site_name" content="The School of Critical Thinking" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="For Organizations - The School of Critical Thinking" />
+  <meta property="og:description" content="Talks, workshops, and training programs on critical thinking for teams and leadership." />
+  <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="For Organizations - The School of Critical Thinking" />
+  <meta name="twitter:description" content="Talks, workshops, and training programs on critical thinking for teams and leadership." />
+  <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+{% endblock %}
+
+{% block content %}
+
+<h1>For Organizations</h1>
+
+<p class="orgs-intro">
+  I started The School of Critical Thinking because I believe critical thinking
+  is the most undervalued skill in most workplaces. Not communication. Not emotional
+  intelligence. The ability to think clearly about hard problems under real pressure.
+</p>
+
+<p class="orgs-intro">
+  Most corporate training on this topic is shallow. It covers fallacy lists and
+  communication frameworks. It doesn't teach people how to actually reason under
+  uncertainty, how to decompose complex problems, or how to maintain judgment when
+  working alongside AI systems that produce confident-sounding answers at zero cost.
+</p>
+
+<p class="orgs-intro">
+  I run talks and workshops that treat critical thinking as the serious professional
+  competency it is. Built on the same intellectual foundation as the books and curriculum,
+  but applied to real organizational problems and real stakes.
+</p>
+
+<hr class="curriculum-divider">
+
+<!-- ── What I offer ──────────────────────────────────────────────────────── -->
+<section class="orgs-offerings">
+  <p class="home-section-label">What I offer</p>
+  <h2 class="orgs-offerings__title">Three formats, one foundation</h2>
+
+  <div class="orgs-offerings__grid">
+
+    <div class="orgs-offering">
+      <p class="orgs-offering__name">Lunch and Learn</p>
+      <p class="orgs-offering__duration">60 to 90 minutes</p>
+      <p class="orgs-offering__desc">
+        A single-topic session designed to seed interest, demonstrate what real critical
+        thinking looks like, and give a team something concrete to take back to their work.
+        High-impact, low-disruption. Works well as a standalone or as the opening to a
+        longer engagement.
+      </p>
+    </div>
+
+    <div class="orgs-offering">
+      <p class="orgs-offering__name">Workshop</p>
+      <p class="orgs-offering__duration">Half-day or full day</p>
+      <p class="orgs-offering__desc">
+        Hands-on application of critical thinking frameworks to real organizational problems.
+        Pre-mortems, decomposition exercises, working through paradoxes and decision traps
+        with the team's own cases. Not a lecture. The goal is for people to leave with
+        a different way of approaching their actual work.
+      </p>
+    </div>
+
+    <div class="orgs-offering">
+      <p class="orgs-offering__name">Multi-Session Program</p>
+      <p class="orgs-offering__duration">Structured cohort, bespoke length</p>
+      <p class="orgs-offering__desc">
+        A deeper engagement for leadership teams, decision-making groups, or teams
+        integrating AI into their workflows. Structured around the organization's
+        specific thinking challenges. Includes between-session work and ongoing practice.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<hr class="curriculum-divider">
+
+<!-- ── Signature themes ──────────────────────────────────────────────────── -->
+<section class="orgs-themes">
+  <p class="home-section-label">What we cover</p>
+  <h2 class="orgs-themes__title">Signature themes</h2>
+  <p class="orgs-themes__sub">
+    These are the topics that distinguish this work from generic L&D content.
+    Each one is built around a real intellectual problem, not a framework with a catchy acronym.
+  </p>
+
+  <ul class="orgs-themes__list">
+    <li class="orgs-theme">
+      <p class="orgs-theme__title">Thinking with AI without letting it think for you</p>
+      <p class="orgs-theme__desc">
+        Judgment, evaluation, and epistemic discipline in the age of large language models.
+        What it means to maintain your own reasoning when working with systems that produce
+        fluent, confident, sometimes wrong answers at zero cost.
+      </p>
+    </li>
+    <li class="orgs-theme">
+      <p class="orgs-theme__title">The hidden architecture of bad decisions</p>
+      <p class="orgs-theme__desc">
+        Paradoxes, traps, and the patterns behind organizational failure.
+        Why reasonable people make systematically bad decisions, and what to do about it.
+      </p>
+    </li>
+    <li class="orgs-theme">
+      <p class="orgs-theme__title">Pattern recognition for leaders</p>
+      <p class="orgs-theme__desc">
+        Seeing what others miss in data, decisions, and team dynamics.
+        The difference between a real signal and noise that looks like a signal.
+      </p>
+    </li>
+    <li class="orgs-theme">
+      <p class="orgs-theme__title">Decomposition and clarity</p>
+      <p class="orgs-theme__desc">
+        Breaking down complex problems before trying to solve them.
+        Why most organizational confusion is a decomposition problem in disguise.
+      </p>
+    </li>
+    <li class="orgs-theme">
+      <p class="orgs-theme__title">Reasoning under uncertainty</p>
+      <p class="orgs-theme__desc">
+        Probabilistic thinking for people who don't think of themselves as statisticians.
+        How to make good decisions when you can't know the outcome in advance.
+      </p>
+    </li>
+  </ul>
+</section>
+
+<hr class="curriculum-divider">
+
+<!-- ── About Eldar ────────────────────────────────────────────────────────── -->
+<section class="orgs-about">
+  <p class="home-section-label">The facilitator</p>
+  <div class="orgs-about__inner">
+    <div class="orgs-about__photo-wrap">
+      <img src="{% static 'images/founder-photo.png' %}" alt="Eldar Sarajlic" class="orgs-about__photo">
+    </div>
+    <div class="orgs-about__text">
+      <h2 class="orgs-about__name">Eldar Sarajlic</h2>
+      <p>
+        I am a philosopher and academic who has taught logic, critical thinking,
+        and philosophy at the university level for over a decade. I founded The School
+        of Critical Thinking to build the curriculum I couldn't find elsewhere: one
+        that takes thinking seriously as a discipline, from age eight to the boardroom,
+        on the same intellectual foundations.
+      </p>
+      <p>
+        My approach is rooted in the same tradition of truth-seeking as academic
+        philosophy, but applied to the real problems that organizations face: decisions
+        under uncertainty, reasoning about complex systems, and maintaining judgment
+        when working alongside AI.
+      </p>
+      <a href="/about/" class="orgs-about__link">More about the School &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<hr class="curriculum-divider">
+
+<!-- ── Contact ────────────────────────────────────────────────────────────── -->
+<section class="orgs-contact" id="contact">
+  <p class="home-section-label">Get in touch</p>
+  <h2 class="orgs-contact__title">Tell me about your team</h2>
+  <p class="orgs-contact__desc">
+    Every engagement starts with a conversation. Tell me who you're trying to reach,
+    what you're working on, and what you're hoping to change. I'll respond within two
+    business days.
+  </p>
+
+  {% if sent %}
+    <p class="orgs-contact__success">
+      Message received. I'll be in touch within two business days.
+    </p>
+  {% else %}
+    <form class="orgs-contact__form" method="post" action="/organizations/#contact">
+      {% csrf_token %}
+
+      {% if errors %}
+        <p class="contact-error-summary">Please fix the errors below before submitting.</p>
+      {% endif %}
+
+      <div class="contact-field">
+        <label class="contact-label" for="id_name">Your name</label>
+        {% if errors.name %}<p class="contact-error">{{ errors.name }}</p>{% endif %}
+        <input class="contact-input" type="text" id="id_name" name="name"
+               value="{{ form.name|default:'' }}" required autocomplete="name">
+      </div>
+
+      <div class="contact-field">
+        <label class="contact-label" for="id_email">Email address</label>
+        {% if errors.email %}<p class="contact-error">{{ errors.email }}</p>{% endif %}
+        <input class="contact-input" type="email" id="id_email" name="email"
+               value="{{ form.email|default:'' }}" required autocomplete="email">
+      </div>
+
+      <div class="contact-field">
+        <label class="contact-label" for="id_message">What are you working on?</label>
+        {% if errors.message %}<p class="contact-error">{{ errors.message }}</p>{% endif %}
+        <textarea class="contact-textarea" id="id_message" name="message"
+                  rows="6" required>{{ form.message|default:'' }}</textarea>
+      </div>
+
+      <button class="contact-btn" type="submit">Send message</button>
+    </form>
+  {% endif %}
+</section>
+
+{% endblock %}

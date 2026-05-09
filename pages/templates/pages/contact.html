@@ -3,39 +3,31 @@
 
 {% block title %}Contact - The School of Critical Thinking{% endblock %}
 
-{% block meta_description %}<meta name="description" content="Get in touch with the School of Critical Thinking. Questions about the curriculum, books, or live instruction.">{% endblock %}
+{% block meta_description %}<meta name="description" content="Get in touch with the School of Critical Thinking. Questions about the curriculum, workshops, or anything else.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="The School of Critical Thinking" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Contact - The School of Critical Thinking" />
-  <meta property="og:description" content="Questions about the curriculum, books, or live instruction." />
+  <meta property="og:description" content="Questions about the curriculum, workshops, or anything else." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Contact - The School of Critical Thinking" />
-  <meta name="twitter:description" content="Questions about the curriculum, books, or live instruction." />
+  <meta name="twitter:description" content="Questions about the curriculum, workshops, or anything else." />
 {% endblock %}
 
 {% block content %}
   <h1>Get in touch</h1>
 
   <p class="contact-context">
-    Use this form to ask about the curriculum, books, or live instruction.
-    Whether you're a homeschooling parent looking for a starting point, or you have a specific question about
-    a module -- one short paragraph is enough.
+    Use this form for any question: about the curriculum, a workshop or talk for your organization,
+    or anything else. One short paragraph is enough.
   </p>
-
-  <p class="contact-context">
-    Live instruction and consultation are available for both children and adults.
-    If you're interested in working directly, mention your child's age and what you'd like them to get better at.
-  </p>
-
-  {# ---------------- STATUS ---------------- #}
 
   {% if sent %}
     <p class="contact-success" role="status">
-      Message sent. Thank you -- we'll reply by email.
+      Message sent. I will reply by email.
     </p>
   {% endif %}
 
@@ -44,8 +36,6 @@
       Please fix the fields below and try again.
     </p>
   {% endif %}
-
-  {# ---------------- CONTACT FORM ---------------- #}
 
   <form method="post" class="contact-form" novalidate>
     {% csrf_token %}
