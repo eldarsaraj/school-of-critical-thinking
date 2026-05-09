@@ -3621,6 +3621,16 @@ a.curriculum-book:hover .curriculum-book__title {
   margin: 0 0 8px 0;
 }
 
+.about-narrative__quote {
+  margin: 40px 0 0 0;
+  padding: 0 0 0 20px;
+  border-left: 2px solid rgba(0,0,0,0.15);
+  font-size: 17px;
+  line-height: 1.75;
+  color: rgba(0,0,0,0.6);
+  font-style: italic;
+}
+
 .about-narrative__signature {
   margin-top: 48px;
 }

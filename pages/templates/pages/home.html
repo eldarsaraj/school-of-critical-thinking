@@ -92,11 +92,6 @@
   </div>
   <div class="home-founder__text">
     <p class="home-section-label">The founder</p>
-    <p class="home-founder__quote">
-      "I designed this curriculum because I couldn't find one that taught my child
-      how the world actually worked: not just facts about it, but the structures that explained
-      how and why things happened the way they did."
-    </p>
     <p class="home-founder__bio">
       Eldar Sarajlic is a philosopher, academic, and a parent. He has taught logic,
       critical thinking, and philosophy at the university level for over a decade.
@@ -105,33 +100,6 @@
     </p>
     <a href="/about/" class="home-founder__link">More about the School &rarr;</a>
   </div>
-</section>
-
-<!-- ── Final CTA ─────────────────────────────────────────────────────────── -->
-<section class="home-final-cta">
-  <p class="home-section-label">Start here</p>
-  <h2 class="home-final-cta__title">Try a lesson before you commit</h2>
-  <p class="home-final-cta__desc">
-    Module 1 is available now. Enter your email and download a complete sample lesson
-    from the <em>Seeing Patterns</em> textbook, free, no obligation.
-  </p>
-  <form class="home-final-cta__form" method="post" action="{% url 'download_sample' %}">
-    {% csrf_token %}
-    <input type="hidden" name="source" value="home-page">
-    <input class="home-final-cta__input" type="email" name="email"
-           placeholder="Your email address" required autocomplete="email">
-    <button class="home-final-cta__btn" type="submit">Download sample lesson</button>
-  </form>
-  <p class="home-final-cta__alts">
-    Or explore:
-    <a href="/families/">Families</a>
-    &nbsp;&middot;&nbsp;
-    <a href="/learners/">Learners</a>
-    &nbsp;&middot;&nbsp;
-    <a href="/organizations/">Organizations</a>
-    &nbsp;&middot;&nbsp;
-    <a href="{% url 'diagnostic_intro' %}">Thinking Diagnostic (free, for adults)</a>
-  </p>
 </section>
 
 {% endblock %}

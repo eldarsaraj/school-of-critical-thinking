@@ -87,6 +87,29 @@
 
 <hr class="curriculum-divider">
 
+<!-- ── CTA ───────────────────────────────────────────────────────────────── -->
+<section class="curriculum-cta">
+  <p class="curriculum-cta__label">Start here</p>
+  <h2 class="curriculum-cta__title">Try a lesson before you commit</h2>
+  <p class="curriculum-cta__desc">
+    Module 1 is available now. Download a complete sample lesson from
+    <em>Seeing Patterns</em>, no purchase required.
+  </p>
+  <form class="curriculum-cta__form" method="post" action="{% url 'download_sample' %}">
+    {% csrf_token %}
+    <input type="hidden" name="source" value="families-page">
+    <input class="curriculum-cta__input" type="email" name="email"
+           placeholder="Your email address" required autocomplete="email">
+    <button class="curriculum-cta__btn" type="submit">Download sample lesson</button>
+  </form>
+  <p class="curriculum-cta__note">
+    Or <a href="{% url 'module_detail' 'seeing-patterns' %}">read more about Module 1</a>
+    before downloading.
+  </p>
+</section>
+
+<hr class="curriculum-divider">
+
 <!-- ── What's distinctive ────────────────────────────────────────────────── -->
 <section class="families-why">
   <p class="home-section-label">What makes this different</p>
@@ -147,29 +170,6 @@
       </a>
     </p>
   </div>
-</section>
-
-<hr class="curriculum-divider">
-
-<!-- ── CTA ───────────────────────────────────────────────────────────────── -->
-<section class="curriculum-cta">
-  <p class="curriculum-cta__label">Start here</p>
-  <h2 class="curriculum-cta__title">Try a lesson before you commit</h2>
-  <p class="curriculum-cta__desc">
-    Module 1 is available now. Download a complete sample lesson from
-    <em>Seeing Patterns</em>, no purchase required.
-  </p>
-  <form class="curriculum-cta__form" method="post" action="{% url 'download_sample' %}">
-    {% csrf_token %}
-    <input type="hidden" name="source" value="families-page">
-    <input class="curriculum-cta__input" type="email" name="email"
-           placeholder="Your email address" required autocomplete="email">
-    <button class="curriculum-cta__btn" type="submit">Download sample lesson</button>
-  </form>
-  <p class="curriculum-cta__note">
-    Or <a href="{% url 'module_detail' 'seeing-patterns' %}">read more about Module 1</a>
-    before downloading.
-  </p>
 </section>
 
 {% endblock %}
