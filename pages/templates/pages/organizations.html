@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}For Organizations - The School of Critical Thinking{% endblock %}
+{% block title %}Organizations - The School of Critical Thinking{% endblock %}
 
 {% block meta_description %}<meta name="description" content="Talks, workshops, and training programs on critical thinking for teams and leadership. Built on real intellectual foundations, not generic soft-skills content.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="The School of Critical Thinking" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="For Organizations - The School of Critical Thinking" />
+  <meta property="og:title" content="Organizations - The School of Critical Thinking" />
   <meta property="og:description" content="Talks, workshops, and training programs on critical thinking for teams and leadership." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="For Organizations - The School of Critical Thinking" />
+  <meta name="twitter:title" content="Organizations - The School of Critical Thinking" />
   <meta name="twitter:description" content="Talks, workshops, and training programs on critical thinking for teams and leadership." />
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 {% endblock %}
