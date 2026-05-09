@@ -3592,3 +3592,67 @@ a.curriculum-book:hover .curriculum-book__title {
   background: transparent;
   border-color: rgba(0,0,0,0.5);
 }
+
+/* ======================================================
+   ABOUT: NARRATIVE ESSAY
+   ====================================================== */
+
+.about-narrative {
+  max-width: 660px;
+  margin-top: 40px;
+}
+
+.about-narrative p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: rgba(0,0,0,0.82);
+  margin: 0 0 24px 0;
+}
+
+.about-narrative ul {
+  margin: 4px 0 24px 0;
+  padding-left: 20px;
+}
+
+.about-narrative ul li {
+  font-size: 17px;
+  line-height: 1.75;
+  color: rgba(0,0,0,0.82);
+  margin: 0 0 8px 0;
+}
+
+.about-narrative__signature {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 0.5px solid rgba(0,0,0,0.1);
+}
+
+.about-narrative__name {
+  font-size: 15px;
+  color: rgba(0,0,0,0.75);
+  margin: 0 0 4px 0;
+}
+
+.about-narrative__role {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+  margin: 0 0 32px 0;
+}
+
+.about-narrative__links {
+  font-size: 14px;
+  color: rgba(0,0,0,0.55);
+}
+
+.about-narrative__links a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 0.5px solid rgba(0,0,0,0.2);
+}
+
+.about-narrative__links a:hover {
+  border-bottom-color: rgba(0,0,0,0.45);
+  color: #111;
+}
