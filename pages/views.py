@@ -27,7 +27,8 @@ def book_detail(request, slug):
 
 
 def families(request):
-    return render(request, "pages/families.html")
+    waitlisted = request.GET.get("waitlisted") == "1"
+    return render(request, "pages/families.html", {"waitlisted": waitlisted})
 
 
 def organizations(request):
@@ -51,6 +52,15 @@ def organizations(request):
             "form": {"name": name, "email": email, "message": message},
         })
     return render(request, "pages/organizations.html", {"sent": sent})
+
+
+def waitlist_signup(request):
+    if request.method != "POST":
+        return redirect("families")
+    email = (request.POST.get("email") or "").strip()
+    if email:
+        CurriculumLead.objects.get_or_create(email=email, defaults={"source": "module-waitlist"})
+    return redirect("/families/?waitlisted=1")
 
 
 def learners(request):

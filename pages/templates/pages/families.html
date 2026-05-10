@@ -83,6 +83,21 @@
     </div>
 
   </div>
+
+  {% if waitlisted %}
+    <p class="families-waitlist__confirm">You are on the list. We will let you know when the next module launches.</p>
+  {% else %}
+    <div class="families-waitlist">
+      <p class="families-waitlist__label">Modules 2-9 are in development.</p>
+      <form class="families-waitlist__form" method="post" action="{% url 'waitlist_signup' %}">
+        {% csrf_token %}
+        <input class="families-waitlist__input" type="email" name="email"
+               placeholder="Your email address" required autocomplete="email">
+        <button class="families-waitlist__btn" type="submit">Notify me when the next module launches</button>
+      </form>
+    </div>
+  {% endif %}
+
 </section>
 
 <hr class="curriculum-divider">
