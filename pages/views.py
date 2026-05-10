@@ -85,6 +85,10 @@ def curriculum(request):
     return render(request, "pages/curriculum.html")
 
 
+def curriculum_module_redirect(request, slug):
+    return redirect(f"/families/{slug}/", permanent=True)
+
+
 def module_detail(request, slug):
     module = MODULES_BY_SLUG.get(slug)
     if module is None:
