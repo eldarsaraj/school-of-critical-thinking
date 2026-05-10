@@ -3647,24 +3647,25 @@ a.curriculum-book:hover .curriculum-book__title {
   font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: rgba(0,0,0,0.35);
-  margin: 0 0 5px 0;
+  letter-spacing: 0.09em;
+  color: rgba(0,0,0,0.3);
+  margin: 0 0 4px 0;
 }
 
 .about-founder-intro__name {
-  font-size: 16px;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18px;
   font-weight: 600;
   font-variant: small-caps;
-  letter-spacing: 0.03em;
-  color: rgba(0,0,0,0.8);
+  letter-spacing: 0.04em;
+  color: rgba(0,0,0,0.55);
   margin: 0 0 6px 0;
 }
 
 .about-founder-intro__bio {
-  font-size: 13px;
-  line-height: 1.6;
-  color: rgba(0,0,0,0.42);
+  font-size: 12px;
+  line-height: 1.65;
+  color: rgba(0,0,0,0.38);
   margin: 0;
 }
 
