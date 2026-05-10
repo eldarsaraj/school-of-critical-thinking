@@ -23,26 +23,10 @@
 <h1>Learners</h1>
 
 <p>
-  Whether you are learning to code, preparing for a high-stakes exam,
-  or an adult who wants to think more clearly about the world: this is where to start.
-  The tools here are built on the same foundations as the curriculum, applied to
-  specific problems that learners actually face.
+  Two tools, built on the same intellectual foundations as the curriculum.
+  One for adults who want to understand where their reasoning breaks down.
+  One for children who want to learn to think analytically through code.
 </p>
-
-<hr class="curriculum-divider">
-
-<!-- ── Python Detective ──────────────────────────────────────────────────── -->
-<section class="learners-section">
-  <p class="home-section-label">For children, ages 10+</p>
-  <h2 class="learners-section__title">Python Detective</h2>
-  <p class="learners-section__desc">
-    An introductory coding course that teaches children analytical thinking through
-    the programming language Python. Students learn to think analytically by writing
-    real code, solving puzzles, and doing projects that require reasoning, not just
-    typing. Free, browser-based, no installation required.
-  </p>
-  <a class="learners-cta-btn" href="/static/python-detective/index.html">Start Python Detective &rarr;</a>
-</section>
 
 <hr class="curriculum-divider">
 
@@ -54,9 +38,24 @@
     A free diagnostic that identifies the specific ways your reasoning breaks down.
     Not a general quiz. It maps your answers against 16 named thinking patterns and
     produces a personalized report showing where you are strongest and where you have
-    the most room to improve. Takes about fifteen minutes.
+    the most room to improve. Takes about fifteen minutes. No account required.
   </p>
   <a class="learners-cta-btn" href="{% url 'diagnostic_intro' %}">Take the Thinking Diagnostic &rarr;</a>
+</section>
+
+<hr class="curriculum-divider">
+
+<!-- ── Python Detective ──────────────────────────────────────────────────── -->
+<section class="learners-section">
+  <p class="home-section-label">For children, ages 10+</p>
+  <h2 class="learners-section__title">Python Detective</h2>
+  <p class="learners-section__desc">
+    An introductory coding course that teaches children analytical thinking through
+    the programming language Python. Students learn to think by writing real code,
+    solving puzzles, and doing projects that require reasoning, not just typing.
+    Free, browser-based, no installation required.
+  </p>
+  <a class="learners-cta-btn" href="/static/python-detective/index.html">Start Python Detective &rarr;</a>
 </section>
 
 <hr class="curriculum-divider">
@@ -66,25 +65,10 @@
   <p class="home-section-label">For students, ages 12-14 &middot; Coming soon</p>
   <h2 class="learners-section__title">SHSAT Preparation</h2>
   <p class="learners-section__desc">
-    A dashboard for the SHSAT, New York City's entrance exam for specialized high schools.
-    Most test prep treats it as a puzzle to be gamed through rote drilling. This one treats it
-    as an application of real critical thinking skills: pattern recognition, logical reasoning,
-    and reasoning under uncertainty. Currently under construction.
+    A test-prep dashboard for the SHSAT, New York City's entrance exam for specialized
+    high schools. Built on real critical thinking skills rather than rote drilling.
+    Currently under construction.
   </p>
-</section>
-
-<hr class="curriculum-divider">
-
-<!-- ── More coming ────────────────────────────────────────────────────────── -->
-<section class="learners-section learners-section--muted">
-  <p class="home-section-label">Coming</p>
-  <h2 class="learners-section__title">More tools for self-directed learners</h2>
-  <p class="learners-section__desc">
-    Additional test-prep dashboards, self-paced courses, and structured practice sets
-    are in development. If you want to be notified when new tools are available,
-    download a sample lesson from the curriculum and you will be on the list.
-  </p>
-  <a class="learners-cta-btn learners-cta-btn--ghost" href="{% url 'module_detail' 'seeing-patterns' %}#sample">Download a free sample lesson</a>
 </section>
 
 {% endblock %}
