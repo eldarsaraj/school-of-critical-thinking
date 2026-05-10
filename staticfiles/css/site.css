@@ -3680,6 +3680,10 @@ a.curriculum-book:hover .curriculum-book__title {
   margin: 0;
 }
 
+.about-narrative .about-founder-intro__bio + .about-founder-intro__bio {
+  margin-top: 8px;
+}
+
 @media (max-width: 480px) {
   .about-founder-intro {
     flex-direction: column;
