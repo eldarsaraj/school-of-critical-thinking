@@ -6,7 +6,7 @@ from django.conf import settings
 
 
 from .book_data import BOOKS
-from .models import ContactMessage, CurriculumLead
+from .models import ContactMessage, CurriculumLead, ModuleWaitlist
 from .module_data import MODULES_BY_SLUG
 
 
@@ -59,7 +59,7 @@ def waitlist_signup(request):
         return redirect("families")
     email = (request.POST.get("email") or "").strip()
     if email:
-        CurriculumLead.objects.get_or_create(email=email, defaults={"source": "module-waitlist"})
+        ModuleWaitlist.objects.get_or_create(email=email)
     return redirect("/families/?waitlisted=1")
 
 
