@@ -3631,40 +3631,43 @@ a.curriculum-book:hover .curriculum-book__title {
 .about-founder-intro {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
   margin: 32px 0 48px 0;
+  padding: 20px 24px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 3px;
 }
 
 .about-founder-intro__photo {
-  width: 80px;
-  height: 80px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+  opacity: 0.75;
 }
 
 .about-founder-intro__label {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.1em;
   color: rgba(0,0,0,0.3);
-  margin: 0 0 4px 0;
+  margin: 0 0 3px 0;
 }
 
 .about-founder-intro__name {
   font-family: 'EB Garamond', Georgia, serif;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 15px;
   font-variant: small-caps;
   letter-spacing: 0.04em;
-  color: rgba(0,0,0,0.55);
-  margin: 0 0 6px 0;
+  color: rgba(0,0,0,0.5);
+  margin: 0 0 5px 0;
 }
 
 .about-founder-intro__bio {
   font-size: 12px;
-  line-height: 1.65;
+  line-height: 1.6;
   color: rgba(0,0,0,0.38);
   margin: 0;
 }
