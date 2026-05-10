@@ -14,6 +14,7 @@ urlpatterns = [
     path("curriculum/download-sample/", views.download_sample, name="download_sample"),
     path("curriculum/sample-lesson.pdf", views.sample_pdf, name="sample_pdf"),
     path("curriculum/<slug:slug>/", views.module_detail, name="module_detail"),
+    path("newsletter/", views.newsletter_signup, name="newsletter_signup"),
     path("families/", views.families, name="families"),
     path("families/waitlist/", views.waitlist_signup, name="waitlist_signup"),
     path("organizations/", views.organizations, name="organizations"),

@@ -6,7 +6,7 @@ from django.conf import settings
 
 
 from .book_data import BOOKS
-from .models import ContactMessage, CurriculumLead, ModuleWaitlist
+from .models import ContactMessage, CurriculumLead, ModuleWaitlist, NewsletterSubscriber
 from .module_data import MODULES_BY_SLUG
 
 
@@ -52,6 +52,16 @@ def organizations(request):
             "form": {"name": name, "email": email, "message": message},
         })
     return render(request, "pages/organizations.html", {"sent": sent})
+
+
+def newsletter_signup(request):
+    if request.method != "POST":
+        return redirect("home")
+    email = (request.POST.get("email") or "").strip()
+    if email:
+        NewsletterSubscriber.objects.get_or_create(email=email)
+    referer = request.META.get("HTTP_REFERER", "/")
+    return redirect(referer)
 
 
 def waitlist_signup(request):

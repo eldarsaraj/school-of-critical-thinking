@@ -74,11 +74,10 @@
         <div class="site-footer__left">
           <p class="site-footer__brand">The School of Critical Thinking</p>
           <p class="site-footer__tagline">Teaching people to think clearly at every age.</p>
-          <form class="footer-capture" method="post" action="{% url 'download_sample' %}">
+          <form class="footer-capture" method="post" action="{% url 'newsletter_signup' %}">
             {% csrf_token %}
-            <input type="hidden" name="source" value="footer">
             <input class="footer-capture__input" type="email" name="email"
-                   placeholder="Email for free sample lesson" required autocomplete="email">
+                   placeholder="Email — get new articles" required autocomplete="email">
             <button class="footer-capture__btn" type="submit">→</button>
           </form>
         </div>

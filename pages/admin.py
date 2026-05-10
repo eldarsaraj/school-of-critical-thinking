@@ -1,11 +1,19 @@
 from django.contrib import admin
-from .models import ContactMessage, CurriculumLead, ModuleWaitlist
+from .models import ContactMessage, CurriculumLead, ModuleWaitlist, NewsletterSubscriber
 
 
 @admin.register(CurriculumLead)
 class CurriculumLeadAdmin(admin.ModelAdmin):
     list_display = ("email", "source", "created_at")
     list_filter = ("source", "created_at")
+    search_fields = ("email",)
+    readonly_fields = ("created_at",)
+    date_hierarchy = "created_at"
+
+
+@admin.register(NewsletterSubscriber)
+class NewsletterSubscriberAdmin(admin.ModelAdmin):
+    list_display = ("email", "created_at")
     search_fields = ("email",)
     readonly_fields = ("created_at",)
     date_hierarchy = "created_at"
