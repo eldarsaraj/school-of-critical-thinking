@@ -3647,28 +3647,29 @@ a.curriculum-book:hover .curriculum-book__title {
   opacity: 0.75;
 }
 
-.about-founder-intro__label {
+.about-narrative .about-founder-intro__label {
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgba(0,0,0,0.3);
-  margin: 0 0 3px 0;
+  color: rgba(0,0,0,0.4);
+  margin: 0 0 6px 0;
 }
 
-.about-founder-intro__name {
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 15px;
-  font-variant: small-caps;
-  letter-spacing: 0.04em;
-  color: rgba(0,0,0,0.5);
-  margin: 0 0 5px 0;
+.about-narrative .about-founder-intro__name {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  font-variant: normal;
+  letter-spacing: normal;
+  color: rgba(0,0,0,0.75);
+  margin: 0 0 6px 0;
 }
 
-.about-founder-intro__bio {
+.about-narrative .about-founder-intro__bio {
   font-size: 12px;
   line-height: 1.6;
-  color: rgba(0,0,0,0.38);
+  color: rgba(0,0,0,0.42);
   margin: 0;
 }
 
