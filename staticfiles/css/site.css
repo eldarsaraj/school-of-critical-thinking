@@ -2361,6 +2361,13 @@ a.curriculum-book:hover .curriculum-book__title {
 
 .start__action a:hover { border-bottom-color: rgba(0,0,0,0.5); }
 
+.start__action a.btn-black,
+.start__action a.btn-black:hover {
+  color: #fff;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
 /* Closing note block */
 .start__note {
   margin-top: 44px;
