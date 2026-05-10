@@ -3643,17 +3643,28 @@ a.curriculum-book:hover .curriculum-book__title {
   flex-shrink: 0;
 }
 
-.about-founder-intro__name {
-  font-size: 15px;
+.about-founder-intro__label {
+  font-size: 10px;
   font-weight: 600;
-  color: rgba(0,0,0,0.85);
-  margin: 0 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(0,0,0,0.35);
+  margin: 0 0 5px 0;
+}
+
+.about-founder-intro__name {
+  font-size: 16px;
+  font-weight: 600;
+  font-variant: small-caps;
+  letter-spacing: 0.03em;
+  color: rgba(0,0,0,0.8);
+  margin: 0 0 6px 0;
 }
 
 .about-founder-intro__bio {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.6;
-  color: rgba(0,0,0,0.55);
+  color: rgba(0,0,0,0.42);
   margin: 0;
 }
 
