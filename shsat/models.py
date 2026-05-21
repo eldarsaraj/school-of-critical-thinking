@@ -89,7 +89,7 @@ class Question(models.Model):
     choice_b = models.TextField(blank=True, default="")
     choice_c = models.TextField(blank=True, default="")
     choice_d = models.TextField(blank=True, default="")
-    correct_answer = models.CharField(max_length=1)  # A, B, C, D
+    correct_answer = models.CharField(max_length=20)  # A/B/C/D or numeric string for grid-in
     explanation = models.TextField(blank=True, default="")
 
     class Meta:
