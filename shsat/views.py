@@ -8,8 +8,21 @@ from django.utils import timezone
 from django.conf import settings
 
 from .models import Parent, Test, Question, TestAttempt, Answer, ManualScore, CutoffScore
-from .forms import SignupForm, LoginForm, ManualScoreForm, NotesForm, AccountForm
+from .forms import SignupForm, LoginForm, ManualScoreForm, NotesForm, AccountForm, QuestionEditForm
 from .scoring import scale_score, compute_placement
+
+
+def _staff_required(view_func):
+    """Decorator: only allow is_staff users, otherwise redirect to SHSAT login."""
+    from functools import wraps
+    @wraps(view_func)
+    def wrapped(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect(f"/shsat/login/?next={request.path}")
+        if not request.user.is_staff:
+            return redirect("shsat_dashboard")
+        return view_func(request, *args, **kwargs)
+    return wrapped
 
 
 # ---------------------------------------------------------------------------
@@ -365,3 +378,81 @@ def flag_question(request):
         return JsonResponse({"status": "ok", "flagged": flagged})
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=400)
+
+
+# ---------------------------------------------------------------------------
+# Content review interface (staff only)
+# ---------------------------------------------------------------------------
+
+STAGE_ORDER = {"routing": 0, "easy_module": 1, "hard_module": 2, "standard": 3}
+STAGE_LABELS = {
+    "routing": "Routing",
+    "easy_module": "Easy Module",
+    "hard_module": "Hard Module",
+    "standard": "Standard",
+}
+SKILL_LABELS = dict(Question.SKILL_CHOICES)
+
+
+@_staff_required
+def content_home(request):
+    tests = Test.objects.prefetch_related("questions").order_by("order", "id")
+    test_data = []
+    for test in tests:
+        qs = test.questions.all()
+        test_data.append({
+            "test": test,
+            "ela_routing": qs.filter(section="ELA", stage="routing").count(),
+            "ela_easy": qs.filter(section="ELA", stage="easy_module").count(),
+            "ela_hard": qs.filter(section="ELA", stage="hard_module").count(),
+            "ela_standard": qs.filter(section="ELA", stage="standard").count(),
+            "math_routing": qs.filter(section="Math", stage="routing").count(),
+            "math_easy": qs.filter(section="Math", stage="easy_module").count(),
+            "math_hard": qs.filter(section="Math", stage="hard_module").count(),
+            "math_standard": qs.filter(section="Math", stage="standard").count(),
+        })
+    return render(request, "shsat/content_home.html", {"test_data": test_data})
+
+
+@_staff_required
+def content_test(request, test_id):
+    test = get_object_or_404(Test, id=test_id)
+    questions = test.questions.all().order_by("section", "stage", "question_number")
+
+    def _group(section):
+        groups = {}
+        for q in questions:
+            if q.section != section:
+                continue
+            key = q.stage
+            if key not in groups:
+                groups[key] = []
+            groups[key].append(q)
+        # Return sorted by stage order
+        return [(STAGE_LABELS.get(k, k), v) for k, v in
+                sorted(groups.items(), key=lambda x: STAGE_ORDER.get(x[0], 99))]
+
+    context = {
+        "test": test,
+        "ela_groups": _group("ELA"),
+        "math_groups": _group("Math"),
+        "skill_labels": SKILL_LABELS,
+    }
+    return render(request, "shsat/content_test.html", context)
+
+
+@_staff_required
+def content_question_edit(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    if request.method == "POST":
+        form = QuestionEditForm(request.POST, instance=question)
+        if form.is_valid():
+            form.save()
+            return redirect("shsat_content_test", test_id=question.test_id)
+    else:
+        form = QuestionEditForm(instance=question)
+    return render(request, "shsat/content_question_edit.html", {
+        "question": question,
+        "form": form,
+        "skill_labels": SKILL_LABELS,
+    })

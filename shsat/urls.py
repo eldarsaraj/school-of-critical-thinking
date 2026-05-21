@@ -22,4 +22,9 @@ urlpatterns = [
     # AJAX
     path("api/save-answer/", views.save_answer, name="shsat_save_answer"),
     path("api/flag-question/", views.flag_question, name="shsat_flag_question"),
+
+    # Content review (staff only — not linked in nav)
+    path("content/", views.content_home, name="shsat_content_home"),
+    path("content/<int:test_id>/", views.content_test, name="shsat_content_test"),
+    path("content/question/<int:question_id>/edit/", views.content_question_edit, name="shsat_content_question_edit"),
 ]

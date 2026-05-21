@@ -2,7 +2,78 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
-from .models import Parent, ManualScore
+from .models import Parent, ManualScore, Question
+
+
+DISTRACTOR_CHOICES = [
+    ("", "-- none --"),
+    # ELA
+    ("too_broad", "Too Broad"),
+    ("too_narrow", "Too Narrow"),
+    ("unsupported", "Plausible but Unsupported"),
+    ("distortion", "Distortion"),
+    ("misidentified_detail", "Misidentified Detail"),
+    ("extreme_language", "Extreme Language"),
+    ("opposite", "Opposite"),
+    ("overcorrection", "Overcorrection"),
+    ("wrong_fix", "Wrong Fix"),
+    # Math
+    ("partial_answer", "Partial Answer"),
+    ("off_by_operation", "Wrong Operation"),
+    ("misread_question", "Misread Question"),
+    ("computation_error", "Computation Error"),
+    ("wrong_formula", "Wrong Formula"),
+    ("proportion_inversion", "Proportion Inversion"),
+    ("order_of_operations", "Order of Operations"),
+    ("unit_error", "Unit/Conversion Error"),
+]
+
+
+class QuestionEditForm(forms.ModelForm):
+    distractor_a = forms.ChoiceField(choices=DISTRACTOR_CHOICES, required=False, label="Choice A trap")
+    distractor_b = forms.ChoiceField(choices=DISTRACTOR_CHOICES, required=False, label="Choice B trap")
+    distractor_c = forms.ChoiceField(choices=DISTRACTOR_CHOICES, required=False, label="Choice C trap")
+    distractor_d = forms.ChoiceField(choices=DISTRACTOR_CHOICES, required=False, label="Choice D trap")
+
+    class Meta:
+        model = Question
+        fields = [
+            "section", "stage", "skill", "difficulty", "question_type", "topic",
+            "passage_group_id", "passage_title", "passage_text",
+            "question_text", "choice_a", "choice_b", "choice_c", "choice_d",
+            "correct_answer", "explanation",
+        ]
+        widgets = {
+            "question_text": forms.Textarea(attrs={"rows": 4}),
+            "passage_text": forms.Textarea(attrs={"rows": 10}),
+            "explanation": forms.Textarea(attrs={"rows": 4}),
+            "choice_a": forms.Textarea(attrs={"rows": 2}),
+            "choice_b": forms.Textarea(attrs={"rows": 2}),
+            "choice_c": forms.Textarea(attrs={"rows": 2}),
+            "choice_d": forms.Textarea(attrs={"rows": 2}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.pk and self.instance.distractor_types:
+            dt = self.instance.distractor_types
+            self.fields["distractor_a"].initial = dt.get("A", "")
+            self.fields["distractor_b"].initial = dt.get("B", "")
+            self.fields["distractor_c"].initial = dt.get("C", "")
+            self.fields["distractor_d"].initial = dt.get("D", "")
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        dt = {}
+        for letter, field in [("A", "distractor_a"), ("B", "distractor_b"),
+                               ("C", "distractor_c"), ("D", "distractor_d")]:
+            val = self.cleaned_data.get(field, "")
+            if val:
+                dt[letter] = val
+        instance.distractor_types = dt
+        if commit:
+            instance.save()
+        return instance
 
 
 class SignupForm(forms.Form):

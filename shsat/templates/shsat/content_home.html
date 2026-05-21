@@ -1,0 +1,52 @@
+{% extends "shsat/base_shsat.html" %}
+
+{% block title %}Content Review — SHSAT{% endblock %}
+
+{% block content %}
+<div class="content-review">
+  <div class="content-review__header">
+    <h1>Content Review</h1>
+    <p class="content-review__note">Staff only &middot; Not linked publicly</p>
+  </div>
+
+  {% if not test_data %}
+    <p>No tests imported yet.</p>
+  {% else %}
+  <table class="content-table">
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Adaptive</th>
+        <th colspan="4">ELA Questions</th>
+        <th colspan="4">Math Questions</th>
+        <th>Actions</th>
+      </tr>
+      <tr class="content-table__subhead">
+        <th></th>
+        <th></th>
+        <th>Routing</th><th>Easy Mod</th><th>Hard Mod</th><th>Standard</th>
+        <th>Routing</th><th>Easy Mod</th><th>Hard Mod</th><th>Standard</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for d in test_data %}
+      <tr>
+        <td><strong>{{ d.test.title }}</strong><br><small>{{ d.test.source }}</small></td>
+        <td>{% if d.test.is_adaptive %}<span class="badge badge--green">Yes</span>{% else %}<span class="badge badge--gray">No</span>{% endif %}</td>
+        <td>{{ d.ela_routing }}</td>
+        <td>{{ d.ela_easy }}</td>
+        <td>{{ d.ela_hard }}</td>
+        <td>{{ d.ela_standard }}</td>
+        <td>{{ d.math_routing }}</td>
+        <td>{{ d.math_easy }}</td>
+        <td>{{ d.math_hard }}</td>
+        <td>{{ d.math_standard }}</td>
+        <td><a href="{% url 'shsat_content_test' d.test.id %}" class="content-btn">Review</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

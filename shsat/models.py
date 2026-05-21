@@ -22,6 +22,8 @@ class Test(models.Model):
     is_free = models.BooleanField(default=True)
     is_published = models.BooleanField(default=False)
     order = models.PositiveSmallIntegerField(default=0)
+    is_adaptive = models.BooleanField(default=False)
+    routing_threshold = models.FloatField(default=0.60)
 
     class Meta:
         ordering = ["order", "id"]
@@ -46,13 +48,36 @@ class Question(models.Model):
         ("grid_in", "Grid-In"),
     ]
     DIFFICULTY_CHOICES = [("easy", "Easy"), ("medium", "Medium"), ("hard", "Hard")]
+    STAGE_CHOICES = [
+        ("standard", "Standard"),
+        ("routing", "Routing"),
+        ("easy_module", "Easy Module"),
+        ("hard_module", "Hard Module"),
+    ]
+    SKILL_CHOICES = [
+        # ELA
+        ("grammar_mechanics", "Grammar & Mechanics"),
+        ("rhetoric_organization", "Rhetoric & Organization"),
+        ("literal_comprehension", "Literal Comprehension"),
+        ("inference_analysis", "Inference & Analysis"),
+        ("vocabulary", "Vocabulary in Context"),
+        # Math
+        ("number_operations", "Number & Operations"),
+        ("algebraic_reasoning", "Algebraic Reasoning"),
+        ("geometric_reasoning", "Geometric Reasoning"),
+        ("data_probability", "Data & Probability"),
+        ("multistep_reasoning", "Multi-step Reasoning"),
+    ]
 
     test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name="questions")
     section = models.CharField(max_length=10, choices=SECTION_CHOICES)
+    stage = models.CharField(max_length=15, choices=STAGE_CHOICES, default="standard")
     question_number = models.PositiveSmallIntegerField()
     question_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default="multiple_choice")
     topic = models.CharField(max_length=100, blank=True, default="")
+    skill = models.CharField(max_length=30, choices=SKILL_CHOICES, blank=True, default="")
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES, default="medium")
+    distractor_types = models.JSONField(default=dict, blank=True)
 
     # Passage (shared across a group of questions)
     passage_group_id = models.CharField(max_length=50, blank=True, default="")
@@ -68,8 +93,8 @@ class Question(models.Model):
     explanation = models.TextField(blank=True, default="")
 
     class Meta:
-        ordering = ["section", "question_number"]
-        unique_together = [("test", "section", "question_number")]
+        ordering = ["section", "stage", "question_number"]
+        unique_together = [("test", "section", "stage", "question_number")]
 
     def __str__(self):
         return f"{self.test} – {self.section} Q{self.question_number}"
@@ -84,6 +109,10 @@ class TestAttempt(models.Model):
     # Snapshot of questions at start (ordered list of IDs)
     started_with = models.JSONField(default=list)
     total_seconds = models.PositiveIntegerField(null=True, blank=True)
+
+    # Adaptive module assignment (set after routing stage, if test.is_adaptive)
+    ela_module = models.CharField(max_length=10, blank=True, default="")   # 'easy' or 'hard'
+    math_module = models.CharField(max_length=10, blank=True, default="")
 
     # Computed scores (filled on submission)
     ela_correct = models.PositiveSmallIntegerField(null=True, blank=True)

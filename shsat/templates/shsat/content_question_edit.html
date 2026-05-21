@@ -1,0 +1,101 @@
+{% extends "shsat/base_shsat.html" %}
+
+{% block title %}Edit Q{{ question.question_number }} — {{ question.test.title }}{% endblock %}
+
+{% block content %}
+<div class="content-review">
+  <div class="content-review__header">
+    <a href="{% url 'shsat_content_test' question.test_id %}" class="content-back">&larr; Back to {{ question.test.title }}</a>
+    <h1>Edit: {{ question.section }} Q{{ question.question_number }}
+      <span class="diff-tag diff-tag--{{ question.difficulty }}">{{ question.difficulty }}</span>
+      <span class="skill-tag">{% for code, label in skill_labels.items %}{% if code == question.skill %}{{ label }}{% endif %}{% endfor %}</span>
+    </h1>
+  </div>
+
+  <form method="post" class="content-edit-form">
+    {% csrf_token %}
+
+    <div class="content-edit-form__grid">
+
+      <div class="content-edit-form__col content-edit-form__col--meta">
+        <h3>Metadata</h3>
+        <div class="cef-field">
+          <label>Section</label>{{ form.section }}
+        </div>
+        <div class="cef-field">
+          <label>Stage</label>{{ form.stage }}
+        </div>
+        <div class="cef-field">
+          <label>Skill</label>{{ form.skill }}
+        </div>
+        <div class="cef-field">
+          <label>Difficulty</label>{{ form.difficulty }}
+        </div>
+        <div class="cef-field">
+          <label>Question type</label>{{ form.question_type }}
+        </div>
+        <div class="cef-field">
+          <label>Topic (free text)</label>{{ form.topic }}
+        </div>
+
+        <h3>Passage (optional)</h3>
+        <div class="cef-field">
+          <label>Passage group ID</label>{{ form.passage_group_id }}
+        </div>
+        <div class="cef-field">
+          <label>Passage title</label>{{ form.passage_title }}
+        </div>
+        <div class="cef-field">
+          <label>Passage text</label>{{ form.passage_text }}
+        </div>
+      </div>
+
+      <div class="content-edit-form__col content-edit-form__col--question">
+        <h3>Question</h3>
+        <div class="cef-field">
+          <label>Question text</label>{{ form.question_text }}
+        </div>
+
+        <h3>Choices &amp; correct answer</h3>
+        <div class="cef-field cef-field--inline">
+          <label>A</label>{{ form.choice_a }}
+          <span class="cef-distractor-label">Trap:</span>{{ form.distractor_a }}
+        </div>
+        <div class="cef-field cef-field--inline">
+          <label>B</label>{{ form.choice_b }}
+          <span class="cef-distractor-label">Trap:</span>{{ form.distractor_b }}
+        </div>
+        <div class="cef-field cef-field--inline">
+          <label>C</label>{{ form.choice_c }}
+          <span class="cef-distractor-label">Trap:</span>{{ form.distractor_c }}
+        </div>
+        <div class="cef-field cef-field--inline">
+          <label>D</label>{{ form.choice_d }}
+          <span class="cef-distractor-label">Trap:</span>{{ form.distractor_d }}
+        </div>
+        <div class="cef-field">
+          <label>Correct answer (A/B/C/D)</label>{{ form.correct_answer }}
+        </div>
+
+        <h3>Explanation</h3>
+        <div class="cef-field">
+          {{ form.explanation }}
+        </div>
+      </div>
+
+    </div>
+
+    {% if form.errors %}
+    <div class="content-edit-form__errors">
+      <p>Please fix the errors below:</p>
+      {{ form.errors }}
+    </div>
+    {% endif %}
+
+    <div class="content-edit-form__actions">
+      <button type="submit" class="content-btn content-btn--primary">Save changes</button>
+      <a href="{% url 'shsat_content_test' question.test_id %}" class="content-btn content-btn--ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

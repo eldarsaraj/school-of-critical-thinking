@@ -6,6 +6,17 @@ Usage:
 
     # Replace questions (wipes existing questions for that test):
     python manage.py import_test path/to/test.yaml --replace
+
+YAML format for adaptive tests:
+    Each question in the ela/math lists should include:
+      stage: routing | easy_module | hard_module   (default: standard)
+      skill: grammar_mechanics | rhetoric_organization | literal_comprehension |
+             inference_analysis | vocabulary | number_operations | algebraic_reasoning |
+             geometric_reasoning | data_probability | multistep_reasoning
+      distractors:          # optional — maps wrong-answer letters to trap type
+        B: partial_answer
+        C: misread_question
+        D: off_by_operation
 """
 
 import sys
@@ -39,7 +50,6 @@ def _import_section(test, section_key, rows):
 
         if passage_id:
             if passage_id not in passage_store:
-                # First question in this passage group — store the text
                 passage_store[passage_id] = {
                     "title": row.get("passage_title", ""),
                     "text": row.get("passage_text", ""),
@@ -49,9 +59,7 @@ def _import_section(test, section_key, rows):
 
         choices = row.get("choices", {})
 
-        # Normalise E/F/G/H → A/B/C/D so YAML authors can write either set.
-        # Official SHSAT alternates A-D (odd questions) and E-H (even questions);
-        # we store everything internally as A/B/C/D.
+        # Normalise E/F/G/H → A/B/C/D
         _efgh_to_abcd = {"E": "A", "F": "B", "G": "C", "H": "D"}
 
         def _norm_choice(key):
@@ -62,13 +70,25 @@ def _import_section(test, section_key, rows):
             a = str(ans).strip().upper()
             return _efgh_to_abcd.get(a, a)
 
+        def _norm_distractors(raw):
+            if not raw:
+                return {}
+            result = {}
+            for letter, trap in raw.items():
+                normalized_letter = _efgh_to_abcd.get(str(letter).upper(), str(letter).upper())
+                result[normalized_letter] = str(trap).strip()
+            return result
+
         Question.objects.create(
             test=test,
             section=section_key,
+            stage=row.get("stage", "standard"),
             question_number=row["number"],
             question_type=row.get("type", "multiple_choice"),
             topic=row.get("topic", ""),
+            skill=row.get("skill", ""),
             difficulty=row.get("difficulty", "medium"),
+            distractor_types=_norm_distractors(row.get("distractors", {})),
             passage_group_id=passage_id,
             passage_title=passage_title,
             passage_text=passage_text,
@@ -114,6 +134,8 @@ class Command(BaseCommand):
                 "is_free": data.get("is_free", True),
                 "is_published": data.get("is_published", True),
                 "order": data.get("order", 0),
+                "is_adaptive": data.get("is_adaptive", False),
+                "routing_threshold": data.get("routing_threshold", 0.60),
             },
         )
 
@@ -137,6 +159,8 @@ class Command(BaseCommand):
             test.is_free = data.get("is_free", test.is_free)
             test.is_published = data.get("is_published", test.is_published)
             test.order = data.get("order", test.order)
+            test.is_adaptive = data.get("is_adaptive", test.is_adaptive)
+            test.routing_threshold = data.get("routing_threshold", test.routing_threshold)
             test.save()
 
         ela_rows = data.get("ela", [])
@@ -148,4 +172,6 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(
             f"Imported '{title}': {ela_count} ELA + {math_count} Math = {ela_count + math_count} questions."
         ))
+        adaptive_str = f"  Adaptive: YES (threshold {test.routing_threshold:.0%})" if test.is_adaptive else "  Adaptive: no"
         self.stdout.write(f"  Test ID: {test.id}  |  Published: {test.is_published}  |  Free: {test.is_free}")
+        self.stdout.write(adaptive_str)

@@ -1,0 +1,32 @@
+<table class="content-table content-table--questions">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Skill</th>
+      <th>Diff</th>
+      <th>Question (preview)</th>
+      <th>Ans</th>
+      <th>Distractor traps</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for q in questions %}
+    <tr>
+      <td>{{ q.question_number }}</td>
+      <td><span class="skill-tag">{% for code, label in skill_labels.items %}{% if code == q.skill %}{{ label }}{% endif %}{% endfor %}{% if not q.skill %}&mdash;{% endif %}</span></td>
+      <td><span class="diff-tag diff-tag--{{ q.difficulty }}">{{ q.difficulty }}</span></td>
+      <td class="content-table__preview">
+        {% if q.passage_text %}<em class="content-passage-note">[Passage: {{ q.passage_title }}]</em> {% endif %}
+        {{ q.question_text|truncatechars:130 }}
+      </td>
+      <td><strong>{{ q.correct_answer }}</strong></td>
+      <td class="content-table__distractors">
+        {% for letter, trap in q.distractor_types.items %}<span class="trap-tag">{{ letter }}:{{ trap }}</span> {% endfor %}
+        {% if not q.distractor_types %}&mdash;{% endif %}
+      </td>
+      <td><a href="{% url 'shsat_content_question_edit' q.id %}" class="content-btn content-btn--sm">Edit</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
