@@ -4,35 +4,54 @@
 
 {% block content %}
 <div class="content-review">
+
   <div class="content-review__header">
     <a href="{% url 'shsat_content_home' %}" class="content-back">&larr; All tests</a>
-    <h1>{{ test.title }}</h1>
-    <p class="content-review__note">
-      {{ test.source }}
-      &middot; {% if test.is_adaptive %}Adaptive (threshold: {{ test.routing_threshold|floatformat:0 }}%){% else %}Standard{% endif %}
-      &middot; {% if test.is_published %}Published{% else %}Draft{% endif %}
-    </p>
+    <div class="content-review__title-row">
+      <h1>{{ test.title }}</h1>
+      <div class="content-review__status-pills">
+        {% if test.is_published %}
+          <span class="status-pill status-pill--published">Published</span>
+        {% else %}
+          <span class="status-pill status-pill--draft">Draft</span>
+        {% endif %}
+        {% if test.is_adaptive %}
+          <span class="status-pill status-pill--adaptive">Adaptive &middot; {{ test.routing_threshold|floatformat:0 }}% threshold</span>
+        {% else %}
+          <span class="status-pill status-pill--standard">Standard</span>
+        {% endif %}
+        {% if test.is_free %}
+          <span class="status-pill status-pill--free">Free</span>
+        {% endif %}
+      </div>
+    </div>
+    {% if test.source %}<p class="content-review__note">Source: {{ test.source }}</p>{% endif %}
   </div>
 
+  {% for section_label, groups, section_code in sections %}
   <section class="content-section">
-    <h2 class="content-section__title">ELA</h2>
-    {% for stage_label, questions in ela_groups %}
-    <div class="content-stage">
-      <h3 class="content-stage__title">{{ stage_label }} <span class="content-stage__count">({{ questions|length }})</span></h3>
-      {% include "shsat/_content_qtable.html" with questions=questions skill_labels=skill_labels %}
-    </div>
-    {% empty %}<p class="content-empty">No ELA questions.</p>{% endfor %}
-  </section>
+    <h2 class="content-section__title">{{ section_label }}</h2>
 
-  <section class="content-section">
-    <h2 class="content-section__title">Math</h2>
-    {% for stage_label, questions in math_groups %}
+    {% for stage_key, stage_label, questions in groups %}
     <div class="content-stage">
-      <h3 class="content-stage__title">{{ stage_label }} <span class="content-stage__count">({{ questions|length }})</span></h3>
-      {% include "shsat/_content_qtable.html" with questions=questions skill_labels=skill_labels %}
+      <div class="content-stage__header">
+        <div class="content-stage__title-group">
+          <span class="stage-pill stage-pill--{{ stage_key }}">{{ stage_label }}</span>
+          <span class="content-stage__count">{{ questions|length }} question{{ questions|length|pluralize }}</span>
+        </div>
+        <a href="{% url 'shsat_content_question_add' test.id %}?section={{ section_code }}&stage={{ stage_key }}"
+           class="content-btn content-btn--add">+ Add question</a>
+      </div>
+      {% if questions %}
+        {% include "shsat/_content_qtable.html" with questions=questions skill_labels=skill_labels %}
+      {% else %}
+        <p class="content-empty">No questions yet.</p>
+      {% endif %}
     </div>
-    {% empty %}<p class="content-empty">No Math questions.</p>{% endfor %}
+    {% endfor %}
+
   </section>
+  {% endfor %}
 
 </div>
 {% endblock %}

@@ -1,15 +1,13 @@
 {% extends "shsat/base_shsat.html" %}
 
-{% block title %}Edit Q{{ question.question_number }} — {{ question.test.title }}{% endblock %}
+{% block title %}Add Question — {{ test.title }}{% endblock %}
 
 {% block content %}
 <div class="content-review">
   <div class="content-review__header">
-    <a href="{% url 'shsat_content_test' question.test_id %}" class="content-back">&larr; Back to {{ question.test.title }}</a>
-    <h1>Edit: {{ question.section }} Q{{ question.question_number }}
-      <span class="diff-tag diff-tag--{{ question.difficulty }}">{{ question.difficulty }}</span>
-      <span class="skill-tag">{% for code, label in skill_labels.items %}{% if code == question.skill %}{{ label }}{% endif %}{% endfor %}</span>
-    </h1>
+    <a href="{% url 'shsat_content_test' test.id %}" class="content-back">&larr; Back to {{ test.title }}</a>
+    <h1>Add Question</h1>
+    <p class="content-review__note">{{ test.title }}</p>
   </div>
 
   <form method="post" class="content-edit-form">
@@ -77,7 +75,7 @@
           <span class="cef-distractor-label">Trap:</span>{{ form.distractor_d }}
         </div>
         <div class="cef-field">
-          <label>Correct answer (A/B/C/D)</label>{{ form.correct_answer }}
+          <label>Correct answer (A/B/C/D or grid-in number)</label>{{ form.correct_answer }}
         </div>
 
         <h3>Explanation</h3>
@@ -96,8 +94,8 @@
     {% endif %}
 
     <div class="content-edit-form__actions">
-      <button type="submit" class="content-btn content-btn--primary">Save changes</button>
-      <a href="{% url 'shsat_content_test' question.test_id %}" class="content-btn content-btn--ghost">Cancel</a>
+      <button type="submit" class="content-btn content-btn--primary">Add question</button>
+      <a href="{% url 'shsat_content_test' test.id %}" class="content-btn content-btn--ghost">Cancel</a>
     </div>
   </form>
 </div>

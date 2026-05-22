@@ -419,23 +419,33 @@ def content_test(request, test_id):
     test = get_object_or_404(Test, id=test_id)
     questions = test.questions.all().order_by("section", "stage", "question_number")
 
-    def _group(section):
+    def _group(section_code):
+        # Collect questions per stage key
         groups = {}
         for q in questions:
-            if q.section != section:
+            if q.section != section_code:
                 continue
-            key = q.stage
-            if key not in groups:
-                groups[key] = []
-            groups[key].append(q)
-        # Return sorted by stage order
-        return [(STAGE_LABELS.get(k, k), v) for k, v in
-                sorted(groups.items(), key=lambda x: STAGE_ORDER.get(x[0], 99))]
+            groups.setdefault(q.stage, []).append(q)
+        # For adaptive tests show routing/easy/hard; for standard show standard only
+        if test.is_adaptive:
+            stage_keys = ["routing", "easy_module", "hard_module"]
+        else:
+            stage_keys = ["standard"]
+        # Always include any extra stages present in data
+        for key in groups:
+            if key not in stage_keys:
+                stage_keys.append(key)
+        return [
+            (key, STAGE_LABELS.get(key, key), groups.get(key, []))
+            for key in stage_keys
+        ]
 
     context = {
         "test": test,
-        "ela_groups": _group("ELA"),
-        "math_groups": _group("Math"),
+        "sections": [
+            ("ELA", _group("ELA"), "ELA"),
+            ("Math", _group("Math"), "Math"),
+        ],
         "skill_labels": SKILL_LABELS,
     }
     return render(request, "shsat/content_test.html", context)
@@ -456,3 +466,45 @@ def content_question_edit(request, question_id):
         "form": form,
         "skill_labels": SKILL_LABELS,
     })
+
+
+@_staff_required
+def content_question_add(request, test_id):
+    test = get_object_or_404(Test, id=test_id)
+    # Pre-fill section/stage from query params (passed from "Add question" button)
+    initial = {
+        "section": request.GET.get("section", "ELA"),
+        "stage": request.GET.get("stage", "standard"),
+    }
+    if request.method == "POST":
+        form = QuestionEditForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.test = test
+            question.save()
+            # Also persist distractor_types from the form
+            dt = {}
+            for letter, field in [("A", "distractor_a"), ("B", "distractor_b"),
+                                   ("C", "distractor_c"), ("D", "distractor_d")]:
+                val = form.cleaned_data.get(field, "")
+                if val:
+                    dt[letter] = val
+            question.distractor_types = dt
+            question.save(update_fields=["distractor_types"])
+            return redirect("shsat_content_test", test_id=test_id)
+    else:
+        form = QuestionEditForm(initial=initial)
+    return render(request, "shsat/content_question_add.html", {
+        "test": test,
+        "form": form,
+        "skill_labels": SKILL_LABELS,
+    })
+
+
+@_staff_required
+@require_POST
+def content_question_delete(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    test_id = question.test_id
+    question.delete()
+    return redirect("shsat_content_test", test_id=test_id)

@@ -38,7 +38,7 @@ class QuestionEditForm(forms.ModelForm):
     class Meta:
         model = Question
         fields = [
-            "section", "stage", "skill", "difficulty", "question_type", "topic",
+            "section", "stage", "question_number", "skill", "difficulty", "question_type", "topic",
             "passage_group_id", "passage_title", "passage_text",
             "question_text", "choice_a", "choice_b", "choice_c", "choice_d",
             "correct_answer", "explanation",
