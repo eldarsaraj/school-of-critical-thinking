@@ -2,7 +2,7 @@
 
 {% block title %}Edit Q{{ question.question_number }} — {{ question.test.title }}{% endblock %}
 
-{% block content %}
+{% block shsat_content %}
 <div class="content-review">
   <div class="content-review__header">
     <a href="{% url 'shsat_content_test' question.test_id %}" class="content-back">&larr; Back to {{ question.test.title }}</a>
