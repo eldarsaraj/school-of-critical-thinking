@@ -1,0 +1,53 @@
+{% extends "shsat/base_shsat.html" %}
+
+{% block title %}New Test — Content Review{% endblock %}
+
+{% block shsat_content %}
+<div class="content-review">
+  <div class="content-review__header">
+    <a href="{% url 'shsat_content_home' %}" class="content-back">&larr; All tests</a>
+    <h1>New Test</h1>
+    <p class="content-review__note">Creates an empty test — add questions afterwards.</p>
+  </div>
+
+  <form method="post" class="content-edit-form">
+    {% csrf_token %}
+    <div class="content-edit-form__col" style="max-width: 480px;">
+      <h3>Test details</h3>
+      <div class="cef-field">
+        <label>Title</label>{{ form.title }}
+      </div>
+      <div class="cef-field">
+        <label>Source</label>{{ form.source }}
+      </div>
+      <div class="cef-field">
+        <label>Display order</label>{{ form.order }}
+      </div>
+
+      <h3>Settings</h3>
+      <div class="cef-field cef-field--checkbox">
+        {{ form.is_free }} <label class="cef-inline-label">Free (no subscription required)</label>
+      </div>
+      <div class="cef-field cef-field--checkbox">
+        {{ form.is_published }} <label class="cef-inline-label">Published (visible to users)</label>
+      </div>
+      <div class="cef-field cef-field--checkbox">
+        {{ form.is_adaptive }} <label class="cef-inline-label">Adaptive (multistage format)</label>
+      </div>
+      <div class="cef-field">
+        <label>Routing threshold</label>{{ form.routing_threshold }}
+        <p class="cef-hint">Only applies to adaptive tests. 0.60 = student must get 60% of routing questions correct to enter the hard module.</p>
+      </div>
+    </div>
+
+    {% if form.errors %}
+    <div class="content-edit-form__errors">{{ form.errors }}</div>
+    {% endif %}
+
+    <div class="content-edit-form__actions">
+      <button type="submit" class="content-btn content-btn--primary">Create test</button>
+      <a href="{% url 'shsat_content_home' %}" class="content-btn content-btn--ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

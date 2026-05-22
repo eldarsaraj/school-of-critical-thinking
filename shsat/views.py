@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.conf import settings
 
 from .models import Parent, Test, Question, TestAttempt, Answer, ManualScore, CutoffScore
-from .forms import SignupForm, LoginForm, ManualScoreForm, NotesForm, AccountForm, QuestionEditForm
+from .forms import SignupForm, LoginForm, ManualScoreForm, NotesForm, AccountForm, QuestionEditForm, TestForm
 from .scoring import scale_score, compute_placement
 
 
@@ -392,6 +392,18 @@ STAGE_LABELS = {
     "standard": "Standard",
 }
 SKILL_LABELS = dict(Question.SKILL_CHOICES)
+
+
+@_staff_required
+def content_test_add(request):
+    if request.method == "POST":
+        form = TestForm(request.POST)
+        if form.is_valid():
+            test = form.save()
+            return redirect("shsat_content_test", test_id=test.id)
+    else:
+        form = TestForm()
+    return render(request, "shsat/content_test_add.html", {"form": form})
 
 
 @_staff_required

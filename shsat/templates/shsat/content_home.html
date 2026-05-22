@@ -5,7 +5,10 @@
 {% block shsat_content %}
 <div class="content-review">
   <div class="content-review__header">
-    <h1>Content Review</h1>
+    <div class="content-review__title-row">
+      <h1>Content Review</h1>
+      <a href="{% url 'shsat_content_test_add' %}" class="content-btn">+ New test</a>
+    </div>
     <p class="content-review__note">Staff only &middot; Not linked publicly</p>
   </div>
 

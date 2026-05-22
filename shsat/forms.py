@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
-from .models import Parent, ManualScore, Question
+from .models import Parent, ManualScore, Question, Test
 
 
 DISTRACTOR_CHOICES = [
@@ -27,6 +27,17 @@ DISTRACTOR_CHOICES = [
     ("order_of_operations", "Order of Operations"),
     ("unit_error", "Unit/Conversion Error"),
 ]
+
+
+class TestForm(forms.ModelForm):
+    class Meta:
+        model = Test
+        fields = ["title", "source", "order", "is_free", "is_published", "is_adaptive", "routing_threshold"]
+        labels = {
+            "source": "Source (e.g. Official SHSAT Handbook 2025)",
+            "order": "Display order (lower = first)",
+            "routing_threshold": "Routing threshold (0.0–1.0, e.g. 0.60 = 60%)",
+        }
 
 
 class QuestionEditForm(forms.ModelForm):

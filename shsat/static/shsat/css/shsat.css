@@ -1106,6 +1106,29 @@
 }
 
 .cef-field textarea { resize: vertical; }
+
+.cef-field--checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cef-field--checkbox input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+.cef-inline-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  text-transform: none;
+  letter-spacing: 0;
+  margin: 0;
+}
+.cef-hint {
+  font-size: 11px;
+  color: #9ca3af;
+  margin: 4px 0 0;
+}
 .cef-field--inline textarea { overflow: hidden; }
 
 .cef-field--inline {
