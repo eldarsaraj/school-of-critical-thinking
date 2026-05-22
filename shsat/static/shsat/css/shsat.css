@@ -1106,6 +1106,7 @@
 }
 
 .cef-field textarea { resize: vertical; }
+.cef-field--inline textarea { overflow: hidden; }
 
 .cef-field--inline {
   display: grid;

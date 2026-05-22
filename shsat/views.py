@@ -384,7 +384,7 @@ def flag_question(request):
 # Content review interface (staff only)
 # ---------------------------------------------------------------------------
 
-STAGE_ORDER = {"routing": 0, "easy_module": 1, "hard_module": 2, "standard": 3}
+STAGE_ORDER = {"easy_module": 0, "routing": 1, "hard_module": 2, "standard": 3}
 STAGE_LABELS = {
     "routing": "Routing",
     "easy_module": "Easy Module",
@@ -428,7 +428,7 @@ def content_test(request, test_id):
             groups.setdefault(q.stage, []).append(q)
         # For adaptive tests show routing/easy/hard; for standard show standard only
         if test.is_adaptive:
-            stage_keys = ["routing", "easy_module", "hard_module"]
+            stage_keys = ["easy_module", "routing", "hard_module"]
         else:
             stage_keys = ["standard"]
         # Always include any extra stages present in data
