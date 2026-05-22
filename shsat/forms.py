@@ -55,9 +55,9 @@ class QuestionEditForm(forms.ModelForm):
             "correct_answer", "explanation",
         ]
         widgets = {
-            "question_text": forms.Textarea(attrs={"rows": 4}),
+            "question_text": forms.Textarea(attrs={"rows": 6}),
             "passage_text": forms.Textarea(attrs={"rows": 10}),
-            "explanation": forms.Textarea(attrs={"rows": 6}),
+            "explanation": forms.Textarea(attrs={"rows": 8}),
             "choice_a": forms.Textarea(attrs={"rows": 4}),
             "choice_b": forms.Textarea(attrs={"rows": 4}),
             "choice_c": forms.Textarea(attrs={"rows": 4}),
