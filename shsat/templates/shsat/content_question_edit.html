@@ -90,9 +90,23 @@
     </div>
     {% endif %}
 
+    <input type="hidden" name="next_question_id" value="">
     <div class="content-edit-form__actions">
       <button type="submit" class="content-btn content-btn--primary">Save changes</button>
       <a href="{% url 'shsat_content_test' question.test_id %}" class="content-btn content-btn--ghost">Cancel</a>
+      <span class="cef-position">{{ question_position }} / {{ question_total }}</span>
+      <div class="cef-nav">
+        {% if prev_question_id %}
+        <a href="{% url 'shsat_content_question_edit' prev_question_id %}" class="content-btn content-btn--ghost">&larr; Prev</a>
+        {% endif %}
+        {% if next_question_id %}
+        <a href="{% url 'shsat_content_question_edit' next_question_id %}" class="content-btn content-btn--ghost">Next &rarr;</a>
+        <button type="submit" class="content-btn content-btn--primary"
+          onclick="document.querySelector('[name=next_question_id]').value='{{ next_question_id }}'">
+          Save &amp; Next &rarr;
+        </button>
+        {% endif %}
+      </div>
     </div>
   </form>
 </div>

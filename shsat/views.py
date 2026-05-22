@@ -482,13 +482,35 @@ def content_question_edit(request, question_id):
         form = QuestionEditForm(request.POST, instance=question)
         if form.is_valid():
             form.save()
+            next_id = request.POST.get("next_question_id")
+            if next_id:
+                return redirect("shsat_content_question_edit", question_id=next_id)
             return redirect("shsat_content_test", test_id=question.test_id)
     else:
         form = QuestionEditForm(instance=question)
+
+    # Find the next question in the same test (ordered by section, stage, question_number)
+    all_ids = list(
+        Question.objects.filter(test_id=question.test_id)
+        .order_by("section", "stage", "question_number")
+        .values_list("id", flat=True)
+    )
+    try:
+        current_index = all_ids.index(question.id)
+        next_question_id = all_ids[current_index + 1] if current_index + 1 < len(all_ids) else None
+        prev_question_id = all_ids[current_index - 1] if current_index > 0 else None
+    except ValueError:
+        next_question_id = None
+        prev_question_id = None
+
     return render(request, "shsat/content_question_edit.html", {
         "question": question,
         "form": form,
         "skill_labels": SKILL_LABELS,
+        "next_question_id": next_question_id,
+        "prev_question_id": prev_question_id,
+        "question_position": all_ids.index(question.id) + 1 if question.id in all_ids else None,
+        "question_total": len(all_ids),
         "choices": [
             ("A", form["choice_a"], form["distractor_a"]),
             ("B", form["choice_b"], form["distractor_b"]),
