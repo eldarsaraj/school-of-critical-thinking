@@ -43,8 +43,25 @@ def _import_section(test, section_key, rows):
     passage_store = {}
     count = 0
 
+    # E/F/G/H → A/B/C/D normalisation (for R&E Part B answer choices)
+    _efgh_to_abcd = {"E": "A", "F": "B", "G": "C", "H": "D"}
+
+    def _norm_answer(ans):
+        a = str(ans).strip().upper()
+        return _efgh_to_abcd.get(a, a)
+
+    def _norm_distractors(raw):
+        if not raw:
+            return {}
+        result = {}
+        for letter, trap in raw.items():
+            normalized_letter = _efgh_to_abcd.get(str(letter).upper(), str(letter).upper())
+            result[normalized_letter] = str(trap).strip()
+        return result
+
     for row in rows:
-        passage_id = row.get("passage_id", "")
+        # Support both naming conventions: passage_group_id (new) and passage_id (old)
+        passage_id = row.get("passage_group_id") or row.get("passage_id", "")
         passage_title = ""
         passage_text = ""
 
@@ -57,34 +74,25 @@ def _import_section(test, section_key, rows):
             passage_title = passage_store[passage_id]["title"]
             passage_text = passage_store[passage_id]["text"]
 
+        # Support both naming conventions for choices
         choices = row.get("choices", {})
 
-        # Normalise E/F/G/H → A/B/C/D
-        _efgh_to_abcd = {"E": "A", "F": "B", "G": "C", "H": "D"}
-
         def _norm_choice(key):
+            # Try flat keys first (choice_a, choice_b …), then nested choices dict
+            flat = row.get(f"choice_{key.lower()}", "")
+            if flat:
+                return str(flat).strip()
             val = choices.get(key) or choices.get(_efgh_to_abcd.get(key, ""), "")
-            return str(val).strip()
-
-        def _norm_answer(ans):
-            a = str(ans).strip().upper()
-            return _efgh_to_abcd.get(a, a)
-
-        def _norm_distractors(raw):
-            if not raw:
-                return {}
-            result = {}
-            for letter, trap in raw.items():
-                normalized_letter = _efgh_to_abcd.get(str(letter).upper(), str(letter).upper())
-                result[normalized_letter] = str(trap).strip()
-            return result
+            return str(val).strip() if val else ""
 
         Question.objects.create(
             test=test,
             section=section_key,
             stage=row.get("stage", "standard"),
-            question_number=row["number"],
-            question_type=row.get("type", "multiple_choice"),
+            # Support both question_number (new) and number (old)
+            question_number=row.get("question_number") or row["number"],
+            # Support both question_type (new) and type (old)
+            question_type=row.get("question_type") or row.get("type", "multiple_choice"),
             topic=row.get("topic", ""),
             skill=row.get("skill", ""),
             difficulty=row.get("difficulty", "medium"),
@@ -92,12 +100,14 @@ def _import_section(test, section_key, rows):
             passage_group_id=passage_id,
             passage_title=passage_title,
             passage_text=passage_text,
-            question_text=row["question"].strip(),
+            # Support both question_text (new) and question (old)
+            question_text=(row.get("question_text") or row.get("question", "")).strip(),
             choice_a=_norm_choice("A"),
             choice_b=_norm_choice("B"),
             choice_c=_norm_choice("C"),
             choice_d=_norm_choice("D"),
-            correct_answer=_norm_answer(row["answer"]),
+            # Support both correct_answer (new) and answer (old)
+            correct_answer=_norm_answer(row.get("correct_answer") or row.get("answer", "")),
             explanation=row.get("explanation", "").strip(),
         )
         count += 1
