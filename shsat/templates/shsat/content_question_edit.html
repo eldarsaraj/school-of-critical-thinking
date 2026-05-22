@@ -60,22 +60,17 @@
         </div>
 
         <h3>Choices &amp; correct answer</h3>
-        <div class="cef-field cef-field--inline">
-          <label>A</label>{{ form.choice_a }}
-          <span class="cef-distractor-label">Trap:</span>{{ form.distractor_a }}
+        {% for letter, field, distractor in choices %}
+        <div class="cef-choice">
+          <div class="cef-choice__header">
+            <span class="cef-choice__letter">{{ letter }}</span>
+            <div class="cef-choice__trap">
+              <span class="cef-distractor-label">Trap:</span>{{ distractor }}
+            </div>
+          </div>
+          {{ field }}
         </div>
-        <div class="cef-field cef-field--inline">
-          <label>B</label>{{ form.choice_b }}
-          <span class="cef-distractor-label">Trap:</span>{{ form.distractor_b }}
-        </div>
-        <div class="cef-field cef-field--inline">
-          <label>C</label>{{ form.choice_c }}
-          <span class="cef-distractor-label">Trap:</span>{{ form.distractor_c }}
-        </div>
-        <div class="cef-field cef-field--inline">
-          <label>D</label>{{ form.choice_d }}
-          <span class="cef-distractor-label">Trap:</span>{{ form.distractor_d }}
-        </div>
+        {% endfor %}
         <div class="cef-field">
           <label>Correct answer (A/B/C/D)</label>{{ form.correct_answer }}
         </div>

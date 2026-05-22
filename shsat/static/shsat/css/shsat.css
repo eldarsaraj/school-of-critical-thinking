@@ -1215,31 +1215,56 @@
   color: #9ca3af;
   margin: 4px 0 0;
 }
-.cef-field--inline textarea { overflow: hidden; }
-
-.cef-field--inline {
-  display: grid;
-  grid-template-columns: 18px 1fr 50px 160px;
-  gap: 8px;
-  align-items: start;
+/* Choice blocks (A/B/C/D) */
+.cef-choice {
+  margin-bottom: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
-.cef-field--inline label {
-  font-size: 15px;
+.cef-choice__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cef-choice__letter {
+  font-size: 13px;
   font-weight: 700;
   color: #111;
-  padding-top: 9px;
-  margin: 0;
-  text-transform: none;
-  letter-spacing: 0;
+}
+
+.cef-choice__trap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .cef-distractor-label {
   font-size: 11px;
   color: #9ca3af;
-  padding-top: 10px;
-  text-align: right;
   white-space: nowrap;
+}
+
+.cef-choice textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 0;
+  font-size: 13px;
+  font-family: inherit;
+  box-sizing: border-box;
+  resize: vertical;
+  background: #fff;
+}
+
+.cef-choice textarea:focus {
+  outline: none;
+  background: #fffbeb;
 }
 
 .content-edit-form__errors {

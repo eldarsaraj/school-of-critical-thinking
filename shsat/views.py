@@ -489,6 +489,12 @@ def content_question_edit(request, question_id):
         "question": question,
         "form": form,
         "skill_labels": SKILL_LABELS,
+        "choices": [
+            ("A", form["choice_a"], form["distractor_a"]),
+            ("B", form["choice_b"], form["distractor_b"]),
+            ("C", form["choice_c"], form["distractor_c"]),
+            ("D", form["choice_d"], form["distractor_d"]),
+        ],
     })
 
 
@@ -522,6 +528,12 @@ def content_question_add(request, test_id):
         "test": test,
         "form": form,
         "skill_labels": SKILL_LABELS,
+        "choices": [
+            ("A", form["choice_a"], form["distractor_a"]),
+            ("B", form["choice_b"], form["distractor_b"]),
+            ("C", form["choice_c"], form["distractor_c"]),
+            ("D", form["choice_d"], form["distractor_d"]),
+        ],
     })
 
 
