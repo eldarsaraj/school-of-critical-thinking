@@ -57,11 +57,11 @@ class QuestionEditForm(forms.ModelForm):
         widgets = {
             "question_text": forms.Textarea(attrs={"rows": 4}),
             "passage_text": forms.Textarea(attrs={"rows": 10}),
-            "explanation": forms.Textarea(attrs={"rows": 4}),
-            "choice_a": forms.Textarea(attrs={"rows": 2}),
-            "choice_b": forms.Textarea(attrs={"rows": 2}),
-            "choice_c": forms.Textarea(attrs={"rows": 2}),
-            "choice_d": forms.Textarea(attrs={"rows": 2}),
+            "explanation": forms.Textarea(attrs={"rows": 6}),
+            "choice_a": forms.Textarea(attrs={"rows": 4}),
+            "choice_b": forms.Textarea(attrs={"rows": 4}),
+            "choice_c": forms.Textarea(attrs={"rows": 4}),
+            "choice_d": forms.Textarea(attrs={"rows": 4}),
         }
 
     def __init__(self, *args, **kwargs):
