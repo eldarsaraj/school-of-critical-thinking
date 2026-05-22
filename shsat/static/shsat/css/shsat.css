@@ -770,6 +770,7 @@
 .content-review__title-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
 }
@@ -1030,8 +1031,93 @@
 
 .delete-form { display: inline; margin: 0; padding: 0; }
 
-/* Home table (test list) */
-.content-table--home td { vertical-align: middle; }
+/* Test cards (content home) */
+.test-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.test-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.test-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  gap: 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.test-card__title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.test-card__pills {
+  display: flex;
+  gap: 6px;
+}
+
+.test-card__actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.test-card__body {
+  display: flex;
+  gap: 0;
+}
+
+.test-card__section {
+  flex: 1;
+  padding: 14px 20px;
+  border-right: 1px solid #f3f4f6;
+}
+.test-card__section:last-child { border-right: none; }
+
+.test-card__section-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+  margin-bottom: 8px;
+}
+
+.test-card__counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.test-card__count {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: #374151;
+}
+
+.stage-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.stage-dot--routing      { background: #3b82f6; }
+.stage-dot--easy_module  { background: #10b981; }
+.stage-dot--hard_module  { background: #ef4444; }
+.stage-dot--standard     { background: #9ca3af; }
 
 /* Edit / Add form */
 .content-edit-form {

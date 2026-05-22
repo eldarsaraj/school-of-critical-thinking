@@ -1,13 +1,13 @@
 {% extends "shsat/base_shsat.html" %}
 
-{% block title %}New Test — Content Review{% endblock %}
+{% block title %}{% if test %}Edit {{ test.title }}{% else %}New Test{% endif %} — Content Review{% endblock %}
 
 {% block shsat_content %}
 <div class="content-review">
   <div class="content-review__header">
-    <a href="{% url 'shsat_content_home' %}" class="content-back">&larr; All tests</a>
-    <h1>New Test</h1>
-    <p class="content-review__note">Creates an empty test — add questions afterwards.</p>
+    <a href="{% if test %}{% url 'shsat_content_test' test.id %}{% else %}{% url 'shsat_content_home' %}{% endif %}" class="content-back">&larr; {% if test %}Back to {{ test.title }}{% else %}All tests{% endif %}</a>
+    <h1>{% if test %}Edit test settings{% else %}New Test{% endif %}</h1>
+    {% if not test %}<p class="content-review__note">Creates an empty test — add questions afterwards.</p>{% endif %}
   </div>
 
   <form method="post" class="content-edit-form">
@@ -36,7 +36,7 @@
       </div>
       <div class="cef-field">
         <label>Routing threshold</label>{{ form.routing_threshold }}
-        <p class="cef-hint">Only applies to adaptive tests. 0.60 = student must get 60% of routing questions correct to enter the hard module.</p>
+        <p class="cef-hint">0.60 = student must answer 60% of routing questions correctly to enter the hard module.</p>
       </div>
     </div>
 
@@ -45,8 +45,8 @@
     {% endif %}
 
     <div class="content-edit-form__actions">
-      <button type="submit" class="content-btn content-btn--primary">Create test</button>
-      <a href="{% url 'shsat_content_home' %}" class="content-btn content-btn--ghost">Cancel</a>
+      <button type="submit" class="content-btn content-btn--primary">{% if test %}Save changes{% else %}Create test{% endif %}</button>
+      <a href="{% if test %}{% url 'shsat_content_test' test.id %}{% else %}{% url 'shsat_content_home' %}{% endif %}" class="content-btn content-btn--ghost">Cancel</a>
     </div>
   </form>
 </div>

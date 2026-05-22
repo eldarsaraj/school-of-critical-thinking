@@ -9,6 +9,8 @@
     <a href="{% url 'shsat_content_home' %}" class="content-back">&larr; All tests</a>
     <div class="content-review__title-row">
       <h1>{{ test.title }}</h1>
+      <div style="display:flex;align-items:center;gap:10px;">
+      <a href="{% url 'shsat_content_test_edit' test.id %}" class="content-btn content-btn--ghost content-btn--sm">Edit settings</a>
       <div class="content-review__status-pills">
         {% if test.is_published %}
           <span class="status-pill status-pill--published">Published</span>
@@ -23,6 +25,7 @@
         {% if test.is_free %}
           <span class="status-pill status-pill--free">Free</span>
         {% endif %}
+      </div>
       </div>
     </div>
     {% if test.source %}<p class="content-review__note">Source: {{ test.source }}</p>{% endif %}

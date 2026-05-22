@@ -13,43 +13,45 @@
   </div>
 
   {% if not test_data %}
-    <p>No tests imported yet.</p>
+    <p class="content-empty">No tests yet. Use the button above to create one.</p>
   {% else %}
-  <table class="content-table">
-    <thead>
-      <tr>
-        <th>Test</th>
-        <th>Adaptive</th>
-        <th colspan="4">ELA Questions</th>
-        <th colspan="4">Math Questions</th>
-        <th>Actions</th>
-      </tr>
-      <tr class="content-table__subhead">
-        <th></th>
-        <th></th>
-        <th>Routing</th><th>Easy Mod</th><th>Hard Mod</th><th>Standard</th>
-        <th>Routing</th><th>Easy Mod</th><th>Hard Mod</th><th>Standard</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
+    <div class="test-card-list">
       {% for d in test_data %}
-      <tr>
-        <td><strong>{{ d.test.title }}</strong><br><small>{{ d.test.source }}</small></td>
-        <td>{% if d.test.is_adaptive %}<span class="badge badge--green">Yes</span>{% else %}<span class="badge badge--gray">No</span>{% endif %}</td>
-        <td>{{ d.ela_routing }}</td>
-        <td>{{ d.ela_easy }}</td>
-        <td>{{ d.ela_hard }}</td>
-        <td>{{ d.ela_standard }}</td>
-        <td>{{ d.math_routing }}</td>
-        <td>{{ d.math_easy }}</td>
-        <td>{{ d.math_hard }}</td>
-        <td>{{ d.math_standard }}</td>
-        <td><a href="{% url 'shsat_content_test' d.test.id %}" class="content-btn">Review</a></td>
-      </tr>
+      <div class="test-card">
+        <div class="test-card__header">
+          <div>
+            <h2 class="test-card__title">{{ d.test.title }}</h2>
+            <div class="test-card__pills">
+              {% if d.test.is_published %}<span class="status-pill status-pill--published">Published</span>
+              {% else %}<span class="status-pill status-pill--draft">Draft</span>{% endif %}
+              {% if d.test.is_free %}<span class="status-pill status-pill--free">Free</span>{% endif %}
+              {% if d.test.is_adaptive %}<span class="status-pill status-pill--adaptive">Adaptive</span>{% endif %}
+            </div>
+          </div>
+          <div class="test-card__actions">
+            <a href="{% url 'shsat_content_test_edit' d.test.id %}" class="content-btn content-btn--ghost content-btn--sm">Settings</a>
+            <a href="{% url 'shsat_content_test' d.test.id %}" class="content-btn content-btn--sm">Review questions</a>
+          </div>
+        </div>
+
+        <div class="test-card__body">
+          {% for section, counts in d.sections.items %}
+          <div class="test-card__section">
+            <span class="test-card__section-label">{{ section }}</span>
+            <div class="test-card__counts">
+              {% for stage_key, stage_label, count in counts %}
+              <span class="test-card__count">
+                <span class="stage-dot stage-dot--{{ stage_key }}"></span>
+                {{ stage_label }}: <strong>{{ count }}</strong>
+              </span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
       {% endfor %}
-    </tbody>
-  </table>
+    </div>
   {% endif %}
 </div>
 {% endblock %}

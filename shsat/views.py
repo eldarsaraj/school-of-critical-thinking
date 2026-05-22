@@ -407,22 +407,34 @@ def content_test_add(request):
 
 
 @_staff_required
+def content_test_edit(request, test_id):
+    test = get_object_or_404(Test, id=test_id)
+    if request.method == "POST":
+        form = TestForm(request.POST, instance=test)
+        if form.is_valid():
+            form.save()
+            return redirect("shsat_content_test", test_id=test.id)
+    else:
+        form = TestForm(instance=test)
+    return render(request, "shsat/content_test_add.html", {"form": form, "test": test})
+
+
+@_staff_required
 def content_home(request):
     tests = Test.objects.prefetch_related("questions").order_by("order", "id")
     test_data = []
+    adaptive_stages = [("easy_module", "Easy"), ("routing", "Routing"), ("hard_module", "Hard")]
+    standard_stages = [("standard", "Standard")]
     for test in tests:
         qs = test.questions.all()
-        test_data.append({
-            "test": test,
-            "ela_routing": qs.filter(section="ELA", stage="routing").count(),
-            "ela_easy": qs.filter(section="ELA", stage="easy_module").count(),
-            "ela_hard": qs.filter(section="ELA", stage="hard_module").count(),
-            "ela_standard": qs.filter(section="ELA", stage="standard").count(),
-            "math_routing": qs.filter(section="Math", stage="routing").count(),
-            "math_easy": qs.filter(section="Math", stage="easy_module").count(),
-            "math_hard": qs.filter(section="Math", stage="hard_module").count(),
-            "math_standard": qs.filter(section="Math", stage="standard").count(),
-        })
+        stages = adaptive_stages if test.is_adaptive else standard_stages
+        sections = {}
+        for section_code, section_label in [("ELA", "ELA"), ("Math", "Math")]:
+            sections[section_label] = [
+                (key, label, qs.filter(section=section_code, stage=key).count())
+                for key, label in stages
+            ]
+        test_data.append({"test": test, "sections": sections})
     return render(request, "shsat/content_home.html", {"test_data": test_data})
 
 

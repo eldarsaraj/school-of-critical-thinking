@@ -26,6 +26,7 @@ urlpatterns = [
     # Content review (staff only — not linked in nav)
     path("content/", views.content_home, name="shsat_content_home"),
     path("content/add-test/", views.content_test_add, name="shsat_content_test_add"),
+    path("content/<int:test_id>/edit/", views.content_test_edit, name="shsat_content_test_edit"),
     path("content/<int:test_id>/", views.content_test, name="shsat_content_test"),
     path("content/<int:test_id>/add/", views.content_question_add, name="shsat_content_question_add"),
     path("content/question/<int:question_id>/edit/", views.content_question_edit, name="shsat_content_question_edit"),
