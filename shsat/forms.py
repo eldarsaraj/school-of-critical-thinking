@@ -19,6 +19,7 @@ DISTRACTOR_CHOICES = [
         ("surface_match", "(E) Surface Match"),
         ("inference_leap", "(E) Inference Leap"),
         ("causal_confusion", "(E) Causal Confusion"),
+        ("overgeneralized_rule", "(E) Overgeneralized Rule"),
     ]),
     ("Math", [
         ("partial_answer", "(M) Partial Answer"),
