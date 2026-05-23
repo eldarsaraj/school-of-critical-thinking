@@ -60,18 +60,19 @@ class Question(models.Model):
         ("sentence_structure", "Sentence Structure"),
         ("main_idea", "Main Idea & Central Claim"),
         ("supporting_detail", "Supporting Detail"),
+        ("evidence_selection", "Evidence Selection"),
         ("inference", "Inference & Implication"),
         ("vocabulary", "Vocabulary in Context"),
         ("authors_craft", "Author's Craft & Organization"),
+        ("cross_passage_synthesis", "Cross-passage Synthesis"),
         # Math
         ("number_operations", "Number & Operations"),
-        ("fractions_decimals_percents", "Fractions, Decimals & Percents"),
         ("ratios_proportions", "Ratios & Proportions"),
-        ("algebra", "Algebra"),
-        ("functions_patterns", "Functions & Patterns"),
+        ("algebra", "Algebra & Functions"),
         ("geometry", "Geometry"),
         ("statistics_data", "Statistics & Data"),
         ("probability", "Probability"),
+        ("multistep_word_problems", "Multi-step Word Problems"),
     ]
 
     test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name="questions")

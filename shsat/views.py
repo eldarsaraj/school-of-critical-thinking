@@ -403,6 +403,9 @@ SKILL_LABELS.update({
     "geometric_reasoning": "Geometric Reasoning",
     "data_probability": "Data & Probability",
     "multistep_reasoning": "Multi-step Reasoning",
+    # Merged skills — still display if in DB
+    "fractions_decimals_percents": "Fractions, Decimals & Percents",
+    "functions_patterns": "Functions & Patterns",
 })
 
 
