@@ -40,6 +40,8 @@ DISTRACTOR_CHOICES = [
     ("unsimplified", "Unsimplified Answer"),
     ("estimation_failure", "Estimation Failure"),
     ("fast_pattern_match", "Fast Pattern Match"),
+    ("misattributed_error_location", "Misattributed Error Location"),
+    ("semantic_over_syntactic", "Semantic Over Syntactic"),
 ]
 
 
