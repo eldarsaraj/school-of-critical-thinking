@@ -384,7 +384,7 @@ def flag_question(request):
 # Content review interface (staff only)
 # ---------------------------------------------------------------------------
 
-STAGE_ORDER = {"easy_module": 0, "routing": 1, "hard_module": 2, "standard": 3}
+STAGE_ORDER = {"easy_module": 0, "routing": 1, "hard_module": 2}
 STAGE_LABELS = {
     "routing": "Routing",
     "easy_module": "Easy Module",
@@ -392,6 +392,18 @@ STAGE_LABELS = {
     "standard": "Standard",
 }
 SKILL_LABELS = dict(Question.SKILL_CHOICES)
+
+# Legacy skill values from old taxonomy — shown as-is if still in DB
+SKILL_LABELS.update({
+    "grammar_mechanics": "Grammar & Mechanics",
+    "rhetoric_organization": "Rhetoric & Organization",
+    "literal_comprehension": "Literal Comprehension",
+    "inference_analysis": "Inference & Analysis",
+    "algebraic_reasoning": "Algebraic Reasoning",
+    "geometric_reasoning": "Geometric Reasoning",
+    "data_probability": "Data & Probability",
+    "multistep_reasoning": "Multi-step Reasoning",
+})
 
 
 @_staff_required
@@ -424,7 +436,7 @@ def content_home(request):
     tests = Test.objects.prefetch_related("questions").order_by("order", "id")
     test_data = []
     adaptive_stages = [("easy_module", "Easy"), ("routing", "Routing"), ("hard_module", "Hard")]
-    standard_stages = [("standard", "Standard")]
+    standard_stages = [("routing", "Routing"), ("easy_module", "Easy"), ("hard_module", "Hard")]
     for test in tests:
         qs = test.questions.all()
         stages = adaptive_stages if test.is_adaptive else standard_stages

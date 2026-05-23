@@ -49,24 +49,29 @@ class Question(models.Model):
     ]
     DIFFICULTY_CHOICES = [("easy", "Easy"), ("medium", "Medium"), ("hard", "Hard")]
     STAGE_CHOICES = [
-        ("standard", "Standard"),
         ("routing", "Routing"),
         ("easy_module", "Easy Module"),
         ("hard_module", "Hard Module"),
     ]
     SKILL_CHOICES = [
         # ELA
-        ("grammar_mechanics", "Grammar & Mechanics"),
-        ("rhetoric_organization", "Rhetoric & Organization"),
-        ("literal_comprehension", "Literal Comprehension"),
-        ("inference_analysis", "Inference & Analysis"),
+        ("punctuation", "Punctuation"),
+        ("usage_agreement", "Usage & Agreement"),
+        ("sentence_structure", "Sentence Structure"),
+        ("main_idea", "Main Idea & Central Claim"),
+        ("supporting_detail", "Supporting Detail"),
+        ("inference", "Inference & Implication"),
         ("vocabulary", "Vocabulary in Context"),
+        ("authors_craft", "Author's Craft & Organization"),
         # Math
         ("number_operations", "Number & Operations"),
-        ("algebraic_reasoning", "Algebraic Reasoning"),
-        ("geometric_reasoning", "Geometric Reasoning"),
-        ("data_probability", "Data & Probability"),
-        ("multistep_reasoning", "Multi-step Reasoning"),
+        ("fractions_decimals_percents", "Fractions, Decimals & Percents"),
+        ("ratios_proportions", "Ratios & Proportions"),
+        ("algebra", "Algebra"),
+        ("functions_patterns", "Functions & Patterns"),
+        ("geometry", "Geometry"),
+        ("statistics_data", "Statistics & Data"),
+        ("probability", "Probability"),
     ]
 
     test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name="questions")
