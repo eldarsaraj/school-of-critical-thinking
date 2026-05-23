@@ -20,6 +20,8 @@ DISTRACTOR_CHOICES = [
         ("inference_leap", "(E) Inference Leap"),
         ("causal_confusion", "(E) Causal Confusion"),
         ("overgeneralized_rule", "(E) Overgeneralized Rule"),
+        ("recognition_as_correctness", "(E) Recognition as Correctness"),
+        ("referent_slippage", "(E) Referent Slippage"),
     ]),
     ("Math", [
         ("partial_answer", "(M) Partial Answer"),
