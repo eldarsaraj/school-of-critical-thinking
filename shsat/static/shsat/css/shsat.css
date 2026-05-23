@@ -829,7 +829,7 @@
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 .content-stage__header {
@@ -839,6 +839,7 @@
   padding: 12px 16px;
   background: #f9fafb;
   border-bottom: 1px solid #e5e7eb;
+  border-radius: 8px 8px 0 0;
 }
 
 .content-stage__title-group {
