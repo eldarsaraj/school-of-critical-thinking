@@ -22,6 +22,7 @@ DISTRACTOR_CHOICES = [
         ("overgeneralized_rule", "(E) Overgeneralized Rule"),
         ("recognition_as_correctness", "(E) Recognition as Correctness"),
         ("referent_slippage", "(E) Referent Slippage"),
+        ("partly_true_but_wrong", "(E) Partly True but Wrong"),
     ]),
     ("Math", [
         ("partial_answer", "(M) Partial Answer"),
