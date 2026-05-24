@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 from django.utils import timezone
 from django.conf import settings
@@ -581,3 +581,41 @@ def content_question_delete(request, question_id):
     test_id = question.test_id
     question.delete()
     return redirect("shsat_content_test", test_id=test_id)
+
+
+@_staff_required
+def content_test_export(request, test_id):
+    import yaml
+    test = get_object_or_404(Test, id=test_id)
+    questions = test.questions.order_by("section", "stage", "question_number")
+
+    records = []
+    for q in questions:
+        record = {
+            "section": q.section,
+            "stage": q.stage,
+            "question_number": q.question_number,
+            "question_type": q.question_type,
+            "skill": q.skill,
+            "difficulty": q.difficulty,
+            "topic": q.topic,
+            "passage_group_id": q.passage_group_id,
+            "passage_title": q.passage_title,
+            "passage_text": q.passage_text,
+            "question_text": q.question_text,
+            "choice_a": q.choice_a,
+            "choice_b": q.choice_b,
+            "choice_c": q.choice_c,
+            "choice_d": q.choice_d,
+            "correct_answer": q.correct_answer,
+            "explanation": q.explanation,
+            "distractor_types": q.distractor_types,
+        }
+        records.append(record)
+
+    slug = test.title.lower().replace(" ", "_")
+    filename = f"{slug}_export.yaml"
+    content = yaml.dump(records, allow_unicode=True, sort_keys=False, default_flow_style=False)
+    response = HttpResponse(content, content_type="text/yaml; charset=utf-8")
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
+    return response
