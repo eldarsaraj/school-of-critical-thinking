@@ -7,6 +7,7 @@
   <div class="content-review__header">
     <a href="{% url 'shsat_content_test' question.test_id %}" class="content-back">&larr; Back to {{ question.test.title }}</a>
     <h1>Edit: {{ question.section }} Q{{ question.question_number }}
+      <span class="stage-pill stage-pill--{{ question.stage }}">{{ question.get_stage_display }}</span>
       <span class="diff-tag diff-tag--{{ question.difficulty }}">{{ question.difficulty }}</span>
       <span class="skill-tag">{% for code, label in skill_labels.items %}{% if code == question.skill %}{{ label }}{% endif %}{% endfor %}</span>
     </h1>
