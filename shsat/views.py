@@ -500,7 +500,7 @@ def content_question_edit(request, question_id):
             next_id = request.POST.get("next_question_id")
             if next_id:
                 return redirect("shsat_content_question_edit", question_id=next_id)
-            return redirect("shsat_content_test", test_id=question.test_id)
+            return redirect("shsat_content_question_edit", question_id=question.id)
     else:
         form = QuestionEditForm(instance=question)
 
