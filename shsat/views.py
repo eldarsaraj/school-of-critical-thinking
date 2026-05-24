@@ -504,12 +504,14 @@ def content_question_edit(request, question_id):
     else:
         form = QuestionEditForm(instance=question)
 
-    # Find the next question in the same test (ordered by section, stage, question_number)
-    all_ids = list(
+    # Find the next question in the same test using display order (easy → routing → hard)
+    all_qs = list(
         Question.objects.filter(test_id=question.test_id)
-        .order_by("section", "stage", "question_number")
-        .values_list("id", flat=True)
+        .order_by("section", "question_number")
+        .values_list("id", "section", "stage", "question_number")
     )
+    all_qs.sort(key=lambda q: (q[1], STAGE_ORDER.get(q[2], 99), q[3]))
+    all_ids = [q[0] for q in all_qs]
     try:
         current_index = all_ids.index(question.id)
         next_question_id = all_ids[current_index + 1] if current_index + 1 < len(all_ids) else None
