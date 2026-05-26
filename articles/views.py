@@ -94,7 +94,7 @@ def detail(request, slug):
     if article.cover_image:
         url = article.cover_image.url
         if "res.cloudinary.com" in url and "/upload/" in url:
-            og_image_url = url.replace("/upload/", "/upload/c_fill,w_1200,h_630,f_jpg/")
+            og_image_url = url.replace("/upload/", "/upload/c_fill,w_1200,h_630,f_jpg/") + ".jpg"
         else:
             og_image_url = url
 
