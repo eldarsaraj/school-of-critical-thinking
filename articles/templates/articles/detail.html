@@ -17,26 +17,13 @@
   <meta property=”og:url” content=”{{ request.build_absolute_uri }}” />
 
   {% if article.cover_image %}
-    {% with img_url=article.cover_image.url %}
-    {# Ensure HTTPS — Facebook rejects HTTP images #}
-    {% if img_url|slice:”:5” == “http:” %}
-      {% with secure_url=”https”|add:img_url|slice:”5:” %}
-      <meta property=”og:image” content=”{{ secure_url }}” />
-      <meta property=”og:image:secure_url” content=”{{ secure_url }}” />
-      <meta name=”twitter:image” content=”{{ secure_url }}” />
-      {% endwith %}
-    {% else %}
-      <meta property=”og:image” content=”{{ img_url }}” />
-      <meta property=”og:image:secure_url” content=”{{ img_url }}” />
-      <meta name=”twitter:image” content=”{{ img_url }}” />
-    {% endif %}
-    {% endwith %}
+    <meta property=”og:image” content=”{{ article.cover_image.url }}” />
+    <meta property=”og:image:secure_url” content=”{{ article.cover_image.url }}” />
+    <meta name=”twitter:image” content=”{{ article.cover_image.url }}” />
   {% else %}
-    {% with fallback_url=”https://”|add:request.get_host %}
-    <meta property=”og:image” content=”{{ fallback_url }}{% static 'images/og-default.png' %}” />
-    <meta property=”og:image:secure_url” content=”{{ fallback_url }}{% static 'images/og-default.png' %}” />
-    <meta name=”twitter:image” content=”{{ fallback_url }}{% static 'images/og-default.png' %}” />
-    {% endwith %}
+    <meta property=”og:image” content=”https://{{ request.get_host }}{% static 'images/og-default.png' %}” />
+    <meta property=”og:image:secure_url” content=”https://{{ request.get_host }}{% static 'images/og-default.png' %}” />
+    <meta name=”twitter:image” content=”https://{{ request.get_host }}{% static 'images/og-default.png' %}” />
   {% endif %}
   <meta name=”twitter:card” content=”summary_large_image” />
   <meta name=”twitter:title” content=”{{ article.title }}” />
