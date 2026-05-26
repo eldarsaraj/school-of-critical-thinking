@@ -88,6 +88,16 @@ def detail(request, slug):
             soup.new_tag("span", **{"class": "end-mark", "aria-hidden": "true"})
         )
 
+    # Build an OG-ready image URL: Cloudinary URLs lack a file extension which
+    # confuses Facebook's scraper. Insert a transform to force JPEG + 1200x630.
+    og_image_url = None
+    if article.cover_image:
+        url = article.cover_image.url
+        if "res.cloudinary.com" in url and "/upload/" in url:
+            og_image_url = url.replace("/upload/", "/upload/c_fill,w_1200,h_630,f_jpg/")
+        else:
+            og_image_url = url
+
     return render(
         request,
         "articles/detail.html",
@@ -95,5 +105,6 @@ def detail(request, slug):
             "article": article,
             "article_html": str(soup),
             "toc_items": toc_items,
+            "og_image_url": og_image_url,
         },
     )
