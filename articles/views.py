@@ -107,14 +107,19 @@ def detail(request, slug):
 
 
 def og_image(request, slug):
-    """Redirect to the article's cover image via our own domain.
-    Facebook's scraper can always reach schoolofcriticalthinking.org,
-    so this avoids Cloudinary being blocked by the scraper."""
+    """Proxy the article cover image through our own domain.
+    Facebook's scraper fetches this URL directly — no redirect to follow,
+    no Cloudinary cross-origin issues."""
+    import urllib.request
+    from django.http import HttpResponse, Http404
     article = get_object_or_404(Article, slug=slug, status=Article.Status.PUBLISHED)
     if not article.cover_image:
-        from django.http import Http404
         raise Http404
     url = article.cover_image.url
     if "res.cloudinary.com" in url and "/upload/" in url:
         url = url.replace("/upload/", "/upload/c_fill,w_1200,h_630,f_jpg/") + ".jpg"
-    return redirect(url, permanent=False)
+    try:
+        with urllib.request.urlopen(url, timeout=10) as resp:
+            return HttpResponse(resp.read(), content_type="image/jpeg")
+    except Exception:
+        raise Http404
