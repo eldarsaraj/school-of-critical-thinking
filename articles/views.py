@@ -88,11 +88,15 @@ def detail(request, slug):
             soup.new_tag("span", **{"class": "end-mark", "aria-hidden": "true"})
         )
 
-    # OG image: use our own domain URL so Facebook's scraper can always reach it.
-    # The og_image view below redirects to Cloudinary.
+    # OG image: use Cloudinary transformation URL directly.
+    # Facebook's scraper can reach Cloudinary CDN without going through our server.
     og_image_url = None
     if article.cover_image:
-        og_image_url = request.build_absolute_uri(f"/articles/{article.slug}/og-image.jpg")
+        url = article.cover_image.url
+        if "res.cloudinary.com" in url and "/upload/" in url:
+            og_image_url = url.replace("/upload/", "/upload/c_fill,w_1200,h_630,f_jpg/")
+        else:
+            og_image_url = url
 
     return render(
         request,
