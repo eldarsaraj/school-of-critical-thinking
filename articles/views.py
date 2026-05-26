@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from bs4 import BeautifulSoup
 from django.utils.text import slugify
 import markdown
@@ -88,15 +88,11 @@ def detail(request, slug):
             soup.new_tag("span", **{"class": "end-mark", "aria-hidden": "true"})
         )
 
-    # Build an OG-ready image URL: Cloudinary URLs lack a file extension which
-    # confuses Facebook's scraper. Insert a transform to force JPEG + 1200x630.
+    # OG image: use our own domain URL so Facebook's scraper can always reach it.
+    # The og_image view below redirects to Cloudinary.
     og_image_url = None
     if article.cover_image:
-        url = article.cover_image.url
-        if "res.cloudinary.com" in url and "/upload/" in url:
-            og_image_url = url.replace("/upload/", "/upload/c_fill,w_1200,h_630,f_jpg/") + ".jpg"
-        else:
-            og_image_url = url
+        og_image_url = request.build_absolute_uri(f"/articles/{article.slug}/og-image.jpg")
 
     return render(
         request,
@@ -108,3 +104,17 @@ def detail(request, slug):
             "og_image_url": og_image_url,
         },
     )
+
+
+def og_image(request, slug):
+    """Redirect to the article's cover image via our own domain.
+    Facebook's scraper can always reach schoolofcriticalthinking.org,
+    so this avoids Cloudinary being blocked by the scraper."""
+    article = get_object_or_404(Article, slug=slug, status=Article.Status.PUBLISHED)
+    if not article.cover_image:
+        from django.http import Http404
+        raise Http404
+    url = article.cover_image.url
+    if "res.cloudinary.com" in url and "/upload/" in url:
+        url = url.replace("/upload/", "/upload/c_fill,w_1200,h_630,f_jpg/") + ".jpg"
+    return redirect(url, permanent=False)
