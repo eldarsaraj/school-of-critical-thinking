@@ -35,6 +35,7 @@ DISTRACTOR_CHOICES = [
         ("order_of_operations", "(M) Order of Operations"),
         ("unit_error", "(M) Unit/Conversion Error"),
         ("unsimplified", "(M) Unsimplified Answer"),
+        ("misread_question", "(M) Misread Question"),
         ("wrong_concept", "(M) Wrong Concept"),
         ("computation_error", "(M) Computation Error"),
         ("estimation_failure", "(M) Estimation Failure"),
