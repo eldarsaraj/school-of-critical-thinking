@@ -226,6 +226,7 @@ def test_take(request, test_id):
             "use_efgh": q.question_number % 2 == 0,
             "passage_title": q.passage_title,
             "passage_text": q.passage_text,
+            "image_url": q.image.url if q.image else "",
             "question_text": q.question_text,
             "choice_a": q.choice_a,
             "choice_b": q.choice_b,
@@ -494,7 +495,7 @@ def content_test(request, test_id):
 def content_question_edit(request, question_id):
     question = get_object_or_404(Question, id=question_id)
     if request.method == "POST":
-        form = QuestionEditForm(request.POST, instance=question)
+        form = QuestionEditForm(request.POST, request.FILES, instance=question)
         if form.is_valid():
             form.save()
             next_id = request.POST.get("next_question_id")

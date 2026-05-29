@@ -13,7 +13,7 @@
     </h1>
   </div>
 
-  <form method="post" class="content-edit-form">
+  <form method="post" enctype="multipart/form-data" class="content-edit-form">
     {% csrf_token %}
 
     <div class="content-edit-form__grid">
@@ -56,6 +56,16 @@
 
       <div class="content-edit-form__col content-edit-form__col--question">
         <h3>Question</h3>
+        <div class="cef-field">
+          <label>Image (optional — diagram, chart, geometry figure)</label>
+          {% if question.image %}
+            <div class="cef-image-preview">
+              <img src="{{ question.image.url }}" alt="Question image">
+              <label class="cef-image-clear"><input type="checkbox" name="image-clear"> Remove image</label>
+            </div>
+          {% endif %}
+          {{ form.image }}
+        </div>
         <div class="cef-field">
           <label>Question text</label>{{ form.question_text }}
         </div>

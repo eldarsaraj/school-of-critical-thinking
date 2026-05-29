@@ -352,6 +352,18 @@
   margin-bottom: 10px;
 }
 
+.shsat-question-image {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.shsat-question-image img {
+  max-width: 100%;
+  max-height: 360px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
 .shsat-question-text {
   font-size: 17px;
   line-height: 1.6;
@@ -1159,6 +1171,31 @@
 
 .cef-field {
   margin-bottom: 14px;
+}
+
+.cef-image-preview {
+  margin-bottom: 10px;
+}
+
+.cef-image-preview img {
+  display: block;
+  max-width: 100%;
+  max-height: 240px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.cef-image-clear {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #ef4444;
+  cursor: pointer;
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .cef-field label {

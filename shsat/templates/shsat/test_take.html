@@ -123,6 +123,10 @@ function renderQuestion(idx) {
     html += `<div>${esc(q.passage_text).replace(/\n/g, "<br>")}</div></div>`;
   }
 
+  if (q.image_url) {
+    html += `<div class="shsat-question-image"><img src="${q.image_url}" alt="Question diagram"></div>`;
+  }
+
   html += `<div class="shsat-question-text">${esc(q.question_text)}</div>`;
 
   if (q.question_type === "grid_in") {

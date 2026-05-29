@@ -90,6 +90,7 @@ class Question(models.Model):
     passage_title = models.CharField(max_length=200, blank=True, default="")
     passage_text = models.TextField(blank=True, default="")
 
+    image = models.ImageField(upload_to="shsat/questions/", blank=True, null=True)
     question_text = models.TextField()
     choice_a = models.TextField(blank=True, default="")
     choice_b = models.TextField(blank=True, default="")

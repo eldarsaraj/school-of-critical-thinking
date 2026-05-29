@@ -70,7 +70,7 @@ class QuestionEditForm(forms.ModelForm):
         fields = [
             "section", "stage", "question_number", "skill", "difficulty", "question_type", "topic",
             "passage_group_id", "passage_title", "passage_text",
-            "question_text", "choice_a", "choice_b", "choice_c", "choice_d",
+            "image", "question_text", "choice_a", "choice_b", "choice_c", "choice_d",
             "correct_answer", "explanation",
         ]
         widgets = {
