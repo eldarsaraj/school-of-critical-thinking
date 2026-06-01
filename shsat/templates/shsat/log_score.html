@@ -29,4 +29,40 @@
   <button type="submit" class="shsat-btn">Save score</button>
   <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline" style="margin-left:8px;">Cancel</a>
 </form>
+
+{% if logged_scores %}
+<div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
+  <p class="shsat-section-title">Logged scores</p>
+  <table class="shsat-table">
+    <thead>
+      <tr>
+        <th>Source</th>
+        <th>Date</th>
+        <th>ELA</th>
+        <th>Math</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in logged_scores %}
+      <tr>
+        <td>{{ s.source_name }}</td>
+        <td>{{ s.date|date:"M d, Y" }}</td>
+        <td>{{ s.ela_correct }}/{{ s.ela_total }}</td>
+        <td>{{ s.math_correct }}/{{ s.math_total }}</td>
+        <td>
+          <form method="post" action="{% url 'shsat_delete_manual_score' s.id %}"
+                onsubmit="return confirm('Delete this score?');">
+            {% csrf_token %}
+            <button type="submit" style="background:none;border:none;cursor:pointer;font-size:13px;color:#a4161a;padding:0;text-decoration:underline;">
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
 {% endblock %}

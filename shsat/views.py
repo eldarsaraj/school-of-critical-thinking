@@ -307,8 +307,19 @@ def log_score(request):
         score.parent = parent
         score.save()
         messages.success(request, "Score logged.")
-        return redirect("shsat_dashboard")
-    return render(request, "shsat/log_score.html", {"form": form})
+        return redirect("shsat_log_score")
+    logged_scores = ManualScore.objects.filter(parent=parent).order_by("-date")
+    return render(request, "shsat/log_score.html", {"form": form, "logged_scores": logged_scores})
+
+
+@login_required(login_url="/shsat/login/")
+@require_POST
+def delete_manual_score(request, score_id):
+    parent, _ = Parent.objects.get_or_create(user=request.user)
+    score = get_object_or_404(ManualScore, id=score_id, parent=parent)
+    score.delete()
+    messages.success(request, "Score deleted.")
+    return redirect("shsat_log_score")
 
 
 @login_required(login_url="/shsat/login/")

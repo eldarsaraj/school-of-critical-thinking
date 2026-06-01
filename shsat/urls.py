@@ -12,6 +12,7 @@ urlpatterns = [
     # Protected
     path("dashboard/", views.dashboard, name="shsat_dashboard"),
     path("log-score/", views.log_score, name="shsat_log_score"),
+    path("log-score/<int:score_id>/delete/", views.delete_manual_score, name="shsat_delete_manual_score"),
     path("tests/", views.test_list, name="shsat_test_list"),
     path("tests/<int:test_id>/", views.test_intro, name="shsat_test_intro"),
     path("tests/<int:test_id>/take/", views.test_take, name="shsat_test_take"),
