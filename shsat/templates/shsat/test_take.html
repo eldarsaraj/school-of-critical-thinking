@@ -47,22 +47,9 @@
 {{ q_list|json_script:"questionData" }}
 
 {% if is_adaptive %}
-<!-- Adaptive: module assignment overlay -->
-<div id="moduleOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;align-items:center;justify-content:center;">
-  <div style="background:#fff;max-width:480px;width:90%;padding:32px;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,0.25);">
-    <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:8px;">Adaptive Test</div>
-    <div style="font-size:22px;font-weight:700;margin-bottom:4px;">Routing Complete</div>
-    <div style="font-size:14px;color:rgba(0,0,0,0.5);margin-bottom:24px;">Based on your routing scores, you'll continue with the following modules:</div>
-    <div id="moduleResults" style="margin-bottom:24px;"></div>
-    <button onclick="closeModuleModal()" class="shsat-btn" style="width:100%;">Continue with Module Questions →</button>
-  </div>
-</div>
-
-<!-- Floating "Get Your Module Assignment" button (shown once all routing answered) -->
-<div id="getModulesBtn" style="display:none;position:fixed;bottom:24px;right:24px;z-index:999;">
-  <button id="getModulesBtnInner" onclick="requestModuleAssignment()" class="shsat-btn" style="padding:14px 20px;font-size:15px;box-shadow:0 4px 20px rgba(0,0,0,0.2);">
-    Get Your Module Assignment →
-  </button>
+<!-- Adaptive: subtle "module questions unlocked" toast (auto-dismissed) -->
+<div id="moduleToast" style="display:none;position:fixed;bottom:24px;right:24px;z-index:999;background:#111;color:#fff;padding:12px 20px;font-size:14px;border-radius:4px;box-shadow:0 4px 16px rgba(0,0,0,0.25);">
+  All 57 questions now available
 </div>
 {% endif %}
 
@@ -322,10 +309,11 @@ function toggleFlag(qId) {
 // Question map
 // ---------------------------------------------------------------------------
 function updateMap() {
+  const SECTION_TOTAL = IS_ADAPTIVE ? 57 : null;  // real SHSAT: 57 per section
   [["ela", elaSqs], ["math", mathSqs]].forEach(([section, sqs]) => {
     const el = document.getElementById(`${section}Map`);
     if (!el) return;
-    el.innerHTML = sqs.map(q => {
+    let html = sqs.map(q => {
       const globalIdx = questions.indexOf(q);
       let cls = "shsat-qmap__dot";
       if (answers[q.id]) cls += " answered";
@@ -336,25 +324,31 @@ function updateMap() {
       }
       return `<div class="${cls}" onclick="goTo(${globalIdx})" title="Q${q.display_index}">${q.display_index}</div>`;
     }).join("");
+    // Adaptive: show locked placeholder dots for unassigned module questions
+    if (IS_ADAPTIVE && !modulesAssigned && SECTION_TOTAL) {
+      const locked = SECTION_TOTAL - sqs.length;
+      for (let i = 0; i < locked; i++) {
+        const n = sqs.length + i + 1;
+        html += `<div class="shsat-qmap__dot shsat-qmap__dot--locked" title="Q${n}">·</div>`;
+      }
+    }
+    el.innerHTML = html;
   });
 }
 
 // ---------------------------------------------------------------------------
-// Adaptive: routing completion check + module assignment
+// Adaptive: silent auto-routing when all routing questions are answered
 // ---------------------------------------------------------------------------
 function checkRoutingComplete() {
   const routingQs = questions.filter(q => q.is_routing);
   const allAnswered = routingQs.length > 0 && routingQs.every(q => answers[q.id]);
-  const btn = document.getElementById("getModulesBtn");
-  if (btn) btn.style.display = allAnswered ? "block" : "none";
+  if (allAnswered) requestModuleAssignment();
 }
 
 let assigningModules = false;
 function requestModuleAssignment() {
-  if (assigningModules) return;
+  if (assigningModules || modulesAssigned) return;
   assigningModules = true;
-  const inner = document.getElementById("getModulesBtnInner");
-  if (inner) inner.textContent = "Scoring routing…";
 
   fetch("/shsat/api/assign-modules/", {
     method: "POST",
@@ -364,16 +358,13 @@ function requestModuleAssignment() {
   .then(r => r.json())
   .then(data => {
     if (data.status === "error") {
-      alert("Error assigning modules: " + data.message);
+      console.error("Module assignment error:", data.message);
       assigningModules = false;
-      if (inner) inner.textContent = "Get Your Module Assignment →";
       return;
     }
     elaModule = data.ela_module;
     mathModule = data.math_module;
     modulesAssigned = true;
-    const btn = document.getElementById("getModulesBtn");
-    if (btn) btn.style.display = "none";
 
     if (data.questions && data.questions.length) {
       data.questions.forEach(q => {
@@ -383,47 +374,20 @@ function requestModuleAssignment() {
     }
     rebuildSectionLists();
     updateMap();
-    showModuleModal(data);
+    // Re-render current question so Next → button appears if on last routing Q
+    renderQuestion(currentIdx);
+
+    // Brief toast notification
+    const toast = document.getElementById("moduleToast");
+    if (toast) {
+      toast.style.display = "block";
+      setTimeout(() => { toast.style.display = "none"; }, 2500);
+    }
   })
   .catch(err => {
-    console.error(err);
+    console.error("Module assignment failed:", err);
     assigningModules = false;
-    if (inner) inner.textContent = "Get Your Module Assignment →";
   });
-}
-
-function showModuleModal(data) {
-  const moduleLabel = m => m === "hard" ? "Advanced Module" : "Standard Module";
-  const pctColor = pct => pct >= 60 ? "#10b981" : "#f59e0b";
-  const html = `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-      <div style="padding:16px;border:1px solid rgba(0,0,0,0.1);border-radius:8px;">
-        <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:6px;">ELA Routing</div>
-        <div style="font-size:28px;font-weight:700;color:${pctColor(data.ela_pct)};">${data.ela_pct}%</div>
-        <div style="font-size:12px;color:rgba(0,0,0,0.5);margin-bottom:8px;">${data.ela_routing_correct} / ${data.ela_routing_total} correct</div>
-        <div style="font-size:13px;font-weight:600;">→ ${moduleLabel(data.ela_module)}</div>
-      </div>
-      <div style="padding:16px;border:1px solid rgba(0,0,0,0.1);border-radius:8px;">
-        <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:6px;">Math Routing</div>
-        <div style="font-size:28px;font-weight:700;color:${pctColor(data.math_pct)};">${data.math_pct}%</div>
-        <div style="font-size:12px;color:rgba(0,0,0,0.5);margin-bottom:8px;">${data.math_routing_correct} / ${data.math_routing_total} correct</div>
-        <div style="font-size:13px;font-weight:600;">→ ${moduleLabel(data.math_module)}</div>
-      </div>
-    </div>`;
-  document.getElementById("moduleResults").innerHTML = html;
-  const overlay = document.getElementById("moduleOverlay");
-  overlay.style.display = "flex";
-}
-
-function closeModuleModal() {
-  document.getElementById("moduleOverlay").style.display = "none";
-  // Jump to first module question
-  const firstModuleIdx = questions.findIndex(q => !q.is_routing);
-  if (firstModuleIdx !== -1) {
-    pauseCurrentTimer();
-    renderQuestion(firstModuleIdx);
-    resumeTimer();
-  }
 }
 
 // ---------------------------------------------------------------------------
@@ -431,7 +395,7 @@ function closeModuleModal() {
 // ---------------------------------------------------------------------------
 function confirmSubmit() {
   if (IS_ADAPTIVE && !modulesAssigned) {
-    alert("Please answer all routing questions and click 'Get Your Module Assignment' before submitting.");
+    alert("Please answer all 29 questions in each section before submitting — more questions will appear as you progress.");
     return;
   }
   const answered = questions.filter(q => answers[q.id]).length;
@@ -445,6 +409,5 @@ function confirmSubmit() {
 renderQuestion(0);
 timerEl.textContent = formatTime(elapsed);
 timerSidebar.textContent = formatTime(elapsed);
-if (IS_ADAPTIVE && !modulesAssigned) checkRoutingComplete();
 </script>
 {% endblock %}

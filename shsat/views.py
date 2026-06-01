@@ -82,7 +82,9 @@ def dashboard(request):
         .order_by("-submitted_at")
     )
     manual_scores = ManualScore.objects.filter(parent=parent).order_by("-date")
-    cutoffs = CutoffScore.objects.all()
+    from django.db.models import Max
+    latest_year = CutoffScore.objects.aggregate(Max("admissions_year"))["admissions_year__max"]
+    cutoffs = CutoffScore.objects.filter(admissions_year=latest_year).order_by("cutoff_score")
 
     # Build score history for Chart.js (combined platform + manual)
     # Sort by full datetime so same-day tests appear in submission order

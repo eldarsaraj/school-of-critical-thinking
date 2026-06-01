@@ -172,10 +172,10 @@ Chart.register(emptyStatePlugin);
   const greyLine = { borderColor: "rgba(0,0,0,0.12)", backgroundColor: "transparent",
                      pointBackgroundColor: "rgba(0,0,0,0.12)", borderWidth: 2, tension: 0.2, pointRadius: 4 };
 
-  // Build projection: project up to 5 total tests from the latest result
+  // Build projection: project up to 6 total tests (baseline + 5 more)
   // Uses a deterministic sequence (seeded on last composite) so it's stable on reload
   function buildProjection(history) {
-    const totalTests = 5;
+    const totalTests = 6;
     const numProj = Math.max(0, totalTests - history.length);
     if (numProj === 0 || history.length === 0) return null;
 

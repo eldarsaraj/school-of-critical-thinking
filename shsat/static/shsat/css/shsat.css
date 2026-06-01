@@ -487,6 +487,17 @@
 .shsat-qmap__dot--shade2:not(.answered) { background: rgba(100, 60, 0, 0.08); }
 .shsat-qmap__dot--shade3:not(.answered) { background: rgba(60, 100, 0, 0.07); }
 
+/* Adaptive: locked module slots (not yet assigned) */
+.shsat-qmap__dot--locked {
+  background: transparent;
+  color: rgba(0, 0, 0, 0.18);
+  border-color: rgba(0, 0, 0, 0.08);
+  border-style: dashed;
+  cursor: default;
+  font-size: 14px;
+  pointer-events: none;
+}
+
 /* ----------------------------------------------------------
    Results page
    ---------------------------------------------------------- */
