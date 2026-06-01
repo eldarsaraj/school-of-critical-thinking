@@ -112,17 +112,19 @@ def dashboard(request):
             "source": m.source_name,
         })
     score_history_raw.sort(key=lambda x: x["_sort"])
-    # Add x-axis labels: Baseline Test entries → "Baseline", "Baseline (2)", …
-    # Other entries → "Test 1", "Test 2", …
-    baseline_count = 0
-    non_baseline_count = 0
-    for entry in score_history_raw:
-        if "baseline" in entry["source"].lower():
-            baseline_count += 1
-            entry["seq"] = "Baseline" if baseline_count == 1 else f"Baseline ({baseline_count})"
-        else:
-            non_baseline_count += 1
-            entry["seq"] = f"Test {non_baseline_count}"
+    # Collapse all "Baseline Test" entries into a single point (latest score wins).
+    # Everything else is labelled "Test 1", "Test 2", … in chronological order.
+    baseline_entries = [e for e in score_history_raw if "baseline" in e["source"].lower()]
+    other_entries = [e for e in score_history_raw if "baseline" not in e["source"].lower()]
+    collapsed = []
+    if baseline_entries:
+        best = baseline_entries[-1]  # most recent Baseline attempt
+        best["seq"] = "Baseline"
+        collapsed.append(best)
+    for i, entry in enumerate(other_entries):
+        entry["seq"] = f"Test {i + 1}"
+        collapsed.append(entry)
+    score_history_raw = collapsed
     score_history = [{k: v for k, v in e.items() if k != "_sort"} for e in score_history_raw]
 
     # Most recent composite = from the most recently submitted attempt (not mixed history)

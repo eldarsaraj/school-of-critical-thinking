@@ -191,9 +191,8 @@ Chart.register(emptyStatePlugin);
     // Pre-computed gain deltas: realistic weekly improvement with slight fluctuation
     const gains = [14, 9, 16, 11, 13, 8, 15, 12, 10, 17];
 
-    const bCount = history.filter(d => d.seq.toLowerCase().startsWith("baseline")).length;
-    const tCount = history.length - bCount;
-    const lastIsBaseline = history[history.length - 1].seq.toLowerCase().startsWith("baseline");
+    // Count existing non-baseline ("Test N") entries to continue numbering
+    const existingTestCount = history.filter(d => d.seq.toLowerCase().startsWith("test")).length;
 
     const compProj = [], elaProj = [], mathProj = [], labels = [];
     for (let i = 0; i < numProj; i++) {
@@ -205,10 +204,7 @@ Chart.register(emptyStatePlugin);
       compProj.push(ela + math);
       elaProj.push(ela);
       mathProj.push(math);
-      const projLabel = lastIsBaseline
-        ? `Baseline (${bCount + i + 1}) (projected)`
-        : `Test ${tCount + i + 1} (projected)`;
-      labels.push(projLabel);
+      labels.push(`Test ${existingTestCount + i + 1} (projected)`);
     }
     // Bridge: include last real value at position 0 of projection so lines connect
     return {
