@@ -188,20 +188,21 @@ def dashboard(request):
 
 
     # Sort skills by accuracy ascending (weakest first)
-    skill_label_map = dict(Question.SKILL_CHOICES)
-    skill_label_map.update({
-        "grammar_mechanics": "Grammar & Mechanics",
-        "rhetoric_organization": "Rhetoric & Organization",
-        "literal_comprehension": "Literal Comprehension",
-        "inference_analysis": "Inference & Analysis",
-        "algebraic_reasoning": "Algebraic Reasoning",
-        "geometric_reasoning": "Geometric Reasoning",
-        "data_probability": "Data & Probability",
-        "multistep_reasoning": "Multi-step Reasoning",
-        "fractions_decimals_percents": "Fractions, Decimals & Percents",
-        "functions_patterns": "Functions & Patterns",
-        "unknown": "Uncategorized",
-    })
+    skill_label_map = {
+        "grammar_mechanics": "Grammar",
+        "rhetoric_organization": "Rhetoric",
+        "literal_comprehension": "Comprehension",
+        "inference_analysis": "Inference",
+        "authors_craft": "Author's Craft",
+        "cross_passage_synthesis": "Cross-passage",
+        "algebraic_reasoning": "Algebra",
+        "geometric_reasoning": "Geometry",
+        "data_probability": "Statistics",
+        "multistep_reasoning": "Multi-step",
+        "fractions_decimals_percents": "Fractions & Percents",
+        "functions_patterns": "Functions",
+        "unknown": "Other",
+    }
 
     skill_accuracy_data = []
     for skill, s in skill_stats.items():
@@ -497,18 +498,21 @@ def error_analysis(request, attempt_id):
         .order_by("question__section", "question__question_number")
     )
 
-    skill_label_map = dict(Question.SKILL_CHOICES)
-    skill_label_map.update({
-        "grammar_mechanics": "Grammar & Mechanics",
-        "rhetoric_organization": "Rhetoric & Organization",
-        "literal_comprehension": "Literal Comprehension",
-        "inference_analysis": "Inference & Analysis",
-        "algebraic_reasoning": "Algebraic Reasoning",
-        "geometric_reasoning": "Geometric Reasoning",
-        "data_probability": "Data & Probability",
-        "multistep_reasoning": "Multi-step Reasoning",
-        "unknown": "Uncategorized",
-    })
+    skill_label_map = {
+        "grammar_mechanics": "Grammar",
+        "rhetoric_organization": "Rhetoric",
+        "literal_comprehension": "Comprehension",
+        "inference_analysis": "Inference",
+        "authors_craft": "Author's Craft",
+        "cross_passage_synthesis": "Cross-passage",
+        "algebraic_reasoning": "Algebra",
+        "geometric_reasoning": "Geometry",
+        "data_probability": "Statistics",
+        "multistep_reasoning": "Multi-step",
+        "fractions_decimals_percents": "Fractions & Percents",
+        "functions_patterns": "Functions",
+        "unknown": "Other",
+    }
 
     total_answered = sum(1 for a in answers if a.selected_answer)
     total_correct = sum(1 for a in answers if a.is_correct)
