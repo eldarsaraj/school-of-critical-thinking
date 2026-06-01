@@ -15,15 +15,18 @@
   <li class="shsat-test-item">
     <div>
       <div class="shsat-test-item__title">{{ test.title }}</div>
+      {% if test.description %}
+      <div style="font-size:14px;color:rgba(0,0,0,0.55);margin:3px 0 2px;">{{ test.description }}</div>
+      {% endif %}
       <div class="shsat-test-item__meta">
-        {{ test.total_questions }} questions
+        {{ test.displayed_question_count }} questions · 57 ELA + 57 Math
         {% if test.source %} · {{ test.source }}{% endif %}
         {% if not test.is_free %} · <span style="color:rgba(0,0,0,0.4);">Premium</span>{% endif %}
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;">
       {% if test.id in completed_ids %}
-        <span class="shsat-badge shsat-badge--done">Done</span>
+        <span class="shsat-badge shsat-badge--done">Complete</span>
       {% endif %}
       {% if test.is_free or tests_taken < free_limit %}
         <a href="{% url 'shsat_test_intro' test.id %}" class="shsat-btn shsat-btn--outline">
@@ -32,6 +35,19 @@
       {% else %}
         <span class="shsat-badge">Upgrade required</span>
       {% endif %}
+    </div>
+  </li>
+  {% endfor %}
+
+  <!-- Upcoming practice tests (not yet available) -->
+  {% for n in "12345" %}
+  <li class="shsat-test-item" style="opacity:0.38;">
+    <div>
+      <div class="shsat-test-item__title">Practice Test {{ forloop.counter }}</div>
+      <div class="shsat-test-item__meta">57 questions per section · Coming soon</div>
+    </div>
+    <div>
+      <span class="shsat-badge" style="border-color:rgba(0,0,0,0.15);color:rgba(0,0,0,0.35);">Coming soon</span>
     </div>
   </li>
   {% endfor %}

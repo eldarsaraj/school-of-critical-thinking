@@ -18,6 +18,7 @@ class Parent(models.Model):
 
 class Test(models.Model):
     title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, default="")
     source = models.CharField(max_length=200, blank=True, default="")
     is_free = models.BooleanField(default=True)
     is_published = models.BooleanField(default=False)
@@ -38,6 +39,17 @@ class Test(models.Model):
         return self.questions.filter(section="Math").order_by("question_number")
 
     def total_questions(self):
+        return self.questions.count()
+
+    @property
+    def displayed_question_count(self):
+        """For adaptive tests, count routing + one module (what the student actually sees)."""
+        if self.is_adaptive:
+            ela_r = self.questions.filter(section="ELA", stage="routing").count()
+            math_r = self.questions.filter(section="Math", stage="routing").count()
+            ela_m = self.questions.filter(section="ELA", stage="easy_module").count()
+            math_m = self.questions.filter(section="Math", stage="easy_module").count()
+            return ela_r + math_r + ela_m + math_m
         return self.questions.count()
 
 
