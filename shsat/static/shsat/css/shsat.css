@@ -320,10 +320,10 @@
    ---------------------------------------------------------- */
 .shsat-test-layout {
   display: grid;
-  grid-template-columns: 1fr 220px;
-  gap: 32px;
+  grid-template-columns: 1fr 172px;
+  gap: 24px;
   align-items: start;
-  max-width: 1000px;
+  max-width: 1060px;
 }
 
 @media (max-width: 720px) {

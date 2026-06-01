@@ -26,7 +26,7 @@
     </div>
     <div style="display:flex;align-items:center;gap:12px;">
       {% if test.id in completed_ids %}
-        <span class="shsat-badge shsat-badge--done">Complete</span>
+        <span class="shsat-badge shsat-badge--done">Completed</span>
       {% endif %}
       {% if test.is_free or tests_taken < free_limit %}
         <a href="{% url 'shsat_test_intro' test.id %}" class="shsat-btn shsat-btn--outline">

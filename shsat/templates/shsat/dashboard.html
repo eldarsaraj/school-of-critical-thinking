@@ -45,6 +45,11 @@
 </div>
 {{ score_history|json_script:"scoreChartData" }}
 {{ cutoffs_list|json_script:"cutoffsData" }}
+{% if score_history %}
+<p style="font-size:12px;color:rgba(0,0,0,0.38);margin:-20px 0 28px;line-height:1.6;">
+  Dotted lines show projected scores for upcoming tests. Projections assume consistent weekly practice — actual improvement depends on study effort and focus areas.
+</p>
+{% endif %}
 
 <!-- School placement heatmap -->
 <p class="shsat-section-title">School placement (2026 cutoffs)</p>

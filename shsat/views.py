@@ -615,97 +615,75 @@ def save_answer(request):
 @require_POST
 def assign_modules(request):
     """
-    Adaptive tests: score routing answers, assign ela_module/math_module,
+    Adaptive tests: score routing answers for a section, assign its module,
     add module question IDs to started_with, return question data for client.
+    `section` param: 'ELA' or 'Math' (assigns one section at a time).
     """
     import json
     try:
         data = json.loads(request.body)
         attempt_id = data.get("attempt_id")
+        section = data.get("section", "ELA")  # 'ELA' or 'Math'
 
         parent, _ = Parent.objects.get_or_create(user=request.user)
         attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent, is_completed=False)
 
-        # Idempotent: if already assigned, return current state
-        if attempt.ela_module and attempt.math_module:
-            return JsonResponse({
-                "status": "already_assigned",
-                "ela_module": attempt.ela_module,
-                "math_module": attempt.math_module,
-            })
+        # Idempotent: if this section already assigned, return its current state
+        if section == "ELA" and attempt.ela_module:
+            return JsonResponse({"status": "already_assigned", "section": "ELA", "module": attempt.ela_module})
+        if section == "Math" and attempt.math_module:
+            return JsonResponse({"status": "already_assigned", "section": "Math", "module": attempt.math_module})
 
-        # Score routing answers per section
+        # Score routing answers for this section only
         routing_answers = (
-            Answer.objects.filter(attempt=attempt, question__stage='routing')
+            Answer.objects.filter(attempt=attempt, question__stage='routing', question__section=section)
             .select_related('question')
         )
-        ela_r_correct = ela_r_total = math_r_correct = math_r_total = 0
+        r_correct = r_total = 0
         for a in routing_answers:
-            if a.question.section == 'ELA':
-                ela_r_total += 1
-                if a.selected_answer and a.selected_answer.upper() == a.question.correct_answer.upper():
-                    ela_r_correct += 1
-            else:
-                math_r_total += 1
-                if a.selected_answer and a.selected_answer.upper() == a.question.correct_answer.upper():
-                    math_r_correct += 1
+            r_total += 1
+            if a.selected_answer and a.selected_answer.upper() == a.question.correct_answer.upper():
+                r_correct += 1
 
-        threshold = attempt.test.routing_threshold  # default 0.60
-        ela_pct  = ela_r_correct  / ela_r_total  if ela_r_total  else 0
-        math_pct = math_r_correct / math_r_total if math_r_total else 0
-        ela_module  = 'hard' if ela_pct  >= threshold else 'easy'
-        math_module = 'hard' if math_pct >= threshold else 'easy'
+        threshold = attempt.test.routing_threshold
+        r_pct = r_correct / r_total if r_total else 0
+        module = 'hard' if r_pct >= threshold else 'easy'
+        stage = f'{module}_module'
 
-        attempt.ela_module  = ela_module
-        attempt.math_module = math_module
+        if section == "ELA":
+            attempt.ela_module = module
+        else:
+            attempt.math_module = module
 
-        # Fetch and add module questions
-        ela_stage  = f'{"hard" if ela_module  == "hard" else "easy"}_module'
-        math_stage = f'{"hard" if math_module == "hard" else "easy"}_module'
-
-        ela_module_ids  = list(
-            attempt.test.questions.filter(section='ELA', stage=ela_stage)
+        # Fetch and add this section's module questions
+        module_ids = list(
+            attempt.test.questions.filter(section=section, stage=stage)
             .order_by('question_number').values_list('id', flat=True)
         )
-        math_module_ids = list(
-            attempt.test.questions.filter(section='Math', stage=math_stage)
-            .order_by('question_number').values_list('id', flat=True)
-        )
-        new_ids = ela_module_ids + math_module_ids
-        attempt.started_with = list(attempt.started_with) + new_ids
+        attempt.started_with = list(attempt.started_with) + module_ids
         attempt.save()
 
-        for qid in new_ids:
+        for qid in module_ids:
             Answer.objects.get_or_create(attempt=attempt, question_id=qid)
 
-        # Build question data for client (with sequential display_index)
-        module_qs = list(
-            Question.objects.filter(id__in=new_ids)
-            .order_by('section', 'question_number')
-        )
+        # Build question data (display_index continues after this section's routing count)
+        module_qs = list(Question.objects.filter(id__in=module_ids).order_by('question_number'))
         ans_map = {
             a.question_id: a
-            for a in Answer.objects.filter(attempt=attempt, question_id__in=new_ids)
+            for a in Answer.objects.filter(attempt=attempt, question_id__in=module_ids)
         }
         q_data = []
-        # display_index continues after routing: ELA routing was ela_r_total questions
-        ela_idx  = ela_r_total
-        math_idx = math_r_total
+        idx = r_total
         for q in module_qs:
+            idx += 1
             ans = ans_map.get(q.id)
-            if q.section == 'ELA':
-                ela_idx += 1
-                display_index = ela_idx
-            else:
-                math_idx += 1
-                display_index = math_idx
             q_data.append({
                 "id": q.id,
                 "section": q.section,
                 "stage": q.stage,
                 "is_routing": False,
                 "question_number": q.question_number,
-                "display_index": display_index,
+                "display_index": idx,
                 "question_type": q.question_type,
                 "use_efgh": q.question_number % 2 == 0,
                 "passage_group_id": q.passage_group_id or "",
@@ -723,14 +701,10 @@ def assign_modules(request):
 
         return JsonResponse({
             "status": "ok",
-            "ela_module": ela_module,
-            "math_module": math_module,
-            "ela_routing_correct": ela_r_correct,
-            "ela_routing_total": ela_r_total,
-            "ela_pct": round(ela_pct * 100),
-            "math_routing_correct": math_r_correct,
-            "math_routing_total": math_r_total,
-            "math_pct": round(math_pct * 100),
+            "section": section,
+            "module": module,
+            "routing_correct": r_correct,
+            "routing_total": r_total,
             "questions": q_data,
         })
     except Exception as e:

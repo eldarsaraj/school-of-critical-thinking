@@ -35,7 +35,7 @@
 
 <!-- School placement -->
 {% if placement_data %}
-<p class="shsat-section-title">School placement (2025 cutoffs)</p>
+<p class="shsat-section-title">School placement (2026 cutoffs)</p>
 <table class="shsat-table" style="margin-bottom:36px;">
   <thead>
     <tr>
@@ -64,13 +64,18 @@
 
 <!-- Notes -->
 <p class="shsat-section-title">Notes</p>
-<form method="post" style="max-width:520px;margin-bottom:36px;">
+<form method="post" style="max-width:520px;margin-bottom:24px;">
   {% csrf_token %}
   <div class="contact-form__field">
     {{ notes_form.notes }}
   </div>
   <button type="submit" class="shsat-btn shsat-btn--outline">Save notes</button>
 </form>
+
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;">
+  <a href="{% url 'shsat_error_analysis' attempt.id %}" class="shsat-btn">View Error Analysis →</a>
+  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline">Back to dashboard</a>
+</div>
 
 <!-- ELA review -->
 <p class="shsat-section-title">ELA — answer review</p>
@@ -107,8 +112,7 @@
 {% endfor %}
 
 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;">
-  <a href="{% url 'shsat_error_analysis' attempt.id %}" class="shsat-btn">View Error Analysis →</a>
-  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline">Back to dashboard</a>
   <a href="{% url 'shsat_test_list' %}" class="shsat-btn shsat-btn--outline">Practice tests</a>
+  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline">Back to dashboard</a>
 </div>
 {% endblock %}

@@ -58,9 +58,11 @@ const ATTEMPT_ID = {{ attempt.id }};
 const CSRF_TOKEN = "{{ csrf_token }}";
 const INITIAL_ELAPSED = {{ duration_seconds }} - {{ remaining_seconds }};
 const IS_ADAPTIVE = {{ is_adaptive|yesno:"true,false" }};
-let modulesAssigned = {{ modules_assigned|yesno:"true,false" }};
 let elaModule = "{{ ela_module }}";
 let mathModule = "{{ math_module }}";
+let elaModuleAssigned = elaModule !== "";
+let mathModuleAssigned = mathModule !== "";
+let modulesAssigned = elaModuleAssigned && mathModuleAssigned;
 
 const questions = JSON.parse(document.getElementById("questionData").textContent);
 let currentIdx = 0;
@@ -269,7 +271,10 @@ function selectAnswer(qId, letter, el) {
     headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
     body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, selected_answer: letter, time_spent: accumulated }),
   }).catch(console.error);
-  if (IS_ADAPTIVE && !modulesAssigned) checkRoutingComplete();
+  if (IS_ADAPTIVE) {
+    const q = questions.find(q => q.id === qId);
+    if (q && q.is_routing) checkSectionRoutingComplete(q.section);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -286,7 +291,10 @@ function saveGridIn(qId, value) {
       headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
       body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, selected_answer: value }),
     }).catch(console.error);
-    if (IS_ADAPTIVE && !modulesAssigned) checkRoutingComplete();
+    if (IS_ADAPTIVE) {
+      const q = questions.find(q => q.id === qId);
+      if (q && q.is_routing) checkSectionRoutingComplete(q.section);
+    }
   }, 600);
 }
 
@@ -309,8 +317,7 @@ function toggleFlag(qId) {
 // Question map
 // ---------------------------------------------------------------------------
 function updateMap() {
-  const SECTION_TOTAL = IS_ADAPTIVE ? 57 : null;  // real SHSAT: 57 per section
-  [["ela", elaSqs], ["math", mathSqs]].forEach(([section, sqs]) => {
+  [["ela", elaSqs, elaModuleAssigned], ["math", mathSqs, mathModuleAssigned]].forEach(([section, sqs, sectionAssigned]) => {
     const el = document.getElementById(`${section}Map`);
     if (!el) return;
     let html = sqs.map(q => {
@@ -324,9 +331,9 @@ function updateMap() {
       }
       return `<div class="${cls}" onclick="goTo(${globalIdx})" title="Q${q.display_index}">${q.display_index}</div>`;
     }).join("");
-    // Adaptive: show locked placeholder dots for unassigned module questions
-    if (IS_ADAPTIVE && !modulesAssigned && SECTION_TOTAL) {
-      const locked = SECTION_TOTAL - sqs.length;
+    // Adaptive: show locked placeholder dots for this section's unassigned module questions
+    if (IS_ADAPTIVE && !sectionAssigned) {
+      const locked = 57 - sqs.length;
       for (let i = 0; i < locked; i++) {
         const n = sqs.length + i + 1;
         html += `<div class="shsat-qmap__dot shsat-qmap__dot--locked" title="Q${n}">·</div>`;
@@ -337,56 +344,65 @@ function updateMap() {
 }
 
 // ---------------------------------------------------------------------------
-// Adaptive: silent auto-routing when all routing questions are answered
+// Adaptive: per-section silent auto-routing
 // ---------------------------------------------------------------------------
-function checkRoutingComplete() {
-  const routingQs = questions.filter(q => q.is_routing);
-  const allAnswered = routingQs.length > 0 && routingQs.every(q => answers[q.id]);
-  if (allAnswered) requestModuleAssignment();
+function checkSectionRoutingComplete(section) {
+  const routing = questions.filter(q => q.section === section && q.is_routing);
+  if (routing.length > 0 && routing.every(q => answers[q.id])) {
+    requestSectionModules(section);
+  }
 }
 
-let assigningModules = false;
-function requestModuleAssignment() {
-  if (assigningModules || modulesAssigned) return;
-  assigningModules = true;
+const _assigning = { ELA: false, Math: false };
+
+function requestSectionModules(section) {
+  const alreadyAssigned = section === "ELA" ? elaModuleAssigned : mathModuleAssigned;
+  if (_assigning[section] || alreadyAssigned) return;
+  _assigning[section] = true;
 
   fetch("/shsat/api/assign-modules/", {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
-    body: JSON.stringify({ attempt_id: ATTEMPT_ID }),
+    body: JSON.stringify({ attempt_id: ATTEMPT_ID, section }),
   })
   .then(r => r.json())
   .then(data => {
     if (data.status === "error") {
       console.error("Module assignment error:", data.message);
-      assigningModules = false;
+      _assigning[section] = false;
       return;
     }
-    elaModule = data.ela_module;
-    mathModule = data.math_module;
-    modulesAssigned = true;
 
-    if (data.questions && data.questions.length) {
-      data.questions.forEach(q => {
-        questions.push(q);
-        initQuestion(q);
-      });
+    const newQs = data.questions || [];
+    if (newQs.length) {
+      // Insert module questions right after this section's last routing question
+      const lastRoutingIdx = questions.reduce(
+        (last, q, i) => (q.section === section && q.is_routing ? i : last), -1
+      );
+      const insertAt = lastRoutingIdx + 1;
+      questions.splice(insertAt, 0, ...newQs);
+      newQs.forEach(q => initQuestion(q));
     }
+
+    if (section === "ELA") { elaModule = data.module; elaModuleAssigned = true; }
+    else                   { mathModule = data.module; mathModuleAssigned = true; }
+    modulesAssigned = elaModuleAssigned && mathModuleAssigned;
+
     rebuildSectionLists();
     updateMap();
-    // Re-render current question so Next → button appears if on last routing Q
-    renderQuestion(currentIdx);
+    renderQuestion(currentIdx);  // refresh Next → button if on last routing Q
 
-    // Brief toast notification
-    const toast = document.getElementById("moduleToast");
-    if (toast) {
-      toast.style.display = "block";
-      setTimeout(() => { toast.style.display = "none"; }, 2500);
+    if (modulesAssigned) {
+      const toast = document.getElementById("moduleToast");
+      if (toast) {
+        toast.style.display = "block";
+        setTimeout(() => { toast.style.display = "none"; }, 2500);
+      }
     }
   })
   .catch(err => {
     console.error("Module assignment failed:", err);
-    assigningModules = false;
+    _assigning[section] = false;
   });
 }
 
