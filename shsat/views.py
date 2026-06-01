@@ -209,6 +209,7 @@ def dashboard(request):
 
     # Avg time per question across all timed answers
     timed_answers = [a for a in all_answers if a.time_spent_seconds is not None]
+    has_timing_data = len(timed_answers) > 0
     avg_time_per_q = (
         round(sum(a.time_spent_seconds for a in timed_answers) / len(timed_answers) / 60, 1)
         if timed_answers else None
@@ -227,6 +228,7 @@ def dashboard(request):
         "skill_accuracy_data": skill_accuracy_data,
         "weakest_skill": weakest_skill,
         "avg_time_per_q": avg_time_per_q,
+        "has_timing_data": has_timing_data,
     }
     return render(request, "shsat/dashboard.html", context)
 

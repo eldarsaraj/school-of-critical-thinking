@@ -120,7 +120,7 @@
 </div>
 {{ skill_accuracy_data|json_script:"skillChartData" }}
 
-{% if avg_time_per_q %}
+{% if has_timing_data %}
 <p class="shsat-section-title" style="margin-top:32px;">Avg time per skill (minutes)</p>
 <div class="shsat-chart-wrap">
   <canvas id="timeChart"></canvas>
