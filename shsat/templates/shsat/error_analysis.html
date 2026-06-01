@@ -113,6 +113,122 @@
   <a href="{% url 'shsat_test_list' %}" class="shsat-btn">Take another test</a>
 </div>
 
+<!-- Parent Insights callout -->
+{% if easy_wrong or unanswered_count or total_time_minutes %}
+<div class="shsat-insights-box" style="margin-top:48px;">
+  <p class="shsat-insights-box__title">Parent insights</p>
+  <div class="shsat-insights-grid">
+    {% if easy_wrong %}
+    <div class="shsat-insight shsat-insight--warn">
+      <div class="shsat-insight__value">{{ easy_wrong|length }}</div>
+      <div class="shsat-insight__label">Easy questions missed</div>
+      <div class="shsat-insight__note">These are the most recoverable points — straightforward concepts answered incorrectly. Prioritise reviewing these first.</div>
+    </div>
+    {% endif %}
+    {% if unanswered_count %}
+    <div class="shsat-insight shsat-insight--warn">
+      <div class="shsat-insight__value">{{ unanswered_count }}</div>
+      <div class="shsat-insight__label">Questions left blank</div>
+      <div class="shsat-insight__note">Unanswered questions score zero. Work on pacing so every question gets an attempt — even a guess.</div>
+    </div>
+    {% endif %}
+    {% if total_time_minutes %}
+    <div class="shsat-insight {% if pacing_ok %}shsat-insight--ok{% else %}shsat-insight--warn{% endif %}">
+      <div class="shsat-insight__value">{{ total_time_minutes|floatformat:0 }} min</div>
+      <div class="shsat-insight__label">Total time used</div>
+      <div class="shsat-insight__note">{% if pacing_ok %}Good pacing — well within the 3-hour limit.{% else %}Close to or over the 3-hour limit. Practise answering more quickly on familiar question types.{% endif %}</div>
+    </div>
+    {% endif %}
+    {% if not easy_wrong and not unanswered_count %}
+    <div class="shsat-insight shsat-insight--ok">
+      <div class="shsat-insight__value">✓</div>
+      <div class="shsat-insight__label">No easy questions missed</div>
+      <div class="shsat-insight__note">All easy questions were answered correctly. Focus areas are in medium and hard difficulty questions.</div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+<!-- Full Question Review -->
+<p class="shsat-section-title" style="margin-top:56px;">Question review</p>
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 24px;">All questions from this attempt. Wrong answers show choices, explanation, and the trap type.</p>
+
+{% for section_name in review_sections %}
+<p style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:28px 0 10px;">{{ section_name }}</p>
+
+{% for q in question_review %}
+{% if q.section == section_name %}
+
+{% if q.is_correct %}
+<div class="shsat-qrow shsat-qrow--correct">
+  <span class="shsat-qrow__icon">✓</span>
+  <span class="shsat-qrow__num">Q{{ q.number }}</span>
+  <span class="shsat-qrow__text">{{ q.text|truncatechars:90 }}</span>
+  <span class="shsat-qrow__skill">{{ q.skill }}</span>
+</div>
+
+{% elif q.unanswered %}
+<div class="shsat-qrow shsat-qrow--unanswered">
+  <span class="shsat-qrow__icon">—</span>
+  <span class="shsat-qrow__num">Q{{ q.number }}</span>
+  <span class="shsat-qrow__text">{{ q.text|truncatechars:90 }}</span>
+  <span class="shsat-qrow__skill" style="color:#f59e0b;">Not answered</span>
+</div>
+
+{% else %}
+<div class="shsat-qcard">
+  <div class="shsat-qcard__header">
+    <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;">
+      <span class="shsat-qrow__icon shsat-qrow__icon--wrong">✗</span>
+      <span style="font-weight:600;font-size:14px;">Q{{ q.number }}</span>
+      <span class="shsat-badge-pill shsat-badge-pill--{{ q.difficulty|lower }}">{{ q.difficulty }}</span>
+      <span class="shsat-badge-pill shsat-badge-pill--skill">{{ q.skill }}</span>
+    </div>
+    <p class="shsat-qcard__text">{{ q.text }}</p>
+  </div>
+
+  {% if q.choices %}
+  <div class="shsat-qcard__choices">
+    {% for choice in q.choices %}
+    <div class="shsat-choice shsat-choice--{{ choice.status }}">
+      <span class="shsat-choice__letter">{{ choice.letter }}</span>
+      <span class="shsat-choice__text">{{ choice.text }}</span>
+      {% if choice.status == "correct" %}<span class="shsat-choice__tag shsat-choice__tag--correct">Correct answer</span>{% endif %}
+      {% if choice.status == "wrong" %}<span class="shsat-choice__tag shsat-choice__tag--wrong">Your answer</span>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div style="font-size:13px;color:rgba(0,0,0,0.5);padding:12px 16px;">
+    Grid-in — answered: <strong>{{ q.student_answer }}</strong> · Correct: <strong>{{ q.correct_answer }}</strong>
+  </div>
+  {% endif %}
+
+  {% if q.distractor_type %}
+  <div class="shsat-qcard__trap">
+    <span class="shsat-trap-label">Trap:</span> {{ q.distractor_type|title }}
+  </div>
+  {% endif %}
+
+  {% if q.explanation %}
+  <div class="shsat-qcard__explanation">
+    <span class="shsat-explanation-label">Explanation</span>
+    <p>{{ q.explanation }}</p>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:48px;">
+  <a href="{% url 'shsat_test_results' attempt.id %}" class="shsat-btn shsat-btn--outline">← Back to results</a>
+  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline">Dashboard</a>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 // ---------------------------------------------------------------------------

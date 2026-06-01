@@ -586,6 +586,45 @@ def error_analysis(request, attempt_id):
         })
     has_section_time = any(s["has_time"] for s in section_summary_data)
 
+    # Full question review (for parent)
+    question_review = []
+    for ans in answers:
+        q = ans.question
+        choices = []
+        for letter, text in [("A", q.choice_a), ("B", q.choice_b), ("C", q.choice_c), ("D", q.choice_d)]:
+            if not text:
+                continue
+            status = "neutral"
+            if letter == q.correct_answer:
+                status = "correct"
+            if letter == ans.selected_answer and not ans.is_correct:
+                status = "wrong"
+            choices.append({"letter": letter, "text": text, "status": status})
+        distractor_type = ""
+        if ans.selected_answer and not ans.is_correct and q.distractor_types:
+            distractor_type = q.distractor_types.get(ans.selected_answer, "")
+        question_review.append({
+            "number": q.question_number,
+            "section": q.section,
+            "text": q.question_text,
+            "choices": choices,
+            "student_answer": ans.selected_answer or "",
+            "correct_answer": q.correct_answer,
+            "is_correct": ans.is_correct,
+            "unanswered": not ans.selected_answer,
+            "explanation": q.explanation or "",
+            "skill": skill_label_map.get(q.skill or "unknown", q.skill or "Unknown"),
+            "difficulty": (q.difficulty or "medium").capitalize(),
+            "distractor_type": distractor_type,
+            "is_grid_in": q.question_type == "grid_in",
+        })
+
+    # Parent insights: easy questions wrong, unanswered count, pacing
+    easy_wrong = [q for q in question_review if q["difficulty"] == "Easy" and not q["is_correct"] and not q["unanswered"]]
+    unanswered_count = sum(1 for q in question_review if q["unanswered"])
+    total_time_minutes = sum(s["time_minutes"] for s in section_summary_data)
+    pacing_ok = total_time_minutes <= 170 if has_section_time else None  # 3h test = 180m, flag if >170m
+
     context = {
         "attempt": attempt,
         "accuracy_pct": accuracy_pct,
@@ -599,6 +638,12 @@ def error_analysis(request, attempt_id):
         "recommendations": recommendations,
         "section_summary_data": section_summary_data,
         "has_section_time": has_section_time,
+        "question_review": question_review,
+        "easy_wrong": easy_wrong,
+        "unanswered_count": unanswered_count,
+        "pacing_ok": pacing_ok,
+        "total_time_minutes": round(total_time_minutes, 0) if has_section_time else None,
+        "review_sections": ["ELA", "Math"],
     }
     return render(request, "shsat/error_analysis.html", context)
 
