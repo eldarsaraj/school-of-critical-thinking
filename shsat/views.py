@@ -94,6 +94,7 @@ def dashboard(request):
         if a.composite_score is not None:
             score_history_raw.append({
                 "_sort": a.submitted_at.isoformat(),
+                "type": "attempt",
                 "date": a.submitted_at.strftime("%b %d"),
                 "composite": a.composite_score,
                 "ela": a.ela_scaled,
@@ -105,6 +106,7 @@ def dashboard(request):
         math_scaled = _scale(min(m.math_correct, 47))
         score_history_raw.append({
             "_sort": m.date.isoformat() + "T00:00:00",
+            "type": "manual",
             "date": m.date.strftime("%b %d"),
             "composite": ela_scaled + math_scaled,
             "ela": ela_scaled,
@@ -121,8 +123,15 @@ def dashboard(request):
         best = baseline_entries[-1]  # most recent Baseline attempt
         best["seq"] = "Baseline"
         collapsed.append(best)
-    for i, entry in enumerate(other_entries):
-        entry["seq"] = f"Test {i + 1}"
+    test_count = 0
+    log_count = 0
+    for entry in other_entries:
+        if entry.get("type") == "manual":
+            log_count += 1
+            entry["seq"] = f"Log {log_count}"
+        else:
+            test_count += 1
+            entry["seq"] = f"Test {test_count}"
         collapsed.append(entry)
     score_history_raw = collapsed
     score_history = [{k: v for k, v in e.items() if k != "_sort"} for e in score_history_raw]
