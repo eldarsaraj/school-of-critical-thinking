@@ -26,11 +26,11 @@
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
       {% if test.id in completed_ids %}
-        <span class="shsat-btn shsat-btn--done">Completed</span>
+        <span class="shsat-btn shsat-btn--sm shsat-btn--done">Completed</span>
       {% endif %}
       {% if test.is_free or tests_taken < free_limit %}
         <a href="{% url 'shsat_test_intro' test.id %}"
-           class="shsat-btn {% if test.id in completed_ids %}shsat-btn--retake{% else %}shsat-btn--outline{% endif %}">
+           class="shsat-btn shsat-btn--sm {% if test.id in completed_ids %}shsat-btn--retake{% else %}shsat-btn--outline{% endif %}">
           {% if test.id in completed_ids %}Retake{% else %}Start{% endif %}
         </a>
       {% else %}

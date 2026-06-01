@@ -226,6 +226,12 @@
   border-color: rgba(160, 30, 20, 0.4);
 }
 
+.shsat-btn--sm {
+  padding: 3px 10px;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+
 .shsat-btn--done {
   background: transparent;
   color: #1a7f3c;
