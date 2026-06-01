@@ -187,65 +187,77 @@ const emptyStatePlugin = {
 Chart.register(emptyStatePlugin);
 
 // ---------------------------------------------------------------------------
+// Shared projection: lifted out so gap chart can reuse it
+// Only test-slot entries (Baseline + Test N) count toward the 6-slot limit.
+// Log entries appear in history but do NOT consume a projection slot.
+// ---------------------------------------------------------------------------
+const _history = JSON.parse(document.getElementById("scoreChartData").textContent);
+
+function buildProjection(history) {
+  const totalTests = 6; // Baseline + Test 1..5
+  const isLog = d => d.seq.toLowerCase().startsWith("log");
+  const testHistory = history.filter(d => !isLog(d));
+  const numProj = Math.max(0, totalTests - testHistory.length);
+  if (numProj === 0 || testHistory.length === 0) return null;
+
+  // Bridge from the last non-log entry; find its index in the full history
+  let bridgeIdx = -1, last = null;
+  for (let i = history.length - 1; i >= 0; i--) {
+    if (!isLog(history[i])) { bridgeIdx = i; last = history[i]; break; }
+  }
+  if (!last) return null;
+
+  let ela = last.ela, math = last.math;
+  const seed = last.composite;
+  const existingTestCount = testHistory.filter(d => d.seq.toLowerCase().startsWith("test")).length;
+  const gains = [14, 9, 16, 11, 13, 8, 15, 12, 10, 17];
+
+  const compProj = [], elaProj = [], mathProj = [], labels = [];
+  for (let i = 0; i < numProj; i++) {
+    const gain = gains[(seed + i * 3) % gains.length];
+    const elaGain = Math.round(gain * 0.48 + (i % 2 === 0 ? 1 : -1));
+    const mathGain = gain - elaGain;
+    ela = Math.min(400, ela + elaGain);
+    math = Math.min(400, math + mathGain);
+    compProj.push(ela + math);
+    elaProj.push(ela);
+    mathProj.push(math);
+    labels.push(`Test ${existingTestCount + i + 1} (projected)`);
+  }
+  return {
+    labels, bridgeIdx,
+    composite: [last.composite, ...compProj],
+    ela: [last.ela, ...elaProj],
+    math: [last.math, ...mathProj],
+  };
+}
+
+const _proj = buildProjection(_history);
+const _realLabels = _history.map(d => d.seq);
+const _allLabels = _proj ? [..._realLabels, ..._proj.labels] : _realLabels;
+
+// Build a full-length null-padded array with projected values starting at bridgeIdx
+function makeProjData(arr) {
+  if (!arr || !_proj) return [];
+  const result = Array(_allLabels.length).fill(null);
+  arr.forEach((v, i) => { result[_proj.bridgeIdx + i] = v; });
+  return result;
+}
+
+// ---------------------------------------------------------------------------
 // Score history line chart with score projection
 // ---------------------------------------------------------------------------
 (function () {
-  const history = JSON.parse(document.getElementById("scoreChartData").textContent);
+  const history = _history;
+  const proj = _proj;
+  const allLabels = _allLabels;
   const isEmpty = history.length === 0;
   const ctx = document.getElementById("scoreChart").getContext("2d");
 
   const greyLine = { borderColor: "rgba(0,0,0,0.12)", backgroundColor: "transparent",
                      pointBackgroundColor: "rgba(0,0,0,0.12)", borderWidth: 2, tension: 0.2, pointRadius: 4 };
 
-  // Build projection: project up to 6 total tests (baseline + 5 more)
-  // Uses a deterministic sequence (seeded on last composite) so it's stable on reload
-  function buildProjection(history) {
-    const totalTests = 6;
-    const numProj = Math.max(0, totalTests - history.length);
-    if (numProj === 0 || history.length === 0) return null;
-
-    const last = history[history.length - 1];
-    let ela = last.ela, math = last.math;
-    const seed = last.composite;
-
-    // Pre-computed gain deltas: realistic weekly improvement with slight fluctuation
-    const gains = [14, 9, 16, 11, 13, 8, 15, 12, 10, 17];
-
-    // Count existing non-baseline ("Test N") entries to continue numbering
-    const existingTestCount = history.filter(d => d.seq.toLowerCase().startsWith("test")).length;
-
-    const compProj = [], elaProj = [], mathProj = [], labels = [];
-    for (let i = 0; i < numProj; i++) {
-      const gain = gains[(seed + i * 3) % gains.length];
-      const elaGain = Math.round(gain * 0.48 + (i % 2 === 0 ? 1 : -1));
-      const mathGain = gain - elaGain;
-      ela = Math.min(400, ela + elaGain);
-      math = Math.min(400, math + mathGain);
-      compProj.push(ela + math);
-      elaProj.push(ela);
-      mathProj.push(math);
-      labels.push(`Test ${existingTestCount + i + 1} (projected)`);
-    }
-    // Bridge: include last real value at position 0 of projection so lines connect
-    return {
-      labels,
-      composite: [last.composite, ...compProj],
-      ela: [last.ela, ...elaProj],
-      math: [last.math, ...mathProj],
-    };
-  }
-
-  const proj = buildProjection(history);
-  // Full x-axis labels: real test labels + projected labels
-  const realLabels = history.map(d => d.seq);
-  const allLabels = proj ? [...realLabels, ...proj.labels] : realLabels;
-
-  // Null-padded projection arrays (null for real points, value for projected)
-  function projData(arr) {
-    if (!arr) return [];
-    // First projected point is at index history.length - 1 (bridge point)
-    return [...Array(history.length - 1).fill(null), ...arr];
-  }
+  function projData(arr) { return makeProjData(arr); }
 
   const datasets = isEmpty
     ? [
@@ -477,7 +489,7 @@ Chart.register(emptyStatePlugin);
 })();
 
 // ---------------------------------------------------------------------------
-// Score-to-cutoff gap progression chart
+// Score-to-cutoff gap progression chart (with projections)
 // ---------------------------------------------------------------------------
 (function () {
   const el = document.getElementById("gapChart");
@@ -490,9 +502,13 @@ Chart.register(emptyStatePlugin);
     "#e76f51", "#2a9d8f", "#b5838d", "#264653"
   ];
 
+  // Use shared projection; extend x-axis with projected test labels
+  const gapAllLabels = _proj ? [...data.labels, ..._proj.labels] : data.labels;
+
+  // Real gap datasets (null-padded to full length)
   const datasets = data.schools.map((s, i) => ({
     label: s.school,
-    data: s.gaps,
+    data: [...s.gaps, ...Array(_proj ? _proj.labels.length : 0).fill(null)],
     borderColor: palette[i % palette.length],
     backgroundColor: "transparent",
     pointBackgroundColor: palette[i % palette.length],
@@ -501,25 +517,49 @@ Chart.register(emptyStatePlugin);
     pointRadius: 5,
   }));
 
+  // Projected gap datasets (one per school, dotted, same colour but lighter)
+  if (_proj) {
+    data.schools.forEach((s, i) => {
+      const projGaps = _proj.composite.map(c => c - s.cutoff);
+      datasets.push({
+        label: `${s.school} (proj)`,
+        data: makeProjData(projGaps),
+        borderColor: palette[i % palette.length],
+        backgroundColor: "transparent",
+        pointBackgroundColor: palette[i % palette.length],
+        borderWidth: 1.5,
+        borderDash: [4, 4],
+        tension: 0.2,
+        pointRadius: 3,
+        pointStyle: "circle",
+      });
+    });
+  }
+
   new Chart(el.getContext("2d"), {
     type: "line",
-    data: { labels: data.labels, datasets },
+    data: { labels: gapAllLabels, datasets },
     options: {
       responsive: true,
       aspectRatio: 2.5,
       plugins: {
         legend: {
           display: true, position: "top", align: "end",
-          labels: { boxWidth: 12, font: { size: 12 }, padding: 14 }
+          labels: {
+            boxWidth: 12, font: { size: 12 }, padding: 14,
+            filter: item => !item.text.includes("(proj)"),
+          }
         },
         tooltip: {
           callbacks: {
             label: (item) => {
-              const s = data.schools[item.datasetIndex];
+              const school = data.schools[item.datasetIndex % data.schools.length];
               const gap = item.raw;
+              if (gap === null) return null;
               const sign = gap >= 0 ? "+" : "";
+              const proj = item.dataset.label.includes("(proj)") ? " projected" : "";
               const status = gap >= 0 ? "above cutoff" : "below cutoff";
-              return ` ${s.school}: ${sign}${gap} pts (${status}, cutoff ${s.cutoff})`;
+              return ` ${school.school}${proj}: ${sign}${gap} pts (${status}, cutoff ${school.cutoff})`;
             }
           }
         },

@@ -198,12 +198,30 @@ def dashboard(request):
 
     # Sort skills by accuracy ascending (weakest first)
     skill_label_map = {
+        # ELA — SKILL_CHOICES keys
+        "punctuation": "Punctuation",
+        "usage_agreement": "Usage & Agreement",
+        "sentence_structure": "Sentence Structure",
+        "main_idea": "Main Idea",
+        "supporting_detail": "Supporting Detail",
+        "evidence_selection": "Evidence",
+        "inference": "Inference",
+        "vocabulary": "Vocabulary",
+        "authors_craft": "Author's Craft",
+        "cross_passage_synthesis": "Cross-passage",
+        # Math — SKILL_CHOICES keys
+        "number_operations": "Number Ops",
+        "ratios_proportions": "Ratios & Proportions",
+        "algebra": "Algebra",
+        "geometry": "Geometry",
+        "statistics_data": "Statistics",
+        "probability": "Probability",
+        "multistep_word_problems": "Multi-step",
+        # Legacy keys
         "grammar_mechanics": "Grammar",
         "rhetoric_organization": "Rhetoric",
         "literal_comprehension": "Comprehension",
         "inference_analysis": "Inference",
-        "authors_craft": "Author's Craft",
-        "cross_passage_synthesis": "Cross-passage",
         "algebraic_reasoning": "Algebra",
         "geometric_reasoning": "Geometry",
         "data_probability": "Statistics",
@@ -508,12 +526,30 @@ def error_analysis(request, attempt_id):
     )
 
     skill_label_map = {
+        # ELA — SKILL_CHOICES keys
+        "punctuation": "Punctuation",
+        "usage_agreement": "Usage & Agreement",
+        "sentence_structure": "Sentence Structure",
+        "main_idea": "Main Idea",
+        "supporting_detail": "Supporting Detail",
+        "evidence_selection": "Evidence",
+        "inference": "Inference",
+        "vocabulary": "Vocabulary",
+        "authors_craft": "Author's Craft",
+        "cross_passage_synthesis": "Cross-passage",
+        # Math — SKILL_CHOICES keys
+        "number_operations": "Number Ops",
+        "ratios_proportions": "Ratios & Proportions",
+        "algebra": "Algebra",
+        "geometry": "Geometry",
+        "statistics_data": "Statistics",
+        "probability": "Probability",
+        "multistep_word_problems": "Multi-step",
+        # Legacy keys
         "grammar_mechanics": "Grammar",
         "rhetoric_organization": "Rhetoric",
         "literal_comprehension": "Comprehension",
         "inference_analysis": "Inference",
-        "authors_craft": "Author's Craft",
-        "cross_passage_synthesis": "Cross-passage",
         "algebraic_reasoning": "Algebra",
         "geometric_reasoning": "Geometry",
         "data_probability": "Statistics",
