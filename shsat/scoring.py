@@ -12,12 +12,13 @@
 #      'hard' module: more generous (harder questions deserve more credit)
 #      'easy' module: more conservative
 #
-# Calibration for adaptive tables (Option B):
-#   Hard path, ~23/57 correct ≈ 258/section  (Stuyvesant cutoff, 517 composite)
-#   Easy path, ~25/57 correct ≈ 231/section  (Brooklyn Tech cutoff, 463 composite)
+# Calibration for adaptive tables (conservative):
+#   Hard path, ~35/57 correct ≈ 262/section  (Stuyvesant cutoff ~517 composite)
+#   Easy path, ~32/57 correct ≈ 232/section  (Brooklyn Tech cutoff ~463 composite)
 #   Both paths: 0/57 → 200,  57/57 → 400
-#   Random guessing (14/57, 25% on 4-choice MC) → ~210 on easy path → ~420 composite
+#   Random guessing (14/57, 25% on 4-choice MC) → ~206 easy / ~215 hard → ~420-430 composite
 #   (well below any cutoff, as expected)
+#   Students need ~60%+ correct to approach Stuyvesant-level scores.
 #
 # These tables are approximations — the DOE does not publish conversion tables.
 # ---------------------------------------------------------------------------
@@ -60,15 +61,17 @@ def _build_table(anchors: list[tuple[int, int]]) -> dict[int, int]:
 
 
 # Easy-module path: conservative credit — easier questions
+# ~32/57 correct needed to approach Brooklyn Tech cutoff (~231/section)
 _EASY_ANCHORS = [
-    (0, 200), (7, 204), (14, 210), (21, 222), (28, 238),
-    (35, 260), (42, 290), (50, 340), (57, 400),
+    (0, 200), (7, 202), (14, 206), (21, 213), (28, 222),
+    (35, 240), (42, 274), (50, 325), (57, 400),
 ]
 
 # Hard-module path: more generous credit — harder questions
+# ~35/57 correct needed to approach Stuyvesant cutoff (~258/section)
 _HARD_ANCHORS = [
-    (0, 200), (7, 210), (14, 226), (21, 250), (28, 275),
-    (35, 307), (42, 340), (50, 375), (57, 400),
+    (0, 200), (7, 206), (14, 215), (21, 228), (28, 244),
+    (35, 262), (42, 310), (50, 360), (57, 400),
 ]
 
 _EASY_TABLE = _build_table(_EASY_ANCHORS)

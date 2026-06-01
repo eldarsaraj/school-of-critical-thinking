@@ -754,6 +754,16 @@ def account(request):
     })
 
 
+@login_required(login_url="/shsat/login/")
+@require_POST
+def delete_attempt(request, attempt_id):
+    parent, _ = Parent.objects.get_or_create(user=request.user)
+    attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent)
+    attempt.delete()
+    messages.success(request, "Test attempt deleted.")
+    return redirect("shsat_account")
+
+
 # ---------------------------------------------------------------------------
 # AJAX views
 # ---------------------------------------------------------------------------

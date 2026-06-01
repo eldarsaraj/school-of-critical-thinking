@@ -59,10 +59,17 @@
         <td><strong>{{ a.composite_score|default:"—" }}</strong></td>
         <td>{{ a.ela_scaled|default:"—" }}</td>
         <td>{{ a.math_scaled|default:"—" }}</td>
-        <td>
-          <a href="{% url 'shsat_error_analysis' a.id %}" style="font-size:13px;color:#274c77;text-decoration:none;white-space:nowrap;">
+        <td style="white-space:nowrap;">
+          <a href="{% url 'shsat_error_analysis' a.id %}" style="font-size:13px;color:#274c77;text-decoration:none;">
             Error analysis →
           </a>
+          <form method="post" action="{% url 'shsat_delete_attempt' a.id %}" style="display:inline;margin-left:12px;"
+                onsubmit="return confirm('Delete this attempt? This cannot be undone.');">
+            {% csrf_token %}
+            <button type="submit" style="background:none;border:none;cursor:pointer;font-size:13px;color:#a4161a;padding:0;text-decoration:underline;">
+              Delete
+            </button>
+          </form>
         </td>
       </tr>
       {% endfor %}

@@ -19,6 +19,7 @@ urlpatterns = [
     path("tests/<int:attempt_id>/results/", views.test_results, name="shsat_test_results"),
     path("tests/<int:attempt_id>/error-analysis/", views.error_analysis, name="shsat_error_analysis"),
     path("account/", views.account, name="shsat_account"),
+    path("tests/<int:attempt_id>/delete/", views.delete_attempt, name="shsat_delete_attempt"),
 
     # AJAX
     path("api/save-answer/", views.save_answer, name="shsat_save_answer"),
