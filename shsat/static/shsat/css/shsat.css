@@ -4,6 +4,20 @@
    ============================================================= */
 
 /* ----------------------------------------------------------
+   Design tokens
+   ---------------------------------------------------------- */
+:root {
+  --color-navy: #0f172a;
+  --color-correct: #10b981;
+  --color-error: #ef4444;
+  --color-amber: #f59e0b;
+  --color-slate: #64748b;
+  --color-correct-bg: #d1fae5;
+  --color-error-bg: #fee2e2;
+  --color-amber-bg: #fef3c7;
+}
+
+/* ----------------------------------------------------------
    Wrapper
    ---------------------------------------------------------- */
 .shsat-wrap {
@@ -90,6 +104,8 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 20px 18px;
   background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .shsat-stat-card__value {
@@ -97,6 +113,13 @@
   font-weight: 700;
   line-height: 1;
   margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.shsat-stat-card__value--sm {
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
 .shsat-stat-card__label {
@@ -1338,4 +1361,72 @@
 .cef-nav {
   display: flex;
   gap: 8px;
+}
+
+/* ----------------------------------------------------------
+   Focus / Improvement cards (dashboard + error analysis)
+   ---------------------------------------------------------- */
+.shsat-focus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.shsat-focus-card {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.shsat-focus-card__skill {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.55);
+  margin-bottom: 4px;
+}
+
+.shsat-focus-card__accuracy {
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.shsat-focus-card__accuracy--danger { color: var(--color-error); }
+.shsat-focus-card__accuracy--warn   { color: var(--color-amber); }
+.shsat-focus-card__accuracy--ok     { color: var(--color-correct); }
+
+.shsat-focus-card__detail {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  margin-bottom: 8px;
+}
+
+.shsat-focus-card__cta {
+  font-size: 12px;
+  font-weight: 600;
+  color: #111;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  margin-top: auto;
+}
+
+.shsat-focus-card__cta:hover {
+  text-decoration: underline;
+}
+
+/* ----------------------------------------------------------
+   Chart wrap refinement
+   ---------------------------------------------------------- */
+.shsat-chart-wrap {
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }

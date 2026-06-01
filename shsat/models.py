@@ -142,6 +142,7 @@ class Answer(models.Model):
     selected_answer = models.CharField(max_length=1, blank=True, default="")
     is_correct = models.BooleanField(null=True, blank=True)
     is_flagged = models.BooleanField(default=False)
+    time_spent_seconds = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         unique_together = [("attempt", "question")]

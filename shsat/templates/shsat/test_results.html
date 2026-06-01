@@ -107,7 +107,8 @@
 {% endfor %}
 
 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;">
-  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn">Back to dashboard</a>
+  <a href="{% url 'shsat_error_analysis' attempt.id %}" class="shsat-btn">View Error Analysis →</a>
+  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline">Back to dashboard</a>
   <a href="{% url 'shsat_test_list' %}" class="shsat-btn shsat-btn--outline">Practice tests</a>
 </div>
 {% endblock %}

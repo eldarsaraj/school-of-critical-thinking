@@ -131,6 +131,85 @@ def dashboard(request):
         for a in attempts
         if a.composite_score is not None
     ]
+
+    # Skill & difficulty accuracy aggregation (across all completed attempts)
+    all_answers = Answer.objects.filter(
+        attempt__parent=parent,
+        attempt__is_completed=True,
+        is_correct__isnull=False,
+    ).select_related("question")
+
+    skill_stats = {}   # skill -> {correct, total, time_sum, time_count}
+    diff_stats = {"easy": {"correct": 0, "total": 0},
+                  "medium": {"correct": 0, "total": 0},
+                  "hard": {"correct": 0, "total": 0}}
+
+    for ans in all_answers:
+        skill = ans.question.skill or "unknown"
+        diff = ans.question.difficulty or "medium"
+
+        if skill not in skill_stats:
+            skill_stats[skill] = {"correct": 0, "total": 0, "time_sum": 0, "time_count": 0}
+        skill_stats[skill]["total"] += 1
+        if ans.is_correct:
+            skill_stats[skill]["correct"] += 1
+        if ans.time_spent_seconds is not None:
+            skill_stats[skill]["time_sum"] += ans.time_spent_seconds
+            skill_stats[skill]["time_count"] += 1
+
+        if diff in diff_stats:
+            diff_stats[diff]["total"] += 1
+            if ans.is_correct:
+                diff_stats[diff]["correct"] += 1
+
+    # Sort skills by accuracy ascending (weakest first)
+    skill_label_map = dict(Question.SKILL_CHOICES)
+    skill_label_map.update({
+        "grammar_mechanics": "Grammar & Mechanics",
+        "rhetoric_organization": "Rhetoric & Organization",
+        "literal_comprehension": "Literal Comprehension",
+        "inference_analysis": "Inference & Analysis",
+        "algebraic_reasoning": "Algebraic Reasoning",
+        "geometric_reasoning": "Geometric Reasoning",
+        "data_probability": "Data & Probability",
+        "multistep_reasoning": "Multi-step Reasoning",
+        "fractions_decimals_percents": "Fractions, Decimals & Percents",
+        "functions_patterns": "Functions & Patterns",
+        "unknown": "Uncategorized",
+    })
+
+    skill_accuracy_data = []
+    for skill, s in skill_stats.items():
+        if s["total"] == 0:
+            continue
+        pct = round(s["correct"] / s["total"] * 100, 1)
+        avg_time = round(s["time_sum"] / s["time_count"], 1) if s["time_count"] > 0 else None
+        skill_accuracy_data.append({
+            "skill": skill,
+            "label": skill_label_map.get(skill, skill),
+            "accuracy": pct,
+            "correct": s["correct"],
+            "total": s["total"],
+            "avg_time": avg_time,
+        })
+    skill_accuracy_data.sort(key=lambda x: x["accuracy"])
+
+    weakest_skill = skill_accuracy_data[0]["label"] if skill_accuracy_data else None
+
+    # Avg time per question across all timed answers
+    timed_answers = [a for a in all_answers if a.time_spent_seconds is not None]
+    avg_time_per_q = (
+        round(sum(a.time_spent_seconds for a in timed_answers) / len(timed_answers))
+        if timed_answers else None
+    )
+
+    # Difficulty chart data
+    diff_chart_data = [
+        {"label": "Easy", "pct": round(diff_stats["easy"]["correct"] / diff_stats["easy"]["total"] * 100, 1) if diff_stats["easy"]["total"] else 0, "total": diff_stats["easy"]["total"]},
+        {"label": "Medium", "pct": round(diff_stats["medium"]["correct"] / diff_stats["medium"]["total"] * 100, 1) if diff_stats["medium"]["total"] else 0, "total": diff_stats["medium"]["total"]},
+        {"label": "Hard", "pct": round(diff_stats["hard"]["correct"] / diff_stats["hard"]["total"] * 100, 1) if diff_stats["hard"]["total"] else 0, "total": diff_stats["hard"]["total"]},
+    ]
+
     context = {
         "parent": parent,
         "attempts": attempts[:5],
@@ -141,6 +220,10 @@ def dashboard(request):
         "cutoffs": cutoffs,
         "cutoffs_list": cutoffs_list,
         "attempts_chart_data": attempts_chart_data,
+        "skill_accuracy_data": skill_accuracy_data,
+        "diff_chart_data": diff_chart_data,
+        "weakest_skill": weakest_skill,
+        "avg_time_per_q": avg_time_per_q,
     }
     return render(request, "shsat/dashboard.html", context)
 
@@ -327,6 +410,127 @@ def test_results(request, attempt_id):
 
 
 @login_required(login_url="/shsat/login/")
+def error_analysis(request, attempt_id):
+    parent, _ = Parent.objects.get_or_create(user=request.user)
+    attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent, is_completed=True)
+    answers = (
+        Answer.objects.filter(attempt=attempt)
+        .select_related("question")
+        .order_by("question__section", "question__question_number")
+    )
+
+    skill_label_map = dict(Question.SKILL_CHOICES)
+    skill_label_map.update({
+        "grammar_mechanics": "Grammar & Mechanics",
+        "rhetoric_organization": "Rhetoric & Organization",
+        "literal_comprehension": "Literal Comprehension",
+        "inference_analysis": "Inference & Analysis",
+        "algebraic_reasoning": "Algebraic Reasoning",
+        "geometric_reasoning": "Geometric Reasoning",
+        "data_probability": "Data & Probability",
+        "multistep_reasoning": "Multi-step Reasoning",
+        "unknown": "Uncategorized",
+    })
+
+    total_answered = sum(1 for a in answers if a.selected_answer)
+    total_correct = sum(1 for a in answers if a.is_correct)
+    accuracy_pct = round(total_correct / total_answered * 100, 1) if total_answered else 0
+
+    wrong_answers = [a for a in answers if a.selected_answer and not a.is_correct]
+
+    # Wrong answers by skill
+    skill_errors = {}
+    for ans in wrong_answers:
+        skill = ans.question.skill or "unknown"
+        label = skill_label_map.get(skill, skill)
+        skill_errors[label] = skill_errors.get(label, 0) + 1
+    skill_errors_data = sorted(
+        [{"label": k, "count": v} for k, v in skill_errors.items()],
+        key=lambda x: x["count"], reverse=True
+    )
+
+    # Distractor trap analysis
+    trap_counts = {}
+    for ans in wrong_answers:
+        trap = ans.question.distractor_types.get(ans.selected_answer, "")
+        if trap:
+            section = ans.question.section
+            key = f"{section}: {trap}"
+            trap_counts[key] = trap_counts.get(key, 0) + 1
+    trap_data = sorted(
+        [{"label": k, "count": v} for k, v in trap_counts.items()],
+        key=lambda x: x["count"], reverse=True
+    )
+
+    # Difficulty breakdown of wrong answers
+    diff_errors = {"easy": 0, "medium": 0, "hard": 0}
+    diff_totals = {"easy": 0, "medium": 0, "hard": 0}
+    for ans in answers:
+        if ans.selected_answer:
+            diff = ans.question.difficulty or "medium"
+            if diff in diff_totals:
+                diff_totals[diff] += 1
+                if not ans.is_correct:
+                    diff_errors[diff] += 1
+    diff_breakdown = [
+        {"label": "Easy", "errors": diff_errors["easy"], "total": diff_totals["easy"]},
+        {"label": "Medium", "errors": diff_errors["medium"], "total": diff_totals["medium"]},
+        {"label": "Hard", "errors": diff_errors["hard"], "total": diff_totals["hard"]},
+    ]
+
+    # Time vs accuracy scatter (only if timing data exists)
+    scatter_data = []
+    for ans in answers:
+        if ans.selected_answer and ans.time_spent_seconds is not None:
+            scatter_data.append({
+                "x": ans.time_spent_seconds,
+                "y": 1 if ans.is_correct else 0,
+                "section": ans.question.section,
+                "q": ans.question.question_number,
+            })
+
+    # Recommendations: top 3 weak skills
+    skill_attempt = {}
+    for ans in answers:
+        if ans.selected_answer:
+            skill = ans.question.skill or "unknown"
+            if skill not in skill_attempt:
+                skill_attempt[skill] = {"correct": 0, "total": 0}
+            skill_attempt[skill]["total"] += 1
+            if ans.is_correct:
+                skill_attempt[skill]["correct"] += 1
+
+    recommendations = []
+    for skill, s in skill_attempt.items():
+        if s["total"] == 0:
+            continue
+        pct = round(s["correct"] / s["total"] * 100, 1)
+        recommendations.append({
+            "label": skill_label_map.get(skill, skill),
+            "skill": skill,
+            "accuracy": pct,
+            "wrong": s["total"] - s["correct"],
+            "total": s["total"],
+        })
+    recommendations.sort(key=lambda x: x["accuracy"])
+    recommendations = recommendations[:3]
+
+    context = {
+        "attempt": attempt,
+        "accuracy_pct": accuracy_pct,
+        "total_correct": total_correct,
+        "total_answered": total_answered,
+        "skill_errors_data": skill_errors_data,
+        "trap_data": trap_data,
+        "diff_breakdown": diff_breakdown,
+        "scatter_data": scatter_data,
+        "has_timing": len(scatter_data) > 0,
+        "recommendations": recommendations,
+    }
+    return render(request, "shsat/error_analysis.html", context)
+
+
+@login_required(login_url="/shsat/login/")
 def account(request):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     form = AccountForm(request.POST or None, instance=parent, user=request.user)
@@ -350,12 +554,20 @@ def save_answer(request):
         attempt_id = data.get("attempt_id")
         question_id = data.get("question_id")
         selected = data.get("selected_answer", "").upper()
+        time_spent = data.get("time_spent")
 
         parent, _ = Parent.objects.get_or_create(user=request.user)
         attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent, is_completed=False)
         answer, _ = Answer.objects.get_or_create(attempt=attempt, question_id=question_id)
         answer.selected_answer = selected
-        answer.save(update_fields=["selected_answer"])
+        update_fields = ["selected_answer"]
+        if time_spent is not None:
+            try:
+                answer.time_spent_seconds = max(0, int(time_spent))
+                update_fields.append("time_spent_seconds")
+            except (TypeError, ValueError):
+                pass
+        answer.save(update_fields=update_fields)
         return JsonResponse({"status": "ok"})
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=400)

@@ -2,7 +2,11 @@
 Import an SHSAT practice test from a YAML file.
 
 Usage:
+    # Dict format (has title: key + ela:/math: sections):
     python manage.py import_test path/to/test.yaml
+
+    # Flat-array format (list of dicts, each with a section: field):
+    python manage.py import_test path/to/test.yaml --title "Baseline Test" --free --published
 
     # Replace questions (wipes existing questions for that test):
     python manage.py import_test path/to/test.yaml --replace
@@ -125,29 +129,57 @@ class Command(BaseCommand):
             action="store_true",
             help="Delete existing questions for this test before importing",
         )
+        # Flat-array format options (required when YAML is a bare list)
+        parser.add_argument("--title", type=str, default="", help="Test title (required for flat-array YAML)")
+        parser.add_argument("--free", action="store_true", default=False, help="Mark test as free")
+        parser.add_argument("--published", action="store_true", default=False, help="Mark test as published")
+        parser.add_argument("--adaptive", action="store_true", default=False, help="Mark test as adaptive")
+        parser.add_argument("--source", type=str, default="", help="Test source label")
+        parser.add_argument("--order", type=int, default=0, help="Display order")
 
     def handle(self, *args, **options):
         path = Path(options["yaml_file"])
         if not path.exists():
             raise CommandError(f"File not found: {path}")
 
-        data = _load_yaml(path)
+        raw = _load_yaml(path)
 
-        title = data.get("title")
-        if not title:
-            raise CommandError("YAML file must have a 'title' field.")
-
-        test, created = Test.objects.get_or_create(
-            title=title,
-            defaults={
-                "source": data.get("source", ""),
-                "is_free": data.get("is_free", True),
-                "is_published": data.get("is_published", True),
-                "order": data.get("order", 0),
-                "is_adaptive": data.get("is_adaptive", False),
+        # Auto-detect flat-array vs dict format
+        if isinstance(raw, list):
+            # Flat-array format: each item has a 'section' field (ELA or Math)
+            title = options["title"]
+            if not title:
+                raise CommandError(
+                    "YAML is a flat list. Provide a title with --title 'My Test Title'."
+                )
+            ela_rows = [r for r in raw if str(r.get("section", "")).upper() == "ELA"]
+            math_rows = [r for r in raw if str(r.get("section", "")).upper() == "MATH"]
+            meta = {
+                "source": options["source"],
+                "is_free": options["free"],
+                "is_published": options["published"],
+                "is_adaptive": options["adaptive"],
+                "routing_threshold": 0.60,
+                "order": options["order"],
+            }
+        else:
+            # Dict format: YAML has a 'title' key and ela:/math: sections
+            data = raw
+            title = data.get("title") or options["title"]
+            if not title:
+                raise CommandError("YAML file must have a 'title' field (or pass --title).")
+            ela_rows = data.get("ela", [])
+            math_rows = data.get("math", [])
+            meta = {
+                "source": data.get("source", options["source"]),
+                "is_free": data.get("is_free", options["free"]),
+                "is_published": data.get("is_published", options["published"]),
+                "is_adaptive": data.get("is_adaptive", options["adaptive"]),
                 "routing_threshold": data.get("routing_threshold", 0.60),
-            },
-        )
+                "order": data.get("order", options["order"]),
+            }
+
+        test, created = Test.objects.get_or_create(title=title, defaults=meta)
 
         if not created:
             if options["replace"]:
@@ -165,16 +197,9 @@ class Command(BaseCommand):
                     sys.exit(1)
 
             # Update metadata fields in case they changed
-            test.source = data.get("source", test.source)
-            test.is_free = data.get("is_free", test.is_free)
-            test.is_published = data.get("is_published", test.is_published)
-            test.order = data.get("order", test.order)
-            test.is_adaptive = data.get("is_adaptive", test.is_adaptive)
-            test.routing_threshold = data.get("routing_threshold", test.routing_threshold)
+            for k, v in meta.items():
+                setattr(test, k, v)
             test.save()
-
-        ela_rows = data.get("ela", [])
-        math_rows = data.get("math", [])
 
         ela_count = _import_section(test, "ELA", ela_rows)
         math_count = _import_section(test, "Math", math_rows)
