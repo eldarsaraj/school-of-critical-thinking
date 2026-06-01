@@ -1730,3 +1730,24 @@
 .shsat-badge-pill--medium { background: rgba(245, 158, 11, 0.12); color: #92400e; }
 .shsat-badge-pill--hard   { background: rgba(239, 68, 68, 0.12);  color: #b91c1c; }
 .shsat-badge-pill--skill  { background: rgba(100, 116, 139, 0.1); color: rgba(0,0,0,0.55); }
+
+/* ----------------------------------------------------------
+   Skill persistence badges (focus areas)
+   ---------------------------------------------------------- */
+.shsat-persistence-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.shsat-persistence-badge--persistent {
+  background: rgba(239, 68, 68, 0.1);
+  color: #b91c1c;
+}
+.shsat-persistence-badge--new {
+  background: rgba(245, 158, 11, 0.1);
+  color: #92400e;
+}

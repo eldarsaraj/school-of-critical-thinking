@@ -157,11 +157,13 @@ def dashboard(request):
     ).select_related("question")
 
     skill_stats = {}   # skill -> {correct, total, time_sum, time_count}
-    diff_stats = {}  # no longer used for charts
+    # Per-attempt skill tracking for consistency analysis
+    from collections import defaultdict
+    att_skill_correct = defaultdict(lambda: defaultdict(int))
+    att_skill_total   = defaultdict(lambda: defaultdict(int))
 
     for ans in all_answers:
         skill = ans.question.skill or "unknown"
-        diff = ans.question.difficulty or "medium"
 
         if skill not in skill_stats:
             skill_stats[skill] = {"correct": 0, "total": 0, "time_sum": 0, "time_count": 0}
@@ -171,6 +173,18 @@ def dashboard(request):
         if ans.time_spent_seconds is not None:
             skill_stats[skill]["time_sum"] += ans.time_spent_seconds
             skill_stats[skill]["time_count"] += 1
+        att_skill_total[ans.attempt_id][skill] += 1
+        if ans.is_correct:
+            att_skill_correct[ans.attempt_id][skill] += 1
+
+    # Count how many attempts each skill was weak (< 70%) in
+    skill_weak_counts = defaultdict(int)
+    for att_id, totals in att_skill_total.items():
+        for skill, total in totals.items():
+            if total >= 2:
+                correct = att_skill_correct[att_id].get(skill, 0)
+                if correct / total < 0.70:
+                    skill_weak_counts[skill] += 1
 
 
     # Sort skills by accuracy ascending (weakest first)
@@ -205,6 +219,12 @@ def dashboard(request):
         })
     skill_accuracy_data.sort(key=lambda x: x["accuracy"])
 
+    # Annotate with persistence
+    for s in skill_accuracy_data:
+        weak_count = skill_weak_counts.get(s["skill"], 0)
+        s["weak_attempts"] = weak_count
+        s["is_persistent"] = weak_count >= 2
+
     weakest_skill = skill_accuracy_data[0]["label"] if skill_accuracy_data else None
 
     # Avg time per question across all timed answers
@@ -214,6 +234,22 @@ def dashboard(request):
         round(sum(a.time_spent_seconds for a in timed_answers) / len(timed_answers) / 60, 1)
         if timed_answers else None
     )
+
+    # Score-to-cutoff gap progression (one data point per score history entry)
+    gap_progression = None
+    if score_history and cutoffs:
+        sorted_cutoffs = sorted(cutoffs, key=lambda c: c.cutoff_score, reverse=True)
+        gap_progression = {
+            "labels": [e["seq"] for e in score_history],
+            "schools": [
+                {
+                    "school": c.school_short,
+                    "cutoff": c.cutoff_score,
+                    "gaps": [e["composite"] - c.cutoff_score for e in score_history],
+                }
+                for c in sorted_cutoffs
+            ],
+        }
 
     context = {
         "parent": parent,
@@ -229,6 +265,7 @@ def dashboard(request):
         "weakest_skill": weakest_skill,
         "avg_time_per_q": avg_time_per_q,
         "has_timing_data": has_timing_data,
+        "gap_progression": gap_progression,
     }
     return render(request, "shsat/dashboard.html", context)
 
