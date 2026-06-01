@@ -482,6 +482,11 @@
   outline-offset: 1px;
 }
 
+/* Passage group shading (ELA sidebar — unanswered state only) */
+.shsat-qmap__dot--shade1:not(.answered) { background: rgba(39, 76, 119, 0.08); }
+.shsat-qmap__dot--shade2:not(.answered) { background: rgba(100, 60, 0, 0.08); }
+.shsat-qmap__dot--shade3:not(.answered) { background: rgba(60, 100, 0, 0.07); }
+
 /* ----------------------------------------------------------
    Results page
    ---------------------------------------------------------- */

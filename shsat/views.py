@@ -140,9 +140,7 @@ def dashboard(request):
     ).select_related("question")
 
     skill_stats = {}   # skill -> {correct, total, time_sum, time_count}
-    diff_stats = {"easy": {"correct": 0, "total": 0},
-                  "medium": {"correct": 0, "total": 0},
-                  "hard": {"correct": 0, "total": 0}}
+    diff_stats = {}  # no longer used for charts
 
     for ans in all_answers:
         skill = ans.question.skill or "unknown"
@@ -157,10 +155,6 @@ def dashboard(request):
             skill_stats[skill]["time_sum"] += ans.time_spent_seconds
             skill_stats[skill]["time_count"] += 1
 
-        if diff in diff_stats:
-            diff_stats[diff]["total"] += 1
-            if ans.is_correct:
-                diff_stats[diff]["correct"] += 1
 
     # Sort skills by accuracy ascending (weakest first)
     skill_label_map = dict(Question.SKILL_CHOICES)
@@ -203,13 +197,6 @@ def dashboard(request):
         if timed_answers else None
     )
 
-    # Difficulty chart data
-    diff_chart_data = [
-        {"label": "Easy", "pct": round(diff_stats["easy"]["correct"] / diff_stats["easy"]["total"] * 100, 1) if diff_stats["easy"]["total"] else 0, "total": diff_stats["easy"]["total"]},
-        {"label": "Medium", "pct": round(diff_stats["medium"]["correct"] / diff_stats["medium"]["total"] * 100, 1) if diff_stats["medium"]["total"] else 0, "total": diff_stats["medium"]["total"]},
-        {"label": "Hard", "pct": round(diff_stats["hard"]["correct"] / diff_stats["hard"]["total"] * 100, 1) if diff_stats["hard"]["total"] else 0, "total": diff_stats["hard"]["total"]},
-    ]
-
     context = {
         "parent": parent,
         "attempts": attempts[:5],
@@ -221,7 +208,6 @@ def dashboard(request):
         "cutoffs_list": cutoffs_list,
         "attempts_chart_data": attempts_chart_data,
         "skill_accuracy_data": skill_accuracy_data,
-        "diff_chart_data": diff_chart_data,
         "weakest_skill": weakest_skill,
         "avg_time_per_q": avg_time_per_q,
     }
@@ -293,20 +279,37 @@ def test_take(request, test_id):
         for qid in questions:
             Answer.objects.get_or_create(attempt=attempt, question_id=qid)
 
-    questions = Question.objects.filter(id__in=attempt.started_with).order_by("section", "question_number")
+    from django.db.models import Case, When, IntegerField, Value
+    stage_sort = Case(
+        When(stage='routing', then=Value(0)),
+        When(stage='easy_module', then=Value(1)),
+        When(stage='hard_module', then=Value(2)),
+        default=Value(3),
+        output_field=IntegerField()
+    )
+    questions = (
+        Question.objects.filter(id__in=attempt.started_with)
+        .annotate(stage_sort=stage_sort)
+        .order_by("section", "stage_sort", "question_number")
+    )
     answers_qs = Answer.objects.filter(attempt=attempt).select_related("question")
     answers_map = {a.question_id: a for a in answers_qs}
 
     # Build serializable question list for JSON rendering in JS
+    # Track per-section display index (1-based sequential)
+    section_counters = {"ELA": 0, "Math": 0}
     q_list = []
     for q in questions:
         ans = answers_map.get(q.id)
+        section_counters[q.section] += 1
         q_list.append({
             "id": q.id,
             "section": q.section,
             "question_number": q.question_number,
+            "display_index": section_counters[q.section],
             "question_type": q.question_type,
             "use_efgh": q.question_number % 2 == 0,
+            "passage_group_id": q.passage_group_id or "",
             "passage_title": q.passage_title,
             "passage_text": q.passage_text,
             "image_url": q.image.url if q.image else "",

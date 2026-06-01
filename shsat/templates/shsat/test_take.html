@@ -123,13 +123,34 @@ function esc(s) {
   return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+// Per-section question lists (built once)
+const elaSqs  = questions.filter(q => q.section === "ELA");
+const mathSqs = questions.filter(q => q.section === "Math");
+
+// Passage color map for ELA sidebar shading
+// Build a ordered list of unique passage_group_ids in ELA order
+const elaPassageOrder = [];
+elaSqs.forEach(q => {
+  const pg = q.passage_group_id;
+  if (pg && !elaPassageOrder.includes(pg)) elaPassageOrder.push(pg);
+});
+// Assign a subtle shade index to each passage id (cycling through 3 shades)
+const passageShadeClass = {};
+const PASSAGE_SHADES = ["shsat-qmap__dot--shade1", "shsat-qmap__dot--shade2", "shsat-qmap__dot--shade3"];
+elaPassageOrder.forEach((pg, i) => { passageShadeClass[pg] = PASSAGE_SHADES[i % PASSAGE_SHADES.length]; });
+
 function renderQuestion(idx) {
   currentIdx = idx;
   const q = questions[idx];
 
+  // Section-local display index and total
+  const sectionQs = q.section === "ELA" ? elaSqs : mathSqs;
+  const sectionIdx = sectionQs.indexOf(q);  // 0-based within section
+  const displayNum = q.display_index;        // 1-based sequential within section
+
   let html = `<div class="shsat-question-nav">
-    <span style="font-weight:700;">Q${idx + 1} of ${questions.length}</span>
-    <span style="color:rgba(0,0,0,0.4);">${esc(q.section)} · Q${q.question_number}</span>
+    <span style="font-weight:700;">${esc(q.section)} Q${displayNum} of ${sectionQs.length}</span>
+    <span style="color:rgba(0,0,0,0.4);">Overall ${idx + 1} of ${questions.length}</span>
     <button type="button" onclick="toggleFlag(${q.id})" id="flagBtn_${q.id}"
       style="margin-left:auto;background:none;border:1px solid rgba(0,0,0,0.2);padding:4px 10px;cursor:pointer;font-size:12px;">
       ${flags[q.id] ? "🚩 Flagged" : "Flag"}
@@ -248,17 +269,20 @@ function toggleFlag(qId) {
 // Question map
 // ---------------------------------------------------------------------------
 function updateMap() {
-  ["ela", "math"].forEach(section => {
+  [["ela", elaSqs], ["math", mathSqs]].forEach(([section, sqs]) => {
     const el = document.getElementById(`${section}Map`);
     if (!el) return;
-    const sqs = questions.filter(q => q.section.toLowerCase() === section);
     el.innerHTML = sqs.map(q => {
       const globalIdx = questions.indexOf(q);
       let cls = "shsat-qmap__dot";
       if (answers[q.id]) cls += " answered";
       if (flags[q.id]) cls += " flagged";
       if (globalIdx === currentIdx) cls += " current";
-      return `<div class="${cls}" onclick="goTo(${globalIdx})" title="Q${q.question_number}">${q.question_number}</div>`;
+      // ELA: shade by passage group
+      if (section === "ela" && q.passage_group_id && passageShadeClass[q.passage_group_id]) {
+        cls += " " + passageShadeClass[q.passage_group_id];
+      }
+      return `<div class="${cls}" onclick="goTo(${globalIdx})" title="Q${q.display_index}">${q.display_index}</div>`;
     }).join("");
   });
 }
