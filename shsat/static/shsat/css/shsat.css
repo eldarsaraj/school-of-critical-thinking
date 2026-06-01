@@ -226,6 +226,24 @@
   border-color: rgba(160, 30, 20, 0.4);
 }
 
+.shsat-btn--done {
+  background: transparent;
+  color: #1a7f3c;
+  border-color: #1a7f3c;
+  cursor: default;
+  pointer-events: none;
+}
+
+.shsat-btn--retake {
+  background: transparent;
+  color: #a4161a;
+  border-color: rgba(164, 22, 26, 0.5);
+}
+
+.shsat-btn--retake:hover {
+  background: rgba(164, 22, 26, 0.06);
+}
+
 /* ----------------------------------------------------------
    Auth forms
    ---------------------------------------------------------- */
