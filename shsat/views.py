@@ -112,9 +112,17 @@ def dashboard(request):
             "source": m.source_name,
         })
     score_history_raw.sort(key=lambda x: x["_sort"])
-    # Add sequential labels ("Test 1", "Test 2", …) for x-axis
-    for i, entry in enumerate(score_history_raw):
-        entry["seq"] = f"Test {i + 1}"
+    # Add x-axis labels: Baseline Test entries → "Baseline", "Baseline (2)", …
+    # Other entries → "Test 1", "Test 2", …
+    baseline_count = 0
+    non_baseline_count = 0
+    for entry in score_history_raw:
+        if "baseline" in entry["source"].lower():
+            baseline_count += 1
+            entry["seq"] = "Baseline" if baseline_count == 1 else f"Baseline ({baseline_count})"
+        else:
+            non_baseline_count += 1
+            entry["seq"] = f"Test {non_baseline_count}"
     score_history = [{k: v for k, v in e.items() if k != "_sort"} for e in score_history_raw]
 
     # Most recent composite = from the most recently submitted attempt (not mixed history)
@@ -544,6 +552,36 @@ def error_analysis(request, attempt_id):
     recommendations.sort(key=lambda x: x["accuracy"])
     recommendations = recommendations[:3]
 
+    # Section time and accuracy summary
+    section_summary_raw = {
+        "ELA":  {"correct": 0, "total": 0, "time_sum": 0, "has_time": False},
+        "Math": {"correct": 0, "total": 0, "time_sum": 0, "has_time": False},
+    }
+    for ans in answers:
+        sec = ans.question.section
+        if sec not in section_summary_raw:
+            continue
+        if ans.selected_answer:
+            section_summary_raw[sec]["total"] += 1
+            if ans.is_correct:
+                section_summary_raw[sec]["correct"] += 1
+        if ans.time_spent_seconds is not None:
+            section_summary_raw[sec]["time_sum"] += ans.time_spent_seconds
+            section_summary_raw[sec]["has_time"] = True
+    section_summary_data = []
+    for sec in ["ELA", "Math"]:
+        s = section_summary_raw[sec]
+        pct = round(s["correct"] / s["total"] * 100, 1) if s["total"] else 0
+        section_summary_data.append({
+            "section": sec,
+            "time_minutes": round(s["time_sum"] / 60, 1),
+            "accuracy_pct": pct,
+            "correct": s["correct"],
+            "total": s["total"],
+            "has_time": s["has_time"],
+        })
+    has_section_time = any(s["has_time"] for s in section_summary_data)
+
     context = {
         "attempt": attempt,
         "accuracy_pct": accuracy_pct,
@@ -555,6 +593,8 @@ def error_analysis(request, attempt_id):
         "scatter_data": scatter_data,
         "has_timing": len(scatter_data) > 0,
         "recommendations": recommendations,
+        "section_summary_data": section_summary_data,
+        "has_section_time": has_section_time,
     }
     return render(request, "shsat/error_analysis.html", context)
 

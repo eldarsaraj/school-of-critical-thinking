@@ -31,7 +31,7 @@
 </div>
 
 <!-- Score chart -->
-<p class="shsat-section-title">Score history</p>
+<p class="shsat-section-title">{% if parent.child_nickname %}{{ parent.child_nickname }}'s Score History{% else %}Score History{% endif %}</p>
 <div class="shsat-chart-wrap">
   <canvas id="scoreChart"></canvas>
   <div class="shsat-cutoff-pills" id="cutoffPills">
@@ -54,9 +54,6 @@
 <!-- School placement heatmap -->
 <p class="shsat-section-title">School placement (2026 cutoffs)</p>
 {% if placement_data %}
-<p style="font-size:13px;color:rgba(0,0,0,0.4);margin:-8px 0 16px;">
-  Based on your latest composite score of <strong>{{ latest_composite }}</strong>. Colour indicates distance from cutoff.
-</p>
 <div class="shsat-heat-grid">
   {% for p in placement_data %}
   <div class="shsat-heat-tile" style="background:{{ p.heat_bg }};" title="{{ p.school_name }} — cutoff {{ p.cutoff }}">
@@ -66,7 +63,10 @@
   </div>
   {% endfor %}
 </div>
-<p style="font-size:12px;color:rgba(0,0,0,0.35);margin:12px 0 36px;">
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:14px 0 6px;">
+  Based on your latest composite score of <strong>{{ latest_composite }}</strong>. Colour indicates distance from cutoff.
+</p>
+<p style="font-size:12px;color:rgba(0,0,0,0.35);margin:0 0 36px;">
   Estimated only. Actual SHSAT scaling varies by year and is not published by the DOE.
 </p>
 {% else %}
@@ -191,6 +191,10 @@ Chart.register(emptyStatePlugin);
     // Pre-computed gain deltas: realistic weekly improvement with slight fluctuation
     const gains = [14, 9, 16, 11, 13, 8, 15, 12, 10, 17];
 
+    const bCount = history.filter(d => d.seq.toLowerCase().startsWith("baseline")).length;
+    const tCount = history.length - bCount;
+    const lastIsBaseline = history[history.length - 1].seq.toLowerCase().startsWith("baseline");
+
     const compProj = [], elaProj = [], mathProj = [], labels = [];
     for (let i = 0; i < numProj; i++) {
       const gain = gains[(seed + i * 3) % gains.length];
@@ -201,7 +205,10 @@ Chart.register(emptyStatePlugin);
       compProj.push(ela + math);
       elaProj.push(ela);
       mathProj.push(math);
-      labels.push(`Test ${history.length + i + 1} (projected)`);
+      const projLabel = lastIsBaseline
+        ? `Baseline (${bCount + i + 1}) (projected)`
+        : `Test ${tCount + i + 1} (projected)`;
+      labels.push(projLabel);
     }
     // Bridge: include last real value at position 0 of projection so lines connect
     return {
