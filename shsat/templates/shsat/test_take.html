@@ -46,10 +46,34 @@
 
 {{ q_list|json_script:"questionData" }}
 
+{% if is_adaptive %}
+<!-- Adaptive: module assignment overlay -->
+<div id="moduleOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:#fff;max-width:480px;width:90%;padding:32px;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,0.25);">
+    <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:8px;">Adaptive Test</div>
+    <div style="font-size:22px;font-weight:700;margin-bottom:4px;">Routing Complete</div>
+    <div style="font-size:14px;color:rgba(0,0,0,0.5);margin-bottom:24px;">Based on your routing scores, you'll continue with the following modules:</div>
+    <div id="moduleResults" style="margin-bottom:24px;"></div>
+    <button onclick="closeModuleModal()" class="shsat-btn" style="width:100%;">Continue with Module Questions →</button>
+  </div>
+</div>
+
+<!-- Floating "Get Your Module Assignment" button (shown once all routing answered) -->
+<div id="getModulesBtn" style="display:none;position:fixed;bottom:24px;right:24px;z-index:999;">
+  <button id="getModulesBtnInner" onclick="requestModuleAssignment()" class="shsat-btn" style="padding:14px 20px;font-size:15px;box-shadow:0 4px 20px rgba(0,0,0,0.2);">
+    Get Your Module Assignment →
+  </button>
+</div>
+{% endif %}
+
 <script>
 const ATTEMPT_ID = {{ attempt.id }};
 const CSRF_TOKEN = "{{ csrf_token }}";
 const INITIAL_ELAPSED = {{ duration_seconds }} - {{ remaining_seconds }};
+const IS_ADAPTIVE = {{ is_adaptive|yesno:"true,false" }};
+let modulesAssigned = {{ modules_assigned|yesno:"true,false" }};
+let elaModule = "{{ ela_module }}";
+let mathModule = "{{ math_module }}";
 
 const questions = JSON.parse(document.getElementById("questionData").textContent);
 let currentIdx = 0;
@@ -57,12 +81,13 @@ let currentIdx = 0;
 // State maps keyed by question id
 const answers = {};
 const flags = {};
-const timeSpent = {};  // accumulated seconds per question
-questions.forEach(q => {
+const timeSpent = {};
+function initQuestion(q) {
   answers[q.id] = q.selected || "";
   flags[q.id] = q.is_flagged || false;
   timeSpent[q.id] = 0;
-});
+}
+questions.forEach(initQuestion);
 
 // Per-question timing
 let questionStartTime = Date.now();
@@ -110,11 +135,33 @@ setInterval(() => {
 // Alternating A-D / E-H label scheme (mirrors official SHSAT answer sheet)
 // ---------------------------------------------------------------------------
 const EFGH_MAP = {A: "E", B: "F", C: "G", D: "H"};
-const ABCD_MAP = {E: "A", F: "B", G: "C", H: "D"};
 
 function displayLetter(internal, useEfgh) {
   return useEfgh ? (EFGH_MAP[internal] || internal) : internal;
 }
+
+// ---------------------------------------------------------------------------
+// Section lists and passage shading (rebuilt after module assignment)
+// ---------------------------------------------------------------------------
+let elaSqs  = [];
+let mathSqs = [];
+const elaPassageOrder = [];
+const passageShadeClass = {};
+const PASSAGE_SHADES = ["shsat-qmap__dot--shade1", "shsat-qmap__dot--shade2", "shsat-qmap__dot--shade3"];
+
+function rebuildSectionLists() {
+  elaSqs  = questions.filter(q => q.section === "ELA");
+  mathSqs = questions.filter(q => q.section === "Math");
+  // Rebuild ELA passage shading
+  elaPassageOrder.length = 0;
+  Object.keys(passageShadeClass).forEach(k => delete passageShadeClass[k]);
+  elaSqs.forEach(q => {
+    const pg = q.passage_group_id;
+    if (pg && !elaPassageOrder.includes(pg)) elaPassageOrder.push(pg);
+  });
+  elaPassageOrder.forEach((pg, i) => { passageShadeClass[pg] = PASSAGE_SHADES[i % PASSAGE_SHADES.length]; });
+}
+rebuildSectionLists();
 
 // ---------------------------------------------------------------------------
 // Render question
@@ -123,30 +170,12 @@ function esc(s) {
   return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-// Per-section question lists (built once)
-const elaSqs  = questions.filter(q => q.section === "ELA");
-const mathSqs = questions.filter(q => q.section === "Math");
-
-// Passage color map for ELA sidebar shading
-// Build a ordered list of unique passage_group_ids in ELA order
-const elaPassageOrder = [];
-elaSqs.forEach(q => {
-  const pg = q.passage_group_id;
-  if (pg && !elaPassageOrder.includes(pg)) elaPassageOrder.push(pg);
-});
-// Assign a subtle shade index to each passage id (cycling through 3 shades)
-const passageShadeClass = {};
-const PASSAGE_SHADES = ["shsat-qmap__dot--shade1", "shsat-qmap__dot--shade2", "shsat-qmap__dot--shade3"];
-elaPassageOrder.forEach((pg, i) => { passageShadeClass[pg] = PASSAGE_SHADES[i % PASSAGE_SHADES.length]; });
-
 function renderQuestion(idx) {
   currentIdx = idx;
   const q = questions[idx];
 
-  // Section-local display index and total
   const sectionQs = q.section === "ELA" ? elaSqs : mathSqs;
-  const sectionIdx = sectionQs.indexOf(q);  // 0-based within section
-  const displayNum = q.display_index;        // 1-based sequential within section
+  const displayNum = q.display_index;  // 1-based sequential within section
 
   let html = `<div class="shsat-question-nav">
     <span style="font-weight:700;">${esc(q.section)} Q${displayNum} of ${sectionQs.length}</span>
@@ -224,13 +253,13 @@ function selectAnswer(qId, letter, el) {
   el.closest(".shsat-choices").querySelectorAll(".shsat-choice").forEach(li => li.classList.remove("selected"));
   el.classList.add("selected");
   updateMap();
-  // Accumulate time up to this moment for this question
   const accumulated = (timeSpent[qId] || 0) + getElapsedForCurrent();
   fetch("/shsat/api/save-answer/", {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
     body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, selected_answer: letter, time_spent: accumulated }),
   }).catch(console.error);
+  if (IS_ADAPTIVE && !modulesAssigned) checkRoutingComplete();
 }
 
 // ---------------------------------------------------------------------------
@@ -247,6 +276,7 @@ function saveGridIn(qId, value) {
       headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
       body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, selected_answer: value }),
     }).catch(console.error);
+    if (IS_ADAPTIVE && !modulesAssigned) checkRoutingComplete();
   }, 600);
 }
 
@@ -278,7 +308,6 @@ function updateMap() {
       if (answers[q.id]) cls += " answered";
       if (flags[q.id]) cls += " flagged";
       if (globalIdx === currentIdx) cls += " current";
-      // ELA: shade by passage group
       if (section === "ela" && q.passage_group_id && passageShadeClass[q.passage_group_id]) {
         cls += " " + passageShadeClass[q.passage_group_id];
       }
@@ -288,9 +317,100 @@ function updateMap() {
 }
 
 // ---------------------------------------------------------------------------
+// Adaptive: routing completion check + module assignment
+// ---------------------------------------------------------------------------
+function checkRoutingComplete() {
+  const routingQs = questions.filter(q => q.is_routing);
+  const allAnswered = routingQs.length > 0 && routingQs.every(q => answers[q.id]);
+  const btn = document.getElementById("getModulesBtn");
+  if (btn) btn.style.display = allAnswered ? "block" : "none";
+}
+
+let assigningModules = false;
+function requestModuleAssignment() {
+  if (assigningModules) return;
+  assigningModules = true;
+  const inner = document.getElementById("getModulesBtnInner");
+  if (inner) inner.textContent = "Scoring routing…";
+
+  fetch("/shsat/api/assign-modules/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
+    body: JSON.stringify({ attempt_id: ATTEMPT_ID }),
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.status === "error") {
+      alert("Error assigning modules: " + data.message);
+      assigningModules = false;
+      if (inner) inner.textContent = "Get Your Module Assignment →";
+      return;
+    }
+    elaModule = data.ela_module;
+    mathModule = data.math_module;
+    modulesAssigned = true;
+    const btn = document.getElementById("getModulesBtn");
+    if (btn) btn.style.display = "none";
+
+    if (data.questions && data.questions.length) {
+      data.questions.forEach(q => {
+        questions.push(q);
+        initQuestion(q);
+      });
+    }
+    rebuildSectionLists();
+    updateMap();
+    showModuleModal(data);
+  })
+  .catch(err => {
+    console.error(err);
+    assigningModules = false;
+    if (inner) inner.textContent = "Get Your Module Assignment →";
+  });
+}
+
+function showModuleModal(data) {
+  const moduleLabel = m => m === "hard" ? "Advanced Module" : "Standard Module";
+  const pctColor = pct => pct >= 60 ? "#10b981" : "#f59e0b";
+  const html = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div style="padding:16px;border:1px solid rgba(0,0,0,0.1);border-radius:8px;">
+        <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:6px;">ELA Routing</div>
+        <div style="font-size:28px;font-weight:700;color:${pctColor(data.ela_pct)};">${data.ela_pct}%</div>
+        <div style="font-size:12px;color:rgba(0,0,0,0.5);margin-bottom:8px;">${data.ela_routing_correct} / ${data.ela_routing_total} correct</div>
+        <div style="font-size:13px;font-weight:600;">→ ${moduleLabel(data.ela_module)}</div>
+      </div>
+      <div style="padding:16px;border:1px solid rgba(0,0,0,0.1);border-radius:8px;">
+        <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:6px;">Math Routing</div>
+        <div style="font-size:28px;font-weight:700;color:${pctColor(data.math_pct)};">${data.math_pct}%</div>
+        <div style="font-size:12px;color:rgba(0,0,0,0.5);margin-bottom:8px;">${data.math_routing_correct} / ${data.math_routing_total} correct</div>
+        <div style="font-size:13px;font-weight:600;">→ ${moduleLabel(data.math_module)}</div>
+      </div>
+    </div>`;
+  document.getElementById("moduleResults").innerHTML = html;
+  const overlay = document.getElementById("moduleOverlay");
+  overlay.style.display = "flex";
+}
+
+function closeModuleModal() {
+  document.getElementById("moduleOverlay").style.display = "none";
+  // Jump to first module question
+  const firstModuleIdx = questions.findIndex(q => !q.is_routing);
+  if (firstModuleIdx !== -1) {
+    pauseCurrentTimer();
+    renderQuestion(firstModuleIdx);
+    resumeTimer();
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Submit
 // ---------------------------------------------------------------------------
 function confirmSubmit() {
+  if (IS_ADAPTIVE && !modulesAssigned) {
+    alert("Please answer all routing questions and click 'Get Your Module Assignment' before submitting.");
+    return;
+  }
   const answered = questions.filter(q => answers[q.id]).length;
   if (answered < questions.length) {
     if (!confirm(`You have answered ${answered} of ${questions.length} questions. Submit anyway?`)) return;
@@ -302,5 +422,6 @@ function confirmSubmit() {
 renderQuestion(0);
 timerEl.textContent = formatTime(elapsed);
 timerSidebar.textContent = formatTime(elapsed);
+if (IS_ADAPTIVE && !modulesAssigned) checkRoutingComplete();
 </script>
 {% endblock %}

@@ -269,14 +269,24 @@ def test_take(request, test_id):
     # Get or create attempt
     attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=False).first()
     if not attempt:
-        questions = list(test.questions.order_by("section", "question_number").values_list("id", flat=True))
+        if test.is_adaptive:
+            # Adaptive: start with routing questions only; modules assigned later
+            question_ids = list(
+                test.questions.filter(stage='routing')
+                .order_by('section', 'question_number')
+                .values_list('id', flat=True)
+            )
+        else:
+            question_ids = list(
+                test.questions.order_by('section', 'question_number')
+                .values_list('id', flat=True)
+            )
         attempt = TestAttempt.objects.create(
             parent=parent,
             test=test,
-            started_with=questions,
+            started_with=question_ids,
         )
-        # Pre-create empty Answer rows
-        for qid in questions:
+        for qid in question_ids:
             Answer.objects.get_or_create(attempt=attempt, question_id=qid)
 
     from django.db.models import Case, When, IntegerField, Value
@@ -305,6 +315,8 @@ def test_take(request, test_id):
         q_list.append({
             "id": q.id,
             "section": q.section,
+            "stage": q.stage,
+            "is_routing": q.stage == "routing",
             "question_number": q.question_number,
             "display_index": section_counters[q.section],
             "question_type": q.question_type,
@@ -325,12 +337,18 @@ def test_take(request, test_id):
     elapsed = int((timezone.now() - attempt.started_at).total_seconds())
     remaining = max(0, settings.SHSAT_TEST_DURATION_SECONDS - elapsed)
 
+    modules_assigned = bool(attempt.ela_module)
+
     context = {
         "test": test,
         "attempt": attempt,
         "q_list": q_list,
         "remaining_seconds": remaining,
         "duration_seconds": settings.SHSAT_TEST_DURATION_SECONDS,
+        "is_adaptive": test.is_adaptive,
+        "modules_assigned": modules_assigned,
+        "ela_module": attempt.ela_module,
+        "math_module": attempt.math_module,
     }
     return render(request, "shsat/test_take.html", context)
 
@@ -344,8 +362,6 @@ def test_submit(request, test_id):
     answers = Answer.objects.filter(attempt=attempt).select_related("question")
     ela_correct = 0
     math_correct = 0
-    ela_total = 0
-    math_total = 0
 
     for ans in answers:
         q = ans.question
@@ -354,16 +370,19 @@ def test_submit(request, test_id):
             ans.is_correct = correct
             ans.save(update_fields=["is_correct"])
             if q.section == "ELA":
-                ela_total += 1
                 if correct:
                     ela_correct += 1
             else:
-                math_total += 1
                 if correct:
                     math_correct += 1
 
-    ela_scaled = scale_score(min(ela_correct, 47))
-    math_scaled = scale_score(min(math_correct, 47))
+    if attempt.test.is_adaptive and (attempt.ela_module or attempt.math_module):
+        from .scoring import scale_score_adaptive
+        ela_scaled = scale_score_adaptive(ela_correct, attempt.ela_module or 'easy')
+        math_scaled = scale_score_adaptive(math_correct, attempt.math_module or 'easy')
+    else:
+        ela_scaled = scale_score(min(ela_correct, 47))
+        math_scaled = scale_score(min(math_correct, 47))
     composite = ela_scaled + math_scaled
 
     elapsed = int((timezone.now() - attempt.started_at).total_seconds())
@@ -572,6 +591,132 @@ def save_answer(request):
                 pass
         answer.save(update_fields=update_fields)
         return JsonResponse({"status": "ok"})
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": str(e)}, status=400)
+
+
+@login_required(login_url="/shsat/login/")
+@require_POST
+def assign_modules(request):
+    """
+    Adaptive tests: score routing answers, assign ela_module/math_module,
+    add module question IDs to started_with, return question data for client.
+    """
+    import json
+    try:
+        data = json.loads(request.body)
+        attempt_id = data.get("attempt_id")
+
+        parent, _ = Parent.objects.get_or_create(user=request.user)
+        attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent, is_completed=False)
+
+        # Idempotent: if already assigned, return current state
+        if attempt.ela_module and attempt.math_module:
+            return JsonResponse({
+                "status": "already_assigned",
+                "ela_module": attempt.ela_module,
+                "math_module": attempt.math_module,
+            })
+
+        # Score routing answers per section
+        routing_answers = (
+            Answer.objects.filter(attempt=attempt, question__stage='routing')
+            .select_related('question')
+        )
+        ela_r_correct = ela_r_total = math_r_correct = math_r_total = 0
+        for a in routing_answers:
+            if a.question.section == 'ELA':
+                ela_r_total += 1
+                if a.selected_answer and a.selected_answer.upper() == a.question.correct_answer.upper():
+                    ela_r_correct += 1
+            else:
+                math_r_total += 1
+                if a.selected_answer and a.selected_answer.upper() == a.question.correct_answer.upper():
+                    math_r_correct += 1
+
+        threshold = attempt.test.routing_threshold  # default 0.60
+        ela_pct  = ela_r_correct  / ela_r_total  if ela_r_total  else 0
+        math_pct = math_r_correct / math_r_total if math_r_total else 0
+        ela_module  = 'hard' if ela_pct  >= threshold else 'easy'
+        math_module = 'hard' if math_pct >= threshold else 'easy'
+
+        attempt.ela_module  = ela_module
+        attempt.math_module = math_module
+
+        # Fetch and add module questions
+        ela_stage  = f'{"hard" if ela_module  == "hard" else "easy"}_module'
+        math_stage = f'{"hard" if math_module == "hard" else "easy"}_module'
+
+        ela_module_ids  = list(
+            attempt.test.questions.filter(section='ELA', stage=ela_stage)
+            .order_by('question_number').values_list('id', flat=True)
+        )
+        math_module_ids = list(
+            attempt.test.questions.filter(section='Math', stage=math_stage)
+            .order_by('question_number').values_list('id', flat=True)
+        )
+        new_ids = ela_module_ids + math_module_ids
+        attempt.started_with = list(attempt.started_with) + new_ids
+        attempt.save()
+
+        for qid in new_ids:
+            Answer.objects.get_or_create(attempt=attempt, question_id=qid)
+
+        # Build question data for client (with sequential display_index)
+        module_qs = list(
+            Question.objects.filter(id__in=new_ids)
+            .order_by('section', 'question_number')
+        )
+        ans_map = {
+            a.question_id: a
+            for a in Answer.objects.filter(attempt=attempt, question_id__in=new_ids)
+        }
+        q_data = []
+        # display_index continues after routing: ELA routing was ela_r_total questions
+        ela_idx  = ela_r_total
+        math_idx = math_r_total
+        for q in module_qs:
+            ans = ans_map.get(q.id)
+            if q.section == 'ELA':
+                ela_idx += 1
+                display_index = ela_idx
+            else:
+                math_idx += 1
+                display_index = math_idx
+            q_data.append({
+                "id": q.id,
+                "section": q.section,
+                "stage": q.stage,
+                "is_routing": False,
+                "question_number": q.question_number,
+                "display_index": display_index,
+                "question_type": q.question_type,
+                "use_efgh": q.question_number % 2 == 0,
+                "passage_group_id": q.passage_group_id or "",
+                "passage_title": q.passage_title,
+                "passage_text": q.passage_text,
+                "image_url": q.image.url if q.image else "",
+                "question_text": q.question_text,
+                "choice_a": q.choice_a,
+                "choice_b": q.choice_b,
+                "choice_c": q.choice_c,
+                "choice_d": q.choice_d,
+                "selected": ans.selected_answer if ans else "",
+                "is_flagged": ans.is_flagged if ans else False,
+            })
+
+        return JsonResponse({
+            "status": "ok",
+            "ela_module": ela_module,
+            "math_module": math_module,
+            "ela_routing_correct": ela_r_correct,
+            "ela_routing_total": ela_r_total,
+            "ela_pct": round(ela_pct * 100),
+            "math_routing_correct": math_r_correct,
+            "math_routing_total": math_r_total,
+            "math_pct": round(math_pct * 100),
+            "questions": q_data,
+        })
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=400)
 
