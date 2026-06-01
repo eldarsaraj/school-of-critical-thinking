@@ -194,7 +194,7 @@ def dashboard(request):
         if s["total"] == 0:
             continue
         pct = round(s["correct"] / s["total"] * 100, 1)
-        avg_time = round(s["time_sum"] / s["time_count"], 1) if s["time_count"] > 0 else None
+        avg_time = round(s["time_sum"] / s["time_count"] / 60, 2) if s["time_count"] > 0 else None
         skill_accuracy_data.append({
             "skill": skill,
             "label": skill_label_map.get(skill, skill),
@@ -210,7 +210,7 @@ def dashboard(request):
     # Avg time per question across all timed answers
     timed_answers = [a for a in all_answers if a.time_spent_seconds is not None]
     avg_time_per_q = (
-        round(sum(a.time_spent_seconds for a in timed_answers) / len(timed_answers))
+        round(sum(a.time_spent_seconds for a in timed_answers) / len(timed_answers) / 60, 1)
         if timed_answers else None
     )
 
