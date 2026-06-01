@@ -200,11 +200,9 @@ function buildProjection(history) {
   const numProj = Math.max(0, totalTests - testHistory.length);
   if (numProj === 0 || testHistory.length === 0) return null;
 
-  // Bridge from the last non-log entry; find its index in the full history
-  let bridgeIdx = -1, last = null;
-  for (let i = history.length - 1; i >= 0; i--) {
-    if (!isLog(history[i])) { bridgeIdx = i; last = history[i]; break; }
-  }
+  // Bridge from the last entry (log or test) so projection continues from current state
+  const bridgeIdx = history.length - 1;
+  const last = history[bridgeIdx];
   if (!last) return null;
 
   let ela = last.ela, math = last.math;
@@ -502,8 +500,17 @@ function makeProjData(arr) {
     "#e76f51", "#2a9d8f", "#b5838d", "#264653"
   ];
 
-  // Use shared projection; extend x-axis with projected test labels
-  const gapAllLabels = _proj ? [...data.labels, ..._proj.labels] : data.labels;
+  function hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  // Use shared projection; extend x-axis with projected test labels (strip "(projected)" suffix)
+  const gapAllLabels = _proj
+    ? [...data.labels, ..._proj.labels.map(l => l.replace(" (projected)", ""))]
+    : data.labels;
 
   // Real gap datasets (null-padded to full length)
   const datasets = data.schools.map((s, i) => ({
@@ -517,16 +524,18 @@ function makeProjData(arr) {
     pointRadius: 5,
   }));
 
-  // Projected gap datasets (one per school, dotted, same colour but lighter)
+  // Projected gap datasets (one per school, dotted, dimmed to 0.28 opacity)
   if (_proj) {
     data.schools.forEach((s, i) => {
+      const color = palette[i % palette.length];
+      const dimColor = hexToRgba(color, 0.28);
       const projGaps = _proj.composite.map(c => c - s.cutoff);
       datasets.push({
         label: `${s.school} (proj)`,
         data: makeProjData(projGaps),
-        borderColor: palette[i % palette.length],
+        borderColor: dimColor,
         backgroundColor: "transparent",
-        pointBackgroundColor: palette[i % palette.length],
+        pointBackgroundColor: dimColor,
         borderWidth: 1.5,
         borderDash: [4, 4],
         tension: 0.2,
