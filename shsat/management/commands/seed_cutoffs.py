@@ -1,28 +1,28 @@
 from django.core.management.base import BaseCommand
 from shsat.models import CutoffScore
 
-CUTOFFS_2025 = [
-    ("Stuyvesant High School", "Stuyvesant", 562, 762),
-    ("Bronx High School of Science", "Bronx Sci", 522, 749),
-    ("Staten Island Technical HS", "SITH", 527, 387),
-    ("Brooklyn Technical HS", "Brooklyn Tech", 478, 1766),
-    ("HS of Math, Science & Engineering at City College", "HSMSE", 493, 135),
-    ("HS of American Studies at Lehman College", "HSAS", 514, 144),
-    ("Queens HS for the Sciences at York College", "QHSS", 472, 111),
-    ("The Brooklyn Latin School", "Brooklyn Latin", 437, 262),
+CUTOFFS_2026 = [
+    ("Stuyvesant High School", "Stuyvesant", 561, 762),
+    ("Bronx High School of Science", "Bronx Sci", 525, 749),
+    ("Staten Island Technical HS", "SITH", 517, 387),
+    ("Brooklyn Technical HS", "Brooklyn Tech", 506, 1766),
+    ("HS of Math, Science & Engineering at City College", "HSMSE", 539, 135),
+    ("HS of American Studies at Lehman College", "HSAS", 507, 144),
+    ("Queens HS for the Sciences at York College", "QHSS", 531, 111),
+    ("The Brooklyn Latin School", "Brooklyn Latin", 495, 262),
 ]
 
 
 class Command(BaseCommand):
-    help = "Seed CutoffScore table with 2025 admissions data"
+    help = "Seed CutoffScore table with 2026 admissions data"
 
     def handle(self, *args, **options):
         created = 0
         updated = 0
-        for name, short, cutoff, seats in CUTOFFS_2025:
+        for name, short, cutoff, seats in CUTOFFS_2026:
             obj, was_created = CutoffScore.objects.update_or_create(
                 school_short=short,
-                admissions_year=2025,
+                admissions_year=2026,
                 defaults={
                     "school_name": name,
                     "cutoff_score": cutoff,
@@ -34,5 +34,5 @@ class Command(BaseCommand):
             else:
                 updated += 1
         self.stdout.write(
-            self.style.SUCCESS(f"Done — {created} created, {updated} updated.")
+            self.style.SUCCESS(f"Done (2026 cutoffs) — {created} created, {updated} updated.")
         )

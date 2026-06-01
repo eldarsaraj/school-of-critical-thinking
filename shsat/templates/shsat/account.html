@@ -37,6 +37,40 @@
   <p style="font-size:14px;color:rgba(0,0,0,0.5);">Premium features coming soon.</p>
 </div>
 
+{% if completed_attempts %}
+<div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
+  <p class="shsat-section-title">Test history</p>
+  <table class="shsat-table">
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Date</th>
+        <th>Composite</th>
+        <th>ELA</th>
+        <th>Math</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in completed_attempts %}
+      <tr>
+        <td>{{ a.test.title }}</td>
+        <td>{{ a.submitted_at|date:"M d, Y" }}</td>
+        <td><strong>{{ a.composite_score|default:"—" }}</strong></td>
+        <td>{{ a.ela_scaled|default:"—" }}</td>
+        <td>{{ a.math_scaled|default:"—" }}</td>
+        <td>
+          <a href="{% url 'shsat_error_analysis' a.id %}" style="font-size:13px;color:#274c77;text-decoration:none;white-space:nowrap;">
+            Error analysis →
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
 <div style="margin-top:36px;">
   <a href="{% url 'shsat_logout' %}" class="shsat-btn shsat-btn--danger">Log out</a>
 </div>

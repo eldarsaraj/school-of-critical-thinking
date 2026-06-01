@@ -170,69 +170,92 @@ function esc(s) {
   return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function renderQuestion(idx) {
-  currentIdx = idx;
-  const q = questions[idx];
-
-  const sectionQs = q.section === "ELA" ? elaSqs : mathSqs;
-  const displayNum = q.display_index;  // 1-based sequential within section
-
-  let html = `<div class="shsat-question-nav">
-    <span style="font-weight:700;">${esc(q.section)} Q${displayNum} of ${sectionQs.length}</span>
-    <span style="color:rgba(0,0,0,0.4);">Overall ${idx + 1} of ${questions.length}</span>
-    <button type="button" onclick="toggleFlag(${q.id})" id="flagBtn_${q.id}"
-      style="margin-left:auto;background:none;border:1px solid rgba(0,0,0,0.2);padding:4px 10px;cursor:pointer;font-size:12px;">
-      ${flags[q.id] ? "🚩 Flagged" : "Flag"}
-    </button>
-  </div>`;
-
-  if (q.passage_text) {
-    html += `<div class="shsat-passage">`;
-    if (q.passage_title) html += `<div class="shsat-passage__title">${esc(q.passage_title)}</div>`;
-    html += `<div>${esc(q.passage_text).replace(/\n/g, "<br>")}</div></div>`;
+// Render question text: split on double-newlines so referenced sentences appear
+// in their own highlighted block rather than inline with the question stem.
+function renderQuestionText(text) {
+  const paras = text.split(/\n\n+/);
+  if (paras.length <= 1) {
+    return `<div class="shsat-question-text">${esc(text).replace(/\n/g, "<br>")}</div>`;
   }
-
-  if (q.image_url) {
-    html += `<div class="shsat-question-image"><img src="${q.image_url}" alt="Question diagram"></div>`;
+  let html = `<div class="shsat-question-text">${esc(paras[0].trim()).replace(/\n/g, "<br>")}</div>`;
+  for (let i = 1; i < paras.length; i++) {
+    const t = paras[i].trim();
+    if (t) html += `<div class="shsat-sentence-block">${esc(t).replace(/\n/g, "<br>")}</div>`;
   }
+  return html;
+}
 
-  html += `<div class="shsat-question-text">${esc(q.question_text)}</div>`;
-
+function buildChoicesHtml(q) {
   if (q.question_type === "grid_in") {
     const val = esc(answers[q.id] || "");
-    html += `<div class="shsat-gridin">
+    return `<div class="shsat-gridin">
       <label class="shsat-gridin__label">Enter your answer:</label>
       <input type="text" class="shsat-gridin__input" id="gridinInput_${q.id}"
              value="${val}" maxlength="10" autocomplete="off"
              oninput="saveGridIn(${q.id}, this.value)">
       <span class="shsat-gridin__hint">Numbers only. Fractions: write as decimal or fraction (e.g. 1.5 or 3/2).</span>
     </div>`;
-  } else {
-    const choices = [
-      ["A", q.choice_a],
-      ["B", q.choice_b],
-      ["C", q.choice_c],
-      ["D", q.choice_d],
-    ].filter(([, text]) => text);
-
-    html += `<ul class="shsat-choices">`;
-    choices.forEach(([letter, text]) => {
-      const disp = displayLetter(letter, q.use_efgh);
-      const sel = answers[q.id] === letter ? "selected" : "";
-      html += `<li class="shsat-choice ${sel}" onclick="selectAnswer(${q.id}, '${letter}', this)">
-        <span class="shsat-choice__letter">${disp}</span>
-        <span>${esc(text)}</span>
-      </li>`;
-    });
-    html += `</ul>`;
   }
+  const choices = [
+    ["A", q.choice_a], ["B", q.choice_b], ["C", q.choice_c], ["D", q.choice_d],
+  ].filter(([, text]) => text);
+  let html = `<ul class="shsat-choices">`;
+  choices.forEach(([letter, text]) => {
+    const disp = displayLetter(letter, q.use_efgh);
+    const sel = answers[q.id] === letter ? "selected" : "";
+    html += `<li class="shsat-choice ${sel}" onclick="selectAnswer(${q.id}, '${letter}', this)">
+      <span class="shsat-choice__letter">${disp}</span>
+      <span>${esc(text)}</span>
+    </li>`;
+  });
+  return html + `</ul>`;
+}
 
-  html += `<div style="display:flex;gap:12px;margin-top:8px;">`;
-  if (idx > 0)
-    html += `<button type="button" onclick="goTo(${idx - 1})" class="shsat-btn shsat-btn--outline">← Previous</button>`;
-  if (idx < questions.length - 1)
-    html += `<button type="button" onclick="goTo(${idx + 1})" class="shsat-btn">Next →</button>`;
-  html += `</div>`;
+function renderQuestion(idx) {
+  currentIdx = idx;
+  const q = questions[idx];
+
+  const sectionQs = q.section === "ELA" ? elaSqs : mathSqs;
+  const displayNum = q.display_index;
+
+  // Footer: nav info + prev/next buttons (always below question)
+  const navInfo = `<div class="shsat-question-footer">
+    <div class="shsat-question-footer__info">
+      <span style="font-weight:700;">${esc(q.section)} Q${displayNum} of ${sectionQs.length}</span>
+      <span style="color:rgba(0,0,0,0.4);">Overall ${idx + 1} of ${questions.length}</span>
+      <button type="button" onclick="toggleFlag(${q.id})" id="flagBtn_${q.id}"
+        style="background:none;border:1px solid rgba(0,0,0,0.2);padding:4px 10px;cursor:pointer;font-size:12px;">
+        ${flags[q.id] ? "🚩 Flagged" : "Flag"}
+      </button>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:8px;">
+      ${idx > 0 ? `<button type="button" onclick="goTo(${idx - 1})" class="shsat-btn shsat-btn--outline">← Previous</button>` : ""}
+      ${idx < questions.length - 1 ? `<button type="button" onclick="goTo(${idx + 1})" class="shsat-btn">Next →</button>` : ""}
+    </div>
+  </div>`;
+
+  let html;
+  if (q.passage_text) {
+    // Two-column layout: passage left, question right
+    const passageHtml = `<div class="shsat-passage shsat-passage--scroll">
+      ${q.passage_title ? `<div class="shsat-passage__title">${esc(q.passage_title)}</div>` : ""}
+      <div>${esc(q.passage_text).replace(/\n/g, "<br>")}</div>
+    </div>`;
+    const questionHtml = renderQuestionText(q.question_text)
+      + (q.image_url ? `<div class="shsat-question-image"><img src="${q.image_url}" alt="Question diagram"></div>` : "")
+      + buildChoicesHtml(q)
+      + navInfo;
+    html = `<div class="shsat-passage-layout">
+      <div class="shsat-passage-col">${passageHtml}</div>
+      <div class="shsat-question-col">${questionHtml}</div>
+    </div>`;
+  } else {
+    // Single-column: image, question text, choices, then nav below
+    html = (q.image_url ? `<div class="shsat-question-image"><img src="${q.image_url}" alt="Question diagram"></div>` : "")
+      + renderQuestionText(q.question_text)
+      + buildChoicesHtml(q)
+      + navInfo;
+  }
 
   document.getElementById("questionPanel").innerHTML = html;
   updateMap();

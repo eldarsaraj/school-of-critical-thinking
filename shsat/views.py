@@ -85,12 +85,13 @@ def dashboard(request):
     cutoffs = CutoffScore.objects.all()
 
     # Build score history for Chart.js (combined platform + manual)
+    # Sort by full datetime so same-day tests appear in submission order
     from .scoring import scale_score as _scale
     score_history_raw = []
     for a in attempts:
         if a.composite_score is not None:
             score_history_raw.append({
-                "_sort": a.submitted_at.date(),
+                "_sort": a.submitted_at.isoformat(),
                 "date": a.submitted_at.strftime("%b %d"),
                 "composite": a.composite_score,
                 "ela": a.ela_scaled,
@@ -101,7 +102,7 @@ def dashboard(request):
         ela_scaled = _scale(min(m.ela_correct, 47))
         math_scaled = _scale(min(m.math_correct, 47))
         score_history_raw.append({
-            "_sort": m.date,
+            "_sort": m.date.isoformat() + "T00:00:00",
             "date": m.date.strftime("%b %d"),
             "composite": ela_scaled + math_scaled,
             "ela": ela_scaled,
@@ -109,10 +110,14 @@ def dashboard(request):
             "source": m.source_name,
         })
     score_history_raw.sort(key=lambda x: x["_sort"])
+    # Add sequential labels ("Test 1", "Test 2", …) for x-axis
+    for i, entry in enumerate(score_history_raw):
+        entry["seq"] = f"Test {i + 1}"
     score_history = [{k: v for k, v in e.items() if k != "_sort"} for e in score_history_raw]
 
-    # Most recent composite = last entry in the date-sorted history (same source as chart)
-    latest_composite = score_history_raw[-1]["composite"] if score_history_raw else None
+    # Most recent composite = from the most recently submitted attempt (not mixed history)
+    latest_attempt = attempts.filter(composite_score__isnull=False).first()
+    latest_composite = latest_attempt.composite_score if latest_attempt else None
 
     placement_data = compute_placement(latest_composite, cutoffs) if latest_composite else []
 
@@ -560,7 +565,16 @@ def account(request):
         form.save()
         messages.success(request, "Account updated.")
         return redirect("shsat_account")
-    return render(request, "shsat/account.html", {"form": form, "parent": parent})
+    completed_attempts = (
+        TestAttempt.objects.filter(parent=parent, is_completed=True)
+        .select_related("test")
+        .order_by("submitted_at")
+    )
+    return render(request, "shsat/account.html", {
+        "form": form,
+        "parent": parent,
+        "completed_attempts": completed_attempts,
+    })
 
 
 # ---------------------------------------------------------------------------

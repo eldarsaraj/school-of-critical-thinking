@@ -28,10 +28,6 @@
     <div class="shsat-stat-card__value">{% if avg_time_per_q %}{{ avg_time_per_q }}s{% else %}—{% endif %}</div>
     <div class="shsat-stat-card__label">Avg time / question</div>
   </div>
-  <div class="shsat-stat-card">
-    <div class="shsat-stat-card__value shsat-stat-card__value--sm">{{ weakest_skill|default:"—" }}</div>
-    <div class="shsat-stat-card__label">Weakest skill</div>
-  </div>
 </div>
 
 <!-- Score chart -->
@@ -51,7 +47,7 @@
 {{ cutoffs_list|json_script:"cutoffsData" }}
 
 <!-- School placement heatmap -->
-<p class="shsat-section-title">School placement (2025 cutoffs)</p>
+<p class="shsat-section-title">School placement (2026 cutoffs)</p>
 {% if placement_data %}
 <p style="font-size:13px;color:rgba(0,0,0,0.4);margin:-8px 0 16px;">
   Based on your latest composite score of <strong>{{ latest_composite }}</strong>. Colour indicates distance from cutoff.
@@ -166,7 +162,7 @@ const emptyStatePlugin = {
 Chart.register(emptyStatePlugin);
 
 // ---------------------------------------------------------------------------
-// Score history line chart
+// Score history line chart with score projection
 // ---------------------------------------------------------------------------
 (function () {
   const history = JSON.parse(document.getElementById("scoreChartData").textContent);
@@ -176,39 +172,110 @@ Chart.register(emptyStatePlugin);
   const greyLine = { borderColor: "rgba(0,0,0,0.12)", backgroundColor: "transparent",
                      pointBackgroundColor: "rgba(0,0,0,0.12)", borderWidth: 2, tension: 0.2, pointRadius: 4 };
 
+  // Build projection: project up to 5 total tests from the latest result
+  // Uses a deterministic sequence (seeded on last composite) so it's stable on reload
+  function buildProjection(history) {
+    const totalTests = 5;
+    const numProj = Math.max(0, totalTests - history.length);
+    if (numProj === 0 || history.length === 0) return null;
+
+    const last = history[history.length - 1];
+    let ela = last.ela, math = last.math;
+    const seed = last.composite;
+
+    // Pre-computed gain deltas: realistic weekly improvement with slight fluctuation
+    const gains = [14, 9, 16, 11, 13, 8, 15, 12, 10, 17];
+
+    const compProj = [], elaProj = [], mathProj = [], labels = [];
+    for (let i = 0; i < numProj; i++) {
+      const gain = gains[(seed + i * 3) % gains.length];
+      const elaGain = Math.round(gain * 0.48 + (i % 2 === 0 ? 1 : -1));
+      const mathGain = gain - elaGain;
+      ela = Math.min(400, ela + elaGain);
+      math = Math.min(400, math + mathGain);
+      compProj.push(ela + math);
+      elaProj.push(ela);
+      mathProj.push(math);
+      labels.push(`Test ${history.length + i + 1} (projected)`);
+    }
+    // Bridge: include last real value at position 0 of projection so lines connect
+    return {
+      labels,
+      composite: [last.composite, ...compProj],
+      ela: [last.ela, ...elaProj],
+      math: [last.math, ...mathProj],
+    };
+  }
+
+  const proj = buildProjection(history);
+  // Full x-axis labels: real test labels + projected labels
+  const realLabels = history.map(d => d.seq);
+  const allLabels = proj ? [...realLabels, ...proj.labels] : realLabels;
+
+  // Null-padded projection arrays (null for real points, value for projected)
+  function projData(arr) {
+    if (!arr) return [];
+    // First projected point is at index history.length - 1 (bridge point)
+    return [...Array(history.length - 1).fill(null), ...arr];
+  }
+
+  const datasets = isEmpty
+    ? [
+        { label: "Composite", data: [], ...greyLine, borderDash: [6, 3] },
+        { label: "ELA",       data: [], ...greyLine },
+        { label: "Math",      data: [], ...greyLine },
+      ]
+    : [
+        {
+          label: "Composite",
+          data: history.map(d => d.composite),
+          borderColor: "#161a1d", backgroundColor: "transparent",
+          pointBackgroundColor: "#161a1d", borderWidth: 2, borderDash: [6, 3],
+          tension: 0.2, pointRadius: 4,
+        },
+        {
+          label: "ELA",
+          data: history.map(d => d.ela),
+          borderColor: "#274c77", backgroundColor: "transparent",
+          pointBackgroundColor: "#274c77", borderWidth: 2,
+          tension: 0.2, pointRadius: 4,
+        },
+        {
+          label: "Math",
+          data: history.map(d => d.math),
+          borderColor: "#a4161a", backgroundColor: "transparent",
+          pointBackgroundColor: "#a4161a", borderWidth: 2,
+          tension: 0.2, pointRadius: 4,
+        },
+        // Projected datasets (dotted, light)
+        proj ? {
+          label: "Composite (projected)",
+          data: projData(proj.composite),
+          borderColor: "rgba(0,0,0,0.22)", backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(0,0,0,0.18)", borderWidth: 2, borderDash: [4, 4],
+          tension: 0.2, pointRadius: 3, pointStyle: "circle",
+        } : null,
+        proj ? {
+          label: "ELA (projected)",
+          data: projData(proj.ela),
+          borderColor: "rgba(39,76,119,0.3)", backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(39,76,119,0.25)", borderWidth: 2, borderDash: [4, 4],
+          tension: 0.2, pointRadius: 3,
+        } : null,
+        proj ? {
+          label: "Math (projected)",
+          data: projData(proj.math),
+          borderColor: "rgba(164,22,26,0.3)", backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(164,22,26,0.25)", borderWidth: 2, borderDash: [4, 4],
+          tension: 0.2, pointRadius: 3,
+        } : null,
+      ].filter(Boolean);
+
   const chart = new Chart(ctx, {
     type: "line",
     data: {
-      labels: isEmpty ? [] : history.map(d => d.date),
-      datasets: isEmpty
-        ? [
-            { label: "Composite", data: [], ...greyLine, borderDash: [6, 3] },
-            { label: "ELA",       data: [], ...greyLine },
-            { label: "Math",      data: [], ...greyLine },
-          ]
-        : [
-            {
-              label: "Composite",
-              data: history.map(d => d.composite),
-              borderColor: "#161a1d", backgroundColor: "transparent",
-              pointBackgroundColor: "#161a1d", borderWidth: 2, borderDash: [6, 3],
-              tension: 0.2, pointRadius: 4,
-            },
-            {
-              label: "ELA",
-              data: history.map(d => d.ela),
-              borderColor: "#274c77", backgroundColor: "transparent",
-              pointBackgroundColor: "#274c77", borderWidth: 2,
-              tension: 0.2, pointRadius: 4,
-            },
-            {
-              label: "Math",
-              data: history.map(d => d.math),
-              borderColor: "#a4161a", backgroundColor: "transparent",
-              pointBackgroundColor: "#a4161a", borderWidth: 2,
-              tension: 0.2, pointRadius: 4,
-            },
-          ]
+      labels: isEmpty ? [] : allLabels,
+      datasets,
     },
     options: {
       _emptyMessage: "Take a test or log a score to see your history",
@@ -217,8 +284,28 @@ Chart.register(emptyStatePlugin);
       plugins: {
         legend: {
           display: true, position: "top", align: "end",
-          labels: { boxWidth: 14, font: { size: 12 }, padding: 18,
-                    color: isEmpty ? "rgba(0,0,0,0.25)" : undefined }
+          labels: {
+            boxWidth: 14, font: { size: 12 }, padding: 18,
+            color: isEmpty ? "rgba(0,0,0,0.25)" : undefined,
+            filter: (item) => !item.text.includes("projected"),
+          }
+        },
+        tooltip: {
+          callbacks: {
+            title: (items) => {
+              const idx = items[0].dataIndex;
+              if (idx < history.length) {
+                const d = history[idx];
+                return `${d.seq} · ${d.date} — ${d.source}`;
+              }
+              return items[0].label;
+            },
+            footer: (items) => {
+              const idx = items[0].dataIndex;
+              if (idx >= history.length) return "Projected improvement";
+              return "";
+            }
+          }
         },
         annotation: { annotations: {} }
       },
@@ -231,7 +318,13 @@ Chart.register(emptyStatePlugin);
         },
         x: {
           grid: { display: false },
-          ticks: { font: { size: 12 }, color: isEmpty ? "rgba(0,0,0,0.2)" : undefined }
+          ticks: {
+            font: { size: 12 }, color: isEmpty ? "rgba(0,0,0,0.2)" : undefined,
+            callback: function(val, idx) {
+              const label = this.getLabelForValue(val);
+              return label.includes("projected") ? label.replace(" (projected)", " ↑") : label;
+            }
+          }
         }
       }
     }

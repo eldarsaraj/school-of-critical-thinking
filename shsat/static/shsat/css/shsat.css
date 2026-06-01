@@ -1435,3 +1435,79 @@
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
+
+/* ----------------------------------------------------------
+   Passage two-column layout (test-taking)
+   ---------------------------------------------------------- */
+.shsat-passage-layout {
+  display: grid;
+  grid-template-columns: 44% 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.shsat-passage-col {
+  position: sticky;
+  top: 12px;
+}
+
+.shsat-passage--scroll {
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-left: 3px solid rgba(0, 0, 0, 0.18);
+  padding: 20px 22px;
+  background: rgba(0, 0, 0, 0.025);
+  font-size: 15px;
+  line-height: 1.75;
+  border-radius: 2px;
+}
+
+.shsat-question-col {
+  /* no extra styles needed */
+}
+
+@media (max-width: 780px) {
+  .shsat-passage-layout {
+    grid-template-columns: 1fr;
+  }
+  .shsat-passage-col {
+    position: static;
+  }
+  .shsat-passage--scroll {
+    max-height: 320px;
+  }
+}
+
+/* ----------------------------------------------------------
+   Question footer (nav info + prev/next, below choices)
+   ---------------------------------------------------------- */
+.shsat-question-footer {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.shsat-question-footer__info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+/* ----------------------------------------------------------
+   Sentence highlight block (referenced sentence in question)
+   ---------------------------------------------------------- */
+.shsat-sentence-block {
+  background: rgba(39, 76, 119, 0.05);
+  border-left: 3px solid rgba(39, 76, 119, 0.3);
+  padding: 12px 18px;
+  margin: 0 0 20px;
+  font-size: 16px;
+  line-height: 1.65;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.78);
+}
