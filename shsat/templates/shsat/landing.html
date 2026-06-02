@@ -122,26 +122,18 @@
   line-height: 1.6;
 }
 .sl-preview__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 .sl-preview-img {
-  background: rgba(0,0,0,.035);
   border: 1px solid rgba(0,0,0,.08);
   border-radius: 4px;
-  aspect-ratio: 16/9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  color: rgba(0,0,0,.3);
   overflow: hidden;
 }
 .sl-preview-img img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
 }
 .sl-preview-img__caption {
@@ -229,7 +221,6 @@
 
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <div class="sl-hero">
-  <p class="sl-hero__label">SHSAT Prep</p>
   <h1 class="sl-hero__title">Learn to think,<br>not just answer.</h1>
   <p class="sl-hero__sub">
     Most SHSAT prep gives you more questions. We give you a method.
@@ -267,7 +258,9 @@
       <p class="sl-diff-card__marker">02 — Analysis</p>
       <h2 class="sl-diff-card__title">Every wrong answer has a name</h2>
       <p class="sl-diff-card__body">
-        There are four ways to be wrong on SHSAT ELA, and a specific set for Math.
+        There are several ways to be wrong on SHSAT ELA and Math questions. Our error analysis 
+        tags every wrong answer with the specific trap it falls into, so you learn not just that 
+        an answer is wrong, but why it's wrong and how to avoid it.
         After each test, your error analysis shows which trap caught you and how often,
         so review is targeted, not random.
       </p>
@@ -321,7 +314,7 @@
 <!-- ── The Method ─────────────────────────────────────────────────────────── -->
 <section class="sl-method">
   <p class="sl-method__label">The Set Method</p>
-  <h2 class="sl-method__title">A novel approach to cracking Reading Comprehension</h2>
+  <h2 class="sl-method__title">A novel approach to cracking reading comprehension</h2>
   <p class="sl-method__body">
     Most students treat SHSAT Reading Comprehension as a reading problem. It is not.
     It is a classification problem. We offer a cutting-edge approach, the Set Method,
@@ -330,7 +323,7 @@
     explicitly makes.<br><br>
     Once a student internalizes this, wrong answers stop feeling vague and start
     looking like what they are: predictable, nameable traps. Elimination stops being
-    intuition. It becomes a procedure.
+    intuition and becomes a procedure.
   </p>
 </section>
 
