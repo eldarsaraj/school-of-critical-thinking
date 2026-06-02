@@ -31,6 +31,11 @@
           <div class="test-card__actions">
             <a href="{% url 'shsat_content_test_edit' d.test.id %}" class="content-btn content-btn--ghost content-btn--sm">Settings</a>
             <a href="{% url 'shsat_content_test' d.test.id %}" class="content-btn content-btn--sm">Review questions</a>
+            <form method="post" action="{% url 'shsat_content_test_delete' d.test.id %}" style="display:inline;"
+                  onsubmit="return confirm('Delete {{ d.test.title }} and all its questions? This cannot be undone.');">
+              {% csrf_token %}
+              <button type="submit" class="content-btn content-btn--danger content-btn--sm">Delete</button>
+            </form>
           </div>
         </div>
 

@@ -1173,6 +1173,15 @@ def content_question_delete(request, question_id):
 
 
 @_staff_required
+@require_POST
+def content_test_delete(request, test_id):
+    test = get_object_or_404(Test, id=test_id)
+    test.delete()
+    messages.success(request, f"Test deleted.")
+    return redirect("shsat_content_home")
+
+
+@_staff_required
 def content_test_export(request, test_id):
     import yaml
     test = get_object_or_404(Test, id=test_id)
