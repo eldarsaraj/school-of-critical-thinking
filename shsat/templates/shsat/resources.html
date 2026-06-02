@@ -1,77 +1,182 @@
 {% extends "shsat/base_shsat.html" %}
 
-{% block title %}Resources — SHSAT Workshop{% endblock %}
+{% block title %}Resources — SHSAT Prep{% endblock %}
 {% block tab_resources %}active{% endblock %}
 
 {% block shsat_content %}
-<h1 class="shsat-page-title">SHSAT Resources</h1>
-<p class="shsat-page-subtitle">Free materials to supplement your practice tests.</p>
+<h1 class="shsat-page-title">Resources</h1>
+<p class="shsat-page-subtitle">Honest guidance on where to go beyond this platform.</p>
 
-<p class="shsat-section-title">Official DOE resources</p>
-<ul class="shsat-resource-list">
-  <li class="shsat-resource-item">
-    <a href="https://www.schools.nyc.gov/enrollment/high-schools/specialized-high-school-admissions" target="_blank" rel="noopener">
-      NYC DOE — Specialized High School Admissions
-    </a>
-    <div class="shsat-resource-item__type">Official website</div>
-  </li>
-  <li class="shsat-resource-item">
-    <a href="https://www.schools.nyc.gov/enrollment/high-schools/specialized-high-school-admissions/shsat" target="_blank" rel="noopener">
-      SHSAT official handbook (download from DOE)
-    </a>
-    <div class="shsat-resource-item__type">PDF handbook</div>
-  </li>
-</ul>
+<!-- ── Official DOE resources ─────────────────────────────────────────────── -->
+<section class="res-section">
+  <h2 class="res-section__title">Official DOE materials</h2>
+  <p class="res-section__body">
+    The only authoritative source for SHSAT content is the New York City Department of Education.
+    Their official practice handbooks are the materials this platform was built from, and they are
+    free. If you only do one thing outside of this platform, download the handbooks and work through
+    every question carefully. No commercial prep resource replaces them.
+  </p>
+  <ul class="res-list">
+    <li class="res-list__item">
+      <a href="https://www.schools.nyc.gov/enrollment/high-schools/specialized-high-school-admissions" target="_blank" rel="noopener">NYC DOE — Specialized High School Admissions</a>
+      <span class="res-list__meta">Official admissions hub: eligibility, timeline, and process</span>
+    </li>
+    <li class="res-list__item">
+      <a href="https://www.schools.nyc.gov/enrollment/high-schools/specialized-high-school-admissions/shsat" target="_blank" rel="noopener">SHSAT official page</a>
+      <span class="res-list__meta">Test structure, registration, and handbook downloads</span>
+    </li>
+    <li class="res-list__item">
+      <a href="https://www.schools.nyc.gov/docs/default-source/default-document-library/2024-shsat-handbook-english" target="_blank" rel="noopener">2024 SHSAT Handbook (PDF)</a>
+      <span class="res-list__meta">Full practice test with answer explanations — direct from the DOE</span>
+    </li>
+  </ul>
+</section>
 
-<p class="shsat-section-title">ELA preparation</p>
-<ul class="shsat-resource-list">
-  <li class="shsat-resource-item">
-    Revising/Editing passages — focus on grammar, sentence structure, and logic flow.
-    <div class="shsat-resource-item__type">Practice type</div>
-  </li>
-  <li class="shsat-resource-item">
-    Literary and informational reading — practice identifying main idea, evidence, and inference.
-    <div class="shsat-resource-item__type">Practice type</div>
-  </li>
-</ul>
+<!-- ── Private tutoring ───────────────────────────────────────────────────── -->
+<section class="res-section">
+  <h2 class="res-section__title">Private tutoring and prep programs</h2>
+  <p class="res-section__body">
+    This platform is designed to give you a method and precise feedback, not to replace a human tutor.
+    For students who want one-on-one instruction or structured group classes, the following are
+    established NYC-based services. We have no affiliation with any of them and make no endorsement.
+    List prices, availability, and quality vary. Do your own due diligence.
+  </p>
+  <ul class="res-list">
+    <li class="res-list__item">
+      <a href="https://ivytutorsnetwork.com/exams/shsat-the-specialized-high-school-admissions-test" target="_blank" rel="noopener">Ivy Tutors Network</a>
+      <span class="res-list__meta">One-on-one and group classes; 20+ years of SHSAT prep in NYC</span>
+    </li>
+    <li class="res-list__item">
+      <a href="https://centralparktutors.com/shsat-tutoring-nyc/" target="_blank" rel="noopener">Central Park Tutors</a>
+      <span class="res-list__meta">Tutors who are alumni of Stuyvesant, Bronx Science, and Brooklyn Tech</span>
+    </li>
+    <li class="res-list__item">
+      <a href="https://www.ibidprep.com/shsat-prep" target="_blank" rel="noopener">ibidPREP</a>
+      <span class="res-list__meta">One-on-one and small-group classes; focuses on middle school learning</span>
+    </li>
+    <li class="res-list__item">
+      <a href="https://honorsprep.com/shsat-tutoring" target="_blank" rel="noopener">Honors Prep</a>
+      <span class="res-list__meta">Independent Brooklyn-based practice; personalized tutoring</span>
+    </li>
+    <li class="res-list__item">
+      <a href="https://catestutoring.com/shsat-test-prep-nyc/" target="_blank" rel="noopener">CATES Tutoring</a>
+      <span class="res-list__meta">Private tutors and small classes; in-person across Manhattan and Brooklyn</span>
+    </li>
+    <li class="res-list__item">
+      <a href="https://doctorshsat.com/" target="_blank" rel="noopener">Doctor SHSAT</a>
+      <span class="res-list__meta">Oxford Ph.D., 20+ years experience; exclusive one-on-one in NYC or online</span>
+    </li>
+    <li class="res-list__item">
+      <a href="https://nycstemclub.com/nyc-top-shsat-prep-program/" target="_blank" rel="noopener">NYC STEM Club</a>
+      <span class="res-list__meta">Year-long program and bootcamp options; high specialized HS acceptance rates</span>
+    </li>
+    <li class="res-list__item">
+      <a href="https://kitablearning.com/shsat-prep/" target="_blank" rel="noopener">Kitab Learning</a>
+      <span class="res-list__meta">Small-group SHSAT classes with personalized instruction</span>
+    </li>
+    <li class="res-list__item">
+      <a href="https://www.citysmarts.net/shsat-foundations" target="_blank" rel="noopener">City Smarts</a>
+      <span class="res-list__meta">9-week SHSAT clinic and full prep programs for 6th to 8th graders</span>
+    </li>
+    <li class="res-list__item">
+      <a href="https://fivepointslearning.com/" target="_blank" rel="noopener">Five Points Learning</a>
+      <span class="res-list__meta">NYC tutoring and test prep since 2009</span>
+    </li>
+    <li class="res-list__item">
+      <a href="https://kennytan.nyc/shsat/" target="_blank" rel="noopener">Kenny Tan SHSAT Tutoring</a>
+      <span class="res-list__meta">Full-time professional tutor with 10+ years and hundreds of students</span>
+    </li>
+  </ul>
+</section>
 
-<p class="shsat-section-title">Math preparation</p>
-<ul class="shsat-resource-list">
-  <li class="shsat-resource-item">
-    Grid-in problems — no answer choices, must compute exactly. Practice with NYS Math standards.
-    <div class="shsat-resource-item__type">Practice type</div>
-  </li>
-  <li class="shsat-resource-item">
-    Algebra, geometry, statistics, and number theory appear most on recent tests.
-    <div class="shsat-resource-item__type">Topic overview</div>
-  </li>
-</ul>
+<!-- ── Coming soon: Set Method ────────────────────────────────────────────── -->
+<section class="res-section res-section--coming-soon">
+  <div class="res-coming-soon__badge">Coming soon</div>
+  <h2 class="res-section__title">The Set Method — full lesson</h2>
+  <p class="res-section__body">
+    A complete, self-contained lesson on the Set Method: the framework that reframes every SHSAT
+    Reading Comprehension question as a classification problem rather than a reading problem.
+    The lesson will cover the theory, walk through worked examples from the official DOE handbooks,
+    and give you a repeatable procedure for eliminating wrong answers with precision.
+  </p>
+</section>
 
-<p class="shsat-section-title">About the scoring</p>
-<div style="background:rgba(0,0,0,0.025);border-left:3px solid rgba(0,0,0,0.12);padding:16px 20px;font-size:15px;line-height:1.7;margin-bottom:32px;">
-  <p style="margin:0 0 12px;">The SHSAT has 57 ELA questions and 57 Math questions, but only <strong>47 of each are scored</strong>. The rest are unscored field-test items — you won't know which ones. Scores range from 200 to 800 (composite 400–1600, then re-scaled to 200–800).</p>
-  <p style="margin:0;">Our platform uses a <strong>conservative scaling table</strong>. Scores shown are estimates. Actual SHSAT scaling varies by year and is not published by the NYC DOE.</p>
-</div>
+<!-- ── Coming soon: Question Builder ─────────────────────────────────────── -->
+<section class="res-section res-section--coming-soon">
+  <div class="res-coming-soon__badge">Coming soon</div>
+  <h2 class="res-section__title">Question Builder</h2>
+  <p class="res-section__body">
+    The oldest insight in education is that the best way to learn something is to teach it.
+    When you can explain a concept to someone else, you understand it at a deeper level than
+    when you can only recognize the right answer.
+  </p>
+  <p class="res-section__body">
+    The Question Builder puts students on the other side of the test. Instead of answering
+    questions, they write them: choosing a passage, identifying the set of meaning it defines,
+    and constructing wrong answers that fall into specific trap types. To do this well, a student
+    has to fully understand how each trap works and what the SHSAT is actually measuring. That
+    understanding is the goal. The Question Builder is the drill that builds it.
+  </p>
+</section>
 
-<p class="shsat-section-title">2025 Admissions cutoff scores</p>
-<table class="shsat-table">
-  <thead>
-    <tr>
-      <th>School</th>
-      <th>Cutoff score</th>
-      <th>Approx. seats</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>Stuyvesant High School</td><td>562</td><td>762</td></tr>
-    <tr><td>Bronx High School of Science</td><td>522</td><td>749</td></tr>
-    <tr><td>Staten Island Technical HS</td><td>527</td><td>387</td></tr>
-    <tr><td>HS of American Studies at Lehman College</td><td>514</td><td>144</td></tr>
-    <tr><td>HS of Math, Science & Engineering at City College</td><td>493</td><td>135</td></tr>
-    <tr><td>Brooklyn Technical HS</td><td>478</td><td>1766</td></tr>
-    <tr><td>Queens HS for the Sciences at York College</td><td>472</td><td>111</td></tr>
-    <tr><td>The Brooklyn Latin School</td><td>437</td><td>262</td></tr>
-  </tbody>
-</table>
-<p style="font-size:13px;color:rgba(0,0,0,0.4);">Source: NYC DOE 2025 admissions cycle. Cutoffs vary annually.</p>
+<style>
+.res-section {
+  padding: 36px 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+  max-width: 680px;
+}
+.res-section__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: -.01em;
+}
+.res-section__body {
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(0,0,0,.6);
+  margin-bottom: 20px;
+}
+.res-section__body:last-child { margin-bottom: 0; }
+.res-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+.res-list__item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.res-list__item a {
+  font-size: 15px;
+  font-weight: 500;
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.res-list__item a:hover { color: rgba(0,0,0,.55); }
+.res-list__meta {
+  font-size: 13px;
+  color: rgba(0,0,0,.45);
+  line-height: 1.5;
+}
+.res-section--coming-soon {
+  opacity: 0.7;
+}
+.res-coming-soon__badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.4);
+  border: 1px solid rgba(0,0,0,.2);
+  padding: 2px 8px;
+  margin-bottom: 12px;
+}
+</style>
 {% endblock %}
