@@ -87,10 +87,10 @@ class QuestionEditForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.pk and self.instance.distractor_types:
             dt = self.instance.distractor_types
-            self.fields["distractor_a"].initial = dt.get("A", "")
-            self.fields["distractor_b"].initial = dt.get("B", "")
-            self.fields["distractor_c"].initial = dt.get("C", "")
-            self.fields["distractor_d"].initial = dt.get("D", "")
+            self.initial["distractor_a"] = dt.get("A", "")
+            self.initial["distractor_b"] = dt.get("B", "")
+            self.initial["distractor_c"] = dt.get("C", "")
+            self.initial["distractor_d"] = dt.get("D", "")
 
     def save(self, commit=True):
         instance = super().save(commit=False)

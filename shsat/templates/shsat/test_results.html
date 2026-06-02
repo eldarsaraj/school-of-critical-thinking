@@ -8,7 +8,7 @@
 <h1 class="shsat-page-title">Results — {{ attempt.test.title }}</h1>
 <p class="shsat-page-subtitle">{{ attempt.submitted_at|date:"F j, Y" }}
   {% if attempt.total_seconds %}
-  · {{ attempt.total_seconds|floatformat:0 }} seconds elapsed
+  · {{ attempt.total_seconds|duration }} elapsed
   {% endif %}
 </p>
 

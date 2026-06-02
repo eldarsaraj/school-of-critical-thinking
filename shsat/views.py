@@ -154,7 +154,7 @@ def dashboard(request):
             "composite": a.composite_score,
             "minutes": round(a.total_seconds / 60, 1) if a.total_seconds else None,
         }
-        for a in attempts
+        for a in reversed(list(attempts))
         if a.composite_score is not None
     ]
 
