@@ -1,5 +1,5 @@
 {% extends "shsat/base_shsat.html" %}
-{% load static %}
+{% load static shsat_extras %}
 
 {% block title %}Dashboard — SHSAT Workshop{% endblock %}
 {% block tab_dashboard %}active{% endblock %}
@@ -149,7 +149,7 @@
   {% for skill in skill_accuracy_data|slice:":3" %}
   <div class="shsat-focus-card">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-      <div class="shsat-focus-card__skill" style="margin-bottom:0;">{{ skill.label }}</div>
+      <div class="shsat-focus-card__skill" style="margin-bottom:0;">{{ skill.label|first_word }}</div>
       {% if skill.is_persistent %}
       <span class="shsat-persistence-badge shsat-persistence-badge--persistent">Persistent gap</span>
       {% elif skill.weak_attempts == 1 %}

@@ -18,6 +18,12 @@ def duration(seconds):
 
 
 @register.filter
+def first_word(value):
+    """Return only the first word of a string."""
+    return value.split()[0] if value else value
+
+
+@register.filter
 def display_letter(letter, question_number):
     """Return the display letter for a given internal letter (A-D) and question number.
     Odd questions: A/B/C/D. Even questions: E/F/G/H (official SHSAT alternating scheme)."""
