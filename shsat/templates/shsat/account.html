@@ -7,6 +7,16 @@
 <h1 class="shsat-page-title">Account settings</h1>
 <p class="shsat-page-subtitle">{{ user.email }}</p>
 
+<div style="margin-bottom:36px;padding:20px 24px;border:1px solid rgba(0,0,0,.08);background:rgba(0,0,0,.018);max-width:560px;">
+  <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.38);margin:0 0 10px;">Privacy</p>
+  <p style="font-size:14px;line-height:1.75;color:rgba(0,0,0,.6);margin:0;">
+    No personal information about students or parents is captured or shared. No names, locations,
+    or identifying details are stored beyond what you provide here. Aggregate score and accuracy
+    data may be used anonymously to improve the quality of the tests. Your email address is used
+    only to confirm your account and to deliver error analysis reports after each test.
+  </p>
+</div>
+
 <form method="post" novalidate style="max-width:520px;">
   {% csrf_token %}
 
