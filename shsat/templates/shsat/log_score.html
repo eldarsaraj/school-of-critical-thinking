@@ -6,6 +6,12 @@
 {% block shsat_content %}
 <h1 class="shsat-page-title">Log a score</h1>
 <p class="shsat-page-subtitle">Record a score from any practice test book or printout.</p>
+<p style="font-size:15px;line-height:1.75;color:rgba(0,0,0,.6);max-width:560px;margin-bottom:28px;">
+  The dashboard is not limited to tests taken here. If your child takes a test from Kaplan,
+  Princeton Review, an official DOE handbook, or any other source, log the score and it will
+  appear in the score history and projection charts alongside everything else. The goal is to
+  give you one place to track progress across all your prep, wherever it happens.
+</p>
 
 <form method="post" novalidate style="max-width:520px;">
   {% csrf_token %}
