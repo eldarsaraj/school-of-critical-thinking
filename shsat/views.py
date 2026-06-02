@@ -490,6 +490,35 @@ def test_submit(request, test_id):
     attempt.total_seconds = elapsed
     attempt.save()
 
+    # Send results email to parent
+    try:
+        from django.core.mail import send_mail
+        from django.template.loader import render_to_string
+        error_analysis_url = request.build_absolute_uri(
+            f"/shsat/tests/{attempt.id}/error-analysis/"
+        )
+        ela_total = answers.filter(question__section="ELA").count()
+        math_total = answers.filter(question__section="Math").count()
+        body = render_to_string("shsat/email_results.html", {
+            "test_title": attempt.test.title,
+            "ela_correct": ela_correct,
+            "math_correct": math_correct,
+            "ela_total": ela_total,
+            "math_total": math_total,
+            "composite_score": composite,
+            "error_analysis_url": error_analysis_url,
+        })
+        send_mail(
+            subject=f"Results ready: {attempt.test.title}",
+            message="",
+            from_email=None,  # uses DEFAULT_FROM_EMAIL
+            recipient_list=[request.user.email],
+            html_message=body,
+            fail_silently=True,
+        )
+    except Exception:
+        pass
+
     return redirect("shsat_test_results", attempt_id=attempt.id)
 
 
