@@ -30,8 +30,6 @@ def _staff_required(view_func):
 # ---------------------------------------------------------------------------
 
 def landing(request):
-    if request.user.is_authenticated and hasattr(request.user, "shsat_profile"):
-        return redirect("shsat_dashboard")
     return render(request, "shsat/landing.html")
 
 

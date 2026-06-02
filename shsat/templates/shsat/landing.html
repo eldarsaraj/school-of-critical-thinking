@@ -9,7 +9,7 @@
 <style>
 /* ── SHSAT landing page ───────────────────────────────────────────────────── */
 .sl-hero {
-  padding: 80px 0 64px;
+  padding: 48px 0 56px;
   max-width: 720px;
 }
 .sl-hero__label {
@@ -21,11 +21,10 @@
   margin-bottom: 20px;
 }
 .sl-hero__title {
-  font-size: clamp(32px, 5vw, 52px);
-  font-weight: 600;
-  line-height: 1.12;
-  margin-bottom: 24px;
-  letter-spacing: -0.02em;
+  font-size: 36px;
+  line-height: 1.15;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.01em;
 }
 .sl-hero__sub {
   font-size: 18px;
@@ -124,7 +123,7 @@
 }
 .sl-preview__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 20px;
 }
 .sl-preview-img {
@@ -155,12 +154,8 @@
 .sl-method {
   padding: 64px 0;
   border-top: 1px solid rgba(0,0,0,.08);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: start;
+  max-width: 640px;
 }
-@media (max-width: 700px) { .sl-method { grid-template-columns: 1fr; gap: 32px; } }
 .sl-method__label {
   font-size: 11px;
   font-weight: 700;
@@ -181,25 +176,6 @@
   line-height: 1.75;
   color: rgba(0,0,0,.6);
 }
-.sl-trap-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.sl-trap-table th {
-  text-align: left;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,.38);
-  padding: 0 12px 10px 0;
-  border-bottom: 1px solid rgba(0,0,0,.1);
-}
-.sl-trap-table td {
-  padding: 10px 12px 10px 0;
-  vertical-align: top;
-  border-bottom: 1px solid rgba(0,0,0,.06);
-  color: rgba(0,0,0,.7);
-  line-height: 1.5;
-}
-.sl-trap-table td:first-child { font-weight: 600; color: #111; white-space: nowrap; }
 
 /* ── Features ─────────────────────────────────────────────────────────────── */
 .sl-features {
@@ -258,12 +234,16 @@
   <p class="sl-hero__sub">
     Most SHSAT prep gives you more questions. We give you a method.
     Built by reverse-engineering the official DOE practice tests,
-    question by question, to find the exact pattern the SHSAT tests —
+    question by question, to find the exact patterns the SHSAT tests
     and the exact traps it sets.
   </p>
   <div class="sl-hero__actions">
-    <a href="{% url 'shsat_signup' %}" class="sl-btn">Start with the free Baseline Test &rarr;</a>
-    <a href="{% url 'shsat_login' %}" class="sl-btn sl-btn--ghost">Log in</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'shsat_dashboard' %}" class="sl-btn">Your account &rarr;</a>
+    {% else %}
+      <a href="{% url 'shsat_signup' %}" class="sl-btn">Start with the free Baseline Test &rarr;</a>
+      <a href="{% url 'shsat_login' %}" class="sl-btn sl-btn--ghost">Log in</a>
+    {% endif %}
   </div>
 </div>
 
@@ -277,8 +257,9 @@
       <h2 class="sl-diff-card__title">Reverse-engineered from the source</h2>
       <p class="sl-diff-card__body">
         Every question, explanation, and distractor label was written by reading the official
-        DOE handbooks and working backwards from the answer rationales. The SHSAT has a precise
-        logic. We found it.
+        DOE handbooks and working backwards from the answer rationales. The questions are also
+        constructed according to latent variable theory and factor analysis, ensuring they
+        measure what the SHSAT actually measures. This is not guesswork.
       </p>
     </div>
 
@@ -287,17 +268,18 @@
       <h2 class="sl-diff-card__title">Every wrong answer has a name</h2>
       <p class="sl-diff-card__body">
         There are four ways to be wrong on SHSAT ELA, and a specific set for Math.
-        After each test, your error analysis shows which trap caught you and how often —
+        After each test, your error analysis shows which trap caught you and how often,
         so review is targeted, not random.
       </p>
     </div>
 
     <div class="sl-diff-card">
       <p class="sl-diff-card__marker">03 — Integrity</p>
-      <h2 class="sl-diff-card__title">No AI. No generated content.</h2>
+      <h2 class="sl-diff-card__title">An AI-free platform</h2>
       <p class="sl-diff-card__body">
         Every question was written and reviewed by hand. Every explanation was written
-        to teach the reasoning, not just reveal the answer.
+        to teach the reasoning, not just reveal the answer. We keep AI out of content
+        creation to eliminate hallucinations and factual errors.
         What you practice is what the DOE actually tests.
       </p>
     </div>
@@ -317,53 +299,39 @@
   <div class="sl-preview__grid">
     <div>
       <div class="sl-preview-img">
-        <!-- Replace with actual screenshot: static/shsat/images/preview-dashboard.png -->
-        <span>Dashboard preview</span>
+        <img src="{% static 'shsat/preview-dashboard.png' %}" alt="Score history and school placement dashboard">
       </div>
       <p class="sl-preview-img__caption">Score history and school placement dashboard</p>
     </div>
     <div>
       <div class="sl-preview-img">
-        <!-- Replace with actual screenshot: static/shsat/images/preview-error-analysis.png -->
-        <span>Error analysis preview</span>
+        <img src="{% static 'shsat/preview-error-analysis.png' %}" alt="Per-attempt error analysis and distractor breakdown">
       </div>
       <p class="sl-preview-img__caption">Per-attempt error analysis and distractor breakdown</p>
+    </div>
+    <div>
+      <div class="sl-preview-img">
+        <img src="{% static 'shsat/preview-trap.png' %}" alt="Distractor trap analysis chart">
+      </div>
+      <p class="sl-preview-img__caption">Distractor trap breakdown: which patterns caught you</p>
     </div>
   </div>
 </section>
 
 <!-- ── The Method ─────────────────────────────────────────────────────────── -->
 <section class="sl-method">
-  <div>
-    <p class="sl-method__label">The Set Method</p>
-    <h2 class="sl-method__title">ELA is one operation, applied 57 times</h2>
-    <p class="sl-method__body">
-      SHSAT Reading Comprehension doesn't test reading. It tests a single, learnable operation:
-      deciding whether a statement belongs to a precisely defined set of meaning — the claims
-      the passage explicitly makes.<br><br>
-      Once a student understands this, the four types of wrong answer become visible
-      as distinct categories rather than vague feelings. Elimination stops being intuition.
-      It becomes a procedure.
-    </p>
-  </div>
-  <div>
-    <p class="sl-method__label">The four traps</p>
-    <table class="sl-trap-table">
-      <thead>
-        <tr><th>Trap</th><th>What it looks like</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Out of scope</td><td>A claim the passage never addresses — plausible but absent</td></tr>
-        <tr><td>True but off-target</td><td>A real detail from the passage that doesn't answer this specific question</td></tr>
-        <tr><td>Partial</td><td>Half the claim is supported; the other half isn't</td></tr>
-        <tr><td>Reversal</td><td>The passage says the opposite — cause and effect swapped, or a relationship inverted</td></tr>
-      </tbody>
-    </table>
-    <p style="font-size:13px;color:rgba(0,0,0,.38);margin-top:14px;line-height:1.6;">
-      Every wrong ELA answer in the official DOE handbooks falls into one of these four types.
-      The error analysis tags each wrong answer you select so you can see your pattern, not just your score.
-    </p>
-  </div>
+  <p class="sl-method__label">The Set Method</p>
+  <h2 class="sl-method__title">A novel approach to cracking Reading Comprehension</h2>
+  <p class="sl-method__body">
+    Most students treat SHSAT Reading Comprehension as a reading problem. It is not.
+    It is a classification problem. We offer a cutting-edge approach, the Set Method,
+    which reframes every question as a single learnable operation: deciding whether a
+    statement belongs to a precisely defined set of meaning, the claims the passage
+    explicitly makes.<br><br>
+    Once a student internalizes this, wrong answers stop feeling vague and start
+    looking like what they are: predictable, nameable traps. Elimination stops being
+    intuition. It becomes a procedure.
+  </p>
 </section>
 
 <!-- ── Features ──────────────────────────────────────────────────────────── -->
@@ -372,7 +340,7 @@
   <div class="sl-features__grid">
     <div class="sl-feature">
       <p class="sl-feature__title">Adaptive practice test</p>
-      <p class="sl-feature__body">Routes you into harder or easier questions based on your routing section performance — the same adaptive structure as the real SHSAT.</p>
+      <p class="sl-feature__body">Routes you into harder or easier questions based on your routing section performance, matching the same adaptive structure as the real SHSAT.</p>
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">Honest scaled scores</p>
@@ -380,7 +348,7 @@
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">Distractor trap labels</p>
-      <p class="sl-feature__body">Every wrong answer you select is tagged by trap type. Review becomes structural, not random — you learn your specific failure pattern.</p>
+      <p class="sl-feature__body">Every wrong answer you select is tagged by trap type. Review becomes structural, not random. You learn your specific failure pattern.</p>
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">School placement tracking</p>
@@ -388,7 +356,7 @@
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">Accuracy by skill</p>
-      <p class="sl-feature__body">Broken down across ELA and Math skill areas — so you know whether Inference or Algebra is costing you more points.</p>
+      <p class="sl-feature__body">Broken down across ELA and Math skill areas, so you know whether Inference or Algebra is costing you more points.</p>
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">Score history and projection</p>
@@ -399,9 +367,13 @@
 
 <!-- ── CTA ────────────────────────────────────────────────────────────────── -->
 <section class="sl-cta">
-  <h2 class="sl-cta__title">Start with the Baseline Test — free</h2>
+  <h2 class="sl-cta__title">Start with the Baseline Test, free</h2>
   <p class="sl-cta__sub">114 questions. Full error analysis. No credit card required.</p>
-  <a href="{% url 'shsat_signup' %}" class="sl-btn">Create a free account &rarr;</a>
+  {% if user.is_authenticated %}
+    <a href="{% url 'shsat_dashboard' %}" class="sl-btn">Your account &rarr;</a>
+  {% else %}
+    <a href="{% url 'shsat_signup' %}" class="sl-btn">Create a free account &rarr;</a>
+  {% endif %}
   <p class="sl-no-ai">No AI. No algorithm-generated content. Built on the official DOE materials.</p>
 </section>
 
