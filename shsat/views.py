@@ -597,16 +597,19 @@ def error_analysis(request, attempt_id):
         elif entry[0]:
             _dist_label[entry[0]] = entry[1]
 
+    import re as _re
     trap_counts = {}
     for ans in wrong_answers:
         trap = ans.question.distractor_types.get(ans.selected_answer, "")
         if trap:
             section = ans.question.section
-            readable = _dist_label.get(trap, trap.replace("_", " ").title())
-            key = f"{section}: {readable}"
+            raw_label = _dist_label.get(trap, trap.replace("_", " ").title())
+            # Strip leading section prefix like "(E) " or "(M) "
+            clean_label = _re.sub(r"^\([EM]\)\s*", "", raw_label)
+            key = (section, clean_label)
             trap_counts[key] = trap_counts.get(key, 0) + 1
     trap_data = sorted(
-        [{"label": k, "count": v} for k, v in trap_counts.items()],
+        [{"label": label, "section": section, "count": v} for (section, label), v in trap_counts.items()],
         key=lambda x: x["count"], reverse=True
     )
 

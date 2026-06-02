@@ -232,6 +232,22 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 // ---------------------------------------------------------------------------
+// Shared palette
+// ---------------------------------------------------------------------------
+const P = {
+  ela:       "#5b8ec4",
+  math:      "#c4635b",
+  correct:   "#5aab8c",
+  wrong:     "#c4635b",
+  warn:      "#c49a5a",
+  neutral:   "#8896a8",
+  composite: "#3d4f63",
+  trap_ela:  "#7aaad4",
+  trap_math: "#d4896f",
+  grid:      "rgba(0,0,0,0.06)",
+};
+
+// ---------------------------------------------------------------------------
 // Section overview — stacked bar (time spent, split by correct / incorrect)
 // ---------------------------------------------------------------------------
 (function () {
@@ -250,20 +266,8 @@
     data: {
       labels,
       datasets: [
-        {
-          label: "Time on correct answers",
-          data: correctTime,
-          backgroundColor: "#10b981",
-          borderWidth: 0,
-          barThickness: 64,
-        },
-        {
-          label: "Time on wrong answers",
-          data: wrongTime,
-          backgroundColor: "#ef4444",
-          borderWidth: 0,
-          barThickness: 64,
-        },
+        { label: "Correct", data: correctTime, backgroundColor: P.correct, borderWidth: 0, barThickness: 64 },
+        { label: "Wrong",   data: wrongTime,   backgroundColor: P.wrong,   borderWidth: 0, barThickness: 64 },
       ]
     },
     options: {
@@ -282,7 +286,7 @@
       },
       scales: {
         x: { stacked: true, grid: { display: false }, ticks: { font: { size: 13, weight: "600" } } },
-        y: { stacked: true, grid: { color: "rgba(0,0,0,0.06)" },
+        y: { stacked: true, grid: { color: P.grid },
              ticks: { font: { size: 11 }, callback: v => v + " min" },
              title: { display: true, text: "Minutes", font: { size: 11 }, color: "rgba(0,0,0,0.4)" } }
       }
@@ -306,7 +310,7 @@
       datasets: [{
         label: "Wrong answers",
         data: data.map(d => d.count),
-        backgroundColor: "#ef4444",
+        backgroundColor: P.wrong,
         borderWidth: 0,
         barThickness: 18,
       }]
@@ -317,7 +321,7 @@
       aspectRatio: Math.max(1.6, 4 / Math.max(data.length, 2)),
       plugins: { legend: { display: false } },
       scales: {
-        x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: "rgba(0,0,0,0.06)" } },
+        x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } },
         y: { grid: { display: false }, ticks: { font: { size: 12 } } }
       }
     }
@@ -325,7 +329,7 @@
 })();
 
 // ---------------------------------------------------------------------------
-// Distractor trap bar chart — horizontal, human-readable labels
+// Distractor trap bar chart — horizontal, colored by section
 // ---------------------------------------------------------------------------
 (function () {
   const el = document.getElementById("trapChart");
@@ -340,7 +344,7 @@
       datasets: [{
         label: "Times caught",
         data: data.map(d => d.count),
-        backgroundColor: "#7c3aed",
+        backgroundColor: data.map(d => d.section === "ELA" ? P.trap_ela : P.trap_math),
         borderWidth: 0,
         barThickness: 18,
       }]
@@ -349,9 +353,16 @@
       indexAxis: "y",
       responsive: true,
       aspectRatio: Math.max(1.4, 4 / Math.max(data.length, 2)),
-      plugins: { legend: { display: false } },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (item) => ` ${item.raw}× — ${data[item.dataIndex].section}`
+          }
+        }
+      },
       scales: {
-        x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: "rgba(0,0,0,0.06)" } },
+        x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } },
         y: { grid: { display: false }, ticks: { font: { size: 12 } } }
       }
     }
@@ -374,7 +385,7 @@
       datasets: [{
         data: hasErrors ? data.map(d => d.errors) : [1, 1, 1],
         backgroundColor: hasErrors
-          ? ["#10b981", "#f59e0b", "#ef4444"]
+          ? [P.correct, P.warn, P.wrong]
           : ["rgba(0,0,0,0.07)", "rgba(0,0,0,0.05)", "rgba(0,0,0,0.03)"],
         borderWidth: 0,
       }]
@@ -404,26 +415,10 @@
     type: "scatter",
     data: {
       datasets: [
-        {
-          label: "ELA correct",
-          data: ela.filter(d => d.y === 1).map(d => ({x: d.x, y: 1})),
-          backgroundColor: "rgba(39,76,119,0.6)", pointRadius: 5,
-        },
-        {
-          label: "ELA wrong",
-          data: ela.filter(d => d.y === 0).map(d => ({x: d.x, y: 0})),
-          backgroundColor: "rgba(39,76,119,0.25)", pointRadius: 5,
-        },
-        {
-          label: "Math correct",
-          data: math.filter(d => d.y === 1).map(d => ({x: d.x, y: 1})),
-          backgroundColor: "rgba(164,22,26,0.6)", pointRadius: 5,
-        },
-        {
-          label: "Math wrong",
-          data: math.filter(d => d.y === 0).map(d => ({x: d.x, y: 0})),
-          backgroundColor: "rgba(164,22,26,0.25)", pointRadius: 5,
-        },
+        { label: "ELA correct",  data: ela.filter(d => d.y === 1).map(d => ({x: d.x, y: 1})),  backgroundColor: P.ela,       pointRadius: 5 },
+        { label: "ELA wrong",    data: ela.filter(d => d.y === 0).map(d => ({x: d.x, y: 0})),  backgroundColor: P.trap_ela,  pointRadius: 5 },
+        { label: "Math correct", data: math.filter(d => d.y === 1).map(d => ({x: d.x, y: 1})), backgroundColor: P.math,      pointRadius: 5 },
+        { label: "Math wrong",   data: math.filter(d => d.y === 0).map(d => ({x: d.x, y: 0})), backgroundColor: P.trap_math, pointRadius: 5 },
       ]
     },
     options: {

@@ -167,6 +167,20 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 <script>
+// ---------------------------------------------------------------------------
+// Shared palette
+// ---------------------------------------------------------------------------
+const P = {
+  ela:       "#5b8ec4",
+  math:      "#c4635b",
+  correct:   "#5aab8c",
+  wrong:     "#c4635b",
+  warn:      "#c49a5a",
+  neutral:   "#8896a8",
+  composite: "#3d4f63",
+  grid:      P.grid,
+};
+
 // Plugin: draw a centered message when a chart has no data
 const emptyStatePlugin = {
   id: "emptyState",
@@ -252,8 +266,8 @@ function makeProjData(arr) {
   const isEmpty = history.length === 0;
   const ctx = document.getElementById("scoreChart").getContext("2d");
 
-  const greyLine = { borderColor: "rgba(0,0,0,0.12)", backgroundColor: "transparent",
-                     pointBackgroundColor: "rgba(0,0,0,0.12)", borderWidth: 2, tension: 0.2, pointRadius: 4 };
+  const greyLine = { borderColor: "rgba(0,0,0,0.10)", backgroundColor: "transparent",
+                     pointBackgroundColor: "rgba(0,0,0,0.10)", borderWidth: 2, tension: 0.2, pointRadius: 4 };
 
   function projData(arr) { return makeProjData(arr); }
 
@@ -264,49 +278,27 @@ function makeProjData(arr) {
         { label: "Math",      data: [], ...greyLine },
       ]
     : [
-        {
-          label: "Composite",
-          data: history.map(d => d.composite),
-          borderColor: "#161a1d", backgroundColor: "transparent",
-          pointBackgroundColor: "#161a1d", borderWidth: 2, borderDash: [6, 3],
-          tension: 0.2, pointRadius: 4,
-        },
-        {
-          label: "ELA",
-          data: history.map(d => d.ela),
-          borderColor: "#274c77", backgroundColor: "transparent",
-          pointBackgroundColor: "#274c77", borderWidth: 2,
-          tension: 0.2, pointRadius: 4,
-        },
-        {
-          label: "Math",
-          data: history.map(d => d.math),
-          borderColor: "#a4161a", backgroundColor: "transparent",
-          pointBackgroundColor: "#a4161a", borderWidth: 2,
-          tension: 0.2, pointRadius: 4,
-        },
-        // Projected datasets (dotted, light)
-        proj ? {
-          label: "Composite (projected)",
-          data: projData(proj.composite),
-          borderColor: "rgba(0,0,0,0.22)", backgroundColor: "transparent",
-          pointBackgroundColor: "rgba(0,0,0,0.18)", borderWidth: 2, borderDash: [4, 4],
-          tension: 0.2, pointRadius: 3, pointStyle: "circle",
-        } : null,
-        proj ? {
-          label: "ELA (projected)",
-          data: projData(proj.ela),
-          borderColor: "rgba(39,76,119,0.3)", backgroundColor: "transparent",
-          pointBackgroundColor: "rgba(39,76,119,0.25)", borderWidth: 2, borderDash: [4, 4],
-          tension: 0.2, pointRadius: 3,
-        } : null,
-        proj ? {
-          label: "Math (projected)",
-          data: projData(proj.math),
-          borderColor: "rgba(164,22,26,0.3)", backgroundColor: "transparent",
-          pointBackgroundColor: "rgba(164,22,26,0.25)", borderWidth: 2, borderDash: [4, 4],
-          tension: 0.2, pointRadius: 3,
-        } : null,
+        { label: "Composite", data: history.map(d => d.composite),
+          borderColor: P.composite, backgroundColor: "transparent", pointBackgroundColor: P.composite,
+          borderWidth: 2, borderDash: [6, 3], tension: 0.2, pointRadius: 4 },
+        { label: "ELA", data: history.map(d => d.ela),
+          borderColor: P.ela, backgroundColor: "transparent", pointBackgroundColor: P.ela,
+          borderWidth: 2, tension: 0.2, pointRadius: 4 },
+        { label: "Math", data: history.map(d => d.math),
+          borderColor: P.math, backgroundColor: "transparent", pointBackgroundColor: P.math,
+          borderWidth: 2, tension: 0.2, pointRadius: 4 },
+        proj ? { label: "Composite (projected)", data: projData(proj.composite),
+          borderColor: "rgba(61,79,99,0.28)", backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(61,79,99,0.22)", borderWidth: 1.5, borderDash: [4, 4],
+          tension: 0.2, pointRadius: 3 } : null,
+        proj ? { label: "ELA (projected)", data: projData(proj.ela),
+          borderColor: "rgba(91,142,196,0.3)", backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(91,142,196,0.25)", borderWidth: 1.5, borderDash: [4, 4],
+          tension: 0.2, pointRadius: 3 } : null,
+        proj ? { label: "Math (projected)", data: projData(proj.math),
+          borderColor: "rgba(196,99,91,0.3)", backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(196,99,91,0.25)", borderWidth: 1.5, borderDash: [4, 4],
+          tension: 0.2, pointRadius: 3 } : null,
       ].filter(Boolean);
 
   const chart = new Chart(ctx, {
@@ -350,7 +342,7 @@ function makeProjData(arr) {
       scales: {
         y: {
           min: 100, max: 700,
-          grid: { color: isEmpty ? "rgba(0,0,0,0.04)" : "rgba(0,0,0,0.06)" },
+          grid: { color: isEmpty ? "rgba(0,0,0,0.04)" : P.grid },
           ticks: { font: { size: 12 }, stepSize: 100,
                    color: isEmpty ? "rgba(0,0,0,0.2)" : undefined }
         },
@@ -383,10 +375,10 @@ function makeProjData(arr) {
         chart.options.plugins.annotation.annotations = {
           cutoffLine: {
             type: "line", yMin: cutoff, yMax: cutoff,
-            borderColor: "rgba(180,40,30,0.7)", borderWidth: 2, borderDash: [6, 4],
+            borderColor: "rgba(196,99,91,0.75)", borderWidth: 2, borderDash: [6, 4],
             label: {
               content: school + " " + cutoff, display: true, position: "end",
-              backgroundColor: "rgba(180,40,30,0.7)", color: "#fff",
+              backgroundColor: "rgba(196,99,91,0.75)", color: "#fff",
               padding: { x: 6, y: 3 }, font: { size: 11, weight: "600" },
             }
           }
@@ -417,21 +409,17 @@ function makeProjData(arr) {
         { label: "Math", data: [], ...greyBar },
       ]
     : [
-        {
-          label: "ELA", data: data.map(d => d.ela),
-          backgroundColor: "#274c77", borderWidth: 0, barThickness: 48, yAxisID: "y", order: 2,
-        },
-        {
-          label: "Math", data: data.map(d => d.math),
-          backgroundColor: "#a4161a", borderWidth: 0, barThickness: 48, yAxisID: "y", order: 2,
-        },
+        { label: "ELA",  data: data.map(d => d.ela),
+          backgroundColor: P.ela,  borderWidth: 0, barThickness: 48, yAxisID: "y", order: 2 },
+        { label: "Math", data: data.map(d => d.math),
+          backgroundColor: P.math, borderWidth: 0, barThickness: 48, yAxisID: "y", order: 2 },
       ];
 
   if (hasTime) {
     datasets.push({
       label: "Time (min)", type: "line", data: data.map(d => d.minutes),
-      borderColor: "rgba(100,80,0,0.7)", backgroundColor: "transparent",
-      pointBackgroundColor: "rgba(100,80,0,0.7)", borderWidth: 2,
+      borderColor: P.neutral, backgroundColor: "transparent",
+      pointBackgroundColor: P.neutral, borderWidth: 2,
       borderDash: [4, 3], tension: 0.2, pointRadius: 4, yAxisID: "yTime", order: 1,
     });
   }
@@ -471,7 +459,7 @@ function makeProjData(arr) {
         },
         y: {
           stacked: true, min: 0, max: 700,
-          grid: { color: isEmpty ? "rgba(0,0,0,0.04)" : "rgba(0,0,0,0.06)" },
+          grid: { color: isEmpty ? "rgba(0,0,0,0.04)" : P.grid },
           ticks: { font: { size: 12 }, stepSize: 100,
                    color: isEmpty ? "rgba(0,0,0,0.2)" : undefined }
         },
@@ -496,8 +484,8 @@ function makeProjData(arr) {
   if (!data || !data.schools || data.labels.length === 0) return;
 
   const palette = [
-    "#274c77", "#a4161a", "#2d6a4f", "#6a4c93",
-    "#e76f51", "#2a9d8f", "#b5838d", "#264653"
+    "#5b8ec4", "#c4635b", "#5aab8c", "#9b7bc4",
+    "#c49a5a", "#5ab8c4", "#c47ba0", "#7bc45a"
   ];
 
   function hexToRgba(hex, alpha) {
@@ -589,7 +577,7 @@ function makeProjData(arr) {
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 12 } } },
         y: {
-          grid: { color: "rgba(0,0,0,0.06)" },
+          grid: { color: P.grid },
           ticks: {
             font: { size: 12 },
             callback: v => (v > 0 ? "+" : "") + v,
@@ -613,7 +601,7 @@ function makeProjData(arr) {
   const skills = JSON.parse(document.getElementById("skillChartData").textContent);
   const labels = skills.map(s => s.label);
   const accuracies = skills.map(s => s.accuracy);
-  const colors = accuracies.map(a => a < 60 ? "#ef4444" : a < 80 ? "#f59e0b" : "#10b981");
+  const colors = accuracies.map(a => a < 60 ? P.wrong : a < 80 ? P.warn : P.correct);
 
   new Chart(el.getContext("2d"), {
     type: "bar",
@@ -643,7 +631,7 @@ function makeProjData(arr) {
         }
       },
       scales: {
-        x: { min: 0, max: 100, grid: { color: "rgba(0,0,0,0.06)" },
+        x: { min: 0, max: 100, grid: { color: P.grid },
              ticks: { font: { size: 11 }, callback: v => v + "%" } },
         y: { grid: { display: false }, ticks: { font: { size: 12 } } }
       }
@@ -670,7 +658,7 @@ function makeProjData(arr) {
       datasets: [{
         label: "Avg minutes",
         data: timed.map(s => s.avg_time),
-        backgroundColor: "#64748b",
+        backgroundColor: P.neutral,
         borderWidth: 0,
         barThickness: 16,
       }]
@@ -684,7 +672,7 @@ function makeProjData(arr) {
         tooltip: { callbacks: { label: (item) => ` ${item.raw} min avg` } }
       },
       scales: {
-        x: { min: 0, grid: { color: "rgba(0,0,0,0.06)" },
+        x: { min: 0, grid: { color: P.grid },
              ticks: { font: { size: 11 }, callback: v => v + "m" } },
         y: { grid: { display: false }, ticks: { font: { size: 12 } } }
       }
