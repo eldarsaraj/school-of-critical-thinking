@@ -587,13 +587,23 @@ def error_analysis(request, attempt_id):
         key=lambda x: x["count"], reverse=True
     )
 
-    # Distractor trap analysis
+    # Distractor trap analysis — build human-readable label map from DISTRACTOR_CHOICES
+    from .forms import DISTRACTOR_CHOICES as _DC
+    _dist_label = {}
+    for entry in _DC:
+        if isinstance(entry[1], (list, tuple)) and entry[0] not in ("", ):
+            for key, label in entry[1]:
+                _dist_label[key] = label
+        elif entry[0]:
+            _dist_label[entry[0]] = entry[1]
+
     trap_counts = {}
     for ans in wrong_answers:
         trap = ans.question.distractor_types.get(ans.selected_answer, "")
         if trap:
             section = ans.question.section
-            key = f"{section}: {trap}"
+            readable = _dist_label.get(trap, trap.replace("_", " ").title())
+            key = f"{section}: {readable}"
             trap_counts[key] = trap_counts.get(key, 0) + 1
     trap_data = sorted(
         [{"label": k, "count": v} for k, v in trap_counts.items()],

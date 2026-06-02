@@ -17,9 +17,9 @@
 </div>
 
 <!-- Section 0: ELA vs Math overview -->
-<p class="shsat-section-title">Section overview</p>
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Time spent and accuracy per section for this attempt.</p>
-<div style="display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start;margin-bottom:40px;">
+<p class="shsat-section-title">Time Spent</p>
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Total time per section. Green = time on correct answers, red = time on wrong answers.</p>
+<div style="display:grid;grid-template-columns:1fr 220px;gap:24px;align-items:start;margin-bottom:40px;">
   <div class="shsat-chart-wrap" style="margin-bottom:0;">
     <canvas id="sectionOverviewChart"></canvas>
   </div>
@@ -232,43 +232,59 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 // ---------------------------------------------------------------------------
-// Section overview donut (ELA vs Math — time or question count; accuracy in legend)
+// Section overview — stacked bar (time spent, split by correct / incorrect)
 // ---------------------------------------------------------------------------
 (function () {
   const el = document.getElementById("sectionOverviewChart");
   if (!el) return;
   const data = JSON.parse(document.getElementById("sectionSummaryData").textContent);
   const hasTime = data.some(s => s.has_time);
+  if (!hasTime) { el.closest(".shsat-chart-wrap").style.display = "none"; return; }
 
-  const values = hasTime ? data.map(s => s.time_minutes) : data.map(s => s.total);
-  const labels = data.map(s => `${s.section} — ${s.accuracy_pct}% correct`);
+  const labels = data.map(s => s.section);
+  const correctTime = data.map(s => +(s.time_minutes * s.accuracy_pct / 100).toFixed(1));
+  const wrongTime   = data.map(s => +(s.time_minutes * (1 - s.accuracy_pct / 100)).toFixed(1));
 
   new Chart(el.getContext("2d"), {
-    type: "doughnut",
+    type: "bar",
     data: {
       labels,
-      datasets: [{
-        data: values,
-        backgroundColor: ["#274c77", "#a4161a"],
-        borderWidth: 0,
-        hoverOffset: 6,
-      }]
+      datasets: [
+        {
+          label: "Time on correct answers",
+          data: correctTime,
+          backgroundColor: "#10b981",
+          borderWidth: 0,
+          barThickness: 64,
+        },
+        {
+          label: "Time on wrong answers",
+          data: wrongTime,
+          backgroundColor: "#ef4444",
+          borderWidth: 0,
+          barThickness: 64,
+        },
+      ]
     },
     options: {
       responsive: true,
+      aspectRatio: 2,
       plugins: {
-        legend: { position: "bottom", labels: { font: { size: 12 }, padding: 14 } },
+        legend: { position: "bottom", labels: { font: { size: 12 }, boxWidth: 14, padding: 14 } },
         tooltip: {
           callbacks: {
-            label: (item) => {
-              const s = data[item.dataIndex];
-              const parts = [];
-              if (hasTime) parts.push(`${s.time_minutes} min`);
-              parts.push(`${s.accuracy_pct}% correct (${s.correct}/${s.total})`);
-              return " " + parts.join(" · ");
+            footer: (items) => {
+              const s = data[items[0].dataIndex];
+              return `Total: ${s.time_minutes} min · ${s.accuracy_pct}% correct (${s.correct}/${s.total})`;
             }
           }
         }
+      },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 13, weight: "600" } } },
+        y: { stacked: true, grid: { color: "rgba(0,0,0,0.06)" },
+             ticks: { font: { size: 11 }, callback: v => v + " min" },
+             title: { display: true, text: "Minutes", font: { size: 11 }, color: "rgba(0,0,0,0.4)" } }
       }
     }
   });
@@ -309,7 +325,7 @@
 })();
 
 // ---------------------------------------------------------------------------
-// Distractor trap bar chart
+// Distractor trap bar chart — horizontal, human-readable labels
 // ---------------------------------------------------------------------------
 (function () {
   const el = document.getElementById("trapChart");
@@ -326,16 +342,17 @@
         data: data.map(d => d.count),
         backgroundColor: "#7c3aed",
         borderWidth: 0,
-        barThickness: 24,
+        barThickness: 18,
       }]
     },
     options: {
+      indexAxis: "y",
       responsive: true,
-      aspectRatio: 3,
+      aspectRatio: Math.max(1.4, 4 / Math.max(data.length, 2)),
       plugins: { legend: { display: false } },
       scales: {
-        y: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: "rgba(0,0,0,0.06)" } },
-        x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+        x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: "rgba(0,0,0,0.06)" } },
+        y: { grid: { display: false }, ticks: { font: { size: 12 } } }
       }
     }
   });
