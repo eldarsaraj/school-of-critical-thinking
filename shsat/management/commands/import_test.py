@@ -100,7 +100,7 @@ def _import_section(test, section_key, rows):
             topic=row.get("topic", ""),
             skill=row.get("skill", ""),
             difficulty=row.get("difficulty", "medium"),
-            distractor_types=_norm_distractors(row.get("distractors", {})),
+            distractor_types=_norm_distractors(row.get("distractor_types") or row.get("distractors") or {}),
             passage_group_id=passage_id,
             passage_title=passage_title,
             passage_text=passage_text,
