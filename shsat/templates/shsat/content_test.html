@@ -11,6 +11,7 @@
       <h1>{{ test.title }}</h1>
       <div style="display:flex;align-items:center;gap:10px;">
       <a href="{% url 'shsat_content_test_export' test.id %}" class="content-btn content-btn--ghost content-btn--sm">Export YAML</a>
+      <a href="{% url 'shsat_content_answers_csv' test.id %}" class="content-btn content-btn--ghost content-btn--sm">Download answers CSV</a>
       <a href="{% url 'shsat_content_test_edit' test.id %}" class="content-btn content-btn--ghost content-btn--sm">Edit settings</a>
       <div class="content-review__status-pills">
         {% if test.is_published %}

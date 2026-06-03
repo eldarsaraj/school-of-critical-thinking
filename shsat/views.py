@@ -1217,3 +1217,57 @@ def content_test_export(request, test_id):
     response = HttpResponse(content, content_type="text/yaml; charset=utf-8")
     response["Content-Disposition"] = f'attachment; filename="{filename}"'
     return response
+
+
+@_staff_required
+def content_test_answers_csv(request, test_id):
+    """Export all completed answers for a test as a CSV dataset for IRT analysis."""
+    import csv as _csv
+    test = get_object_or_404(Test, id=test_id)
+
+    answers = (
+        Answer.objects
+        .filter(attempt__test=test, attempt__is_completed=True)
+        .select_related("attempt", "attempt__parent", "question")
+        .order_by("attempt_id", "question__section", "question__question_number")
+    )
+
+    slug = test.title.lower().replace(" ", "_")
+    filename = f"{slug}_answers.csv"
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
+
+    writer = _csv.writer(response)
+    writer.writerow([
+        "respondent_id", "attempt_id", "attempt_date",
+        "section", "stage", "question_id", "question_number",
+        "skill", "difficulty", "question_type",
+        "selected_answer", "correct_answer", "is_correct",
+        "time_spent_seconds",
+    ])
+
+    # Use a stable anonymised respondent ID (hash of parent pk)
+    import hashlib
+    def _anon(parent_id):
+        return hashlib.sha256(f"shsat-{parent_id}".encode()).hexdigest()[:12]
+
+    for ans in answers:
+        q = ans.question
+        writer.writerow([
+            _anon(ans.attempt.parent_id),
+            ans.attempt_id,
+            ans.attempt.submitted_at.strftime("%Y-%m-%d") if ans.attempt.submitted_at else "",
+            q.section,
+            q.stage,
+            q.id,
+            q.question_number,
+            q.skill,
+            q.difficulty,
+            q.question_type,
+            ans.selected_answer or "",
+            q.correct_answer,
+            1 if ans.is_correct else 0,
+            ans.time_spent_seconds if ans.time_spent_seconds is not None else "",
+        ])
+
+    return response

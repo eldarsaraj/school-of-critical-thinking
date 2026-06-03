@@ -37,4 +37,5 @@ urlpatterns = [
     path("content/question/<int:question_id>/delete/", views.content_question_delete, name="shsat_content_question_delete"),
     path("content/<int:test_id>/delete/", views.content_test_delete, name="shsat_content_test_delete"),
     path("content/<int:test_id>/export/", views.content_test_export, name="shsat_content_test_export"),
+    path("content/<int:test_id>/answers-csv/", views.content_test_answers_csv, name="shsat_content_answers_csv"),
 ]
