@@ -93,7 +93,7 @@ class Question(models.Model):
     question_number = models.PositiveSmallIntegerField()
     question_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default="multiple_choice")
     topic = models.CharField(max_length=100, blank=True, default="")
-    skill = models.CharField(max_length=30, choices=SKILL_CHOICES, blank=True, default="")
+    skill = models.CharField(max_length=50, choices=SKILL_CHOICES, blank=True, default="")
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES, default="medium")
     distractor_types = models.JSONField(default=dict, blank=True)
 
