@@ -411,7 +411,9 @@ function requestSectionModules(section) {
 // ---------------------------------------------------------------------------
 // Submit
 // ---------------------------------------------------------------------------
+let _submitLocked = false;
 function confirmSubmit() {
+  if (_submitLocked) return;
   if (IS_ADAPTIVE && !modulesAssigned) {
     alert("Please answer all 29 questions in each section before submitting — more questions will appear as you progress.");
     return;
@@ -420,6 +422,7 @@ function confirmSubmit() {
   if (answered < questions.length) {
     if (!confirm(`You have answered ${answered} of ${questions.length} questions. Submit anyway?`)) return;
   }
+  _submitLocked = true;
   document.getElementById("submitForm").submit();
 }
 

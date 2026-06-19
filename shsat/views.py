@@ -450,6 +450,10 @@ def test_take(request, test_id):
 @require_POST
 def test_submit(request, test_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
+    # If already completed (double-submit), redirect to results gracefully
+    completed = TestAttempt.objects.filter(test_id=test_id, parent=parent, is_completed=True).order_by("-submitted_at").first()
+    if completed and not TestAttempt.objects.filter(test_id=test_id, parent=parent, is_completed=False).exists():
+        return redirect("shsat_test_results", attempt_id=completed.id)
     attempt = get_object_or_404(TestAttempt, test_id=test_id, parent=parent, is_completed=False)
 
     answers = Answer.objects.filter(attempt=attempt).select_related("question")
