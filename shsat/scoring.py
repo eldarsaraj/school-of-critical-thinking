@@ -12,15 +12,27 @@
 #      'hard' module: more generous (harder questions deserve more credit)
 #      'easy' module: more conservative
 #
-# Calibration for adaptive tables (conservative):
-#   Hard path, ~35/57 correct ≈ 262/section  (Stuyvesant cutoff ~517 composite)
-#   Easy path, ~32/57 correct ≈ 232/section  (Brooklyn Tech cutoff ~463 composite)
-#   Both paths: 0/57 → 200,  57/57 → 400
-#   Random guessing (14/57, 25% on 4-choice MC) → ~206 easy / ~215 hard → ~420-430 composite
-#   (well below any cutoff, as expected)
-#   Students need ~60%+ correct to approach Stuyvesant-level scores.
+# Calibration targets (2026 admissions cutoffs):
+#   Stuyvesant:    561 composite → 280.5/section avg
+#   Bronx Science: 525 composite → 262.5/section avg
+#   Brooklyn Tech: 506 composite → 253.0/section avg
+#   Brooklyn Latin:495 composite → 247.5/section avg
 #
-# These tables are approximations — the DOE does not publish conversion tables.
+#   Hard path: ~42/57 (74%) correct ≈ 281/section (Stuyvesant territory)
+#   Hard path: ~35/57 (61%) correct ≈ 264/section (Bronx Science territory)
+#   Easy path: ~40/57 (70%) correct ≈ 253/section (Brooklyn Tech territory)
+#   Easy path: ~35/57 (61%) correct ≈ 248/section (Brooklyn Latin territory)
+#
+#   Ceiling: 57/57 → 350/section → 700 composite max
+#     The all-time SHSAT record is 689; 800 is statistically impossible.
+#     Average test-taker scores ~400 composite (200/section) = our floor.
+#
+#   Random guessing (14/57, 25% on 4-choice MC):
+#     → ~208/section easy, ~216/section hard → ~416-432 composite
+#     (well below the 495 Brooklyn Latin floor, as expected)
+#
+#   Intentionally conservative — students should not overestimate readiness.
+#   These are piecewise-linear approximations; the DOE does not publish tables.
 # ---------------------------------------------------------------------------
 
 
@@ -60,18 +72,22 @@ def _build_table(anchors: list[tuple[int, int]]) -> dict[int, int]:
     return table
 
 
-# Easy-module path: conservative credit — easier questions
-# ~32/57 correct needed to approach Brooklyn Tech cutoff (~231/section)
+# Easy-module path: conservative — easier questions earn less per correct answer
+# ~40/57 (70%) needed for Brooklyn Tech territory (~253/section)
+# ~35/57 (61%) needed for Brooklyn Latin territory (~248/section)
+# Ceiling: 57/57 → 350/section (composite 700) — all-time record is 689
 _EASY_ANCHORS = [
-    (0, 200), (7, 202), (14, 206), (21, 213), (28, 222),
-    (35, 240), (42, 274), (50, 325), (57, 400),
+    (0, 200), (7, 203), (14, 208), (21, 216), (28, 230),
+    (35, 248), (40, 253), (46, 285), (50, 310), (57, 350),
 ]
 
-# Hard-module path: more generous credit — harder questions
-# ~35/57 correct needed to approach Stuyvesant cutoff (~258/section)
+# Hard-module path: more generous — harder questions earn more per correct answer
+# ~42/57 (74%) needed for Stuyvesant territory (~281/section)
+# ~35/57 (61%) needed for Bronx Science territory (~264/section)
+# Ceiling: 57/57 → 350/section (composite 700) — all-time record is 689
 _HARD_ANCHORS = [
-    (0, 200), (7, 206), (14, 215), (21, 228), (28, 244),
-    (35, 262), (42, 310), (50, 360), (57, 400),
+    (0, 200), (7, 207), (14, 216), (21, 229), (28, 249),
+    (35, 264), (42, 281), (50, 320), (57, 350),
 ]
 
 _EASY_TABLE = _build_table(_EASY_ANCHORS)
