@@ -89,7 +89,8 @@
     {% endif %}
 
     <div class="content-edit-form__actions">
-      <button type="submit" class="content-btn content-btn--primary">Add question</button>
+      <button type="submit" name="action" value="add_next" class="content-btn content-btn--primary">Add question &amp; add next</button>
+      <button type="submit" class="content-btn content-btn--ghost">Add question</button>
       <a href="{% url 'shsat_content_test' test.id %}" class="content-btn content-btn--ghost">Cancel</a>
     </div>
   </form>

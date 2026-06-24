@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
@@ -1151,6 +1152,11 @@ def content_question_add(request, test_id):
                     dt[letter] = val
             question.distractor_types = dt
             question.save(update_fields=["distractor_types"])
+            if request.POST.get("action") == "add_next":
+                section = form.cleaned_data.get("section", "ELA")
+                stage = form.cleaned_data.get("stage", "standard")
+                url = reverse("shsat_content_question_add", kwargs={"test_id": test_id})
+                return redirect(f"{url}?section={section}&stage={stage}")
             return redirect("shsat_content_test", test_id=test_id)
     else:
         form = QuestionEditForm(initial=initial)

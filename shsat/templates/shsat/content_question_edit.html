@@ -116,6 +116,8 @@
           onclick="document.querySelector('[name=next_question_id]').value='{{ next_question_id }}'">
           Save &amp; Next &rarr;
         </button>
+        {% else %}
+        <a href="{% url 'shsat_content_question_add' question.test_id %}?section={{ question.section }}&stage={{ question.stage }}" class="content-btn content-btn--add">+ Add next question</a>
         {% endif %}
       </div>
     </div>
