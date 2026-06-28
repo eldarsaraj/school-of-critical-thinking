@@ -3,87 +3,117 @@
 
 {% block title %}The School of Critical Thinking{% endblock %}
 
-{% block meta_description %}<meta name="description" content="Teaching people to think clearly at every age. A curriculum for families, learners, and organizations, built on one idea: critical thinking is the act of resisting entropy.">{% endblock %}
+{% block meta_description %}<meta name="description" content="Precision SHSAT preparation and a critical thinking curriculum for students ages 8–16. Built on scientific test design, error analysis, and the conviction that good reasoning transfers.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="The School of Critical Thinking" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="The School of Critical Thinking" />
-  <meta property="og:description" content="Teaching people to think clearly at every age. A curriculum for families, learners, and organizations." />
+  <meta property="og:description" content="Precision SHSAT preparation and a critical thinking curriculum for students ages 8–16." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The School of Critical Thinking" />
-  <meta name="twitter:description" content="Teaching people to think clearly at every age." />
+  <meta name="twitter:description" content="Precision SHSAT preparation and a critical thinking curriculum for students ages 8–16." />
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 {% endblock %}
 
 {% block content %}
 
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
-<section class="home-hero">
+<section class="home-hero home-hero--full">
   <div class="home-hero__text">
-    <h1 class="home-hero__title">The most important skill today is learning how to think well.</h1>
+    <h1 class="home-hero__title">The test is a tool.<br>The thinking is the point.</h1>
     <p class="home-hero__sub">
-      The advance of AI is making one thing clear: the ability to reason carefully (to distinguish causes from
-      correlations, to handle uncertainty, to make decisions that hold up) will be the defining
-      skill for both children and professionals in the future. As a philosophy professor and a father,
-      I could not find a curriculum that taught this seriously and from first principles,
-      one that goes beyond academic exercises and teaches how the world actually works.
-      So I built one.
+      NYC's most selective high schools are testing something most prep courses never teach directly:
+      the ability to recognize why a wrong answer is wrong, not just which one is right.
+      We built a program around that distinction. It prepares students for the SHSAT.
+      It also teaches them something they will use long after the test is over.
     </p>
-    <a href="/families/" class="home-hero__btn">See the curriculum</a>
-    <a href="/organizations/" class="home-hero__btn home-hero__btn--ghost">For organizations</a>
-  </div>
-  <div class="home-hero__book">
-    <a href="https://www.amazon.com/dp/B0GX6NJ22H" target="_blank" rel="noopener">
-      <img src="{% static 'images/books/seeing-patterns-single-cover.jpg' %}"
-           alt="Seeing Patterns: Book 1 of the School of Critical Thinking curriculum"
-           class="home-hero__cover">
-    </a>
-    <a href="https://www.amazon.com/dp/B0GX6NJ22H" target="_blank" rel="noopener" class="home-hero__cover-caption">Module 1: Seeing Patterns &mdash; Buy on Amazon &rarr;</a>
+    <div class="home-hero__actions">
+      <a href="/shsat/" class="home-hero__btn">Start SHSAT prep &rarr;</a>
+      <a href="/families/" class="home-hero__btn home-hero__btn--ghost">See the curriculum</a>
+    </div>
   </div>
 </section>
 
-<!-- ── Two paths ──────────────────────────────────────────────────────────── -->
-<section class="home-pathways">
-  <h2 class="home-pathways__title">Who this is for</h2>
+<!-- ── SHSAT Feature ──────────────────────────────────────────────────────── -->
+<section class="home-feature">
+  <p class="home-feature__label">SHSAT Preparation — New York City</p>
+  <div class="home-feature__header">
+    <h2 class="home-feature__title">Reverse-engineered from the source.<br>Calibrated to the cutoffs.</h2>
+    <p class="home-feature__sub">
+      Every practice question was built by working backwards through the official DOE handbooks to identify
+      the exact patterns the SHSAT tests and the exact traps it sets. After each test, a full error
+      analysis tells you not just what you got wrong, but which specific thinking error caused it —
+      so review is targeted, not random.
+    </p>
+  </div>
 
-  <div class="home-pathways__grid">
+  <div class="home-feature__images">
+    <div class="home-feature__img-wrap">
+      <img src="{% static 'shsat/preview-dashboard.png' %}" alt="Score history and school placement dashboard">
+      <p class="home-feature__img-caption">Score history and school placement dashboard</p>
+    </div>
+    <div class="home-feature__img-wrap">
+      <img src="{% static 'shsat/preview-error-analysis.png' %}" alt="Per-attempt error analysis">
+      <p class="home-feature__img-caption">Per-attempt error analysis by skill and difficulty</p>
+    </div>
+    <div class="home-feature__img-wrap">
+      <img src="{% static 'shsat/preview-trap.png' %}" alt="Distractor trap analysis chart">
+      <p class="home-feature__img-caption">Distractor trap breakdown — which answer patterns caught you</p>
+    </div>
+  </div>
 
-    <a class="pathway-card" href="/families/">
-      <p class="pathway-card__label">Families</p>
-      <h3 class="pathway-card__title">A curriculum for children, ages 8 to 16</h3>
-      <p class="pathway-card__desc">
-        Nine modules. Fifty-two lessons each. One lesson a week.
-        Each module is a standalone book built around one of the five structures
-        that underpin clear thinking: patterns, causality, uncertainty, models, and decisions.
-        The curriculum I built because no one else had.
-      </p>
-      <p class="pathway-card__cta">See the curriculum &rarr;</p>
-    </a>
+  <div class="home-feature__meta">
+    <div class="home-feature__meta-item">
+      <p class="home-feature__meta-title">Adaptive practice tests</p>
+      <p class="home-feature__meta-body">Routing section assigns you to hard or easy module — the same structure as the real SHSAT. Honest scaled scores calibrated against actual cutoffs.</p>
+    </div>
+    <div class="home-feature__meta-item">
+      <p class="home-feature__meta-title">Named distractor traps</p>
+      <p class="home-feature__meta-body">Every wrong answer you select is tagged by trap type — 28 categories across ELA and Math. You learn your specific failure pattern, not a generic lesson.</p>
+    </div>
+    <div class="home-feature__meta-item">
+      <p class="home-feature__meta-title">Accuracy by skill area</p>
+      <p class="home-feature__meta-body">Broken down across ELA and Math skills so you know whether Inference or Algebra is costing you more points, and by how much.</p>
+    </div>
+    <div class="home-feature__meta-item">
+      <p class="home-feature__meta-title">School placement tracking</p>
+      <p class="home-feature__meta-body">Projected cutoff distances for all eight NYC specialized high schools, updated each attempt so you can track your closing gap.</p>
+    </div>
+  </div>
 
-    <a class="pathway-card" href="/shsat/">
-      <p class="pathway-card__label">SHSAT Prep</p>
-      <h3 class="pathway-card__title">Precision test prep — reverse-engineered</h3>
-      <p class="pathway-card__desc">
-        Full-length adaptive practice tests built from the official DOE handbooks,
-        with per-question error analysis, distractor trap labeling, and honest scaled scores.
-        No AI. No generic question banks. A real method.
-      </p>
-      <p class="pathway-card__cta">Start with the free Baseline Test &rarr;</p>
-    </a>
-
+  <div class="home-feature__cta">
+    <a href="/shsat/" class="home-hero__btn">Start with the free Baseline Test &rarr;</a>
+    <p class="home-feature__cta-note">114 questions. Full error analysis. No credit card required.</p>
   </div>
 </section>
 
-<!-- ── Diagnostic CTA ────────────────────────────────────────────────────── -->
+<!-- ── Curriculum ─────────────────────────────────────────────────────────── -->
+<section class="home-secondary">
+  <div class="home-secondary__inner">
+    <div class="home-secondary__text">
+      <p class="home-secondary__label">Critical Thinking Curriculum</p>
+      <h2 class="home-secondary__title">Nine modules. One lesson a week. A framework for a lifetime.</h2>
+      <p class="home-secondary__body">
+        For families who want more than test readiness — a structured program in the five foundations
+        of clear thinking: patterns, causality, uncertainty, models, and decisions.
+        Ages 8 to 16. One lesson per week, alongside any existing curriculum.
+        The same analytical rigour that drives our test preparation, built into a long-form course.
+      </p>
+      <a href="/families/" class="home-secondary__cta">See the curriculum &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Diagnostic ─────────────────────────────────────────────────────────── -->
 <section class="home-diagnostic-cta">
-  <p class="home-section-label">Not sure where to start?</p>
+  <p class="home-section-label">For adults and older students</p>
   <h2 class="home-diagnostic-cta__title">Take the free Thinking Diagnostic</h2>
   <p class="home-diagnostic-cta__desc">
-    I built a fifteen-minute diagnostic that maps your reasoning against 16 named thinking patterns
-    and produces a personalized report showing exactly where your thinking breaks down.
+    A fifteen-minute assessment that maps your reasoning against 16 named cognitive patterns.
+    The same analytical framework that underpins our preparation methodology — applied to your own thinking.
     Free, no account required.
   </p>
   <a href="{% url 'diagnostic_intro' %}" class="home-diagnostic-cta__btn">Take the diagnostic &rarr;</a>

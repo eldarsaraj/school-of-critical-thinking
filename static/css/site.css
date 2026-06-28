@@ -3777,6 +3777,170 @@ a.curriculum-book:hover .curriculum-book__title {
   background: #333;
 }
 
+/* ── Home: Hero full-width variant ────────────────────────────────────── */
+.home-hero--full {
+  max-width: 680px;
+  padding-top: 56px;
+  padding-bottom: 64px;
+}
+.home-hero--full .home-hero__sub {
+  max-width: 60ch;
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.6);
+}
+
+/* ── Home: SHSAT Feature section ───────────────────────────────────────── */
+.home-feature {
+  padding: 64px 0 72px;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+
+.home-feature__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-bottom: 20px;
+}
+
+.home-feature__header {
+  max-width: 680px;
+  margin-bottom: 48px;
+}
+
+.home-feature__title {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0 0 16px 0;
+}
+
+.home-feature__sub {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(0,0,0,.58);
+  margin: 0;
+}
+
+.home-feature__images {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-bottom: 56px;
+}
+
+.home-feature__img-wrap {
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.home-feature__img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.home-feature__img-caption {
+  font-size: 12px;
+  color: rgba(0,0,0,.38);
+  padding: 10px 14px;
+  margin: 0;
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+
+.home-feature__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.home-feature__meta-item {
+  padding: 20px 20px 24px;
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+.home-feature__meta-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  margin: 0 0 8px 0;
+}
+
+.home-feature__meta-body {
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(0,0,0,.55);
+  margin: 0;
+}
+
+.home-feature__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.home-feature__cta-note {
+  font-size: 13px;
+  color: rgba(0,0,0,.38);
+  margin: 0;
+  letter-spacing: .01em;
+}
+
+/* ── Home: Secondary (Curriculum) section ──────────────────────────────── */
+.home-secondary {
+  padding: 64px 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+
+.home-secondary__inner {
+  max-width: 640px;
+}
+
+.home-secondary__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-bottom: 16px;
+}
+
+.home-secondary__title {
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0 0 16px 0;
+}
+
+.home-secondary__body {
+  font-size: 16px;
+  line-height: 1.72;
+  color: rgba(0,0,0,.58);
+  margin: 0 0 28px 0;
+}
+
+.home-secondary__cta {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,0,0,.25);
+  padding-bottom: 2px;
+  transition: border-color .15s;
+}
+
+.home-secondary__cta:hover {
+  border-color: #111;
+}
+
 /* ── Families: Module waitlist ─────────────────────────────────────────── */
 .families-waitlist {
   margin: 28px 0 0 0;
