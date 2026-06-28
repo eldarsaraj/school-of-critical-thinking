@@ -5,7 +5,17 @@
 
 {% block shsat_content %}
 <h1 class="shsat-page-title">Resources</h1>
-<p class="shsat-page-subtitle">Honest guidance on where to go beyond this platform.</p>
+<p class="shsat-page-subtitle">Tools and guidance beyond the practice tests.</p>
+
+<!-- ── Log a score ────────────────────────────────────────────────────────── -->
+<section class="res-section" style="border-top:none;padding-top:0;margin-top:8px;">
+  <h2 class="res-section__title">Log a score</h2>
+  <p class="res-section__body">
+    Practising from a book or another source? Record that score here so your dashboard
+    tracks all your results in one place, not just the tests you take on this platform.
+  </p>
+  <a href="{% url 'shsat_log_score' %}" class="shsat-btn">Log a score &rarr;</a>
+</section>
 
 <!-- ── Official DOE resources ─────────────────────────────────────────────── -->
 <section class="res-section">
