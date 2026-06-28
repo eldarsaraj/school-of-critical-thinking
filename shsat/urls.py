@@ -18,6 +18,7 @@ urlpatterns = [
     path("tests/<int:test_id>/take/", views.test_take, name="shsat_test_take"),
     path("tests/<int:test_id>/submit/", views.test_submit, name="shsat_test_submit"),
     path("tests/<int:attempt_id>/results/", views.test_results, name="shsat_test_results"),
+    path("error-analysis/", views.error_analysis_list, name="shsat_error_analysis_list"),
     path("tests/<int:attempt_id>/error-analysis/", views.error_analysis, name="shsat_error_analysis"),
     path("account/", views.account, name="shsat_account"),
     path("tests/<int:attempt_id>/delete/", views.delete_attempt, name="shsat_delete_attempt"),

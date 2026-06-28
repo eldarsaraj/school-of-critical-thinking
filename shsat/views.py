@@ -561,6 +561,20 @@ def test_results(request, attempt_id):
 
 
 @login_required(login_url="/shsat/login/")
+def error_analysis_list(request):
+    parent, _ = Parent.objects.get_or_create(user=request.user)
+    completed_attempts = (
+        TestAttempt.objects.filter(parent=parent, is_completed=True)
+        .select_related("test")
+        .order_by("-submitted_at")
+    )
+    return render(request, "shsat/error_analysis_list.html", {
+        "parent": parent,
+        "completed_attempts": completed_attempts,
+    })
+
+
+@login_required(login_url="/shsat/login/")
 def error_analysis(request, attempt_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent, is_completed=True)

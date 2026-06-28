@@ -1,0 +1,127 @@
+{% extends "shsat/base_shsat.html" %}
+
+{% block title %}Error Analysis — SHSAT Workshop{% endblock %}
+{% block tab_error_analysis %}active{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">Error Analysis</h1>
+<p class="shsat-page-subtitle">
+  Every wrong answer has a name. Review what went wrong, attempt by attempt.
+</p>
+
+{% if completed_attempts %}
+<div class="ea-list">
+  {% for a in completed_attempts %}
+  <div class="ea-list__item">
+    <div class="ea-list__meta">
+      <p class="ea-list__test">{{ a.test.title }}</p>
+      <p class="ea-list__date">{{ a.submitted_at|date:"F j, Y" }}</p>
+    </div>
+    <div class="ea-list__scores">
+      <div class="ea-list__score-block">
+        <span class="ea-list__score-value">{{ a.composite_score|default:"—" }}</span>
+        <span class="ea-list__score-label">Composite</span>
+      </div>
+      <div class="ea-list__score-block">
+        <span class="ea-list__score-value">{{ a.ela_scaled|default:"—" }}</span>
+        <span class="ea-list__score-label">ELA</span>
+      </div>
+      <div class="ea-list__score-block">
+        <span class="ea-list__score-value">{{ a.math_scaled|default:"—" }}</span>
+        <span class="ea-list__score-label">Math</span>
+      </div>
+    </div>
+    <a href="{% url 'shsat_error_analysis' a.id %}" class="ea-list__cta">
+      View analysis &rarr;
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div style="margin-top:48px;padding:40px 0;border-top:1px solid rgba(0,0,0,.08);">
+  <p style="font-size:16px;color:rgba(0,0,0,.45);margin:0 0 20px;">
+    No completed tests yet. Take a practice test to see your error analysis here.
+  </p>
+  <a href="{% url 'shsat_test_list' %}" class="shsat-btn">Take a practice test &rarr;</a>
+</div>
+{% endif %}
+
+<style>
+.ea-list {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.ea-list__item {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(0,0,0,.07);
+  flex-wrap: wrap;
+}
+.ea-list__item:last-child {
+  border-bottom: 1px solid rgba(0,0,0,.07);
+}
+.ea-list__meta {
+  flex: 1 1 200px;
+}
+.ea-list__test {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  margin: 0 0 4px;
+}
+.ea-list__date {
+  font-size: 13px;
+  color: rgba(0,0,0,.42);
+  margin: 0;
+}
+.ea-list__scores {
+  display: flex;
+  gap: 28px;
+  flex-shrink: 0;
+}
+.ea-list__score-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.ea-list__score-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111;
+  line-height: 1;
+}
+.ea-list__score-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.35);
+}
+.ea-list__cta {
+  display: inline-block;
+  padding: 9px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  border: 1px solid rgba(0,0,0,.18);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color .12s, background .12s;
+  flex-shrink: 0;
+}
+.ea-list__cta:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+@media (max-width: 600px) {
+  .ea-list__item { gap: 16px; }
+  .ea-list__scores { gap: 16px; }
+}
+</style>
+{% endblock %}

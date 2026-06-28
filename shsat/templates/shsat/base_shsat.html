@@ -11,6 +11,7 @@
   {% if user.is_authenticated %}
   <nav class="shsat-tabs" aria-label="SHSAT Workshop sections">
     <a href="{% url 'shsat_dashboard' %}" class="shsat-tab {% block tab_dashboard %}{% endblock %}">Dashboard</a>
+    <a href="{% url 'shsat_error_analysis_list' %}" class="shsat-tab {% block tab_error_analysis %}{% endblock %}">Error Analysis</a>
     <a href="{% url 'shsat_test_list' %}" class="shsat-tab {% block tab_tests %}{% endblock %}">Practice Tests</a>
     <a href="{% url 'shsat_log_score' %}" class="shsat-tab {% block tab_log %}{% endblock %}">Log Score</a>
     <a href="{% url 'shsat_resources' %}" class="shsat-tab {% block tab_resources %}{% endblock %}">Resources</a>

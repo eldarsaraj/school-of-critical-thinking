@@ -69,10 +69,7 @@
         <td><strong>{{ a.composite_score|default:"—" }}</strong></td>
         <td>{{ a.ela_scaled|default:"—" }}</td>
         <td>{{ a.math_scaled|default:"—" }}</td>
-        <td style="white-space:nowrap;">
-          <a href="{% url 'shsat_error_analysis' a.id %}" class="shsat-btn shsat-btn--sm shsat-btn--outline" style="margin-right:8px;">
-            Error analysis →
-          </a>
+        <td>
           <form method="post" action="{% url 'shsat_delete_attempt' a.id %}" style="display:inline;"
                 onsubmit="return confirm('Delete this attempt? This cannot be undone.');">
             {% csrf_token %}
