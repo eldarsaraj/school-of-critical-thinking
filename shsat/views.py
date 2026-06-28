@@ -262,21 +262,21 @@ def dashboard(request):
         if timed_answers else None
     )
 
-    # Score-to-cutoff gap progression (one data point per score history entry)
-    gap_progression = None
-    if score_history and cutoffs:
-        sorted_cutoffs = sorted(cutoffs, key=lambda c: c.cutoff_score, reverse=True)
-        gap_progression = {
-            "labels": [e["seq"] for e in score_history],
-            "schools": [
-                {
-                    "school": c.school_short,
-                    "cutoff": c.cutoff_score,
-                    "gaps": [e["composite"] - c.cutoff_score for e in score_history],
-                }
-                for c in sorted_cutoffs
-            ],
-        }
+    # Platform score distribution (all completed attempts across all users)
+    import math as _math
+    all_platform_scores = list(
+        TestAttempt.objects.filter(is_completed=True, composite_score__isnull=False)
+        .values_list("composite_score", flat=True)
+    )
+    platform_n = len(all_platform_scores)
+    if platform_n >= 5:
+        platform_mean = sum(all_platform_scores) / platform_n
+        variance = sum((s - platform_mean) ** 2 for s in all_platform_scores) / platform_n
+        platform_std = round(max(_math.sqrt(variance), 20), 1)
+        platform_mean = round(platform_mean, 1)
+    else:
+        platform_mean = None
+        platform_std = None
 
     context = {
         "parent": parent,
@@ -292,7 +292,9 @@ def dashboard(request):
         "weakest_skill": weakest_skill,
         "avg_time_per_q": avg_time_per_q,
         "has_timing_data": has_timing_data,
-        "gap_progression": gap_progression,
+        "platform_mean": platform_mean,
+        "platform_std": platform_std,
+        "platform_n": platform_n,
     }
     return render(request, "shsat/dashboard.html", context)
 
