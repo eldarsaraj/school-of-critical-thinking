@@ -1,39 +1,49 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Families - The School of Critical Thinking{% endblock %}
+{% block title %}Curriculum - The School of Critical Thinking{% endblock %}
 
-{% block meta_description %}<meta name="description" content="A structured critical thinking curriculum for homeschool families and parents supplementing school. Ages 8-16. Nine modules. One lesson per week. No specialist background required.">{% endblock %}
+{% block meta_description %}<meta name="description" content="A structured critical thinking curriculum for children ages 8-16. Nine modules. One lesson per week. No specialist background required.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="The School of Critical Thinking" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Families - The School of Critical Thinking" />
-  <meta property="og:description" content="A structured critical thinking curriculum for homeschool families and parents supplementing school. Ages 8-16." />
+  <meta property="og:title" content="Curriculum - The School of Critical Thinking" />
+  <meta property="og:description" content="A structured critical thinking curriculum for children ages 8-16. Nine modules. One lesson per week." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Families - The School of Critical Thinking" />
-  <meta name="twitter:description" content="A structured critical thinking curriculum for homeschool families. Ages 8-16." />
+  <meta name="twitter:title" content="Curriculum - The School of Critical Thinking" />
+  <meta name="twitter:description" content="A structured critical thinking curriculum for children ages 8-16." />
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 {% endblock %}
 
 {% block content %}
 
-<h1>For Families</h1>
-
-<p>
-  Most curricula teach children what to think. History dates, scientific facts,
-  grammar rules. These matter. But they leave out something more fundamental:
-  how to think. How to spot a real pattern versus a coincidence. How to tell a
-  cause from a correlation. How to reason when you don't have all the information.
-</p>
-
-<p class="families-intro-note">
-  The School of Critical Thinking was built to fill that gap.
-  A structured curriculum for ages 8 to 16, designed for families who take thinking seriously.
-  One lesson per week, alongside any existing curriculum, no specialist background required.
-</p>
+<div class="home-hero" style="padding-top: 48px; padding-bottom: 56px;">
+  <div class="home-hero__text">
+    <h1 style="margin: 0 0 16px 0; font-size: 36px; line-height: 1.15; letter-spacing: -0.01em;">The Curriculum</h1>
+    <p style="margin: 0 0 0 0; font-size: 17px; line-height: 1.7; color: rgba(0,0,0,0.6); max-width: 50ch;">
+      Most curricula teach children what to think. History dates, scientific facts,
+      grammar rules. These matter. But they leave out something more fundamental:
+      how to think. How to spot a real pattern versus a coincidence. How to tell a
+      cause from a correlation. How to reason when you don't have all the information.
+    </p>
+    <p class="families-intro-note" style="margin-top: 20px;">
+      The School of Critical Thinking was built to fill that gap.
+      A structured curriculum for ages 8 to 16, designed for families who take thinking seriously.
+      One lesson per week, alongside any existing curriculum, no specialist background required.
+    </p>
+  </div>
+  <div class="home-hero__book">
+    <a href="https://www.amazon.com/dp/B0GX6NJ22H" target="_blank" rel="noopener">
+      <img src="{% static 'images/books/seeing-patterns-single-cover.jpg' %}"
+           alt="Seeing Patterns: Book 1 of the School of Critical Thinking curriculum"
+           class="home-hero__cover">
+    </a>
+    <a href="https://www.amazon.com/dp/B0GX6NJ22H" target="_blank" rel="noopener" class="home-hero__cover-caption">Module 1: Seeing Patterns &mdash; Buy on Amazon &rarr;</a>
+  </div>
+</div>
 
 <!-- ── The curriculum ────────────────────────────────────────────────────── -->
 <section class="home-curriculum" style="margin-top: 48px;">

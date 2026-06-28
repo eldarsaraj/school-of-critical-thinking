@@ -66,11 +66,11 @@ def newsletter_signup(request):
 
 def waitlist_signup(request):
     if request.method != "POST":
-        return redirect("families")
+        return redirect("curriculum")
     email = (request.POST.get("email") or "").strip()
     if email:
         ModuleWaitlist.objects.get_or_create(email=email)
-    return redirect("/families/?waitlisted=1")
+    return redirect("/curriculum/?waitlisted=1")
 
 
 def learners(request):
@@ -86,7 +86,7 @@ def curriculum(request):
 
 
 def curriculum_module_redirect(request, slug):
-    return redirect(f"/families/{slug}/", permanent=True)
+    return redirect(f"/curriculum/{slug}/", permanent=True)
 
 
 def module_detail(request, slug):
