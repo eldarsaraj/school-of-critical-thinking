@@ -270,12 +270,12 @@
 
     <div class="sl-diff-card">
       <p class="sl-diff-card__marker">03 — Integrity</p>
-      <h2 class="sl-diff-card__title">No AI feedback</h2>
+      <h2 class="sl-diff-card__title">No AI chatbot feedback</h2>
       <p class="sl-diff-card__body">
-        Every question, explanation, and piece of feedback your child receives was written
-        and reviewed by hand. AI is not involved in generating any of it. What your child
-        reads after a wrong answer is a precise, human-written explanation of the reasoning —
-        not a hallucination dressed up as one.
+        Many prep platforms use AI to generate explanations on the fly. We don't.
+        Every explanation your child sees after a wrong answer was written and structured
+        by a person — precise, deliberate, and reviewed. There is no language model
+        interpolating between training data and calling it feedback.
       </p>
     </div>
 
@@ -385,7 +385,7 @@
   {% else %}
     <a href="{% url 'shsat_signup' %}" class="sl-btn">Create a free account &rarr;</a>
   {% endif %}
-  <p class="sl-no-ai">No AI-generated feedback. Science-based content built from official DOE materials.</p>
+  <p class="sl-no-ai">No AI chatbot feedback. Every explanation is written and structured by a person.</p>
 </section>
 
 {% endblock %}
