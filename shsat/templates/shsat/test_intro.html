@@ -25,18 +25,35 @@
     <div>Answers save automatically as you click. You can pause and return at any time.</div>
   </div>
   <div class="shsat-intro__rule">
-    <div class="shsat-intro__rule-label">Flagging</div>
-    <div>Click the flag button on any question to mark it for review.</div>
+    <div class="shsat-intro__rule-label">Navigation</div>
+    <div>Questions are presented one at a time. You cannot return to a previous question.</div>
   </div>
 
-  <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;">
-    {% if in_progress %}
-    <a href="{% url 'shsat_test_take' test.id %}" class="shsat-btn">Resume test</a>
-    <span style="font-size:13px;color:rgba(0,0,0,0.5);align-self:center;">In-progress attempt found</span>
+  <div style="margin-top:32px;">
+    {% if completed_attempt %}
+      <p style="font-size:15px;color:rgba(0,0,0,0.5);margin-bottom:16px;">
+        You have already completed this test. Each test may only be taken once.
+      </p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="{% url 'shsat_test_results' completed_attempt.id %}" class="shsat-btn">View your results</a>
+        <a href="{% url 'shsat_test_list' %}" class="shsat-btn shsat-btn--outline">Back to tests</a>
+      </div>
+    {% elif in_progress %}
+      <p style="font-size:13px;color:rgba(0,0,0,0.5);margin-bottom:12px;">In-progress attempt found — resuming where you left off.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="{% url 'shsat_test_take' test.id %}" class="shsat-btn">Resume test</a>
+        <a href="{% url 'shsat_test_list' %}" class="shsat-btn shsat-btn--outline">Back to tests</a>
+      </div>
     {% else %}
-    <a href="{% url 'shsat_test_take' test.id %}" class="shsat-btn">Begin test</a>
+      <p style="font-size:14px;font-weight:600;margin-bottom:12px;color:rgba(0,0,0,0.65);">Which section do you want to start with?</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="{% url 'shsat_test_take' test.id %}?section_first=ELA" class="shsat-btn">Start with ELA →</a>
+        <a href="{% url 'shsat_test_take' test.id %}?section_first=Math" class="shsat-btn shsat-btn--outline">Start with Math →</a>
+      </div>
+      <p style="font-size:12px;color:rgba(0,0,0,0.38);margin-top:10px;">
+        On the real SHSAT you choose your section order. Pick the one you want to do first.
+      </p>
     {% endif %}
-    <a href="{% url 'shsat_test_list' %}" class="shsat-btn shsat-btn--outline">Back to tests</a>
   </div>
 </div>
 {% endblock %}

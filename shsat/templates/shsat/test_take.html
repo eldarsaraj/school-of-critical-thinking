@@ -8,36 +8,24 @@
 
 <div class="shsat-wrap" style="padding-top:16px;">
 
-  <!-- Top bar -->
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+  <!-- Top bar: title + timer -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px;">
     <div>
-      <div style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:4px;">{{ test.title }}</div>
+      <div style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:4px;">{{ test.title }}</div>
       <div id="timer" class="shsat-timer">0:00:00</div>
       <div style="font-size:12px;color:rgba(0,0,0,0.4);">Time elapsed</div>
     </div>
   </div>
 
-  <div class="shsat-test-layout">
-
-    <!-- Question panel -->
-    <div class="shsat-question-panel" id="questionPanel"></div>
-
-    <!-- Sidebar: question map -->
-    <div class="shsat-qmap">
-      <div id="timerSidebar" style="text-align:center;font-size:22px;font-weight:700;margin-bottom:12px;"></div>
-
-      <div class="shsat-qmap__section">ELA</div>
-      <div class="shsat-qmap__grid" id="elaMap"></div>
-
-      <div class="shsat-qmap__section" style="margin-top:12px;">Math</div>
-      <div class="shsat-qmap__grid" id="mathMap"></div>
-
-      <div style="margin-top:16px;font-size:12px;color:rgba(0,0,0,0.4);line-height:2;">
-        <span style="display:inline-block;width:12px;height:12px;background:#111;vertical-align:middle;margin-right:4px;"></span>Answered<br>
-        <span style="display:inline-block;width:12px;height:12px;border:1px solid rgba(180,40,30,0.6);vertical-align:middle;margin-right:4px;"></span>Flagged
-      </div>
-    </div>
+  <!-- Progress bar (updated by JS) -->
+  <div class="shsat-progress-wrap" id="progressWrap">
+    <div class="shsat-progress-meta" id="progressMeta"></div>
+    <div class="shsat-progress-bar"><div class="shsat-progress-fill" id="progressFill"></div></div>
   </div>
+
+  <!-- Question panel -->
+  <div id="questionPanel"></div>
+
 </div>
 
 {{ q_list|json_script:"questionData" }}
@@ -47,11 +35,39 @@
 </form>
 
 {% if is_adaptive %}
-<!-- Adaptive: subtle "module questions unlocked" toast (auto-dismissed) -->
 <div id="moduleToast" style="display:none;position:fixed;bottom:24px;right:24px;z-index:999;background:#111;color:#fff;padding:12px 20px;font-size:14px;border-radius:4px;box-shadow:0 4px 16px rgba(0,0,0,0.25);">
-  All 57 questions now available
+  Section complete — next questions loaded
 </div>
 {% endif %}
+
+<style>
+.shsat-progress-wrap {
+  margin-bottom: 20px;
+}
+.shsat-progress-meta {
+  font-size: 13px;
+  color: rgba(0,0,0,0.5);
+  margin-bottom: 6px;
+  display: flex;
+  gap: 16px;
+}
+.shsat-progress-meta strong {
+  color: #111;
+  font-weight: 600;
+}
+.shsat-progress-bar {
+  height: 4px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.shsat-progress-fill {
+  height: 100%;
+  background: #111;
+  border-radius: 2px;
+  transition: width 0.2s ease;
+}
+</style>
 
 <script>
 const ATTEMPT_ID = {{ attempt.id }};
@@ -100,7 +116,6 @@ function resumeTimer() {
 // ---------------------------------------------------------------------------
 let elapsed = INITIAL_ELAPSED;
 const timerEl = document.getElementById("timer");
-const timerSidebar = document.getElementById("timerSidebar");
 
 function formatTime(s) {
   const h = Math.floor(s / 3600);
@@ -111,46 +126,46 @@ function formatTime(s) {
 
 setInterval(() => {
   elapsed++;
-  const disp = formatTime(elapsed);
-  timerEl.textContent = disp;
-  timerSidebar.textContent = disp;
+  timerEl.textContent = formatTime(elapsed);
   if (elapsed > {{ duration_seconds }}) {
     timerEl.classList.add("shsat-timer--overtime");
-    timerSidebar.style.color = "rgba(180,40,30,0.8)";
   }
 }, 1000);
 
 // ---------------------------------------------------------------------------
-// Alternating A-D / E-H label scheme (mirrors official SHSAT answer sheet)
+// Alternating A-D / E-H label scheme
 // ---------------------------------------------------------------------------
 const EFGH_MAP = {A: "E", B: "F", C: "G", D: "H"};
-
 function displayLetter(internal, useEfgh) {
   return useEfgh ? (EFGH_MAP[internal] || internal) : internal;
 }
 
 // ---------------------------------------------------------------------------
-// Section lists and passage shading (rebuilt after module assignment)
+// Section lists (rebuilt after module assignment)
 // ---------------------------------------------------------------------------
 let elaSqs  = [];
 let mathSqs = [];
-const elaPassageOrder = [];
-const passageShadeClass = {};
-const PASSAGE_SHADES = ["shsat-qmap__dot--shade1", "shsat-qmap__dot--shade2", "shsat-qmap__dot--shade3"];
 
 function rebuildSectionLists() {
   elaSqs  = questions.filter(q => q.section === "ELA");
   mathSqs = questions.filter(q => q.section === "Math");
-  // Rebuild ELA passage shading
-  elaPassageOrder.length = 0;
-  Object.keys(passageShadeClass).forEach(k => delete passageShadeClass[k]);
-  elaSqs.forEach(q => {
-    const pg = q.passage_group_id;
-    if (pg && !elaPassageOrder.includes(pg)) elaPassageOrder.push(pg);
-  });
-  elaPassageOrder.forEach((pg, i) => { passageShadeClass[pg] = PASSAGE_SHADES[i % PASSAGE_SHADES.length]; });
 }
 rebuildSectionLists();
+
+// ---------------------------------------------------------------------------
+// Progress bar
+// ---------------------------------------------------------------------------
+function updateProgress() {
+  const q = questions[currentIdx];
+  const sectionQs = q.section === "ELA" ? elaSqs : mathSqs;
+  const displayNum = q.display_index;
+  const pct = (displayNum / sectionQs.length) * 100;
+
+  const meta = document.getElementById("progressMeta");
+  const fill = document.getElementById("progressFill");
+  if (meta) meta.innerHTML = `<strong>${q.section}</strong> <span>Question ${displayNum} of ${sectionQs.length}</span>`;
+  if (fill) fill.style.width = pct + "%";
+}
 
 // ---------------------------------------------------------------------------
 // Render question
@@ -159,8 +174,6 @@ function esc(s) {
   return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-// Render question text: split on double-newlines so referenced sentences appear
-// in their own highlighted block rather than inline with the question stem.
 function renderQuestionText(text) {
   const paras = text.split(/\n\n+/);
   if (paras.length <= 1) {
@@ -204,52 +217,58 @@ function renderQuestion(idx) {
   currentIdx = idx;
   const q = questions[idx];
 
-  const sectionQs = q.section === "ELA" ? elaSqs : mathSqs;
-  const displayNum = q.display_index;
+  // Show submit only when at the true end (adaptive: all modules must be assigned)
+  const atEnd = idx >= questions.length - 1;
+  const showSubmit = atEnd && (!IS_ADAPTIVE || modulesAssigned);
 
-  // Footer: nav info + prev/next buttons (always below question)
-  const navInfo = `<div class="shsat-question-footer">
+  const navFooter = `<div class="shsat-question-footer">
     <div class="shsat-question-footer__info">
-      <span style="font-weight:700;">${esc(q.section)} Q${displayNum} of ${sectionQs.length}</span>
-      <span style="color:rgba(0,0,0,0.4);">Overall ${idx + 1} of ${questions.length}</span>
       <button type="button" onclick="toggleFlag(${q.id})" id="flagBtn_${q.id}"
         style="background:none;border:1px solid rgba(0,0,0,0.2);padding:4px 10px;cursor:pointer;font-size:12px;">
         ${flags[q.id] ? "🚩 Flagged" : "Flag"}
       </button>
     </div>
     <div style="display:flex;gap:12px;margin-top:8px;">
-      ${idx > 0 ? `<button type="button" onclick="goTo(${idx - 1})" class="shsat-btn shsat-btn--outline">← Previous</button>` : ""}
-      ${idx < questions.length - 1
-        ? `<button type="button" onclick="goTo(${idx + 1})" class="shsat-btn">Next →</button>`
-        : `<button type="button" onclick="confirmSubmit()" class="shsat-btn" style="background:#a4161a;border-color:#a4161a;color:#fff;">Submit test</button>`}
+      ${showSubmit
+        ? `<button type="button" onclick="confirmSubmit()" class="shsat-btn" style="background:#a4161a;border-color:#a4161a;color:#fff;">Submit test</button>`
+        : (atEnd
+            ? `<button type="button" disabled class="shsat-btn" style="opacity:0.4;cursor:not-allowed;">Loading next questions…</button>`
+            : `<button type="button" onclick="goTo(${idx + 1})" class="shsat-btn">Next →</button>`)
+      }
     </div>
   </div>`;
 
   let html;
   if (q.passage_text) {
-    // Two-column layout: passage left, question right
+    // Strip passage title from the start of passage_text if it appears there
+    let passageBody = q.passage_text;
+    if (q.passage_title) {
+      const stripped = passageBody.trimStart();
+      if (stripped.startsWith(q.passage_title)) {
+        passageBody = stripped.slice(q.passage_title.length).trimStart();
+      }
+    }
     const passageHtml = `<div class="shsat-passage shsat-passage--scroll">
       ${q.passage_title ? `<div class="shsat-passage__title">${esc(q.passage_title)}</div>` : ""}
-      <div>${esc(q.passage_text).replace(/\n/g, "<br>")}</div>
+      <div>${esc(passageBody).replace(/\n/g, "<br>")}</div>
     </div>`;
     const questionHtml = renderQuestionText(q.question_text)
       + (q.image_url ? `<div class="shsat-question-image"><img src="${q.image_url}" alt="Question diagram"></div>` : "")
       + buildChoicesHtml(q)
-      + navInfo;
+      + navFooter;
     html = `<div class="shsat-passage-layout">
       <div class="shsat-passage-col">${passageHtml}</div>
       <div class="shsat-question-col">${questionHtml}</div>
     </div>`;
   } else {
-    // Single-column: image, question text, choices, then nav below
     html = (q.image_url ? `<div class="shsat-question-image"><img src="${q.image_url}" alt="Question diagram"></div>` : "")
       + renderQuestionText(q.question_text)
       + buildChoicesHtml(q)
-      + navInfo;
+      + navFooter;
   }
 
   document.getElementById("questionPanel").innerHTML = html;
-  updateMap();
+  updateProgress();
   window.scrollTo(0, 0);
 }
 
@@ -266,7 +285,6 @@ function selectAnswer(qId, letter, el) {
   answers[qId] = letter;
   el.closest(".shsat-choices").querySelectorAll(".shsat-choice").forEach(li => li.classList.remove("selected"));
   el.classList.add("selected");
-  updateMap();
   const accumulated = (timeSpent[qId] || 0) + getElapsedForCurrent();
   fetch("/shsat/api/save-answer/", {
     method: "POST",
@@ -285,7 +303,6 @@ function selectAnswer(qId, letter, el) {
 let gridInTimer = null;
 function saveGridIn(qId, value) {
   answers[qId] = value;
-  updateMap();
   clearTimeout(gridInTimer);
   gridInTimer = setTimeout(() => {
     fetch("/shsat/api/save-answer/", {
@@ -307,42 +324,11 @@ function toggleFlag(qId) {
   flags[qId] = !flags[qId];
   const btn = document.getElementById(`flagBtn_${qId}`);
   if (btn) btn.textContent = flags[qId] ? "🚩 Flagged" : "Flag";
-  updateMap();
   fetch("/shsat/api/flag-question/", {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
     body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, flagged: flags[qId] }),
   }).catch(console.error);
-}
-
-// ---------------------------------------------------------------------------
-// Question map
-// ---------------------------------------------------------------------------
-function updateMap() {
-  [["ela", elaSqs, elaModuleAssigned], ["math", mathSqs, mathModuleAssigned]].forEach(([section, sqs, sectionAssigned]) => {
-    const el = document.getElementById(`${section}Map`);
-    if (!el) return;
-    let html = sqs.map(q => {
-      const globalIdx = questions.indexOf(q);
-      let cls = "shsat-qmap__dot";
-      if (answers[q.id]) cls += " answered";
-      if (flags[q.id]) cls += " flagged";
-      if (globalIdx === currentIdx) cls += " current";
-      if (section === "ela" && q.passage_group_id && passageShadeClass[q.passage_group_id]) {
-        cls += " " + passageShadeClass[q.passage_group_id];
-      }
-      return `<div class="${cls}" onclick="goTo(${globalIdx})" title="Q${q.display_index}">${q.display_index}</div>`;
-    }).join("");
-    // Adaptive: show locked placeholder dots for this section's unassigned module questions
-    if (IS_ADAPTIVE && !sectionAssigned) {
-      const locked = 57 - sqs.length;
-      for (let i = 0; i < locked; i++) {
-        const n = sqs.length + i + 1;
-        html += `<div class="shsat-qmap__dot shsat-qmap__dot--locked" title="Q${n}">·</div>`;
-      }
-    }
-    el.innerHTML = html;
-  });
 }
 
 // ---------------------------------------------------------------------------
@@ -391,8 +377,7 @@ function requestSectionModules(section) {
     modulesAssigned = elaModuleAssigned && mathModuleAssigned;
 
     rebuildSectionLists();
-    updateMap();
-    renderQuestion(currentIdx);  // refresh Next → button if on last routing Q
+    renderQuestion(currentIdx);  // refresh Next/Submit button state
 
     if (modulesAssigned) {
       const toast = document.getElementById("moduleToast");
@@ -415,7 +400,7 @@ let _submitLocked = false;
 function confirmSubmit() {
   if (_submitLocked) return;
   if (IS_ADAPTIVE && !modulesAssigned) {
-    alert("Please answer all 29 questions in each section before submitting — more questions will appear as you progress.");
+    alert("Please answer all questions in each section before submitting — more questions will appear as you progress.");
     return;
   }
   const answered = questions.filter(q => answers[q.id]).length;
@@ -429,6 +414,5 @@ function confirmSubmit() {
 // Init
 renderQuestion(0);
 timerEl.textContent = formatTime(elapsed);
-timerSidebar.textContent = formatTime(elapsed);
 </script>
 {% endblock %}

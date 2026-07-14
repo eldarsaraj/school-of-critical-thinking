@@ -130,7 +130,7 @@ def dashboard(request):
             entry["seq"] = f"Log {log_count}"
         else:
             test_count += 1
-            entry["seq"] = f"Test {test_count}"
+            entry["seq"] = f"Benchmark {test_count}"
         collapsed.append(entry)
     score_history_raw = collapsed
     score_history = [{k: v for k, v in e.items() if k != "_sort"} for e in score_history_raw]
@@ -345,11 +345,12 @@ def test_list(request):
 def test_intro(request, test_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     test = get_object_or_404(Test, id=test_id, is_published=True)
-    # Check if there's an in-progress attempt
     in_progress = TestAttempt.objects.filter(parent=parent, test=test, is_completed=False).first()
+    completed_attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=True).order_by("-submitted_at").first()
     context = {
         "test": test,
         "in_progress": in_progress,
+        "completed_attempt": completed_attempt,
         "ela_count": test.ela_questions().count(),
         "math_count": test.math_questions().count(),
         "duration_hours": settings.SHSAT_TEST_DURATION_SECONDS // 3600,
@@ -362,21 +363,26 @@ def test_take(request, test_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     test = get_object_or_404(Test, id=test_id, is_published=True)
 
-    # Get or create attempt
+    # Block retake: if already completed, send to results
+    completed_attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=True).order_by("-submitted_at").first()
     attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=False).first()
     if not attempt:
+        if completed_attempt:
+            from django.contrib import messages
+            messages.info(request, f"You have already completed {test.title}.")
+            return redirect("shsat_test_results", attempt_id=completed_attempt.id)
+        # Determine section order from GET param (ELA first by default)
+        section_first = request.GET.get("section_first", "ELA")
+        second = "Math" if section_first == "ELA" else "ELA"
         if test.is_adaptive:
-            # Adaptive: start with routing questions only; modules assigned later
-            question_ids = list(
-                test.questions.filter(stage='routing')
-                .order_by('section', 'question_number')
-                .values_list('id', flat=True)
-            )
+            # Routing questions in chosen section order
+            first_ids = list(test.questions.filter(stage='routing', section=section_first).order_by('question_number').values_list('id', flat=True))
+            second_ids = list(test.questions.filter(stage='routing', section=second).order_by('question_number').values_list('id', flat=True))
+            question_ids = first_ids + second_ids
         else:
-            question_ids = list(
-                test.questions.order_by('section', 'question_number')
-                .values_list('id', flat=True)
-            )
+            first_ids = list(test.questions.filter(section=section_first).order_by('question_number').values_list('id', flat=True))
+            second_ids = list(test.questions.filter(section=second).order_by('question_number').values_list('id', flat=True))
+            question_ids = first_ids + second_ids
         attempt = TestAttempt.objects.create(
             parent=parent,
             test=test,
@@ -385,19 +391,10 @@ def test_take(request, test_id):
         for qid in question_ids:
             Answer.objects.get_or_create(attempt=attempt, question_id=qid)
 
-    from django.db.models import Case, When, IntegerField, Value
-    stage_sort = Case(
-        When(stage='routing', then=Value(0)),
-        When(stage='easy_module', then=Value(1)),
-        When(stage='hard_module', then=Value(2)),
-        default=Value(3),
-        output_field=IntegerField()
-    )
-    questions = (
-        Question.objects.filter(id__in=attempt.started_with)
-        .annotate(stage_sort=stage_sort)
-        .order_by("section", "stage_sort", "question_number")
-    )
+    # Preserve question order from started_with (respects section choice and module insertions)
+    qs_by_id = {q.id: q for q in Question.objects.filter(id__in=attempt.started_with)}
+    ordered_questions = [qs_by_id[qid] for qid in attempt.started_with if qid in qs_by_id]
+
     answers_qs = Answer.objects.filter(attempt=attempt).select_related("question")
     answers_map = {a.question_id: a for a in answers_qs}
 
@@ -405,7 +402,7 @@ def test_take(request, test_id):
     # Track per-section display index (1-based sequential)
     section_counters = {"ELA": 0, "Math": 0}
     q_list = []
-    for q in questions:
+    for q in ordered_questions:
         ans = answers_map.get(q.id)
         section_counters[q.section] += 1
         q_list.append({

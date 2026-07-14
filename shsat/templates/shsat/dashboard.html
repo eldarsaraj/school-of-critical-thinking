@@ -233,7 +233,7 @@ function buildProjection(history) {
 
   let ela = last.ela, math = last.math;
   const seed = last.composite;
-  const existingTestCount = testHistory.filter(d => d.seq.toLowerCase().startsWith("test")).length;
+  const existingTestCount = testHistory.filter(d => !d.seq.toLowerCase().startsWith("baseline")).length;
   const gains = [14, 9, 16, 11, 13, 8, 15, 12, 10, 17];
 
   const compProj = [], elaProj = [], mathProj = [], labels = [];
@@ -246,7 +246,7 @@ function buildProjection(history) {
     compProj.push(ela + math);
     elaProj.push(ela);
     mathProj.push(math);
-    labels.push(`Test ${existingTestCount + i + 1} (projected)`);
+    labels.push(`Benchmark ${existingTestCount + i + 1} (projected)`);
   }
   return {
     labels, bridgeIdx,
@@ -521,28 +521,48 @@ function makeProjData(arr) {
   }
 
   const pct = Math.round(normalCDF(score, mean, std) * 100);
-  // Position label on whichever side has more space
   const labelPos = score < mean ? "end" : "start";
 
   new Chart(el.getContext("2d"), {
     type: "line",
     data: {
-      datasets: [{
-        label: "Score distribution",
-        data: pts,
-        borderColor: P.neutral,
-        backgroundColor: "rgba(136,150,168,0.13)",
-        borderWidth: 2,
-        fill: true,
-        tension: 0.4,
-        pointRadius: 0,
-      }]
+      datasets: [
+        {
+          label: "Score distribution",
+          data: pts,
+          borderColor: P.neutral,
+          backgroundColor: "rgba(136,150,168,0.13)",
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4,
+          pointRadius: 0,
+        },
+        {
+          // Dummy dataset for legend entry only
+          label: "Child's score",
+          data: [],
+          borderColor: P.composite,
+          backgroundColor: P.composite,
+          borderWidth: 2,
+          borderDash: [6, 4],
+          pointRadius: 0,
+        }
+      ]
     },
     options: {
       responsive: true,
       aspectRatio: 3,
       plugins: {
-        legend: { display: false },
+        legend: {
+          display: true,
+          position: "top",
+          align: "end",
+          labels: {
+            boxWidth: 20,
+            font: { size: 12 },
+            filter: item => item.text === "Child's score",
+          }
+        },
         tooltip: {
           callbacks: {
             title: items => `Score: ${items[0].parsed.x}`,
@@ -555,16 +575,25 @@ function makeProjData(arr) {
               type: "line",
               xMin: score, xMax: score,
               borderColor: P.composite,
-              borderWidth: 2.5,
+              borderWidth: 2,
+              borderDash: [6, 4],
               label: {
                 content: [`Score: ${score}`, `${pct}th percentile`],
-                display: true,
+                display: false,
                 position: labelPos,
                 backgroundColor: P.composite,
                 color: "#fff",
                 padding: { x: 8, y: 5 },
                 font: { size: 12, weight: "600" },
                 yAdjust: -8,
+              },
+              enter({ chart, element }) {
+                element.options.label.display = true;
+                chart.update("none");
+              },
+              leave({ chart, element }) {
+                element.options.label.display = false;
+                chart.update("none");
               }
             }
           }
@@ -575,19 +604,13 @@ function makeProjData(arr) {
           type: "linear",
           min: 200, max: 700,
           grid: { color: P.grid },
-          ticks: {
-            font: { size: 11 },
-            stepSize: 100,
-            callback: v => v,
-          },
+          ticks: { font: { size: 11 }, stepSize: 100, callback: v => v },
           title: {
             display: true, text: "Composite score",
             font: { size: 11 }, color: "rgba(0,0,0,0.4)",
           }
         },
-        y: {
-          display: false,
-        }
+        y: { display: false }
       }
     }
   });
