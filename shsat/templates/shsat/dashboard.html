@@ -523,52 +523,36 @@ function makeProjData(arr) {
   const pct = Math.round(normalCDF(score, mean, std) * 100);
   const labelPos = score < mean ? "end" : "start";
 
-  new Chart(el.getContext("2d"), {
+  const distChart = new Chart(el.getContext("2d"), {
     type: "line",
     data: {
-      datasets: [
-        {
-          label: "Score distribution",
-          data: pts,
-          borderColor: P.neutral,
-          backgroundColor: "rgba(136,150,168,0.13)",
-          borderWidth: 2,
-          fill: true,
-          tension: 0.4,
-          pointRadius: 0,
-        },
-        {
-          // Dummy dataset for legend entry only
-          label: "Child's score",
-          data: [],
-          borderColor: P.composite,
-          backgroundColor: P.composite,
-          borderWidth: 2,
-          borderDash: [6, 4],
-          pointRadius: 0,
-        }
-      ]
+      datasets: [{
+        label: "Score distribution",
+        data: pts,
+        borderColor: P.neutral,
+        backgroundColor: "rgba(136,150,168,0.13)",
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 0,
+      }]
     },
     options: {
       responsive: true,
       aspectRatio: 3,
+      onHover: (event, _elements, chart) => {
+        if (!chart.scales.x || event.x === null) return;
+        const lineX = chart.scales.x.getPixelForValue(score);
+        const near = Math.abs(event.x - lineX) < 14;
+        const ann = chart.options.plugins.annotation.annotations.scoreLine;
+        if (ann.label.display !== near) {
+          ann.label.display = near;
+          chart.update("none");
+        }
+      },
       plugins: {
-        legend: {
-          display: true,
-          position: "top",
-          align: "end",
-          labels: {
-            boxWidth: 20,
-            font: { size: 12 },
-            filter: item => item.text === "Child's score",
-          }
-        },
-        tooltip: {
-          callbacks: {
-            title: items => `Score: ${items[0].parsed.x}`,
-            label: () => null,
-          }
-        },
+        legend: { display: false },
+        tooltip: { enabled: false },
         annotation: {
           annotations: {
             scoreLine: {
@@ -586,14 +570,6 @@ function makeProjData(arr) {
                 padding: { x: 8, y: 5 },
                 font: { size: 12, weight: "600" },
                 yAdjust: -8,
-              },
-              enter({ chart, element }) {
-                element.options.label.display = true;
-                chart.update("none");
-              },
-              leave({ chart, element }) {
-                element.options.label.display = false;
-                chart.update("none");
               }
             }
           }
