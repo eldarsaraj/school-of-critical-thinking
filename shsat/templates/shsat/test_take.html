@@ -157,13 +157,13 @@ rebuildSectionLists();
 // ---------------------------------------------------------------------------
 function updateProgress() {
   const q = questions[currentIdx];
-  const sectionQs = q.section === "ELA" ? elaSqs : mathSqs;
   const displayNum = q.display_index;
-  const pct = (displayNum / sectionQs.length) * 100;
+  const total = IS_ADAPTIVE ? 57 : (q.section === "ELA" ? elaSqs : mathSqs).length;
+  const pct = (displayNum / total) * 100;
 
   const meta = document.getElementById("progressMeta");
   const fill = document.getElementById("progressFill");
-  if (meta) meta.innerHTML = `<strong>${q.section}</strong> <span>Question ${displayNum} of ${sectionQs.length}</span>`;
+  if (meta) meta.innerHTML = `<strong>${q.section}</strong> <span>Question ${displayNum} of ${total}</span>`;
   if (fill) fill.style.width = pct + "%";
 }
 
