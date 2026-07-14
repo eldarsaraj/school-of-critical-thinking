@@ -350,7 +350,7 @@ def test_intro(request, test_id):
     context = {
         "test": test,
         "in_progress": in_progress,
-        "completed_attempt": completed_attempt,
+        "completed_attempt": completed_attempt if not request.user.is_staff else None,
         "ela_count": test.ela_questions().count(),
         "math_count": test.math_questions().count(),
         "duration_hours": settings.SHSAT_TEST_DURATION_SECONDS // 3600,
@@ -363,11 +363,11 @@ def test_take(request, test_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     test = get_object_or_404(Test, id=test_id, is_published=True)
 
-    # Block retake: if already completed, send to results
+    # Block retake: if already completed, send to results (staff bypass)
     completed_attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=True).order_by("-submitted_at").first()
     attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=False).first()
     if not attempt:
-        if completed_attempt:
+        if completed_attempt and not request.user.is_staff:
             from django.contrib import messages
             messages.info(request, f"You have already completed {test.title}.")
             return redirect("shsat_test_results", attempt_id=completed_attempt.id)
