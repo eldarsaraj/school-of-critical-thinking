@@ -14,6 +14,10 @@ def home(request):
     return render(request, "pages/home.html")
 
 
+def test_prep(request):
+    return render(request, "pages/test_prep.html")
+
+
 def about(request):
     return render(request, "pages/about.html")
 

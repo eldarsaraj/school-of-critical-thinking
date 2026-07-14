@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Test Prep — The School of Critical Thinking{% endblock %}
+
+{% block meta_description %}<meta name="description" content="Precision test preparation for NYC's most competitive admissions exams. Reverse-engineered from official sources, with adaptive tests and error analysis that shows exactly why wrong answers are wrong.">{% endblock %}
+
+{% block social_meta %}
+  <meta property="og:site_name" content="The School of Critical Thinking" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Test Prep — The School of Critical Thinking" />
+  <meta property="og:description" content="Precision test preparation built from official sources. Adaptive tests, named distractor traps, and error analysis that targets the reasoning skills that drive real score improvement." />
+  <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Test Prep — The School of Critical Thinking" />
+  <meta name="twitter:description" content="Precision test preparation built from official sources." />
+  <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+{% endblock %}
+
+{% block content %}
+
+<style>
+.tp-hero {
+  padding: 52px 0 48px;
+  max-width: 660px;
+}
+.tp-hero__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-bottom: 20px;
+}
+.tp-hero__title {
+  font-size: 36px;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  letter-spacing: -0.01em;
+}
+.tp-hero__sub {
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.58);
+  max-width: 560px;
+}
+
+/* ── Test cards ── */
+.tp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 48px 0 64px;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+.tp-card {
+  border: 1px solid rgba(0,0,0,.1);
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.tp-card--soon {
+  opacity: 0.42;
+}
+.tp-card__badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border: 1px solid rgba(0,0,0,.18);
+  color: rgba(0,0,0,.4);
+  padding: 2px 8px;
+  margin-bottom: 16px;
+  align-self: flex-start;
+}
+.tp-card__badge--active {
+  background: #111;
+  border-color: #111;
+  color: #fff;
+}
+.tp-card__name {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  margin-bottom: 6px;
+}
+.tp-card__full {
+  font-size: 13px;
+  color: rgba(0,0,0,.42);
+  margin-bottom: 16px;
+}
+.tp-card__desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(0,0,0,.58);
+  margin-bottom: 20px;
+  flex: 1;
+}
+.tp-card__facts {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tp-card__facts li {
+  font-size: 13px;
+  color: rgba(0,0,0,.5);
+}
+.tp-card__facts li::before {
+  content: "→ ";
+  color: rgba(0,0,0,.25);
+}
+.tp-card__cta {
+  display: inline-block;
+  padding: 11px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-decoration: none;
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+  align-self: flex-start;
+}
+.tp-card__cta:hover { background: #333; }
+.tp-card__soon-label {
+  font-size: 13px;
+  color: rgba(0,0,0,.35);
+  font-style: italic;
+}
+
+/* ── Method strip ── */
+.tp-method {
+  border-top: 1px solid rgba(0,0,0,.08);
+  padding: 48px 0 56px;
+  max-width: 640px;
+}
+.tp-method__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-bottom: 16px;
+}
+.tp-method__title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  letter-spacing: -.01em;
+}
+.tp-method__body {
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(0,0,0,.58);
+}
+</style>
+
+<!-- Hero -->
+<div class="tp-hero">
+  <p class="tp-hero__label">Standardized Test Preparation</p>
+  <h1 class="tp-hero__title">Built from the source.<br>Not guessing at it.</h1>
+  <p class="tp-hero__sub">
+    Every test on this platform was reverse-engineered from official materials.
+    Adaptive scoring, named distractor traps, and error analysis that shows not just
+    which answers were wrong — but why, and what to do about it.
+  </p>
+</div>
+
+<!-- Test cards -->
+<div class="tp-grid">
+
+  <!-- SHSAT — active -->
+  <div class="tp-card">
+    <span class="tp-card__badge tp-card__badge--active">Available now</span>
+    <div class="tp-card__name">SHSAT</div>
+    <div class="tp-card__full">Specialized High Schools Admissions Test</div>
+    <p class="tp-card__desc">
+      NYC's most competitive high school admissions test. Our platform is built from the
+      official DOE handbooks — adaptive tests, 28 named distractor traps, and precision
+      error analysis by skill and difficulty.
+    </p>
+    <ul class="tp-card__facts">
+      <li>Free Baseline Test (114 questions, full error analysis)</li>
+      <li>Adaptive routing — routes to easy or hard module</li>
+      <li>School placement tracking for all 8 specialized high schools</li>
+    </ul>
+    <a href="/shsat/" class="tp-card__cta">Start SHSAT prep →</a>
+  </div>
+
+  <!-- ISEE — coming soon -->
+  <div class="tp-card tp-card--soon">
+    <span class="tp-card__badge">Coming soon</span>
+    <div class="tp-card__name">ISEE</div>
+    <div class="tp-card__full">Independent School Entrance Examination</div>
+    <p class="tp-card__desc">
+      The primary admissions test for NYC independent and private schools.
+      Middle and Upper Level preparation with the same precision approach.
+    </p>
+    <ul class="tp-card__facts">
+      <li>Verbal reasoning, reading, math, essay</li>
+      <li>Middle Level (grades 5–6) and Upper Level (grades 7–8)</li>
+    </ul>
+    <span class="tp-card__soon-label">In development</span>
+  </div>
+
+  <!-- SSAT — coming soon -->
+  <div class="tp-card tp-card--soon">
+    <span class="tp-card__badge">Coming soon</span>
+    <div class="tp-card__name">SSAT</div>
+    <div class="tp-card__full">Secondary School Admission Test</div>
+    <p class="tp-card__desc">
+      Used by many of the same private schools as the ISEE, with different
+      question types and scoring. A distinct test that requires its own preparation.
+    </p>
+    <ul class="tp-card__facts">
+      <li>Verbal, quantitative, reading comprehension</li>
+      <li>Middle and Upper Level</li>
+    </ul>
+    <span class="tp-card__soon-label">In development</span>
+  </div>
+
+</div>
+
+<!-- Method strip -->
+<div class="tp-method">
+  <p class="tp-method__label">The approach</p>
+  <h2 class="tp-method__title">The same method, applied to every test.</h2>
+  <p class="tp-method__body">
+    Each test we build starts the same way: reading the official materials carefully and
+    working backwards from the answer rationales. Questions are constructed according to
+    latent variable theory, ensuring they measure what the actual test measures. Wrong
+    answers are tagged by trap type — so your child learns not just what they got wrong,
+    but the specific reasoning error behind it. No AI-generated content. No guesswork.
+  </p>
+</div>
+
+{% endblock %}
