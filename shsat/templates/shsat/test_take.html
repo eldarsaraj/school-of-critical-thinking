@@ -403,10 +403,6 @@ function confirmSubmit() {
     alert("Please answer all questions in each section before submitting — more questions will appear as you progress.");
     return;
   }
-  const answered = questions.filter(q => answers[q.id]).length;
-  if (answered < questions.length) {
-    if (!confirm(`You have answered ${answered} of ${questions.length} questions. Submit anyway?`)) return;
-  }
   _submitLocked = true;
   document.getElementById("submitForm").submit();
 }
