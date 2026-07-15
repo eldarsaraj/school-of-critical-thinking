@@ -97,7 +97,8 @@ def stripe_webhook(request):
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
         if session.get("payment_status") == "paid":
-            parent_id = session.get("metadata", {}).get("parent_id")
+            metadata = session.get("metadata") or {}
+            parent_id = metadata.get("parent_id") if isinstance(metadata, dict) else getattr(metadata, "parent_id", None)
             if parent_id:
                 Parent.objects.filter(id=parent_id).update(has_paid=True)
 
