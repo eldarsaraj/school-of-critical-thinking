@@ -69,7 +69,22 @@ def create_checkout_session(request):
 
 
 @login_required(login_url="/shsat/login/")
+@login_required(login_url="/shsat/login/")
 def checkout_success(request):
+    import stripe
+    from django.conf import settings as django_settings
+    session_id = request.GET.get("session_id")
+    if session_id:
+        stripe.api_key = django_settings.STRIPE_SECRET_KEY
+        try:
+            session = stripe.checkout.Session.retrieve(session_id)
+            if session.payment_status == "paid":
+                parent, _ = Parent.objects.get_or_create(user=request.user)
+                if not parent.has_paid:
+                    parent.has_paid = True
+                    parent.save(update_fields=["has_paid"])
+        except Exception:
+            pass
     return render(request, "shsat/checkout_success.html")
 
 
@@ -94,11 +109,11 @@ def stripe_webhook(request):
     except (ValueError, stripe.error.SignatureVerificationError):
         return HttpResponse(status=400)
 
-    if event["type"] == "checkout.session.completed":
-        session = event["data"]["object"]
-        if session.get("payment_status") == "paid":
-            metadata = session.get("metadata") or {}
-            parent_id = metadata.get("parent_id") if isinstance(metadata, dict) else getattr(metadata, "parent_id", None)
+    if event.type == "checkout.session.completed":
+        session = event.data.object
+        if getattr(session, "payment_status", None) == "paid":
+            metadata = getattr(session, "metadata", None) or {}
+            parent_id = metadata.get("parent_id") if hasattr(metadata, "get") else getattr(metadata, "parent_id", None)
             if parent_id:
                 Parent.objects.filter(id=parent_id).update(has_paid=True)
 
