@@ -42,9 +42,14 @@
 </form>
 
 <div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
-  <p class="shsat-section-title">Subscription</p>
-  <p style="font-size:15px;">Status: <strong>{{ parent.subscription_status|capfirst }}</strong></p>
-  <p style="font-size:14px;color:rgba(0,0,0,0.5);">Premium features coming soon.</p>
+  <p class="shsat-section-title">Access</p>
+  {% if parent.has_paid %}
+  <p style="font-size:15px;">Status: <strong>Paid</strong></p>
+  <p style="font-size:14px;color:rgba(0,0,0,0.5);">You have access to all Benchmark Tests.</p>
+  {% else %}
+  <p style="font-size:15px;">Status: <strong>Free</strong></p>
+  <p style="font-size:14px;color:rgba(0,0,0,0.5);"><a href="{% url 'shsat_upgrade' %}">Upgrade to unlock all Benchmark Tests →</a></p>
+  {% endif %}
 </div>
 
 {% if completed_attempts %}

@@ -73,7 +73,6 @@ def create_checkout_session(request):
 
 
 @login_required(login_url="/shsat/login/")
-@login_required(login_url="/shsat/login/")
 def checkout_success(request):
     import stripe
     from django.conf import settings as django_settings
@@ -87,7 +86,7 @@ def checkout_success(request):
                 if not parent.has_paid:
                     parent.has_paid = True
                     parent.save(update_fields=["has_paid"])
-        except Exception:
+        except stripe.error.StripeError:
             pass
     return render(request, "shsat/checkout_success.html")
 
