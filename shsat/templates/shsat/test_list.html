@@ -48,30 +48,15 @@
   {% endfor %}
 
   {% if not has_paid %}
-  <!-- Upgrade teaser (shown to unpaid users) -->
-  <li class="shsat-test-item shsat-test-item--upgrade">
-    <div>
-      <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:8px;">Early access</div>
-      <div class="shsat-test-item__title" style="font-size:18px;">Unlock all 4 Benchmark Tests + Error Analysis</div>
-      <div class="shsat-test-item__meta" style="margin-top:6px;">
-        One payment, no subscription — less than one hour with a private tutor.
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-      <span style="font-size:22px;font-weight:700;letter-spacing:-.01em;">$149</span>
-      <a href="{% url 'shsat_upgrade' %}" class="shsat-btn">See what's included →</a>
-    </div>
-  </li>
-
-  <!-- Benchmark tests (locked) -->
+  <!-- Benchmark tests coming soon -->
   {% for n in "1234" %}
   <li class="shsat-test-item" style="opacity:0.38;">
     <div>
       <div class="shsat-test-item__title">Benchmark Test {{ forloop.counter }}</div>
-      <div class="shsat-test-item__meta">114 questions · Unlock above to access</div>
+      <div class="shsat-test-item__meta">114 questions · Coming soon</div>
     </div>
     <div>
-      <span class="shsat-badge" style="border-color:rgba(0,0,0,0.15);color:rgba(0,0,0,0.35);">Locked</span>
+      <span class="shsat-badge" style="border-color:rgba(0,0,0,0.15);color:rgba(0,0,0,0.35);">Coming soon</span>
     </div>
   </li>
   {% endfor %}
