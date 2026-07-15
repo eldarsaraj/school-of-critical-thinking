@@ -10,6 +10,7 @@ urlpatterns = [
     path("resources/", views.resources, name="shsat_resources"),
 
     # Protected
+    path("upgrade/", views.upgrade, name="shsat_upgrade"),
     path("dashboard/", views.dashboard, name="shsat_dashboard"),
     path("log-score/", views.log_score, name="shsat_log_score"),
     path("log-score/<int:score_id>/delete/", views.delete_manual_score, name="shsat_delete_manual_score"),

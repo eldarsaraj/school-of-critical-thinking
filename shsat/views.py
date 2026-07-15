@@ -34,6 +34,10 @@ def landing(request):
     return render(request, "shsat/landing.html")
 
 
+def upgrade(request):
+    return render(request, "shsat/upgrade.html")
+
+
 def shsat_signup(request):
     if request.user.is_authenticated:
         return redirect("shsat_dashboard")
