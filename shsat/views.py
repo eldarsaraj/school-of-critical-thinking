@@ -35,7 +35,71 @@ def landing(request):
 
 
 def upgrade(request):
-    return render(request, "shsat/upgrade.html")
+    from django.conf import settings as django_settings
+    return render(request, "shsat/upgrade.html", {
+        "stripe_publishable_key": django_settings.STRIPE_PUBLISHABLE_KEY,
+    })
+
+
+@login_required(login_url="/shsat/login/")
+def create_checkout_session(request):
+    import stripe
+    from django.conf import settings as django_settings
+    stripe.api_key = django_settings.STRIPE_SECRET_KEY
+
+    parent, _ = Parent.objects.get_or_create(user=request.user)
+    if parent.has_paid:
+        return redirect("shsat_test_list")
+
+    success_url = request.build_absolute_uri("/shsat/checkout/success/") + "?session_id={CHECKOUT_SESSION_ID}"
+    cancel_url = request.build_absolute_uri("/shsat/upgrade/")
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        line_items=[{"price": django_settings.STRIPE_PRICE_ID, "quantity": 1}],
+        mode="payment",
+        success_url=success_url,
+        cancel_url=cancel_url,
+        client_reference_id=str(request.user.id),
+        customer_email=request.user.email,
+        metadata={"parent_id": str(parent.id)},
+    )
+    return redirect(session.url, permanent=False)
+
+
+@login_required(login_url="/shsat/login/")
+def checkout_success(request):
+    return render(request, "shsat/checkout_success.html")
+
+
+@login_required(login_url="/shsat/login/")
+def checkout_cancel(request):
+    return redirect("shsat_upgrade")
+
+
+@require_POST
+def stripe_webhook(request):
+    import stripe
+    from django.conf import settings as django_settings
+    stripe.api_key = django_settings.STRIPE_SECRET_KEY
+
+    payload = request.body
+    sig_header = request.META.get("HTTP_STRIPE_SIGNATURE", "")
+    webhook_secret = django_settings.STRIPE_WEBHOOK_SECRET
+
+    try:
+        event = stripe.Webhook.construct_event(payload, sig_header, webhook_secret)
+    except (ValueError, stripe.error.SignatureVerificationError):
+        return HttpResponse(status=400)
+
+    if event["type"] == "checkout.session.completed":
+        session = event["data"]["object"]
+        if session.get("payment_status") == "paid":
+            parent_id = session.get("metadata", {}).get("parent_id")
+            if parent_id:
+                Parent.objects.filter(id=parent_id).update(has_paid=True)
+
+    return HttpResponse(status=200)
 
 
 def shsat_signup(request):
@@ -341,6 +405,7 @@ def test_list(request):
         "completed_ids": completed_ids,
         "free_limit": free_limit,
         "tests_taken": tests_taken,
+        "has_paid": parent.has_paid,
     }
     return render(request, "shsat/test_list.html", context)
 

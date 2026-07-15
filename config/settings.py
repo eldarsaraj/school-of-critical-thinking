@@ -160,6 +160,12 @@ CLOUDINARY_STORAGE = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# --- Stripe ---
+STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
+STRIPE_PRICE_ID = os.environ.get("STRIPE_PRICE_ID", "")
+STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
+
 # --- SHSAT Prep ---
 SHSAT_FREE_TEST_LIMIT = 1
 SHSAT_TEST_DURATION_SECONDS = 10800  # 3 hours

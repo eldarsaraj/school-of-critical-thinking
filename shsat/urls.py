@@ -11,6 +11,10 @@ urlpatterns = [
 
     # Protected
     path("upgrade/", views.upgrade, name="shsat_upgrade"),
+    path("checkout/", views.create_checkout_session, name="shsat_checkout"),
+    path("checkout/success/", views.checkout_success, name="shsat_checkout_success"),
+    path("checkout/cancel/", views.checkout_cancel, name="shsat_checkout_cancel"),
+    path("webhook/stripe/", views.stripe_webhook, name="shsat_stripe_webhook"),
     path("dashboard/", views.dashboard, name="shsat_dashboard"),
     path("log-score/", views.log_score, name="shsat_log_score"),
     path("log-score/<int:score_id>/delete/", views.delete_manual_score, name="shsat_delete_manual_score"),

@@ -47,7 +47,8 @@
   </li>
   {% endfor %}
 
-  <!-- Upgrade teaser -->
+  {% if not has_paid %}
+  <!-- Upgrade teaser (shown to unpaid users) -->
   <li class="shsat-test-item shsat-test-item--upgrade">
     <div>
       <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:8px;">Early access</div>
@@ -74,6 +75,7 @@
     </div>
   </li>
   {% endfor %}
+  {% endif %}
 </ul>
 {% endif %}
 {% endblock %}
