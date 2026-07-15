@@ -11,6 +11,7 @@ urlpatterns = [
 
     # Protected
     path("upgrade/", views.upgrade, name="shsat_upgrade"),
+    path("terms/", views.terms, name="shsat_terms"),
     path("checkout/", views.create_checkout_session, name="shsat_checkout"),
     path("checkout/success/", views.checkout_success, name="shsat_checkout_success"),
     path("checkout/cancel/", views.checkout_cancel, name="shsat_checkout_cancel"),

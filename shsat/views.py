@@ -35,6 +35,10 @@ def landing(request):
     return render(request, "shsat/landing.html")
 
 
+def terms(request):
+    return render(request, "shsat/terms.html")
+
+
 def upgrade(request):
     from django.conf import settings as django_settings
     return render(request, "shsat/upgrade.html", {
