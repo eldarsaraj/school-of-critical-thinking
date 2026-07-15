@@ -439,7 +439,10 @@ def test_list(request):
 @login_required(login_url="/shsat/login/")
 def test_intro(request, test_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
-    test = get_object_or_404(Test, id=test_id, is_published=True)
+    test = get_object_or_404(Test, id=test_id)
+    if not test.is_published and not test.is_free and not parent.has_paid and not request.user.is_staff:
+        from django.http import Http404
+        raise Http404
     in_progress = TestAttempt.objects.filter(parent=parent, test=test, is_completed=False).first()
     completed_attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=True).order_by("-submitted_at").first()
     context = {
@@ -456,7 +459,10 @@ def test_intro(request, test_id):
 @login_required(login_url="/shsat/login/")
 def test_take(request, test_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
-    test = get_object_or_404(Test, id=test_id, is_published=True)
+    test = get_object_or_404(Test, id=test_id)
+    if not test.is_published and not test.is_free and not parent.has_paid and not request.user.is_staff:
+        from django.http import Http404
+        raise Http404
 
     # Block retake: if already completed, send to results (staff bypass)
     completed_attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=True).order_by("-submitted_at").first()
