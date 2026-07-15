@@ -38,7 +38,7 @@
         {% if user.is_staff %}
           <a href="{% url 'shsat_test_intro' test.id %}" class="shsat-btn shsat-btn--sm shsat-btn--retake">Retake</a>
         {% endif %}
-      {% elif test.is_free or tests_taken < free_limit %}
+      {% elif test.is_free or tests_taken < free_limit or has_paid %}
         <a href="{% url 'shsat_test_intro' test.id %}" class="shsat-btn shsat-btn--sm shsat-btn--outline">Start</a>
       {% else %}
         <span class="shsat-badge">Upgrade required</span>
