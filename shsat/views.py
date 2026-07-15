@@ -396,7 +396,11 @@ def delete_manual_score(request, score_id):
 @login_required(login_url="/shsat/login/")
 def test_list(request):
     parent, _ = Parent.objects.get_or_create(user=request.user)
-    tests = Test.objects.filter(is_published=True)
+    if parent.has_paid or request.user.is_staff:
+        tests = Test.objects.filter(is_published=True) | Test.objects.filter(is_published=False, is_free=False)
+        tests = tests.distinct().order_by("id")
+    else:
+        tests = Test.objects.filter(is_published=True)
     completed_ids = set(
         TestAttempt.objects.filter(parent=parent, is_completed=True).values_list("test_id", flat=True)
     )
