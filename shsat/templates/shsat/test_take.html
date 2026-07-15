@@ -252,8 +252,8 @@ function renderQuestion(idx) {
       ${q.passage_title ? `<div class="shsat-passage__title">${esc(q.passage_title)}</div>` : ""}
       <div>${esc(passageBody).replace(/\n/g, "<br>")}</div>
     </div>`;
-    const questionHtml = renderQuestionText(q.question_text)
-      + (q.image_url ? `<div class="shsat-question-image"><img src="${q.image_url}" alt="Question diagram"></div>` : "")
+    const questionHtml = (q.image_url ? `<div class="shsat-question-image"><img src="${q.image_url}" alt="Question diagram"></div>` : "")
+      + renderQuestionText(q.question_text)
       + buildChoicesHtml(q)
       + navFooter;
     html = `<div class="shsat-passage-layout">
