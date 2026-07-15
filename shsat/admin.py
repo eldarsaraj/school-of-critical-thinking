@@ -10,13 +10,13 @@ def export_emails_csv(modeladmin, request, queryset):
     response = HttpResponse(content_type="text/csv")
     response["Content-Disposition"] = 'attachment; filename="shsat_parents.csv"'
     writer = csv.writer(response)
-    writer.writerow(["email", "child_nickname", "child_grade", "subscription_status", "joined"])
+    writer.writerow(["email", "child_nickname", "child_grade", "has_paid", "joined"])
     for parent in queryset.select_related("user"):
         writer.writerow([
             parent.user.email,
             parent.child_nickname or "",
             parent.child_grade or "",
-            parent.subscription_status,
+            parent.has_paid,
             parent.created_at.strftime("%Y-%m-%d"),
         ])
     return response
@@ -26,9 +26,9 @@ export_emails_csv.short_description = "Export selected parents as CSV"
 
 @admin.register(Parent)
 class ParentAdmin(admin.ModelAdmin):
-    list_display = ["get_email", "child_nickname", "child_grade", "subscription_status", "created_at"]
+    list_display = ["get_email", "child_nickname", "child_grade", "has_paid", "created_at"]
     search_fields = ["user__email", "user__first_name", "child_nickname"]
-    list_filter = ["subscription_status", "child_grade"]
+    list_filter = ["has_paid", "child_grade"]
     actions = [export_emails_csv]
 
     def get_email(self, obj):
