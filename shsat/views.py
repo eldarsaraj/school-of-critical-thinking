@@ -1014,7 +1014,19 @@ def assign_modules(request):
             attempt.test.questions.filter(section=section, stage=stage)
             .order_by('question_number').values_list('id', flat=True)
         )
-        attempt.started_with = list(attempt.started_with) + module_ids
+        # Insert after the last routing question of this section (not at the end)
+        # so that page reloads preserve the correct ELA→Math interleaving
+        current_ids = list(attempt.started_with)
+        routing_ids_for_section = set(
+            attempt.test.questions.filter(stage='routing', section=section)
+            .values_list('id', flat=True)
+        )
+        last_routing_pos = max(
+            (i for i, qid in enumerate(current_ids) if qid in routing_ids_for_section),
+            default=len(current_ids) - 1,
+        )
+        insert_at = last_routing_pos + 1
+        attempt.started_with = current_ids[:insert_at] + module_ids + current_ids[insert_at:]
         attempt.save()
 
         for qid in module_ids:

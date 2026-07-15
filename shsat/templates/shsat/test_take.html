@@ -217,9 +217,18 @@ function renderQuestion(idx) {
   currentIdx = idx;
   const q = questions[idx];
 
-  // Show submit only when at the true end (adaptive: all modules must be assigned)
   const atEnd = idx >= questions.length - 1;
+
+  // For adaptive tests: are we at the last routing question of a section with assignment in flight?
+  const sectionAwaitingModules = IS_ADAPTIVE && q.is_routing && (() => {
+    const laterRouting = questions.slice(idx + 1).some(nq => nq.section === q.section && nq.is_routing);
+    if (laterRouting) return false;
+    const alreadyAssigned = q.section === "ELA" ? elaModuleAssigned : mathModuleAssigned;
+    return _assigning[q.section] && !alreadyAssigned;
+  })();
+
   const showSubmit = atEnd && (!IS_ADAPTIVE || modulesAssigned);
+  const showLoading = !showSubmit && (atEnd || sectionAwaitingModules);
 
   const navFooter = `<div class="shsat-question-footer">
     <div class="shsat-question-footer__info">
@@ -231,7 +240,7 @@ function renderQuestion(idx) {
     <div style="display:flex;gap:12px;margin-top:8px;">
       ${showSubmit
         ? `<button type="button" onclick="confirmSubmit()" class="shsat-btn" style="background:#a4161a;border-color:#a4161a;color:#fff;">Submit test</button>`
-        : (atEnd
+        : (showLoading
             ? `<button type="button" disabled class="shsat-btn" style="opacity:0.4;cursor:not-allowed;">Loading next questions…</button>`
             : `<button type="button" onclick="goTo(${idx + 1})" class="shsat-btn">Next →</button>`)
       }
@@ -347,6 +356,7 @@ function requestSectionModules(section) {
   const alreadyAssigned = section === "ELA" ? elaModuleAssigned : mathModuleAssigned;
   if (_assigning[section] || alreadyAssigned) return;
   _assigning[section] = true;
+  renderQuestion(currentIdx);  // Immediately disable Next while waiting
 
   fetch("/shsat/api/assign-modules/", {
     method: "POST",
