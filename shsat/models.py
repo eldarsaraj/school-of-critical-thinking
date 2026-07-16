@@ -199,3 +199,18 @@ class CutoffScore(models.Model):
 
     def __str__(self):
         return f"{self.school_short} {self.admissions_year}: {self.cutoff_score}"
+
+
+class QuestionReport(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="reports")
+    attempt = models.ForeignKey(TestAttempt, on_delete=models.SET_NULL, null=True, blank=True, related_name="reports")
+    parent = models.ForeignKey(Parent, on_delete=models.SET_NULL, null=True, blank=True)
+    reason = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    resolved = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"Report on {self.question} ({self.created_at:%Y-%m-%d})"

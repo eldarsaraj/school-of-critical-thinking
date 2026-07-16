@@ -2112,3 +2112,20 @@
   border-radius: 2px;
   transition: width 0.2s ease;
 }
+
+/* Report a problem form (test-taking) */
+.shsat-report-form {
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fafafa;
+  max-width: 480px;
+}
+.shsat-report-form textarea {
+  width: 100%;
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid rgba(0,0,0,0.18);
+  resize: vertical;
+  box-sizing: border-box;
+}

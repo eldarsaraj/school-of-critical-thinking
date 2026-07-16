@@ -35,6 +35,7 @@ urlpatterns = [
     # AJAX
     path("api/save-answer/", views.save_answer, name="shsat_save_answer"),
     path("api/flag-question/", views.flag_question, name="shsat_flag_question"),
+    path("api/report-question/", views.report_question, name="shsat_report_question"),
     path("api/assign-modules/", views.assign_modules, name="shsat_assign_modules"),
 
     # Content review (staff only — not linked in nav)

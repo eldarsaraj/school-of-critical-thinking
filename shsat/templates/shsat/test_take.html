@@ -206,8 +206,20 @@ function renderQuestion(idx) {
     <div class="shsat-question-footer__info">
       <button type="button" onclick="toggleFlag(${q.id})" id="flagBtn_${q.id}"
         style="background:none;border:1px solid rgba(0,0,0,0.2);padding:4px 10px;cursor:pointer;font-size:12px;">
-        ${flags[q.id] ? "🚩 Flagged" : "Flag"}
+        ${flags[q.id] ? "📌 Marked for review" : "Mark for review"}
       </button>
+      <button type="button" onclick="toggleReportForm(${q.id})"
+        style="background:none;border:none;padding:4px 6px;cursor:pointer;font-size:12px;color:rgba(0,0,0,0.4);text-decoration:underline;margin-left:8px;">
+        Report a problem
+      </button>
+      <div id="reportForm_${q.id}" class="shsat-report-form" style="display:none;">
+        <textarea id="reportText_${q.id}" placeholder="Describe the issue (typo, wrong answer, unclear question…)" rows="3"></textarea>
+        <div style="display:flex;gap:8px;margin-top:6px;">
+          <button type="button" onclick="submitReport(${q.id})" class="shsat-btn" style="font-size:12px;padding:5px 12px;">Send report</button>
+          <button type="button" onclick="toggleReportForm(${q.id})" style="background:none;border:none;cursor:pointer;font-size:12px;color:rgba(0,0,0,0.4);">Cancel</button>
+        </div>
+        <div id="reportConfirm_${q.id}" style="display:none;font-size:12px;color:rgba(0,0,0,0.5);margin-top:6px;">Thank you — report submitted.</div>
+      </div>
     </div>
     <div style="display:flex;gap:12px;margin-top:8px;">
       ${showSubmit
@@ -301,10 +313,30 @@ function saveGridIn(qId, value) {
 // ---------------------------------------------------------------------------
 // Flagging
 // ---------------------------------------------------------------------------
+function toggleReportForm(qId) {
+  const form = document.getElementById(`reportForm_${qId}`);
+  if (form) form.style.display = form.style.display === "none" ? "block" : "none";
+}
+
+function submitReport(qId) {
+  const text = (document.getElementById(`reportText_${qId}`)?.value || "").trim();
+  fetch("/shsat/api/report-question/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
+    body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, reason: text }),
+  }).catch(console.error);
+  const form = document.getElementById(`reportForm_${qId}`);
+  const confirm = document.getElementById(`reportConfirm_${qId}`);
+  if (form) {
+    form.querySelectorAll("textarea, button").forEach(el => el.style.display = "none");
+    if (confirm) confirm.style.display = "block";
+  }
+}
+
 function toggleFlag(qId) {
   flags[qId] = !flags[qId];
   const btn = document.getElementById(`flagBtn_${qId}`);
-  if (btn) btn.textContent = flags[qId] ? "🚩 Flagged" : "Flag";
+  if (btn) btn.textContent = flags[qId] ? "📌 Marked for review" : "Mark for review";
   fetch("/shsat/api/flag-question/", {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },

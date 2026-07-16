@@ -3,7 +3,7 @@ import csv
 from django.contrib import admin
 from django.http import HttpResponse
 
-from .models import Parent, Test, Question, TestAttempt, Answer, ManualScore, CutoffScore
+from .models import Parent, Test, Question, TestAttempt, Answer, ManualScore, CutoffScore, QuestionReport
 
 
 def export_emails_csv(modeladmin, request, queryset):
@@ -88,3 +88,29 @@ class ManualScoreAdmin(admin.ModelAdmin):
 class CutoffScoreAdmin(admin.ModelAdmin):
     list_display = ["school_short", "school_name", "admissions_year", "cutoff_score", "approximate_seats"]
     list_filter = ["admissions_year"]
+
+
+@admin.register(QuestionReport)
+class QuestionReportAdmin(admin.ModelAdmin):
+    list_display = ["short_question", "get_test", "get_parent_email", "reason_preview", "created_at", "resolved"]
+    list_filter = ["resolved", "question__test"]
+    list_editable = ["resolved"]
+    search_fields = ["question__question_text", "reason", "parent__user__email"]
+    readonly_fields = ["question", "attempt", "parent", "reason", "created_at"]
+
+    def short_question(self, obj):
+        return str(obj.question)
+    short_question.short_description = "Question"
+
+    def get_test(self, obj):
+        return obj.question.test.title
+    get_test.short_description = "Test"
+    get_test.admin_order_field = "question__test"
+
+    def get_parent_email(self, obj):
+        return obj.parent.user.email if obj.parent else "—"
+    get_parent_email.short_description = "Parent"
+
+    def reason_preview(self, obj):
+        return obj.reason[:80] if obj.reason else "—"
+    reason_preview.short_description = "Reason"

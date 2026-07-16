@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.conf import settings
 
-from .models import Parent, Test, Question, TestAttempt, Answer, ManualScore, CutoffScore
+from .models import Parent, Test, Question, TestAttempt, Answer, ManualScore, CutoffScore, QuestionReport
 from .forms import SignupForm, LoginForm, ManualScoreForm, NotesForm, AccountForm, QuestionEditForm, TestForm
 from .scoring import scale_score, compute_placement
 
@@ -706,11 +706,13 @@ def test_results(request, attempt_id):
 
     ela_answers = [a for a in answers if a.question.section == "ELA"]
     math_answers = [a for a in answers if a.question.section == "Math"]
+    flagged_answers = [a for a in answers if a.is_flagged]
 
     context = {
         "attempt": attempt,
         "ela_answers": ela_answers,
         "math_answers": math_answers,
+        "flagged_answers": flagged_answers,
         "placement_data": placement_data,
         "notes_form": notes_form,
         "is_baseline": attempt.test.is_free,
@@ -1155,6 +1157,31 @@ def flag_question(request):
         answer.is_flagged = flagged
         answer.save(update_fields=["is_flagged"])
         return JsonResponse({"status": "ok", "flagged": flagged})
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": str(e)}, status=400)
+
+
+@login_required(login_url="/shsat/login/")
+@require_POST
+def report_question(request):
+    import json
+    try:
+        data = json.loads(request.body)
+        attempt_id = data.get("attempt_id")
+        question_id = data.get("question_id")
+        reason = (data.get("reason") or "").strip()
+
+        parent, _ = Parent.objects.get_or_create(user=request.user)
+        attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent)
+        question = get_object_or_404(Question, id=question_id)
+
+        QuestionReport.objects.create(
+            question=question,
+            attempt=attempt,
+            parent=parent,
+            reason=reason,
+        )
+        return JsonResponse({"status": "ok"})
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=400)
 

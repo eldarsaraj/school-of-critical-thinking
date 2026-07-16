@@ -90,6 +90,22 @@
 </div>
 {% endif %}
 
+<!-- Marked for review -->
+{% if flagged_answers %}
+<p class="shsat-section-title">Marked for review</p>
+<div style="margin-bottom:24px;">
+  {% for ans in flagged_answers %}
+  <div class="shsat-answer-row {% if not ans.selected_answer %}shsat-answer-row--unanswered{% elif ans.is_correct %}shsat-answer-row--correct{% else %}shsat-answer-row--wrong{% endif %}" style="grid-template-columns:60px 40px 1fr 60px 60px;">
+    <span style="color:rgba(0,0,0,0.4);font-size:12px;">{{ ans.question.section }}</span>
+    <span>{{ ans.question.question_number }}</span>
+    <span style="font-size:13px;color:rgba(0,0,0,0.6);">{{ ans.question.question_text|truncatechars:60 }}</span>
+    <span class="shsat-answer-given">{% if ans.selected_answer %}{{ ans.selected_answer }}{% else %}—{% endif %}</span>
+    <span>{% if not ans.is_correct %}{{ ans.question.correct_answer }}{% endif %}</span>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
 <!-- ELA review -->
 <p class="shsat-section-title">ELA — answer review</p>
 <div style="margin-bottom:8px;font-size:12px;color:rgba(0,0,0,0.4);display:grid;grid-template-columns:40px 1fr 60px 60px;gap:8px;padding:0 0 6px;border-bottom:1px solid rgba(0,0,0,0.1);">
