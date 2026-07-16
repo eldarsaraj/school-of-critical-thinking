@@ -40,7 +40,10 @@ def terms(request):
 
 
 def upgrade(request):
-    return redirect("shsat_test_list")
+    from django.conf import settings as django_settings
+    return render(request, "shsat/upgrade.html", {
+        "stripe_publishable_key": django_settings.STRIPE_PUBLISHABLE_KEY,
+    })
 
 
 @login_required(login_url="/shsat/login/")
