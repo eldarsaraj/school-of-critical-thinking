@@ -5,6 +5,10 @@
 
 {% block meta_description %}<meta name="description" content="Full-length SHSAT practice tests reverse-engineered from the official DOE handbooks. Adaptive scoring, per-question error analysis, and a method that teaches you why wrong answers exist.">{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'shsat/css/shsat.css' %}">
+{% endblock %}
+
 {% block content %}
 
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
@@ -90,26 +94,7 @@
     accuracy by skill, time per question, and a distractor trap analysis
     that shows exactly which answer patterns are costing you points.
   </p>
-  <div class="sl-preview__grid">
-    <div>
-      <div class="sl-preview-img">
-        <img src="{% static 'shsat/preview-dashboard.png' %}" alt="Score history and school placement dashboard">
-      </div>
-      <p class="sl-preview-img__caption">Score history and school placement dashboard</p>
-    </div>
-    <div>
-      <div class="sl-preview-img">
-        <img src="{% static 'shsat/preview-error-analysis.png' %}" alt="Per-attempt error analysis and distractor breakdown">
-      </div>
-      <p class="sl-preview-img__caption">Per-attempt error analysis and distractor breakdown</p>
-    </div>
-    <div>
-      <div class="sl-preview-img">
-        <img src="{% static 'shsat/preview-trap.png' %}" alt="Distractor trap analysis chart">
-      </div>
-      <p class="sl-preview-img__caption">Distractor trap breakdown: which patterns caught you</p>
-    </div>
-  </div>
+  {% include "pages/includes/demo_dashboard.html" %}
 </section>
 
 <!-- ── Philosophy ────────────────────────────────────────────────────────── -->
