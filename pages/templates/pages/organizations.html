@@ -143,6 +143,9 @@
   {% else %}
     <form class="contact-form" method="post" action="/organizations/#contact" novalidate>
       {% csrf_token %}
+      <div style="display:none;" aria-hidden="true">
+        <input type="text" name="website" tabindex="-1" autocomplete="off">
+      </div>
 
       {% if errors %}
         <p class="contact-error" role="alert">Please fix the fields below and try again.</p>

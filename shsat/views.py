@@ -123,18 +123,70 @@ def stripe_webhook(request):
     return HttpResponse(status=200)
 
 
+def _send_verification_email(request, user, parent):
+    from django.core.mail import send_mail
+    from django.template.loader import render_to_string
+    verify_url = request.build_absolute_uri(f"/shsat/verify-email/{parent.email_verification_token}/")
+    body = render_to_string("shsat/email_verify.html", {"verify_url": verify_url})
+    send_mail(
+        subject="Verify your email — SHSAT Prep",
+        message=f"Verify your email: {verify_url}",
+        from_email=None,
+        recipient_list=[user.email],
+        html_message=body,
+        fail_silently=True,
+    )
+
+
 def shsat_signup(request):
     if request.user.is_authenticated:
         return redirect("shsat_dashboard")
     form = SignupForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
         user = form.save()
-        Parent.objects.create(user=user)
+        parent = Parent.objects.create(user=user, email_verified=False)
+        _send_verification_email(request, user, parent)
         user = authenticate(request, email=user.email, password=form.cleaned_data["password1"])
         if user:
             login(request, user, backend="shsat.backends.EmailBackend")
-        return redirect("shsat_dashboard")
+        return redirect("shsat_verify_pending")
     return render(request, "shsat/signup.html", {"form": form})
+
+
+@login_required(login_url="/shsat/login/")
+def verify_pending(request):
+    try:
+        parent = request.user.shsat_profile
+        if parent.email_verified:
+            return redirect("shsat_dashboard")
+    except Parent.DoesNotExist:
+        pass
+    resent = request.GET.get("resent") == "1"
+    return render(request, "shsat/verify_pending.html", {
+        "email": request.user.email,
+        "resent": resent,
+    })
+
+
+@login_required(login_url="/shsat/login/")
+@require_POST
+def verify_resend(request):
+    try:
+        parent = request.user.shsat_profile
+        if not parent.email_verified:
+            _send_verification_email(request, request.user, parent)
+    except Parent.DoesNotExist:
+        pass
+    return redirect("/shsat/verify-email/?resent=1")
+
+
+def verify_email(request, token):
+    parent = get_object_or_404(Parent, email_verification_token=token)
+    parent.email_verified = True
+    parent.save(update_fields=["email_verified"])
+    if not request.user.is_authenticated:
+        login(request, parent.user, backend="shsat.backends.EmailBackend")
+    return redirect("shsat_dashboard")
 
 
 def shsat_login(request):
@@ -611,6 +663,8 @@ def test_submit(request, test_id):
             "math_total": math_total,
             "composite_score": composite,
             "error_analysis_url": error_analysis_url,
+            "is_baseline": attempt.test.is_free,
+            "upgrade_url": request.build_absolute_uri("/shsat/upgrade/"),
         })
         send_mail(
             subject=f"Results ready: {attempt.test.title}",

@@ -38,6 +38,9 @@ def families(request):
 def organizations(request):
     sent = request.GET.get("sent") == "1"
     if request.method == "POST":
+        if request.POST.get("website"):
+            return redirect("/organizations/?sent=1")
+
         name = (request.POST.get("name") or "").strip()
         email = (request.POST.get("email") or "").strip()
         message = (request.POST.get("message") or "").strip()
@@ -134,6 +137,10 @@ def contact(request):
     source = request.GET.get("from", "")  # optional
 
     if request.method == "POST":
+        # Honeypot: bots fill in hidden fields, humans don't
+        if request.POST.get("website"):
+            return redirect(f"{reverse('contact')}?sent=1&path={path}&from={source}")
+
         name = (request.POST.get("name") or "").strip()
         email = (request.POST.get("email") or "").strip()
         message = (request.POST.get("message") or "").strip()

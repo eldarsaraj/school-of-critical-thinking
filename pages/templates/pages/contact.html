@@ -39,6 +39,9 @@
 
   <form method="post" class="contact-form" novalidate>
     {% csrf_token %}
+    <div style="display:none;" aria-hidden="true">
+      <input type="text" name="website" tabindex="-1" autocomplete="off">
+    </div>
 
     <div class="contact-form__field">
       <label for="id_name">Name</label>

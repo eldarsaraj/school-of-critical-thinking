@@ -7,6 +7,9 @@ urlpatterns = [
     path("signup/", views.shsat_signup, name="shsat_signup"),
     path("login/", views.shsat_login, name="shsat_login"),
     path("logout/", views.shsat_logout, name="shsat_logout"),
+    path("verify-email/", views.verify_pending, name="shsat_verify_pending"),
+    path("verify-email/<uuid:token>/", views.verify_email, name="shsat_verify_email"),
+    path("verify-email/resend/", views.verify_resend, name="shsat_verify_resend"),
     path("resources/", views.resources, name="shsat_resources"),
 
     # Protected
