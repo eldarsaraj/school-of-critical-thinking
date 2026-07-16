@@ -4182,3 +4182,252 @@ a.curriculum-book:hover .curriculum-book__title {
   line-height: 1.75;
   color: rgba(0,0,0,.58);
 }
+
+/* ==========================================================================
+   SHSAT landing page  (shsat/landing.html — extends base.html)
+   ========================================================================== */
+.sl-hero {
+  padding: 48px 0 56px;
+  max-width: 720px;
+}
+.sl-hero__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.38);
+  margin-bottom: 20px;
+}
+.sl-hero__title {
+  font-size: 36px;
+  line-height: 1.15;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.01em;
+}
+.sl-hero__sub {
+  font-size: 18px;
+  line-height: 1.65;
+  color: rgba(0,0,0,0.6);
+  margin-bottom: 36px;
+  max-width: 580px;
+}
+.sl-hero__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.sl-btn {
+  display: inline-block;
+  padding: 13px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-decoration: none;
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+  transition: background .12s;
+}
+.sl-btn:hover { background: #333; }
+.sl-btn--ghost {
+  background: transparent;
+  color: #111;
+}
+.sl-btn--ghost:hover { background: rgba(0,0,0,.05); }
+
+/* ── Differentiators ── */
+.sl-diff {
+  padding: 64px 0 56px;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+.sl-diff__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.38);
+  margin-bottom: 40px;
+}
+.sl-diff__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px;
+}
+.sl-diff-card {
+  padding: 28px 24px;
+  border: 1px solid rgba(0,0,0,.09);
+}
+.sl-diff-card__marker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-bottom: 12px;
+}
+.sl-diff-card__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+.sl-diff-card__body {
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(0,0,0,.6);
+}
+
+/* ── Platform preview ── */
+.sl-preview {
+  padding: 64px 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+.sl-preview__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.38);
+  margin-bottom: 16px;
+}
+.sl-preview__title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  letter-spacing: -.01em;
+}
+.sl-preview__sub {
+  font-size: 16px;
+  color: rgba(0,0,0,.55);
+  margin-bottom: 40px;
+  max-width: 560px;
+  line-height: 1.6;
+}
+.sl-preview__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.sl-preview-img {
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.sl-preview-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.sl-preview-img__caption {
+  font-size: 12px;
+  color: rgba(0,0,0,.4);
+  margin-top: 8px;
+}
+
+/* ── Method ── */
+.sl-method {
+  padding: 64px 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+  max-width: 640px;
+}
+.sl-method__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.38);
+  margin-bottom: 16px;
+}
+.sl-method__title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+}
+.sl-method__body {
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(0,0,0,.6);
+}
+
+/* ── Philosophy ── */
+.sl-philosophy {
+  padding: 64px 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+  max-width: 680px;
+}
+.sl-philosophy__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.38);
+  margin-bottom: 16px;
+}
+.sl-philosophy__title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+}
+.sl-philosophy__body {
+  font-size: 15px;
+  line-height: 1.85;
+  color: rgba(0,0,0,.62);
+}
+.sl-philosophy__body p { margin: 0 0 20px; }
+.sl-philosophy__body p:last-child { margin: 0; }
+.sl-philosophy__close {
+  margin-top: 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  letter-spacing: .01em;
+}
+
+/* ── Features ── */
+.sl-features {
+  padding: 64px 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+.sl-features__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.38);
+  margin-bottom: 40px;
+}
+.sl-features__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.sl-feature {
+  padding: 20px 20px 24px;
+  border: 1px solid rgba(0,0,0,.08);
+}
+.sl-feature__title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.sl-feature__body { font-size: 14px; color: rgba(0,0,0,.55); line-height: 1.6; }
+
+/* ── CTA ── */
+.sl-cta {
+  padding: 72px 0 80px;
+  border-top: 1px solid rgba(0,0,0,.08);
+  text-align: center;
+}
+.sl-cta__title {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  letter-spacing: -.01em;
+}
+.sl-cta__sub {
+  font-size: 16px;
+  color: rgba(0,0,0,.5);
+  margin-bottom: 32px;
+}
+.sl-no-ai {
+  margin-top: 24px;
+  font-size: 13px;
+  color: rgba(0,0,0,.38);
+  letter-spacing: .01em;
+}
