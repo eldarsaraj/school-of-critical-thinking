@@ -4040,3 +4040,145 @@ a.curriculum-book:hover .curriculum-book__title {
 
 .about-cta__btn:hover { background: #333; color: #fff; }
 .about-cta__btn--ghost:hover { border-color: rgba(0,0,0,0.6); background: transparent; color: #161a1d; }
+
+/* ==========================================================================
+   Test Prep page  (test_prep.html)
+   ========================================================================== */
+.tp-hero {
+  padding: 52px 0 48px;
+  max-width: 660px;
+}
+.tp-hero__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-bottom: 20px;
+}
+.tp-hero__title {
+  font-size: 36px;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  letter-spacing: -0.01em;
+}
+.tp-hero__sub {
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.58);
+  max-width: 560px;
+}
+
+/* ── Test cards ── */
+.tp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 48px 0 64px;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+.tp-card {
+  border: 1px solid rgba(0,0,0,.1);
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.tp-card--soon {
+  opacity: 0.42;
+}
+.tp-card__badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border: 1px solid rgba(0,0,0,.18);
+  color: rgba(0,0,0,.4);
+  padding: 2px 8px;
+  margin-bottom: 16px;
+  align-self: flex-start;
+}
+.tp-card__badge--active {
+  background: #111;
+  border-color: #111;
+  color: #fff;
+}
+.tp-card__name {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  margin-bottom: 6px;
+}
+.tp-card__full {
+  font-size: 13px;
+  color: rgba(0,0,0,.42);
+  margin-bottom: 16px;
+}
+.tp-card__desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(0,0,0,.58);
+  margin-bottom: 20px;
+  flex: 1;
+}
+.tp-card__facts {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tp-card__facts li {
+  font-size: 13px;
+  color: rgba(0,0,0,.5);
+}
+.tp-card__facts li::before {
+  content: "→ ";
+  color: rgba(0,0,0,.25);
+}
+.tp-card__cta {
+  display: inline-block;
+  padding: 11px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-decoration: none;
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+  align-self: flex-start;
+}
+.tp-card__cta:hover { background: #333; }
+.tp-card__soon-label {
+  font-size: 13px;
+  color: rgba(0,0,0,.35);
+  font-style: italic;
+}
+
+/* ── Method strip ── */
+.tp-method {
+  border-top: 1px solid rgba(0,0,0,.08);
+  padding: 48px 0 56px;
+  max-width: 640px;
+}
+.tp-method__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-bottom: 16px;
+}
+.tp-method__title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  letter-spacing: -.01em;
+}
+.tp-method__body {
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(0,0,0,.58);
+}
