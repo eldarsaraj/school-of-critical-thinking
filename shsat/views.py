@@ -707,6 +707,8 @@ def test_results(request, attempt_id):
         "math_answers": math_answers,
         "placement_data": placement_data,
         "notes_form": notes_form,
+        "is_baseline": attempt.test.is_free,
+        "has_paid": parent.has_paid,
     }
     return render(request, "shsat/test_results.html", context)
 
