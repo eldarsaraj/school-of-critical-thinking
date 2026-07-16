@@ -4431,3 +4431,53 @@ a.curriculum-book:hover .curriculum-book__title {
   color: rgba(0,0,0,.38);
   letter-spacing: .01em;
 }
+
+/* ==========================================================================
+   Home page — live demo dashboard  (demo_dashboard.html include)
+   ========================================================================== */
+.home-demo {
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 2px;
+  padding: 32px 28px 40px;
+  margin: 40px 0 48px;
+  background: #fafafa;
+}
+.home-demo__header {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+.home-demo__badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  background: #111;
+  color: #fff;
+  padding: 2px 10px;
+  flex-shrink: 0;
+}
+.home-demo__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+}
+.home-demo__subtitle {
+  font-size: 13px;
+  color: rgba(0,0,0,.42);
+}
+.home-demo__cta {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+.home-demo__cta-note {
+  margin-top: 12px;
+  font-size: 13px;
+  color: rgba(0,0,0,.42);
+}

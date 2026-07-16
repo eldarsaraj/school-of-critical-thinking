@@ -18,6 +18,10 @@
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'shsat/css/shsat.css' %}">
+{% endblock %}
+
 {% block content %}
 
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
@@ -53,20 +57,7 @@
     </p>
   </div>
 
-  <div class="home-feature__images">
-    <div class="home-feature__img-wrap">
-      <img src="{% static 'shsat/preview-dashboard.png' %}" alt="Score history and school placement dashboard">
-      <p class="home-feature__img-caption">Score history and school placement dashboard</p>
-    </div>
-    <div class="home-feature__img-wrap">
-      <img src="{% static 'shsat/preview-error-analysis.png' %}" alt="Per-attempt error analysis">
-      <p class="home-feature__img-caption">Per-attempt error analysis by skill and difficulty</p>
-    </div>
-    <div class="home-feature__img-wrap">
-      <img src="{% static 'shsat/preview-trap.png' %}" alt="Distractor trap analysis chart">
-      <p class="home-feature__img-caption">Distractor trap breakdown — which answer patterns caught you</p>
-    </div>
-  </div>
+  {% include "pages/includes/demo_dashboard.html" %}
 
   <div class="home-feature__meta">
     <div class="home-feature__meta-item">
