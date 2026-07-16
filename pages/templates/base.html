@@ -76,6 +76,9 @@
           <p class="site-footer__tagline">Teaching people to think clearly at every age.</p>
           <form class="footer-capture" method="post" action="{% url 'newsletter_signup' %}">
             {% csrf_token %}
+            <div style="display:none;" aria-hidden="true">
+              <input type="text" name="website" tabindex="-1" autocomplete="off">
+            </div>
             <input class="footer-capture__input" type="email" name="email"
                    placeholder="Email — get new articles" required autocomplete="email">
             <button class="footer-capture__btn" type="submit">→</button>

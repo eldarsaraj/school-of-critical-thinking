@@ -9,6 +9,7 @@ urlpatterns = [
     path("questions/", views.diagnostic_questions, name="diagnostic_questions"),
     path("results/", views.diagnostic_results, name="diagnostic_results"),
     path("email/", views.diagnostic_email, name="diagnostic_email"),
+    path("email/sent/", views.diagnostic_email_sent, name="diagnostic_email_sent"),
     path("syllabus/", views.diagnostic_syllabus, name="diagnostic_syllabus"),
     path("syllabus/<uuid:token>/", views.diagnostic_syllabus_by_token, name="diagnostic_syllabus_token"),
     path("pdf/", views.diagnostic_pdf, name="diagnostic_pdf"),

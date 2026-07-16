@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Check your inbox — Thinking Diagnostic{% endblock %}
+
+{% block content %}
+  <h1>Check your inbox.</h1>
+
+  <p class="diagnostic-desc" style="margin: 10px 0 22px 0;">
+    Your syllabus and PDF have been sent to{% if email %} <strong>{{ email }}</strong>{% else %} your email address{% endif %}.
+    Click the link in that email to access your results.
+  </p>
+
+  <p class="diagnostic-desc" style="margin: 0 0 12px 0; font-size: 14px; color: rgba(0,0,0,0.5);">
+    If you don't see it within a minute, check your spam folder.
+  </p>
+{% endblock %}

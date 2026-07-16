@@ -137,6 +137,9 @@
     {% else %}
     <form class="module-sample__form" method="post" action="{% url 'download_sample' %}">
       {% csrf_token %}
+      <div style="display:none;" aria-hidden="true">
+        <input type="text" name="website" tabindex="-1" autocomplete="off">
+      </div>
       <input type="hidden" name="source" value="module-{{ module.number }}-sample">
       <input class="module-sample__input" type="email" name="email"
              placeholder="Your email address" required autocomplete="email">

@@ -75,6 +75,9 @@
 
   <form method="post" action="{% url 'diagnostic_email' %}" class="contact-form">
     {% csrf_token %}
+    <div style="display:none;" aria-hidden="true">
+      <input type="text" name="website" tabindex="-1" autocomplete="off">
+    </div>
 
     <div class="contact-form__field">
       <label for="id_full_name">Full name</label>

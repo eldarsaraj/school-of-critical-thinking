@@ -64,6 +64,9 @@ def organizations(request):
 def newsletter_signup(request):
     if request.method != "POST":
         return redirect("home")
+    if request.POST.get("website"):
+        referer = request.META.get("HTTP_REFERER", "/")
+        return redirect(referer)
     email = (request.POST.get("email") or "").strip()
     if email:
         NewsletterSubscriber.objects.get_or_create(email=email)
@@ -74,6 +77,8 @@ def newsletter_signup(request):
 def waitlist_signup(request):
     if request.method != "POST":
         return redirect("curriculum")
+    if request.POST.get("website"):
+        return redirect("/curriculum/?waitlisted=1")
     email = (request.POST.get("email") or "").strip()
     if email:
         ModuleWaitlist.objects.get_or_create(email=email)
@@ -107,10 +112,33 @@ def module_detail(request, slug):
 def download_sample(request):
     if request.method != "POST":
         raise Http404()
+    if request.POST.get("website"):
+        return redirect("thank_you")
     email = (request.POST.get("email") or "").strip()
     slug = (request.POST.get("source") or "module-1-sample").strip()
     if email:
         CurriculumLead.objects.get_or_create(email=email, defaults={"source": slug})
+        download_url = request.build_absolute_uri("/curriculum/sample-lesson.pdf")
+        try:
+            from django.core.mail import send_mail
+            send_mail(
+                subject="Your sample lesson — The School of Critical Thinking",
+                message=f"Download your sample lesson here: {download_url}",
+                from_email=None,
+                recipient_list=[email],
+                html_message=f"""<!DOCTYPE html>
+<html><body style="font-family:Georgia,serif;max-width:600px;margin:0 auto;padding:40px 24px;color:#1a1a1a;line-height:1.7;">
+<p>Hello,</p>
+<p>Here is your sample lesson from <em>Seeing Patterns</em> — Module 1 of the School of Critical Thinking curriculum.</p>
+<p><a href="{download_url}" style="display:inline-block;background:#111;color:#fff;padding:12px 24px;text-decoration:none;font-family:Arial,sans-serif;font-size:15px;font-weight:600;">Download sample lesson &rarr;</a></p>
+<p style="font-size:13px;color:#888;">If the button doesn't work, copy this link: {download_url}</p>
+<hr style="border:none;border-top:1px solid #ddd;margin:32px 0;">
+<p style="font-size:13px;color:#888;">The School of Critical Thinking</p>
+</body></html>""",
+                fail_silently=True,
+            )
+        except Exception:
+            pass
     return redirect("thank_you")
 
 

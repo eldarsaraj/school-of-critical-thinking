@@ -290,6 +290,9 @@ def diagnostic_email(request: HttpRequest) -> HttpResponse:
         framing_lines.append(f"{title}: {goal}" if goal else title)
 
     if request.method == "POST":
+        if request.POST.get("website"):
+            return redirect("diagnostic_email_sent")
+
         full_name = (request.POST.get("full_name") or "").strip()
         organization = (request.POST.get("organization") or "").strip()
         email = (request.POST.get("email") or "").strip()
@@ -334,13 +337,18 @@ def diagnostic_email(request: HttpRequest) -> HttpResponse:
                 print(f"EMAIL SEND FAILED: {e}")
                 traceback.print_exc()
 
-            return redirect("diagnostic_syllabus")
+            return redirect("diagnostic_email_sent")
 
     return render(
         request,
         "diagnostic/diagnostic_email.html",
         {"preview_modules": preview_modules, "framing_lines": framing_lines},
     )
+
+
+def diagnostic_email_sent(request: HttpRequest) -> HttpResponse:
+    email = request.session.get("diagnostic_v0_1_email", "")
+    return render(request, "diagnostic/diagnostic_email_sent.html", {"email": email})
 
 
 def diagnostic_syllabus(request: HttpRequest) -> HttpResponse:
