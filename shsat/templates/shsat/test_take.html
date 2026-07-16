@@ -390,7 +390,12 @@ function confirmSubmit() {
 }
 
 // Init
-renderQuestion(0);
+if (questions.length === 0) {
+  document.getElementById("questionPanel").innerHTML =
+    '<p style="color:rgba(0,0,0,0.5);font-size:15px;margin-top:32px;">No questions found for this attempt. <a href="">Refresh the page</a> to try again.</p>';
+} else {
+  renderQuestion(0);
+}
 timerEl.textContent = formatTime(elapsed);
 </script>
 {% endblock %}

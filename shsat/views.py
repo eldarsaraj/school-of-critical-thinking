@@ -547,6 +547,12 @@ def test_take(request, test_id):
     qs_by_id = {q.id: q for q in Question.objects.filter(id__in=attempt.started_with)}
     ordered_questions = [qs_by_id[qid] for qid in attempt.started_with if qid in qs_by_id]
 
+    # If started_with is non-empty but no questions resolved, the attempt has stale IDs
+    # (e.g. test was re-imported with --replace). Reset so a fresh attempt is created.
+    if attempt.started_with and not ordered_questions:
+        attempt.delete()
+        return redirect("shsat_test_intro", test_id=test.id)
+
     answers_qs = Answer.objects.filter(attempt=attempt).select_related("question")
     answers_map = {a.question_id: a for a in answers_qs}
 
