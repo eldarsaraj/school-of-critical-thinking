@@ -1775,3 +1775,302 @@
   background: rgba(245, 158, 11, 0.1);
   color: #92400e;
 }
+
+/* ==========================================================================
+   Upgrade page  (upgrade.html)
+   ========================================================================== */
+.up-wrap {
+  max-width: 680px;
+  padding: 48px 0 80px;
+}
+.up-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-bottom: 20px;
+}
+.up-title {
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+  margin: 0 0 16px;
+}
+.up-sub {
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(0,0,0,.55);
+  margin-bottom: 48px;
+  max-width: 560px;
+}
+
+/* ── What's included ── */
+.up-includes {
+  border-top: 1px solid rgba(0,0,0,.08);
+  padding-top: 36px;
+  margin-bottom: 48px;
+}
+.up-includes__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.35);
+  margin-bottom: 20px;
+}
+.up-includes__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 520px) {
+  .up-includes__grid { grid-template-columns: 1fr; }
+}
+.up-item {
+  border: 1px solid rgba(0,0,0,.09);
+  padding: 20px 18px;
+}
+.up-item__title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.up-item__body {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(0,0,0,.52);
+}
+
+/* ── Tutor comparison ── */
+.up-compare {
+  background: rgba(0,0,0,.025);
+  border: 1px solid rgba(0,0,0,.07);
+  padding: 28px 24px;
+  margin-bottom: 48px;
+}
+.up-compare__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.35);
+  margin-bottom: 16px;
+}
+.up-compare__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,.07);
+  font-size: 14px;
+}
+.up-compare__row:last-child { border-bottom: none; }
+.up-compare__item { color: rgba(0,0,0,.65); }
+.up-compare__price { font-weight: 600; color: #111; }
+.up-compare__price--ours { color: #2a6e4e; }
+
+/* ── Pricing box ── */
+.up-pricing {
+  border: 1px solid rgba(0,0,0,.12);
+  padding: 32px 28px;
+  margin-bottom: 16px;
+}
+.up-pricing__early {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  background: #111;
+  color: #fff;
+  padding: 3px 10px;
+  margin-bottom: 16px;
+}
+.up-pricing__price {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.up-pricing__desc {
+  font-size: 14px;
+  color: rgba(0,0,0,.45);
+  margin-bottom: 28px;
+}
+.up-cta {
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: .03em;
+  text-align: center;
+  background: rgba(0,0,0,.12);
+  color: rgba(0,0,0,.35);
+  border: 1px solid rgba(0,0,0,.1);
+  cursor: not-allowed;
+}
+.up-cta-note {
+  font-size: 12px;
+  color: rgba(0,0,0,.35);
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* ── Baseline note ── */
+.up-baseline-note {
+  border-top: 1px solid rgba(0,0,0,.07);
+  padding-top: 28px;
+  font-size: 14px;
+  color: rgba(0,0,0,.45);
+  line-height: 1.7;
+}
+.up-baseline-note a {
+  color: #111;
+}
+
+/* ==========================================================================
+   Error Analysis list  (error_analysis_list.html)
+   ========================================================================== */
+.ea-list {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.ea-list__item {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(0,0,0,.07);
+  flex-wrap: wrap;
+}
+.ea-list__item:last-child {
+  border-bottom: 1px solid rgba(0,0,0,.07);
+}
+.ea-list__meta {
+  flex: 1 1 200px;
+}
+.ea-list__test {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  margin: 0 0 4px;
+}
+.ea-list__date {
+  font-size: 13px;
+  color: rgba(0,0,0,.42);
+  margin: 0;
+}
+.ea-list__scores {
+  display: flex;
+  gap: 28px;
+  flex-shrink: 0;
+}
+.ea-list__score-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.ea-list__score-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111;
+  line-height: 1;
+}
+.ea-list__score-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.35);
+}
+.ea-list__cta {
+  display: inline-block;
+  padding: 9px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  border: 1px solid rgba(0,0,0,.18);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color .12s, background .12s;
+  flex-shrink: 0;
+}
+.ea-list__cta:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+@media (max-width: 600px) {
+  .ea-list__item { gap: 16px; }
+  .ea-list__scores { gap: 16px; }
+}
+
+/* ==========================================================================
+   Resources page  (resources.html)
+   ========================================================================== */
+.res-section {
+  padding: 36px 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+  max-width: 680px;
+}
+.res-section__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: -.01em;
+}
+.res-section__body {
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(0,0,0,.6);
+  margin-bottom: 20px;
+}
+.res-section__body:last-child { margin-bottom: 0; }
+.res-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+.res-list__item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.res-list__item a {
+  font-size: 15px;
+  font-weight: 500;
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.res-list__item a:hover { color: rgba(0,0,0,.55); }
+.res-list__meta {
+  font-size: 13px;
+  color: rgba(0,0,0,.45);
+  line-height: 1.5;
+}
+.res-section--coming-soon {
+  opacity: 0.7;
+}
+.res-coming-soon__badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.4);
+  border: 1px solid rgba(0,0,0,.2);
+  padding: 2px 8px;
+  margin-bottom: 12px;
+}
