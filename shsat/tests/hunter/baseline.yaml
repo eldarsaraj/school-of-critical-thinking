@@ -1,0 +1,4 @@
+# Hunter College High School — Baseline Test
+# Paste your test content here following the same YAML format as the SHSAT tests.
+# Import command (unpublished, not free, not adaptive):
+#   .venv/bin/python manage.py import_test shsat/tests/hunter/baseline.yaml
