@@ -73,6 +73,20 @@ class Command(BaseCommand):
             if not isinstance(distractor_types, dict):
                 distractor_types = {}
 
+            # quant_comparison items have column_a/column_b instead of question_text
+            if item.get("item_type") == "quant_comparison":
+                col_a = item.get("column_a") or ""
+                col_b = item.get("column_b") or ""
+                shared = item.get("shared_information") or ""
+                parts = []
+                if shared:
+                    parts.append(shared)
+                parts.append(f"Column A: {col_a}")
+                parts.append(f"Column B: {col_b}")
+                question_text = "\n".join(parts)
+            else:
+                question_text = item.get("question_text") or ""
+
             Question.objects.update_or_create(
                 test=test,
                 section=section,
@@ -86,7 +100,7 @@ class Command(BaseCommand):
                     passage_group_id=passage_id,
                     passage_title=passage["title"] if passage else "",
                     passage_text=passage["text"] if passage else "",
-                    question_text=item.get("question_text", ""),
+                    question_text=question_text,
                     choice_a=item.get("choice_a") or "",
                     choice_b=item.get("choice_b") or "",
                     choice_c=item.get("choice_c") or "",
