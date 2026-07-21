@@ -1363,10 +1363,22 @@ def content_test(request, test_id):
             ("Math", _group("Math"), "Math"),
         ]
 
+    # For Hunter tests, skills are human-readable strings not in SKILL_LABELS;
+    # add any unknown skill values from this test mapped to themselves.
+    skill_labels = dict(SKILL_LABELS)
+    extra_skills = (
+        test.questions.exclude(skill="")
+        .exclude(skill__in=skill_labels.keys())
+        .values_list("skill", flat=True)
+        .distinct()
+    )
+    for s in extra_skills:
+        skill_labels[s] = s
+
     context = {
         "test": test,
         "sections": section_list,
-        "skill_labels": SKILL_LABELS,
+        "skill_labels": skill_labels,
     }
     return render(request, "shsat/content_test.html", context)
 
@@ -1401,10 +1413,14 @@ def content_question_edit(request, question_id):
         next_question_id = None
         prev_question_id = None
 
+    skill_labels = dict(SKILL_LABELS)
+    if question.skill and question.skill not in skill_labels:
+        skill_labels[question.skill] = question.skill
+
     return render(request, "shsat/content_question_edit.html", {
         "question": question,
         "form": form,
-        "skill_labels": SKILL_LABELS,
+        "skill_labels": skill_labels,
         "next_question_id": next_question_id,
         "prev_question_id": prev_question_id,
         "question_position": all_ids.index(question.id) + 1 if question.id in all_ids else None,

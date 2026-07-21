@@ -915,13 +915,20 @@
 .status-pill--standard  { background: #f3f4f6; color: #374151; }
 .status-pill--free      { background: #f5f3ff; color: #5b21b6; }
 
-/* Sections (ELA / Math) */
+/* Sections (ELA / Math / Hunter) */
 .content-section {
   margin-bottom: 56px;
+  padding-top: 32px;
+  border-top: 3px solid #111;
+}
+
+.content-section:first-of-type {
+  border-top: none;
+  padding-top: 0;
 }
 
 .content-section__title {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.01em;
   margin: 0 0 20px;
