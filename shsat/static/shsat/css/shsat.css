@@ -1541,37 +1541,28 @@
   font-size: 14.5px;
   line-height: 1.78;
   color: #1a1a1a;
+  padding-left: 32px;
 }
 
-/* Each block: line-number gutter + flowing text */
-.shsat-passage-group {
-  display: flex;
-  align-items: baseline;
-  gap: 0;
+.shsat-passage-para {
+  margin: 0 0 0.75em;
 }
 
-.shsat-passage-group-num {
-  flex: 0 0 30px;
-  font-size: 10px;
-  font-variant-numeric: tabular-nums;
-  color: rgba(0, 0, 0, 0.28);
+.shsat-lnum {
+  float: left;
+  clear: left;
+  margin-left: -32px;
+  width: 24px;
   text-align: right;
-  padding-right: 10px;
+  padding-right: 6px;
+  box-sizing: border-box;
+  font-size: 10px;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.3);
+  font-variant-numeric: tabular-nums;
   line-height: 1.78;
-  align-self: flex-start;
   user-select: none;
   -webkit-user-select: none;
-  padding-top: 0.15em;
-}
-
-.shsat-passage-group-text {
-  flex: 1;
-  min-width: 0;
-  line-height: 1.78;
-}
-
-.shsat-passage-gap {
-  height: 0.7em;
 }
 
 .shsat-question-col {

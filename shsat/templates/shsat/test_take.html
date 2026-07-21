@@ -157,40 +157,40 @@ function esc(s) {
 }
 
 // Render a numbered passage (Hunter format: 4-char prefix is line number or spaces).
-// Groups lines into blocks that start at each line number (every 5 lines).
-// Number sits in a fixed left gutter; text within each block reflows naturally.
+// Text reflows naturally into paragraphs. Line number spans are floated into
+// the left gutter (float: left; clear: left; negative margin-left) so they
+// appear on the left without breaking the text flow.
 function renderPassage(text) {
   const rawLines = text.split('\n');
 
-  // Build segments: each numbered line starts a new block; blank lines = gap
-  const segments = [];
-  let cur = null;
+  // Group into paragraphs; within each paragraph collect (num|null, content) pairs
+  const paras = [];
+  let cur = [];
   for (const raw of rawLines) {
     if (raw.trim() === '') {
-      if (cur) { segments.push(cur); cur = null; }
-      segments.push({ gap: true });
+      if (cur.length) { paras.push(cur); cur = []; }
       continue;
     }
     const prefix = raw.slice(0, 4);
     const content = raw.slice(4).trim();
     const m = prefix.match(/^\s*(\d+)\s*$/);
-    if (m) {
-      if (cur) segments.push(cur);
-      cur = { num: m[1], lines: [content] };
-    } else {
-      if (!cur) cur = { num: null, lines: [] };
-      cur.lines.push(content);
-    }
+    cur.push({ num: m ? m[1] : null, content });
   }
-  if (cur) segments.push(cur);
+  if (cur.length) paras.push(cur);
 
   let html = '<div class="shsat-passage-prose">';
-  for (const seg of segments) {
-    if (seg.gap) { html += '<div class="shsat-passage-gap"></div>'; continue; }
-    html += `<div class="shsat-passage-group">` +
-      `<span class="shsat-passage-group-num">${seg.num || ''}</span>` +
-      `<span class="shsat-passage-group-text">${esc(seg.lines.join(' '))}</span>` +
-      `</div>`;
+  for (const para of paras) {
+    html += '<p class="shsat-passage-para">';
+    for (let i = 0; i < para.length; i++) {
+      const seg = para[i];
+      // Float the number into the left gutter before this segment's text
+      if (seg.num !== null) {
+        html += `<span class="shsat-lnum">${seg.num}</span>`;
+      }
+      html += esc(seg.content);
+      if (i < para.length - 1) html += ' ';
+    }
+    html += '</p>';
   }
   html += '</div>';
   return html;
