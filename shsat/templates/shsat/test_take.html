@@ -504,5 +504,15 @@ if (questions.length === 0) {
   renderQuestion(0);
 }
 timerEl.textContent = formatTime(elapsed);
+
+// Reposition line numbers on resize (column width may change)
+let _resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(() => {
+    document.querySelectorAll('.shsat-passage-prose .shsat-lnum').forEach(el => el.remove());
+    placeLineNumbers();
+  }, 150);
+});
 </script>
 {% endblock %}

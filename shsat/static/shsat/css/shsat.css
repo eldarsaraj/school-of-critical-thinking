@@ -1516,7 +1516,7 @@
    ---------------------------------------------------------- */
 .shsat-passage-layout {
   display: grid;
-  grid-template-columns: 46% 1fr;
+  grid-template-columns: minmax(300px, 555px) 1fr;
   gap: 32px;
   align-items: start;
 }
