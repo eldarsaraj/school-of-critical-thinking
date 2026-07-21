@@ -157,38 +157,40 @@ function esc(s) {
 }
 
 // Render a numbered passage (Hunter format: 4-char prefix is line number or spaces).
-// Reflows text into natural paragraphs; injects small inline line-number markers
-// at every numbered position so "lines 5–10" references remain meaningful.
+// Groups lines into blocks that start at each line number (every 5 lines).
+// Number sits in a fixed left gutter; text within each block reflows naturally.
 function renderPassage(text) {
   const rawLines = text.split('\n');
 
-  // Group into paragraphs (blank lines = paragraph break)
-  const paras = [];
-  let cur = [];
+  // Build segments: each numbered line starts a new block; blank lines = gap
+  const segments = [];
+  let cur = null;
   for (const raw of rawLines) {
     if (raw.trim() === '') {
-      if (cur.length) { paras.push(cur); cur = []; }
+      if (cur) { segments.push(cur); cur = null; }
+      segments.push({ gap: true });
       continue;
     }
     const prefix = raw.slice(0, 4);
     const content = raw.slice(4).trim();
     const m = prefix.match(/^\s*(\d+)\s*$/);
-    cur.push({ lineNum: m ? m[1] : null, content });
+    if (m) {
+      if (cur) segments.push(cur);
+      cur = { num: m[1], lines: [content] };
+    } else {
+      if (!cur) cur = { num: null, lines: [] };
+      cur.lines.push(content);
+    }
   }
-  if (cur.length) paras.push(cur);
+  if (cur) segments.push(cur);
 
   let html = '<div class="shsat-passage-prose">';
-  for (const para of paras) {
-    html += '<p class="shsat-passage-para">';
-    for (let i = 0; i < para.length; i++) {
-      const seg = para[i];
-      if (seg.lineNum !== null) {
-        html += `<span class="shsat-linenum-mark">${seg.lineNum}</span>`;
-      }
-      html += esc(seg.content);
-      if (i < para.length - 1) html += ' ';
-    }
-    html += '</p>';
+  for (const seg of segments) {
+    if (seg.gap) { html += '<div class="shsat-passage-gap"></div>'; continue; }
+    html += `<div class="shsat-passage-group">` +
+      `<span class="shsat-passage-group-num">${seg.num || ''}</span>` +
+      `<span class="shsat-passage-group-text">${esc(seg.lines.join(' '))}</span>` +
+      `</div>`;
   }
   html += '</div>';
   return html;
