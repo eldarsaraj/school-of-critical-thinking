@@ -59,10 +59,11 @@ DISTRACTOR_CHOICES = [
 class TestForm(forms.ModelForm):
     class Meta:
         model = Test
-        fields = ["title", "source", "order", "is_free", "is_published", "is_adaptive", "routing_threshold"]
+        fields = ["title", "source", "order", "exam_type", "is_free", "is_published", "is_adaptive", "routing_threshold"]
         labels = {
             "source": "Source (e.g. Official SHSAT Handbook 2025)",
             "order": "Display order (lower = first)",
+            "exam_type": "Exam type (SHSAT or Hunter)",
             "routing_threshold": "Routing threshold (0.0–1.0, e.g. 0.60 = 60%)",
         }
 
@@ -72,13 +73,14 @@ class QuestionEditForm(forms.ModelForm):
     distractor_b = forms.ChoiceField(choices=DISTRACTOR_CHOICES, required=False, label="Choice B trap")
     distractor_c = forms.ChoiceField(choices=DISTRACTOR_CHOICES, required=False, label="Choice C trap")
     distractor_d = forms.ChoiceField(choices=DISTRACTOR_CHOICES, required=False, label="Choice D trap")
+    distractor_e = forms.ChoiceField(choices=DISTRACTOR_CHOICES, required=False, label="Choice E trap")
 
     class Meta:
         model = Question
         fields = [
             "section", "stage", "question_number", "skill", "difficulty", "question_type", "topic",
             "passage_group_id", "passage_title", "passage_text",
-            "image", "question_text", "choice_a", "choice_b", "choice_c", "choice_d",
+            "image", "question_text", "choice_a", "choice_b", "choice_c", "choice_d", "choice_e",
             "correct_answer", "explanation",
         ]
         widgets = {
@@ -89,6 +91,7 @@ class QuestionEditForm(forms.ModelForm):
             "choice_b": forms.Textarea(attrs={"rows": 4}),
             "choice_c": forms.Textarea(attrs={"rows": 4}),
             "choice_d": forms.Textarea(attrs={"rows": 4}),
+            "choice_e": forms.Textarea(attrs={"rows": 4}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -99,12 +102,14 @@ class QuestionEditForm(forms.ModelForm):
             self.initial["distractor_b"] = dt.get("B", "")
             self.initial["distractor_c"] = dt.get("C", "")
             self.initial["distractor_d"] = dt.get("D", "")
+            self.initial["distractor_e"] = dt.get("E", "")
 
     def save(self, commit=True):
         instance = super().save(commit=False)
         dt = {}
         for letter, field in [("A", "distractor_a"), ("B", "distractor_b"),
-                               ("C", "distractor_c"), ("D", "distractor_d")]:
+                               ("C", "distractor_c"), ("D", "distractor_d"),
+                               ("E", "distractor_e")]:
             val = self.cleaned_data.get(field, "")
             if val:
                 dt[letter] = val

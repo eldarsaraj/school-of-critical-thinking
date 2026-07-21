@@ -124,18 +124,28 @@ function rebuildSectionLists() {
 }
 rebuildSectionLists();
 
+const SECTION_LABELS = {
+  ELA: "ELA", Math: "Math",
+  reading_comprehension: "Reading Comprehension",
+  quantitative_reasoning: "Quantitative Reasoning",
+  math_achievement: "Math Achievement",
+  writing: "Writing",
+};
+
 // ---------------------------------------------------------------------------
 // Progress bar
 // ---------------------------------------------------------------------------
 function updateProgress() {
   const q = questions[currentIdx];
   const displayNum = q.display_index;
-  const total = IS_ADAPTIVE ? 57 : (q.section === "ELA" ? elaSqs : mathSqs).length;
+  const sectionQs = questions.filter(sq => sq.section === q.section);
+  const total = IS_ADAPTIVE ? 57 : sectionQs.length;
   const pct = (displayNum / total) * 100;
+  const label = SECTION_LABELS[q.section] || q.section;
 
   const meta = document.getElementById("progressMeta");
   const fill = document.getElementById("progressFill");
-  if (meta) meta.innerHTML = `<strong>${q.section}</strong> <span>Question ${displayNum} of ${total}</span>`;
+  if (meta) meta.innerHTML = `<strong>${label}</strong> <span>Question ${displayNum} of ${total}</span>`;
   if (fill) fill.style.width = pct + "%";
 }
 
@@ -160,6 +170,12 @@ function renderQuestionText(text) {
 }
 
 function buildChoicesHtml(q) {
+  if (q.question_type === "essay") {
+    return `<div class="shsat-essay-prompt">
+      <p class="shsat-essay-prompt__note">Essay prompt — no answer selection required.</p>
+      <p class="shsat-essay-prompt__hint">Read the prompt carefully, then select Next to continue.</p>
+    </div>`;
+  }
   if (q.question_type === "grid_in") {
     const val = esc(answers[q.id] || "");
     return `<div class="shsat-gridin">
@@ -172,9 +188,11 @@ function buildChoicesHtml(q) {
   }
   const choices = [
     ["A", q.choice_a], ["B", q.choice_b], ["C", q.choice_c], ["D", q.choice_d],
-  ].filter(([, text]) => text);
+  ];
+  if (q.choice_e) choices.push(["E", q.choice_e]);
+  const filtered = choices.filter(([, text]) => text);
   let html = `<ul class="shsat-choices">`;
-  choices.forEach(([letter, text]) => {
+  filtered.forEach(([letter, text]) => {
     const disp = displayLetter(letter, q.use_efgh);
     const sel = answers[q.id] === letter ? "selected" : "";
     html += `<li class="shsat-choice ${sel}" onclick="selectAnswer(${q.id}, '${letter}', this)">

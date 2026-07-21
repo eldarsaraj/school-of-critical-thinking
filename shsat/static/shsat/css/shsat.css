@@ -743,6 +743,28 @@
 }
 
 /* ----------------------------------------------------------
+   Essay prompt card
+   ---------------------------------------------------------- */
+.shsat-essay-prompt {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fafafa;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.shsat-essay-prompt__note {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.shsat-essay-prompt__hint {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+/* ----------------------------------------------------------
    Grid-in answer input
    ---------------------------------------------------------- */
 .shsat-gridin {

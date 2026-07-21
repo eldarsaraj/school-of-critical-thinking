@@ -8,6 +8,14 @@
   <h1 class="shsat-page-title">{{ test.title }}</h1>
   <p class="shsat-page-subtitle">Read the rules below before you begin.</p>
 
+  {% if hunter_sections %}
+    {% for label, count in hunter_sections %}
+    <div class="shsat-intro__rule">
+      <div class="shsat-intro__rule-label">{{ label }}</div>
+      <div>{{ count }} question{{ count|pluralize }}</div>
+    </div>
+    {% endfor %}
+  {% else %}
   <div class="shsat-intro__rule">
     <div class="shsat-intro__rule-label">ELA questions</div>
     <div>57</div>
@@ -16,6 +24,7 @@
     <div class="shsat-intro__rule-label">Math questions</div>
     <div>57</div>
   </div>
+  {% endif %}
   <div class="shsat-intro__rule">
     <div class="shsat-intro__rule-label">Time allowed</div>
     <div>{{ duration_hours }} hours (timer shown; no hard cutoff)</div>
@@ -46,6 +55,11 @@
       <p style="font-size:13px;color:rgba(0,0,0,0.5);margin-bottom:12px;">In-progress attempt found — resuming where you left off.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
         <a href="{% url 'shsat_test_take' test.id %}" class="shsat-btn">Resume test</a>
+        <a href="{% url 'shsat_test_list' %}" class="shsat-btn shsat-btn--outline">Back to tests</a>
+      </div>
+    {% elif hunter_sections %}
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="{% url 'shsat_test_take' test.id %}" class="shsat-btn">Start test →</a>
         <a href="{% url 'shsat_test_list' %}" class="shsat-btn shsat-btn--outline">Back to tests</a>
       </div>
     {% else %}

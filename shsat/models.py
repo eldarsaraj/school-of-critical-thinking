@@ -22,6 +22,7 @@ class Parent(models.Model):
 
 
 class Test(models.Model):
+    EXAM_TYPE_CHOICES = [("shsat", "SHSAT"), ("hunter", "Hunter")]
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, default="")
     source = models.CharField(max_length=200, blank=True, default="")
@@ -30,6 +31,7 @@ class Test(models.Model):
     order = models.PositiveSmallIntegerField(default=0)
     is_adaptive = models.BooleanField(default=False)
     routing_threshold = models.FloatField(default=0.60)
+    exam_type = models.CharField(max_length=20, choices=EXAM_TYPE_CHOICES, default="shsat")
 
     class Meta:
         ordering = ["order", "id"]
@@ -59,10 +61,17 @@ class Test(models.Model):
 
 
 class Question(models.Model):
-    SECTION_CHOICES = [("ELA", "ELA"), ("Math", "Math")]
+    SECTION_CHOICES = [
+        ("ELA", "ELA"), ("Math", "Math"),
+        ("reading_comprehension", "Reading Comprehension"),
+        ("quantitative_reasoning", "Quantitative Reasoning"),
+        ("math_achievement", "Math Achievement"),
+        ("writing", "Writing"),
+    ]
     TYPE_CHOICES = [
         ("multiple_choice", "Multiple Choice"),
         ("grid_in", "Grid-In"),
+        ("essay", "Essay"),
     ]
     DIFFICULTY_CHOICES = [("easy", "Easy"), ("medium", "Medium"), ("hard", "Hard")]
     STAGE_CHOICES = [
@@ -93,7 +102,7 @@ class Question(models.Model):
     ]
 
     test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name="questions")
-    section = models.CharField(max_length=10, choices=SECTION_CHOICES)
+    section = models.CharField(max_length=30, choices=SECTION_CHOICES)
     stage = models.CharField(max_length=15, choices=STAGE_CHOICES, default="standard")
     question_number = models.PositiveSmallIntegerField()
     question_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default="multiple_choice")
@@ -113,7 +122,8 @@ class Question(models.Model):
     choice_b = models.TextField(blank=True, default="")
     choice_c = models.TextField(blank=True, default="")
     choice_d = models.TextField(blank=True, default="")
-    correct_answer = models.CharField(max_length=20)  # A/B/C/D or numeric string for grid-in
+    choice_e = models.TextField(blank=True, default="")
+    correct_answer = models.CharField(max_length=20)  # A/B/C/D/E or numeric string for grid-in
     explanation = models.TextField(blank=True, default="")
 
     class Meta:

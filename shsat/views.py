@@ -504,6 +504,13 @@ def test_intro(request, test_id):
         "math_count": test.math_questions().count(),
         "duration_hours": settings.SHSAT_TEST_DURATION_SECONDS // 3600,
     }
+    if test.exam_type == "hunter":
+        context["hunter_sections"] = [
+            ("Reading Comprehension", test.questions.filter(section="reading_comprehension").count()),
+            ("Writing", test.questions.filter(section="writing").count()),
+            ("Quantitative Reasoning", test.questions.filter(section="quantitative_reasoning").count()),
+            ("Math Achievement", test.questions.filter(section="math_achievement").count()),
+        ]
     return render(request, "shsat/test_intro.html", context)
 
 
@@ -523,18 +530,24 @@ def test_take(request, test_id):
             from django.contrib import messages
             messages.info(request, f"You have already completed {test.title}.")
             return redirect("shsat_test_results", attempt_id=completed_attempt.id)
-        # Determine section order from GET param (ELA first by default)
-        section_first = request.GET.get("section_first", "ELA")
-        second = "Math" if section_first == "ELA" else "ELA"
-        if test.is_adaptive:
-            # Routing questions in chosen section order
-            first_ids = list(test.questions.filter(stage='routing', section=section_first).order_by('question_number').values_list('id', flat=True))
-            second_ids = list(test.questions.filter(stage='routing', section=second).order_by('question_number').values_list('id', flat=True))
-            question_ids = first_ids + second_ids
+        if test.exam_type == "hunter":
+            HUNTER_SECTION_ORDER = ["reading_comprehension", "writing", "quantitative_reasoning", "math_achievement"]
+            question_ids = []
+            for sec in HUNTER_SECTION_ORDER:
+                question_ids += list(test.questions.filter(section=sec).order_by('question_number').values_list('id', flat=True))
         else:
-            first_ids = list(test.questions.filter(section=section_first).order_by('question_number').values_list('id', flat=True))
-            second_ids = list(test.questions.filter(section=second).order_by('question_number').values_list('id', flat=True))
-            question_ids = first_ids + second_ids
+            # Determine section order from GET param (ELA first by default)
+            section_first = request.GET.get("section_first", "ELA")
+            second = "Math" if section_first == "ELA" else "ELA"
+            if test.is_adaptive:
+                # Routing questions in chosen section order
+                first_ids = list(test.questions.filter(stage='routing', section=section_first).order_by('question_number').values_list('id', flat=True))
+                second_ids = list(test.questions.filter(stage='routing', section=second).order_by('question_number').values_list('id', flat=True))
+                question_ids = first_ids + second_ids
+            else:
+                first_ids = list(test.questions.filter(section=section_first).order_by('question_number').values_list('id', flat=True))
+                second_ids = list(test.questions.filter(section=second).order_by('question_number').values_list('id', flat=True))
+                question_ids = first_ids + second_ids
         attempt = TestAttempt.objects.create(
             parent=parent,
             test=test,
@@ -558,7 +571,7 @@ def test_take(request, test_id):
 
     # Build serializable question list for JSON rendering in JS
     # Track per-section display index (1-based sequential)
-    section_counters = {"ELA": 0, "Math": 0}
+    section_counters = {s: 0 for s in set(q.section for q in ordered_questions)}
     q_list = []
     for q in ordered_questions:
         ans = answers_map.get(q.id)
@@ -581,6 +594,7 @@ def test_take(request, test_id):
             "choice_b": q.choice_b,
             "choice_c": q.choice_c,
             "choice_d": q.choice_d,
+            "choice_e": q.choice_e,
             "selected": ans.selected_answer if ans else "",
             "is_flagged": ans.is_flagged if ans else False,
         })
@@ -615,30 +629,38 @@ def test_submit(request, test_id):
     attempt = get_object_or_404(TestAttempt, test_id=test_id, parent=parent, is_completed=False)
 
     answers = Answer.objects.filter(attempt=attempt).select_related("question")
-    ela_correct = 0
-    math_correct = 0
 
     for ans in answers:
         q = ans.question
+        if q.question_type == "essay":
+            continue
         if ans.selected_answer:
             correct = ans.selected_answer.upper() == q.correct_answer.upper()
             ans.is_correct = correct
             ans.save(update_fields=["is_correct"])
-            if q.section == "ELA":
-                if correct:
-                    ela_correct += 1
-            else:
-                if correct:
-                    math_correct += 1
 
-    if attempt.test.is_adaptive and (attempt.ela_module or attempt.math_module):
-        from .scoring import scale_score_adaptive
-        ela_scaled = scale_score_adaptive(ela_correct, attempt.ela_module or 'easy')
-        math_scaled = scale_score_adaptive(math_correct, attempt.math_module or 'easy')
+    scored = list(answers.filter(is_correct__isnull=False))
+
+    if attempt.test.exam_type == "hunter":
+        rc_correct = sum(1 for a in scored if a.is_correct and a.question.section == "reading_comprehension")
+        qr_correct = sum(1 for a in scored if a.is_correct and a.question.section == "quantitative_reasoning")
+        ma_correct = sum(1 for a in scored if a.is_correct and a.question.section == "math_achievement")
+        ela_correct = rc_correct
+        math_correct = qr_correct + ma_correct
+        ela_scaled = rc_correct
+        math_scaled = qr_correct + ma_correct
+        composite = rc_correct + qr_correct + ma_correct
     else:
-        ela_scaled = scale_score(min(ela_correct, 47))
-        math_scaled = scale_score(min(math_correct, 47))
-    composite = ela_scaled + math_scaled
+        ela_correct = sum(1 for a in scored if a.is_correct and a.question.section == "ELA")
+        math_correct = sum(1 for a in scored if a.is_correct and a.question.section == "Math")
+        if attempt.test.is_adaptive and (attempt.ela_module or attempt.math_module):
+            from .scoring import scale_score_adaptive
+            ela_scaled = scale_score_adaptive(ela_correct, attempt.ela_module or 'easy')
+            math_scaled = scale_score_adaptive(math_correct, attempt.math_module or 'easy')
+        else:
+            ela_scaled = scale_score(min(ela_correct, 47))
+            math_scaled = scale_score(min(math_correct, 47))
+        composite = ela_scaled + math_scaled
 
     elapsed = int((timezone.now() - attempt.started_at).total_seconds())
 
@@ -652,7 +674,10 @@ def test_submit(request, test_id):
     attempt.total_seconds = elapsed
     attempt.save()
 
-    # Send results email to parent
+    # Send results email to parent (SHSAT only)
+    if attempt.test.exam_type == "hunter":
+        return redirect("shsat_test_results", attempt_id=attempt.id)
+
     try:
         from django.core.mail import send_mail
         from django.template.loader import render_to_string
@@ -704,8 +729,20 @@ def test_results(request, attempt_id):
         attempt.save(update_fields=["notes"])
         return redirect("shsat_test_results", attempt_id=attempt.id)
 
-    ela_answers = [a for a in answers if a.question.section == "ELA"]
-    math_answers = [a for a in answers if a.question.section == "Math"]
+    is_hunter = attempt.test.exam_type == "hunter"
+
+    if is_hunter:
+        ela_answers = [a for a in answers if a.question.section == "reading_comprehension"]
+        math_answers = [a for a in answers if a.question.section in ("quantitative_reasoning", "math_achievement")]
+        hunter_rc_answers = [a for a in answers if a.question.section == "reading_comprehension"]
+        hunter_qr_answers = [a for a in answers if a.question.section == "quantitative_reasoning"]
+        hunter_ma_answers = [a for a in answers if a.question.section == "math_achievement"]
+        hunter_writing_answers = [a for a in answers if a.question.section == "writing"]
+    else:
+        ela_answers = [a for a in answers if a.question.section == "ELA"]
+        math_answers = [a for a in answers if a.question.section == "Math"]
+        hunter_rc_answers = hunter_qr_answers = hunter_ma_answers = hunter_writing_answers = []
+
     flagged_answers = [a for a in answers if a.is_flagged]
 
     context = {
@@ -717,6 +754,12 @@ def test_results(request, attempt_id):
         "notes_form": notes_form,
         "is_baseline": attempt.test.is_free,
         "has_paid": parent.has_paid,
+        "is_hunter": is_hunter,
+        "hunter_rc_answers": hunter_rc_answers,
+        "hunter_qr_answers": hunter_qr_answers,
+        "hunter_ma_answers": hunter_ma_answers,
+        "hunter_writing_answers": hunter_writing_answers,
+        "hunter_qr_ma_total": len(hunter_qr_answers) + len(hunter_ma_answers),
     }
     return render(request, "shsat/test_results.html", context)
 
@@ -1240,6 +1283,14 @@ def content_test_edit(request, test_id):
     return render(request, "shsat/content_test_add.html", {"form": form, "test": test})
 
 
+HUNTER_SECTION_DISPLAY = [
+    ("reading_comprehension", "Reading"),
+    ("quantitative_reasoning", "Quant"),
+    ("math_achievement", "Math Achievement"),
+    ("writing", "Writing"),
+]
+
+
 @_staff_required
 def content_home(request):
     tests = Test.objects.prefetch_related("questions").order_by("order", "id")
@@ -1248,13 +1299,19 @@ def content_home(request):
     standard_stages = [("routing", "Routing"), ("easy_module", "Easy"), ("hard_module", "Hard")]
     for test in tests:
         qs = test.questions.all()
-        stages = adaptive_stages if test.is_adaptive else standard_stages
         sections = {}
-        for section_code, section_label in [("ELA", "ELA"), ("Math", "Math")]:
-            sections[section_label] = [
-                (key, label, qs.filter(section=section_code, stage=key).count())
-                for key, label in stages
-            ]
+        if test.exam_type == "hunter":
+            for section_code, section_label in HUNTER_SECTION_DISPLAY:
+                sections[section_label] = [
+                    ("standard", "Standard", qs.filter(section=section_code).count())
+                ]
+        else:
+            stages = adaptive_stages if test.is_adaptive else standard_stages
+            for section_code, section_label in [("ELA", "ELA"), ("Math", "Math")]:
+                sections[section_label] = [
+                    (key, label, qs.filter(section=section_code, stage=key).count())
+                    for key, label in stages
+                ]
         test_data.append({"test": test, "sections": sections})
     return render(request, "shsat/content_home.html", {"test_data": test_data})
 
@@ -1285,12 +1342,25 @@ def content_test(request, test_id):
             for key in stage_keys
         ]
 
-    context = {
-        "test": test,
-        "sections": [
+    if test.exam_type == "hunter":
+        section_list = [
+            (label, _group(code), code)
+            for code, label in [
+                ("reading_comprehension", "Reading Comprehension"),
+                ("writing", "Writing"),
+                ("quantitative_reasoning", "Quantitative Reasoning"),
+                ("math_achievement", "Math Achievement"),
+            ]
+        ]
+    else:
+        section_list = [
             ("ELA", _group("ELA"), "ELA"),
             ("Math", _group("Math"), "Math"),
-        ],
+        ]
+
+    context = {
+        "test": test,
+        "sections": section_list,
         "skill_labels": SKILL_LABELS,
     }
     return render(request, "shsat/content_test.html", context)
@@ -1339,6 +1409,7 @@ def content_question_edit(request, question_id):
             ("B", form["choice_b"], form["distractor_b"]),
             ("C", form["choice_c"], form["distractor_c"]),
             ("D", form["choice_d"], form["distractor_d"]),
+            ("E", form["choice_e"], form["distractor_e"]),
         ],
     })
 
@@ -1346,9 +1417,10 @@ def content_question_edit(request, question_id):
 @_staff_required
 def content_question_add(request, test_id):
     test = get_object_or_404(Test, id=test_id)
+    default_section = "reading_comprehension" if test.exam_type == "hunter" else "ELA"
     # Pre-fill section/stage from query params (passed from "Add question" button)
     initial = {
-        "section": request.GET.get("section", "ELA"),
+        "section": request.GET.get("section", default_section),
         "stage": request.GET.get("stage", "standard"),
     }
     if request.method == "POST":
@@ -1357,17 +1429,8 @@ def content_question_add(request, test_id):
             question = form.save(commit=False)
             question.test = test
             question.save()
-            # Also persist distractor_types from the form
-            dt = {}
-            for letter, field in [("A", "distractor_a"), ("B", "distractor_b"),
-                                   ("C", "distractor_c"), ("D", "distractor_d")]:
-                val = form.cleaned_data.get(field, "")
-                if val:
-                    dt[letter] = val
-            question.distractor_types = dt
-            question.save(update_fields=["distractor_types"])
             if request.POST.get("action") == "add_next":
-                section = form.cleaned_data.get("section", "ELA")
+                section = form.cleaned_data.get("section", default_section)
                 stage = form.cleaned_data.get("stage", "standard")
                 url = reverse("shsat_content_question_add", kwargs={"test_id": test_id})
                 return redirect(f"{url}?section={section}&stage={stage}")
@@ -1383,6 +1446,7 @@ def content_question_add(request, test_id):
             ("B", form["choice_b"], form["distractor_b"]),
             ("C", form["choice_c"], form["distractor_c"]),
             ("D", form["choice_d"], form["distractor_d"]),
+            ("E", form["choice_e"], form["distractor_e"]),
         ],
     })
 
@@ -1429,6 +1493,7 @@ def content_test_export(request, test_id):
             "choice_b": q.choice_b,
             "choice_c": q.choice_c,
             "choice_d": q.choice_d,
+            "choice_e": q.choice_e,
             "correct_answer": q.correct_answer,
             "explanation": q.explanation,
             "distractor_types": q.distractor_types,
