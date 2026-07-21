@@ -1516,7 +1516,7 @@
    ---------------------------------------------------------- */
 .shsat-passage-layout {
   display: grid;
-  grid-template-columns: minmax(280px, 490px) 1fr;
+  grid-template-columns: minmax(300px, 560px) 1fr;
   gap: 32px;
   align-items: start;
 }
@@ -1529,6 +1529,7 @@
 .shsat-passage--scroll {
   max-height: calc(100vh - 160px);
   overflow-y: auto;
+  overflow-x: auto;
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-left: 3px solid rgba(0, 0, 0, 0.18);
   padding: 20px 18px 20px 14px;
@@ -1536,17 +1537,22 @@
   border-radius: 2px;
 }
 
-/* Passage with left-gutter line numbers, reflowed text per block */
+/* Passage — one <div> per original line so visual lines match original numbering */
 .shsat-passage-prose {
   position: relative;
   font-size: 13px;
-  line-height: 1.78;
+  line-height: 1.7;
   color: #1a1a1a;
   padding-left: 32px;
+  white-space: nowrap;
 }
 
-.shsat-passage-para {
-  margin: 0 0 0.75em;
+.shsat-passage-line {
+  display: block;
+}
+
+.shsat-passage-gap {
+  height: 0.6em;
 }
 
 .shsat-lnum-anchor {

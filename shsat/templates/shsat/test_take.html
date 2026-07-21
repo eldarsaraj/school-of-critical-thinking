@@ -157,39 +157,22 @@ function esc(s) {
 }
 
 // Render a numbered passage (Hunter format: 4-char prefix is line number or spaces).
-// Text reflows naturally into paragraphs. Line numbers are placed after render
-// using absolute positioning so they never interrupt inline text flow.
+// Each original line becomes its own <div> so visual lines match the original numbering.
+// Line number labels are placed absolutely after render via placeLineNumbers().
 function renderPassage(text) {
-  const rawLines = text.split('\n');
-
-  // Group into paragraphs; within each paragraph collect (num|null, content) pairs
-  const paras = [];
-  let cur = [];
-  for (const raw of rawLines) {
-    if (raw.trim() === '') {
-      if (cur.length) { paras.push(cur); cur = []; }
+  let html = '<div class="shsat-passage-prose">';
+  for (const raw of text.split('\n')) {
+    if (!raw.trim()) {
+      html += '<div class="shsat-passage-gap"></div>';
       continue;
     }
     const prefix = raw.slice(0, 4);
-    const content = raw.slice(4).trim();
+    const content = raw.slice(4);
     const m = prefix.match(/^\s*(\d+)\s*$/);
-    cur.push({ num: m ? m[1] : null, content });
-  }
-  if (cur.length) paras.push(cur);
-
-  let html = '<div class="shsat-passage-prose">';
-  for (const para of paras) {
-    html += '<p class="shsat-passage-para">';
-    for (let i = 0; i < para.length; i++) {
-      const seg = para[i];
-      // Invisible zero-width anchor; line numbers are positioned absolutely after render
-      if (seg.num !== null) {
-        html += `<span class="shsat-lnum-anchor" data-linenum="${seg.num}"></span>`;
-      }
-      html += esc(seg.content);
-      if (i < para.length - 1) html += ' ';
-    }
-    html += '</p>';
+    html += '<div class="shsat-passage-line">';
+    if (m) html += `<span class="shsat-lnum-anchor" data-linenum="${m[1]}"></span>`;
+    html += esc(content.trim());
+    html += '</div>';
   }
   html += '</div>';
   return html;
