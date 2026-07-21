@@ -778,6 +778,22 @@ def error_analysis_list(request):
     })
 
 
+def _parse_quant_comparison(question_text):
+    """Parse a quant_comparison question_text into structured fields for the template."""
+    is_qc = "\nColumn A:" in question_text
+    if not is_qc:
+        return {"is_quant_comparison": False, "qc_col_a": "", "qc_col_b": "", "qc_shared": ""}
+    col_a = col_b = shared = ""
+    for line in question_text.splitlines():
+        if line.startswith("Column A:"):
+            col_a = line[9:].strip()
+        elif line.startswith("Column B:"):
+            col_b = line[9:].strip()
+        elif line.strip():
+            shared = line.strip()
+    return {"is_quant_comparison": True, "qc_col_a": col_a, "qc_col_b": col_b, "qc_shared": shared}
+
+
 @login_required(login_url="/shsat/login/")
 def error_analysis(request, attempt_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
@@ -918,10 +934,21 @@ def error_analysis(request, attempt_id):
     recommendations.sort(key=lambda x: x["accuracy"])
     recommendations = recommendations[:3]
 
-    # Section time and accuracy summary
+    is_hunter = attempt.test.exam_type == "hunter"
+
+    # Section time and accuracy summary — dynamic per exam type
+    if is_hunter:
+        _sections_ordered = [
+            ("reading_comprehension", "Reading Comprehension"),
+            ("quantitative_reasoning", "Quantitative Reasoning"),
+            ("math_achievement", "Math Achievement"),
+        ]
+    else:
+        _sections_ordered = [("ELA", "ELA"), ("Math", "Math")]
+
     section_summary_raw = {
-        "ELA":  {"correct": 0, "total": 0, "time_sum": 0, "has_time": False},
-        "Math": {"correct": 0, "total": 0, "time_sum": 0, "has_time": False},
+        code: {"label": label, "correct": 0, "total": 0, "time_sum": 0, "has_time": False}
+        for code, label in _sections_ordered
     }
     for ans in answers:
         sec = ans.question.section
@@ -935,11 +962,12 @@ def error_analysis(request, attempt_id):
             section_summary_raw[sec]["time_sum"] += ans.time_spent_seconds
             section_summary_raw[sec]["has_time"] = True
     section_summary_data = []
-    for sec in ["ELA", "Math"]:
-        s = section_summary_raw[sec]
+    for code, _ in _sections_ordered:
+        s = section_summary_raw[code]
         pct = round(s["correct"] / s["total"] * 100, 1) if s["total"] else 0
         section_summary_data.append({
-            "section": sec,
+            "section": s["label"],
+            "section_code": code,
             "time_minutes": round(s["time_sum"] / 60, 1),
             "accuracy_pct": pct,
             "correct": s["correct"],
@@ -948,12 +976,42 @@ def error_analysis(request, attempt_id):
         })
     has_section_time = any(s["has_time"] for s in section_summary_data)
 
-    # Full question review (for parent)
+    # Passage accuracy breakdown (Hunter RC only)
+    passage_summary = []
+    if is_hunter:
+        _passage_acc = {}
+        for ans in answers:
+            if ans.question.section != "reading_comprehension":
+                continue
+            pid = ans.question.passage_group_id or ""
+            ptitle = ans.question.passage_title or pid
+            if pid not in _passage_acc:
+                _passage_acc[pid] = {"title": ptitle, "correct": 0, "total": 0}
+            if ans.selected_answer:
+                _passage_acc[pid]["total"] += 1
+                if ans.is_correct:
+                    _passage_acc[pid]["correct"] += 1
+        passage_summary = [
+            {
+                "title": v["title"],
+                "correct": v["correct"],
+                "total": v["total"],
+                "pct": round(v["correct"] / v["total"] * 100) if v["total"] else 0,
+            }
+            for v in _passage_acc.values() if v["total"] > 0
+        ]
+
+    # Full question review
     question_review = []
     for ans in answers:
         q = ans.question
+        if q.question_type == "essay":
+            continue
+        choices_src = [("A", q.choice_a), ("B", q.choice_b), ("C", q.choice_c), ("D", q.choice_d)]
+        if q.choice_e:
+            choices_src.append(("E", q.choice_e))
         choices = []
-        for letter, text in [("A", q.choice_a), ("B", q.choice_b), ("C", q.choice_c), ("D", q.choice_d)]:
+        for letter, text in choices_src:
             if not text:
                 continue
             status = "neutral"
@@ -965,9 +1023,12 @@ def error_analysis(request, attempt_id):
         distractor_type = ""
         if ans.selected_answer and not ans.is_correct and q.distractor_types:
             distractor_type = q.distractor_types.get(ans.selected_answer, "")
+        skill_raw = q.skill or "unknown"
+        skill_display = skill_label_map.get(skill_raw, skill_raw)
         question_review.append({
             "number": q.question_number,
             "section": q.section,
+            "section_label": section_summary_raw.get(q.section, {}).get("label", q.section),
             "text": q.question_text,
             "choices": choices,
             "student_answer": ans.selected_answer or "",
@@ -975,20 +1036,22 @@ def error_analysis(request, attempt_id):
             "is_correct": ans.is_correct,
             "unanswered": not ans.selected_answer,
             "explanation": q.explanation or "",
-            "skill": skill_label_map.get(q.skill or "unknown", q.skill or "Unknown"),
+            "skill": skill_display,
             "difficulty": (q.difficulty or "medium").capitalize(),
             "distractor_type": distractor_type,
             "is_grid_in": q.question_type == "grid_in",
+            **_parse_quant_comparison(q.question_text),
         })
 
     # Parent insights: easy questions wrong, unanswered count, pacing
     easy_wrong = [q for q in question_review if q["difficulty"] == "Easy" and not q["is_correct"] and not q["unanswered"]]
     unanswered_count = sum(1 for q in question_review if q["unanswered"])
     total_time_minutes = sum(s["time_minutes"] for s in section_summary_data)
-    pacing_ok = total_time_minutes <= 170 if has_section_time else None  # 3h test = 180m, flag if >170m
+    pacing_ok = total_time_minutes <= 170 if has_section_time else None
 
     context = {
         "attempt": attempt,
+        "is_hunter": is_hunter,
         "accuracy_pct": accuracy_pct,
         "total_correct": total_correct,
         "total_answered": total_answered,
@@ -1000,12 +1063,13 @@ def error_analysis(request, attempt_id):
         "recommendations": recommendations,
         "section_summary_data": section_summary_data,
         "has_section_time": has_section_time,
+        "passage_summary": passage_summary,
         "question_review": question_review,
         "easy_wrong": easy_wrong,
         "unanswered_count": unanswered_count,
         "pacing_ok": pacing_ok,
         "total_time_minutes": round(total_time_minutes, 0) if has_section_time else None,
-        "review_sections": ["ELA", "Math"],
+        "review_sections": [(s["section_code"], s["section"]) for s in section_summary_data],
     }
     return render(request, "shsat/error_analysis.html", context)
 

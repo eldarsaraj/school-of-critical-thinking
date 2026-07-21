@@ -2169,3 +2169,112 @@
   resize: vertical;
   box-sizing: border-box;
 }
+
+/* ----------------------------------------------------------
+   Error analysis — CSS difficulty / passage bars (replaces donut)
+   Tufte-inspired: no chartjunk, pure data-ink
+   ---------------------------------------------------------- */
+.shsat-diff-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shsat-diff-bar-row {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.shsat-diff-bar-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shsat-diff-bar-track {
+  height: 10px;
+  background: rgba(0, 0, 0, 0.07);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.shsat-diff-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.4s ease;
+}
+
+/* Difficulty color scale */
+.shsat-diff-bar-fill--easy   { background: #10b981; }
+.shsat-diff-bar-fill--medium { background: #f59e0b; }
+.shsat-diff-bar-fill--hard   { background: #ef4444; }
+
+/* Passage accuracy: green=good, warn=medium, danger=poor */
+.shsat-diff-bar-fill--ok     { background: #10b981; }
+.shsat-diff-bar-fill--warn   { background: #f59e0b; }
+.shsat-diff-bar-fill--danger { background: #ef4444; }
+
+.shsat-diff-bar-stat {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: #374151;
+  white-space: nowrap;
+  min-width: 120px;
+  text-align: right;
+}
+
+/* ----------------------------------------------------------
+   Error analysis — Quantitative Comparison question display
+   ---------------------------------------------------------- */
+.shsat-qcard__quant-comparison {
+  margin-top: 14px;
+  padding: 16px 20px;
+  background: #f8f9fb;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 8px;
+}
+
+.shsat-qc-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.shsat-qc-col {
+  font-size: 15px;
+  font-weight: 700;
+  color: #161a1d;
+  text-align: center;
+  padding: 10px 6px;
+  border-bottom: 2px solid rgba(0,0,0,0.12);
+}
+
+.shsat-qc-col--label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.shsat-qc-row--values .shsat-qc-col {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 12px 8px;
+  border-bottom: none;
+}
+
+.shsat-qc-shared {
+  font-size: 13px;
+  color: rgba(0,0,0,0.55);
+  margin: 10px 0 0;
+  font-style: italic;
+  text-align: center;
+}

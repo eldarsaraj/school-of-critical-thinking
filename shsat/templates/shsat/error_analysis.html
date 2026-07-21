@@ -11,31 +11,31 @@
   <h1 class="shsat-page-title" style="margin-top:12px;">Error Analysis</h1>
   <p class="shsat-page-subtitle">
     {{ attempt.test.title }} · {{ attempt.submitted_at|date:"F j, Y" }}
-    · Composite <strong>{{ attempt.composite_score }}</strong>
+    {% if not is_hunter %} · Composite <strong>{{ attempt.composite_score }}</strong>{% endif %}
     · <strong>{{ accuracy_pct }}%</strong> accuracy ({{ total_correct }}/{{ total_answered }} answered)
   </p>
 </div>
 
-<!-- Section 0: ELA vs Math overview -->
-<p class="shsat-section-title">Time Spent</p>
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Total time per section. Green = time on correct answers, red = time on wrong answers.</p>
-<div style="display:grid;grid-template-columns:1fr 220px;gap:24px;align-items:start;margin-bottom:40px;">
+<!-- Section overview -->
+<p class="shsat-section-title">Section overview</p>
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Accuracy and time per section.{% if has_section_time %} Stacked bars show time on correct vs. wrong answers.{% endif %}</p>
+<div style="display:grid;grid-template-columns:1fr {% if section_summary_data|length <= 2 %}220px{% else %}200px{% endif %};gap:24px;align-items:start;margin-bottom:40px;">
   <div class="shsat-chart-wrap" style="margin-bottom:0;">
     <canvas id="sectionOverviewChart"></canvas>
   </div>
   <div>
     {% for s in section_summary_data %}
-    <div style="margin-bottom:14px;padding:16px 20px;border:1px solid rgba(0,0,0,0.08);border-radius:8px;">
-      <div style="font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:4px;">{{ s.section }}</div>
-      <div style="font-size:24px;font-weight:700;color:#161a1d;line-height:1;">{{ s.accuracy_pct }}%</div>
-      <div style="font-size:13px;color:rgba(0,0,0,0.5);margin-top:3px;">{{ s.correct }} of {{ s.total }} correct{% if s.has_time %} · {{ s.time_minutes }} min{% endif %}</div>
+    <div style="margin-bottom:10px;padding:14px 18px;border:1px solid rgba(0,0,0,0.08);border-radius:8px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:3px;">{{ s.section }}</div>
+      <div style="font-size:22px;font-weight:700;color:#161a1d;line-height:1;font-variant-numeric:tabular-nums;">{{ s.accuracy_pct }}%</div>
+      <div style="font-size:12px;color:rgba(0,0,0,0.5);margin-top:2px;">{{ s.correct }}/{{ s.total }}{% if s.has_time %} · {{ s.time_minutes }}m{% endif %}</div>
     </div>
     {% endfor %}
   </div>
 </div>
 {{ section_summary_data|json_script:"sectionSummaryData" }}
 
-<!-- Section 1: Wrong answers by skill -->
+<!-- Wrong answers by skill -->
 <p class="shsat-section-title">Wrong answers by skill</p>
 {% if skill_errors_data %}
 <div class="shsat-chart-wrap">
@@ -46,7 +46,25 @@
 {% endif %}
 {{ skill_errors_data|json_script:"skillErrorData" }}
 
-<!-- Section 2: Distractor trap analysis -->
+<!-- Passage accuracy (Hunter RC only) -->
+{% if is_hunter and passage_summary %}
+<p class="shsat-section-title" style="margin-top:12px;">Reading comprehension by passage</p>
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Which passages caused the most errors.</p>
+<div class="shsat-diff-bars" style="margin-bottom:36px;">
+  {% for p in passage_summary %}
+  <div class="shsat-diff-bar-row">
+    <div class="shsat-diff-bar-label" style="min-width:200px;max-width:200px;">{{ p.title }}</div>
+    <div class="shsat-diff-bar-track">
+      <div class="shsat-diff-bar-fill {% if p.pct >= 80 %}shsat-diff-bar-fill--ok{% elif p.pct >= 60 %}shsat-diff-bar-fill--warn{% else %}shsat-diff-bar-fill--danger{% endif %}"
+           style="width:{{ p.pct }}%;"></div>
+    </div>
+    <div class="shsat-diff-bar-stat">{{ p.correct }}/{{ p.total }} <span style="color:rgba(0,0,0,0.4);font-size:11px;">{{ p.pct }}%</span></div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Distractor trap analysis -->
 {% if trap_data %}
 <p class="shsat-section-title" style="margin-top:12px;">Distractor trap analysis</p>
 <p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Which answer traps caught you most often.</p>
@@ -56,32 +74,28 @@
 {% endif %}
 {{ trap_data|json_script:"trapData" }}
 
-<!-- Section 3: Difficulty breakdown -->
-<p class="shsat-section-title" style="margin-top:12px;">Wrong answers by difficulty</p>
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Easy errors are high-priority — they represent recoverable points.</p>
-<div style="display:grid;grid-template-columns:280px 1fr;gap:24px;align-items:start;margin-bottom:36px;">
-  <div class="shsat-chart-wrap" style="margin-bottom:0;">
-    <canvas id="diffErrorChart"></canvas>
+<!-- Difficulty breakdown — CSS bars, not a donut -->
+<p class="shsat-section-title" style="margin-top:12px;">Performance by difficulty</p>
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Easy errors are highest-priority — they are recoverable points on familiar material.</p>
+<div class="shsat-diff-bars" style="margin-bottom:36px;">
+  {% for d in diff_breakdown %}
+  {% if d.total %}
+  {% widthratio d.errors d.total 100 as err_pct %}
+  {% widthratio d.errors d.total 1 as err_int %}
+  <div class="shsat-diff-bar-row">
+    <div class="shsat-diff-bar-label">{{ d.label }}</div>
+    <div class="shsat-diff-bar-track">
+      <div class="shsat-diff-bar-fill
+        {% if d.label == 'Easy' %}shsat-diff-bar-fill--easy{% elif d.label == 'Medium' %}shsat-diff-bar-fill--medium{% else %}shsat-diff-bar-fill--hard{% endif %}"
+        style="width:{{ err_pct }}%;"></div>
+    </div>
+    <div class="shsat-diff-bar-stat">{{ d.errors }}/{{ d.total }} wrong <span style="color:rgba(0,0,0,0.4);font-size:11px;">({{ err_pct }}%)</span></div>
   </div>
-  <table class="shsat-table" style="margin-bottom:0;">
-    <thead>
-      <tr><th>Difficulty</th><th>Wrong</th><th>Total answered</th><th>Error rate</th></tr>
-    </thead>
-    <tbody>
-      {% for d in diff_breakdown %}
-      <tr>
-        <td>{{ d.label }}</td>
-        <td>{{ d.errors }}</td>
-        <td>{{ d.total }}</td>
-        <td>{% if d.total %}{{ d.errors|floatformat:0 }}/{{ d.total }} ({% widthratio d.errors d.total 100 %}%){% else %}—{% endif %}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  {% endif %}
+  {% endfor %}
 </div>
-{{ diff_breakdown|json_script:"diffBreakdownData" }}
 
-<!-- Section 4: Time vs Accuracy scatter (only if timing data) -->
+<!-- Time vs Accuracy scatter (only if timing data) -->
 {% if has_timing %}
 <p class="shsat-section-title">Time vs. accuracy</p>
 <p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Each dot is one question. Reveals rushing or overthinking patterns.</p>
@@ -91,7 +105,7 @@
 {% endif %}
 {{ scatter_data|json_script:"scatterData" }}
 
-<!-- Section 5: Recommendations -->
+<!-- Recommendations -->
 {% if recommendations %}
 <p class="shsat-section-title" style="margin-top:48px;">Targeted recommendations</p>
 <p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Based on this attempt's data. Focus on these skills next.</p>
@@ -154,11 +168,11 @@
 <p class="shsat-section-title" style="margin-top:56px;">Question review</p>
 <p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 24px;">All questions from this attempt. Wrong answers show choices, explanation, and the trap type.</p>
 
-{% for section_name in review_sections %}
-<p style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:28px 0 10px;">{{ section_name }}</p>
+{% for section_code, section_label in review_sections %}
+<p style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:28px 0 10px;">{{ section_label }}</p>
 
 {% for q in question_review %}
-{% if q.section == section_name %}
+{% if q.section == section_code %}
 
 {% if q.is_correct %}
 <div class="shsat-qrow shsat-qrow--correct">
@@ -185,7 +199,21 @@
       <span class="shsat-badge-pill shsat-badge-pill--{{ q.difficulty|lower }}">{{ q.difficulty }}</span>
       <span class="shsat-badge-pill shsat-badge-pill--skill">{{ q.skill }}</span>
     </div>
+    {% if q.is_quant_comparison %}
+    <div class="shsat-qcard__quant-comparison">
+      <div class="shsat-qc-row">
+        <div class="shsat-qc-col shsat-qc-col--label">Column A</div>
+        <div class="shsat-qc-col shsat-qc-col--label">Column B</div>
+      </div>
+      <div class="shsat-qc-row shsat-qc-row--values">
+        <div class="shsat-qc-col">{{ q.qc_col_a }}</div>
+        <div class="shsat-qc-col">{{ q.qc_col_b }}</div>
+      </div>
+      {% if q.qc_shared %}<p class="shsat-qc-shared">{{ q.qc_shared }}</p>{% endif %}
+    </div>
+    {% else %}
     <p class="shsat-qcard__text">{{ q.text }}</p>
+    {% endif %}
   </div>
 
   {% if q.choices %}
@@ -231,58 +259,69 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
-// ---------------------------------------------------------------------------
-// Shared palette
-// ---------------------------------------------------------------------------
 const P = {
-  ela:       "#5b8ec4",
-  math:      "#c4635b",
-  correct:   "#5aab8c",
-  wrong:     "#c4635b",
-  warn:      "#c49a5a",
-  neutral:   "#8896a8",
-  composite: "#3d4f63",
-  trap_ela:  "#7aaad4",
-  trap_math: "#d4896f",
-  grid:      "rgba(0,0,0,0.06)",
+  correct:  "#5aab8c",
+  wrong:    "#c4635b",
+  warn:     "#c49a5a",
+  neutral:  "#8896a8",
+  grid:     "rgba(0,0,0,0.06)",
+  // Section palette — up to 4 sections
+  sections: ["#5b8ec4", "#c4635b", "#7aab6e", "#a07ac4"],
 };
 
 // ---------------------------------------------------------------------------
-// Section overview — stacked bar (time spent, split by correct / incorrect)
+// Section overview — stacked bar (time on correct vs wrong)
 // ---------------------------------------------------------------------------
 (function () {
   const el = document.getElementById("sectionOverviewChart");
   if (!el) return;
   const data = JSON.parse(document.getElementById("sectionSummaryData").textContent);
   const hasTime = data.some(s => s.has_time);
-  if (!hasTime) { el.closest(".shsat-chart-wrap").style.display = "none"; return; }
 
-  const labels = data.map(s => s.section);
-  const correctTime = data.map(s => +(s.time_minutes * s.accuracy_pct / 100).toFixed(1));
-  const wrongTime   = data.map(s => +(s.time_minutes * (1 - s.accuracy_pct / 100)).toFixed(1));
+  if (!hasTime) {
+    // No timing data: show accuracy bars instead
+    new Chart(el.getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: data.map(s => s.section),
+        datasets: [
+          { label: "Correct",    data: data.map(s => s.correct),           backgroundColor: P.correct, borderWidth: 0, barThickness: 48 },
+          { label: "Wrong/skip", data: data.map(s => s.total - s.correct), backgroundColor: P.wrong,   borderWidth: 0, barThickness: 48 },
+        ]
+      },
+      options: {
+        responsive: true, aspectRatio: 2,
+        plugins: {
+          legend: { position: "bottom", labels: { font: { size: 12 }, boxWidth: 12, padding: 14 } },
+          tooltip: { callbacks: { footer: items => { const s = data[items[0].dataIndex]; return `${s.accuracy_pct}% correct  (${s.correct}/${s.total})`; } } }
+        },
+        scales: {
+          x: { stacked: true, grid: { display: false }, ticks: { font: { size: 13, weight: "600" } } },
+          y: { stacked: true, grid: { color: P.grid }, ticks: { stepSize: 5, font: { size: 11 } } }
+        }
+      }
+    });
+    return;
+  }
+
+  const labels     = data.map(s => s.section);
+  const correctT   = data.map(s => +(s.time_minutes * s.accuracy_pct / 100).toFixed(1));
+  const wrongT     = data.map(s => +(s.time_minutes * (1 - s.accuracy_pct / 100)).toFixed(1));
 
   new Chart(el.getContext("2d"), {
     type: "bar",
     data: {
       labels,
       datasets: [
-        { label: "Correct", data: correctTime, backgroundColor: P.correct, borderWidth: 0, barThickness: 64 },
-        { label: "Wrong",   data: wrongTime,   backgroundColor: P.wrong,   borderWidth: 0, barThickness: 64 },
+        { label: "Correct", data: correctT, backgroundColor: P.correct, borderWidth: 0, barThickness: 64 },
+        { label: "Wrong",   data: wrongT,   backgroundColor: P.wrong,   borderWidth: 0, barThickness: 64 },
       ]
     },
     options: {
-      responsive: true,
-      aspectRatio: 2,
+      responsive: true, aspectRatio: 2,
       plugins: {
         legend: { position: "bottom", labels: { font: { size: 12 }, boxWidth: 14, padding: 14 } },
-        tooltip: {
-          callbacks: {
-            footer: (items) => {
-              const s = data[items[0].dataIndex];
-              return `Total: ${s.time_minutes} min · ${s.accuracy_pct}% correct (${s.correct}/${s.total})`;
-            }
-          }
-        }
+        tooltip: { callbacks: { footer: items => { const s = data[items[0].dataIndex]; return `Total: ${s.time_minutes} min · ${s.accuracy_pct}% correct (${s.correct}/${s.total})`; } } }
       },
       scales: {
         x: { stacked: true, grid: { display: false }, ticks: { font: { size: 13, weight: "600" } } },
@@ -307,17 +346,10 @@ const P = {
     type: "bar",
     data: {
       labels: data.map(d => d.label),
-      datasets: [{
-        label: "Wrong answers",
-        data: data.map(d => d.count),
-        backgroundColor: P.wrong,
-        borderWidth: 0,
-        barThickness: 18,
-      }]
+      datasets: [{ label: "Wrong answers", data: data.map(d => d.count), backgroundColor: P.wrong, borderWidth: 0, barThickness: 18 }]
     },
     options: {
-      indexAxis: "y",
-      responsive: true,
+      indexAxis: "y", responsive: true,
       aspectRatio: Math.max(1.6, 4 / Math.max(data.length, 2)),
       plugins: { legend: { display: false } },
       scales: {
@@ -329,7 +361,7 @@ const P = {
 })();
 
 // ---------------------------------------------------------------------------
-// Distractor trap bar chart — horizontal, colored by section
+// Distractor trap bar — colored by section index
 // ---------------------------------------------------------------------------
 (function () {
   const el = document.getElementById("trapChart");
@@ -337,29 +369,21 @@ const P = {
   const data = JSON.parse(document.getElementById("trapData").textContent);
   if (!data.length) return;
 
+  const sections = [...new Set(data.map(d => d.section))];
+  const color = sec => P.sections[sections.indexOf(sec) % P.sections.length];
+
   new Chart(el.getContext("2d"), {
     type: "bar",
     data: {
       labels: data.map(d => d.label),
-      datasets: [{
-        label: "Times caught",
-        data: data.map(d => d.count),
-        backgroundColor: data.map(d => d.section === "ELA" ? P.trap_ela : P.trap_math),
-        borderWidth: 0,
-        barThickness: 18,
-      }]
+      datasets: [{ label: "Times caught", data: data.map(d => d.count), backgroundColor: data.map(d => color(d.section)), borderWidth: 0, barThickness: 18 }]
     },
     options: {
-      indexAxis: "y",
-      responsive: true,
+      indexAxis: "y", responsive: true,
       aspectRatio: Math.max(1.4, 4 / Math.max(data.length, 2)),
       plugins: {
         legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: (item) => ` ${item.raw}× — ${data[item.dataIndex].section}`
-          }
-        }
+        tooltip: { callbacks: { label: item => ` ${item.raw}× — ${data[item.dataIndex].section}` } }
       },
       scales: {
         x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } },
@@ -370,37 +394,7 @@ const P = {
 })();
 
 // ---------------------------------------------------------------------------
-// Difficulty breakdown — donut
-// ---------------------------------------------------------------------------
-(function () {
-  const el = document.getElementById("diffErrorChart");
-  if (!el) return;
-  const data = JSON.parse(document.getElementById("diffBreakdownData").textContent);
-  const hasErrors = data.some(d => d.errors > 0);
-
-  new Chart(el.getContext("2d"), {
-    type: "doughnut",
-    data: {
-      labels: data.map(d => d.label + " (" + d.errors + " wrong)"),
-      datasets: [{
-        data: hasErrors ? data.map(d => d.errors) : [1, 1, 1],
-        backgroundColor: hasErrors
-          ? [P.correct, P.warn, P.wrong]
-          : ["rgba(0,0,0,0.07)", "rgba(0,0,0,0.05)", "rgba(0,0,0,0.03)"],
-        borderWidth: 0,
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: "bottom", labels: { font: { size: 11 }, padding: 12 } },
-      }
-    }
-  });
-})();
-
-// ---------------------------------------------------------------------------
-// Time vs Accuracy scatter
+// Time vs Accuracy scatter — dynamic section coloring
 // ---------------------------------------------------------------------------
 (function () {
   const el = document.getElementById("scatterChart");
@@ -408,31 +402,26 @@ const P = {
   const raw = JSON.parse(document.getElementById("scatterData").textContent);
   if (!raw.length) return;
 
-  const ela = raw.filter(d => d.section === "ELA");
-  const math = raw.filter(d => d.section === "Math");
+  const sections = [...new Set(raw.map(d => d.section))];
+  const datasets = [];
+  sections.forEach((sec, i) => {
+    const col = P.sections[i % P.sections.length];
+    datasets.push({ label: sec + " correct", data: raw.filter(d => d.section === sec && d.y === 1).map(d => ({x:d.x, y:1})), backgroundColor: col,                    pointRadius: 5 });
+    datasets.push({ label: sec + " wrong",   data: raw.filter(d => d.section === sec && d.y === 0).map(d => ({x:d.x, y:0})), backgroundColor: col + "80", pointRadius: 5 });
+  });
 
   new Chart(el.getContext("2d"), {
     type: "scatter",
-    data: {
-      datasets: [
-        { label: "ELA correct",  data: ela.filter(d => d.y === 1).map(d => ({x: d.x, y: 1})),  backgroundColor: P.ela,       pointRadius: 5 },
-        { label: "ELA wrong",    data: ela.filter(d => d.y === 0).map(d => ({x: d.x, y: 0})),  backgroundColor: P.trap_ela,  pointRadius: 5 },
-        { label: "Math correct", data: math.filter(d => d.y === 1).map(d => ({x: d.x, y: 1})), backgroundColor: P.math,      pointRadius: 5 },
-        { label: "Math wrong",   data: math.filter(d => d.y === 0).map(d => ({x: d.x, y: 0})), backgroundColor: P.trap_math, pointRadius: 5 },
-      ]
-    },
+    data: { datasets },
     options: {
-      responsive: true,
-      aspectRatio: 3,
+      responsive: true, aspectRatio: 3,
       plugins: {
         legend: { position: "top", align: "end", labels: { font: { size: 12 }, boxWidth: 12, padding: 16 } },
-        tooltip: { callbacks: { label: (item) => ` ${item.raw.x}s — ${item.raw.y ? "correct" : "wrong"}` } }
+        tooltip: { callbacks: { label: item => ` ${item.raw.x}s — ${item.raw.y ? "correct" : "wrong"}` } }
       },
       scales: {
-        x: { title: { display: true, text: "Time spent (seconds)", font: { size: 12 } },
-             grid: { color: "rgba(0,0,0,0.06)" }, ticks: { font: { size: 11 } } },
-        y: { min: -0.2, max: 1.2, ticks: { stepSize: 1, callback: v => v === 1 ? "Correct" : v === 0 ? "Wrong" : "" },
-             grid: { color: "rgba(0,0,0,0.06)" } }
+        x: { title: { display: true, text: "Time spent (seconds)", font: { size: 12 } }, grid: { color: P.grid }, ticks: { font: { size: 11 } } },
+        y: { min: -0.2, max: 1.2, ticks: { stepSize: 1, callback: v => v === 1 ? "Correct" : v === 0 ? "Wrong" : "" }, grid: { color: P.grid } }
       }
     }
   });
