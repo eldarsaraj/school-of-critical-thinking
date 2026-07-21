@@ -156,6 +156,26 @@ function esc(s) {
   return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+// Render a numbered passage (Hunter format: 4-char prefix is line number or spaces)
+function renderPassage(text) {
+  const lines = text.split('\n');
+  let html = '<div class="shsat-passage-lines">';
+  for (const raw of lines) {
+    if (raw === '') {
+      html += '<div class="shsat-passage-blank"></div>';
+      continue;
+    }
+    // First 4 chars: "    " (no number) or "5   " / "10  " (line number)
+    const prefix = raw.slice(0, 4);
+    const content = raw.slice(4);
+    const m = prefix.match(/^\s*(\d+)\s*$/);
+    const lineNum = m ? m[1] : '';
+    html += `<div class="shsat-passage-line"><span class="shsat-passage-linenum">${lineNum}</span><span class="shsat-passage-linetext">${esc(content)}</span></div>`;
+  }
+  html += '</div>';
+  return html;
+}
+
 function renderQuestionText(text) {
   const paras = text.split(/\n\n+/);
   if (paras.length <= 1) {
@@ -261,7 +281,7 @@ function renderQuestion(idx) {
     }
     const passageHtml = `<div class="shsat-passage shsat-passage--scroll">
       ${q.passage_title ? `<div class="shsat-passage__title">${esc(q.passage_title)}</div>` : ""}
-      <div>${esc(passageBody).replace(/\n/g, "<br>")}</div>
+      ${renderPassage(passageBody)}
     </div>`;
     const questionHtml = (q.image_url ? `<div class="shsat-question-image"><img src="${q.image_url}" alt="Question diagram"></div>` : "")
       + renderQuestionText(q.question_text)

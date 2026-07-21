@@ -1516,8 +1516,8 @@
    ---------------------------------------------------------- */
 .shsat-passage-layout {
   display: grid;
-  grid-template-columns: 44% 1fr;
-  gap: 28px;
+  grid-template-columns: 46% 1fr;
+  gap: 32px;
   align-items: start;
 }
 
@@ -1531,11 +1531,42 @@
   overflow-y: auto;
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-left: 3px solid rgba(0, 0, 0, 0.18);
-  padding: 20px 22px;
+  padding: 20px 18px 20px 14px;
   background: rgba(0, 0, 0, 0.025);
-  font-size: 15px;
-  line-height: 1.75;
   border-radius: 2px;
+}
+
+/* Numbered passage lines */
+.shsat-passage-lines {
+  font-size: 14px;
+  line-height: 1.72;
+  color: #1a1a1a;
+}
+
+.shsat-passage-line {
+  display: flex;
+  align-items: baseline;
+}
+
+.shsat-passage-linenum {
+  flex: 0 0 26px;
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  color: rgba(0, 0, 0, 0.3);
+  text-align: right;
+  padding-right: 10px;
+  line-height: inherit;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.shsat-passage-linetext {
+  flex: 1;
+  line-height: inherit;
+}
+
+.shsat-passage-blank {
+  height: 0.65em;
 }
 
 .shsat-question-col {
