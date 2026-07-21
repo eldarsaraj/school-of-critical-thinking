@@ -879,6 +879,15 @@
   letter-spacing: -0.02em;
 }
 
+.content-exam-heading {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+  margin: 0 0 16px;
+}
+
 .content-review__note {
   font-size: 13px;
   color: #888;

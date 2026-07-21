@@ -1313,7 +1313,12 @@ def content_home(request):
                     for key, label in stages
                 ]
         test_data.append({"test": test, "sections": sections})
-    return render(request, "shsat/content_home.html", {"test_data": test_data})
+    shsat_tests = [d for d in test_data if d["test"].exam_type == "shsat"]
+    hunter_tests = [d for d in test_data if d["test"].exam_type == "hunter"]
+    return render(request, "shsat/content_home.html", {
+        "shsat_tests": shsat_tests,
+        "hunter_tests": hunter_tests,
+    })
 
 
 @_staff_required

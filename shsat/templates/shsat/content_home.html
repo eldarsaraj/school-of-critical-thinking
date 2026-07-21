@@ -12,51 +12,27 @@
     <p class="content-review__note">Staff only &middot; Not linked publicly</p>
   </div>
 
-  {% if not test_data %}
+  {% if not shsat_tests and not hunter_tests %}
     <p class="content-empty">No tests yet. Use the button above to create one.</p>
-  {% else %}
-    <div class="test-card-list">
-      {% for d in test_data %}
-      <div class="test-card">
-        <div class="test-card__header">
-          <div>
-            <h2 class="test-card__title">{{ d.test.title }}</h2>
-            <div class="test-card__pills">
-              {% if d.test.is_published %}<span class="status-pill status-pill--published">Published</span>
-              {% else %}<span class="status-pill status-pill--draft">Draft</span>{% endif %}
-              {% if d.test.is_free %}<span class="status-pill status-pill--free">Free</span>{% endif %}
-              {% if d.test.is_adaptive %}<span class="status-pill status-pill--adaptive">Adaptive</span>{% endif %}
-            </div>
-          </div>
-          <div class="test-card__actions">
-            <a href="{% url 'shsat_content_test_edit' d.test.id %}" class="content-btn content-btn--ghost content-btn--sm">Settings</a>
-            <a href="{% url 'shsat_content_test' d.test.id %}" class="content-btn content-btn--sm">Review questions</a>
-            <form method="post" action="{% url 'shsat_content_test_delete' d.test.id %}" style="display:inline;"
-                  onsubmit="return confirm('Delete {{ d.test.title }} and all its questions? This cannot be undone.');">
-              {% csrf_token %}
-              <button type="submit" class="content-btn content-btn--danger content-btn--sm">Delete</button>
-            </form>
-          </div>
-        </div>
-
-        <div class="test-card__body">
-          {% for section, counts in d.sections.items %}
-          <div class="test-card__section">
-            <span class="test-card__section-label">{{ section }}</span>
-            <div class="test-card__counts">
-              {% for stage_key, stage_label, count in counts %}
-              <span class="test-card__count">
-                <span class="stage-dot stage-dot--{{ stage_key }}"></span>
-                {{ stage_label }}: <strong>{{ count }}</strong>
-              </span>
-              {% endfor %}
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      {% endfor %}
-    </div>
   {% endif %}
+
+  {% if shsat_tests %}
+  <h2 class="content-exam-heading">SHSAT</h2>
+  <div class="test-card-list">
+    {% for d in shsat_tests %}
+    {% include "shsat/_content_test_card.html" %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if hunter_tests %}
+  <h2 class="content-exam-heading" style="margin-top:40px;">Hunter</h2>
+  <div class="test-card-list">
+    {% for d in hunter_tests %}
+    {% include "shsat/_content_test_card.html" %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
 </div>
 {% endblock %}
