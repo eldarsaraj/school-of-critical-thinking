@@ -1538,6 +1538,7 @@
 
 /* Passage with left-gutter line numbers, reflowed text per block */
 .shsat-passage-prose {
+  position: relative;
   font-size: 14.5px;
   line-height: 1.78;
   color: #1a1a1a;
@@ -1548,14 +1549,15 @@
   margin: 0 0 0.75em;
 }
 
+.shsat-lnum-anchor {
+  /* zero-width marker; exists only as a measurement point */
+}
+
 .shsat-lnum {
-  float: left;
-  clear: left;
-  margin-left: -32px;
-  width: 24px;
+  position: absolute;
+  left: 0;
+  width: 26px;
   text-align: right;
-  padding-right: 6px;
-  box-sizing: border-box;
   font-size: 10px;
   font-weight: normal;
   color: rgba(0, 0, 0, 0.3);
@@ -1563,6 +1565,7 @@
   line-height: 1.78;
   user-select: none;
   -webkit-user-select: none;
+  pointer-events: none;
 }
 
 .shsat-question-col {

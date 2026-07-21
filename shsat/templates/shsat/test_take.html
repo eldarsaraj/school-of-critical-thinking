@@ -157,9 +157,8 @@ function esc(s) {
 }
 
 // Render a numbered passage (Hunter format: 4-char prefix is line number or spaces).
-// Text reflows naturally into paragraphs. Line number spans are floated into
-// the left gutter (float: left; clear: left; negative margin-left) so they
-// appear on the left without breaking the text flow.
+// Text reflows naturally into paragraphs. Line numbers are placed after render
+// using absolute positioning so they never interrupt inline text flow.
 function renderPassage(text) {
   const rawLines = text.split('\n');
 
@@ -183,9 +182,9 @@ function renderPassage(text) {
     html += '<p class="shsat-passage-para">';
     for (let i = 0; i < para.length; i++) {
       const seg = para[i];
-      // Float the number into the left gutter before this segment's text
+      // Invisible zero-width anchor; line numbers are positioned absolutely after render
       if (seg.num !== null) {
-        html += `<span class="shsat-lnum">${seg.num}</span>`;
+        html += `<span class="shsat-lnum-anchor" data-linenum="${seg.num}"></span>`;
       }
       html += esc(seg.content);
       if (i < para.length - 1) html += ' ';
@@ -194,6 +193,23 @@ function renderPassage(text) {
   }
   html += '</div>';
   return html;
+}
+
+// After DOM render, measure anchor positions and place absolutely-positioned line numbers.
+function placeLineNumbers() {
+  document.querySelectorAll('.shsat-passage-prose').forEach(prose => {
+    const anchors = prose.querySelectorAll('.shsat-lnum-anchor');
+    if (!anchors.length) return;
+    const proseTop = prose.getBoundingClientRect().top;
+    anchors.forEach(anchor => {
+      const top = anchor.getBoundingClientRect().top - proseTop;
+      const num = document.createElement('span');
+      num.className = 'shsat-lnum';
+      num.textContent = anchor.dataset.linenum;
+      num.style.top = top + 'px';
+      prose.appendChild(num);
+    });
+  });
 }
 
 function renderQuestionText(text) {
@@ -321,6 +337,7 @@ function renderQuestion(idx) {
   document.getElementById("questionPanel").innerHTML = html;
   updateProgress();
   window.scrollTo(0, 0);
+  requestAnimationFrame(placeLineNumbers);
 }
 
 function goTo(idx) {
