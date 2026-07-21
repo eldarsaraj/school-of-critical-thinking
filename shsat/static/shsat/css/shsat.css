@@ -1536,37 +1536,33 @@
   border-radius: 2px;
 }
 
-/* Numbered passage lines */
-.shsat-passage-lines {
-  font-size: 14px;
-  line-height: 1.72;
+/* Reflowed passage with inline line-number markers */
+.shsat-passage-prose {
+  font-size: 14.5px;
+  line-height: 1.78;
   color: #1a1a1a;
 }
 
-.shsat-passage-line {
-  display: flex;
-  align-items: baseline;
+.shsat-passage-para {
+  margin: 0 0 0.8em 0;
 }
 
-.shsat-passage-linenum {
-  flex: 0 0 26px;
-  font-size: 10.5px;
+.shsat-passage-para:last-child {
+  margin-bottom: 0;
+}
+
+/* Tiny superscript line-number anchors (every 5 lines) */
+.shsat-linenum-mark {
+  display: inline;
+  font-size: 9.5px;
   font-variant-numeric: tabular-nums;
-  color: rgba(0, 0, 0, 0.3);
-  text-align: right;
-  padding-right: 10px;
-  line-height: inherit;
+  color: rgba(0, 0, 0, 0.32);
+  vertical-align: super;
+  line-height: 0;
+  margin-right: 1px;
   user-select: none;
   -webkit-user-select: none;
-}
-
-.shsat-passage-linetext {
-  flex: 1;
-  line-height: inherit;
-}
-
-.shsat-passage-blank {
-  height: 0.65em;
+  pointer-events: none;
 }
 
 .shsat-question-col {

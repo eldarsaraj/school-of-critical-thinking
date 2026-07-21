@@ -156,21 +156,39 @@ function esc(s) {
   return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-// Render a numbered passage (Hunter format: 4-char prefix is line number or spaces)
+// Render a numbered passage (Hunter format: 4-char prefix is line number or spaces).
+// Reflows text into natural paragraphs; injects small inline line-number markers
+// at every numbered position so "lines 5–10" references remain meaningful.
 function renderPassage(text) {
-  const lines = text.split('\n');
-  let html = '<div class="shsat-passage-lines">';
-  for (const raw of lines) {
-    if (raw === '') {
-      html += '<div class="shsat-passage-blank"></div>';
+  const rawLines = text.split('\n');
+
+  // Group into paragraphs (blank lines = paragraph break)
+  const paras = [];
+  let cur = [];
+  for (const raw of rawLines) {
+    if (raw.trim() === '') {
+      if (cur.length) { paras.push(cur); cur = []; }
       continue;
     }
-    // First 4 chars: "    " (no number) or "5   " / "10  " (line number)
     const prefix = raw.slice(0, 4);
-    const content = raw.slice(4);
+    const content = raw.slice(4).trim();
     const m = prefix.match(/^\s*(\d+)\s*$/);
-    const lineNum = m ? m[1] : '';
-    html += `<div class="shsat-passage-line"><span class="shsat-passage-linenum">${lineNum}</span><span class="shsat-passage-linetext">${esc(content)}</span></div>`;
+    cur.push({ lineNum: m ? m[1] : null, content });
+  }
+  if (cur.length) paras.push(cur);
+
+  let html = '<div class="shsat-passage-prose">';
+  for (const para of paras) {
+    html += '<p class="shsat-passage-para">';
+    for (let i = 0; i < para.length; i++) {
+      const seg = para[i];
+      if (seg.lineNum !== null) {
+        html += `<span class="shsat-linenum-mark">${seg.lineNum}</span>`;
+      }
+      html += esc(seg.content);
+      if (i < para.length - 1) html += ' ';
+    }
+    html += '</p>';
   }
   html += '</div>';
   return html;
