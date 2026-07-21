@@ -993,6 +993,7 @@
 .content-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
   font-size: 13px;
 }
 
@@ -1028,12 +1029,13 @@
 }
 
 .col-num    { width: 36px; font-weight: 600; color: #374151; }
-.col-skill  { width: 140px; }
+.col-skill  { width: 140px; max-width: 140px; overflow: hidden; }
+.col-skill .skill-tag { max-width: 116px; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom; }
 .col-diff   { width: 72px; }
-.col-preview { }
+.col-preview { max-width: 300px; overflow: hidden; }
 .col-ans    { width: 40px; text-align: center; }
-.col-traps  { width: 180px; }
-.col-actions { width: 64px; }
+.col-traps  { width: 180px; max-width: 180px; overflow: hidden; }
+.col-actions { width: 64px; min-width: 64px; }
 
 .content-table--questions .content-table__preview {
   color: #374151;
