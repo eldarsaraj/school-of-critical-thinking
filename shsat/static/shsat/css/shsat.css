@@ -1516,7 +1516,7 @@
    ---------------------------------------------------------- */
 .shsat-passage-layout {
   display: grid;
-  grid-template-columns: minmax(300px, max-content) 1fr;
+  grid-template-columns: minmax(300px, 490px) 1fr;
   gap: 32px;
   align-items: start;
 }
@@ -1544,7 +1544,6 @@
   line-height: 1.7;
   color: #1a1a1a;
   padding-left: 32px;
-  white-space: nowrap;
 }
 
 .shsat-passage-line {
