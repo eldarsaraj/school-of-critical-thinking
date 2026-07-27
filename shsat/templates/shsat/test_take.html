@@ -430,6 +430,7 @@ function requestSectionModules(section) {
     if (data.status === "error") {
       console.error("Module assignment error:", data.message);
       _assigning[section] = false;
+      renderQuestion(currentIdx);
       return;
     }
 
