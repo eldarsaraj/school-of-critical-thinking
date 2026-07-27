@@ -1,0 +1,366 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ test.title }} — Hunter Workshop{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'shsat/css/shsat.css' %}">
+<link rel="stylesheet" href="{% static 'shsat/css/hunter.css' %}">
+
+<div class="shsat-wrap" style="padding-top:16px;">
+
+  <!-- Top bar: title + timer -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px;">
+    <div>
+      <div style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-bottom:4px;">{{ test.title }}</div>
+      <div id="timer" class="shsat-timer">0:00:00</div>
+      <div style="font-size:12px;color:rgba(0,0,0,0.4);">Time elapsed</div>
+    </div>
+    <form method="post" action="{% url 'shsat_delete_attempt' attempt.id %}" onsubmit="return confirm('Abandon this attempt? All your answers will be lost and you can start fresh.');">
+      {% csrf_token %}
+      <button type="submit" style="background:none;border:1px solid rgba(0,0,0,0.2);padding:5px 12px;font-size:12px;cursor:pointer;color:rgba(0,0,0,0.5);border-radius:3px;">Abandon attempt</button>
+    </form>
+  </div>
+
+  <!-- Progress bar (updated by JS) -->
+  <div class="shsat-progress-wrap" id="progressWrap">
+    <div class="shsat-progress-meta" id="progressMeta"></div>
+    <div class="shsat-progress-bar"><div class="shsat-progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <!-- Question panel -->
+  <div id="questionPanel"></div>
+
+</div>
+
+{{ q_list|json_script:"questionData" }}
+
+<form method="post" action="{% url 'shsat_test_submit' test.id %}" id="submitForm" style="display:none;">
+  {% csrf_token %}
+</form>
+
+
+<script>
+const ATTEMPT_ID = {{ attempt.id }};
+const CSRF_TOKEN = "{{ csrf_token }}";
+const INITIAL_ELAPSED = {{ duration_seconds }} - {{ remaining_seconds }};
+
+const questions = JSON.parse(document.getElementById("questionData").textContent);
+let currentIdx = 0;
+
+// State maps keyed by question id
+const answers = {};
+const flags = {};
+const timeSpent = {};
+function initQuestion(q) {
+  answers[q.id] = q.selected || "";
+  flags[q.id] = q.is_flagged || false;
+  timeSpent[q.id] = 0;
+}
+questions.forEach(initQuestion);
+
+// Per-question timing
+let questionStartTime = Date.now();
+
+function getElapsedForCurrent() {
+  return Math.round((Date.now() - questionStartTime) / 1000);
+}
+
+function pauseCurrentTimer() {
+  const qId = questions[currentIdx].id;
+  timeSpent[qId] = (timeSpent[qId] || 0) + getElapsedForCurrent();
+  questionStartTime = Date.now();
+}
+
+function resumeTimer() {
+  questionStartTime = Date.now();
+}
+
+// ---------------------------------------------------------------------------
+// Timer (counts up from elapsed)
+// ---------------------------------------------------------------------------
+let elapsed = INITIAL_ELAPSED;
+const timerEl = document.getElementById("timer");
+
+function formatTime(s) {
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  return [h, m, sec].map(n => String(n).padStart(2, "0")).join(":");
+}
+
+setInterval(() => {
+  elapsed++;
+  timerEl.textContent = formatTime(elapsed);
+  if (elapsed > {{ duration_seconds }}) {
+    timerEl.classList.add("shsat-timer--overtime");
+  }
+}, 1000);
+
+// ---------------------------------------------------------------------------
+// Alternating A-D / E-H label scheme
+// ---------------------------------------------------------------------------
+const EFGH_MAP = {A: "E", B: "F", C: "G", D: "H"};
+function displayLetter(internal, useEfgh) {
+  return useEfgh ? (EFGH_MAP[internal] || internal) : internal;
+}
+
+const SECTION_LABELS = {
+  reading_comprehension: "Reading Comprehension",
+  quantitative_reasoning: "Quantitative Reasoning",
+  math_achievement: "Math Achievement",
+  writing: "Writing",
+};
+
+// ---------------------------------------------------------------------------
+// Progress bar
+// ---------------------------------------------------------------------------
+function updateProgress() {
+  const q = questions[currentIdx];
+  const displayNum = q.display_index;
+  const sectionQs = questions.filter(sq => sq.section === q.section);
+  const total = sectionQs.length;
+  const pct = (displayNum / total) * 100;
+  const label = SECTION_LABELS[q.section] || q.section;
+
+  const meta = document.getElementById("progressMeta");
+  const fill = document.getElementById("progressFill");
+  if (meta) meta.innerHTML = `<strong>${label}</strong> <span>Question ${displayNum} of ${total}</span>`;
+  if (fill) fill.style.width = pct + "%";
+}
+
+// ---------------------------------------------------------------------------
+// Render question
+// ---------------------------------------------------------------------------
+function esc(s) {
+  return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// Each original line is one <div>; 4-char prefix is the line number if numeric.
+// Line number labels are placed absolutely after render via placeLineNumbers().
+function renderPassage(text) {
+  let html = '<div class="shsat-passage-prose">';
+  for (const raw of text.split('\n')) {
+    if (!raw.trim()) {
+      html += '<div class="shsat-passage-gap"></div>';
+      continue;
+    }
+    const prefix = raw.slice(0, 4);
+    const m = prefix.match(/^\s*(\d+)\s*$/);
+    const content = m ? raw.slice(4) : raw;
+    html += '<div class="shsat-passage-line">';
+    if (m) html += `<span class="shsat-lnum-anchor" data-linenum="${m[1]}"></span>`;
+    html += esc(content.trim());
+    html += '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+// After DOM render, measure anchor positions and place absolutely-positioned line numbers.
+function placeLineNumbers() {
+  document.querySelectorAll('.shsat-passage-prose').forEach(prose => {
+    const anchors = prose.querySelectorAll('.shsat-lnum-anchor');
+    if (!anchors.length) return;
+    const proseTop = prose.getBoundingClientRect().top;
+    anchors.forEach(anchor => {
+      const top = anchor.getBoundingClientRect().top - proseTop;
+      const num = document.createElement('span');
+      num.className = 'shsat-lnum';
+      num.textContent = anchor.dataset.linenum;
+      num.style.top = top + 'px';
+      prose.appendChild(num);
+    });
+  });
+}
+
+function renderQuestionText(text) {
+  const paras = text.split(/\n\n+/);
+  if (paras.length <= 1) {
+    return `<div class="shsat-question-text">${esc(text).replace(/\n/g, "<br>")}</div>`;
+  }
+  let html = `<div class="shsat-question-text">${esc(paras[0].trim()).replace(/\n/g, "<br>")}</div>`;
+  for (let i = 1; i < paras.length; i++) {
+    const t = paras[i].trim();
+    if (t) html += `<div class="shsat-sentence-block">${esc(t).replace(/\n/g, "<br>")}</div>`;
+  }
+  return html;
+}
+
+function buildChoicesHtml(q) {
+  if (q.question_type === "essay") {
+    return `<div class="shsat-essay-prompt">
+      <p class="shsat-essay-prompt__note">Essay prompt — no answer selection required.</p>
+      <p class="shsat-essay-prompt__hint">Read the prompt carefully, then select Next to continue.</p>
+    </div>`;
+  }
+  const choices = [
+    ["A", q.choice_a], ["B", q.choice_b], ["C", q.choice_c], ["D", q.choice_d],
+  ];
+  if (q.choice_e) choices.push(["E", q.choice_e]);
+  const filtered = choices.filter(([, text]) => text);
+  let html = `<ul class="shsat-choices">`;
+  filtered.forEach(([letter, text]) => {
+    const disp = displayLetter(letter, q.use_efgh);
+    const sel = answers[q.id] === letter ? "selected" : "";
+    html += `<li class="shsat-choice ${sel}" onclick="selectAnswer(${q.id}, '${letter}', this)">
+      <span class="shsat-choice__letter">${disp}</span>
+      <span>${esc(text)}</span>
+    </li>`;
+  });
+  return html + `</ul>`;
+}
+
+function renderQuestion(idx) {
+  currentIdx = idx;
+  const q = questions[idx];
+
+  const atEnd = idx >= questions.length - 1;
+  const showSubmit = atEnd;
+
+  const navFooter = `<div class="shsat-question-footer">
+    <div class="shsat-question-footer__info">
+      <button type="button" onclick="toggleFlag(${q.id})" id="flagBtn_${q.id}"
+        style="background:none;border:1px solid rgba(0,0,0,0.2);padding:4px 10px;cursor:pointer;font-size:12px;">
+        ${flags[q.id] ? "📌 Marked for review" : "Mark for review"}
+      </button>
+      <button type="button" onclick="toggleReportForm(${q.id})"
+        style="background:none;border:none;padding:4px 6px;cursor:pointer;font-size:12px;color:rgba(0,0,0,0.4);text-decoration:underline;margin-left:8px;">
+        Report a problem
+      </button>
+      <div id="reportForm_${q.id}" class="shsat-report-form" style="display:none;">
+        <textarea id="reportText_${q.id}" placeholder="Describe the issue (typo, wrong answer, unclear question…)" rows="3"></textarea>
+        <div style="display:flex;gap:8px;margin-top:6px;">
+          <button type="button" onclick="submitReport(${q.id})" class="shsat-btn" style="font-size:12px;padding:5px 12px;">Send report</button>
+          <button type="button" onclick="toggleReportForm(${q.id})" style="background:none;border:none;cursor:pointer;font-size:12px;color:rgba(0,0,0,0.4);">Cancel</button>
+        </div>
+        <div id="reportConfirm_${q.id}" style="display:none;font-size:12px;color:rgba(0,0,0,0.5);margin-top:6px;">Thank you — report submitted.</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:8px;">
+      ${showSubmit
+        ? `<button type="button" onclick="confirmSubmit()" class="shsat-btn" style="background:#a4161a;border-color:#a4161a;color:#fff;">Submit test</button>`
+        : `<button type="button" onclick="goTo(${idx + 1})" class="shsat-btn">Next →</button>`
+      }
+    </div>
+  </div>`;
+
+  let html;
+  if (q.passage_text) {
+    let passageBody = q.passage_text;
+    if (q.passage_title) {
+      const stripped = passageBody.trimStart();
+      if (stripped.startsWith(q.passage_title)) {
+        passageBody = stripped.slice(q.passage_title.length).trimStart();
+      }
+    }
+    const passageHtml = `<div class="shsat-passage shsat-passage--scroll">
+      ${q.passage_title ? `<div class="shsat-passage__title">${esc(q.passage_title)}</div>` : ""}
+      ${renderPassage(passageBody)}
+    </div>`;
+    const questionHtml = (q.image_url ? `<div class="shsat-question-image"><img src="${q.image_url}" alt="Question diagram"></div>` : "")
+      + renderQuestionText(q.question_text)
+      + buildChoicesHtml(q)
+      + navFooter;
+    html = `<div class="shsat-passage-layout">
+      <div class="shsat-passage-col">${passageHtml}</div>
+      <div class="shsat-question-col">${questionHtml}</div>
+    </div>`;
+  } else {
+    html = (q.image_url ? `<div class="shsat-question-image"><img src="${q.image_url}" alt="Question diagram"></div>` : "")
+      + renderQuestionText(q.question_text)
+      + buildChoicesHtml(q)
+      + navFooter;
+  }
+
+  document.getElementById("questionPanel").innerHTML = html;
+  updateProgress();
+  window.scrollTo(0, 0);
+  requestAnimationFrame(placeLineNumbers);
+}
+
+function goTo(idx) {
+  pauseCurrentTimer();
+  renderQuestion(idx);
+  resumeTimer();
+}
+
+// ---------------------------------------------------------------------------
+// Answer selection
+// ---------------------------------------------------------------------------
+function selectAnswer(qId, letter, el) {
+  answers[qId] = letter;
+  el.closest(".shsat-choices").querySelectorAll(".shsat-choice").forEach(li => li.classList.remove("selected"));
+  el.classList.add("selected");
+  const accumulated = (timeSpent[qId] || 0) + getElapsedForCurrent();
+  fetch("/shsat/api/save-answer/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
+    body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, selected_answer: letter, time_spent: accumulated }),
+  }).catch(console.error);
+}
+
+// ---------------------------------------------------------------------------
+// Flagging / reporting
+// ---------------------------------------------------------------------------
+function toggleReportForm(qId) {
+  const form = document.getElementById(`reportForm_${qId}`);
+  if (form) form.style.display = form.style.display === "none" ? "block" : "none";
+}
+
+function submitReport(qId) {
+  const text = (document.getElementById(`reportText_${qId}`)?.value || "").trim();
+  fetch("/shsat/api/report-question/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
+    body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, reason: text }),
+  }).catch(console.error);
+  const form = document.getElementById(`reportForm_${qId}`);
+  const confirm = document.getElementById(`reportConfirm_${qId}`);
+  if (form) {
+    form.querySelectorAll("textarea, button").forEach(el => el.style.display = "none");
+    if (confirm) confirm.style.display = "block";
+  }
+}
+
+function toggleFlag(qId) {
+  flags[qId] = !flags[qId];
+  const btn = document.getElementById(`flagBtn_${qId}`);
+  if (btn) btn.textContent = flags[qId] ? "📌 Marked for review" : "Mark for review";
+  fetch("/shsat/api/flag-question/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
+    body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, flagged: flags[qId] }),
+  }).catch(console.error);
+}
+
+// ---------------------------------------------------------------------------
+// Submit
+// ---------------------------------------------------------------------------
+let _submitLocked = false;
+function confirmSubmit() {
+  if (_submitLocked) return;
+  _submitLocked = true;
+  document.getElementById("submitForm").submit();
+}
+
+// Init
+if (questions.length === 0) {
+  document.getElementById("questionPanel").innerHTML =
+    '<p style="color:rgba(0,0,0,0.5);font-size:15px;margin-top:32px;">No questions found for this attempt. <a href="">Refresh the page</a> to try again.</p>';
+} else {
+  renderQuestion(0);
+}
+timerEl.textContent = formatTime(elapsed);
+
+// Reposition line numbers on resize (column width may change)
+let _resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(() => {
+    document.querySelectorAll('.shsat-passage-prose .shsat-lnum').forEach(el => el.remove());
+    placeLineNumbers();
+  }, 150);
+});
+</script>
+{% endblock %}

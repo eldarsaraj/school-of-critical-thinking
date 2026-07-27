@@ -1,0 +1,18 @@
+/* ----------------------------------------------------------
+   Hunter-specific overrides
+   Loaded in addition to shsat.css by Hunter test templates.
+   Keeps Hunter passage behaviour separate from SHSAT so changes
+   to one cannot accidentally break the other.
+   ---------------------------------------------------------- */
+
+/* Passage column: expand to fit original line length (Hunter has
+   fixed-width typed passages where line breaks carry meaning). */
+.shsat-passage-layout {
+  grid-template-columns: minmax(300px, max-content) 1fr;
+}
+
+/* Prevent the browser from wrapping lines — each <div> is one
+   original source line, so the visual line numbers stay aligned. */
+.shsat-passage-prose {
+  white-space: nowrap;
+}

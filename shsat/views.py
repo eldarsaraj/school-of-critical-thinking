@@ -656,7 +656,8 @@ def test_take(request, test_id):
         "ela_module": attempt.ela_module,
         "math_module": attempt.math_module,
     }
-    return render(request, "shsat/test_take.html", context)
+    template = "shsat/test_take_hunter.html" if test.exam_type == "hunter" else "shsat/test_take_shsat.html"
+    return render(request, template, context)
 
 
 @login_required(login_url="/shsat/login/")
@@ -809,7 +810,8 @@ def test_results(request, attempt_id):
         "hunter_writing_answers": hunter_writing_answers,
         "hunter_qr_ma_total": len(hunter_qr_answers) + len(hunter_ma_answers),
     }
-    return render(request, "shsat/test_results.html", context)
+    template = "shsat/test_results_hunter.html" if is_hunter else "shsat/test_results_shsat.html"
+    return render(request, template, context)
 
 
 @login_required(login_url="/shsat/login/")
