@@ -305,7 +305,7 @@ def dashboard(request):
         is_correct__isnull=False,
     ).select_related("question")
 
-    skill_stats = {}   # skill -> {correct, total, time_sum, time_count}
+    skill_stats = {}   # skill -> {correct, total, time_sum, time_count, section}
     # Per-attempt skill tracking for consistency analysis
     from collections import defaultdict
     att_skill_correct = defaultdict(lambda: defaultdict(int))
@@ -313,9 +313,10 @@ def dashboard(request):
 
     for ans in all_answers:
         skill = ans.question.skill or "unknown"
+        section = ans.question.section or "unknown"
 
         if skill not in skill_stats:
-            skill_stats[skill] = {"correct": 0, "total": 0, "time_sum": 0, "time_count": 0}
+            skill_stats[skill] = {"correct": 0, "total": 0, "time_sum": 0, "time_count": 0, "section": section}
         skill_stats[skill]["total"] += 1
         if ans.is_correct:
             skill_stats[skill]["correct"] += 1
@@ -375,11 +376,18 @@ def dashboard(request):
     for skill, s in skill_stats.items():
         if s["total"] == 0:
             continue
+        # Skip skills not in the taxonomy (e.g. figurative_craft, unknown)
+        if skill not in skill_label_map:
+            continue
+        raw_label = skill_label_map[skill]
+        # Clean any residual underscores in labels
+        label = raw_label.replace("_", " ").title() if "_" in raw_label else raw_label
         pct = round(s["correct"] / s["total"] * 100, 1)
         avg_time = round(s["time_sum"] / s["time_count"] / 60, 2) if s["time_count"] > 0 else None
         skill_accuracy_data.append({
             "skill": skill,
-            "label": skill_label_map.get(skill, skill),
+            "label": label,
+            "section": s["section"],
             "accuracy": pct,
             "correct": s["correct"],
             "total": s["total"],

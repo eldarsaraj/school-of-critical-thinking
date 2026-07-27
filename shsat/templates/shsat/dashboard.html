@@ -140,15 +140,25 @@
 <!-- Skill & Difficulty Charts -->
 {% if skill_accuracy_data %}
 <p class="shsat-section-title" style="margin-top:48px;">Accuracy by skill</p>
-<div class="shsat-chart-wrap">
-  <canvas id="skillChart"></canvas>
+<div id="skillElaWrap" class="shsat-chart-wrap" style="display:none;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
+  <canvas id="skillChartEla"></canvas>
+</div>
+<div id="skillMathWrap" class="shsat-chart-wrap" style="display:none;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
+  <canvas id="skillChartMath"></canvas>
 </div>
 {{ skill_accuracy_data|json_script:"skillChartData" }}
 
 {% if has_timing_data %}
 <p class="shsat-section-title" style="margin-top:32px;">Avg time per skill (minutes)</p>
-<div class="shsat-chart-wrap">
-  <canvas id="timeChart"></canvas>
+<div id="timeElaWrap" class="shsat-chart-wrap" style="display:none;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
+  <canvas id="timeChartEla"></canvas>
+</div>
+<div id="timeMathWrap" class="shsat-chart-wrap" style="display:none;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
+  <canvas id="timeChartMath"></canvas>
 </div>
 {% endif %}
 {% endif %}
@@ -593,91 +603,75 @@ function makeProjData(arr) {
 })();
 
 // ---------------------------------------------------------------------------
-// Skill accuracy horizontal bar chart
+// Skill accuracy horizontal bar charts — one per section
 // ---------------------------------------------------------------------------
 (function () {
-  const el = document.getElementById("skillChart");
-  if (!el) return;
-  const skills = JSON.parse(document.getElementById("skillChartData").textContent);
-  const labels = skills.map(s => s.label);
-  const accuracies = skills.map(s => s.accuracy);
-  const colors = accuracies.map(a => a < 60 ? P.wrong : a < 80 ? P.warn : P.correct);
+  const allSkills = JSON.parse(document.getElementById("skillChartData").textContent);
 
-  new Chart(el.getContext("2d"), {
-    type: "bar",
-    data: {
-      labels,
-      datasets: [{
-        label: "Accuracy %",
-        data: accuracies,
-        backgroundColor: colors,
-        borderWidth: 0,
-        barThickness: 16,
-      }]
-    },
-    options: {
-      indexAxis: "y",
-      responsive: true,
-      aspectRatio: skills.length > 6 ? 1.8 : 2.5,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: (item) => {
-              const s = skills[item.dataIndex];
-              return ` ${s.accuracy}% (${s.correct}/${s.total})`;
-            }
-          }
-        }
+  function renderSkillAccuracy(canvasId, wrapId, skills) {
+    if (!skills.length) return;
+    document.getElementById(wrapId).style.display = "";
+    const accuracies = skills.map(s => s.accuracy);
+    const colors = accuracies.map(a => a < 60 ? P.wrong : a < 80 ? P.warn : P.correct);
+    new Chart(document.getElementById(canvasId).getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: skills.map(s => s.label),
+        datasets: [{ label: "Accuracy %", data: accuracies, backgroundColor: colors, borderWidth: 0, barThickness: 16 }]
       },
-      scales: {
-        x: { min: 0, max: 100, grid: { color: P.grid },
-             ticks: { font: { size: 11 }, callback: v => v + "%" } },
-        y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      options: {
+        indexAxis: "y", responsive: true,
+        aspectRatio: skills.length > 6 ? 1.8 : 2.5,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (item) => { const s = skills[item.dataIndex]; return ` ${s.accuracy}% (${s.correct}/${s.total})`; } } }
+        },
+        scales: {
+          x: { min: 0, max: 100, grid: { color: P.grid }, ticks: { font: { size: 11 }, callback: v => v + "%" } },
+          y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+        }
       }
-    }
-  });
+    });
+  }
+
+  renderSkillAccuracy("skillChartEla",  "skillElaWrap",  allSkills.filter(s => s.section === "ELA"));
+  renderSkillAccuracy("skillChartMath", "skillMathWrap", allSkills.filter(s => s.section === "Math"));
 })();
 
 // ---------------------------------------------------------------------------
-// Time per skill horizontal bar chart
+// Time per skill horizontal bar charts — one per section
 // ---------------------------------------------------------------------------
 (function () {
-  const el = document.getElementById("timeChart");
-  if (!el) return;
-  const skills = JSON.parse(document.getElementById("skillChartData").textContent);
-  const timed = skills.filter(s => s.avg_time !== null);
-  if (timed.length === 0) return;
+  const allSkills = JSON.parse(document.getElementById("skillChartData").textContent);
 
-  timed.sort((a, b) => b.avg_time - a.avg_time);
-
-  new Chart(el.getContext("2d"), {
-    type: "bar",
-    data: {
-      labels: timed.map(s => s.label),
-      datasets: [{
-        label: "Avg minutes",
-        data: timed.map(s => s.avg_time),
-        backgroundColor: P.neutral,
-        borderWidth: 0,
-        barThickness: 16,
-      }]
-    },
-    options: {
-      indexAxis: "y",
-      responsive: true,
-      aspectRatio: timed.length > 6 ? 1.8 : 2.5,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: (item) => ` ${item.raw} min avg` } }
+  function renderSkillTime(canvasId, wrapId, skills) {
+    const timed = skills.filter(s => s.avg_time !== null);
+    if (!timed.length) return;
+    document.getElementById(wrapId).style.display = "";
+    timed.sort((a, b) => b.avg_time - a.avg_time);
+    new Chart(document.getElementById(canvasId).getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: timed.map(s => s.label),
+        datasets: [{ label: "Avg minutes", data: timed.map(s => s.avg_time), backgroundColor: P.neutral, borderWidth: 0, barThickness: 16 }]
       },
-      scales: {
-        x: { min: 0, grid: { color: P.grid },
-             ticks: { font: { size: 11 }, callback: v => v + "m" } },
-        y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      options: {
+        indexAxis: "y", responsive: true,
+        aspectRatio: timed.length > 6 ? 1.8 : 2.5,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (item) => ` ${item.raw} min avg` } }
+        },
+        scales: {
+          x: { min: 0, grid: { color: P.grid }, ticks: { font: { size: 11 }, callback: v => v + "m" } },
+          y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+        }
       }
-    }
-  });
+    });
+  }
+
+  renderSkillTime("timeChartEla",  "timeElaWrap",  allSkills.filter(s => s.section === "ELA"));
+  renderSkillTime("timeChartMath", "timeMathWrap", allSkills.filter(s => s.section === "Math"));
 })();
 </script>
 {% endblock %}
