@@ -602,6 +602,47 @@ def test_take(request, test_id):
     elapsed = int((timezone.now() - attempt.started_at).total_seconds())
     remaining = max(0, settings.SHSAT_TEST_DURATION_SECONDS - elapsed)
 
+    # Auto-submit if time has expired (e.g. user started a test and never returned)
+    if remaining == 0:
+        answers = Answer.objects.filter(attempt=attempt).select_related("question")
+        for ans in answers:
+            q = ans.question
+            if q.question_type == "essay":
+                continue
+            if ans.selected_answer:
+                ans.is_correct = ans.selected_answer.upper() == q.correct_answer.upper()
+                ans.save(update_fields=["is_correct"])
+        scored = list(Answer.objects.filter(attempt=attempt, is_correct__isnull=False))
+        if test.exam_type == "hunter":
+            rc_correct = sum(1 for a in scored if a.is_correct and a.question.section == "reading_comprehension")
+            qr_correct = sum(1 for a in scored if a.is_correct and a.question.section == "quantitative_reasoning")
+            ma_correct = sum(1 for a in scored if a.is_correct and a.question.section == "math_achievement")
+            attempt.ela_correct = rc_correct
+            attempt.math_correct = qr_correct + ma_correct
+            attempt.ela_scaled = rc_correct
+            attempt.math_scaled = qr_correct + ma_correct
+            attempt.composite_score = rc_correct + qr_correct + ma_correct
+        else:
+            ela_correct = sum(1 for a in scored if a.is_correct and a.question.section == "ELA")
+            math_correct = sum(1 for a in scored if a.is_correct and a.question.section == "Math")
+            if attempt.test.is_adaptive and (attempt.ela_module or attempt.math_module):
+                from .scoring import scale_score_adaptive
+                ela_scaled = scale_score_adaptive(ela_correct, attempt.ela_module or 'easy')
+                math_scaled = scale_score_adaptive(math_correct, attempt.math_module or 'easy')
+            else:
+                ela_scaled = scale_score(min(ela_correct, 47))
+                math_scaled = scale_score(min(math_correct, 47))
+            attempt.ela_correct = ela_correct
+            attempt.math_correct = math_correct
+            attempt.ela_scaled = ela_scaled
+            attempt.math_scaled = math_scaled
+            attempt.composite_score = ela_scaled + math_scaled
+        attempt.is_completed = True
+        attempt.submitted_at = timezone.now()
+        attempt.total_seconds = elapsed
+        attempt.save()
+        return redirect("shsat_test_results", attempt_id=attempt.id)
+
     modules_assigned = bool(attempt.ela_module)
 
     context = {
