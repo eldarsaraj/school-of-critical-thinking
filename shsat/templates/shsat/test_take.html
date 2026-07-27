@@ -167,8 +167,8 @@ function renderPassage(text) {
       continue;
     }
     const prefix = raw.slice(0, 4);
-    const content = raw.slice(4);
     const m = prefix.match(/^\s*(\d+)\s*$/);
+    const content = m ? raw.slice(4) : raw;
     html += '<div class="shsat-passage-line">';
     if (m) html += `<span class="shsat-lnum-anchor" data-linenum="${m[1]}"></span>`;
     html += esc(content.trim());
