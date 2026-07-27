@@ -68,8 +68,13 @@
 {% if trap_data %}
 <p class="shsat-section-title" style="margin-top:12px;">Distractor trap analysis</p>
 <p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Which answer traps caught you most often.</p>
-<div class="shsat-chart-wrap">
-  <canvas id="trapChart"></canvas>
+<div id="trapElaWrap" class="shsat-chart-wrap" style="display:none;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
+  <canvas id="trapChartEla"></canvas>
+</div>
+<div id="trapMathWrap" class="shsat-chart-wrap" style="display:none;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
+  <canvas id="trapChartMath"></canvas>
 </div>
 {% endif %}
 {{ trap_data|json_script:"trapData" }}
@@ -361,36 +366,40 @@ const P = {
 })();
 
 // ---------------------------------------------------------------------------
-// Distractor trap bar — colored by section index
+// Distractor trap bars — one chart per section
 // ---------------------------------------------------------------------------
 (function () {
-  const el = document.getElementById("trapChart");
-  if (!el) return;
-  const data = JSON.parse(document.getElementById("trapData").textContent);
-  if (!data.length) return;
+  const allData = JSON.parse(document.getElementById("trapData").textContent);
+  if (!allData.length) return;
 
-  const sections = [...new Set(data.map(d => d.section))];
-  const color = sec => P.sections[sections.indexOf(sec) % P.sections.length];
-
-  new Chart(el.getContext("2d"), {
-    type: "bar",
-    data: {
-      labels: data.map(d => d.label),
-      datasets: [{ label: "Times caught", data: data.map(d => d.count), backgroundColor: data.map(d => color(d.section)), borderWidth: 0, barThickness: 18 }]
-    },
-    options: {
-      indexAxis: "y", responsive: true,
-      aspectRatio: Math.max(1.4, 4 / Math.max(data.length, 2)),
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: item => ` ${item.raw}× — ${data[item.dataIndex].section}` } }
+  function renderTrapChart(canvasId, wrapId, sectionData, color) {
+    if (!sectionData.length) return;
+    document.getElementById(wrapId).style.display = "";
+    new Chart(document.getElementById(canvasId).getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: sectionData.map(d => d.label),
+        datasets: [{ label: "Times caught", data: sectionData.map(d => d.count), backgroundColor: color, borderWidth: 0, barThickness: 18 }]
       },
-      scales: {
-        x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } },
-        y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      options: {
+        indexAxis: "y", responsive: true,
+        aspectRatio: Math.max(1.4, 4 / Math.max(sectionData.length, 2)),
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: item => ` ${item.raw}×` } }
+        },
+        scales: {
+          x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } },
+          y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+        }
       }
-    }
-  });
+    });
+  }
+
+  const elaData  = allData.filter(d => d.section === "ELA");
+  const mathData = allData.filter(d => d.section === "Math");
+  renderTrapChart("trapChartEla",  "trapElaWrap",  elaData,  P.sections[0]);
+  renderTrapChart("trapChartMath", "trapMathWrap", mathData, P.sections[1]);
 })();
 
 // ---------------------------------------------------------------------------
