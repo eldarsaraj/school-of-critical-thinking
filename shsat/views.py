@@ -780,8 +780,15 @@ def test_results(request, attempt_id):
         hunter_ma_answers = [a for a in answers if a.question.section == "math_achievement"]
         hunter_writing_answers = [a for a in answers if a.question.section == "writing"]
     else:
-        ela_answers = [a for a in answers if a.question.section == "ELA"]
-        math_answers = [a for a in answers if a.question.section == "Math"]
+        order_map = {qid: i for i, qid in enumerate(attempt.started_with or [])}
+        ela_answers = sorted(
+            [a for a in answers if a.question.section == "ELA"],
+            key=lambda a: order_map.get(a.question_id, 9999),
+        )
+        math_answers = sorted(
+            [a for a in answers if a.question.section == "Math"],
+            key=lambda a: order_map.get(a.question_id, 9999),
+        )
         hunter_rc_answers = hunter_qr_answers = hunter_ma_answers = hunter_writing_answers = []
 
     flagged_answers = [a for a in answers if a.is_flagged]
