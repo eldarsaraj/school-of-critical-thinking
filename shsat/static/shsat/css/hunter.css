@@ -5,10 +5,43 @@
    to one cannot accidentally break the other.
    ---------------------------------------------------------- */
 
-/* Passage column: fixed width cap so occasional long lines (11+ long
-   words) do not squeeze the question column. Line numbers stay correct
-   because placeLineNumbers() uses Y-coordinate anchors — even when a
-   line wraps visually, the anchor is at the line's start. */
+/* Passage column: wide enough for 11-word lines even when words are
+   long (e.g. "instrumented", "measurements"). 680px fits lines up to
+   ~88 chars at 13px variable-width font without wrapping.
+   The question column gets all remaining space (≥ 260px enforced). */
 .shsat-passage-layout {
-  grid-template-columns: minmax(300px, 500px) 1fr;
+  grid-template-columns: minmax(300px, 680px) minmax(260px, 1fr);
+}
+
+/* Flex-gutter line rendering: each <div.shsat-passage-line> is a flex
+   row — fixed-width gutter on the left, text body on the right.
+   This replaces the JS absolute-positioning approach so line numbers
+   are structurally bound to their line and cannot drift. */
+.shsat-passage-prose {
+  padding-left: 0;          /* gutter handled by flex, not padding */
+  white-space: nowrap;      /* prevent wrapping; container is wide enough */
+}
+
+.shsat-passage-line {
+  display: flex;
+  align-items: flex-start;
+}
+
+.shsat-lnum-cell {
+  flex: 0 0 28px;
+  text-align: right;
+  padding-right: 6px;
+  font-size: 10px;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.3);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.78;        /* match .shsat-passage-prose line-height */
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+.shsat-lnum-body {
+  flex: 1;
+  min-width: 0;
 }

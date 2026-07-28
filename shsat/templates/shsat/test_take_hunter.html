@@ -6,6 +6,11 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'shsat/css/shsat.css' %}">
 <link rel="stylesheet" href="{% static 'shsat/css/hunter.css' %}">
+<style>
+  /* Hunter test needs a wider layout for passage + question side-by-side.
+     Override the site's 760px container just for this page. */
+  main > .container { max-width: 1100px; }
+</style>
 
 <div class="shsat-wrap" style="padding-top:16px;">
 
@@ -136,8 +141,9 @@ function esc(s) {
   return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-// Each original line is one <div>; 4-char prefix is the line number if numeric.
-// Line number labels are placed absolutely after render via placeLineNumbers().
+// Each original line is one flex-row <div>: a fixed-width gutter cell
+// (shows the line number every 5th line, blank otherwise) + text body.
+// No JS measurement needed — numbers are structurally part of the DOM.
 function renderPassage(text) {
   let html = '<div class="shsat-passage-prose">';
   for (const raw of text.split('\n')) {
@@ -148,30 +154,14 @@ function renderPassage(text) {
     const prefix = raw.slice(0, 4);
     const m = prefix.match(/^\s*(\d+)\s*$/);
     const content = m ? raw.slice(4) : raw;
-    html += '<div class="shsat-passage-line">';
-    if (m) html += `<span class="shsat-lnum-anchor" data-linenum="${m[1]}"></span>`;
-    html += esc(content.trim());
-    html += '</div>';
+    const numCell = m ? m[1] : '';
+    html += `<div class="shsat-passage-line">`;
+    html += `<span class="shsat-lnum-cell">${numCell}</span>`;
+    html += `<span class="shsat-lnum-body">${esc(content.trim())}</span>`;
+    html += `</div>`;
   }
   html += '</div>';
   return html;
-}
-
-// After DOM render, measure anchor positions and place absolutely-positioned line numbers.
-function placeLineNumbers() {
-  document.querySelectorAll('.shsat-passage-prose').forEach(prose => {
-    const anchors = prose.querySelectorAll('.shsat-lnum-anchor');
-    if (!anchors.length) return;
-    const proseTop = prose.getBoundingClientRect().top;
-    anchors.forEach(anchor => {
-      const top = anchor.getBoundingClientRect().top - proseTop;
-      const num = document.createElement('span');
-      num.className = 'shsat-lnum';
-      num.textContent = anchor.dataset.linenum;
-      num.style.top = top + 'px';
-      prose.appendChild(num);
-    });
-  });
 }
 
 function renderQuestionText(text) {
@@ -276,7 +266,6 @@ function renderQuestion(idx) {
   document.getElementById("questionPanel").innerHTML = html;
   updateProgress();
   window.scrollTo(0, 0);
-  requestAnimationFrame(placeLineNumbers);
 }
 
 function goTo(idx) {
@@ -353,14 +342,5 @@ if (questions.length === 0) {
 }
 timerEl.textContent = formatTime(elapsed);
 
-// Reposition line numbers on resize (column width may change)
-let _resizeTimer;
-window.addEventListener('resize', () => {
-  clearTimeout(_resizeTimer);
-  _resizeTimer = setTimeout(() => {
-    document.querySelectorAll('.shsat-passage-prose .shsat-lnum').forEach(el => el.remove());
-    placeLineNumbers();
-  }, 150);
-});
 </script>
 {% endblock %}
