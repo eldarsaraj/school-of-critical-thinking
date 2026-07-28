@@ -5,21 +5,32 @@
    to one cannot accidentally break the other.
    ---------------------------------------------------------- */
 
-/* Passage column: wide enough for 11-word lines even when words are
-   long (e.g. "instrumented", "measurements"). 680px fits lines up to
-   ~88 chars at 13px variable-width font without wrapping.
-   The question column gets all remaining space (≥ 260px enforced). */
+/* Passage column: max-content so each passage column is exactly as
+   wide as its longest line needs — short passages stay narrow.
+   The passage-col element is capped at 510px so outlier lines (a
+   handful of 11-word lines with many long words) cannot blow out the
+   layout; they overflow and scroll inside the passage box instead. */
 .shsat-passage-layout {
-  grid-template-columns: minmax(300px, 680px) minmax(260px, 1fr);
+  grid-template-columns: minmax(300px, max-content) minmax(240px, 1fr);
 }
 
-/* Flex-gutter line rendering: each <div.shsat-passage-line> is a flex
-   row — fixed-width gutter on the left, text body on the right.
-   This replaces the JS absolute-positioning approach so line numbers
-   are structurally bound to their line and cannot drift. */
+.shsat-passage-col {
+  max-width: 510px;
+}
+
+/* Let the scrollable passage box scroll horizontally when a line
+   exceeds the 510px cap (affects at most 1-2 lines per passage). */
+.shsat-passage--scroll {
+  overflow-x: auto;
+}
+
+/* Flex-gutter line rendering: each passage line is a flex row with
+   a fixed gutter on the left (shows line number or stays blank) and
+   the text body on the right. Numbers are structurally bound to their
+   line — no JS measurement, no drift on resize. */
 .shsat-passage-prose {
-  padding-left: 0;          /* gutter handled by flex, not padding */
-  white-space: nowrap;      /* prevent wrapping; container is wide enough */
+  padding-left: 0;       /* gutter is handled by flex, not padding */
+  white-space: nowrap;   /* lines must not wrap; column width prevents it */
 }
 
 .shsat-passage-line {
@@ -35,7 +46,7 @@
   font-weight: normal;
   color: rgba(0, 0, 0, 0.3);
   font-variant-numeric: tabular-nums;
-  line-height: 1.78;        /* match .shsat-passage-prose line-height */
+  line-height: 1.78;     /* match .shsat-passage-prose line-height */
   user-select: none;
   -webkit-user-select: none;
   pointer-events: none;
