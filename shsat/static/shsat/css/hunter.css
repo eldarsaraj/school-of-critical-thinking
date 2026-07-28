@@ -5,14 +5,10 @@
    to one cannot accidentally break the other.
    ---------------------------------------------------------- */
 
-/* Passage column: expand to fit original line length (Hunter has
-   fixed-width typed passages where line breaks carry meaning). */
+/* Passage column: fixed width cap so occasional long lines (11+ long
+   words) do not squeeze the question column. Line numbers stay correct
+   because placeLineNumbers() uses Y-coordinate anchors — even when a
+   line wraps visually, the anchor is at the line's start. */
 .shsat-passage-layout {
-  grid-template-columns: minmax(300px, max-content) 1fr;
-}
-
-/* Prevent the browser from wrapping lines — each <div> is one
-   original source line, so the visual line numbers stay aligned. */
-.shsat-passage-prose {
-  white-space: nowrap;
+  grid-template-columns: minmax(300px, 500px) 1fr;
 }
