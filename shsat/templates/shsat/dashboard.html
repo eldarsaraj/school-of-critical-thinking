@@ -603,16 +603,27 @@ function makeProjData(arr) {
 })();
 
 // ---------------------------------------------------------------------------
-// Skill accuracy horizontal bar charts — one per section
+// Skill accuracy heatmap bar charts — one per section
+// ELA: blue gradient (lighter = lower, darker = higher)
+// Math: red gradient (same hues as score chart)
 // ---------------------------------------------------------------------------
 (function () {
   const allSkills = JSON.parse(document.getElementById("skillChartData").textContent);
 
-  function renderSkillAccuracy(canvasId, wrapId, skills) {
+  // Heatmap color: opacity 0.15→1.0 mapped to accuracy 0→100
+  // rgb values match P.ela and P.math
+  function heatColor(accuracy, r, g, b) {
+    const alpha = 0.15 + (accuracy / 100) * 0.85;
+    return `rgba(${r},${g},${b},${alpha.toFixed(2)})`;
+  }
+  const ELA_RGB  = [91, 142, 196];   // matches P.ela  #5b8ec4
+  const MATH_RGB = [196, 99, 91];    // matches P.math #c4635b
+
+  function renderSkillAccuracy(canvasId, wrapId, skills, rgb) {
     if (!skills.length) return;
     document.getElementById(wrapId).style.display = "";
     const accuracies = skills.map(s => s.accuracy);
-    const colors = accuracies.map(a => a < 60 ? P.wrong : a < 80 ? P.warn : P.correct);
+    const colors = accuracies.map(a => heatColor(a, ...rgb));
     new Chart(document.getElementById(canvasId).getContext("2d"), {
       type: "bar",
       data: {
@@ -634,17 +645,18 @@ function makeProjData(arr) {
     });
   }
 
-  renderSkillAccuracy("skillChartEla",  "skillElaWrap",  allSkills.filter(s => s.section === "ELA"));
-  renderSkillAccuracy("skillChartMath", "skillMathWrap", allSkills.filter(s => s.section === "Math"));
+  renderSkillAccuracy("skillChartEla",  "skillElaWrap",  allSkills.filter(s => s.section === "ELA"),  ELA_RGB);
+  renderSkillAccuracy("skillChartMath", "skillMathWrap", allSkills.filter(s => s.section === "Math"), MATH_RGB);
 })();
 
 // ---------------------------------------------------------------------------
 // Time per skill horizontal bar charts — one per section
+// ELA: blue, Math: red (consistent with score charts)
 // ---------------------------------------------------------------------------
 (function () {
   const allSkills = JSON.parse(document.getElementById("skillChartData").textContent);
 
-  function renderSkillTime(canvasId, wrapId, skills) {
+  function renderSkillTime(canvasId, wrapId, skills, color) {
     const timed = skills.filter(s => s.avg_time !== null);
     if (!timed.length) return;
     document.getElementById(wrapId).style.display = "";
@@ -653,7 +665,7 @@ function makeProjData(arr) {
       type: "bar",
       data: {
         labels: timed.map(s => s.label),
-        datasets: [{ label: "Avg minutes", data: timed.map(s => s.avg_time), backgroundColor: P.neutral, borderWidth: 0, barThickness: 16 }]
+        datasets: [{ label: "Avg minutes", data: timed.map(s => s.avg_time), backgroundColor: color, borderWidth: 0, barThickness: 16 }]
       },
       options: {
         indexAxis: "y", responsive: true,
@@ -670,8 +682,8 @@ function makeProjData(arr) {
     });
   }
 
-  renderSkillTime("timeChartEla",  "timeElaWrap",  allSkills.filter(s => s.section === "ELA"));
-  renderSkillTime("timeChartMath", "timeMathWrap", allSkills.filter(s => s.section === "Math"));
+  renderSkillTime("timeChartEla",  "timeElaWrap",  allSkills.filter(s => s.section === "ELA"),  P.ela);
+  renderSkillTime("timeChartMath", "timeMathWrap", allSkills.filter(s => s.section === "Math"), P.math);
 })();
 </script>
 {% endblock %}
