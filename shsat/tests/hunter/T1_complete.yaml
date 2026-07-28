@@ -56,8 +56,8 @@ skill_totals:
     Number & Operations (Whole Numbers): 9
 difficulty_totals:
   easy: 17
-  medium: 82
-  hard: 35
+  medium: 89
+  hard: 28
 built_from:
 - T1_run01.yaml
 - T1_run02.yaml
@@ -80,157 +80,411 @@ passages:
 - id: T1-P1
   test_id: Test 1 (baseline)
   slot: 1
-  title: The Visible Mend
+  title: The Useful Blur
   genre: contemporary_informational
   era: contemporary
   source_type: original
   source_citation:
-  setting_place: museum conservation studios and galleries; no single named location
-  setting_period: present day, with reference to the nineteenth century and to 2150
-  narrator_pov: third-person expository; unnamed essayist, no personal narrative
-  central_relationship: none — expository; the conservator and an unknown future viewer
-  topic: why conservators now make repairs reversible and deliberately visible
-  mood: measured, argumentative, coolly certain
-  word_count: 452
-  line_count: 42
-  fk_grade: 10.6
-  mean_sentence_length: 20.5
+  setting_place: none — an essay about maps and description
+  setting_period: present day
+  narrator_pov: third-person expository; unnamed essayist
+  central_relationship: none — expository
+  topic: why a useful description must leave the right things out
+  mood: measured, analytical, lightly provocative
+  word_count: 508
+  line_count: 48
+  fk_grade: 11.2
+  mean_sentence_length: 24.2
   n_items: 9
-  skills_covered: inference; vocabulary_in_context; main_idea; authors_purpose; structure
-  vocab_words_tested: sound; arrested
-  register_collision_check: 'Checked against all 11 real passages and the empty T1 rows. No prior passage is contemporary informational, none is set in a museum or conservation studio, none uses third-person expository voice (H1-E is a first-person essayist), and none has an absent central relationship of this kind. Deliberately avoids the two Nebraska-farm settings (H1-F, H2-E) and adds no fourth first-person-boy narrator (H1-A, H1-F, H2-D). Neither "sound" nor "arrested" appears in vocab_words_tested.
-
-    '
-  text: "    A museum conservator's most useful tool is not a brush or\n    a solvent but a decision, made early and defended for decades,\n    about what a damaged object is for. For most of the\n    history of collecting that decision was easy: a chipped Greek cup\n5   was filled and painted to match, a darkened canvas was scrubbed\n    bright, and the goal in both cases was wholeness. An object\n    should look the way its maker had meant it to look,\n    and the repair should be invisible; restorers took real pride in\n    work that no visitor could detect. That standard has been abandoned,\n10  and not because conservators became less skilled at meeting it. They\n    became less confident, on purpose. Every generation of restorers has been\n    certain it knew what an object originally looked like, and every\n    generation has been corrected by the one that followed it. Nineteenth-century\n    restorers gave armless Roman statues new arms in poses the sculptors\n15  never used, and cleaners stripped away varnish that turned out to\n    be original glaze. Each of those mistakes was made carefully, by\n    experts, with confidence. So the field adopted a rule that sounds\n    like modesty and works like a wager: any treatment must be\n    reversible. The fill must come out, the varnish must dissolve, the\n20  added arm must unscrew. A conservator today assumes that someone in\n    2150 will know things she does not, and she works to\n    leave that person room. The rule has a stranger consequence, and\n    it is the one visitors notice. If a repair must be\n    undoable it helps enormously for the repair to be findable, and\n25  so the best modern fills announce themselves. A missing section of\n    a Roman mosaic is replaced with plain gray plaster, tinted close\n    enough that the eye does not snag on it but never\n    close enough to fool anyone. Step nearer and the seam appears.\n    The vase is whole from across the room and frankly broken\n30  from three feet away. This unsettles visitors who expect a museum\n    to show them the thing itself, but the alternative is worse\n    than ugly, because damage is evidence. A crack records a fall,\n    a fire, a route through a war. Smooth it away and\n    the object looks sound and still answers questions, except that it\n35  now answers them wrongly, with a confidence it has not earned.\n    A seamless restoration offers a claim about the injuries as though\n    the claim itself were the object. Conservators sometimes describe their work\n    as arrested rather than finished, and the phrasing is exact, because\n    they stop a process without concluding it. The visible mend is\n40  the discipline's way of saying so out loud, a line drawn\n    across an object to mark where our knowledge ends and someone\n    else's begins.\n"
+  skills_covered: main_idea; authors_purpose; structure; vocabulary_in_context; inference
+  vocab_words_tested: faithful; contrived
+  text: |2
+       A map that reproduced everything would be worthless, and the reason
+       repays a moment's attention, because it runs against instinct. We are
+       trained to admire a description for its thoroughness, as if the
+       best account of a thing were the one that left nothing
+     5 out. The mapmaker understands otherwise. Picture a map drawn to the
+       scale of the country itself, a full mile of paper for
+       every mile of ground, each fence and ditch and blade of
+       grass marked exactly where it lies. Such a map would be
+       a marvel of accuracy and of no earthly use. To consult
+    10 it you would first have to spread it across the very
+       landscape it copied, and then you would find yourself standing in
+       the ordinary world again, no wiser than before. The map would
+       have duplicated the territory rather than explaining it.
+       The usefulness of a map derives from the very material it
+    15 consents to omit. A road map suppresses the forests so that
+       the road can be followed; a subway map disregards the real
+       distances and forces the tangled rails into tidy parallel lines so
+       that a passenger may grasp, in a single glance, where one
+       route crosses another. Each such map is a species of deliberate
+    20 untruth, and each untruth is committed in the service of a
+       clarity the traveler actually requires. The cartographer's art consists not in
+       the capacity to observe everything but in the discernment to decide
+       what can be sacrificed without penalty, a decision that means nothing
+       except in relation to the particular question the map has been
+    25 made to settle. A chart invaluable to a hiker is useless
+       to an airline pilot, not because either is the more faithful
+       to the land beneath it, but because the two have elected
+       to disregard entirely different things.
+       The lesson is an uncomfortable one, because omission wears the outward
+    30 appearance of neglect. The student filling a notebook longs to preserve
+       the entire lecture; the researcher with a sensitive new instrument is
+       tempted to register every digit it will surrender. Yet a note
+       that transcribes a lecture word for word has not been taken
+       at all, and a quantity reported to more decimal places than
+    35 the problem demands is not the more exact, only the more
+       laborious to read. Information in excess of the purpose at hand
+       does not refine a picture; it obscures it. The understanding, no
+       less than the map, arrives at the meaning of a thing
+       chiefly by retaining a handful of its features and permitting the
+    40 remainder to recede.
+       So when some streamlined diagram appears to condescend to your intelligence,
+       entertain the possibility that its author performed the more demanding labor,
+       the labor of exclusion. Addition asks little of anyone. Only a
+       settled sense of the destination can disclose which of a thousand
+    45 particulars will prove to be so much clutter along the way.
+       The worthiest map is to be judged less by the abundance
+       it manages to carry than by the abundance it has contrived,
+       with purpose and with skill, to leave behind.
 - id: T1-P2
   test_id: Test 1 (baseline)
   slot: 2
-  title: The Jointer
+  title: Off Season
   genre: contemporary_literary_fiction
   era: contemporary
   source_type: original
   source_citation:
-  setting_place: a monthly swap meet in a parking lot behind a roller rink
-  setting_period: present day, a Sunday in June
-  narrator_pov: first-person, granddaughter of about twelve, same-day narration
-  central_relationship: granddaughter & grandfather, with a stranger as the third party
-  topic: a grandfather sells cheaply the one tool he had always refused to sell
-  mood: watchful, withheld, affectionate
-  word_count: 539
-  line_count: 49
-  fk_grade: 5.8
-  mean_sentence_length: 17.4
+  setting_place: a miniature-golf course on a highway, on the last day of the season
+  setting_period: present day, the last Sunday in October
+  narrator_pov: first-person, a girl (the narrator), same-day narration
+  central_relationship: niece and uncle
+  topic: closing a miniature-golf course for winter; the uncle leaves the windmill running
+  mood: watchful, affectionate, withheld
+  word_count: 575
+  line_count: 56
+  fk_grade: 6.8
+  mean_sentence_length: 22.1
   n_items: 8
   skills_covered: figurative_craft; vocabulary_in_context; inference; tone_attitude; point_of_view
-  vocab_words_tested: keen
-  register_collision_check: 'No prior passage is contemporary literary fiction. Setting (a swap meet parking lot) is new; the corpus has no market, no commerce scene, and nothing in a present-day suburb. Narrator is a girl — every first-person narrator in the corpus is a boy or an unspecified adult male, and this avoids adding a fourth first-person-boy narrator (H1-A, H1-F, H2-D). Central relationship is grandfather & granddaughter; the corpus has three mother-child passages (H1-A, H1-B, H1-D), one grandmother inside a trio (H1-F) and one uncle (H2-D), but no grandfather and no grandparent as the central pair. Topic (a sale that is not about money) is unrelated to any corpus topic. "keen" does not appear in vocab_words_tested.
-
-    '
-  text: "    My grandfather sells at the swap meet in the parking lot\n    behind the roller rink, first Sunday of the month, and I\n    go with him because somebody has to make change. He does\n    not trust the app on my phone. He keeps a cigar\n5   box with a rubber band around it and counts out bills\n    like he is dealing cards. We sell tools, and not new\n    ones. Planes and chisels and squares, most of them older than\n    he is, laid out on a folding table with a green\n    blanket over it. He is particular about the blanket. He says\n10  a tool on bare metal looks like it is being got\n    rid of. There was a plane he never sold. A big\n    one, a jointer, almost as long as my arm, with a\n    knob at the front worn down on one side from the\n    way somebody used to hold it. Men came for it. There\n15  is a man named Dennis who comes every month in a\n    truck with his name painted on the door, who calls me\n    young lady every single time as though he has just thought\n    of it, and every month he asks about the jointer, and\n    every month my grandfather says it is not for sale, and\n20  Dennis laughs like it is a joke the two of them\n    are doing together. That Sunday a kid came. Not a kid,\n    a man, but young, maybe twenty, in a work shirt with\n    paint on the cuffs. He picked up three things and put\n    them all back. Then he stood in front of the jointer\n25  for a while without touching it. \"What's this one do,\" he\n    said. My grandfather told him. Then he told him more than\n    that. He showed him how the blade sat, and he ran\n    his thumb along the edge the way he tells me never\n    to do, and the edge was keen, because he had dressed\n30  it Saturday night at the kitchen table with the whetstone and\n    the little dish of oil, which I had not thought about\n    until then. The young man said he was fixing up a\n    house. He said the floors were bad. He asked what a\n    thing like this would cost, and my grandfather said sixty dollars.\n35  I said, \"Grandpa.\" He did not look at me. Dennis had\n    offered four hundred in March. I was there. I wrote it\n    in the book. The young man counted out the money in\n    tens, and my grandfather wrapped the plane in newspaper, which he\n    does not do for anything else, and carried it out to\n40  the car himself, and I watched them from behind the table,\n    two men bent over an open trunk, my grandfather's hands going\n    the way they go when he is explaining. When he came\n    back he did not say anything about it. He moved the\n    block plane over to where the jointer had been, and then\n45  the squares, and then the level, closing up the space so\n    that you would not know. He straightened the blanket. Then he\n    sat down in his chair and looked out at the lot\n    for a while, at the people going by with their arms\n    full, and he said, \"Cold for June.\" It was not cold.\n"
+  vocab_words_tested: careful
+  text: |2
+       My uncle Ray runs the miniature golf on Route 9, and
+       on the last Sunday in October I go with him to
+       put it to bed. That is what he calls it, putting
+       it to bed, as though the eighteen little greens were children
+     5 who would wake in April. We pull the flags and stack
+       the clubs by color along the fence. We carry the plywood
+       covers out to the holes and lower them over the cups
+       so that the leaves will not pack down into them all
+       winter. Uncle Ray lays the covers himself. He will not let
+    10 me, because, he says, you have to set them down and
+       not drop them, and there is a difference between the two.
+       The course sits between a car wash and a field that
+       used to be something and is now only weeds taller than
+       I am. In summer there are birthday parties, and boys who
+    15 swing the little clubs too hard, and a line at the
+       window where Ray sells taffy and hands out the putters and
+       keeps the score cards in an old cigar box. On the
+       last Sunday of the season there is nobody at all but
+       the two of us and the cars going by on their
+    20 way to somewhere else. The artificial grass has worn flat and
+       colorless straight down the middle of every hole, where a whole
+       summer of sneakers has crossed it, and it has stayed a
+       bright unnatural green only along the edges that nobody has any
+       reason to walk, so that you can read the season in
+    25 the carpet the way you can read a path worn across
+       a lawn.
+       He saves the windmill for last. It is the eighth hole,
+       a wooden windmill as tall as I am, painted blue, its
+       four sails turned by a motor, with a gap at the
+    30 bottom the ball has to slip through when the sails swing
+       up out of the way. All afternoon it has been turning
+       over an empty green. When everything else is covered and the
+       clubs are locked inside and the taffy is counted into its
+       tin, Uncle Ray stands in front of the windmill with his
+    35 hands in his jacket and looks at it a long moment.
+       Then he walks around behind it, and I hear the small
+       motor catch, and the sails keep turning.
+       "You're leaving it on," I said. It was nearly dark by
+       then.
+    40 "Costs about nothing," he said, which was not really an answer.
+       He is careful with his money. He counts the taffy quarters
+       into paper rolls at his kitchen table on Sunday nights.
+       We stood there a while without saying anything more. The sails
+       went around, blue against a sky that had gone the color
+    45 of a nickel, and threw a slow shadow that swept over
+       the covered holes and the flattened grass and over the two
+       of us and around again. A car slowed on Route 9
+       and I thought for a second it was turning in, but
+       it was only somebody reading the sign, and then it drove
+    50 on.
+       "All right," Uncle Ray said at last, though no one had
+       asked him anything. He did not turn the windmill off. We
+       climbed into the truck and left it turning behind us in
+       the dark, and he did not say why, and I did
+    55 not ask him, because there are things you can see your
+       uncle would rather keep to himself.
 - id: T1-P3
   test_id: Test 1 (baseline)
   slot: 3
-  title: Playing Pilgrims (opening)
+  title: The Old Pyncheon Family (excerpt)
   genre: classic_literary_fiction
   era: classic
   source_type: public_domain_excerpt
-  source_citation: 'Louisa May Alcott, "Little Women" (Boston: Roberts Brothers, 1868), Chapter 1, "Playing Pilgrims" — opening through Beth''s second sigh. Project Gutenberg etext 514, https://www.gutenberg.org/cache/epub/514/pg514.txt. Public domain in the United States.
-
-    '
-  excerpt_start_anchor: Christmas won't be Christmas without any presents
-  excerpt_end_anchor: sigh that any one could hear that time.
-  setting_place: the sitting room of a modest New England house, before the fire
-  setting_period: 1860s, Christmas during the American Civil War
-  narrator_pov: third-person, lightly ironic and affectionate toward all four girls
-  central_relationship: four sisters
-  topic: four sisters compare their grievances on a Christmas without presents
-  mood: lively and quarrelsome, undercut by an absence
-  word_count: 494
-  line_count: 52
+  source_citation: 'Nathaniel Hawthorne, "The House of the Seven Gables" (Boston: Ticknor, Reed, and Fields, 1851), Chapter 1, "The Old Pyncheon Family." Project Gutenberg etext 77, https://www.gutenberg.org/cache/epub/77/pg77.txt. Public domain in the United States.'
+  excerpt_start_anchor: The House of the Seven Gables, antique as it now looks, was not the first habitation
+  excerpt_end_anchor: was executed for the crime of witchcraft.
+  setting_place: Pyncheon Street in an old New England town; the site of the house
+  setting_period: colonial New England, roughly a century and a half before the narrator's day
+  narrator_pov: third-person, grave and lightly ironic
+  central_relationship: Colonel Pyncheon and Matthew Maule (antagonists over the land)
+  topic: the disputed origin of the Pyncheon house — how a powerful man's claim displaced an obscure settler
+  mood: grave, ironic, morally weighted
+  word_count: 452
+  line_count: 42
+  fk_grade: 14.2
   n_items: 9
-  skills_covered: main_idea; vocabulary_in_context; supporting_detail; inference; figurative_craft; tone_attitude
-  vocab_words_tested: altered; cross
-  layout_rule: paragraph breaks preserved; wrapped at exactly 11 words per line; no paragraph shares a line; every 5th line numbered
-  register_collision_check: 'Period 1860s is unoccupied — the corpus runs 1830s, 1840s, 1880s, 1890s, 1900s, 1910s and mid-20th century. "Four sisters" is an unused central relationship; the corpus has three mother-child pairings, one uncle, one mistress, one trio of men and no sibling group. The narrator is third-person and ironic, distinct from H1-C (third-person limited at sea), H2-C (third-person with direct address) and H2-E (third-person limited). Closest neighbour is H1-D, also a domestic interior with children, but that is 1840s England in first-person retrospect; this is 1860s America in third person with no adult looking back. No farm, no sea, no Nebraska, and no fourth first-person-boy narrator. Neither "altered" nor "cross" appears in vocab_words_tested.
-
-    '
-  text: "    Christmas won't be Christmas without any presents,\" grumbled Jo, lying on\n    the rug.\n    \"It's so dreadful to be poor!\" sighed Meg, looking down at\n    her old dress.\n5   \"I don't think it's fair for some girls to have plenty\n    of pretty things, and other girls nothing at all,\" added little\n    Amy, with an injured sniff.\n    \"We've got Father and Mother, and each other,\" said Beth contentedly\n    from her corner.\n10  The four young faces on which the firelight shone brightened at\n    the cheerful words, but darkened again as Jo said sadly, \"We\n    haven't got Father, and shall not have him for a long\n    time.\" She didn't say \"perhaps never,\" but each silently added it,\n    thinking of Father far away, where the fighting was.\n15  Nobody spoke for a minute; then Meg said in an altered\n    tone, \"You know the reason Mother proposed not having any presents\n    this Christmas was because it is going to be a hard\n    winter for everyone; and she thinks we ought not to spend\n    money for pleasure, when our men are suffering so in the\n20  army. We can't do much, but we can make our little\n    sacrifices, and ought to do it gladly. But I am afraid\n    I don't,\" and Meg shook her head, as she thought regretfully\n    of all the pretty things she wanted.\n    \"But I don't think the little we should spend would do\n25  any good. We've each got a dollar, and the army wouldn't\n    be much helped by our giving that. I agree not to\n    expect anything from Mother or you, but I do want to\n    buy Undine and Sintran for myself. I've wanted it so long,\"\n    said Jo, who was a bookworm.\n30  \"I planned to spend mine in new music,\" said Beth, with\n    a little sigh, which no one heard but the hearth brush\n    and kettle-holder.\n    \"I shall get a nice box of Faber's drawing pencils; I\n    really need them,\" said Amy decidedly.\n35  \"Mother didn't say anything about our money, and she won't wish\n    us to give up everything. Let's each buy what we want,\n    and have a little fun; I'm sure we work hard enough\n    to earn it,\" cried Jo, examining the heels of her shoes\n    in a gentlemanly manner.\n40  \"I know I do--teaching those tiresome children nearly all day, when\n    I'm longing to enjoy myself at home,\" began Meg, in the\n    complaining tone again.\n    \"You don't have half such a hard time as I do,\"\n    said Jo. \"How would you like to be shut up for\n45  hours with a nervous, fussy old lady, who keeps you trotting,\n    is never satisfied, and worries you till you're ready to fly\n    out the window or cry?\"\n    \"It's naughty to fret, but I do think washing dishes and\n    keeping things tidy is the worst work in the world. It\n50  makes me cross, and my hands get so stiff, I can't\n    practice well at all.\" And Beth looked at her rough hands\n    with a sigh that any one could hear that time.\n"
+  skills_covered: main_idea; tone_attitude; supporting_detail; figurative_craft; vocabulary_in_context; inference
+  vocab_words_tested: plausible; obscure
+  layout_rule: paragraph breaks preserved; wrapped at 11 words per line; every 5th line numbered
+  text: |2
+       The House of the Seven Gables, antique as it now looks,
+       was not the first habitation erected by civilized man on precisely
+       the same spot of ground. Pyncheon Street formerly bore the humbler
+       appellation of Maule's Lane, from the name of the original occupant
+     5 of the soil, before whose cottage-door it was a cow-path. A
+       natural spring of soft and pleasant water—a rare treasure on the
+       sea-girt peninsula where the Puritan settlement was made—had early induced Matthew
+       Maule to build a hut, shaggy with thatch, at this point,
+       although somewhat too remote from what was then the centre of
+    10 the village. In the growth of the town, however, after some
+       thirty or forty years, the site covered by this rude hovel
+       had become exceedingly desirable in the eyes of a prominent and
+       powerful personage, who asserted plausible claims to the proprietorship of this
+       and a large adjacent tract of land, on the strength of
+    15 a grant from the legislature. Colonel Pyncheon, the claimant, as we
+       gather from whatever traits of him are preserved, was characterized by
+       an iron energy of purpose. Matthew Maule, on the other hand,
+       though an obscure man, was stubborn in the defence of what
+       he considered his right; and, for several years, he succeeded in
+    20 protecting the acre or two of earth which, with his own
+       toil, he had hewn out of the primeval forest, to be
+       his garden ground and homestead. No written record of this dispute
+       is known to be in existence. Our acquaintance with the whole
+       subject is derived chiefly from tradition. It would be bold, therefore,
+    25 and possibly unjust, to venture a decisive opinion as to its
+       merits; although it appears to have been at least a matter
+       of doubt, whether Colonel Pyncheon's claim were not unduly stretched, in
+       order to make it cover the small metes and bounds of
+       Matthew Maule. What greatly strengthens such a suspicion is the fact
+    30 that this controversy between two ill-matched antagonists—at a period, moreover, laud
+       it as we may, when personal influence had far more weight
+       than now—remained for years undecided, and came to a close only
+       with the death of the party occupying the disputed soil. The
+       mode of his death, too, affects the mind differently, in our
+    35 day, from what it did a century and a half ago.
+       It was a death that blasted with strange horror the humble
+       name of the dweller in the cottage, and made it seem
+       almost a religious act to drive the plough over the little
+       area of his habitation, and obliterate his place and memory from
+    40 among men.
+       Old Matthew Maule, in a word, was executed for the crime
+       of witchcraft.
+  mean_sentence_length: 34.8
 - id: T1-P4
   test_id: Test 1 (baseline)
   slot: 4
-  title: A Squatter's Claim
+  title: Economy (excerpt)
   genre: classic_literary_nonfiction
   era: classic
   source_type: public_domain_excerpt
-  source_citation: 'Isabella L. Bird, "A Lady''s Life in the Rocky Mountains" (London: John Murray, 1879), from the letter headed "Canyon, September" — two consecutive paragraphs describing the Chalmers household. Project Gutenberg etext 755, https://www.gutenberg.org/cache/epub/755/pg755.txt. Public domain in the United States.
-
-    '
-  excerpt_start_anchor: They have one hundred and sixty acres of land
-  excerpt_end_anchor: nearly two years in the United States.
-  setting_place: a squatter's claim and primitive sawmill in the Colorado foothills
-  setting_period: 1873
-  narrator_pov: first-person, an Englishwoman travelling alone, writing letters home to her sister
-  central_relationship: the writer and the frontier family she is lodging with
-  topic: a household that works without rest and stays poor, and what the writer makes of it
-  mood: exact, unsparing, reluctant
-  word_count: 479
-  line_count: 45
+  source_citation: 'Henry David Thoreau, "Walden; or, Life in the Woods" (Boston: Ticknor and Fields, 1854), Chapter 1, "Economy." Project Gutenberg etext 205, https://www.gutenberg.org/cache/epub/205/pg205.txt. Public domain in the United States.'
+  excerpt_start_anchor: The mass of men lead lives of quiet desperation.
+  excerpt_end_anchor: and in others still are entirely unknown.
+  setting_place: none — a reflective essay
+  setting_period: 1850s New England
+  narrator_pov: first-person essayist addressing the reader
+  central_relationship: none — the writer and society at large
+  topic: a challenge to accept inherited ways of living; most lives are lived in 'quiet desperation'
+  mood: challenging, skeptical, reflective
+  word_count: 560
+  line_count: 52
+  fk_grade: 9.0
   n_items: 8
-  skills_covered: main_idea; vocabulary_in_context; inference; tone_attitude; authors_purpose
-  vocab_words_tested: invaluable; want
-  layout_rule: paragraph breaks preserved; wrapped at exactly 11 words per line; no paragraph shares a line; every 5th line numbered
-  register_collision_check: 'Period 1873 is unoccupied — the corpus runs 1830s, 1840s, 1880s, 1890s, 1900s, 1910s and mid-20th century, and slot 3 took the 1860s. Colorado and the American West appear nowhere in the corpus. The narrator is a first-person woman travelling alone and reporting on strangers, which separates her from H2-A (Douglass, first-person male autobiography about his own bondage) and from H1-E (first-person essayist meditating on a natural wonder); this passage is social observation with no landscape and no self-history. Nearest collision is the pair of Nebraska-farm passages, H1-F and H2-E, since this is also land being worked. The distinction is deliberate and holds: Cather''s farms are settings for coming-of-age narratives told from inside the household, whereas this is an outsider''s report on a failing timber claim, and the writer is a lodger who will leave. No fourth first-person-boy narrator. Neither "invaluable" nor "want" appears in vocab_words_tested.
-
-    '
-  text: "    They have one hundred and sixty acres of land, a \"Squatter's\n    claim,\" and an invaluable water power. He is a lumberer, and\n    has a saw-mill of a very primitive kind. I notice that\n    every day something goes wrong with it, and this is the\n5   case throughout. If he wants to haul timber down, one or\n    other of the oxen cannot be found; or if the timber\n    is actually under way, a wheel or a part of the\n    harness gives way, and the whole affair is at a standstill\n    for days. The cabin is hardly a shelter, but is allowed\n10  to remain in ruins because the foundation of a frame house\n    was once dug. A horse is always sure to be lame\n    for want of a shoe nail, or a saddle to be\n    useless from a broken buckle, and the wagon and harness are\n    a marvel of temporary shifts, patchings, and insecure linkings with strands\n15  of rope. Nothing is ever ready or whole when it is\n    wanted. Yet Chalmers is a frugal, sober, hard-working man, and he,\n    his eldest son, and a \"hired man\" \"Rise early,\" \"going forth\n    to their work and labor till the evening\"; and if they\n    do not \"late take rest,\" they truly \"eat the bread of\n20  carefulness.\" It is hardly surprising that nine years of persevering shiftlessness\n    should have resulted in nothing but the ability to procure the\n    bare necessaries of life.\n    Of Mrs. C. I can say less. She looks like one\n    of the English poor women of our childhood--lean, clean, toothless, and\n25  speaks, like some of them, in a piping, discontented voice, which\n    seems to convey a personal reproach. All her waking hours are\n    spent in a large sun-bonnet. She is never idle for one\n    minute, is severe and hard, and despises everything but work. I\n    think she suffers from her husband's shiftlessness. She always speaks of\n30  me as \"This\" or \"that woman.\" The family consists of a\n    grown-up son, a shiftless, melancholy-looking youth, who possibly pines for a\n    wider life; a girl of sixteen, a sour, repellent-looking creature, with\n    as much manners as a pig; and three hard, un-child-like younger\n    children. By the whole family all courtesy and gentleness of act\n35  or speech seem regarded as \"works of the flesh,\" if not\n    of \"the devil.\" They knock over all one's things without apologizing\n    or picking them up, and when I thank them for anything\n    they look grimly amazed. I feel that they think it sinful\n    that I do not work as hard as they do. I\n40  wish I could show them \"a more excellent way.\" This hard\n    greed, and the exclusive pursuit of gain, with the indifference to\n    all which does not aid in its acquisition, are eating up\n    family love and life throughout the West. I write this reluctantly,\n    and after a total experience of nearly two years in the\n45  United States.\n"
+  skills_covered: main_idea; authors_purpose; tone_attitude; figurative_craft; vocabulary_in_context; inference
+  vocab_words_tested: resignation; necessaries
+  layout_rule: paragraph breaks preserved; wrapped at 11 words per line; every 5th line numbered
+  text: |2
+       The mass of men lead lives of quiet desperation. What is
+       called resignation is confirmed desperation. From the desperate city you go
+       into the desperate country, and have to console yourself with the
+       bravery of minks and muskrats. A stereotyped but unconscious despair is
+     5 concealed even under what are called the games and amusements of
+       mankind. There is no play in them, for this comes after
+       work. But it is a characteristic of wisdom not to do
+       desperate things.
+       When we consider what, to use the words of the catechism,
+    10 is the chief end of man, and what are the true
+       necessaries and means of life, it appears as if men had
+       deliberately chosen the common mode of living because they preferred it
+       to any other. Yet they honestly think there is no choice
+       left. But alert and healthy natures remember that the sun rose
+    15 clear. It is never too late to give up our prejudices.
+       No way of thinking or doing, however ancient, can be trusted
+       without proof. What everybody echoes or in silence passes by as
+       true to-day may turn out to be falsehood to-morrow, mere smoke
+       of opinion, which some had trusted for a cloud that would
+    20 sprinkle fertilizing rain on their fields. What old people say you
+       cannot do you try and find that you can. Old deeds
+       for old people, and new deeds for new. Old people did
+       not know enough once, perchance, to fetch fresh fuel to keep
+       the fire a-going; new people put a little dry wood under
+    25 a pot, and are whirled round the globe with the speed
+       of birds, in a way to kill old people, as the
+       phrase is. Age is no better, hardly so well, qualified for
+       an instructor as youth, for it has not profited so much
+       as it has lost. One may almost doubt if the wisest
+    30 man has learned any thing of absolute value by living. Practically,
+       the old have no very important advice to give the young,
+       their own experience has been so partial, and their lives have
+       been such miserable failures, for private reasons, as they must believe;
+       and it may be that they have some faith left which
+    35 belies that experience, and they are only less young than they
+       were. I have lived some thirty years on this planet, and
+       I have yet to hear the first syllable of valuable or
+       even earnest advice from my seniors. They have told me nothing,
+       and probably cannot tell me any thing to the purpose. Here
+    40 is life, an experiment to a great extent untried by me;
+       but it does not avail me that they have tried it.
+       If I have any experience which I think valuable, I am
+       sure to reflect that this my Mentors said nothing about.
+       One farmer says to me, "You cannot live on vegetable food
+    45 solely, for it furnishes nothing to make bones with;" and so
+       he religiously devotes a part of his day to supplying his
+       system with the raw material of bones; walking all the while
+       he talks behind his oxen, which, with vegetable-made bones, jerk him
+       and his lumbering plough along in spite of every obstacle. Some
+    50 things are really necessaries of life in some circles, the most
+       helpless and diseased, which in others are luxuries merely, and in
+       others still are entirely unknown.
+  mean_sentence_length: 23.3
 - id: T1-P5
   test_id: Test 1 (baseline)
   slot: 5
-  title: Gymnasium, Second Night
+  title: Murmuration
   genre: poem
   era: contemporary
   source_type: original
   source_citation:
-  setting_place: a school gymnasium serving as an emergency shelter
-  setting_period: present day, during a flood that has not yet crested
-  narrator_pov: first-person plural, with a single "I" who speaks once
-  central_relationship: a community of strangers sheltering together; no family pair
-  topic: painted floor markings go on organizing people who never learned the game
-  mood: hushed and watchful, opening into wonder at the close
-  line_count: 32
-  stanza_count: 5
+  setting_place: a parking lot behind a closed garden center, at dusk
+  setting_period: present day
+  narrator_pov: first-person, a child, with the father beside
+  central_relationship: a child and a father watching together
+  topic: a starling murmuration — order without a leader, and a wonder too large to speak
+  mood: hushed, wondering
+  line_count: 26
+  stanza_count: 6
+  fk_grade: 7.6
+  mean_sentence_length: 25.4
   n_items: 8
-  skills_covered: inference; figurative_craft; tone_attitude; main_idea
+  skills_covered: main_idea; tone_attitude; figurative_craft; inference
   vocab_words_tested: none
-  register_collision_check: 'Checked against all three corpus poems. H1-B and H2-D are both Chicago, both mid-20th century, both first-person and both built on a family pair (mother and son; nephew and uncle). H2-B is a figurative journey with a first-person speaker and the "men with maps." This poem takes none of those: a gymnasium rather than a street, office or road; present day rather than mid-century; first-person plural rather than singular; and a community of strangers rather than a family pair. No fourth first-person-boy narrator — the one child in the poem is observed, not narrating. It also avoids landscape, which would have run at H1-E and H2-C. Internal check against the four generated passages: an earlier candidate, a poem on the painted outline a demolished building leaves on its neighbour, was rejected because its subject (absence as a record) would have echoed T1-P1 on damage as evidence. This poem''s subject is inherited order persisting, which nothing else in the form touches.
+  text: |2
+       At the hour the streetlights decide to come on
+       the starlings gather above the parking lot
+       behind the closed garden center — a few at first,
+       then a hundred, then a number no one keeps.
 
-    '
-  text: "    The cots came in on Tuesday, forty of them,\n    and the men who carried them set each one down\n    inside a painted line, because the lines were there.\n    Nobody told them to. By morning the whole floor\n5   had arranged itself: a row along the baseline,\n    two rows in the key, one cot at center court\n    where a woman sleeps with her arm across her eyes.\n\n    The scoreboard is dark. It has been dark for days\n    and still we look at it, the way you check a clock\n10  whose hands you know have stopped. Someone has stacked\n    the folded bleachers to the wall. Someone else\n    has swept, though there is nothing here to sweep,\n    only the shine the floor keeps giving back.\n\n    At six the light comes through the high windows\n15  in four long rectangles and lies down on the boards\n    like something let in for the night. A boy of eight\n    walks the center circle heel to toe, arms out,\n    the way you would cross a log above a creek.\n    He has never seen a game played here. He does not know\n20  what the circle was for. He only knows it is a line\n    and that a line asks you to follow it.\n\n    Mr. Alvarez has put his shoes at the free-throw stripe,\n    squared, the toes exactly on the paint.\n    He is eighty-one and he has not played anything\n25  in fifty years. When I asked him why, he shrugged\n    and said a man likes to know where his feet go.\n\n    Outside, the water is still deciding where to stop.\n    Inside, the room keeps saying: stand here, wait there,\n    this is your part of the floor, this is where you start.\n30  We came in with nothing arranged\n    and the floor arranged us, in a language\n    none of us was taught and all of us can read.\n"
+     5 They appoint no leader. Watch how the whole flock
+       leans, and folds, and pours itself
+       out of one shape and into the next:
+       now a fist, now a sheet snapped sideways
+       by a wind that stirs nothing else in the sky.
+
+    10 No single bird decides it. Each one only
+       holds its small distance from the seven nearest,
+       and out of seven thousand of those small minds
+       a larger mind assembles over the traffic,
+       with no head in which to think, and thinks.
+
+    15 My father says they are only going to roost.
+       He says it the way you name the smaller thing
+       to keep from naming the other, the one
+       with no fact in it to hold. We stand by the car
+       in the cold and do not get in. The cloud
+    20 tightens and frays, tightens and frays,
+       and then, as though a held breath were released,
+       comes down all at once into a single tree,
+       and the tree is suddenly loud with the sound
+       of a thousand birds pretending to be leaves,
+    25 and the sky where they had hung is the sky again,
+       and we drive home, and neither of us says what we saw.
 - id: T1-P6
   test_id: Test 1 (baseline)
   slot: 6
-  title: Jam Wave
+  title: Why Rivers Wander
   genre: contemporary_informational
   era: contemporary
   source_type: original
   source_citation:
-  setting_place: a multi-lane highway; no named location
+  setting_place: none — an explanation of river behavior
   setting_period: present day
-  narrator_pov: third-person expository, with brief second-person address to the reader
+  narrator_pov: third-person expository
   central_relationship: none — expository
-  topic: why a traffic jam can form, travel and persist with no obstruction anywhere in it
-  mood: brisk, explanatory, mildly wry
-  word_count: 450
-  line_count: 41
-  fk_grade: 9.6
-  mean_sentence_length: 21.4
+  topic: why a river on flat ground bends, and why the bends keep growing
+  mood: explanatory, unhurried
+  word_count: 461
+  line_count: 43
+  fk_grade: 9.8
+  mean_sentence_length: 27.1
   n_items: 8
-  skills_covered: main_idea; supporting_detail; vocabulary_in_context; inference; authors_purpose
-  vocab_words_tested: absorb; signal
-  register_collision_check: 'Nearest collision is internal, with T1-P1: both are contemporary informational prose in a third-person expository voice, and that pairing was unavoidable once the form was set at three contemporary passages. The two are kept apart on every other axis. T1-P1 argues a position about how repairs ought to be made and closes on a value claim; this passage explains a mechanism and closes on why a known remedy goes unused. This one addresses the reader directly ("You crawl for twenty minutes"), which T1-P1 never does, and it is science rather than ethics. Against the corpus, H1-E is a first-person essayist meditating on a natural wonder; this has no first person, no landscape and no wonder. Neither "absorb" nor "signal" appears in vocab_words_tested.
-
-    '
-  text: "    Nothing happened. That is the strangest feature of the ordinary traffic\n    jam, and the part most drivers refuse to believe. You crawl\n    for twenty minutes, you round a curve braced for the wreckage\n    that must be causing it, and there is nothing there: no\n5   collision, no stalled truck, no lane closed for work. The road\n    opens and you drive away wondering what you sat in. Traffic\n    engineers have a name for it: they call it a jam\n    wave, and the word wave is doing real work in that\n    phrase. What moved backward through the highway was a disturbance travelling\n10  through the cars, in the way a ripple travels through water\n    without carrying the water along with it. Here is how one\n    begins. Traffic is dense but flowing, every driver a little closer\n    to the next than judgment would advise. One driver taps the\n    brake for reasons of his own, and the driver behind him\n15  is following too closely to respond gently, so she brakes somewhat\n    harder. The next brakes harder still. Because each driver reacts a\n    fraction of a second late and overcorrects slightly to make up\n    for it, the disturbance grows as it travels backward, and perhaps\n    twenty cars behind the first tap, someone is brought to a\n20  complete stop. That stopping point is the jam, and the stopping\n    point moves. As the cars at its front accelerate away and\n    fresh cars pile in at its back, the jam slides backward\n    along the road at roughly twelve miles an hour, steady and\n    indifferent, while every car inside it is travelling forward. Follow it\n25  long enough and none of the vehicles caught in the original\n    slowdown is still in it. The jam has outlived its own\n    contents. This is why the search for a cause fails so\n    reliably. The tap on the brake that began the whole thing\n    happened twenty minutes ago and four miles up the road, and\n30  the driver who made it noticed nothing and is home by\n    now. The same reasoning points to a remedy that feels like\n    surrender. A driver who leaves a wide gap ahead of her\n    can absorb the wave instead of passing it on: when the\n    car in front stops, she coasts, spending the gap rather than\n35  the brake, and the cars behind her never receive the signal.\n    Experiments on test tracks, and measurements taken from instrumented highways, suggest\n    that a small fraction of drivers doing this can smooth the\n    flow for everyone behind them. The obstacle is human rather than\n    technical, since the gap looks to every other driver like an\n40  invitation to merge, and to the driver keeping it like ground\n    she has already paid for and is now giving away.\n"
+  skills_covered: main_idea; authors_purpose; supporting_detail; vocabulary_in_context; inference
+  vocab_words_tested: scoured; pronounced
+  text: |2
+       A river crossing a flat plain ought, by any simple logic,
+       to run straight. The shortest path from the hills to the
+       sea is a line, and the water is drawn on by
+       nothing but gravity, which plays no favorites among directions. Yet the
+     5 rivers on the flattest ground are the most crooked of all,
+       looping back on themselves in long, unhurried bends; and the reason
+       a river bends turns out to explain why, once the bending
+       has begun, it can hardly be made to stop.
+       Begin with a channel that runs very nearly straight, and grant
+    10 it one small imperfection: a fallen log, a patch of softer
+       soil, a curve so faint the eye would pass over it.
+       Where the water rounds even the gentlest turn, it is forced
+       to travel a little faster along the outer side than the
+       inner, in the way the outer horse on a carousel must
+    15 cover the greater distance. Faster water carries more force, and force
+       wears at the bank. So the outer bank is scoured and
+       cut back, while along the inner side, where the current slackens,
+       the river lets fall the sand it can no longer carry,
+       and a small beach is built up. The curve, in short,
+    20 deepens itself.
+       Each bend digs away its own outer edge and fills in
+       its own inner one, and so becomes more pronounced with every
+       season, a slight accident enlarged by the water into something like
+       a law. Follow the process far enough and the loops swing
+    25 out so extravagantly that two of them nearly touch. In a
+       flood the river may at last leap the narrow neck of
+       land left between them, deserting the long way around for the
+       shortcut, and the stranded loop is left behind as a curved
+       pond, an oxbow lake, drying at the river's side like a
+    30 sleeve cut from a coat. The river has edited itself, striking
+       out the passage it no longer had a use for.
+       None of this asks for a slope to bring it about,
+       or a mountain, or a design. It asks only for moving
+       water, a bank soft enough to be worn, and time, of
+    35 which a river commands a great deal. What looks from above
+       like indecision, all that patient wandering, is the steadiest habit the
+       river owns, as dependable as its falling downhill. Engineers who straighten
+       a river to win back the land inside its curves discover
+       this the hard way, for the water, given the first excuse,
+    40 sets about curving once more, rebuilding the very bends they had
+       filled. That wandering is the river obeying the single rule that
+       moving water on yielding ground is bound to obey: to seek
+       out the smallest reason to turn, and then to exaggerate it.
 items:
 - id: T1-R01
   passage_id: T1-P1
@@ -238,1348 +492,1300 @@ items:
   item_type: reading_mc
   question_number: 1
   skill: main_idea
+  construct: Identify the whole-passage main idea; wrong options are true but too narrow or partial.
   difficulty: hard
   dok: 3
   target_word:
   question_text: The passage is mainly concerned with
-  choice_a: the mistakes earlier restorers made in good faith
-  choice_b: the methods used for removing old varnish safely
-  choice_c: the reasons a museum's objects cannot be trusted
-  choice_d: why conservators now let their repairs be seen
-  choice_e: how visitors respond to a partly filled object
-  correct_answer: D
+  choice_a: why a useful account of something must leave the right things out
+  choice_b: why simplified diagrams are easier to read than detailed ones
+  choice_c: how mapmakers decide which features to draw and which to erase
+  choice_d: the errors people make when taking notes or recording measurements
+  choice_e: how a map can mislead the person who trusts it
+  correct_answer: A
   distractor_types:
-    A: too_narrow
-    B: misidentified_detail
-    C: inference_leap
-    E: true_but_irrelevant
-  explanation: 'The passage opens on an old rule (repairs should be invisible), explains why that rule was given up, and then defends what replaced it: repairs that can be undone and that can be seen. Everything in the passage — the wrong arms, the reversibility rule, the gray plaster, the crack that records a fire — serves that single argument, so D is the only option that covers the whole piece. A is true and is one of the passage''s steps, but the old restorers'' errors are the reason for the argument, not the argument itself. B misreads lines 15-16: varnish is mentioned as an example of a confident mistake, and no method of removing it safely is described. C over-reads the claim that a seamless restoration is dishonest into a claim that museums as a whole are untrustworthy, which the passage never says. E reports a real detail (line 30, visitors are unsettled) but that reaction is a consequence the author mentions in passing, not the subject of the passage.
-
-    '
+    B: too_narrow
+    C: too_narrow
+    D: too_narrow
+    E: partly_true_but_wrong
+  explanation: |-
+    The whole passage argues that usefulness comes from purposeful omission, moving from the map example to note-taking and measurement to the mind itself. C states that thesis. A, B, and D each name a real part of the passage but only a part; E treats the 'deliberate untruth' remark as the point, when it is one step in the larger argument.
   source_ref:
-  - H2-Q19
-  - H2-Q49
+  - H2-Q30
 - id: T1-R02
   passage_id: T1-P1
   section: reading_comprehension
   item_type: reading_mc
   question_number: 2
   skill: authors_purpose
+  construct: Purpose of a specific extended example (the 1:1 map) within the argument.
   difficulty: hard
   dok: 3
   target_word:
-  question_text: The examples given in lines 13-16 are included mainly to
-  choice_a: show how confident a wrong repair looks
-  choice_b: praise the technical skill of the earlier restorers
-  choice_c: describe the kinds of damage objects suffer
-  choice_d: condemn the taste of the nineteenth century
-  choice_e: explain how Roman sculpture was originally displayed
-  correct_answer: A
+  question_text: The author describes the map 'drawn to the scale of the country itself' (lines 5-13) mainly in order to
+  choice_a: prove that such a map could never actually be built
+  choice_b: show that a description which leaves nothing out is of no use
+  choice_c: suggest that mapmakers waste effort on needless detail
+  choice_d: demonstrate how accurate modern maps have become
+  choice_e: explain why paper maps are being replaced by screens
+  correct_answer: B
   distractor_types:
-    B: opposite
-    C: misidentified_detail
-    D: partly_true_but_wrong
+    A: misidentified_detail
+    C: inference_leap
+    D: opposite
     E: wrong_concept
-  explanation: 'The new arms and the stripped varnish are both repairs that looked right to the people who made them and turned out to be wrong. The sentence that follows them (lines 16-17) says so directly: the mistakes were made carefully, by experts, with confidence. The examples exist to show that confidence is no protection against error, which is what makes the reversibility rule necessary. B reverses the point: the passage grants that these restorers were skilled, but it raises their skill only to show that skill did not save them. C treats the examples as a catalogue of damage, when what is described is the repair, not the injury. D is close enough to tempt — the examples are unflattering — but the passage explicitly refuses to blame these restorers, calling their work careful and expert. E takes "Roman statues" as the subject; the passage says nothing about how the statues were displayed.
-
-    '
+  explanation: |-
+    The full-scale map is an extreme case: perfectly complete and perfectly useless, which is exactly the author's claim about completeness. A fixes on whether such a map is possible, a question the passage never raises; C blames the mapmaker, when the point is about detail itself; D and E import ideas (real accuracy, screens) the passage does not discuss.
   source_ref:
   - H2-Q2
-  - H1-Q10
 - id: T1-R03
   passage_id: T1-P1
   section: reading_comprehension
   item_type: reading_mc
   question_number: 3
-  skill: inference
+  skill: structure
+  construct: How the passage is organized / its progression from case to principle.
   difficulty: hard
   dok: 3
   target_word:
-  question_text: The requirement that every treatment be reversible suggests that conservators regard their own conclusions as
-  choice_a: worthless
-  choice_b: private
-  choice_c: flawless
-  choice_d: unpopular
-  choice_e: temporary
-  correct_answer: E
+  question_text: The passage as a whole moves from
+  choice_a: a general rule to the exceptions that overturn it
+  choice_b: a problem to the person responsible for causing it
+  choice_c: a single example to the wider principle it illustrates
+  choice_d: a claim to the objections that have been raised against it
+  choice_e: a history of maps to a prediction about their future
+  correct_answer: C
   distractor_types:
-    A: too_broad
+    A: wrong_logical_relation
     B: wrong_concept
-    C: opposite
-    D: true_but_irrelevant
-  explanation: 'A conservator builds a repair that can be taken back out because she expects someone later to want it out. Lines 20-22 make the assumption explicit: a person in 2150 will know things she does not. Work built to be undone is work its maker treats as good for now rather than settled, which is what "temporary" names. A pushes that modesty too far. The passage says conservators lost confidence on purpose, not that they think their judgments have no value; a worthless judgment would not be worth making reversible. B has no support: nothing in the passage suggests conservators keep their conclusions to themselves, and the visible mend argues the opposite. C states the belief the whole passage was written against. D is true of the results — line 30 says the visible seam unsettles visitors — but the item asks how conservators regard their conclusions, not how visitors receive them.
-
-    '
+    D: partly_true_but_wrong
+    E: wrong_concept
+  explanation: |-
+    The map begins as one concrete case and then widens into a rule about descriptions, notes, measurements, and understanding in general. A reverses the movement (no exceptions overturn the rule); C invents a culprit; D expects a debate the passage never stages; E promises history and prophecy the passage does not contain.
   source_ref:
-  - H1-Q32
-  - H2-Q5
+  - H2-Q20
 - id: T1-R04
   passage_id: T1-P1
   section: reading_comprehension
   item_type: reading_mc
   question_number: 4
   skill: vocabulary_in_context
+  construct: Vocabulary in context; the common sense ('loyal') is the trap.
   difficulty: medium
   dok: 2
-  target_word: sound
-  question_text: As used in line 34, "sound" most nearly means
-  choice_a: sensible
-  choice_b: undamaged
-  choice_c: audible
-  choice_d: valuable
-  choice_e: thorough
-  correct_answer: B
+  target_word: faithful
+  question_text: As used in line 26, "faithful" most nearly means
+  choice_a: loyal
+  choice_b: religious
+  choice_c: steady
+  choice_d: accurate
+  choice_e: obedient
+  correct_answer: D
   distractor_types:
-    A: wrong_concept
-    C: surface_match
-    D: inference_leap
-    E: less_precise
-  explanation: 'The sentence describes what happens when a crack is smoothed away: the object looks sound. The contrast is with the damage that has just been erased, so "sound" here means whole and unbroken. Every other sense of the word is grammatically possible and contextually wrong. A is the common sense of "sound" in phrases like sound advice, and the passage is full of reasoning, which makes the misreading easy — but an object, not an argument, is what looks sound in this line. C reaches for the noun most students meet first; the word is an adjective here and nothing in the passage makes noise. D imports a judgment the passage does not make: the argument is about honesty, not price. E catches the right family of meaning (as in a sound sleep) but describes completeness of an action rather than the physical wholeness of a thing.
-
-    '
+    A: surface_match
+    B: wrong_concept
+    C: less_precise
+    E: wrong_concept
+  explanation: |-
+    A map 'faithful to the land beneath it' is one that reports the land truly, so 'accurate' fits. 'Loyal' and 'obedient' borrow the sense of faithful used of people; 'religious' reaches for another common meaning; 'steady' names constancy rather than truth to a thing.
   source_ref:
-  - H1-Q33
-  - H2-Q7
+  - H2-Q22
 - id: T1-R05
   passage_id: T1-P1
   section: reading_comprehension
   item_type: reading_mc
   question_number: 5
-  skill: inference
+  skill: vocabulary_in_context
+  construct: Vocabulary in context; the common sense ('artificial/faked') is the trap.
   difficulty: medium
-  dok: 3
-  target_word:
-  question_text: The description of the plaster fill in lines 25-28 suggests that the conservator wants a visitor to
-  choice_a: fail to notice the repair at all
-  choice_b: admire the skill behind the fill
-  choice_c: see the repair on looking closely
-  choice_d: learn when the damage first occurred
-  choice_e: doubt whether the mosaic is genuine
-  correct_answer: C
+  dok: 2
+  target_word: contrived
+  question_text: As used in line 47, "contrived" most nearly means
+  choice_a: faked
+  choice_b: imagined
+  choice_c: refused
+  choice_d: rushed
+  choice_e: managed
+  correct_answer: E
   distractor_types:
-    A: opposite
-    B: true_but_irrelevant
-    D: referent_slippage
-    E: inference_leap
-  explanation: 'The fill is tinted to two different distances at once. From across the room the eye does not snag on it; from close up it does not fool anyone, and the seam appears. That is a repair built to be missed at a glance and found on inspection, which is exactly what C describes. A is the standard the passage says has been abandoned — it is what an invisible repair would achieve. B is genuinely true of the work (the tinting is skilled) but the passage treats the skill as a means; the fill is designed to inform, not to be admired. D takes a real claim from elsewhere in the passage — damage is evidence, a crack records a fall or a fire (lines 32-33) — and attaches it to the wrong thing: the plaster is the new material, and it dates nothing. E overshoots. A visible seam tells a visitor which part is modern, which is the reverse of casting doubt on the original.
-
-    '
+    A: surface_match
+    B: wrong_concept
+    C: opposite
+    D: wrong_concept
+  explanation: |-
+    The best map 'has contrived, with purpose and with skill, to leave behind' what is not needed, so 'contrived' here means brought about by skillful effort — managed. 'Faked' is the everyday sense of contrived (as in a contrived excuse) and is the trap; the others do not fit an act done on purpose and with skill.
   source_ref:
-  - H2-Q8
-  - H1-Q32
+  - H1-Q26
 - id: T1-R06
   passage_id: T1-P1
   section: reading_comprehension
   item_type: reading_mc
   question_number: 6
-  skill: structure
-  difficulty: hard
+  skill: inference
+  construct: Inference about the reason behind a stated contrast (hiker vs pilot).
+  difficulty: medium
   dok: 3
   target_word:
-  question_text: The passage moves from
-  choice_a: a method to its inventor
-  choice_b: an error to its correction
-  choice_c: a warning to its evidence
-  choice_d: a standard to its replacement
-  choice_e: a dispute to its settlement
-  correct_answer: D
+  question_text: The passage suggests that a chart useful to a hiker is useless to a pilot (lines 25-28) because
+  choice_a: each chart omits the very things the other's user needs
+  choice_b: pilots need more accurate charts than hikers do
+  choice_c: the two charts are drawn to different scales
+  choice_d: hikers and pilots travel at very different speeds
+  choice_e: one chart contains more detail than the other
+  correct_answer: A
   distractor_types:
-    A: wrong_concept
-    B: too_narrow
-    C: wrong_logical_relation
-    E: partly_true_but_wrong
-  explanation: 'The first third of the passage sets out the old rule — invisible repair, the object made whole. The middle explains why that rule failed and what replaced it: reversible treatment, then findable treatment. The last third defends the replacement. One standard gives way to another, which is D. A names a person the passage never introduces; no inventor of any method appears. B narrows the passage to one movement inside it. The confident mistakes and the rule that answered them are genuinely there, but they occupy the middle stretch rather than the whole, and the argument keeps going after them. C inverts the order of the parts. The passage puts its cautionary examples early and its claims late, so any warning arrives before its evidence rather than after. E is the closest miss: there is a real disagreement here, and the author clearly takes a side, but the passage ends by marking the limit of present knowledge rather than by settling anything.
-
-    '
+    B: opposite
+    C: misidentified_detail
+    D: inference_leap
+    E: opposite
+  explanation: |-
+    The passage says the difference is 'not because either is the more faithful' but because the two 'have elected to disregard entirely different things.' C restates that. A and E make it a matter of accuracy or amount of detail, which the passage explicitly rules out; B borrows 'scale' from the earlier map example; D adds a fact the passage never uses.
   source_ref:
-  - H2-Q20
+  - H1-Q19
 - id: T1-R07
   passage_id: T1-P1
   section: reading_comprehension
   item_type: reading_mc
   question_number: 7
   skill: inference
-  difficulty: medium
+  construct: Inference synthesizing two parallel examples (verbatim notes; over-reported measurement).
+  difficulty: hard
   dok: 3
   target_word:
-  question_text: The passage suggests that a crack in an object is best understood as
-  choice_a: a record of the object's history
-  choice_b: a defect the maker failed to prevent
-  choice_c: a sign the object was stored badly
-  choice_d: a warning that the object is fragile
-  choice_e: a detail most visitors would prefer hidden
-  correct_answer: A
+  question_text: The author's point about copying a lecture word for word and recording extra decimal places (lines 30-36) is that both
+  choice_a: require special training to do at all
+  choice_b: hold more than the purpose requires and are the worse for it
+  choice_c: fail because they leave out something important
+  choice_d: show that their makers did not try hard enough
+  choice_e: are more accurate than shorter versions would be
+  correct_answer: B
   distractor_types:
-    B: wrong_concept
-    C: inference_leap
-    D: partly_true_but_wrong
-    E: true_but_irrelevant
-  explanation: 'Damage is evidence, the passage says, and it then lists what the evidence is of: a fall, a fire, a route through a war. A crack is thus a trace of what has happened to the object since it was made, which is why erasing it makes the object answer questions wrongly. B locates the crack at the moment of manufacture. The passage places it afterward — in the object''s life, not in its making. C picks one possible cause and treats it as the meaning; the passage''s examples are accidents and history, and none of them is neglect in storage. D is partly right, since a cracked object is fragile, but fragility is a fact about the object''s future and the passage is interested in what the crack tells us about its past. E reports something the passage does say (line 30, visitors are unsettled) and then treats visitor preference as the measure of what a crack is.
-
-    '
+    A: wrong_concept
+    C: opposite
+    D: opposite
+    E: partly_true_but_wrong
+  explanation: |-
+    Both examples pile up detail beyond the need, and the passage says such excess 'obscures' rather than refines. C captures this. B reverses the fault (the trouble is too much, not too little); D reverses the effort (both take more work, not less); E repeats the very error the passage corrects, since the extra decimals are 'not the more exact.'
   source_ref:
-  - H1-Q32
-  - H2-Q5
+  - H1-Q41
 - id: T1-R08
   passage_id: T1-P1
   section: reading_comprehension
   item_type: reading_mc
   question_number: 8
-  skill: vocabulary_in_context
+  skill: inference
+  construct: Inference from a charged phrase ('the labor of exclusion').
   difficulty: medium
-  dok: 2
-  target_word: arrested
-  question_text: As used in line 38, "arrested" most nearly means
-  choice_a: captured
-  choice_b: delayed
-  choice_c: halted
-  choice_d: shielded
-  choice_e: undone
+  dok: 3
+  target_word:
+  question_text: The phrase "the labor of exclusion" (line 43) suggests that the author regards leaving details out as
+  choice_a: a sign of laziness
+  choice_b: a task only trained experts should attempt
+  choice_c: harder work than adding detail is
+  choice_d: a regrettable thing forced on the mapmaker
+  choice_e: something that cannot be done well
   correct_answer: C
   distractor_types:
-    A: surface_match
-    B: less_precise
-    D: wrong_concept
+    A: opposite
+    B: too_broad
+    D: partly_true_but_wrong
     E: opposite
-  explanation: 'The passage glosses its own word in the next clause: conservators stop a process without concluding it. Work that has been stopped rather than completed is halted, so C. A is the meaning most students meet first, and it is a real sense of the word — it is simply the wrong one for a process rather than a person. B is the strongest lure, because delay and stoppage are close in ordinary speech; the passage''s own wording ("they stop a process") rules it out, since a delay implies the process will resume on schedule. D describes a plausible aim of conservation but not the meaning of this word; shielding an object is what a conservator may do, not what "arrested" says. E points the opposite way: an arrested process has been stopped where it stands, while an undone one has been reversed.
-
-    '
+  explanation: |-
+    Calling omission 'labor' — and adding that 'Addition asks little of anyone' — frames leaving out as the harder, more skilled act. A and E treat it as easy or hopeless, the reverse of the point; C overstates it into a job for experts only; D reads omission as a regret, when the passage treats it as an accomplishment.
   source_ref:
-  - H1-Q34
-  - H2-Q1
+  - H1-Q17
 - id: T1-R09
   passage_id: T1-P1
   section: reading_comprehension
   item_type: reading_mc
   question_number: 9
   skill: inference
+  construct: Inference that pulls the thesis together (good description vs. a copy).
   difficulty: hard
   dok: 3
   target_word:
-  question_text: The line drawn across an object in lines 40-42 suggests that the conservator
-  choice_a: distrusts her own training
-  choice_b: expects to be corrected later
-  choice_c: refuses to repair the object
-  choice_d: wants her work to be found
-  choice_e: believes the object resists understanding
-  correct_answer: B
+  question_text: The passage implies that what most distinguishes a good description from a mere copy is that a good description
+  choice_a: contains no errors of any kind
+  choice_b: is simply shorter than the original
+  choice_c: takes less effort to produce
+  choice_d: is shaped to answer a particular question
+  choice_e: can be understood by anyone at all
+  correct_answer: D
   distractor_types:
-    A: partly_true_but_wrong
+    A: wrong_concept
+    B: less_precise
     C: opposite
-    D: referent_slippage
-    E: too_broad
-  explanation: 'The line marks where the conservator''s knowledge ends and someone else''s begins — which means she assumes there is someone else, and that this person will know more. Marking the boundary of your own understanding is a way of leaving the correction to be made, so B. A pushes a real feature of the passage into overstatement. Conservators became less confident on purpose, but the passage credits their training throughout; deliberate humility is not distrust. C reverses the point. The line is drawn across a repair that has been made, not instead of one. D borrows a true claim from lines 24-25 — the best fills are findable — and applies it to the wrong subject: what is meant to be found is the repair, not the conservator''s reputation. E converts a limit on present knowledge into a claim that the object cannot be understood at all, which the passage never approaches.
-
-    '
+    E: inference_leap
+  explanation: |-
+    Throughout, what saves a description from being a useless copy is that it selects with a purpose — 'the particular question the map has been made to settle.' C names that. B mistakes mere shortness for purposeful selection; A and E add tests the passage never applies; D reverses the effort, since selecting is the harder labor.
   source_ref:
-  - H2-Q8
-  - H2-Q27
+  - H2-Q49
 - id: T1-R10
   passage_id: T1-P2
   section: reading_comprehension
   item_type: reading_mc
   question_number: 10
-  skill: figurative_craft
+  skill: point_of_view
+  construct: 'Characterize the narrating stance: reports closely observed detail, interprets little.'
   difficulty: hard
   dok: 3
   target_word:
-  question_text: The grandfather's remark in lines 9-11 suggests that he
-  choice_a: worries about scratching the metal
-  choice_b: keeps a neater table than others
-  choice_c: wants the tools to sell quickly
-  choice_d: treats the tools as still useful
-  choice_e: dislikes the folding table he uses
-  correct_answer: D
+  question_text: The events of the passage are told by someone who
+  choice_a: understands exactly why her uncle behaves as he does
+  choice_b: disapproves of the way her uncle runs the course
+  choice_c: shares in every decision her uncle makes that day
+  choice_d: is looking back on the day from many years later
+  choice_e: reports what she notices without fully explaining it
+  correct_answer: E
   distractor_types:
-    A: too_literal
-    B: inference_leap
+    A: too_broad
+    B: wrong_concept
     C: opposite
-    E: misidentified_detail
-  explanation: 'A thing laid on bare metal looks discarded; a thing laid on a blanket looks kept. The grandfather''s objection is not to the surface but to what the surface says about the object resting on it. He is arranging his table so that the tools read as working equipment rather than as junk, which is D. A takes the remark at face value, as a concern about physical damage; the sentence is about how a tool looks, not about what happens to it. B turns a statement about meaning into a statement about tidiness, and about other sellers the passage never describes. C reverses the motive: goods staged to look discarded are goods staged to move fast, and the grandfather has spent years refusing to move his best one. E fastens on the wrong noun — the table is mentioned, but the remark concerns the blanket over it.
-
-    '
+    D: misidentified_detail
+  explanation: |-
+    The narrator records the covers, the worn grass, the counted quarters, and the running windmill, and leaves the meaning for the reader to assemble; her closing line admits some things her uncle 'would rather keep to himself.' A claims a completeness she disclaims; C invents disapproval; D is contradicted by his refusing to let her lay the covers; E moves her to a distance the same-day telling does not allow.
   source_ref:
-  - H1-Q1
-  - H2-Q9
+  - H1-Q22
 - id: T1-R11
   passage_id: T1-P2
   section: reading_comprehension
   item_type: reading_mc
   question_number: 11
-  skill: figurative_craft
-  difficulty: hard
+  skill: tone_attitude
+  construct: The narrator's attitude toward her uncle (compound-adjective options, as in the real set).
+  difficulty: medium
   dok: 3
   target_word:
-  question_text: The way Dennis laughs each month suggests that he
-  choice_a: finds the grandfather amusing
-  choice_b: is embarrassed by his own request
-  choice_c: has given up wanting the plane
-  choice_d: is friendlier than the other regular buyers
-  choice_e: does not expect the refusal to last
-  correct_answer: E
+  question_text: The narrator's attitude toward her uncle is best described as
+  choice_a: affectionate and watchful
+  choice_b: impatient and critical
+  choice_c: amused and teasing
+  choice_d: anxious and fearful
+  choice_e: distant and cold
+  correct_answer: A
   distractor_types:
-    A: too_literal
-    B: wrong_concept
-    C: opposite
+    B: partly_true_but_wrong
+    C: wrong_concept
     D: inference_leap
-  explanation: 'Dennis treats the refusal as a bit the two of them perform together, which means he does not hear it as final. A man who believed the answer would take it once and stop asking; Dennis asks again the next month, and the month after, because to him the no is part of a negotiation still running. A reads the laugh as ordinary amusement and stops there, missing what a laugh does when the answer was serious. B has no support: Dennis is entirely at ease, and his asking is a routine he has built. C is the reverse of what the monthly return demonstrates — he wants it enough to keep coming. D generalizes from one man to a comparison the passage never sets up; the only other buyer described is the young man, and no ranking of manners is offered.
-
-    '
+    E: opposite
+  explanation: |-
+    She stays close to him, notices his small habits with evident fondness, and reads his silences with care — affectionate and watchful. A catches nothing warm in her; C mistakes her steadiness for teasing; D turns attentiveness into fear she never voices; E is the opposite of a narrator who lingers over every detail of him.
   source_ref:
-  - H2-Q9
-  - H1-Q36
+  - H2-Q42
 - id: T1-R12
   passage_id: T1-P2
   section: reading_comprehension
   item_type: reading_mc
   question_number: 12
-  skill: vocabulary_in_context
+  skill: figurative_craft
+  construct: Interpret an image (worn artificial grass compared to a path across a lawn).
   difficulty: medium
-  dok: 2
-  target_word: keen
-  question_text: As used in line 29, "keen" most nearly means
-  choice_a: eager
-  choice_b: sharp
-  choice_c: clever
-  choice_d: polished
-  choice_e: new
+  dok: 3
+  target_word:
+  question_text: The comparison of the worn grass to "a path worn across a lawn" (lines 24-26) mainly suggests
+  choice_a: that the course has been badly cared for
+  choice_b: that a whole season of use has left its trace on the greens
+  choice_c: that the grass is real and needs to be mowed
+  choice_d: that the narrator would rather be on a lawn
+  choice_e: that the coming winter has already damaged the course
   correct_answer: B
   distractor_types:
-    A: surface_match
-    C: wrong_concept
-    D: less_precise
-    E: inference_leap
-  explanation: 'The word describes the edge of a blade that has just been worked on a whetstone with oil, and that the grandfather forbids the narrator to touch with her thumb. An edge dangerous to a thumb is a sharp one, so B. A is the sense students meet most often, in phrases like keen to go, and it is a real meaning of the word applied to people rather than to blades. C reaches for another human sense — a keen mind — which cannot apply to an edge. D is nearly right and lands one step off: sharpening does leave a bright surface, but "keen" names the cutting quality, not the shine. E infers a restoration the passage does not claim; the plane is decades old, and dressing an edge does not make it new.
-
-    '
+    A: partly_true_but_wrong
+    C: too_literal
+    D: inference_leap
+    E: wrong_concept
+  explanation: |-
+    The pale, flattened lanes record where 'a whole summer of sneakers' has crossed, so the image shows the season made visible. A reads the wear as neglect, but the point is the mark of use, not poor care; C takes 'grass' literally though it is artificial; D and E chase ideas the image does not raise.
   source_ref:
-  - H1-Q2
-  - H2-Q22
+  - H2-Q24
 - id: T1-R13
   passage_id: T1-P2
   section: reading_comprehension
   item_type: reading_mc
   question_number: 13
-  skill: inference
-  difficulty: hard
+  skill: figurative_craft
+  construct: Interpret a character's figurative phrasing ('children who would wake in April').
+  difficulty: medium
   dok: 3
   target_word:
-  question_text: The detail about Saturday night in lines 29-31 suggests that the grandfather
-  choice_a: sharpens every tool each week
-  choice_b: was trying to impress the buyer
-  choice_c: had already decided to sell it
-  choice_d: was worried the blade would rust
-  choice_e: had planned to use the plane himself
+  question_text: Uncle Ray's way of speaking of the greens as "children who would wake in April" (lines 3-5) most suggests that he
+  choice_a: wishes he had children of his own
+  choice_b: finds the work of closing the course childish
+  choice_c: thinks of the course as something he tends and will bring back to life
+  choice_d: is afraid the course will not reopen in the spring
+  choice_e: expects the greens to be ruined over the winter
   correct_answer: C
   distractor_types:
-    A: too_broad
-    B: causal_confusion
-    D: wrong_concept
-    E: opposite
-  explanation: 'The sharpening happened the night before, at the kitchen table, when no buyer existed yet. A man does not put an edge on a tool he means to keep refusing to sell. The narrator herself only understands this in the moment she is describing — "which I had not thought about until then" — and what she understands is that the decision was made before Sunday. A stretches one Saturday into a habit; the passage marks this sharpening as the exception that caught her attention. B gets the sequence backwards, treating work done the night before as a response to a man who had not yet walked up. D substitutes a maintenance worry for a decision, and nothing in the passage mentions rust or storage. E is the reverse: the plane leaves in a stranger''s trunk, and the narrator never suggests her grandfather intended to use it.
-
-    '
+    A: inference_leap
+    B: opposite
+    D: partly_true_but_wrong
+    E: wrong_concept
+  explanation: |-
+    'Putting it to bed,' with the greens as sleeping children, casts the closing as tender care for something living that will return — his attachment to the place. A leaps to a wish the passage never states; C reverses his seriousness about the task; D borrows the later mood of worry and forces it onto a gentle phrase; E contradicts the promise of April.
   source_ref:
-  - H2-Q5
-  - H1-Q17
+  - H2-Q23
 - id: T1-R14
   passage_id: T1-P2
   section: reading_comprehension
   item_type: reading_mc
   question_number: 14
-  skill: inference
-  difficulty: hard
-  dok: 3
-  target_word:
-  question_text: The narrator's account of Dennis's earlier offer suggests that the grandfather's price was
-  choice_a: chosen for reasons other than money
-  choice_b: the most the plane could bring
-  choice_c: a mistake he came to regret
-  choice_d: decided before the young man arrived
-  choice_e: the usual price for such tools
-  correct_answer: A
+  skill: vocabulary_in_context
+  construct: Vocabulary in context; the common sense ('cautious') is the trap.
+  difficulty: medium
+  dok: 2
+  target_word: careful
+  question_text: As used in line 41, "careful" most nearly means
+  choice_a: cautious
+  choice_b: watchful
+  choice_c: gentle
+  choice_d: thrifty
+  choice_e: generous
+  correct_answer: D
   distractor_types:
-    B: opposite
-    C: inference_leap
-    D: referent_slippage
-    E: misidentified_detail
-  explanation: 'Sixty dollars from a stranger, four hundred refused from Dennis. The grandfather knew both numbers, and he set the low one for the buyer who wanted to put the plane back to work on a bad floor. Price, for him, was doing something other than measuring value. B is contradicted by the figure the narrator supplies from March; the plane could plainly bring far more. C reads regret into a silence, but the grandfather never looks back at the sale — he closes the gap on the table and changes the subject. D takes the sharpest inference in the passage, the whetstone on Saturday night, which shows the decision was made before any buyer walked up. It then attaches it to the wrong thing: what was settled in advance was whether to sell, not what to charge. E treats sixty dollars as a market rate, which the four-hundred-dollar offer rules out.
-
-    '
+    A: surface_match
+    B: less_precise
+    C: wrong_concept
+    E: opposite
+  explanation: |-
+    'He is careful with his money' and 'counts the taffy quarters into paper rolls' — careful here means sparing with money, thrifty. 'Cautious' is the everyday sense of careful and the trap; 'watchful' is close but is about attention, not money; 'generous' is the opposite of what the counting shows.
   source_ref:
-  - H2-Q8
-  - H2-Q49
+  - H2-Q6
 - id: T1-R15
   passage_id: T1-P2
   section: reading_comprehension
   item_type: reading_mc
   question_number: 15
   skill: inference
+  construct: Motive inference from a small refusal.
   difficulty: medium
   dok: 3
   target_word:
-  question_text: The grandfather's behavior in lines 46-49 suggests that he
-  choice_a: has grown forgetful with age
-  choice_b: is pleased with the money he made
-  choice_c: wants to go home early
-  choice_d: dislikes the crowd in the lot
-  choice_e: is avoiding the subject
+  question_text: Uncle Ray will not let the narrator lay the plywood covers (lines 9-11) chiefly because he
+  choice_a: does not trust her with any part of the work
+  choice_b: is annoyed with her that day
+  choice_c: wants to get the covers done faster by himself
+  choice_d: thinks the covers are too heavy for her to lift
+  choice_e: believes the task must be done with a care he does not yet expect of her
   correct_answer: E
   distractor_types:
-    A: inference_leap
-    B: opposite
-    C: wrong_concept
-    D: true_but_irrelevant
-  explanation: 'He straightens the blanket, sits, looks at nothing in particular, and then says something about the weather that is not true. Every one of those actions is a way of not talking about what just left the table, and the narrator''s flat last line makes sure the reader notices the remark was cover rather than observation. A explains the false remark as confusion, but a man who has just arranged the table so the gap will not show is tracking the situation closely. B misreads the mood: sixty dollars for a four-hundred-dollar plane is not what a pleased man counts, and he says nothing about the sale at all. C invents an intention the passage never gives; he settles into his chair rather than packing up. D notes the crowd, which the passage does mention, and turns a direction of gaze into a dislike.
-
-    '
+    A: too_broad
+    B: wrong_concept
+    C: inference_leap
+    D: misidentified_detail
+  explanation: |-
+    He insists 'you have to set them down and not drop them, and there is a difference' — the covering is a careful act he keeps for himself. A overstates it, since he lets her pull flags and stack clubs; C invents a mood; D makes it about speed, though doing it himself is slower; E supplies a reason (weight) the passage never gives.
   source_ref:
-  - H1-Q17
-  - H2-Q5
+  - H2-Q29
 - id: T1-R16
   passage_id: T1-P2
   section: reading_comprehension
   item_type: reading_mc
   question_number: 16
-  skill: tone_attitude
-  difficulty: medium
+  skill: inference
+  construct: Inference about the subtext of a line of dialogue.
+  difficulty: hard
   dok: 3
   target_word:
-  question_text: The narrator's attitude toward her grandfather is best described as
-  choice_a: impatient
-  choice_b: amused
-  choice_c: resentful
-  choice_d: watchful
-  choice_e: anxious
-  correct_answer: D
+  question_text: The narrator's remark that Ray's answer, "Costs about nothing," "was not really an answer" (line 40) suggests that
+  choice_a: Ray's real reason for leaving the windmill on is something he is not saying
+  choice_b: Ray has made a mistake in his arithmetic
+  choice_c: the narrator does not believe electricity is cheap
+  choice_d: Ray cannot actually afford to run the windmill
+  choice_e: the narrator wishes the windmill were shut off
+  correct_answer: A
   distractor_types:
-    A: partly_true_but_wrong
-    B: wrong_concept
-    C: too_broad
+    B: too_literal
+    C: misidentified_detail
+    D: opposite
     E: inference_leap
-  explanation: 'She records everything: the rubber band on the cigar box, the worn knob, the newspaper he uses for nothing else, the way his hands move when he explains. She is keeping track of a man she is trying to read, and D is the word for that. A catches one real moment — the single word "Grandpa" is a protest — but one interruption in a day of close attention does not describe her stance. B fits her handling of Dennis, whose "young lady" she clearly finds tiresome, rather than her handling of her grandfather. C converts a flicker of objection about money into a settled grievance the passage never shows; she does not complain again after he declines to look at her. E supplies a worry she never voices; she is observing him, not fearing for him.
-
-    '
+  explanation: |-
+    By calling the reply 'not really an answer,' the narrator signals that money is a cover for the real, unspoken reason. A treats it as a math error; B misreads the doubt as being about the cost of power; D flips the meaning, since he can plainly afford it; E invents a wish she never expresses.
   source_ref:
-  - H1-Q37
-  - H2-Q42
+  - H2-Q31
 - id: T1-R17
   passage_id: T1-P2
   section: reading_comprehension
   item_type: reading_mc
   question_number: 17
-  skill: point_of_view
+  skill: inference
+  construct: Inference about the narrator's understanding in the closing lines.
   difficulty: hard
   dok: 3
   target_word:
-  question_text: The events of the passage are described by someone who
-  choice_a: understands her grandfather completely
-  choice_b: reports more than she explains
-  choice_c: disapproves of the sale throughout
-  choice_d: knows nothing about the tools
-  choice_e: learned about the day afterward
+  question_text: The last sentence (lines 51-56) suggests that the narrator
+  choice_a: is annoyed that her uncle keeps things from her
+  choice_b: has sensed something about her uncle that he has not put into words
+  choice_c: intends to ask him about the windmill on the way home
+  choice_d: believes he has simply forgotten to switch it off
+  choice_e: has decided she no longer wants to help him
   correct_answer: B
   distractor_types:
-    A: too_broad
-    C: partly_true_but_wrong
+    A: partly_true_but_wrong
+    C: inference_leap
     D: opposite
-    E: misidentified_detail
-  explanation: 'The narrator gives us the whetstone, the newspaper, the closed-up gap on the table and the untrue remark about June, and she interprets none of them. The reader assembles the meaning out of details she has noticed and set down without comment, which is B. A claims a completeness she disclaims herself; the line "which I had not thought about until then" admits she is still catching up to him. C is true for one line and false for the rest — after "Grandpa" she stops objecting and starts watching. D is contradicted by everything she names: jointer, block plane, squares, level, and the book where she records offers. E puts her at a distance the passage does not allow, since she is behind the table for the whole scene.
-
-    '
+    E: wrong_concept
+  explanation: |-
+    She leaves the windmill unmentioned 'because there are things you can see your uncle would rather keep to himself' — she has read a feeling he will not name and chooses not to press it. A hardens her tact into irritation; C has her breaking the silence she keeps; D misses that he chose to leave it on; E invents a decision the passage never reports.
   source_ref:
-  - H1-Q22
+  - H2-Q48
 - id: T1-R18
   passage_id: T1-P3
   section: reading_comprehension
   item_type: reading_mc
   question_number: 18
   skill: main_idea
+  construct: Whole-passage main idea of an inserted classic excerpt.
   difficulty: hard
   dok: 3
   target_word:
-  question_text: A good title for this passage would be
-  choice_a: Four Ways to Be Poor
-  choice_b: The Hardest Work in the World
-  choice_c: A Christmas Without Father
-  choice_d: Each Sister Speaks for Herself
-  choice_e: Sacrifices Gladly Made
-  correct_answer: D
+  question_text: The passage is mainly concerned with
+  choice_a: the design and architecture of an old New England house
+  choice_b: how the town around Pyncheon Street was first founded
+  choice_c: the troubling way the Pyncheon land was taken from Matthew Maule
+  choice_d: the history of witchcraft trials throughout New England
+  choice_e: a close friendship between Colonel Pyncheon and Matthew Maule
+  correct_answer: C
   distractor_types:
     A: too_narrow
-    B: misidentified_detail
-    C: partly_true_but_wrong
+    B: too_broad
+    D: too_broad
     E: opposite
-  explanation: 'Almost every line is a sister saying what she wants or what she suffers, and each complaint fits only the girl who makes it — the one who mourns a dress, the one who wants a book, the one who wants pencils, the one who says nothing about herself until the others press on. The passage is a set of self-portraits delivered as grumbling, which is D. A covers only the money, and the girls are quarrelling about work, school and a father as much as about being poor. B lifts one sister''s phrase about washing dishes out of a single speech and hangs the whole scene on it. C names something real and central — the silence when the father is mentioned is the heaviest moment here — but that hush occupies a few lines and the rest of the passage talks past it. E takes Meg''s own words and reverses them, since what she actually says is that she ought to make her sacrifices gladly and is afraid she does not.
-
-    '
+  explanation: |-
+    The excerpt traces how a powerful man's 'plausible claims' displaced an obscure settler and ends on Maule's death, so it is centrally about the dubious origin of the Pyncheon land. A shrinks it to the house; B and D swell it to the whole town or the whole witchcraft era; E reverses the relationship of the 'two ill-matched antagonists.'
   source_ref:
-  - H2-Q19
   - H2-Q30
 - id: T1-R19
   passage_id: T1-P3
   section: reading_comprehension
   item_type: reading_mc
   question_number: 19
-  skill: vocabulary_in_context
+  skill: tone_attitude
+  construct: The narrator's attitude toward Colonel Pyncheon's claim.
   difficulty: medium
-  dok: 2
-  target_word: altered
-  question_text: As used in line 15, "altered" most nearly means
-  choice_a: repaired
-  choice_b: changed
-  choice_c: raised
-  choice_d: improved
-  choice_e: gentle
-  correct_answer: B
+  dok: 3
+  target_word:
+  question_text: The narrator's attitude toward Colonel Pyncheon's claim to the land is best described as
+  choice_a: openly admiring
+  choice_b: completely neutral
+  choice_c: openly frightened
+  choice_d: carefully suspicious
+  choice_e: lightly amused
+  correct_answer: D
   distractor_types:
-    A: surface_match
+    A: opposite
+    B: partly_true_but_wrong
     C: wrong_concept
-    D: inference_leap
-    E: less_precise
-  explanation: 'The word describes Meg''s tone after a silence. She has been complaining about being poor; now she explains her mother''s reasoning. Her manner of speaking is different from what it was a moment before, so B. A is the sense of the word students meet most often in a house where clothes are made over, and the passage has just mentioned Meg''s old dress, which makes the wrong sense easy to reach for — but a tone is not taken in at the seams. C picks a single kind of change, volume, that the passage does not indicate. D adds a judgment: the tone is different, and the passage never says it is better. E describes how the new tone might sound rather than what the word claims, which is only that it is not the earlier tone.
-
-    '
+    E: wrong_concept
+  explanation: |-
+    The narrator withholds a flat verdict yet lets the phrase 'unduly stretched' and the hint of 'personal enmity' color the account against Pyncheon — a careful suspicion. A takes his side; C mistakes the narrator's caution for having no lean at all; D and E name feelings the measured prose never shows.
   source_ref:
-  - H1-Q26
-  - H2-Q3
+  - H1-Q37
 - id: T1-R20
   passage_id: T1-P3
   section: reading_comprehension
   item_type: reading_mc
   question_number: 20
   skill: supporting_detail
+  construct: Locate a stated fact against near-miss detail.
   difficulty: medium
   dok: 2
   target_word:
-  question_text: According to lines 15-23, the sisters are going without presents because
-  choice_a: their mother thinks the winter will be hard
-  choice_b: their father asked them to save money
-  choice_c: they each agreed to give up a dollar
-  choice_d: the money is being sent to the army
-  choice_e: the family cannot afford anything at all
-  correct_answer: A
+  question_text: According to the passage, the long dispute between Pyncheon and Maule was finally ended by
+  choice_a: a ruling handed down by the town court
+  choice_b: a written agreement signed by both men
+  choice_c: Maule's decision to give up his claim
+  choice_d: the sale of the land to a third party
+  choice_e: the death of Matthew Maule
+  correct_answer: E
   distractor_types:
-    B: inference_leap
-    C: misidentified_detail
-    D: causal_confusion
-    E: partly_true_but_wrong
-  explanation: 'Meg reports the reason directly: their mother proposed no presents because the winter is going to be hard for everyone, and she thinks they should not spend on pleasure while the men in the army are suffering. The proposal is the mother''s, and the stated ground is the hard winter. B moves the decision to the father, who is far away and is never said to have asked for anything. C confuses two different dollars: each girl still has hers, and the question of giving them up is what they are arguing about. D turns a comparison into a transaction — the army is the reason for restraint, not the destination of the money, and nothing is sent anywhere. E overstates the poverty; the girls have a dollar each and are debating how to spend it, so the obstacle is a decision rather than an inability.
-
-    '
+    A: misidentified_detail
+    B: wrong_concept
+    C: opposite
+    D: misidentified_detail
+  explanation: |-
+    The passage states the quarrel 'remained for years undecided, and came to a close only with the death of the party occupying the disputed soil' — Maule. A and E invent a court ruling and a sale; B is ruled out by 'no written record'; D reverses the story, since Maule never surrendered his claim.
   source_ref:
-  - H1-Q35
   - H1-Q13
 - id: T1-R21
   passage_id: T1-P3
   section: reading_comprehension
   item_type: reading_mc
   question_number: 21
-  skill: inference
-  difficulty: hard
+  skill: figurative_craft
+  construct: Interpret a metaphor of character ('iron energy of purpose').
+  difficulty: medium
   dok: 3
   target_word:
-  question_text: Jo's remarks about how she will spend her dollar suggest that she
-  choice_a: is the least generous of the sisters
-  choice_b: disagrees with her mother's judgment
-  choice_c: wants to impress her older sister
-  choice_d: has more money than the others
-  choice_e: cares more for books than for clothes
-  correct_answer: E
+  question_text: The description of Colonel Pyncheon as a man of "iron energy of purpose" mainly suggests that he was
+  choice_a: determined and hard to turn aside
+  choice_b: unusually strong in body
+  choice_c: cruel simply for the pleasure of it
+  choice_d: skilled at working with iron
+  choice_e: calm, slow, and patient
+  correct_answer: A
   distractor_types:
-    A: inference_leap
-    B: partly_true_but_wrong
-    C: wrong_concept
-    D: misidentified_detail
-  explanation: 'Jo wants one thing, a book she has wanted a long time, and the narrator adds that she is a bookworm. Set that beside the sister who is looking down at her old dress and the sister who wants drawing pencils, and beside Jo''s own indifference to the state of her shoes, and the preference is plain. A generalizes from one purchase to a character judgment the passage does not support; Jo is the one who argues the others should have what they want too. B is close, since Jo does push back on the plan, but she frames it as reading her mother''s wishes rather than opposing them. C invents an audience: Jo''s stated reason is how long she has wanted the book. D misreads the arithmetic, since the passage says each girl has a dollar.
-
-    '
+    B: too_literal
+    C: inference_leap
+    D: too_literal
+    E: opposite
+  explanation: |-
+    'Iron' here names the hardness of his will, not his body or his trade: a forceful, unyielding determination. A and D read 'iron' literally; C leaps past 'determined' to deliberate cruelty the phrase does not assert; E is the opposite of iron energy.
   source_ref:
-  - H1-Q17
-  - H2-Q5
+  - H1-Q44
 - id: T1-R22
   passage_id: T1-P3
   section: reading_comprehension
   item_type: reading_mc
   question_number: 22
-  skill: figurative_craft
-  difficulty: hard
-  dok: 3
-  target_word:
-  question_text: The mention of the hearth brush and kettle-holder in lines 30-32 suggests that Beth
-  choice_a: spends her time on household work
-  choice_b: is speaking to no one in particular
-  choice_c: keeps her disappointment to herself
-  choice_d: prefers the kitchen to the parlor
-  choice_e: is the quietest of the four sisters
-  correct_answer: C
+  skill: vocabulary_in_context
+  construct: Vocabulary in context of an inserted passage; common wrong sense trap.
+  difficulty: medium
+  dok: 2
+  target_word: plausible
+  question_text: As used in the passage, "plausible" (Pyncheon 'asserted plausible claims') most nearly means
+  choice_a: dishonest
+  choice_b: seemingly reasonable
+  choice_c: generous
+  choice_d: strictly legal
+  choice_e: perfectly obvious
+  correct_answer: B
   distractor_types:
-    A: true_but_irrelevant
-    B: too_literal
-    D: inference_leap
-    E: partly_true_but_wrong
-  explanation: 'Naming the only two things that heard the sigh is a way of saying that none of her sisters did. Beth has a wish and a small sorrow about it, and she lets both out where no person is listening, which is C. A is true of Beth elsewhere in the passage, where she says washing dishes is the worst work in the world, but the objects here are witnesses rather than chores. B takes the joke at face value, as though the point were the direction she faced; the point is who failed to notice. D builds a preference between rooms out of two household objects that happen to sit near the fire. E is the strongest lure because it is broadly true of Beth, but a standing trait is not what this image reports — it reports one sigh that went unheard, which sets up the second sigh that does not.
-
-    '
+    A: wrong_concept
+    C: wrong_concept
+    D: less_precise
+    E: less_precise
+  explanation: |-
+    A plausible claim is one that looks reasonable on its face, whatever the truth beneath it. 'Dishonest' imports the suspicion the narrator only hints at; 'strictly legal' and 'perfectly obvious' overstate it into proof; 'generous' does not fit a claim on someone else's land.
   source_ref:
-  - H1-Q8
-  - H2-Q23
+  - H2-Q4
 - id: T1-R23
   passage_id: T1-P3
   section: reading_comprehension
   item_type: reading_mc
   question_number: 23
   skill: vocabulary_in_context
+  construct: Vocabulary in context; common wrong sense ('unclear') trap.
   difficulty: medium
   dok: 2
-  target_word: cross
-  question_text: As used in line 50, "cross" most nearly means
-  choice_a: angry
-  choice_b: ashamed
-  choice_c: opposed
-  choice_d: irritable
-  choice_e: unwell
-  correct_answer: D
+  target_word: obscure
+  question_text: As used in the passage, "obscure" (Maule 'an obscure man') most nearly means
+  choice_a: hard to understand
+  choice_b: dishonest
+  choice_c: little known
+  choice_d: foreign
+  choice_e: poor
+  correct_answer: C
   distractor_types:
-    A: less_precise
+    A: surface_match
     B: wrong_concept
-    C: surface_match
-    E: inference_leap
-  explanation: 'Beth is describing what dishwashing does to her: it puts her out of temper and stiffens her hands so she cannot practice. The word names a small, ordinary bad mood, which is D. A is in the right family and one degree too strong; a girl who begins by calling it naughty to fret is not reporting anger. B swaps a mood for a judgment about herself, and her shame, if any, is about complaining rather than about the work. C reaches for the sense of the word that means set against something, which is the meaning most visible in the spelling and the wrong one here. E converts a temper into an illness by borrowing the stiff hands from the next clause.
-
-    '
+    D: wrong_concept
+    E: less_precise
+  explanation: |-
+    Set against the 'prominent and powerful' Pyncheon, an 'obscure man' is one of no standing or fame — little known. 'Hard to understand' is the common sense of obscure and the trap; 'poor' is close to his condition but not what the word names; 'dishonest' and 'foreign' have no basis.
   source_ref:
-  - H1-Q28
-  - H2-Q7
+  - H1-Q29
 - id: T1-R24
   passage_id: T1-P3
   section: reading_comprehension
   item_type: reading_mc
   question_number: 24
   skill: inference
+  construct: Motive inference grounded in the excerpt's account of the growing town.
   difficulty: hard
   dok: 3
   target_word:
-  question_text: The difference between Beth's two sighs in lines 30-32 and 48-52 suggests that she
-  choice_a: has grown angrier as the talk went on
-  choice_b: is less patient than her sisters
-  choice_c: wants her sisters to pity her
-  choice_d: finds housework harder than music
-  choice_e: lets her feelings show only gradually
-  correct_answer: E
+  question_text: The passage suggests that Colonel Pyncheon most likely pressed his claim to Maule's ground because
+  choice_a: he admired the sturdy hut Maule had built
+  choice_b: he wished to punish Maule for a crime
+  choice_c: the legislature had ordered him to seize it
+  choice_d: the once-humble spot had grown valuable as the town spread
+  choice_e: Maule had offered to sell it to him
+  correct_answer: D
   distractor_types:
-    A: inference_leap
-    B: opposite
-    C: wrong_concept
-    D: misidentified_detail
-  explanation: 'The first sigh is heard by nobody in the room. The second is one that anyone could hear. The passage marks the change deliberately, and what has changed is not the strength of Beth''s feeling but how much of it reaches the surface, which is E. A reads a louder sigh as a hotter one; the girl sighing has just said it is naughty to fret, which is not the language of rising anger. B reverses her: Beth is the one who opens with gratitude and closes with an apology for complaining. C supplies a motive the passage withholds — she never addresses her sisters or asks anything of them. D compares two burdens the passage does not weigh against each other; the music is what she cannot practice, not a task she prefers.
-
-    '
+    A: opposite
+    B: inference_leap
+    C: misidentified_detail
+    E: wrong_concept
+  explanation: |-
+    The passage notes the site 'had become exceedingly desirable' as the town grew, which is what draws the 'powerful personage' to claim it. A reverses his interest; C jumps to punishment, which belongs to the later witchcraft turn; D misreads the legislative grant as a command; E invents an offer that never occurs.
   source_ref:
-  - H2-Q8
-  - H1-Q24
+  - H1-Q46
 - id: T1-R25
   passage_id: T1-P3
   section: reading_comprehension
   item_type: reading_mc
   question_number: 25
   skill: inference
-  difficulty: medium
+  construct: Inference about the narrator's stance from a deliberate hedge.
+  difficulty: hard
   dok: 3
   target_word:
-  question_text: Taken together, the four sisters' complaints suggest that each of them
-  choice_a: blames the others for her troubles
-  choice_b: wishes to leave the family home
-  choice_c: finds her own burden the heaviest
-  choice_d: regrets the promise she made
-  choice_e: has forgotten her father's absence
-  correct_answer: C
+  question_text: The narrator's remark that it would be "bold... and possibly unjust, to venture a decisive opinion" about the dispute suggests that the narrator
+  choice_a: truly has no opinion about who was right
+  choice_b: thinks both men were equally to blame
+  choice_c: regards the whole quarrel as unimportant
+  choice_d: admires the Colonel's boldness in claiming the land
+  choice_e: leans toward Maule but will not claim it as certain fact
+  correct_answer: E
   distractor_types:
-    A: wrong_concept
-    B: inference_leap
-    D: partly_true_but_wrong
-    E: opposite
-  explanation: 'Each girl answers the previous complaint by topping it. One says her work is hard, the next says the other does not have half such a hard time, the third calls her own the worst work in the world, and the fourth says she does not believe any of them suffer as she does. The shape of the exchange is four people each certain her own case is the worst, which is C. A misplaces the grievance: their complaints are about children, an old lady, dishes and schoolmates, not about one another. B invents a wish for escape that nobody voices. D catches a real moment, since Meg admits she does not make her sacrifices gladly, but regret about the promise is Meg''s alone and the item asks what is true of each. E is contradicted by the silence that falls when the father is mentioned.
-
-    '
+    A: opposite
+    B: partly_true_but_wrong
+    C: wrong_concept
+    D: opposite
+  explanation: |-
+    The hedge is paired with 'unduly stretched,' so the narrator plainly leans toward Maule while refusing to state it as proven — the caution of one who suspects but cannot document. A takes the disclaimer at face value; B splits the blame the narrator does not split; D dismisses a matter the narrator treats seriously; E admires what the narrator quietly questions.
   source_ref:
-  - H1-Q19
-  - H2-Q5
+  - H1-Q24
 - id: T1-R26
   passage_id: T1-P3
   section: reading_comprehension
   item_type: reading_mc
   question_number: 26
-  skill: tone_attitude
+  skill: inference
+  construct: Inference about the function of a stated detail ('no written record').
   difficulty: hard
   dok: 3
   target_word:
-  question_text: The narrator's attitude toward the sisters is best described as
-  choice_a: indulgent
-  choice_b: severe
-  choice_c: mournful
-  choice_d: admiring
-  choice_e: detached
+  question_text: The detail that "no written record of this dispute is known to be in existence" mainly serves to suggest that
+  choice_a: what is known rests on passed-down tradition, so certainty is impossible
+  choice_b: the dispute never actually took place
+  choice_c: Maule was without doubt the rightful owner
+  choice_d: the Pyncheons deliberately destroyed the records
+  choice_e: the town kept careful records of everything else
   correct_answer: A
   distractor_types:
-    B: opposite
+    B: inference_leap
     C: partly_true_but_wrong
-    D: less_precise
+    D: inference_leap
     E: wrong_concept
-  explanation: 'The narrator lets the girls squabble and adds small amused touches — a sister examining her shoe heels in a gentlemanly manner, a sigh overheard only by a hearth brush. The girls are being teased by someone clearly fond of them, which is A. B is the reverse: nothing in the telling scolds them, and their least attractive moments are handled lightly. C fits one passage of the scene, the hush when the father is mentioned, and then misdescribes the rest, which is brisk and comic. D is close and one shade off — the narrator is amused by these girls rather than impressed by them, and admiration would not permit the teasing. E claims a distance the narration does not keep; a detached narrator would not supply the affectionate asides.
-
-    '
+  explanation: |-
+    With nothing written and knowledge 'derived chiefly from tradition,' the narrator warns that the truth cannot be fixed with certainty, which is why he hedges his judgment. A over-reads absence of records into absence of events; B claims the certainty the detail denies; D invents a cover-up; E adds a contrast the passage never draws.
   source_ref:
-  - H1-Q31
-  - H2-Q33
+  - H1-Q35
 - id: T1-R27
   passage_id: T1-P4
   section: reading_comprehension
   item_type: reading_mc
   question_number: 27
   skill: main_idea
+  construct: Whole-passage main idea / central urging of an inserted reflective essay.
   difficulty: hard
   dok: 3
   target_word:
-  question_text: The writer's chief point about the Chalmers family is that they
-  choice_a: are poorer than she first expected
-  choice_b: have been worn down by the work
-  choice_c: work hard without ever getting ahead
-  choice_d: have chosen a hard place to settle
-  choice_e: keep their religion above all else
-  correct_answer: C
+  question_text: The passage is mainly concerned with urging readers to
+  choice_a: work harder in order to escape poverty
+  choice_b: question the customary way of living instead of assuming it is the only one
+  choice_c: trust the advice handed down by their elders
+  choice_d: give up all games and amusements
+  choice_e: leave the city and take up farming
+  correct_answer: B
   distractor_types:
-    A: inference_leap
-    B: partly_true_but_wrong
+    A: wrong_concept
+    C: opposite
     D: too_narrow
     E: misidentified_detail
-  explanation: 'The passage sets two things side by side and refuses to let either cancel the other. The family rises early and works till evening, and after nine years they have only the bare necessaries. Everything between those two facts — the mill that fails daily, the cabin left in ruins, the harness held together with rope — explains the gap, and the gap is the point. A supposes a comparison with an earlier expectation that the passage never records. B is the conclusion the facts seem to invite, given nine years of labour and nothing to show but the bare necessaries. The passage insists on the opposite about the family itself, calling them frugal, sober and hard-working, rising early and labouring till evening. Their trouble is not exhaustion. D shifts the blame to the ground, which the passage never faults; the water power is called invaluable. E takes a real feature of the household and makes it the thesis, when religion appears here only in the phrase about courtesy being a work of the flesh.
-
-    '
+  explanation: |-
+    The speaker calls settled habits into doubt — 'No way of thinking or doing, however ancient, can be trusted without proof' — and insists a different life can be chosen. B is the reverse of his view of elders; A and E take single images (work, the farmer) as the message; D lifts the 'games and amusements' remark out of its place as one example.
   source_ref:
   - H2-Q19
-  - H2-Q49
 - id: T1-R28
   passage_id: T1-P4
   section: reading_comprehension
   item_type: reading_mc
   question_number: 28
-  skill: vocabulary_in_context
-  difficulty: medium
-  dok: 2
-  target_word: invaluable
-  question_text: As used in line 2, "invaluable" most nearly means
-  choice_a: worthless
-  choice_b: priceless
-  choice_c: unmeasured
-  choice_d: unusual
-  choice_e: abundant
-  correct_answer: B
+  skill: authors_purpose
+  construct: Purpose of a specific illustration (the farmer and his ox).
+  difficulty: hard
+  dok: 3
+  target_word:
+  question_text: The example of the farmer who insists one cannot live without meat, even as his ox drags the plough on 'vegetable-made bones,' is included mainly to
+  choice_a: prove that a meat-free diet is the healthiest one
+  choice_b: praise the strength of well-fed oxen
+  choice_c: show that what people call a necessity may be mere habit that the facts contradict
+  choice_d: explain the daily routine of running a farm
+  choice_e: argue that farmers are made to work too hard
+  correct_answer: C
   distractor_types:
-    A: surface_match
-    C: less_precise
-    D: wrong_concept
-    E: inference_leap
-  explanation: 'The word describes the water power that comes with the claim — the one asset the family possesses outright, and the thing that makes a sawmill possible at all. It is being praised, so B. A is the trap the word is built on. The prefix looks like the one in "invisible" or "incomplete," so students read it as not valuable, which reverses the meaning exactly. C catches the idea that no figure is given and mistakes that for the claim being made; the passage is not saying the value is unknown but that it is very great. D substitutes rarity for worth. E borrows from water, of which there is presumably plenty, and applies plenty to the wrong noun — the sentence values the power, not the volume.
-
-    '
+    A: inference_leap
+    B: too_literal
+    D: misidentified_detail
+    E: partly_true_but_wrong
+  explanation: |-
+    The ox, strong on the very food the farmer calls insufficient, quietly refutes the farmer's certainty and shows a 'necessity' that is only assumption. A turns the joke into a health claim the passage avoids; C and D take the ox and the farm literally; E borrows a different Thoreauvian theme not at work here.
   source_ref:
-  - H1-Q33
-  - H2-Q4
+  - H2-Q2
 - id: T1-R29
   passage_id: T1-P4
   section: reading_comprehension
   item_type: reading_mc
   question_number: 29
-  skill: inference
+  skill: tone_attitude
+  construct: The speaker's overall tone.
   difficulty: medium
   dok: 3
   target_word:
-  question_text: The list of things that go wrong on the claim suggests that the trouble comes from
-  choice_a: a failure to keep things in repair
-  choice_b: bad luck that no one could prevent
-  choice_c: land too poor to support a family
-  choice_d: a shortage of money to buy tools
-  choice_e: too few hands to do the work
-  correct_answer: A
+  question_text: The tone of the passage is best described as
+  choice_a: gentle and reassuring
+  choice_b: bitter and without hope
+  choice_c: light and joking
+  choice_d: challenging and questioning
+  choice_e: hesitant and unsure
+  correct_answer: D
   distractor_types:
-    B: opposite
+    A: opposite
+    B: partly_true_but_wrong
     C: wrong_concept
-    D: inference_leap
-    E: misidentified_detail
-  explanation: 'Every item on the list is small and fixable in advance: a missing shoe nail, a broken buckle, a wheel, a strap, a foundation dug and then abandoned. None of them is a disaster. What they share is that each could have been seen to before it stopped the work, and none was. B is the reading the family might prefer, and the passage is built to refuse it — a run of accidents this uniform is not chance. C blames the ground, though the passage calls the water power invaluable and never says the land is bad. D supposes poverty caused the breakdowns, but a shoe nail and a buckle are not what a family cannot afford, and the passage puts the poverty at the end of the chain rather than the start. E is contradicted a few lines later, where the household is said to include a grown son and a hired man.
-
-    '
+    E: opposite
+  explanation: |-
+    The speaker presses the reader to doubt inherited ways and to see that 'it is never too late to give up our prejudices' — a challenging, questioning voice. A softens him; B stops at the 'desperation' and misses the summons to change; D mistakes his sharpness for jokes; E denies the confidence of his flat pronouncements.
   source_ref:
-  - H1-Q32
-  - H2-Q5
+  - H1-Q37
 - id: T1-R30
   passage_id: T1-P4
   section: reading_comprehension
   item_type: reading_mc
   question_number: 30
-  skill: vocabulary_in_context
+  skill: figurative_craft
+  construct: Interpret the central figurative phrase ('quiet desperation').
   difficulty: medium
-  dok: 2
-  target_word: want
-  question_text: As used in line 12, "want" most nearly means
-  choice_a: desire
-  choice_b: lack
-  choice_c: neglect
-  choice_d: delay
-  choice_e: expense
-  correct_answer: B
+  dok: 3
+  target_word:
+  question_text: By saying that most men lead "lives of quiet desperation," the speaker suggests that their unhappiness is
+  choice_a: caused mainly by loud quarrels
+  choice_b: something that has appeared only recently
+  choice_c: limited to the very poor
+  choice_d: easily and quickly cured
+  choice_e: felt deeply but kept silent and hidden
+  correct_answer: E
   distractor_types:
-    A: surface_match
-    C: less_precise
-    D: wrong_concept
-    E: inference_leap
-  explanation: 'A horse goes lame for want of a shoe nail. The nail is missing, and its absence is what lames the horse, so B. A is the meaning students meet in nearly every other sentence they read, and here it produces nonsense: a horse does not go lame because it desires a nail. C is the closest miss and worth dwelling on, because neglect is exactly what the paragraph is diagnosing — but the word names the missing thing, not the carelessness that let it go missing, and the passage supplies that judgment elsewhere. D turns an absence into a delay, which fits the mill''s stoppages but not this phrase. E imports cost into a sentence about a nail nobody bought.
-
-    '
+    A: opposite
+    B: wrong_concept
+    C: too_narrow
+    D: opposite
+  explanation: |-
+    'Quiet' is the heart of the image: the despair is concealed, even under 'games and amusements,' rather than open or loud. A contradicts 'quiet'; C and D add a time and a class the phrase does not; E denies the settled, 'confirmed' quality the speaker gives it.
   source_ref:
-  - H1-Q34
-  - H2-Q6
+  - H2-Q9
 - id: T1-R31
   passage_id: T1-P4
   section: reading_comprehension
   item_type: reading_mc
   question_number: 31
-  skill: inference
-  difficulty: hard
-  dok: 3
-  target_word:
-  question_text: The writer's remarks about Chalmers in lines 16-20 suggest that she believes
-  choice_a: he works harder than his neighbours do
-  choice_b: his religion has made him idle
-  choice_c: he has been unlucky with weather
-  choice_d: hard work is not enough by itself
-  choice_e: his family gives him little help
-  correct_answer: D
+  skill: vocabulary_in_context
+  construct: Vocabulary in context; common wrong sense ('quitting a job') trap.
+  difficulty: medium
+  dok: 2
+  target_word: resignation
+  question_text: As used in the passage, "resignation" ('What is called resignation is confirmed desperation') most nearly means
+  choice_a: passive acceptance of one's lot
+  choice_b: the act of quitting a job
+  choice_c: open anger
+  choice_d: physical tiredness
+  choice_e: willing forgiveness
+  correct_answer: A
   distractor_types:
-    A: inference_leap
-    B: opposite
-    C: wrong_concept
-    E: misidentified_detail
-  explanation: 'The sentence begins with "Yet," and the word is doing the whole job. She has just catalogued nine years of things left undone; now she grants that the man is frugal, sober and hard-working, and that he and two others are at it from dawn to dark. Granting the effort and keeping the verdict means the effort was never the missing piece. A invents a comparison with neighbours who do not appear. B reverses the passage twice over: Chalmers is called hard-working, and his religion is described as narrow rather than as an excuse for idleness. C reaches for the standard explanation of a failed claim, and no weather is mentioned anywhere in the excerpt. E notes the family, who do appear, and misassigns the failure to them, when the same sentence has the son and the hired man labouring alongside him.
-
-    '
+    B: surface_match
+    C: opposite
+    D: less_precise
+    E: wrong_concept
+  explanation: |-
+    Here resignation is the settled giving-in that the speaker equates with despair — passive acceptance. 'Quitting a job' is the common modern sense and the trap; 'anger' is its opposite; 'tiredness' and 'forgiveness' name other states entirely.
   source_ref:
-  - H1-Q32
-  - H2-Q8
+  - H2-Q1
 - id: T1-R32
   passage_id: T1-P4
   section: reading_comprehension
   item_type: reading_mc
   question_number: 32
-  skill: tone_attitude
-  difficulty: hard
-  dok: 3
-  target_word:
-  question_text: The writer's attitude toward the family is best described as
-  choice_a: critical but not unkind
-  choice_b: amused and superior
-  choice_c: openly hostile toward them
-  choice_d: respectful of their beliefs
-  choice_e: anxious about her safety
-  correct_answer: A
+  skill: vocabulary_in_context
+  construct: Vocabulary in context of a plural noun.
+  difficulty: medium
+  dok: 2
+  target_word: necessaries
+  question_text: As used in the passage, "necessaries" ('the true necessaries... of life') most nearly means
+  choice_a: luxuries
+  choice_b: essentials
+  choice_c: tools
+  choice_d: daily chores
+  choice_e: small comforts
+  correct_answer: B
   distractor_types:
-    B: partly_true_but_wrong
-    C: too_broad
-    D: misidentified_detail
-    E: inference_leap
-  explanation: 'Her descriptions are severe — a sour girl, hard un-child-like children, a voice that carries a reproach — and yet she says she thinks the wife suffers, wishes she could show them something better, and admits she writes the judgment reluctantly. Both halves are in the passage, and A is the only choice that holds them together. B catches her class and her distance, and she is at moments both, but amusement does not survive the sentence about the wife''s suffering or the reluctance at the end. C keeps the severity and drops everything that qualifies it. D takes her account of their religion, which she calls narrow, and turns her notice of it into approval. E supplies a fear the passage never shows; she is lodging with them, observing closely, and troubled by their manners rather than by any danger.
-
-    '
+    A: opposite
+    C: less_precise
+    D: wrong_concept
+    E: less_precise
+  explanation: |-
+    The 'necessaries of life' are the things truly required to live — essentials — which the passage sets against mere 'luxuries.' A is the opposite; 'tools' and 'comforts' name narrower or lesser goods; 'chores' confuses things needed with tasks done.
   source_ref:
-  - H1-Q37
-  - H2-Q11
+  - H2-Q7
 - id: T1-R33
   passage_id: T1-P4
   section: reading_comprehension
   item_type: reading_mc
   question_number: 33
   skill: inference
+  construct: Inference from a metaphorical sentence ('the sun rose clear').
   difficulty: hard
   dok: 3
   target_word:
-  question_text: The way the family treats the writer suggests that they regard her as
-  choice_a: a guest who must be honoured
-  choice_b: a servant they have lately hired
-  choice_c: a spy sent to watch them
-  choice_d: a stranger whose manners puzzle them
-  choice_e: an idler who does no work
-  correct_answer: E
+  question_text: The statement that "alert and healthy natures remember that the sun rose clear" most nearly suggests that
+  choice_a: early morning is the best time to work
+  choice_b: healthy people tend to wake up early
+  choice_c: clear-minded people see that each new day offers a fresh chance to choose differently
+  choice_d: the weather has a strong effect on one's mood
+  choice_e: the past can never be undone
+  correct_answer: C
   distractor_types:
-    A: opposite
-    B: wrong_concept
-    C: inference_leap
-    D: partly_true_but_wrong
-  explanation: 'Three details point one way. The wife refers to her as "that woman." The family knocks her belongings over without apology. And she says outright that she feels they think it sinful that she does not work as hard as they do. In a house where everything but work is despised, a woman who reads and knits is a woman doing nothing. A is the reverse of every detail given. B mistakes their coldness for a working arrangement; she is a paying lodger, not staff, and nobody sets her tasks. C dramatizes their suspicion into something the passage never suggests. D is the strongest of the four, because their blank amazement at being thanked really is bewilderment — but puzzlement is a mild word for a family that regards her as living in sin against labour.
-
-    '
+    A: too_literal
+    B: too_literal
+    D: wrong_concept
+    E: inference_leap
+  explanation: |-
+    The clear sunrise stands for a fresh start, paired with 'it is never too late to give up our prejudices' — the alert person sees each day as a new chance. A and B read the sun and waking literally; D turns it into a claim about weather and mood; E draws a gloomy lesson opposite to the hopeful one.
   source_ref:
-  - H2-Q5
-  - H1-Q19
+  - H2-Q14
 - id: T1-R34
   passage_id: T1-P4
   section: reading_comprehension
   item_type: reading_mc
   question_number: 34
-  skill: authors_purpose
+  skill: inference
+  construct: Inference about the speaker's claim regarding age and wisdom.
   difficulty: hard
   dok: 3
   target_word:
-  question_text: The writer ends with the statement in lines 43-45 mainly to
-  choice_a: excuse herself for having stayed so long
-  choice_b: explain why she dislikes the West
-  choice_c: show the judgment was not lightly made
-  choice_d: apologize to the family she describes
-  choice_e: warn other travellers away from Colorado
-  correct_answer: C
+  question_text: The speaker's remarks about the advice of his 'seniors' imply that he believes
+  choice_a: the young always know better than the old
+  choice_b: the old should not be spoken to at all
+  choice_c: experience is the only true teacher
+  choice_d: growing old teaches a person little of real value
+  choice_e: the old have simply forgotten what they once knew
+  correct_answer: D
   distractor_types:
-    A: wrong_concept
-    B: misidentified_detail
-    D: inference_leap
-    E: too_broad
-  explanation: 'She has just made a sweeping charge about what the pursuit of gain is doing to family life in the West. Then she notes that she writes it unwillingly and only after two years in the country. Both halves of that sentence are credentials: the reluctance answers the suspicion that she enjoys the verdict, and the two years answer the suspicion that she reached it in haste. A treats the sentence as being about her own conduct rather than about the reliability of her claim. B inverts the logic — the reluctance exists because she does not wish to dislike the place, and a writer explaining a dislike would not call herself unwilling. D imagines an audience that will never read it; these are private letters, and no apology is offered to anyone. E turns an observation into travel advice, which the passage never gives.
-
-    '
+    A: too_broad
+    B: inference_leap
+    C: opposite
+    E: misidentified_detail
+  explanation: |-
+    Having 'yet to hear the first syllable of valuable... advice' from his elders, the speaker doubts that age brings wisdom worth passing on. A overshoots into a claim that youth is always right; C turns doubt into refusing to speak with them; D reverses his low view of accumulated experience; E says they forgot, when he says they never learned much of value.
   source_ref:
-  - H2-Q2
-  - H1-Q10
+  - H2-Q8
 - id: T1-R35
   passage_id: T1-P5
   section: reading_comprehension
   item_type: reading_mc
   question_number: 35
-  skill: inference
-  difficulty: medium
+  skill: main_idea
+  construct: Whole-poem main idea / best title.
+  difficulty: hard
   dok: 3
   target_word:
-  question_text: The detail that the men set each cot inside a painted line suggests that they
-  choice_a: were following an order they were given
-  choice_b: took the marks as instructions
-  choice_c: wanted to keep the cots from sliding
-  choice_d: hoped to make the room look tidy
-  choice_e: knew the game the lines were for
-  correct_answer: B
+  question_text: The poem is mainly about
+  choice_a: a father teaching his child the names of birds
+  choice_b: the danger that birds pose to traffic
+  choice_c: the reasons starlings fly south for the winter
+  choice_d: a family's ordinary drive home at night
+  choice_e: the strange beauty of a flock that moves as one without any leader
+  correct_answer: E
   distractor_types:
-    A: opposite
+    A: misidentified_detail
+    B: wrong_concept
     C: wrong_concept
-    D: partly_true_but_wrong
-    E: inference_leap
-  explanation: 'The poem gives the reason and then removes the obvious explanation for it. The men set the cots inside the lines because the lines were there — and the next sentence says that nobody told them to. A mark on a floor, with no rule attached and no one enforcing it, was enough to decide where forty beds went. A is ruled out by three words. "Nobody told them to" exists in the poem precisely to close off the reading that someone was directing the work. C supplies a practical purpose, but paint does not hold a cot in place and the poem offers no such motive. D is partly right, since the result is orderly, but tidiness would not require the beds to land inside the markings rather than merely in rows. E credits the men with knowledge the poem never gives them, and the boy later in the poem shows that knowing the game is not what the lines depend on.
-
-    '
+    D: too_narrow
+  explanation: |-
+    The poem watches the flock 'pour itself / out of one shape and into the next' with 'no single bird' in charge, and closes in wonder — its subject is that leaderless, unified motion. A and E seize on the father or the drive, small parts of the scene; C and D invent dangers and migrations the poem never mentions.
   source_ref:
-  - H1-Q9
-  - H1-Q12
+  - H2-Q30
 - id: T1-R36
   passage_id: T1-P5
   section: reading_comprehension
   item_type: reading_mc
   question_number: 36
-  skill: figurative_craft
-  difficulty: hard
+  skill: tone_attitude
+  construct: The speaker's attitude toward the flock.
+  difficulty: medium
   dok: 3
   target_word:
-  question_text: The comparison of the dark scoreboard to a stopped clock suggests that the people
-  choice_a: expect the power to return soon
-  choice_b: have lost track of the days
-  choice_c: resent being kept in the gym
-  choice_d: no longer notice the board at all
-  choice_e: keep a habit that no longer helps
-  correct_answer: E
+  question_text: The speaker's attitude toward the flock is best described as one of
+  choice_a: wonder
+  choice_b: fear
+  choice_c: boredom
+  choice_d: mild amusement
+  choice_e: sadness
+  correct_answer: A
   distractor_types:
-    A: inference_leap
-    B: partly_true_but_wrong
-    C: wrong_concept
-    D: opposite
-  explanation: 'You glance at a clock you already know has stopped. The glance is not a question; it is something your eyes do on their way past. The poem says the people still look at a board that has been dark for days, and the comparison tells you the looking has stopped meaning anything. A turns a habit into an expectation. Someone confident the power was returning would look at the board with a purpose, which is the opposite of what the image describes. B is close to something true — the poem does open with "Tuesday" and then stops counting — but a stopped clock in this line is being looked at, not consulted, and losing track of days is not what the glance shows. C imports a resentment that appears nowhere in a poem whose people sweep a clean floor and square their shoes. D is the reading the first line invites. A board that has been dark for days is a board most people would have stopped seeing, and a student who stops there will choose it. The next line refutes it: they still look. That is the whole point of the comparison, since a stopped clock is something you go on checking after it has ceased to tell you anything.
-
-    '
+    B: wrong_concept
+    C: opposite
+    D: less_precise
+    E: partly_true_but_wrong
+  explanation: |-
+    The close attention to the shifting shapes and the 'larger mind' that 'thinks' marks the speaker's response as wonder. 'Fear' and 'sadness' misread the awe; 'boredom' is its opposite; 'amusement' is too light for a sight that leaves the watchers silent.
   source_ref:
-  - H1-Q11
-  - H2-Q34
+  - H1-Q37
 - id: T1-R37
   passage_id: T1-P5
   section: reading_comprehension
   item_type: reading_mc
   question_number: 37
-  skill: figurative_craft
+  skill: tone_attitude
+  construct: Tone/mood at the poem's close (the silence).
   difficulty: hard
   dok: 3
   target_word:
-  question_text: The description of the morning light in lines 14-16 presents the light as
-  choice_a: a warning of the coming heat
-  choice_b: a reminder of the world outside
-  choice_c: a sign that the storm has passed
-  choice_d: one more thing taken in for shelter
-  choice_e: a shape laid out on the floor
-  correct_answer: D
+  question_text: The mood at the end of the poem (lines 22-26) is chiefly one of
+  choice_a: relief that the birds have finally gone
+  choice_b: a hushed wonder too deep to speak of
+  choice_c: disappointment at how the evening ended
+  choice_d: fear of the gathering dark
+  choice_e: impatience to get home at last
+  correct_answer: B
   distractor_types:
-    A: wrong_concept
-    B: partly_true_but_wrong
-    C: inference_leap
-    E: too_literal
-  explanation: 'The light does not fall or shine in these lines. It lies down on the boards, and it is described as something let in for the night — the phrase you would use of a person or an animal admitted at the door. The poem puts the light on the floor in the same posture as everyone else in the room, which is D. A takes rectangles of sun and predicts weather from them; nothing in the poem is warm or warned about. B is true in a small way, since the light does come from outside, but the image works to bring the light in rather than to point back out, and the poem''s outside is water rather than sky. C uses the sunrise as evidence the danger is over, which the last stanza contradicts — the water is still deciding. E stops at the literal geometry. The light does arrive in four rectangles and does lie on the boards, so the description is accurate as far as it goes, but it misses the phrase the item turns on, which admits the light the way you would admit a guest at the door.
-
-    '
+    A: opposite
+    C: opposite
+    D: wrong_concept
+    E: misidentified_detail
+  explanation: |-
+    The birds fall silent 'pretending to be leaves,' the sky is 'the sky again,' and 'neither of us says what we saw' — a quiet too full for words. A and C mistake awe for relief or letdown; D adds a fear the ending does not carry; E takes the literal drive home as impatience, though the silence is reverence.
   source_ref:
-  - H1-Q8
-  - H2-Q10
+  - H2-Q39
 - id: T1-R38
   passage_id: T1-P5
   section: reading_comprehension
   item_type: reading_mc
   question_number: 38
   skill: figurative_craft
-  difficulty: hard
+  construct: Interpret shifting metaphors ('now a fist, now a sheet').
+  difficulty: medium
   dok: 3
   target_word:
-  question_text: The comparison in line 18 suggests that the boy walks the circle with
-  choice_a: fear of the people around him
-  choice_b: more seriousness than it needs
-  choice_c: anger at being kept indoors
-  choice_d: skill he learned at school
-  choice_e: boredom that has no outlet
-  correct_answer: B
+  question_text: The flock is described as "now a fist, now a sheet snapped sideways" (line 8) mainly to convey
+  choice_a: how violent the birds have become
+  choice_b: the great strength of the wind
+  choice_c: the flock's constant, sudden changes of shape
+  choice_d: the exact number of birds in the sky
+  choice_e: that a storm is about to arrive
+  correct_answer: C
   distractor_types:
-    A: wrong_concept
-    C: inference_leap
-    D: misidentified_detail
-    E: partly_true_but_wrong
-  explanation: 'A log over a creek punishes a wrong step. A painted circle on a gym floor punishes nothing at all. By reaching for the first to describe the second, the poem shows a boy giving a harmless line the whole of his attention, arms out, heel to toe, as though there were a drop. A borrows fear from the comparison and points it at the sleepers, though the boy is absorbed in the floor and the poem never has him look up. C invents a grievance; a child furious at being indoors does not walk a circle with this much care. D reads the balancing as training, but the poem says plainly that he has never seen a game played here. E is the strongest miss, since a bored child does invent games — and boredom would explain that he walks the line, not why he walks it as though it mattered, which is what the comparison is about.
-
-    '
+    A: inference_leap
+    B: misidentified_detail
+    D: less_precise
+    E: wrong_concept
+  explanation: |-
+    Two swiftly traded images — fist, then sheet — show a shape that will not hold still, the flock reforming moment to moment. A reads 'fist' as violence; C credits a wind the poem says 'stirs nothing else'; D and E look for a count or a storm the lines do not give.
   source_ref:
-  - H1-Q8
-  - H2-Q24
+  - H2-Q10
 - id: T1-R39
   passage_id: T1-P5
   section: reading_comprehension
   item_type: reading_mc
   question_number: 39
-  skill: inference
-  difficulty: hard
+  skill: figurative_craft
+  construct: Interpret a closing image ('pretending to be leaves').
+  difficulty: medium
   dok: 3
   target_word:
-  question_text: Mr. Alvarez's answer in lines 25-26 suggests that the painted line gives him
-  choice_a: a memory of playing as a young man
-  choice_b: a way to pass the time indoors
-  choice_c: a small order he can rely on
-  choice_d: a place to keep his shoes safe
-  choice_e: a claim to more room than others
-  correct_answer: C
+  question_text: The image of the birds "pretending to be leaves" (line 24) suggests that, once in the tree, they
+  choice_a: have actually turned into leaves
+  choice_b: are busy eating the leaves
+  choice_c: will burst out and fly off again at once
+  choice_d: settle and fall still, hidden among the branches like part of the tree
+  choice_e: are beginning to die
+  correct_answer: D
   distractor_types:
-    A: opposite
+    A: too_literal
     B: wrong_concept
-    D: too_literal
+    C: opposite
     E: inference_leap
-  explanation: 'He does not say the stripe reminds him of anything. He says a man likes to know where his feet go. In a room where nothing else is settled — not the water, not how long they will stay — a painted line is one thing that holds still and tells him where he stands. A is the sentimental reading and the poem blocks it: he has not played anything in fifty years, and his answer is about the present rather than the past. B treats squared shoes as entertainment, though the gesture takes a moment and is done once. D stops at the literal surface, as if paint protected footwear. E turns a modest act into a territorial one; his shoes are on a stripe, not spread across the floor, and nothing suggests he is claiming space.
-
-    '
+  explanation: |-
+    Settling into one tree, the loud flock goes quiet and blends in, so the tree looks ordinary though it is full of birds — they 'pretend' to be foliage. A takes the pretending literally; C invents feeding; D reverses the settling; E darkens a playful image into death.
   source_ref:
-  - H1-Q12
-  - H2-Q8
+  - H2-Q37
 - id: T1-R40
   passage_id: T1-P5
   section: reading_comprehension
   item_type: reading_mc
   question_number: 40
-  skill: tone_attitude
-  difficulty: medium
+  skill: inference
+  construct: Inference about the subtext of the father's remark.
+  difficulty: hard
   dok: 3
   target_word:
-  question_text: The speaker's attitude toward the people in the gym is best described as
-  choice_a: respectful
-  choice_b: impatient
-  choice_c: pitying
-  choice_d: amused
-  choice_e: detached
-  correct_answer: A
+  question_text: The father says the starlings are "only going to roost" (line 15). The speaker's comment on this suggests that the father
+  choice_a: knows a great deal about the habits of birds
+  choice_b: is bored by the whole spectacle
+  choice_c: is frightened by the enormous flock
+  choice_d: wants to leave before his child is ready to
+  choice_e: offers a plain fact because he cannot, or will not, name the larger feeling
+  correct_answer: E
   distractor_types:
-    B: wrong_concept
-    C: less_precise
-    D: partly_true_but_wrong
-    E: opposite
-  explanation: 'The speaker notices what people do to keep themselves in order: sweeping a floor that does not need it, squaring a pair of shoes, walking a line with care. These are recorded as things worth recording, and the old man is given his own words rather than being explained. That is respect. B has no support in a poem that watches this patiently. C is the near miss and the one most worth rejecting deliberately: pity would look down at these people, and the speaker is one of them, saying "we came in" and "the floor arranged us." D catches a flicker — there is something wry in sweeping an empty floor — but amusement cannot account for the last stanza. E is contradicted by the plural pronouns; a detached speaker would not be sleeping in the room.
-
-    '
+    A: too_literal
+    B: opposite
+    C: wrong_concept
+    D: misidentified_detail
+  explanation: |-
+    The speaker says he names 'the smaller thing / to keep from naming the other, the one / with no fact in it' — the father reaches for a fact to avoid the feeling. A takes his remark as expertise; B misreads restraint as boredom; D invents fear; E turns his stillness into a wish to leave, though they 'do not get in' the car.
   source_ref:
-  - H2-Q33
-  - H1-Q6
+  - H2-Q36
 - id: T1-R41
   passage_id: T1-P5
   section: reading_comprehension
   item_type: reading_mc
   question_number: 41
-  skill: tone_attitude
-  difficulty: medium
+  skill: inference
+  construct: Inference paraphrasing the poem's central paradox.
+  difficulty: hard
   dok: 3
   target_word:
-  question_text: In the final stanza (lines 27-32) the tone of the poem becomes more
-  choice_a: bitter
-  choice_b: playful
-  choice_c: fearful
-  choice_d: hurried
-  choice_e: wondering
-  correct_answer: E
+  question_text: The lines "a larger mind assembles over the traffic, / with no head in which to think, and thinks" (lines 13-14) most nearly mean that
+  choice_a: the flock behaves like a single thinking thing though nothing is directing it
+  choice_b: the birds are more intelligent than people are
+  choice_c: one clever bird leads and directs all the rest
+  choice_d: the birds are confused by the noise of the traffic
+  choice_e: the speaker imagines seeing a face up in the sky
+  correct_answer: A
   distractor_types:
-    A: wrong_concept
-    B: opposite
-    C: inference_leap
-    D: misidentified_detail
-  explanation: 'For four stanzas the poem reports: cots, a dark board, light, a boy, an old man. In the last stanza it stands back and says something it finds remarkable — that a floor arranged people in a language none of them was taught and all of them can read. The register lifts from noticing to marvelling. A hears complaint where the poem offers none; nothing in the closing lines blames anyone. B reverses the movement, since the ending is the most serious part of the poem. C reaches for the water, and the water is mentioned only to say it has not decided — the stanza turns inward and away from it. D describes a pace the lines do not have; the final sentence is the longest and slowest in the poem.
-
-    '
+    B: inference_leap
+    C: opposite
+    D: wrong_concept
+    E: too_literal
+  explanation: |-
+    With each bird only 'holding its small distance,' the flock as a whole acts as if it had one mind, yet 'no single bird decides it' — order without a director. A and E take 'mind' as a claim about cleverness or a literal face; B supplies the leader the poem explicitly denies; D invents confusion the coordinated motion contradicts.
   source_ref:
-  - H2-Q39
-  - H2-Q35
+  - H2-Q34
 - id: T1-R42
   passage_id: T1-P5
   section: reading_comprehension
   item_type: reading_mc
   question_number: 42
-  skill: main_idea
-  difficulty: hard
+  skill: inference
+  construct: Inference from a physical detail (standing in the cold, not getting in).
+  difficulty: medium
   dok: 3
   target_word:
-  question_text: Throughout the poem, the speaker comes to see that
-  choice_a: a storm can force strangers together
-  choice_b: a gym makes a poor shelter
-  choice_c: the boy has learned something new
-  choice_d: old lines still arrange new people
-  choice_e: the people long to go home
-  correct_answer: D
+  question_text: The detail that the speaker and the father "stand by the car / in the cold and do not get in" (lines 18-19) suggests that they
+  choice_a: are waiting for someone else to arrive
+  choice_b: are so held by the sight that they forget the cold
+  choice_c: cannot get the car to start
+  choice_d: are afraid to move while the birds are near
+  choice_e: are in the middle of an argument
+  correct_answer: B
   distractor_types:
-    A: too_broad
-    B: opposite
-    C: too_narrow
-    E: inference_leap
-  explanation: 'Every scene in the poem is the same discovery made again. Men lay beds inside markings nobody enforces. A boy treats a circle as a beam. An old man sets his shoes on a stripe. The last stanza names what they have in common: the floor arranged us. Markings made for a game are still telling people where to be, and D says so. A is true of the situation and would be true of any shelter anywhere; it does not touch the lines, which are what the poem keeps returning to. B reverses the poem''s finding, since the room turns out to serve these people better than they expected. C takes one figure of the four and makes him the subject, and the boy is presented as an instance rather than a learner. E supplies a longing the poem never voices — nobody in it speaks of home.
-
-    '
+    A: misidentified_detail
+    C: wrong_concept
+    D: inference_leap
+    E: opposite
+  explanation: |-
+    Choosing the cold over the warm car shows them caught by the spectacle, unwilling to look away. A and B invent a delay or a breakdown; D reads their stillness as fear rather than absorption; E supplies a quarrel, though the poem ends in shared silence.
   source_ref:
-  - H2-Q19
-  - H2-Q30
+  - H2-Q26
 - id: T1-R43
   passage_id: T1-P6
   section: reading_comprehension
   item_type: reading_mc
   question_number: 43
   skill: main_idea
-  difficulty: hard
+  construct: Whole-passage main idea of an explanatory science piece.
+  difficulty: medium
   dok: 3
   target_word:
-  question_text: The passage is best described as an explanation of
-  choice_a: why highways are built too narrow
-  choice_b: how drivers can avoid being late
-  choice_c: why a jam can outlast its cause
-  choice_d: what happens when drivers follow closely
-  choice_e: why drivers brake more than they should
+  question_text: The passage is mainly concerned with explaining
+  choice_a: how engineers go about straightening rivers
+  choice_b: how people make use of oxbow lakes
+  choice_c: why a river on flat ground bends and why its bends keep growing
+  choice_d: why water always flows downhill
+  choice_e: how floods do damage to riverbanks
   correct_answer: C
   distractor_types:
-    A: wrong_concept
-    B: inference_leap
-    D: too_narrow
-    E: partly_true_but_wrong
-  explanation: 'The whole passage is built to answer one question: how can you sit in a jam for twenty minutes and then find nothing at the end of it? The answer is that the jam is a wave rather than a place, that it travels away from whatever started it, and that the cause was gone long before you arrived. C names that. A blames the road, which the passage never does; the highway in it is working normally. B treats the piece as advice for the reader, but the remedy near the end helps the drivers behind rather than the one who applies it. D names the condition a jam wave needs, and the passage does say that drivers travel closer to one another than judgment advises. But that is the setup rather than the subject, and everything the passage finds interesting happens after it. E names something the passage explicitly describes — drivers do overcorrect — but that is one step in the mechanism, not what the passage sets out to explain.
-
-    '
+    A: too_narrow
+    B: wrong_concept
+    D: too_literal
+    E: too_narrow
+  explanation: |-
+    The passage sets out to answer why flat-land rivers curve and then keep curving, tracing the feedback that deepens each bend. A and E are single late examples; C invents a human use; D restates a background fact rather than the passage's real question.
   source_ref:
-  - H1-Q38
-  - H2-Q19
+  - H2-Q30
 - id: T1-R44
   passage_id: T1-P6
   section: reading_comprehension
   item_type: reading_mc
   question_number: 44
-  skill: supporting_detail
+  skill: authors_purpose
+  construct: Purpose of an analogy (the carousel).
   difficulty: medium
-  dok: 2
+  dok: 3
   target_word:
-  question_text: According to lines 12-20, the disturbance grows as it travels backward because each driver
-  choice_a: reacts late and brakes too hard
-  choice_b: is driving faster than the one ahead
-  choice_c: wants to leave a larger gap
-  choice_d: cannot see the road far enough ahead
-  choice_e: is distracted by something in the car
-  correct_answer: A
+  question_text: The comparison to "the outer horse on a carousel" (lines 14-15) is included mainly to
+  choice_a: show that rivers travel in circles
+  choice_b: prove that carousels and rivers obey the very same laws
+  choice_c: describe how a carousel is put together
+  choice_d: make it easy to picture why the water on the outside of a bend moves faster
+  choice_e: suggest that rivers are built by people
+  correct_answer: D
   distractor_types:
-    B: wrong_concept
-    C: opposite
-    D: inference_leap
-    E: misidentified_detail
-  explanation: 'The passage states the mechanism directly: each driver reacts a fraction of a second late and overcorrects slightly to make up for the delay. Lateness plus overcorrection is what makes each braking a little sharper than the one before it, until someone twenty cars back has to stop. B substitutes a difference in speed for a difference in timing; the passage has the traffic flowing evenly before the first tap. C reverses the situation, since the cars are following closer than judgment would advise, and leaving a larger gap is the remedy offered at the end. D supplies an explanation for the late reaction that the passage does not give and does not need. E fastens on the phrase "for reasons of his own," which the passage uses to withhold the first driver''s reason rather than to identify it, and which in any case applies to one driver instead of each.
-
-    '
+    A: too_literal
+    B: too_broad
+    C: misidentified_detail
+    E: wrong_concept
+  explanation: |-
+    The outer horse, which must 'cover the greater distance,' gives a familiar picture of why water on a bend's outer edge speeds up. A takes the analogy too literally; C overstates a picture into a shared law; D wanders into how carousels are made; E draws an unrelated conclusion.
   source_ref:
-  - H1-Q35
-  - H1-Q40
+  - H1-Q36
 - id: T1-R45
   passage_id: T1-P6
   section: reading_comprehension
   item_type: reading_mc
   question_number: 45
-  skill: vocabulary_in_context
+  skill: supporting_detail
+  construct: Locate a stated cause-and-effect detail against a near miss.
   difficulty: medium
   dok: 2
-  target_word: absorb
-  question_text: As used in line 33, "absorb" most nearly means
-  choice_a: soak up spilled water
-  choice_b: pass along to others
-  choice_c: come to understand fully
-  choice_d: reduce gradually over time
-  choice_e: take in and hold
+  target_word:
+  question_text: According to the passage, sand is dropped and a small beach is built up on the ___ of a bend.
+  choice_a: outer side, where the water runs fastest
+  choice_b: both sides equally
+  choice_c: narrow neck of land between two loops
+  choice_d: very bottom of the channel
+  choice_e: inner side, where the current slackens
   correct_answer: E
   distractor_types:
-    A: surface_match
-    B: opposite
-    C: wrong_concept
-    D: less_precise
-  explanation: 'The sentence sets absorbing against passing on. The driver receives the disturbance and does not send it further: she coasts, spends her gap, and the cars behind her get nothing. To take the wave in and keep it is E. A is the meaning the word carries most often, and the passage has already compared traffic to water, which makes the wrong sense unusually easy to reach for here — but no liquid is involved. B is the exact behaviour the sentence rules out with the words "instead of." C is the sense in "absorb a lesson," which cannot apply to a wave in traffic. D is close and one step off: the wave is stopped at this driver rather than worn down slowly, and the passage gives no span of time over which it fades.
-
-    '
+    A: misidentified_detail
+    B: wrong_concept
+    C: misidentified_detail
+    D: wrong_concept
+  explanation: |-
+    The passage says that 'along the inner side, where the current slackens, the river lets fall the sand' and 'a small beach is built up.' A names the outer side, which is scoured instead; D borrows the 'neck' from the oxbow paragraph; B and E contradict the passage's careful split between the two banks.
   source_ref:
-  - H1-Q33
-  - H1-Q29
+  - H1-Q40
 - id: T1-R46
   passage_id: T1-P6
   section: reading_comprehension
   item_type: reading_mc
   question_number: 46
-  skill: inference
-  difficulty: hard
-  dok: 3
-  target_word:
-  question_text: The statement in lines 20-27 that the jam has outlived its own contents means that
-  choice_a: the jam has lasted longer than expected
-  choice_b: the drivers have grown tired of waiting
-  choice_c: no original car remains inside the jam
-  choice_d: the jam has moved past where it formed
-  choice_e: the cars inside it are no longer moving
-  correct_answer: C
+  skill: vocabulary_in_context
+  construct: Vocabulary in context; common wrong sense ('searched') trap.
+  difficulty: medium
+  dok: 2
+  target_word: scoured
+  question_text: As used in line 16, "scoured" most nearly means
+  choice_a: worn away
+  choice_b: searched
+  choice_c: flooded
+  choice_d: scrubbed clean
+  choice_e: frozen over
+  correct_answer: A
   distractor_types:
-    A: wrong_concept
-    B: inference_leap
-    D: partly_true_but_wrong
-    E: opposite
-  explanation: 'Cars enter the jam at its back and leave from its front while the jam itself slides the other way. Given enough time, every car that was in the original slowdown has driven off, and the jam is still there, made entirely of vehicles that arrived later. The thing has survived a complete change of parts. A reads "outlived" as merely lasting a long time and loses the comparison the word is making — the jam has outlived something specific. B moves the sentence from the jam to the drivers'' patience, which the passage never discusses. D is true and is the closest miss: the jam does travel backward from where it began. But moving away from a place is not the same as replacing everything inside it, and it is the second that "contents" names. E contradicts the same sentence, which says every car inside the jam is travelling forward.
-
-    '
+    B: surface_match
+    C: wrong_concept
+    D: less_precise
+    E: wrong_concept
+  explanation: |-
+    The outer bank is 'scoured and cut back' by the faster water, so scoured means eroded, worn away. 'Searched' is the common other sense of scour (to scour the woods) and the trap; 'scrubbed clean' catches the washing sense but misses that material is removed; 'flooded' and 'frozen' do not fit.
   source_ref:
-  - H1-Q32
-  - H2-Q8
+  - H1-Q28
 - id: T1-R47
   passage_id: T1-P6
   section: reading_comprehension
   item_type: reading_mc
   question_number: 47
-  skill: inference
+  skill: vocabulary_in_context
+  construct: Vocabulary in context; common wrong sense ('spoken') trap.
   difficulty: medium
-  dok: 3
-  target_word:
-  question_text: The passage suggests that a driver who looks for the cause of a jam is likely to
-  choice_a: find a stalled vehicle further ahead
-  choice_b: find nothing where the jam ends
-  choice_c: blame the driver directly in front
-  choice_d: reach home later than expected
-  choice_e: discover a lane closed for work
+  dok: 2
+  target_word: pronounced
+  question_text: As used in line 22, "pronounced" most nearly means
+  choice_a: spoken out loud
+  choice_b: more clearly marked
+  choice_c: declared final
+  choice_d: made straight
+  choice_e: worn shallow
   correct_answer: B
   distractor_types:
-    A: opposite
-    C: inference_leap
-    D: true_but_irrelevant
-    E: misidentified_detail
-  explanation: 'The passage opens on exactly this search and reports its result: you round the curve braced for wreckage and there is nothing there. It then explains why the search must fail — the tap that started the jam happened twenty minutes ago and four miles back, and the driver who made it is home. A and E are the two things the passage lists in order to say they are absent; a stalled truck and a closed lane are named as what you do not find. C supposes a reaction the passage does not describe, and the driver in front is as blameless as everyone else in the wave. D is true of anyone stuck in traffic and has nothing to do with searching for a cause.
-
-    '
+    A: surface_match
+    C: less_precise
+    D: opposite
+    E: wrong_concept
+  explanation: |-
+    A bend that 'becomes more pronounced with every season' becomes more marked, more noticeable. 'Spoken out loud' is the everyday sense of pronounce and the trap; 'declared final' catches another use (pronounced dead) but not this one; 'made straight' is the opposite of a deepening curve.
   source_ref:
-  - H1-Q32
-  - H1-Q19
+  - H1-Q20
 - id: T1-R48
   passage_id: T1-P6
   section: reading_comprehension
   item_type: reading_mc
   question_number: 48
-  skill: vocabulary_in_context
-  difficulty: medium
-  dok: 2
-  target_word: signal
-  question_text: As used in line 35, "signal" most nearly means
-  choice_a: a light at the intersection
-  choice_b: a blinking turn indicator
-  choice_c: a shouted word of warning
-  choice_d: a cue to brake
-  choice_e: a message sent by radio
-  correct_answer: D
+  skill: inference
+  construct: Inference from a compressed causal phrase ('the curve deepens itself').
+  difficulty: hard
+  dok: 3
+  target_word:
+  question_text: The statement that "the curve, in short, deepens itself" (lines 19-20) mainly means that
+  choice_a: the river grows physically deeper at every bend
+  choice_b: someone digs the curves out to make them deeper
+  choice_c: a bend, once begun, causes itself to grow still more curved
+  choice_d: deep rivers curve more sharply than shallow ones do
+  choice_e: the curve slowly fills with sand until it disappears
+  correct_answer: C
   distractor_types:
-    A: surface_match
+    A: too_literal
     B: wrong_concept
-    C: too_literal
-    E: inference_leap
-  explanation: 'What the cars behind never receive is the thing that has been passing backward through the traffic all along — the sight of brake lights ahead, which tells the next driver to slow. The coasting driver never brakes, so that prompt is never sent. D names it. A is the trap the item is built on. In a passage about highways, "signal" pulls hard toward traffic lights, and no intersection appears anywhere in the piece. B stays inside the car and picks the other roadway sense of the word, which has nothing to do with slowing. C imagines drivers calling to one another. E supposes a technology the passage never mentions; what travels between these cars is visible, not transmitted.
-
-    '
+    D: inference_leap
+    E: opposite
+  explanation: |-
+    Scouring the outer bank and building up the inner one make each bend sharper, so the curve feeds its own growth. A reads 'deepens' as water depth; C supplies a digger, though the passage stresses there is no design; D invents a rule about depth and sharpness; E describes the opposite of a growing bend.
   source_ref:
-  - H1-Q34
-  - H2-Q1
+  - H1-Q17
 - id: T1-R49
   passage_id: T1-P6
   section: reading_comprehension
   item_type: reading_mc
   question_number: 49
-  skill: authors_purpose
+  skill: inference
+  construct: Inference from a figurative comparison ('the river has edited itself').
   difficulty: hard
   dok: 3
   target_word:
-  question_text: The author opens the passage with the words "Nothing happened" mainly to
-  choice_a: name the puzzle before explaining it
-  choice_b: announce the answer at the start
-  choice_c: show that the writer was there too
-  choice_d: criticize the design of modern roads
-  choice_e: suggest the problem cannot be solved
-  correct_answer: A
+  question_text: When the author writes that "the river has edited itself" (line 30), the comparison suggests that the river has
+  choice_a: written a message down along its banks
+  choice_b: made an error and then corrected it on purpose
+  choice_c: followed a careful plan to shorten its course
+  choice_d: cut away a loop it no longer used, the way a writer strikes out needless words
+  choice_e: copied the course of a neighboring river
+  correct_answer: D
   distractor_types:
-    B: wrong_logical_relation
+    A: too_literal
+    B: partly_true_but_wrong
     C: inference_leap
-    D: misidentified_detail
-    E: opposite
-  explanation: 'Two words state the whole mystery: you were delayed, and there was no reason for it at the place you were delayed. Everything after them is the explanation. Beginning with the puzzle also puts the reader in the position of the baffled driver, which is why the next sentences say "you" rather than "a driver." B has the right instinct about placement and the wrong idea about content. A short opening line often does carry the main claim, which is why this is tempting. Here it carries the mystery instead: nothing happened is what needs explaining, and the explanation takes the rest of the passage. C reads the flat opening as personal testimony, though the passage never uses "I" and gives no account of the writer''s own trip. D borrows the passage''s later interest in highways and turns an explanation into a complaint about how roads are built. E is contradicted by the last third of the passage, which describes a remedy and cites evidence that it works.
-
-    '
+    E: wrong_concept
+  explanation: |-
+    Editing here means removing what is not needed: in a flood the river abandons the long loop, as a writer deletes a passage 'it no longer had a use for.' A takes 'edited' literally; C adds intention and error the passage does not claim; D imports a 'plan,' though the passage insists none is needed; E invents copying.
   source_ref:
-  - H2-Q2
-  - H1-Q10
+  - H2-Q9
 - id: T1-R50
   passage_id: T1-P6
   section: reading_comprehension
   item_type: reading_mc
   question_number: 50
   skill: inference
-  difficulty: hard
+  construct: Inference/prediction from the closing example (engineers straightening a river).
+  difficulty: medium
   dok: 3
   target_word:
-  question_text: The passage suggests that the remedy it describes is rarely used because drivers
-  choice_a: do not know that it exists
-  choice_b: cannot judge distances well enough
-  choice_c: would rather arrive home sooner
-  choice_d: believe engineers should fix the road
-  choice_e: experience the gap as a loss
+  question_text: The passage suggests that when engineers straighten a river to reclaim its land (lines 37-41), the river will
+  choice_a: stay straight permanently once the work is done
+  choice_b: dry up and disappear
+  choice_c: flow faster than before forever after
+  choice_d: flood the reclaimed land immediately
+  choice_e: soon begin forming new bends again
   correct_answer: E
   distractor_types:
-    A: inference_leap
+    A: opposite
     B: wrong_concept
-    C: partly_true_but_wrong
+    C: inference_leap
     D: misidentified_detail
-  explanation: 'The passage says the obstacle is human rather than technical, and then says what the human obstacle is: the gap feels to the driver keeping it like ground she has already paid for and is now giving away. It is a remedy that registers as a defeat, which is why it goes unused even when it works. A supplies ignorance as the barrier, and the passage rules that out by locating the difficulty in how the gap feels rather than in what drivers know. B invents a limit on skill; nothing in the passage suggests drivers misjudge the distance. C is close to the feeling described and misses its shape — the driver is not calculating arrival time but reacting to the sight of space she could be occupying. D moves the explanation to an opinion about whose job it is, an argument the passage never raises.
-
-    '
+  explanation: |-
+    The passage says the water, 'given the first excuse, sets about curving once more, rebuilding the very bends they had filled' — the straightening does not last. A is the opposite; B and D invent outcomes the passage never predicts; E borrows flooding from the oxbow paragraph and misapplies it.
   source_ref:
-  - H2-Q5
-  - H2-Q49
+  - H1-Q46
 - id: T1-Q01
   section: quantitative_reasoning
   item_type: word_problem
@@ -4145,3 +4351,4 @@ writing_assignment:
 
       '
 math_rebuild_note: QR (Q01-Q37) and MA (M01-M47) were regenerated as construct-faithful structural twins of the real ISEE-ML / Hunter-sample math items in the project dataset. Each item's source_ref names the real item it twins; 'construct' states the latent skill. PT-QR-6/28/31 and PT-MA-7/8/39 were the six dataset items dropped to fit the 37+47 form.
+reading_rebuild_note: Reading passages P1-P6 and items R01-R50 were rebuilt. P1, P2, P5 (poem) and P6 are original passages calibrated ~1 grade above the real sample's readability (FK reported on the dataset's scale). P3 (Hawthorne) and P4 (Thoreau) are public-domain excerpts to be pasted by hand — see each passage's source_citation and excerpt anchors; their question stems use quoted-phrase references. Every item twins the latent skill of a real dataset item named in source_ref; distractors are true-of-passage-but-wrong.
