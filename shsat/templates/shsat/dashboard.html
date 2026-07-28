@@ -140,13 +140,13 @@
 <!-- Skill & Difficulty Charts -->
 {% if skill_accuracy_data %}
 <p class="shsat-section-title" style="margin-top:48px;">Accuracy by skill</p>
-<div id="skillElaWrap" class="shsat-chart-wrap" style="display:none;">
+<div id="skillElaWrap" style="display:none;margin-bottom:24px;">
   <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
-  <canvas id="skillChartEla"></canvas>
+  <div id="skillHeatEla" class="shsat-skill-heat"></div>
 </div>
-<div id="skillMathWrap" class="shsat-chart-wrap" style="display:none;">
+<div id="skillMathWrap" style="display:none;margin-bottom:24px;">
   <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
-  <canvas id="skillChartMath"></canvas>
+  <div id="skillHeatMath" class="shsat-skill-heat"></div>
 </div>
 {{ skill_accuracy_data|json_script:"skillChartData" }}
 
@@ -603,50 +603,49 @@ function makeProjData(arr) {
 })();
 
 // ---------------------------------------------------------------------------
-// Skill accuracy heatmap bar charts — one per section
-// ELA: blue gradient (lighter = lower, darker = higher)
-// Math: red gradient (same hues as score chart)
+// Skill accuracy CSS tile heatmap — one grid per section
+// ELA: light blue (#d5e6f7) → dark blue (#1d4a82)
+// Math: light red (#f7d5d2) → dark red (#821d16)
 // ---------------------------------------------------------------------------
 (function () {
   const allSkills = JSON.parse(document.getElementById("skillChartData").textContent);
 
-  // Heatmap color: opacity 0.15→1.0 mapped to accuracy 0→100
-  // rgb values match P.ela and P.math
-  function heatColor(accuracy, r, g, b) {
-    const alpha = 0.15 + (accuracy / 100) * 0.85;
-    return `rgba(${r},${g},${b},${alpha.toFixed(2)})`;
+  function lerpColor(t, r0, g0, b0, r1, g1, b1) {
+    return `rgb(${Math.round(r0+t*(r1-r0))},${Math.round(g0+t*(g1-g0))},${Math.round(b0+t*(b1-b0))})`;
   }
-  const ELA_RGB  = [91, 142, 196];   // matches P.ela  #5b8ec4
-  const MATH_RGB = [196, 99, 91];    // matches P.math #c4635b
+  // light text for dark tiles, dark text for light tiles
+  function tileTextColor(t) {
+    return t > 0.55 ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.65)";
+  }
 
-  function renderSkillAccuracy(canvasId, wrapId, skills, rgb) {
+  const ELA_LIGHT  = [213, 230, 247];   // #d5e6f7
+  const ELA_DARK   = [29,  74,  130];   // #1d4a82
+  const MATH_LIGHT = [247, 213, 210];   // #f7d5d2
+  const MATH_DARK  = [130, 29,  22];    // #821d16
+
+  function renderSkillHeat(containerId, wrapId, skills, lightRgb, darkRgb) {
     if (!skills.length) return;
     document.getElementById(wrapId).style.display = "";
-    const accuracies = skills.map(s => s.accuracy);
-    const colors = accuracies.map(a => heatColor(a, ...rgb));
-    new Chart(document.getElementById(canvasId).getContext("2d"), {
-      type: "bar",
-      data: {
-        labels: skills.map(s => s.label),
-        datasets: [{ label: "Accuracy %", data: accuracies, backgroundColor: colors, borderWidth: 0, barThickness: 16 }]
-      },
-      options: {
-        indexAxis: "y", responsive: true,
-        aspectRatio: skills.length > 6 ? 1.8 : 2.5,
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: (item) => { const s = skills[item.dataIndex]; return ` ${s.accuracy}% (${s.correct}/${s.total})`; } } }
-        },
-        scales: {
-          x: { min: 0, max: 100, grid: { color: P.grid }, ticks: { font: { size: 11 }, callback: v => v + "%" } },
-          y: { grid: { display: false }, ticks: { font: { size: 12 } } }
-        }
-      }
+    const container = document.getElementById(containerId);
+    skills.forEach(s => {
+      const t = s.accuracy / 100;
+      const bg = lerpColor(t, ...lightRgb, ...darkRgb);
+      const fg = tileTextColor(t);
+      const tile = document.createElement("div");
+      tile.className = "shsat-skill-tile";
+      tile.style.background = bg;
+      tile.style.color = fg;
+      tile.title = `${s.label}: ${s.accuracy}% (${s.correct}/${s.total})`;
+      tile.innerHTML =
+        `<div class="shsat-skill-tile__label">${s.label}</div>` +
+        `<div class="shsat-skill-tile__pct">${s.accuracy}%</div>` +
+        `<div class="shsat-skill-tile__count">${s.correct}/${s.total}</div>`;
+      container.appendChild(tile);
     });
   }
 
-  renderSkillAccuracy("skillChartEla",  "skillElaWrap",  allSkills.filter(s => s.section === "ELA"),  ELA_RGB);
-  renderSkillAccuracy("skillChartMath", "skillMathWrap", allSkills.filter(s => s.section === "Math"), MATH_RGB);
+  renderSkillHeat("skillHeatEla",  "skillElaWrap",  allSkills.filter(s => s.section === "ELA"),  ELA_LIGHT, ELA_DARK);
+  renderSkillHeat("skillHeatMath", "skillMathWrap", allSkills.filter(s => s.section === "Math"), MATH_LIGHT, MATH_DARK);
 })();
 
 // ---------------------------------------------------------------------------
