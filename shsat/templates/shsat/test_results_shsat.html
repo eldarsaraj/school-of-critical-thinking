@@ -12,7 +12,20 @@
   {% endif %}
 </p>
 
-<!-- Score display -->
+{% if is_drill %}
+<!-- Drill score display — Math only, no scaling -->
+<div class="shsat-score-display">
+  <div class="shsat-score-box shsat-score-box--composite">
+    <div class="shsat-score-box__value">{{ attempt.math_correct }}</div>
+    <div class="shsat-score-box__label">Correct</div>
+    <div style="font-size:13px;color:rgba(0,0,0,0.4);margin-top:6px;">of {{ math_answers|length }}</div>
+  </div>
+</div>
+<p style="font-size:12px;color:rgba(0,0,0,0.35);margin-top:-24px;margin-bottom:32px;">
+  Focused drill — Math only. Raw score shown; no scaling applied.
+</p>
+{% else %}
+<!-- Full test score display -->
 <div class="shsat-score-display">
   <div class="shsat-score-box">
     <div class="shsat-score-box__value">{{ attempt.ela_scaled }}</div>
@@ -61,6 +74,7 @@
   </tbody>
 </table>
 {% endif %}
+{% endif %}
 
 <!-- Notes -->
 <p class="shsat-section-title">Notes</p>
@@ -106,7 +120,8 @@
 </div>
 {% endif %}
 
-<!-- ELA review -->
+<!-- ELA review (hidden for drills) -->
+{% if not is_drill %}
 <p class="shsat-section-title">ELA — answer review</p>
 <div style="margin-bottom:8px;font-size:12px;color:rgba(0,0,0,0.4);display:grid;grid-template-columns:40px 1fr 60px 60px;gap:8px;padding:0 0 6px;border-bottom:1px solid rgba(0,0,0,0.1);">
   <span>#</span><span>Question</span><span>Given</span><span>Correct</span>
@@ -122,9 +137,10 @@
   <span>{% if not ans.is_correct %}{{ ans.question.correct_answer|display_letter:ans.question.question_number }}{% endif %}</span>
 </div>
 {% endfor %}
+{% endif %}
 
 <!-- Math review -->
-<p class="shsat-section-title" style="margin-top:32px;">Math — answer review</p>
+<p class="shsat-section-title" style="margin-top:32px;">{% if is_drill %}Answer review{% else %}Math — answer review{% endif %}</p>
 <div style="margin-bottom:8px;font-size:12px;color:rgba(0,0,0,0.4);display:grid;grid-template-columns:40px 1fr 60px 60px;gap:8px;padding:0 0 6px;border-bottom:1px solid rgba(0,0,0,0.1);">
   <span>#</span><span>Question</span><span>Given</span><span>Correct</span>
 </div>

@@ -475,22 +475,32 @@ def delete_manual_score(request, score_id):
 @login_required(login_url="/shsat/login/")
 def test_list(request):
     parent, _ = Parent.objects.get_or_create(user=request.user)
-    if parent.has_paid or request.user.is_staff:
-        tests = Test.objects.filter(is_published=True) | Test.objects.filter(is_published=False, is_free=False)
-        tests = tests.distinct().order_by("id")
+    can_access_paid = parent.has_paid or request.user.is_staff
+
+    if can_access_paid:
+        tests = (
+            Test.objects.filter(is_published=True) | Test.objects.filter(is_published=False, is_free=False)
+        ).filter(is_drill=False).distinct().order_by("id")
+        drills = Test.objects.filter(is_drill=True).order_by("order", "id")
     else:
-        tests = Test.objects.filter(is_published=True)
+        tests = Test.objects.filter(is_published=True, is_drill=False)
+        drills = Test.objects.filter(is_drill=True)  # shown as locked teasers
+
     completed_ids = set(
         TestAttempt.objects.filter(parent=parent, is_completed=True).values_list("test_id", flat=True)
     )
+    has_completed_any = bool(completed_ids)
     free_limit = settings.SHSAT_FREE_TEST_LIMIT
     tests_taken = TestAttempt.objects.filter(parent=parent, is_completed=True).count()
     context = {
         "tests": tests,
+        "drills": drills,
         "completed_ids": completed_ids,
+        "has_completed_any": has_completed_any,
         "free_limit": free_limit,
         "tests_taken": tests_taken,
         "has_paid": parent.has_paid,
+        "can_access_paid": can_access_paid,
     }
     return render(request, "shsat/test_list.html", context)
 
@@ -810,6 +820,7 @@ def test_results(request, attempt_id):
         "placement_data": placement_data,
         "notes_form": notes_form,
         "is_baseline": attempt.test.is_free,
+        "is_drill": attempt.test.is_drill,
         "has_paid": parent.has_paid,
         "is_hunter": is_hunter,
         "hunter_rc_answers": hunter_rc_answers,

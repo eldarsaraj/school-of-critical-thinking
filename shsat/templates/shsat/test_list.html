@@ -46,7 +46,7 @@
   <li class="shsat-test-item shsat-test-item--upgrade">
     <div>
       <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:8px;">Early access</div>
-      <div class="shsat-test-item__title" style="font-size:18px;">Unlock all 4 Benchmark Tests + Error Analysis</div>
+      <div class="shsat-test-item__title" style="font-size:18px;">Unlock all 4 Benchmark Tests + Focused Practice Drills</div>
       <div class="shsat-test-item__meta" style="margin-top:6px;">
         One payment, no subscription — less than one hour with a private tutor.
       </div>
@@ -72,4 +72,44 @@
   {% endif %}
 </ul>
 {% endif %}
+
+<!-- ------------------------------------------------------------------ -->
+<!-- Focused Practice Drills                                              -->
+<!-- ------------------------------------------------------------------ -->
+{% if drills and has_completed_any or drills and can_access_paid %}
+<p class="shsat-section-title" style="margin-top:48px;">Focused Practice</p>
+<p style="font-size:14px;color:rgba(0,0,0,0.5);margin:-8px 0 20px;">
+  Short targeted sets that drill one error pattern at a time. Use these after a full test to sharpen a specific weakness.
+</p>
+<ul class="shsat-test-list">
+  {% for drill in drills %}
+  <li class="shsat-test-item {% if not can_access_paid %}shsat-test-item--drill-locked{% endif %}">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:4px;">Math drill</div>
+      <div class="shsat-test-item__title">{{ drill.title }}</div>
+      {% if drill.description %}
+      <div style="font-size:14px;color:rgba(0,0,0,0.55);margin:3px 0 2px;">{{ drill.description }}</div>
+      {% endif %}
+      <div class="shsat-test-item__meta">
+        {{ drill.displayed_question_count }} questions · Math only · No time limit
+        {% if not can_access_paid %} · <span style="color:rgba(0,0,0,0.4);">Included with upgrade</span>{% endif %}
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      {% if can_access_paid %}
+        {% if drill.id in completed_ids %}
+          <span class="shsat-btn shsat-btn--sm shsat-btn--done">Done</span>
+          <a href="{% url 'shsat_test_intro' drill.id %}" class="shsat-btn shsat-btn--sm shsat-btn--retake">Redo</a>
+        {% else %}
+          <a href="{% url 'shsat_test_intro' drill.id %}" class="shsat-btn shsat-btn--sm shsat-btn--outline">Start</a>
+        {% endif %}
+      {% else %}
+        <a href="{% url 'shsat_upgrade' %}" class="shsat-btn shsat-btn--sm">Unlock →</a>
+      {% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
 {% endblock %}

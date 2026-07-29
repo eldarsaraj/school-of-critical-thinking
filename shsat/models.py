@@ -30,6 +30,7 @@ class Test(models.Model):
     is_published = models.BooleanField(default=False)
     order = models.PositiveSmallIntegerField(default=0)
     is_adaptive = models.BooleanField(default=False)
+    is_drill = models.BooleanField(default=False)
     routing_threshold = models.FloatField(default=0.60)
     exam_type = models.CharField(max_length=20, choices=EXAM_TYPE_CHOICES, default="shsat")
 

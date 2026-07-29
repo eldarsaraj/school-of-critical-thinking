@@ -1,0 +1,634 @@
+# SHSAT construct-mimic set -- 30 math items modeled on 2018 Form A (CORRECTED mapping)
+# Each item preserves the underlying skill of its source question (named in source_ref) with fresh numbers/context.
+# Grid-ins Q61 and Q62 converted to 4-choice MC. Second variants of Q76, Q87, Q98, Q106 are items 27-30.
+# stage mapped from difficulty (easy->easy_module, medium->routing, hard->hard_module) as a placeholder for slotting.
+- section: math
+  stage: routing
+  question_number: 1
+  skill: number_operations
+  difficulty: medium
+  topic: inclusion-exclusion of two overlapping groups with a 'neither' category
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: 'A school club surveyed its members about which instruments they play. Based on the results, all of the following statements are true: 18 members play guitar; 21 members play piano; 4 members play both guitar and piano; 7 members play neither instrument. How many members were surveyed?'
+  choice_a: '35'
+  choice_b: '42'
+  choice_c: '46'
+  choice_d: '50'
+  correct_answer: B
+  explanation: The number surveyed is everyone who plays at least one instrument plus everyone who plays neither. Members who play at least one instrument = 18 + 21 - 4 = 35 (the 4 who play both were counted twice, so subtract them once). Adding the 7 who play neither gives 35 + 7 = 42. Choice A (35) stops after counting instrument-players and forgets the 7 who play neither. Choice C (46) never subtracts the 4 double-counted members (18 + 21 + 7). Choice D (50) adds every number in the problem, doubling the overlap instead of removing it.
+  distractor_types:
+    A: partial_answer
+    C: wrong_setup
+    D: fast_pattern_match
+  source_ref: 2018A_Q61
+- section: math
+  stage: routing
+  question_number: 2
+  skill: number_operations
+  difficulty: medium
+  topic: consecutive integers, transform each, then take the product
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: The sum of two consecutive integers is -23. If 2 is added to the smaller integer and 3 is subtracted from the larger integer, what is the product of the two resulting integers?
+  choice_a: '-140'
+  choice_b: '132'
+  choice_c: '135'
+  choice_d: '140'
+  correct_answer: D
+  explanation: 'Two consecutive integers with sum -23 are -12 and -11. Adding 2 to the smaller: -12 + 2 = -10. Subtracting 3 from the larger: -11 - 3 = -14. Their product is (-10)(-14) = 140. Choice A (-140) makes a sign error, since two negatives multiply to a positive. Choice B (132) multiplies the original integers and ignores the changes. Choice C (135) applies the changes to the wrong integers.'
+  distractor_types:
+    A: sign_error
+    B: fast_pattern_match
+    C: wrong_setup
+  source_ref: 2018A_Q62
+- section: math
+  stage: easy_module
+  question_number: 3
+  skill: ratios_proportions
+  difficulty: easy
+  topic: metric capacity conversion after scaling up
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: One container holds 250 milliliters of paint. How many liters of paint are in 36 of these containers?
+  choice_a: 9 L
+  choice_b: 90 L
+  choice_c: 900 L
+  choice_d: 9,000 L
+  correct_answer: A
+  explanation: The 36 containers hold 36 x 250 = 9,000 milliliters. Since 1,000 milliliters make 1 liter, that is 9,000 / 1,000 = 9 L. Choice B (90) divides by 100 instead of 1,000. Choice C (900) divides by 10. Choice D (9,000) reports the milliliters without converting to liters.
+  distractor_types:
+    B: unit_conversion_error
+    C: unit_conversion_error
+    D: fast_pattern_match
+  source_ref: 2018A_Q64
+- section: math
+  stage: routing
+  question_number: 4
+  skill: algebra
+  difficulty: medium
+  topic: translate a comparison into an equation for a starting amount
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: Marcus starts a game with three times as many tokens as Nadia. Marcus gives Nadia 6 tokens, but he still has 8 more tokens than Nadia. How many tokens did Marcus have to start with?
+  choice_a: '10'
+  choice_b: '12'
+  choice_c: '21'
+  choice_d: '30'
+  correct_answer: D
+  explanation: 'Let Nadia start with n tokens, so Marcus starts with 3n. After Marcus gives away 6, he has 3n - 6 and Nadia has n + 6. Since Marcus still has 8 more: 3n - 6 = (n + 6) + 8, so 2n = 20 and n = 10. Marcus started with 3n = 30. Choice A (10) is Nadia''s starting amount. Choice B (12) ignores that giving tokens changes both counts. Choice C (21) lowers only Marcus''s side and forgets that Nadia gains 6.'
+  distractor_types:
+    A: partial_answer
+    B: wrong_setup
+    C: wrong_setup
+  source_ref: 2018A_Q66
+- section: math
+  stage: routing
+  question_number: 5
+  skill: ratios_proportions
+  difficulty: medium
+  topic: split a perimeter using a length-to-width ratio
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: The perimeter of a rectangle is 360 centimeters. The ratio of its length to its width is 5:4. What are the dimensions of this rectangle?
+  choice_a: 80 cm by 100 cm
+  choice_b: 90 cm by 90 cm
+  choice_c: 100 cm by 80 cm
+  choice_d: 108 cm by 72 cm
+  correct_answer: C
+  explanation: 'With length : width = 5 : 4, write length = 5k and width = 4k. The perimeter is 2(5k + 4k) = 18k = 360, so k = 20, giving 100 cm by 80 cm. Every pair listed has the correct perimeter of 360 cm, so the ratio is the real test. Choice A (80 by 100) assigns the ratio backward. Choice B (90 by 90) ignores the ratio and splits evenly. Choice D (108 by 72) uses a 3 : 2 ratio instead of 5 : 4.'
+  distractor_types:
+    A: proportion_inversion
+    B: wrong_setup
+    D: wrong_setup
+  source_ref: 2018A_Q70
+- section: math
+  stage: routing
+  question_number: 6
+  skill: probability
+  difficulty: medium
+  topic: recover a total from a probability, then a complement count
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: A jar contains exactly 8 green marbles. The probability of drawing a green marble at random is 4/9. How many marbles in the jar are NOT green?
+  choice_a: '5'
+  choice_b: '8'
+  choice_c: '10'
+  choice_d: '18'
+  correct_answer: C
+  explanation: The 8 green marbles are 4/9 of the jar, so the total is 8 / (4/9) = 18 marbles. The number that are not green is 18 - 8 = 10. Choice A (5) misreads 4/9 as '4 green out of 9 total' and answers 9 - 4. Choice B (8) just repeats the green count. Choice D (18) is the total number of marbles; the final subtraction was skipped.
+  distractor_types:
+    A: wrong_setup
+    B: fast_pattern_match
+    D: last_step_trap
+  source_ref: 2018A_Q73
+- section: math
+  stage: hard_module
+  question_number: 7
+  skill: number_operations
+  difficulty: hard
+  topic: two overlapping percentage attributes; find a region of a two-way table
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: In Rivertown, 55% of residents own a bicycle and 70% of residents subscribe to the local newspaper. Of all residents, 40% both own a bicycle and subscribe to the newspaper. What percent of residents neither own a bicycle nor subscribe to the newspaper?
+  choice_a: 15%
+  choice_b: 30%
+  choice_c: 45%
+  choice_d: 85%
+  correct_answer: A
+  explanation: 'First combine the two groups: the percent who own a bicycle OR subscribe is 55 + 70 - 40 = 85. Everyone else does neither, so 100 - 85 = 15%. Choice B (30) is only the newspaper-only group (70 - 40). Choice C (45) is everyone who does not own a bicycle (100 - 55), ignoring the newspaper. Choice D (85) is the combined group itself, not the leftover ''neither'' portion.'
+  distractor_types:
+    B: partial_answer
+    C: wrong_setup
+    D: wrong_setup
+  source_ref: 2018A_Q76
+- section: math
+  stage: routing
+  question_number: 8
+  skill: number_operations
+  difficulty: medium
+  topic: 'multi-step cost: remove a subtotal, then divide'
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: Mr. Alvarez bought 4 folders for $1.25 each and 5 kilograms of rice. He paid a total of $23.00 for these items, not including tax. What was the price per kilogram of the rice?
+  choice_a: $3.60
+  choice_b: $4.50
+  choice_c: $4.60
+  choice_d: $18.00
+  correct_answer: A
+  explanation: The folders cost 4 x $1.25 = $5.00, so the rice cost $23.00 - $5.00 = $18.00. Spread over 5 kilograms, that is $18.00 / 5 = $3.60 per kilogram. Choice B ($4.50) divides the rice total by 4 (the folder count) instead of 5. Choice C ($4.60) divides the full $23.00 by 5 without removing the folder cost. Choice D ($18.00) is the rice subtotal, before dividing by the weight.
+  distractor_types:
+    B: wrong_setup
+    C: wrong_setup
+    D: last_step_trap
+  source_ref: 2018A_Q77
+- section: math
+  stage: routing
+  question_number: 9
+  skill: probability
+  difficulty: medium
+  topic: two draws without replacement; complement of an event
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: 'A drawer holds 12 socks: 5 are white and 7 are gray. Two socks are drawn at random, one at a time without replacement. What is the probability that neither sock is white?'
+  choice_a: 5/33
+  choice_b: 7/22
+  choice_c: 49/144
+  choice_d: 7/12
+  correct_answer: B
+  explanation: '''Neither white'' means both socks are gray. The first gray sock has probability 7/12; with one gray sock removed, the second has probability 6/11. Multiplying: (7/12)(6/11) = 42/132 = 7/22. Choice A (5/33) finds the probability that both socks are white. Choice C (49/144) treats the draws as if the sock were replaced. Choice D (7/12) is the probability for only the first sock.'
+  distractor_types:
+    A: wrong_setup
+    C: wrong_setup
+    D: partial_answer
+  source_ref: 2018A_Q78
+- section: math
+  stage: easy_module
+  question_number: 10
+  skill: statistics_data
+  difficulty: easy
+  topic: mean from a score table (weighting by counts)
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: '[VISUAL: Table showing each score and the number of players who earned it -- 30 points: 3 players; 24 points: 5 players; 15 points: 2 players.] What is the mean score of these 10 players?'
+  choice_a: '21'
+  choice_b: '22.5'
+  choice_c: '23'
+  choice_d: '24'
+  correct_answer: D
+  explanation: 'Weight each score by how many players earned it: (30 x 3 + 24 x 5 + 15 x 2) / 10 = (90 + 120 + 30) / 10 = 240 / 10 = 24. Choice A (21) drops the two players who scored 15. Choice B (22.5) swaps the numbers of players for 30 and 15. Choice C (23) averages the three distinct scores and ignores how many players earned each.'
+  distractor_types:
+    A: partial_answer
+    B: wrong_setup
+    C: wrong_setup
+  source_ref: 2018A_Q80
+- section: math
+  stage: routing
+  question_number: 11
+  skill: statistics_data
+  difficulty: medium
+  topic: read two slices of a circle graph and compare counts
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: '[VISUAL: Circle graph of how 24,000 people arrived at a festival -- Car 46%, Shuttle 24%, Rideshare 20%, Walk 8%, Bicycle 2%.] How many more people arrived by rideshare than arrived on foot?'
+  choice_a: 1,920
+  choice_b: 2,880
+  choice_c: 4,800
+  choice_d: 6,720
+  correct_answer: B
+  explanation: Rideshare is 20% of the 24,000 people and walking is 8%, so the difference is (20% - 8%) of 24,000 = 12% x 24,000 = 2,880. Choice A (1,920) is only the walking group (8% x 24,000). Choice C (4,800) is only the rideshare group (20% x 24,000), without subtracting the walkers. Choice D (6,720) adds the two groups instead of subtracting.
+  distractor_types:
+    A: partial_answer
+    C: last_step_trap
+    D: wrong_setup
+  source_ref: 2018A_Q81
+- section: math
+  stage: routing
+  question_number: 12
+  skill: number_operations
+  difficulty: medium
+  topic: smallest prime factor, then a divisibility test
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: Which of the following numbers has, as one of its factors, the smallest factor (other than 1) of 143?
+  choice_a: '39'
+  choice_b: '42'
+  choice_c: '55'
+  choice_d: '63'
+  correct_answer: C
+  explanation: The smallest factor of 143 greater than 1 is 11, because 143 = 11 x 13. Among the choices, only 55 = 11 x 5 has 11 as a factor. Choice A (39 = 3 x 13) uses 13, the larger factor of 143. Choice B (42 = 2 x 3 x 7) is built from small primes. Choice D (63 = 7 x 9) is divisible by 7, another guessed small factor, but not by 11.
+  distractor_types:
+    A: wrong_setup
+    B: fast_pattern_match
+    D: wrong_setup
+  source_ref: 2018A_Q82
+- section: math
+  stage: routing
+  question_number: 13
+  skill: ratios_proportions
+  difficulty: medium
+  topic: build a unit-conversion expression for a rate
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: A cyclist travels 18 kilometers per hour. There are 1,000 meters in 1 kilometer and 60 minutes in 1 hour. Which of the following calculations gives the cyclist's speed in meters per minute?
+  choice_a: (18 x 1,000) / 60
+  choice_b: (18 x 1,000) / 3,600
+  choice_c: (18 x 60) / 1,000
+  choice_d: (18 x 1,000) x 60
+  correct_answer: A
+  explanation: 'To change 18 kilometers per hour into meters per minute, multiply by 1,000 meters per kilometer and divide by 60 minutes per hour: (18 x 1,000) / 60. Choice B divides by 3,600, which would give meters per second. Choice C divides by 1,000 and multiplies by 60, inverting both conversions. Choice D multiplies by 60 instead of dividing.'
+  distractor_types:
+    B: unit_conversion_error
+    C: proportion_inversion
+    D: wrong_setup
+  source_ref: 2018A_Q86
+- section: math
+  stage: hard_module
+  question_number: 14
+  skill: algebra
+  difficulty: hard
+  topic: two-condition age relationship across two points in time
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: Today, Mia's age is 1/5 of her aunt's age. In 4 years, Mia's age will be 1/4 of her aunt's age. How old is Mia's aunt today?
+  choice_a: '12'
+  choice_b: '16'
+  choice_c: '60'
+  choice_d: '80'
+  correct_answer: C
+  explanation: 'Let the aunt''s age be a, so Mia''s age is a/5. In 4 years Mia is a/5 + 4 and the aunt is a + 4, and Mia is then one-fourth as old: a/5 + 4 = (a + 4)/4. Multiplying by 20: 4a + 80 = 5a + 20, so a = 60. Choice A (12) is Mia''s current age. Choice B (16) is Mia''s age in 4 years. Choice D (80) comes from adding 4 only to Mia and not to the aunt.'
+  distractor_types:
+    A: partial_answer
+    B: partial_answer
+    D: wrong_setup
+  source_ref: 2018A_Q87
+- section: math
+  stage: hard_module
+  question_number: 15
+  skill: algebra
+  difficulty: hard
+  topic: mean of consecutive integers expressed in terms of the least
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: The least of 7 consecutive integers is p, and the greatest is q. What is the value of (p + q)/2 in terms of p?
+  choice_a: 2p
+  choice_b: p + 6
+  choice_c: p + 3
+  choice_d: p + 7
+  correct_answer: C
+  explanation: The seven consecutive integers are p, p + 1, ..., p + 6, so the greatest is q = p + 6. Their average is (p + q)/2 = (p + p + 6)/2 = (2p + 6)/2 = p + 3, the middle integer. Choice A (2p) doubles p instead of averaging. Choice B (p + 6) is the greatest integer q itself, not the average. Choice D (p + 7) miscounts the spacing, as if seven integers span seven steps.
+  distractor_types:
+    A: wrong_setup
+    B: last_step_trap
+    D: wrong_setup
+  source_ref: 2018A_Q89
+- section: math
+  stage: routing
+  question_number: 16
+  skill: probability
+  difficulty: medium
+  topic: count combinations of 2 chosen from n
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: There are 8 different flavors of jam at a stand. Priya will choose 2 different flavors to buy. How many different pairs of 2 flavors can she choose from the 8?
+  choice_a: '16'
+  choice_b: '28'
+  choice_c: '56'
+  choice_d: '64'
+  correct_answer: B
+  explanation: Choosing 2 of 8 flavors, where order does not matter, gives 8 x 7 / 2 = 28 pairs. Choice A (16) just multiplies 8 x 2. Choice C (56) counts 8 x 7 ordered arrangements and forgets that each pair is counted twice. Choice D (64) is 8 x 8, which allows repeats and order.
+  distractor_types:
+    A: wrong_setup
+    C: procedure_substitution
+    D: fast_pattern_match
+  source_ref: 2018A_Q91
+- section: math
+  stage: routing
+  question_number: 17
+  skill: algebra
+  difficulty: medium
+  topic: divide algebraic fractions (multiply by the reciprocal)
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: Suppose M = a/b and N = c/d, where a, b, c, and d are all nonzero. What is M/N in terms of a, b, c, and d?
+  choice_a: ac/bd
+  choice_b: bc/ad
+  choice_c: bd/ac
+  choice_d: ad/bc
+  correct_answer: D
+  explanation: 'Dividing M by N means multiplying M by the reciprocal of N: (a/b) / (c/d) = (a/b)(d/c) = ad/bc. Choice A (ac/bd) multiplies M and N instead of dividing. Choice B (bc/ad) flips the first fraction rather than the second. Choice C (bd/ac) flips both fractions.'
+  distractor_types:
+    A: procedure_substitution
+    B: proportion_inversion
+    C: wrong_setup
+  source_ref: 2018A_Q96
+- section: math
+  stage: hard_module
+  question_number: 18
+  skill: number_operations
+  difficulty: hard
+  topic: inclusion-exclusion counting over an integer range
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: In the set of consecutive integers from 20 to 40, inclusive, how many integers are multiples of neither 2 nor 5?
+  choice_a: '5'
+  choice_b: '8'
+  choice_c: '10'
+  choice_d: '13'
+  correct_answer: B
+  explanation: 'From 20 to 40 there are 21 integers. Multiples of 2: 11; multiples of 5: 5; multiples of 10 (both): 3. Numbers that are multiples of 2 or 5 total 11 + 5 - 3 = 13, so those that are multiples of neither are 21 - 13 = 8. Choice A (5) forgets to add back the 3 multiples of 10. Choice C (10) removes only the multiples of 2. Choice D (13) is the count of multiples of 2 or 5, not the leftover group.'
+  distractor_types:
+    A: wrong_setup
+    C: partial_answer
+    D: last_step_trap
+  source_ref: 2018A_Q97
+- section: math
+  stage: hard_module
+  question_number: 19
+  skill: statistics_data
+  difficulty: hard
+  topic: combine two data series (count x rate) and compare
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: '[VISUAL: Bar graph of the number of buses owned by five tour companies -- F: 10, G: 7, H: 12, J: 8, K: 6.] Companies F and G each seat 40 passengers per bus, Company H seats 30 per bus, and Companies J and K each seat 55 per bus. Which company can carry the most passengers?'
+  choice_a: Company F
+  choice_b: Company H
+  choice_c: Company J
+  choice_d: Company K
+  correct_answer: C
+  explanation: 'Multiply each company''s number of buses by its seats per bus: F = 10 x 40 = 400, G = 7 x 40 = 280, H = 12 x 30 = 360, J = 8 x 55 = 440, K = 6 x 55 = 330. Company J carries the most at 440. Choice A (Company F) reaches only 400. Choice B (Company H) has the most buses, 12, but at 30 seats each carries just 360. Choice D (Company K) has the highest seats per bus, 55, but too few buses, for 330.'
+  distractor_types:
+    A: wrong_setup
+    B: fast_pattern_match
+    D: wrong_setup
+  source_ref: 2018A_Q98
+- section: math
+  stage: routing
+  question_number: 20
+  skill: probability
+  difficulty: medium
+  topic: two draws without replacement; complement of a category
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: A bowl holds 3 lime candies, 4 mango candies, and 5 berry candies. If two candies are drawn at random, one at a time without replacement, what is the probability that neither candy is mango?
+  choice_a: 1/11
+  choice_b: 14/33
+  choice_c: 4/9
+  choice_d: 2/3
+  correct_answer: B
+  explanation: '''Neither mango'' means both candies come from the 8 that are not mango. The first is 8/12; then 7 of the remaining 11 are not mango: (8/12)(7/11) = 56/132 = 14/33. Choice A (1/11) finds the probability that both are mango. Choice C (4/9) treats the draws as if the candy were replaced. Choice D (2/3) is the probability for only the first candy.'
+  distractor_types:
+    A: wrong_setup
+    C: wrong_setup
+    D: partial_answer
+  source_ref: 2018A_Q99
+- section: math
+  stage: routing
+  question_number: 21
+  skill: statistics_data
+  difficulty: medium
+  topic: overall range across combined groups from each group's low and range
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: '[VISUAL: Table showing three classes with the lowest score and the range of scores for each -- Class A: lowest 60, range 29; Class B: lowest 53, range 24; Class C: lowest 66, range 20.] The same test was given to three classes. What is the overall range of all the scores from the three classes combined?'
+  choice_a: '23'
+  choice_b: '29'
+  choice_c: '33'
+  choice_d: '36'
+  correct_answer: D
+  explanation: 'Each class''s highest score is its lowest score plus its range: Class A 60 + 29 = 89, Class B 53 + 24 = 77, Class C 66 + 20 = 86. Across all three, the highest score is 89 and the lowest is 53, so the overall range is 89 - 53 = 36. Choice A (23) subtracts using Class C''s low (89 - 66). Choice B (29) just takes the largest single range. Choice C (33) uses Class C''s top score (86) rather than the overall highest.'
+  distractor_types:
+    A: wrong_setup
+    B: fast_pattern_match
+    C: wrong_setup
+  source_ref: 2018A_Q103
+- section: math
+  stage: hard_module
+  question_number: 22
+  skill: number_operations
+  difficulty: hard
+  topic: position within a repeating-decimal cycle using remainders
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: The fraction 5/7 = 0.714285714285..., in which the six digits 714285 repeat without end. What is the 250th digit after the decimal point?
+  choice_a: '2'
+  choice_b: '4'
+  choice_c: '5'
+  choice_d: '8'
+  correct_answer: A
+  explanation: 'The digits 714285 repeat in blocks of 6. Divide 250 by 6: 250 = 6 x 41 + 4, so the 250th digit is the 4th digit of the block. Counting 7, 1, 4, 2, that digit is 2. Choice B (4) lands on the 3rd digit, off by one. Choice C (5) assumes 250 is a whole number of blocks and takes the last digit. Choice D (8) lands on the 5th digit.'
+  distractor_types:
+    B: last_step_trap
+    C: wrong_setup
+    D: wrong_setup
+  source_ref: 2018A_Q105
+- section: math
+  stage: hard_module
+  question_number: 23
+  skill: geometry
+  difficulty: hard
+  topic: circumference, then distance divided by circumference
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: A wheel with a radius of 14 inches rolls along the ground without slipping. How many complete revolutions does the wheel make while traveling 61,600 inches? (Use 22/7 for pi.)
+  choice_a: '700'
+  choice_b: 1,400
+  choice_c: 2,200
+  choice_d: 4,400
+  correct_answer: A
+  explanation: The wheel's circumference is 2 x pi x radius = 2 x (22/7) x 14 = 88 inches, so it covers 88 inches per revolution. The number of revolutions is 61,600 / 88 = 700. Choice B (1,400) uses pi x radius = 44 inches, dropping the factor of 2 in the circumference. Choice C (2,200) divides by the diameter, 28, leaving out pi. Choice D (4,400) divides by the radius, 14, using the wrong length entirely.
+  distractor_types:
+    B: wrong_formula
+    C: wrong_setup
+    D: wrong_setup
+  source_ref: 2018A_Q106
+- section: math
+  stage: routing
+  question_number: 24
+  skill: number_operations
+  difficulty: medium
+  topic: profit as revenue minus variable cost minus fixed cost
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: Each week, Dana's candle workshop has fixed costs of $900. Each candle costs her $8 in materials, and she sells each candle for $20. What is Dana's profit if she makes and sells 90 candles in one week?
+  choice_a: '180'
+  choice_b: '900'
+  choice_c: 1,080
+  choice_d: 1,800
+  correct_answer: A
+  explanation: Each candle earns Dana 20 - 8 = $12 beyond its materials, and she sells 90, for 90 x 12 = $1,080. Subtracting the $900 in fixed costs leaves a profit of 1,080 - 900 = $180. Choice B (900) subtracts the fixed costs from the sales revenue but forgets the material cost of each candle. Choice C (1,080) forgets the fixed costs entirely. Choice D (1,800) is only the sales revenue (90 x 20).
+  distractor_types:
+    B: wrong_setup
+    C: wrong_setup
+    D: partial_answer
+  source_ref: 2018A_Q109
+- section: math
+  stage: easy_module
+  question_number: 25
+  skill: statistics_data
+  difficulty: easy
+  topic: mean from a frequency table with zero-value and zero-frequency categories
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: '[VISUAL: Table showing how many students read each number of books last month -- 0 books: 6 students; 1 book: 6 students; 2 books: 4 students; 3 books: 2 students; 4 books: 0 students; 5 books: 2 students.] There are 20 students in the class. What is the mean number of books read per student?'
+  choice_a: '1'
+  choice_b: 1 1/2
+  choice_c: 2 1/2
+  choice_d: 3 1/3
+  correct_answer: B
+  explanation: 'Multiply each number of books by how many students read that many, add, then divide by 20 students: (0 x 6 + 1 x 6 + 2 x 4 + 3 x 2 + 4 x 0 + 5 x 2) / 20 = (0 + 6 + 8 + 6 + 0 + 10) / 20 = 30 / 20 = 1 1/2. Choice A (1) drops the students who read 5 books. Choice C (2 1/2) averages the six possible book counts, 0 through 5, ignoring how many students. Choice D (3 1/3) averages the six student counts instead of the books.'
+  distractor_types:
+    A: partial_answer
+    C: wrong_setup
+    D: wrong_setup
+  source_ref: 2018A_Q113
+- section: math
+  stage: routing
+  question_number: 26
+  skill: ratios_proportions
+  difficulty: medium
+  topic: 'multi-part ratio: fraction of the whole, then scale up'
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: A fertilizer is mixed by weight in the ratio 5 parts nitrogen, 3 parts phosphorus, and 2 parts potassium. One garden bed needs 40 pounds of this fertilizer. How many total pounds of phosphorus are needed for 6 garden beds?
+  choice_a: '12'
+  choice_b: '48'
+  choice_c: '72'
+  choice_d: '120'
+  correct_answer: C
+  explanation: The fertilizer has 5 + 3 + 2 = 10 parts, and phosphorus is 3 of them. Each bed's 40 pounds contains 3/10 x 40 = 12 pounds of phosphorus, so 6 beds need 12 x 6 = 72 pounds. Choice A (12) is the amount for a single bed, not all six. Choice B (48) uses the 2 potassium parts instead of the 3 phosphorus parts. Choice D (120) uses the 5 nitrogen parts by mistake.
+  distractor_types:
+    A: partial_answer
+    B: wrong_setup
+    D: wrong_setup
+  source_ref: 2018A_Q114
+- section: math
+  stage: hard_module
+  question_number: 27
+  skill: number_operations
+  difficulty: hard
+  topic: two overlapping percentage attributes; a different two-way-table region (second variant)
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: At a college, 62% of students take a lab science and 48% take a foreign language. Of all students, 35% take both a lab science and a foreign language. What percent of students take a lab science but NOT a foreign language?
+  choice_a: 13%
+  choice_b: 14%
+  choice_c: 25%
+  choice_d: 27%
+  correct_answer: D
+  explanation: 'Students who take a lab science but not a foreign language are the lab-science students minus the ones who take both: 62 - 35 = 27%. Choice A (13) finds the opposite corner -- language but not lab (48 - 35). Choice B (14) just subtracts the two group totals (62 - 48). Choice C (25) is the ''neither'' group, 100 - (62 + 48 - 35).'
+  distractor_types:
+    A: partial_answer
+    B: wrong_setup
+    C: wrong_setup
+  source_ref: 2018A_Q76 (variant 2)
+- section: math
+  stage: hard_module
+  question_number: 28
+  skill: algebra
+  difficulty: hard
+  topic: two-condition age relationship across two points in time (second variant)
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: Today, Noah's age is 1/6 of his grandfather's age. In 3 years, Noah's age will be 1/5 of his grandfather's age. How old is Noah's grandfather today?
+  choice_a: '12'
+  choice_b: '15'
+  choice_c: '72'
+  choice_d: '90'
+  correct_answer: C
+  explanation: 'Let the grandfather''s age be g, so Noah''s age is g/6. In 3 years Noah is g/6 + 3 and the grandfather is g + 3, with Noah then one-fifth as old: g/6 + 3 = (g + 3)/5. Multiplying by 30: 5g + 90 = 6g + 18, so g = 72. Choice A (12) is Noah''s age now. Choice B (15) is Noah''s age in 3 years. Choice D (90) comes from adding 3 only to Noah, not the grandfather.'
+  distractor_types:
+    A: partial_answer
+    B: partial_answer
+    D: wrong_setup
+  source_ref: 2018A_Q87 (variant 2)
+- section: math
+  stage: hard_module
+  question_number: 29
+  skill: statistics_data
+  difficulty: hard
+  topic: combine two data series (count x rate) and compare (second variant)
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: '[VISUAL: Bar graph of the number of shelves in five library sections -- History: 9, Science: 6, Art: 11, Music: 7, Travel: 5.] The History and Science sections hold 40 books per shelf, the Art section holds 25 per shelf, and the Music and Travel sections hold 50 per shelf. Which section holds the most books?'
+  choice_a: Art section
+  choice_b: Music section
+  choice_c: Science section
+  choice_d: History section
+  correct_answer: D
+  explanation: 'Multiply each section''s shelves by its books per shelf: History = 9 x 40 = 360, Science = 6 x 40 = 240, Art = 11 x 25 = 275, Music = 7 x 50 = 350, Travel = 5 x 50 = 250. The History section holds the most at 360. Choice A (Art) has the most shelves, 11, but at 25 books each holds only 275. Choice B (Music) reaches 350, just short. Choice C (Science) holds only 240.'
+  distractor_types:
+    A: fast_pattern_match
+    B: wrong_setup
+    C: wrong_setup
+  source_ref: 2018A_Q98 (variant 2)
+- section: math
+  stage: hard_module
+  question_number: 30
+  skill: geometry
+  difficulty: hard
+  topic: circumference, then distance divided by circumference (second variant)
+  passage_group_id: null
+  passage_title: null
+  passage_text: null
+  question_text: A wheel with a radius of 21 inches rolls along the ground without slipping. How many complete revolutions does the wheel make while traveling 46,200 inches? (Use 22/7 for pi.)
+  choice_a: '175'
+  choice_b: '350'
+  choice_c: '700'
+  choice_d: 1,100
+  correct_answer: B
+  explanation: The wheel's circumference is 2 x pi x radius = 2 x (22/7) x 21 = 132 inches. The number of revolutions is 46,200 / 132 = 350. Choice A (175) uses 2 x pi x diameter = 264 inches, doubling the circumference. Choice C (700) uses pi x radius = 66 inches, dropping the factor of 2. Choice D (1,100) divides by the diameter, 42, leaving out pi.
+  distractor_types:
+    A: wrong_setup
+    C: wrong_formula
+    D: wrong_setup
+  source_ref: 2018A_Q106 (variant 2)
