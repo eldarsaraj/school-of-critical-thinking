@@ -1,32 +1,18 @@
-{% extends "shsat/base_hunter.html" %}
+{% extends "base.html" %}
 
-{% block title %}Hunter College High School Prep{% endblock %}
+{% block title %}Hunter Prep — Coming Soon{% endblock %}
 
-{% block shsat_content %}
-<div class="shsat-intro" style="max-width:560px;">
-  <h1 class="shsat-page-title">Hunter Prep</h1>
-  <p class="shsat-page-subtitle">
-    Full-length Hunter College High School Entrance Exam practice tests with detailed error analysis.
+{% block content %}
+<div style="max-width:520px;padding:80px 0 60px;">
+  <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:16px;">Coming soon</p>
+  <h1 style="font-size:28px;font-weight:600;letter-spacing:-.02em;margin-bottom:16px;">Hunter College High School Prep</h1>
+  <p style="font-size:15px;line-height:1.7;color:rgba(0,0,0,.55);">
+    Full-length Hunter entrance exam practice tests with Reading Comprehension, Writing,
+    Quantitative Reasoning, and Math Achievement — plus the same detailed error analysis
+    available on the SHSAT platform.
   </p>
-
-  <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;">
-    <a href="{% url 'hunter_signup' %}" class="shsat-btn">Create an account &rarr;</a>
-    <a href="{% url 'hunter_login' %}" class="shsat-btn shsat-btn--outline">Log in</a>
-  </div>
-
-  <div style="margin-top:48px;">
-    <div class="shsat-intro__rule">
-      <div class="shsat-intro__rule-label">Exam sections</div>
-      <div>Reading Comprehension · Writing · Quantitative Reasoning · Math Achievement</div>
-    </div>
-    <div class="shsat-intro__rule">
-      <div class="shsat-intro__rule-label">Format</div>
-      <div>Multiple choice, timed, one question at a time</div>
-    </div>
-    <div class="shsat-intro__rule">
-      <div class="shsat-intro__rule-label">After each test</div>
-      <div>Full error analysis with per-question review and skill breakdown</div>
-    </div>
-  </div>
+  <p style="font-size:14px;color:rgba(0,0,0,.4);margin-top:24px;">
+    Not yet open to the public. Check back soon.
+  </p>
 </div>
 {% endblock %}
