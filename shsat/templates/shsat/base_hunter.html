@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Hunter Prep — {{ block.super }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'shsat/css/shsat.css' %}">
+
+<div class="shsat-wrap">
+
+  {% if user.is_authenticated %}
+  <nav class="shsat-tabs" aria-label="Hunter Workshop sections">
+    <a href="{% url 'hunter_dashboard' %}" class="shsat-tab {% block tab_dashboard %}{% endblock %}">Dashboard</a>
+    <a href="{% url 'hunter_error_analysis_list' %}" class="shsat-tab {% block tab_error_analysis %}{% endblock %}">Error Analysis</a>
+    <a href="{% url 'hunter_test_list' %}" class="shsat-tab {% block tab_tests %}{% endblock %}">Practice Tests</a>
+    <a href="{% url 'hunter_resources' %}" class="shsat-tab {% block tab_resources %}{% endblock %}">Resources</a>
+    <a href="{% url 'hunter_account' %}" class="shsat-tab {% block tab_account %}{% endblock %}">Account</a>
+  </nav>
+  {% endif %}
+
+  {% if messages %}
+  <ul class="shsat-messages">
+    {% for message in messages %}
+    <li class="shsat-message shsat-message--{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% block shsat_content %}{% endblock %}
+
+</div>
+{% endblock %}

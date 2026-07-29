@@ -1,4 +1,4 @@
-{% extends "shsat/base_shsat.html" %}
+{% extends parent_template|default:"shsat/base_shsat.html" %}
 {% load static %}
 
 {% block title %}Error Analysis — {{ attempt.test.title }} — SHSAT Workshop{% endblock %}

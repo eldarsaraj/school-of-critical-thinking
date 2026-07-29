@@ -27,6 +27,25 @@ def _staff_required(view_func):
     return wrapped
 
 
+def _require_shsat(view_func):
+    """Decorator: allow only SHSAT-platform users (staff bypass). Redirects Hunter users."""
+    from functools import wraps
+    @wraps(view_func)
+    def wrapped(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect(f"/shsat/login/?next={request.path}")
+        if request.user.is_staff:
+            return view_func(request, *args, **kwargs)
+        try:
+            parent = request.user.shsat_profile
+        except Parent.DoesNotExist:
+            return view_func(request, *args, **kwargs)
+        if parent.platform == "hunter":
+            return redirect("hunter_dashboard")
+        return view_func(request, *args, **kwargs)
+    return wrapped
+
+
 # ---------------------------------------------------------------------------
 # Public views
 # ---------------------------------------------------------------------------
@@ -144,7 +163,7 @@ def shsat_signup(request):
     form = SignupForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
         user = form.save()
-        parent = Parent.objects.create(user=user, email_verified=False)
+        parent = Parent.objects.create(user=user, platform="shsat", email_verified=False)
         _send_verification_email(request, user, parent)
         user = authenticate(request, email=user.email, password=form.cleaned_data["password1"])
         if user:
@@ -186,16 +205,30 @@ def verify_email(request, token):
     parent.save(update_fields=["email_verified"])
     if not request.user.is_authenticated:
         login(request, parent.user, backend="shsat.backends.EmailBackend")
+    if parent.platform == "hunter":
+        return redirect("hunter_dashboard")
     return redirect("shsat_dashboard")
 
 
 def shsat_login(request):
     if request.user.is_authenticated:
+        # Redirect Hunter users away from SHSAT login
+        try:
+            if request.user.shsat_profile.platform == "hunter" and not request.user.is_staff:
+                return redirect("hunter_dashboard")
+        except Parent.DoesNotExist:
+            pass
         return redirect("shsat_dashboard")
     form = LoginForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
         user = form.cleaned_data["user"]
         login(request, user, backend="shsat.backends.EmailBackend")
+        # Redirect Hunter-platform users to their dashboard
+        try:
+            if user.shsat_profile.platform == "hunter" and not user.is_staff:
+                return redirect("hunter_dashboard")
+        except Parent.DoesNotExist:
+            pass
         return redirect(request.GET.get("next") or "shsat_dashboard")
     return render(request, "shsat/login.html", {"form": form})
 
@@ -205,6 +238,7 @@ def shsat_logout(request):
     return redirect("shsat_landing")
 
 
+@_require_shsat
 def resources(request):
     return render(request, "shsat/resources.html")
 
@@ -213,7 +247,7 @@ def resources(request):
 # Protected views
 # ---------------------------------------------------------------------------
 
-@login_required(login_url="/shsat/login/")
+@_require_shsat
 def dashboard(request):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     attempts = (
@@ -473,7 +507,7 @@ def delete_manual_score(request, score_id):
     return redirect("shsat_log_score")
 
 
-@login_required(login_url="/shsat/login/")
+@_require_shsat
 def test_list(request):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     can_access_paid = parent.has_paid or request.user.is_staff
@@ -481,11 +515,11 @@ def test_list(request):
     if can_access_paid:
         tests = (
             Test.objects.filter(is_published=True) | Test.objects.filter(is_published=False, is_free=False)
-        ).filter(is_drill=False).distinct().order_by("id")
-        drills = Test.objects.filter(is_drill=True).order_by("order", "id")
+        ).filter(is_drill=False, exam_type="shsat").distinct().order_by("id")
+        drills = Test.objects.filter(is_drill=True, exam_type="shsat").order_by("order", "id")
     else:
-        tests = Test.objects.filter(is_published=True, is_drill=False)
-        drills = Test.objects.filter(is_drill=True)  # shown as locked teasers
+        tests = Test.objects.filter(is_published=True, is_drill=False, exam_type="shsat")
+        drills = Test.objects.filter(is_drill=True, exam_type="shsat")  # shown as locked teasers
 
     completed_ids = set(
         TestAttempt.objects.filter(parent=parent, is_completed=True).values_list("test_id", flat=True)
@@ -510,11 +544,17 @@ def test_list(request):
 def test_intro(request, test_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     test = get_object_or_404(Test, id=test_id)
+    # Platform guard: ensure user can only access tests for their platform
+    if not request.user.is_staff and test.exam_type != parent.platform:
+        if parent.platform == "hunter":
+            return redirect("hunter_test_list")
+        return redirect("shsat_test_list")
     if not test.is_published and not test.is_free and not parent.has_paid and not request.user.is_staff:
         from django.http import Http404
         raise Http404
     in_progress = TestAttempt.objects.filter(parent=parent, test=test, is_completed=False).first()
     completed_attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=True).order_by("-submitted_at").first()
+    is_hunter_test = test.exam_type == "hunter"
     context = {
         "test": test,
         "in_progress": in_progress,
@@ -523,8 +563,13 @@ def test_intro(request, test_id):
         "math_count": test.math_questions().count(),
         "duration_hours": settings.SHSAT_TEST_DURATION_SECONDS // 3600,
         "is_drill": test.is_drill,
+        "parent_template": "shsat/base_hunter.html" if is_hunter_test else "shsat/base_shsat.html",
+        # URL names so the template works for both platforms
+        "url_test_take": "hunter_test_take" if is_hunter_test else "shsat_test_take",
+        "url_test_list": "hunter_test_list" if is_hunter_test else "shsat_test_list",
+        "url_test_results": "hunter_test_results" if is_hunter_test else "shsat_test_results",
     }
-    if test.exam_type == "hunter":
+    if is_hunter_test:
         context["hunter_sections"] = [
             ("Reading Comprehension", test.questions.filter(section="reading_comprehension").count()),
             ("Writing", test.questions.filter(section="writing").count()),
@@ -538,6 +583,11 @@ def test_intro(request, test_id):
 def test_take(request, test_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     test = get_object_or_404(Test, id=test_id)
+    # Platform guard
+    if not request.user.is_staff and test.exam_type != parent.platform:
+        if parent.platform == "hunter":
+            return redirect("hunter_test_list")
+        return redirect("shsat_test_list")
     if not test.is_published and not test.is_free and not parent.has_paid and not request.user.is_staff:
         from django.http import Http404
         raise Http404
@@ -549,7 +599,8 @@ def test_take(request, test_id):
         if completed_attempt and not request.user.is_staff:
             from django.contrib import messages
             messages.info(request, f"You have already completed {test.title}.")
-            return redirect("shsat_test_results", attempt_id=completed_attempt.id)
+            results_url = "hunter_test_results" if test.exam_type == "hunter" else "shsat_test_results"
+            return redirect(results_url, attempt_id=completed_attempt.id)
         if test.exam_type == "hunter":
             HUNTER_SECTION_ORDER = ["reading_comprehension", "writing", "quantitative_reasoning", "math_achievement"]
             question_ids = []
@@ -584,7 +635,8 @@ def test_take(request, test_id):
     # (e.g. test was re-imported with --replace). Reset so a fresh attempt is created.
     if attempt.started_with and not ordered_questions:
         attempt.delete()
-        return redirect("shsat_test_intro", test_id=test.id)
+        intro_url = "hunter_test_intro" if test.exam_type == "hunter" else "shsat_test_intro"
+        return redirect(intro_url, test_id=test.id)
 
     answers_qs = Answer.objects.filter(attempt=attempt).select_related("question")
     answers_map = {a.question_id: a for a in answers_qs}
@@ -661,7 +713,8 @@ def test_take(request, test_id):
         attempt.submitted_at = timezone.now()
         attempt.total_seconds = elapsed
         attempt.save()
-        return redirect("shsat_test_results", attempt_id=attempt.id)
+        _results_url = "hunter_test_results" if test.exam_type == "hunter" else "shsat_test_results"
+        return redirect(_results_url, attempt_id=attempt.id)
 
     modules_assigned = bool(attempt.ela_module)
 
@@ -687,7 +740,8 @@ def test_submit(request, test_id):
     # If already completed (double-submit), redirect to results gracefully
     completed = TestAttempt.objects.filter(test_id=test_id, parent=parent, is_completed=True).order_by("-submitted_at").first()
     if completed and not TestAttempt.objects.filter(test_id=test_id, parent=parent, is_completed=False).exists():
-        return redirect("shsat_test_results", attempt_id=completed.id)
+        _r = "hunter_test_results" if completed.test.exam_type == "hunter" else "shsat_test_results"
+        return redirect(_r, attempt_id=completed.id)
     attempt = get_object_or_404(TestAttempt, test_id=test_id, parent=parent, is_completed=False)
 
     answers = Answer.objects.filter(attempt=attempt).select_related("question")
@@ -738,7 +792,7 @@ def test_submit(request, test_id):
 
     # Send results email to parent (SHSAT only)
     if attempt.test.exam_type == "hunter":
-        return redirect("shsat_test_results", attempt_id=attempt.id)
+        return redirect("hunter_test_results", attempt_id=attempt.id)
 
     try:
         from django.core.mail import send_mail
@@ -771,6 +825,7 @@ def test_submit(request, test_id):
         pass
 
     return redirect("shsat_test_results", attempt_id=attempt.id)
+    # Note: Hunter tests return early above (hunter_test_results)
 
 
 @login_required(login_url="/shsat/login/")
@@ -786,12 +841,12 @@ def test_results(request, attempt_id):
     placement_data = compute_placement(attempt.composite_score, cutoffs)
 
     notes_form = NotesForm(request.POST or None, initial={"notes": attempt.notes})
+    is_hunter = attempt.test.exam_type == "hunter"
     if request.method == "POST" and notes_form.is_valid():
         attempt.notes = notes_form.cleaned_data["notes"]
         attempt.save(update_fields=["notes"])
-        return redirect("shsat_test_results", attempt_id=attempt.id)
-
-    is_hunter = attempt.test.exam_type == "hunter"
+        _r = "hunter_test_results" if is_hunter else "shsat_test_results"
+        return redirect(_r, attempt_id=attempt.id)
 
     if is_hunter:
         ela_answers = [a for a in answers if a.question.section == "reading_comprehension"]
@@ -830,16 +885,17 @@ def test_results(request, attempt_id):
         "hunter_ma_answers": hunter_ma_answers,
         "hunter_writing_answers": hunter_writing_answers,
         "hunter_qr_ma_total": len(hunter_qr_answers) + len(hunter_ma_answers),
+        "parent_template": "shsat/base_hunter.html" if is_hunter else "shsat/base_shsat.html",
     }
     template = "shsat/test_results_hunter.html" if is_hunter else "shsat/test_results_shsat.html"
     return render(request, template, context)
 
 
-@login_required(login_url="/shsat/login/")
+@_require_shsat
 def error_analysis_list(request):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     completed_attempts = (
-        TestAttempt.objects.filter(parent=parent, is_completed=True)
+        TestAttempt.objects.filter(parent=parent, is_completed=True, test__exam_type="shsat")
         .select_related("test")
         .order_by("-submitted_at")
     )
@@ -1141,11 +1197,12 @@ def error_analysis(request, attempt_id):
         "pacing_ok": pacing_ok,
         "total_time_minutes": round(total_time_minutes, 0) if has_section_time else None,
         "review_sections": [(s["section_code"], s["section"]) for s in section_summary_data],
+        "parent_template": "shsat/base_hunter.html" if is_hunter else "shsat/base_shsat.html",
     }
     return render(request, "shsat/error_analysis.html", context)
 
 
-@login_required(login_url="/shsat/login/")
+@_require_shsat
 def account(request):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     form = AccountForm(request.POST or None, instance=parent, user=request.user)

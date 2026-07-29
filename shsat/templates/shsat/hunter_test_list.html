@@ -1,0 +1,43 @@
+{% extends "shsat/base_hunter.html" %}
+
+{% block title %}Practice Tests — Hunter Prep{% endblock %}
+{% block tab_tests %}active{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">Practice Tests</h1>
+<p class="shsat-page-subtitle">Full-length Hunter entrance exam practice tests.</p>
+
+{% if not tests %}
+<p style="color:rgba(0,0,0,0.5);">No tests published yet. Check back soon.</p>
+{% else %}
+<ul class="shsat-test-list">
+  {% for test in tests %}
+  <li class="shsat-test-item">
+    <div>
+      <div class="shsat-test-item__title">{{ test.title }}</div>
+      {% if test.description %}
+      <div style="font-size:14px;color:rgba(0,0,0,0.55);margin:3px 0 2px;">{{ test.description }}</div>
+      {% endif %}
+      <div class="shsat-test-item__meta">
+        {{ test.questions.count }} questions · RC · Writing · QR · MA
+        {% if test.source %} · {{ test.source }}{% endif %}
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      {% if test.id in completed_ids %}
+        <span class="shsat-btn shsat-btn--sm shsat-btn--done">Completed</span>
+        {% if user.is_staff %}
+          <a href="{% url 'hunter_test_intro' test.id %}" class="shsat-btn shsat-btn--sm shsat-btn--retake">Retake</a>
+        {% endif %}
+      {% elif test.id in in_progress_ids %}
+        <a href="{% url 'hunter_test_intro' test.id %}" class="shsat-btn shsat-btn--sm shsat-btn--outline">Resume</a>
+      {% else %}
+        <a href="{% url 'hunter_test_intro' test.id %}" class="shsat-btn shsat-btn--sm shsat-btn--outline">Start</a>
+      {% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

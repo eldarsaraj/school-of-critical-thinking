@@ -1,4 +1,4 @@
-{% extends "shsat/base_shsat.html" %}
+{% extends parent_template|default:"shsat/base_hunter.html" %}
 {% load shsat_extras %}
 
 {% block title %}Results — {{ attempt.test.title }} — Hunter Workshop{% endblock %}
@@ -44,8 +44,8 @@
 </form>
 
 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;">
-  <a href="{% url 'shsat_error_analysis' attempt.id %}" class="shsat-btn">View Error Analysis →</a>
-  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline">Back to dashboard</a>
+  <a href="{% url 'hunter_error_analysis' attempt.id %}" class="shsat-btn">View Error Analysis →</a>
+  <a href="{% url 'hunter_dashboard' %}" class="shsat-btn shsat-btn--outline">Back to dashboard</a>
 </div>
 
 <!-- Marked for review -->
@@ -116,7 +116,7 @@
 {% endfor %}
 
 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;">
-  <a href="{% url 'shsat_test_list' %}" class="shsat-btn shsat-btn--outline">Practice tests</a>
-  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline">Back to dashboard</a>
+  <a href="{% url 'hunter_test_list' %}" class="shsat-btn shsat-btn--outline">Practice tests</a>
+  <a href="{% url 'hunter_dashboard' %}" class="shsat-btn shsat-btn--outline">Back to dashboard</a>
 </div>
 {% endblock %}

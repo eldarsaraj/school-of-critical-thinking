@@ -1,0 +1,91 @@
+{% extends "shsat/base_hunter.html" %}
+
+{% block title %}Account — Hunter Prep{% endblock %}
+{% block tab_account %}active{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">Account settings</h1>
+<p class="shsat-page-subtitle">{{ user.email }}</p>
+
+<div style="margin-bottom:36px;padding:20px 24px;border:1px solid rgba(0,0,0,.08);background:rgba(0,0,0,.018);max-width:560px;">
+  <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.38);margin:0 0 10px;">Privacy</p>
+  <p style="font-size:14px;line-height:1.75;color:rgba(0,0,0,.6);margin:0;">
+    No personal information about students or parents is captured or shared. No names, locations,
+    or identifying details are stored beyond what you provide here. Your email address is used
+    only to confirm your account and to deliver error analysis reports after each test.
+  </p>
+</div>
+
+<form method="post" novalidate style="max-width:520px;">
+  {% csrf_token %}
+
+  {% if form.non_field_errors %}
+  <div class="contact-form__error" style="margin-bottom:16px;">
+    {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+  </div>
+  {% endif %}
+
+  {% for field in form %}
+  {% if field.name != "target_schools" %}
+  <div class="contact-form__field">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.errors %}
+    <span class="contact-form__error">{{ field.errors|join:" " }}</span>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% endfor %}
+
+  <button type="submit" class="shsat-btn">Save changes</button>
+</form>
+
+{% if completed_attempts %}
+<div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
+  <p class="shsat-section-title">Test history</p>
+  <table class="shsat-table">
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Date</th>
+        <th>RC</th>
+        <th>QR + MA</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in completed_attempts %}
+      <tr>
+        <td>{{ a.test.title }}</td>
+        <td>{{ a.submitted_at|date:"M d, Y" }}</td>
+        <td>{{ a.ela_correct|default:"—" }}</td>
+        <td>{{ a.math_correct|default:"—" }}</td>
+        <td><strong>{{ a.composite_score|default:"—" }}</strong></td>
+        <td>
+          <form method="post" action="{% url 'hunter_delete_attempt' a.id %}" style="display:inline;"
+                onsubmit="return confirm('Delete this attempt? This cannot be undone.');">
+            {% csrf_token %}
+            <button type="submit" style="background:none;border:none;cursor:pointer;font-size:13px;color:#a4161a;padding:0;text-decoration:underline;">
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% if user.is_staff %}
+<div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
+  <p class="shsat-section-title">Content management</p>
+  <a href="{% url 'shsat_content_home' %}" class="shsat-btn shsat-btn--outline">Edit tests →</a>
+</div>
+{% endif %}
+
+<div style="margin-top:36px;">
+  <a href="{% url 'hunter_logout' %}" class="shsat-btn shsat-btn--danger">Log out</a>
+</div>
+{% endblock %}

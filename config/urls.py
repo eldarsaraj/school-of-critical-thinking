@@ -26,6 +26,7 @@ urlpatterns = [
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path("diagnostic/", include("diagnostic.urls")),
     path("shsat/", include("shsat.urls")),
+    path("hunter/", include("shsat.hunter_urls")),
     path(
         "python-detective/",
         RedirectView.as_view(

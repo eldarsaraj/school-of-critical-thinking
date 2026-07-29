@@ -1,0 +1,48 @@
+{% extends "shsat/base_hunter.html" %}
+
+{% block title %}Error Analysis — Hunter Prep{% endblock %}
+{% block tab_error_analysis %}active{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">Error Analysis</h1>
+<p class="shsat-page-subtitle">
+  Review what went wrong, attempt by attempt.
+</p>
+
+{% if completed_attempts %}
+<div class="ea-list">
+  {% for a in completed_attempts %}
+  <div class="ea-list__item">
+    <div class="ea-list__meta">
+      <p class="ea-list__test">{{ a.test.title }}</p>
+      <p class="ea-list__date">{{ a.submitted_at|date:"F j, Y" }}</p>
+    </div>
+    <div class="ea-list__scores">
+      <div class="ea-list__score-block">
+        <span class="ea-list__score-value">{{ a.composite_score|default:"—" }}</span>
+        <span class="ea-list__score-label">Total</span>
+      </div>
+      <div class="ea-list__score-block">
+        <span class="ea-list__score-value">{{ a.ela_correct|default:"—" }}</span>
+        <span class="ea-list__score-label">RC</span>
+      </div>
+      <div class="ea-list__score-block">
+        <span class="ea-list__score-value">{{ a.math_correct|default:"—" }}</span>
+        <span class="ea-list__score-label">QR + MA</span>
+      </div>
+    </div>
+    <a href="{% url 'hunter_error_analysis' a.id %}" class="ea-list__cta">
+      View analysis &rarr;
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div style="margin-top:48px;padding:40px 0;border-top:1px solid rgba(0,0,0,.08);">
+  <p style="font-size:16px;color:rgba(0,0,0,.45);margin:0 0 20px;">
+    No completed tests yet. Take a practice test to see your error analysis here.
+  </p>
+  <a href="{% url 'hunter_test_list' %}" class="shsat-btn">Take a practice test &rarr;</a>
+</div>
+{% endif %}
+{% endblock %}

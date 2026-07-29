@@ -1,0 +1,48 @@
+{% extends "shsat/base_hunter.html" %}
+
+{% block title %}Dashboard — Hunter Prep{% endblock %}
+{% block tab_dashboard %}active{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">Dashboard</h1>
+
+{% if in_progress %}
+<div style="background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.08);padding:16px 20px;margin-bottom:28px;max-width:520px;">
+  <p style="font-size:13px;font-weight:600;margin-bottom:4px;">In progress: {{ in_progress.test.title }}</p>
+  <p style="font-size:13px;color:rgba(0,0,0,0.5);margin-bottom:12px;">Started {{ in_progress.started_at|date:"F j, Y" }} — answers saved automatically.</p>
+  <a href="{% url 'hunter_test_take' in_progress.test.id %}" class="shsat-btn shsat-btn--sm">Resume &rarr;</a>
+</div>
+{% endif %}
+
+{% if attempt_rows %}
+<p class="shsat-section-title">Completed tests</p>
+<div style="margin-bottom:8px;font-size:12px;color:rgba(0,0,0,0.4);display:grid;grid-template-columns:1fr 80px 80px 80px 120px;gap:8px;padding:0 0 6px;border-bottom:1px solid rgba(0,0,0,0.1);">
+  <span>Test</span>
+  <span>RC</span>
+  <span>QR + MA</span>
+  <span>Total</span>
+  <span>Date</span>
+</div>
+{% for row in attempt_rows %}
+<div style="display:grid;grid-template-columns:1fr 80px 80px 80px 120px;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);">
+  <span style="font-size:14px;">{{ row.attempt.test.title }}</span>
+  <span style="font-size:14px;font-weight:600;">{{ row.rc_correct }}</span>
+  <span style="font-size:14px;font-weight:600;">{{ row.qr_ma_correct }}</span>
+  <span style="font-size:14px;font-weight:700;color:#111;">{{ row.composite }}</span>
+  <span style="font-size:12px;color:rgba(0,0,0,0.4);">{{ row.attempt.submitted_at|date:"M j, Y" }}</span>
+</div>
+{% endfor %}
+
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;">
+  <a href="{% url 'hunter_error_analysis_list' %}" class="shsat-btn">View Error Analysis &rarr;</a>
+  <a href="{% url 'hunter_test_list' %}" class="shsat-btn shsat-btn--outline">Practice Tests</a>
+</div>
+
+{% else %}
+<div style="max-width:480px;">
+  <p style="color:rgba(0,0,0,0.5);margin-bottom:24px;">No completed tests yet. Take your first practice test to see your results here.</p>
+  <a href="{% url 'hunter_test_list' %}" class="shsat-btn">See available tests &rarr;</a>
+</div>
+{% endif %}
+
+{% endblock %}

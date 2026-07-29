@@ -1,0 +1,32 @@
+{% extends "shsat/base_hunter.html" %}
+
+{% block title %}Hunter College High School Prep{% endblock %}
+
+{% block shsat_content %}
+<div class="shsat-intro" style="max-width:560px;">
+  <h1 class="shsat-page-title">Hunter Prep</h1>
+  <p class="shsat-page-subtitle">
+    Full-length Hunter College High School Entrance Exam practice tests with detailed error analysis.
+  </p>
+
+  <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;">
+    <a href="{% url 'hunter_signup' %}" class="shsat-btn">Create an account &rarr;</a>
+    <a href="{% url 'hunter_login' %}" class="shsat-btn shsat-btn--outline">Log in</a>
+  </div>
+
+  <div style="margin-top:48px;">
+    <div class="shsat-intro__rule">
+      <div class="shsat-intro__rule-label">Exam sections</div>
+      <div>Reading Comprehension · Writing · Quantitative Reasoning · Math Achievement</div>
+    </div>
+    <div class="shsat-intro__rule">
+      <div class="shsat-intro__rule-label">Format</div>
+      <div>Multiple choice, timed, one question at a time</div>
+    </div>
+    <div class="shsat-intro__rule">
+      <div class="shsat-intro__rule-label">After each test</div>
+      <div>Full error analysis with per-question review and skill breakdown</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

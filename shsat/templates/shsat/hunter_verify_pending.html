@@ -1,0 +1,23 @@
+{% extends "shsat/base_hunter.html" %}
+
+{% block title %}Verify your email — Hunter Prep{% endblock %}
+
+{% block shsat_content %}
+<div class="shsat-intro" style="max-width:480px;">
+  <h1 class="shsat-page-title">Check your email</h1>
+  <p class="shsat-page-subtitle">We sent a verification link to <strong>{{ email }}</strong>.</p>
+
+  {% if resent %}
+  <p style="color:#2a7a2a;font-size:14px;margin-bottom:20px;">Verification email resent.</p>
+  {% endif %}
+
+  <p style="font-size:14px;color:rgba(0,0,0,0.55);margin-bottom:24px;">
+    Click the link in the email to activate your account. Check your spam folder if you don't see it.
+  </p>
+
+  <form method="post" action="{% url 'hunter_verify_resend' %}">
+    {% csrf_token %}
+    <button type="submit" class="shsat-btn shsat-btn--outline">Resend verification email</button>
+  </form>
+</div>
+{% endblock %}

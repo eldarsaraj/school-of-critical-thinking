@@ -5,7 +5,10 @@ from django.contrib.auth.models import User
 
 
 class Parent(models.Model):
+    PLATFORM_CHOICES = [("shsat", "SHSAT"), ("hunter", "Hunter")]
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="shsat_profile")
+    platform = models.CharField(max_length=10, choices=PLATFORM_CHOICES, default="shsat")
     child_nickname = models.CharField(max_length=100, blank=True, default="")
     child_grade = models.PositiveSmallIntegerField(null=True, blank=True)
     target_schools = models.JSONField(default=list, blank=True)
