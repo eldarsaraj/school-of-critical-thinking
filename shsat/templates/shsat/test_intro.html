@@ -8,23 +8,30 @@
   <h1 class="shsat-page-title">{{ test.title }}</h1>
   <p class="shsat-page-subtitle">Read the rules below before you begin.</p>
 
-  {% if hunter_sections %}
+  {% if is_drill %}
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Questions</div>
+    <div>{{ math_count }} Math questions</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Time allowed</div>
+    <div>No time limit — work at your own pace</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Saving answers</div>
+    <div>Answers save automatically as you click.</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Attempts</div>
+    <div>You can redo this drill as many times as you like.</div>
+  </div>
+  {% elif hunter_sections %}
     {% for label, count in hunter_sections %}
     <div class="shsat-intro__rule">
       <div class="shsat-intro__rule-label">{{ label }}</div>
       <div>{{ count }} question{{ count|pluralize }}</div>
     </div>
     {% endfor %}
-  {% else %}
-  <div class="shsat-intro__rule">
-    <div class="shsat-intro__rule-label">ELA questions</div>
-    <div>57</div>
-  </div>
-  <div class="shsat-intro__rule">
-    <div class="shsat-intro__rule-label">Math questions</div>
-    <div>57</div>
-  </div>
-  {% endif %}
   <div class="shsat-intro__rule">
     <div class="shsat-intro__rule-label">Time allowed</div>
     <div>{{ duration_hours }} hours (timer shown; no hard cutoff)</div>
@@ -41,9 +48,35 @@
     <div class="shsat-intro__rule-label">Attempts</div>
     <div>This test can be taken <strong>once only</strong>. If you exit before finishing, your answers are saved and you can resume — but you cannot retake the test from the beginning.</div>
   </div>
+  {% else %}
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">ELA questions</div>
+    <div>57</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Math questions</div>
+    <div>57</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Time allowed</div>
+    <div>{{ duration_hours }} hours (timer shown; no hard cutoff)</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Saving answers</div>
+    <div>Answers save automatically as you click. You can pause and return at any time.</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Navigation</div>
+    <div>Questions are presented one at a time. You cannot return to a previous question.</div>
+  </div>
+  <div class="shsat-intro__rule">
+    <div class="shsat-intro__rule-label">Attempts</div>
+    <div>This test can be taken <strong>once only</strong>. If you exit before finishing, your answers are saved and you can resume — but you cannot retake the test from the beginning.</div>
+  </div>
+  {% endif %}
 
   <div style="margin-top:32px;">
-    {% if completed_attempt %}
+    {% if completed_attempt and not is_drill %}
       <p style="font-size:15px;color:rgba(0,0,0,0.5);margin-bottom:16px;">
         You have already completed this test. Each test may only be taken once.
       </p>
@@ -54,12 +87,12 @@
     {% elif in_progress %}
       <p style="font-size:13px;color:rgba(0,0,0,0.5);margin-bottom:12px;">In-progress attempt found — resuming where you left off.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <a href="{% url 'shsat_test_take' test.id %}" class="shsat-btn">Resume test</a>
+        <a href="{% url 'shsat_test_take' test.id %}" class="shsat-btn">Resume</a>
         <a href="{% url 'shsat_test_list' %}" class="shsat-btn shsat-btn--outline">Back to tests</a>
       </div>
-    {% elif hunter_sections %}
+    {% elif is_drill or hunter_sections %}
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <a href="{% url 'shsat_test_take' test.id %}" class="shsat-btn">Start test →</a>
+        <a href="{% url 'shsat_test_take' test.id %}" class="shsat-btn">Start →</a>
         <a href="{% url 'shsat_test_list' %}" class="shsat-btn shsat-btn--outline">Back to tests</a>
       </div>
     {% else %}

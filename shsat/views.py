@@ -521,6 +521,7 @@ def test_intro(request, test_id):
         "ela_count": test.ela_questions().count(),
         "math_count": test.math_questions().count(),
         "duration_hours": settings.SHSAT_TEST_DURATION_SECONDS // 3600,
+        "is_drill": test.is_drill,
     }
     if test.exam_type == "hunter":
         context["hunter_sections"] = [
