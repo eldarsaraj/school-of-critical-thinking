@@ -251,7 +251,7 @@ def resources(request):
 def dashboard(request):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     attempts = (
-        TestAttempt.objects.filter(parent=parent, is_completed=True, test__is_drill=False)
+        TestAttempt.objects.filter(parent=parent, is_completed=True, test__is_drill=False, test__exam_type="shsat")
         .select_related("test")
         .order_by("-submitted_at")
     )
@@ -449,7 +449,7 @@ def dashboard(request):
     # Platform score distribution (all completed attempts across all users)
     import math as _math
     all_platform_scores = list(
-        TestAttempt.objects.filter(is_completed=True, composite_score__isnull=False, test__is_drill=False)
+        TestAttempt.objects.filter(is_completed=True, composite_score__isnull=False, test__is_drill=False, test__exam_type="shsat")
         .values_list("composite_score", flat=True)
     )
     platform_n = len(all_platform_scores)
