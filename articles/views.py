@@ -122,6 +122,9 @@ def og_image(request, slug):
         url = url.replace("/upload/", "/upload/c_fill,w_1200,h_630,f_jpg/") + ".jpg"
     try:
         with urllib.request.urlopen(url, timeout=10) as resp:
-            return HttpResponse(resp.read(), content_type="image/jpeg")
+            response = HttpResponse(resp.read(), content_type="image/jpeg")
+            response["Cache-Control"] = "public, max-age=86400"
+            response["Vary"] = ""
+            return response
     except Exception:
         raise Http404
