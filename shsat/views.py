@@ -811,6 +811,7 @@ def test_submit(request, test_id):
             "composite_score": composite,
             "error_analysis_url": error_analysis_url,
             "is_baseline": attempt.test.is_free,
+            "is_drill": attempt.test.is_drill,
             "upgrade_url": request.build_absolute_uri("/shsat/upgrade/"),
         })
         send_mail(
@@ -1070,6 +1071,8 @@ def error_analysis(request, attempt_id):
             ("quantitative_reasoning", "Quantitative Reasoning"),
             ("math_achievement", "Math Achievement"),
         ]
+    elif attempt.test.is_drill:
+        _sections_ordered = [("Math", "Math")]
     else:
         _sections_ordered = [("ELA", "ELA"), ("Math", "Math")]
 

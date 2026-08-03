@@ -13,18 +13,22 @@
   </p>
 
   <table style="width: 100%; border-collapse: collapse; margin: 0 0 28px 0; font-size: 15px;">
+    {% if not is_drill %}
     <tr>
       <td style="padding: 10px 0; border-bottom: 1px solid #e8e8e8; color: #555;">ELA</td>
       <td style="padding: 10px 0; border-bottom: 1px solid #e8e8e8; font-weight: bold; text-align: right;">{{ ela_correct }} / {{ ela_total }} correct</td>
     </tr>
+    {% endif %}
     <tr>
-      <td style="padding: 10px 0; border-bottom: 1px solid #e8e8e8; color: #555;">Math</td>
-      <td style="padding: 10px 0; border-bottom: 1px solid #e8e8e8; font-weight: bold; text-align: right;">{{ math_correct }} / {{ math_total }} correct</td>
+      <td style="padding: 10px 0; {% if not is_drill %}border-bottom: 1px solid #e8e8e8; {% endif %}color: #555;">Math</td>
+      <td style="padding: 10px 0; {% if not is_drill %}border-bottom: 1px solid #e8e8e8; {% endif %}font-weight: bold; text-align: right;">{{ math_correct }} / {{ math_total }} correct</td>
     </tr>
+    {% if not is_drill %}
     <tr>
       <td style="padding: 10px 0; color: #555;">Composite score (estimated)</td>
       <td style="padding: 10px 0; font-weight: bold; text-align: right;">{{ composite_score }}</td>
     </tr>
+    {% endif %}
   </table>
 
   <p style="margin: 0 0 16px 0;">
