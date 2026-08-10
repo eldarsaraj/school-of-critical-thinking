@@ -1,6 +1,7 @@
 """
 NOOA EssayEvaluator agent + EssayEvaluation Pydantic model.
 """
+
 from typing import Dict, List
 from pydantic import BaseModel, Field
 
@@ -12,33 +13,61 @@ class EssayEvaluation(BaseModel):
     paragraph_count: int
 
     # Lexical
-    mtld: float = Field(..., description="Lexical diversity (MTLD). Higher = more varied vocabulary.")
+    mtld: float = Field(
+        ..., description="Lexical diversity (MTLD). Higher = more varied vocabulary."
+    )
     vague_word_density: float = Field(..., description="Proportion of vague words.")
     weak_verb_rate: float = Field(..., description="Share of weak verbs.")
-    top_repeated_words: List[str] = Field(..., description="Most repeated content words (excluding stop words).")
-    concreteness_mean: float = Field(..., description="Average concreteness (Brysbaert 1–5 scale).")
+    top_repeated_words: List[str] = Field(
+        ..., description="Most repeated content words (excluding stop words)."
+    )
+    concreteness_mean: float = Field(
+        ..., description="Average concreteness (Brysbaert 1–5 scale)."
+    )
 
     # Sentence structure
     sentence_length_mean: float
-    sentence_length_sd: float = Field(..., description="Standard deviation of sentence lengths.")
-    sentence_opener_variety: float = Field(..., description="Variety of sentence openings (0–1).")
-    sentence_type_mix: Dict[str, int] = Field(..., description="Counts of simple/compound/complex sentences.")
+    sentence_length_sd: float = Field(
+        ..., description="Standard deviation of sentence lengths."
+    )
+    sentence_opener_variety: float = Field(
+        ..., description="Variety of sentence openings (0–1)."
+    )
+    sentence_type_mix: Dict[str, int] = Field(
+        ..., description="Counts of simple/compound/complex sentences."
+    )
 
     # Organization
     sentences_per_paragraph_mean: float
-    weak_transitions: List[str] = Field(..., description="Descriptions of the weakest sentence-to-sentence transitions.")
+    weak_transitions: List[str] = Field(
+        ..., description="Descriptions of the weakest sentence-to-sentence transitions."
+    )
 
     # Development / Prompt coverage
-    on_prompt_relevance: float = Field(..., description="0–1 how on-topic the essay is.")
-    prompt_coverage: Dict[str, float] = Field(..., description="Requirement text → coverage score 0–1.")
+    on_prompt_relevance: float = Field(
+        ..., description="0–1 how on-topic the essay is."
+    )
+    prompt_coverage: Dict[str, float] = Field(
+        ..., description="Requirement text → coverage score 0–1."
+    )
 
     # Mechanics
-    spelling_error_rate: float = Field(..., description="Spelling errors per 100 words.")
-    spelling_errors: List[str] = Field(..., description="List of misspelled words found.")
-    grammar_flags: List[str] = Field(default_factory=list, description="Grammar/punctuation issues. Empty until LanguageTool is wired.")
+    spelling_error_rate: float = Field(
+        ..., description="Spelling errors per 100 words."
+    )
+    spelling_errors: List[str] = Field(
+        ..., description="List of misspelled words found."
+    )
+    grammar_flags: List[str] = Field(
+        default_factory=list,
+        description="Grammar/punctuation issues. Empty until LanguageTool is wired.",
+    )
 
     # LLM-generated
-    feedback: str = Field(..., description="Short, constructive natural-language feedback for the student.")
+    feedback: str = Field(
+        ...,
+        description="Short, constructive natural-language feedback for the student.",
+    )
 
 
 def build_evaluator(llm):
@@ -99,6 +128,8 @@ def build_evaluator(llm):
               Good targets: low prompt-coverage scores, weak transitions, low concreteness,
               high vague-word or weak-verb rates, low sentence-opener variety.
             - If a prompt requirement scored below 0.75, explicitly tell the student what is still missing.
+            - Use intuitive terms for the benchmarks, such as Essay length, Stay on prompt, Specific details, Spelling, Flow of ideas,
+            so users can understand the feedback without needing to know the underlying metrics.
             - Keep the tone encouraging but honest. Avoid generic praise.
             - End with a short forward-looking sentence.
             """

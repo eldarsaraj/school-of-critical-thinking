@@ -20,8 +20,8 @@
 <p class="shsat-section-title">Section overview</p>
 <p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Accuracy and time per section.{% if has_section_time %} Stacked bars show time on correct vs. wrong answers.{% endif %}</p>
 <div style="display:grid;grid-template-columns:1fr {% if section_summary_data|length <= 2 %}220px{% else %}200px{% endif %};gap:24px;align-items:stretch;margin-bottom:40px;">
-  <div class="shsat-chart-wrap" style="margin-bottom:0;display:flex;align-items:stretch;">
-    <canvas id="sectionOverviewChart" style="width:100%;"></canvas>
+  <div class="shsat-chart-wrap" style="margin-bottom:0;display:flex;align-items:stretch;min-height:200px;">
+    <canvas id="sectionOverviewChart" style="width:100%;height:100%;"></canvas>
   </div>
   <div style="display:flex;flex-direction:column;gap:10px;">
     {% for s in section_summary_data %}
@@ -33,6 +33,7 @@
     {% endfor %}
   </div>
 </div>
+<p id="sectionAbbrLegend" style="font-size:11px;color:rgba(0,0,0,0.38);margin:-28px 0 28px;letter-spacing:0.02em;"></p>
 {{ section_summary_data|json_script:"sectionSummaryData" }}
 
 <!-- Wrong answers by skill -->
@@ -53,7 +54,7 @@
 <div class="shsat-diff-bars" style="margin-bottom:36px;">
   {% for p in passage_summary %}
   <div class="shsat-diff-bar-row">
-    <div class="shsat-diff-bar-label" style="min-width:160px;max-width:160px;" title="{{ p.title }}">{{ p.title|truncatechars:30 }}</div>
+    <div class="shsat-diff-bar-label" style="min-width:140px;max-width:140px;padding-right:10px;" title="{{ p.title }}">{{ p.title|truncatechars:28 }}</div>
     <div class="shsat-diff-bar-track">
       <div class="shsat-diff-bar-fill {% if p.pct >= 80 %}shsat-diff-bar-fill--ok{% elif p.pct >= 60 %}shsat-diff-bar-fill--warn{% else %}shsat-diff-bar-fill--danger{% endif %}"
            style="width:{{ p.pct }}%;"></div>
@@ -392,25 +393,34 @@ const P = {
   const data = JSON.parse(document.getElementById("sectionSummaryData").textContent);
   const hasTime = data.some(s => s.has_time);
 
+  // Abbreviate long section names so they fit under bars horizontally
+  const ABBREV = {
+    "Reading Comprehension": "RC",
+    "Quantitative Reasoning": "QR",
+    "Math Achievement": "MA",
+    "ELA": "ELA",
+    "Math": "Math",
+  };
+  function abbrev(s) { return ABBREV[s] || s; }
+
   if (!hasTime) {
-    // No timing data: show accuracy bars instead
     new Chart(el.getContext("2d"), {
       type: "bar",
       data: {
-        labels: data.map(s => s.section),
+        labels: data.map(s => abbrev(s.section)),
         datasets: [
           { label: "Correct",    data: data.map(s => s.correct),           backgroundColor: P.correct, borderWidth: 0, barThickness: 48 },
           { label: "Wrong/skip", data: data.map(s => s.total - s.correct), backgroundColor: P.wrong,   borderWidth: 0, barThickness: 48 },
         ]
       },
       options: {
-        responsive: true, aspectRatio: 2,
+        responsive: true, maintainAspectRatio: false,
         plugins: {
           legend: { position: "bottom", labels: { font: { size: 12 }, boxWidth: 12, padding: 14 } },
           tooltip: { callbacks: { footer: items => { const s = data[items[0].dataIndex]; return `${s.accuracy_pct}% correct  (${s.correct}/${s.total})`; } } }
         },
         scales: {
-          x: { stacked: true, grid: { display: false }, ticks: { font: { size: 13, weight: "600" } } },
+          x: { stacked: true, grid: { display: false }, ticks: { font: { size: 14, weight: "600" } } },
           y: { stacked: true, grid: { color: P.grid }, ticks: { stepSize: 5, font: { size: 11 } } }
         }
       }
@@ -418,9 +428,9 @@ const P = {
     return;
   }
 
-  const labels     = data.map(s => s.section);
-  const correctT   = data.map(s => +(s.time_minutes * s.accuracy_pct / 100).toFixed(1));
-  const wrongT     = data.map(s => +(s.time_minutes * (1 - s.accuracy_pct / 100)).toFixed(1));
+  const labels   = data.map(s => abbrev(s.section));
+  const correctT = data.map(s => +(s.time_minutes * s.accuracy_pct / 100).toFixed(1));
+  const wrongT   = data.map(s => +(s.time_minutes * (1 - s.accuracy_pct / 100)).toFixed(1));
 
   new Chart(el.getContext("2d"), {
     type: "bar",
@@ -432,19 +442,26 @@ const P = {
       ]
     },
     options: {
-      responsive: true, aspectRatio: 2,
+      responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { position: "bottom", labels: { font: { size: 12 }, boxWidth: 14, padding: 14 } },
         tooltip: { callbacks: { footer: items => { const s = data[items[0].dataIndex]; return `Total: ${s.time_minutes} min · ${s.accuracy_pct}% correct (${s.correct}/${s.total})`; } } }
       },
       scales: {
-        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 13, weight: "600" } } },
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 14, weight: "600" } } },
         y: { stacked: true, grid: { color: P.grid },
              ticks: { font: { size: 11 }, callback: v => v + " min" },
              title: { display: true, text: "Minutes", font: { size: 11 }, color: "rgba(0,0,0,0.4)" } }
       }
     }
   });
+
+  // Render abbreviation key below the overview grid
+  const legendEl = document.getElementById("sectionAbbrLegend");
+  if (legendEl) {
+    const unique = data.map(s => s.section).filter(s => ABBREV[s]);
+    if (unique.length) legendEl.textContent = unique.map(s => `${ABBREV[s]} = ${s}`).join(" · ");
+  }
 })();
 
 // ---------------------------------------------------------------------------
