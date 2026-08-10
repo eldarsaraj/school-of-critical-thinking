@@ -8,13 +8,13 @@
    ---------------------------------------------------------- */
 :root {
   --color-navy: #0f172a;
-  --color-correct: #10b981;
-  --color-error: #ef4444;
-  --color-amber: #f59e0b;
+  --color-correct: #5aab8c;
+  --color-error: #c4635b;
+  --color-amber: #c49a5a;
   --color-slate: #64748b;
-  --color-correct-bg: #d1fae5;
-  --color-error-bg: #fee2e2;
-  --color-amber-bg: #fef3c7;
+  --color-correct-bg: rgba(90, 171, 140, 0.12);
+  --color-error-bg: rgba(196, 99, 91, 0.12);
+  --color-amber-bg: rgba(196, 154, 90, 0.12);
 }
 
 /* ----------------------------------------------------------
@@ -133,13 +133,14 @@
    Section heading
    ---------------------------------------------------------- */
 .shsat-section-title {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.5);
-  margin: 0 0 12px;
-  padding-bottom: 8px;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  letter-spacing: -0.015em;
+  text-transform: none;
+  color: #161a1d;
+  margin: 0 0 16px;
+  padding-bottom: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
@@ -1722,7 +1723,7 @@
   gap: 16px;
 }
 .shsat-insight {
-  background: #fff;
+  background: transparent;
   border-radius: 8px;
   padding: 16px 18px;
   border: 1px solid rgba(0, 0, 0, 0.09);
@@ -1764,11 +1765,11 @@
   font-size: 13.5px;
 }
 .shsat-qrow--correct {
-  background: rgba(16, 185, 129, 0.06);
+  background: rgba(90, 171, 140, 0.06);
   color: rgba(0, 0, 0, 0.65);
 }
 .shsat-qrow--unanswered {
-  background: rgba(245, 158, 11, 0.07);
+  background: rgba(196, 154, 90, 0.07);
   color: rgba(0, 0, 0, 0.65);
 }
 .shsat-qrow__icon {
@@ -1790,12 +1791,12 @@
    Question review cards (wrong answers)
    ---------------------------------------------------------- */
 .shsat-qcard {
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  border: 1px solid rgba(196, 99, 91, 0.22);
   border-left: 3px solid var(--color-error);
   border-radius: 8px;
   margin-bottom: 16px;
   overflow: hidden;
-  background: #fff;
+  background: transparent;
 }
 .shsat-qcard__header {
   padding: 16px 18px 0;
@@ -1823,12 +1824,12 @@
   line-height: 1.45;
 }
 .shsat-choice--correct {
-  background: rgba(16, 185, 129, 0.08);
-  border-color: rgba(16, 185, 129, 0.35);
+  background: rgba(90, 171, 140, 0.08);
+  border-color: rgba(90, 171, 140, 0.35);
 }
 .shsat-choice--wrong {
-  background: rgba(239, 68, 68, 0.07);
-  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(196, 99, 91, 0.07);
+  border-color: rgba(196, 99, 91, 0.3);
 }
 .shsat-choice--neutral { background: rgba(0, 0, 0, 0.025); }
 .shsat-choice__letter {
@@ -1838,7 +1839,7 @@
   color: rgba(0, 0, 0, 0.5);
 }
 .shsat-choice--correct .shsat-choice__letter { color: var(--color-correct); }
-.shsat-choice--wrong   .shsat-choice__letter { color: var(--color-error); }
+.shsat-choice--wrong   .shsat-choice__letter { color: var(--color-error);   }
 .shsat-choice__text { flex: 1; }
 .shsat-choice__tag {
   font-size: 11px;
@@ -1849,12 +1850,12 @@
   letter-spacing: .03em;
 }
 .shsat-choice__tag--correct {
-  background: rgba(16, 185, 129, 0.15);
-  color: #047857;
+  background: rgba(90, 171, 140, 0.15);
+  color: #2d7a61;
 }
 .shsat-choice__tag--wrong {
-  background: rgba(239, 68, 68, 0.12);
-  color: #b91c1c;
+  background: rgba(196, 99, 91, 0.12);
+  color: #a0302b;
 }
 .shsat-qcard__trap {
   padding: 8px 18px;
@@ -1902,9 +1903,9 @@
   border-radius: 20px;
   letter-spacing: .03em;
 }
-.shsat-badge-pill--easy   { background: rgba(16, 185, 129, 0.12); color: #047857; }
-.shsat-badge-pill--medium { background: rgba(245, 158, 11, 0.12); color: #92400e; }
-.shsat-badge-pill--hard   { background: rgba(239, 68, 68, 0.12);  color: #b91c1c; }
+.shsat-badge-pill--easy   { background: rgba(90, 171, 140, 0.12);  color: #2d7a61; }
+.shsat-badge-pill--medium { background: rgba(196, 154, 90, 0.12);  color: #8a6520; }
+.shsat-badge-pill--hard   { background: rgba(196, 99, 91, 0.12);   color: #a0302b; }
 .shsat-badge-pill--skill  { background: rgba(100, 116, 139, 0.1); color: rgba(0,0,0,0.55); }
 
 /* ----------------------------------------------------------
@@ -2326,14 +2327,82 @@
 }
 
 /* Difficulty color scale */
-.shsat-diff-bar-fill--easy   { background: #10b981; }
-.shsat-diff-bar-fill--medium { background: #f59e0b; }
-.shsat-diff-bar-fill--hard   { background: #ef4444; }
+.shsat-diff-bar-fill--easy   { background: #5aab8c; }
+.shsat-diff-bar-fill--medium { background: #c49a5a; }
+.shsat-diff-bar-fill--hard   { background: #c4635b; }
 
 /* Passage accuracy: green=good, warn=medium, danger=poor */
-.shsat-diff-bar-fill--ok     { background: #10b981; }
-.shsat-diff-bar-fill--warn   { background: #f59e0b; }
-.shsat-diff-bar-fill--danger { background: #ef4444; }
+.shsat-diff-bar-fill--ok     { background: #5aab8c; }
+.shsat-diff-bar-fill--warn   { background: #c49a5a; }
+.shsat-diff-bar-fill--danger { background: #c4635b; }
+
+/* ----------------------------------------------------------
+   Essay metrics — dot-on-track visualization
+   Tufte: one mark per metric, minimum ink, maximum signal.
+   ---------------------------------------------------------- */
+.shsat-essay-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-bottom: 36px;
+}
+
+.shsat-metric-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 72px;
+  align-items: center;
+  gap: 16px;
+}
+
+.shsat-metric-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.shsat-metric-track {
+  position: relative;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+/* Good-zone highlight strip */
+.shsat-metric-zone {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: 2px;
+  opacity: 0.2;
+}
+
+.shsat-metric-zone--ok     { background: #5aab8c; }
+.shsat-metric-zone--warn   { background: #c49a5a; }
+.shsat-metric-zone--danger { background: #c4635b; }
+
+/* Dot positioned along the track */
+.shsat-metric-dot {
+  position: absolute;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 0.4s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+}
+
+.shsat-metric-dot--ok     { background: #5aab8c; }
+.shsat-metric-dot--warn   { background: #c49a5a; }
+.shsat-metric-dot--danger { background: #c4635b; }
+
+.shsat-metric-stat {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: right;
+  white-space: nowrap;
+}
 
 /* Essay coverage rows: wider label column, wrapping label text */
 .shsat-diff-bar-row--wide-label {

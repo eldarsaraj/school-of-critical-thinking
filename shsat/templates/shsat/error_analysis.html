@@ -75,51 +75,72 @@
 <p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 16px;">Coaching feedback based on your essay.</p>
 <p style="font-size:15px;line-height:1.8;margin:0 0 32px 0;color:#1a1a1a;">{{ ev.feedback }}</p>
 
-<!-- Writing metrics (bar charts) -->
+<!-- Writing metrics (dot-track) -->
 <p class="shsat-section-title" style="margin-top:0;">Writing metrics</p>
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Each bar shows where you land on a reference scale. Green = strong, amber = developing, red = needs work.</p>
-<div class="shsat-diff-bars" style="margin-bottom:36px;">
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 24px;">Each dot shows where your essay lands on a scale. The shaded zone is the target range.</p>
+<div class="shsat-essay-metrics">
 
-  <div class="shsat-diff-bar-row">
-    <div class="shsat-diff-bar-label">Word count <span style="font-weight:400;color:rgba(0,0,0,0.38);font-size:11px;">target 300–500</span></div>
-    <div class="shsat-diff-bar-track"><div class="shsat-diff-bar-fill shsat-diff-bar-fill--{{ item.wc_cls }}" style="width:{{ item.wc_pct }}%;"></div></div>
-    <div class="shsat-diff-bar-stat">{{ d.word_count }} <span style="color:rgba(0,0,0,0.35);font-size:11px;">/ 600</span></div>
+  <div class="shsat-metric-row">
+    <div class="shsat-metric-label">Essay length</div>
+    <div class="shsat-metric-track">
+      <div class="shsat-metric-zone shsat-metric-zone--ok" style="left:50%;width:33%;"></div>
+      <div class="shsat-metric-dot shsat-metric-dot--{{ item.wc_cls }}" style="left:{{ item.wc_pct }}%;"></div>
+    </div>
+    <div class="shsat-metric-stat">{{ d.word_count }} words</div>
   </div>
 
-  <div class="shsat-diff-bar-row">
-    <div class="shsat-diff-bar-label">On-topic <span style="font-weight:400;color:rgba(0,0,0,0.38);font-size:11px;">0 → 1.0</span></div>
-    <div class="shsat-diff-bar-track"><div class="shsat-diff-bar-fill shsat-diff-bar-fill--{{ item.otr_cls }}" style="width:{{ item.otr_pct }}%;"></div></div>
-    <div class="shsat-diff-bar-stat">{{ d.on_prompt_relevance|floatformat:2 }}</div>
+  <div class="shsat-metric-row">
+    <div class="shsat-metric-label">Stays on prompt</div>
+    <div class="shsat-metric-track">
+      <div class="shsat-metric-zone shsat-metric-zone--ok" style="left:75%;width:25%;"></div>
+      <div class="shsat-metric-dot shsat-metric-dot--{{ item.otr_cls }}" style="left:{{ item.otr_pct }}%;"></div>
+    </div>
+    <div class="shsat-metric-stat">{{ d.on_prompt_relevance|floatformat:2 }}</div>
   </div>
 
-  <div class="shsat-diff-bar-row">
-    <div class="shsat-diff-bar-label">Vocab diversity <span style="font-weight:400;color:rgba(0,0,0,0.38);font-size:11px;">MTLD, 70+ = strong</span></div>
-    <div class="shsat-diff-bar-track"><div class="shsat-diff-bar-fill shsat-diff-bar-fill--{{ item.mtld_cls }}" style="width:{{ item.mtld_pct }}%;"></div></div>
-    <div class="shsat-diff-bar-stat">{{ d.mtld|floatformat:0 }} <span style="color:rgba(0,0,0,0.35);font-size:11px;">/ 150</span></div>
+  <div class="shsat-metric-row">
+    <div class="shsat-metric-label">Word variety</div>
+    <div class="shsat-metric-track">
+      <div class="shsat-metric-zone shsat-metric-zone--ok" style="left:47%;width:53%;"></div>
+      <div class="shsat-metric-dot shsat-metric-dot--{{ item.mtld_cls }}" style="left:{{ item.mtld_pct }}%;"></div>
+    </div>
+    <div class="shsat-metric-stat">{{ d.mtld|floatformat:0 }}</div>
   </div>
 
-  <div class="shsat-diff-bar-row">
-    <div class="shsat-diff-bar-label">Concreteness <span style="font-weight:400;color:rgba(0,0,0,0.38);font-size:11px;">1 abstract → 5 vivid</span></div>
-    <div class="shsat-diff-bar-track"><div class="shsat-diff-bar-fill shsat-diff-bar-fill--{{ item.conc_cls }}" style="width:{{ item.conc_pct }}%;"></div></div>
-    <div class="shsat-diff-bar-stat">{{ d.concreteness_mean|floatformat:2 }} <span style="color:rgba(0,0,0,0.35);font-size:11px;">/ 5.0</span></div>
+  <div class="shsat-metric-row">
+    <div class="shsat-metric-label">Specific details</div>
+    <div class="shsat-metric-track">
+      <div class="shsat-metric-zone shsat-metric-zone--ok" style="left:50%;width:50%;"></div>
+      <div class="shsat-metric-dot shsat-metric-dot--{{ item.conc_cls }}" style="left:{{ item.conc_pct }}%;"></div>
+    </div>
+    <div class="shsat-metric-stat">{{ d.concreteness_mean|floatformat:2 }} / 5</div>
   </div>
 
-  <div class="shsat-diff-bar-row">
-    <div class="shsat-diff-bar-label">Spelling accuracy <span style="font-weight:400;color:rgba(0,0,0,0.38);font-size:11px;">higher = fewer errors</span></div>
-    <div class="shsat-diff-bar-track"><div class="shsat-diff-bar-fill shsat-diff-bar-fill--{{ item.spell_cls }}" style="width:{{ item.spell_pct }}%;"></div></div>
-    <div class="shsat-diff-bar-stat">{{ d.spelling_error_rate|floatformat:1 }}% errors</div>
+  <div class="shsat-metric-row">
+    <div class="shsat-metric-label">Spelling</div>
+    <div class="shsat-metric-track">
+      <div class="shsat-metric-zone shsat-metric-zone--ok" style="left:75%;width:25%;"></div>
+      <div class="shsat-metric-dot shsat-metric-dot--{{ item.spell_cls }}" style="left:{{ item.spell_pct }}%;"></div>
+    </div>
+    <div class="shsat-metric-stat">{{ d.spelling_error_rate|floatformat:1 }}% errors</div>
   </div>
 
-  <div class="shsat-diff-bar-row">
-    <div class="shsat-diff-bar-label">Sentence variety <span style="font-weight:400;color:rgba(0,0,0,0.38);font-size:11px;">opener diversity</span></div>
-    <div class="shsat-diff-bar-track"><div class="shsat-diff-bar-fill shsat-diff-bar-fill--{{ item.ov_cls }}" style="width:{{ item.ov_pct }}%;"></div></div>
-    <div class="shsat-diff-bar-stat">{{ d.sentence_opener_variety|floatformat:2 }} <span style="color:rgba(0,0,0,0.35);font-size:11px;">/ 1.0</span></div>
+  <div class="shsat-metric-row">
+    <div class="shsat-metric-label">Sentence variety</div>
+    <div class="shsat-metric-track">
+      <div class="shsat-metric-zone shsat-metric-zone--ok" style="left:50%;width:50%;"></div>
+      <div class="shsat-metric-dot shsat-metric-dot--{{ item.ov_cls }}" style="left:{{ item.ov_pct }}%;"></div>
+    </div>
+    <div class="shsat-metric-stat">{{ d.sentence_opener_variety|floatformat:2 }}</div>
   </div>
 
-  <div class="shsat-diff-bar-row">
-    <div class="shsat-diff-bar-label">Transition flow <span style="font-weight:400;color:rgba(0,0,0,0.38);font-size:11px;">{{ item.flow_weak_count }} abrupt jump{{ item.flow_weak_count|pluralize }} detected</span></div>
-    <div class="shsat-diff-bar-track"><div class="shsat-diff-bar-fill shsat-diff-bar-fill--{{ item.flow_cls }}" style="width:{{ item.flow_pct }}%;"></div></div>
-    <div class="shsat-diff-bar-stat">{{ item.flow_pct }}%</div>
+  <div class="shsat-metric-row">
+    <div class="shsat-metric-label">Flow of ideas</div>
+    <div class="shsat-metric-track">
+      <div class="shsat-metric-zone shsat-metric-zone--ok" style="left:75%;width:25%;"></div>
+      <div class="shsat-metric-dot shsat-metric-dot--{{ item.flow_cls }}" style="left:{{ item.flow_pct }}%;"></div>
+    </div>
+    <div class="shsat-metric-stat">{{ item.flow_pct }}%</div>
   </div>
 
 </div>
