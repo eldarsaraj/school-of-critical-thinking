@@ -1250,13 +1250,70 @@ def error_analysis(request, attempt_id):
     if is_hunter:
         try:
             from evaluators.models import EssayEvaluation
-            essay_evaluations = list(
-                EssayEvaluation.objects.filter(answer__attempt=attempt)
-                .select_related("answer__question")
-            )
-            context["essay_evaluations"] = essay_evaluations
+
+            def _clamp(v, lo=0, hi=100):
+                return max(lo, min(hi, int(v)))
+
+            def _bar_class(pct, ok=75, warn=50):
+                if pct >= ok: return "ok"
+                if pct >= warn: return "warn"
+                return "danger"
+
+            essay_eval_items = []
+            for ev in EssayEvaluation.objects.filter(answer__attempt=attempt).select_related("answer__question"):
+                d = ev.evaluation_data or {}
+                sc = d.get("sentence_count", 1)
+                wt = d.get("weak_transitions", [])
+
+                # Word count bar (0–600 scale; target zone 300–500)
+                wc = d.get("word_count", 0)
+                wc_pct = _clamp(wc / 6)
+                wc_cls = "ok" if 300 <= wc <= 500 else ("warn" if 150 <= wc <= 600 else "danger")
+
+                # On-topic (0–1 → 0–100%)
+                otr = d.get("on_prompt_relevance", 0)
+                otr_pct = _clamp(otr * 100)
+                otr_cls = _bar_class(otr_pct)
+
+                # MTLD vocab diversity (0–150 display scale; 70+ strong)
+                mtld = d.get("mtld", 0)
+                mtld_pct = _clamp(mtld / 1.5)
+                mtld_cls = _bar_class(mtld_pct, ok=47, warn=27)  # 70/150=47%, 40/150=27%
+
+                # Concreteness (1–5 scale normalised to 0–100%)
+                conc = d.get("concreteness_mean", 0)
+                conc_pct = _clamp((conc - 1) / 4 * 100)
+                conc_cls = _bar_class(conc_pct, ok=50, warn=37)
+
+                # Spelling accuracy (inverted; 0% errors = 100% accuracy)
+                ser = d.get("spelling_error_rate", 0)
+                spell_pct = _clamp((1 - min(ser, 10) / 10) * 100)
+                spell_cls = _bar_class(spell_pct, ok=95, warn=85)
+
+                # Opener variety (0–1 → 0–100%)
+                ov = d.get("sentence_opener_variety", 0)
+                ov_pct = _clamp(ov * 100)
+                ov_cls = _bar_class(ov_pct, ok=60, warn=40)
+
+                # Transition flow (proportion of transitions that are NOT weak)
+                flow_pct = _clamp((1.0 - len(wt) / max(sc - 1, 1)) * 100) if sc > 1 else 100
+                flow_cls = _bar_class(flow_pct)
+
+                essay_eval_items.append({
+                    "ev": ev,
+                    "d": d,
+                    "wc_pct": wc_pct, "wc_cls": wc_cls,
+                    "otr_pct": otr_pct, "otr_cls": otr_cls,
+                    "mtld_pct": mtld_pct, "mtld_cls": mtld_cls,
+                    "conc_pct": conc_pct, "conc_cls": conc_cls,
+                    "spell_pct": spell_pct, "spell_cls": spell_cls,
+                    "ov_pct": ov_pct, "ov_cls": ov_cls,
+                    "flow_pct": flow_pct, "flow_cls": flow_cls,
+                    "flow_weak_count": len(wt),
+                })
+            context["essay_eval_items"] = essay_eval_items
         except Exception:
-            context["essay_evaluations"] = []
+            context["essay_eval_items"] = []
 
     return render(request, "shsat/error_analysis.html", context)
 
