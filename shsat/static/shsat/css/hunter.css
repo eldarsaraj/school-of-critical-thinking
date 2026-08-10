@@ -5,23 +5,23 @@
    to one cannot accidentally break the other.
    ---------------------------------------------------------- */
 
-/* Passage column: max-content so each passage column is exactly as
-   wide as its longest line needs — short passages stay narrow.
-   The passage-col element is capped at 510px so outlier lines (a
-   handful of 11-word lines with many long words) cannot blow out the
-   layout; they overflow and scroll inside the passage box instead. */
+/* Passage column: fixed 510px cap so long nowrap lines cannot blow out
+   the two-column layout. The passage box itself scrolls in both axes. */
 .shsat-passage-layout {
-  grid-template-columns: minmax(300px, max-content) minmax(240px, 1fr);
+  grid-template-columns: minmax(300px, 510px) minmax(240px, 1fr);
 }
 
 .shsat-passage-col {
   max-width: 510px;
+  overflow: hidden; /* prevent long lines from escaping the column */
 }
 
-/* Let the scrollable passage box scroll horizontally when a line
-   exceeds the 510px cap (affects at most 1-2 lines per passage). */
+/* Passage scroll box: vertical scroll keeps tall passages accessible
+   while sticky; horizontal scroll handles lines longer than 510px. */
 .shsat-passage--scroll {
   overflow-x: auto;
+  overflow-y: auto;
+  max-height: calc(100vh - 60px);
 }
 
 /* Flex-gutter line rendering: each passage line is a flex row with

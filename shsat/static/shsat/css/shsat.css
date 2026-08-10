@@ -1603,8 +1603,6 @@
 .shsat-passage-col {
   position: sticky;
   top: 12px;
-  max-height: calc(100vh - 32px);
-  overflow-y: auto;
 }
 
 .shsat-passage--scroll {
