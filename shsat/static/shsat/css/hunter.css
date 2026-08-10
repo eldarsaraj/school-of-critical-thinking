@@ -31,10 +31,11 @@
 /* Flex-gutter line rendering: each passage line is a flex row with
    a fixed gutter on the left (shows line number or stays blank) and
    the text body on the right. Numbers are structurally bound to their
-   line — no JS measurement, no drift on resize. */
+   line — no JS measurement, no drift on resize.
+   Text is allowed to wrap — the number still anchors to the start
+   of each original line, which is all that matters for "see line 5." */
 .shsat-passage-prose {
   padding-left: 0;       /* gutter is handled by flex, not padding */
-  white-space: nowrap;   /* lines must not wrap; column width prevents it */
 }
 
 .shsat-passage-line {
@@ -59,6 +60,7 @@
 .shsat-lnum-body {
   flex: 1;
   min-width: 0;
+  word-break: break-word; /* prevent single long words from overflowing */
 }
 
 /* ----------------------------------------------------------
