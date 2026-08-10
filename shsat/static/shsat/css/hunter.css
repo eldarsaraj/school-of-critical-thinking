@@ -5,20 +5,24 @@
    to one cannot accidentally break the other.
    ---------------------------------------------------------- */
 
-/* Passage column: fixed 510px cap so long nowrap lines cannot blow out
-   the two-column layout. The passage box itself scrolls in both axes. */
+/* Passage column: fixed 510px track so long nowrap lines cannot blow
+   out the two-column layout. The passage box handles all overflow. */
 .shsat-passage-layout {
-  grid-template-columns: minmax(300px, 510px) minmax(240px, 1fr);
+  grid-template-columns: 510px 1fr;
 }
 
 .shsat-passage-col {
+  width: 510px;
   max-width: 510px;
-  overflow: hidden; /* prevent long lines from escaping the column */
+  /* no overflow property — let the scroll box own it entirely */
 }
 
 /* Passage scroll box: vertical scroll keeps tall passages accessible
-   while sticky; horizontal scroll handles lines longer than 510px. */
+   while sticky; horizontal scroll handles lines longer than 510px.
+   width:100% + box-sizing so padding doesn't push past the 510px cap. */
 .shsat-passage--scroll {
+  width: 100%;
+  box-sizing: border-box;
   overflow-x: auto;
   overflow-y: auto;
   max-height: calc(100vh - 60px);
