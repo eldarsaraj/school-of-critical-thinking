@@ -19,13 +19,13 @@
 <!-- Section overview -->
 <p class="shsat-section-title">Section overview</p>
 <p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Accuracy and time per section.{% if has_section_time %} Stacked bars show time on correct vs. wrong answers.{% endif %}</p>
-<div style="display:grid;grid-template-columns:1fr {% if section_summary_data|length <= 2 %}220px{% else %}200px{% endif %};gap:24px;align-items:start;margin-bottom:40px;">
-  <div class="shsat-chart-wrap" style="margin-bottom:0;">
-    <canvas id="sectionOverviewChart"></canvas>
+<div style="display:grid;grid-template-columns:1fr {% if section_summary_data|length <= 2 %}220px{% else %}200px{% endif %};gap:24px;align-items:stretch;margin-bottom:40px;">
+  <div class="shsat-chart-wrap" style="margin-bottom:0;display:flex;align-items:stretch;">
+    <canvas id="sectionOverviewChart" style="width:100%;"></canvas>
   </div>
-  <div>
+  <div style="display:flex;flex-direction:column;gap:10px;">
     {% for s in section_summary_data %}
-    <div style="margin-bottom:10px;padding:14px 18px;border:1px solid rgba(0,0,0,0.08);border-radius:8px;">
+    <div style="flex:1;padding:14px 18px;border:1px solid rgba(0,0,0,0.08);border-radius:8px;">
       <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:3px;">{{ s.section }}</div>
       <div style="font-size:22px;font-weight:700;color:#161a1d;line-height:1;font-variant-numeric:tabular-nums;">{{ s.accuracy_pct }}%</div>
       <div style="font-size:12px;color:rgba(0,0,0,0.5);margin-top:2px;">{{ s.correct }}/{{ s.total }}{% if s.has_time %} · {{ s.time_minutes }}m{% endif %}</div>
@@ -53,7 +53,7 @@
 <div class="shsat-diff-bars" style="margin-bottom:36px;">
   {% for p in passage_summary %}
   <div class="shsat-diff-bar-row">
-    <div class="shsat-diff-bar-label" style="min-width:200px;max-width:200px;">{{ p.title }}</div>
+    <div class="shsat-diff-bar-label" style="min-width:160px;max-width:160px;" title="{{ p.title }}">{{ p.title|truncatechars:30 }}</div>
     <div class="shsat-diff-bar-track">
       <div class="shsat-diff-bar-fill {% if p.pct >= 80 %}shsat-diff-bar-fill--ok{% elif p.pct >= 60 %}shsat-diff-bar-fill--warn{% else %}shsat-diff-bar-fill--danger{% endif %}"
            style="width:{{ p.pct }}%;"></div>
