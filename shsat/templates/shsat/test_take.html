@@ -67,6 +67,7 @@ function initQuestion(q) {
   answers[q.id] = q.selected || "";
   flags[q.id] = q.is_flagged || false;
   timeSpent[q.id] = 0;
+  initEssayText(q);
 }
 questions.forEach(initQuestion);
 
@@ -212,11 +213,22 @@ function renderQuestionText(text) {
   return html;
 }
 
+// Store essay text in a separate map so it doesn't conflict with MC answers
+const essayTexts = {};
+function initEssayText(q) {
+  if (q.question_type === "essay") essayTexts[q.id] = q.essay_text || "";
+}
+
 function buildChoicesHtml(q) {
   if (q.question_type === "essay") {
-    return `<div class="shsat-essay-prompt">
-      <p class="shsat-essay-prompt__note">Essay prompt — no answer selection required.</p>
-      <p class="shsat-essay-prompt__hint">Read the prompt carefully, then select Next to continue.</p>
+    const saved = esc(essayTexts[q.id] || "");
+    return `<div class="shsat-essay-wrap">
+      <textarea id="essayInput_${q.id}" class="shsat-essay-textarea" rows="16"
+        placeholder="Write your essay here…"
+        oninput="saveEssayDebounced(${q.id}, this.value)">${saved}</textarea>
+      <p class="shsat-essay-prompt__hint" style="margin-top:8px;font-size:13px;color:rgba(0,0,0,0.45);">
+        Your writing is saved automatically as you type.
+      </p>
     </div>`;
   }
   if (q.question_type === "grid_in") {
@@ -370,6 +382,22 @@ function saveGridIn(qId, value) {
       if (q && q.is_routing) checkSectionRoutingComplete(q.section);
     }
   }, 600);
+}
+
+// ---------------------------------------------------------------------------
+// Essay answer saving (debounced)
+// ---------------------------------------------------------------------------
+let essayTimer = null;
+function saveEssayDebounced(qId, text) {
+  essayTexts[qId] = text;
+  clearTimeout(essayTimer);
+  essayTimer = setTimeout(() => {
+    fetch("/shsat/api/save-answer/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
+      body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, essay_text: text }),
+    }).catch(console.error);
+  }, 800);
 }
 
 // ---------------------------------------------------------------------------

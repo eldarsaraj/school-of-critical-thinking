@@ -56,3 +56,73 @@
   flex: 1;
   min-width: 0;
 }
+
+/* ----------------------------------------------------------
+   Hunter essay question layout
+   ---------------------------------------------------------- */
+
+.hunter-essay-prompt-block {
+  margin-bottom: 24px;
+  border-left: 3px solid #a4161a;
+  padding-left: 20px;
+}
+
+.hunter-essay-prompt-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a4161a;
+  margin-bottom: 10px;
+}
+
+.hunter-essay-prompt-text .shsat-question-text,
+.hunter-essay-prompt-text .shsat-sentence-block {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+
+.hunter-essay-wrap {
+  margin-bottom: 24px;
+}
+
+.hunter-essay-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 4px;
+  padding: 16px 18px;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #161a1d;
+  background: #fff;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+  min-height: 360px;
+}
+
+.hunter-essay-textarea:focus {
+  border-color: #a4161a;
+  box-shadow: 0 0 0 2px rgba(164, 22, 26, 0.08);
+}
+
+.hunter-essay-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.hunter-essay-wordcount {
+  color: rgba(0, 0, 0, 0.45);
+  font-variant-numeric: tabular-nums;
+}
+
+.hunter-essay-saved {
+  color: rgba(0, 0, 0, 0.35);
+}

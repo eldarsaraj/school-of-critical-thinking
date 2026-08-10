@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "articles",
     "diagnostic",
     "shsat",
+    "evaluators",
 ]
 
 SITE_ID = 1
@@ -206,6 +207,10 @@ LOGGING = {
         },
     },
 }
+
+# --- Essay Evaluator (NOOA) ---
+NOOA_MODEL = os.environ.get("NOOA_MODEL", "")   # e.g. "groq/llama-3.3-70b-versatile"
+BRYSBAERT_PATH = BASE_DIR / "data" / "brysbaert_concreteness.tsv"
 
 # --- Production hardening (safe defaults) ---
 

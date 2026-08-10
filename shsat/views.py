@@ -668,6 +668,7 @@ def test_take(request, test_id):
             "choice_d": q.choice_d,
             "choice_e": q.choice_e,
             "selected": ans.selected_answer if ans else "",
+            "essay_text": ans.essay_text if ans else "",
             "is_flagged": ans.is_flagged if ans else False,
         })
 
@@ -733,6 +734,48 @@ def test_take(request, test_id):
     return render(request, template, context)
 
 
+def _trigger_essay_evaluations(attempt, answers):
+    """Evaluate any essay answers attached to the attempt using the NOOA agent."""
+    import logging
+    from asgiref.sync import async_to_sync
+
+    log = logging.getLogger(__name__)
+    essay_answers = [a for a in answers if a.question.question_type == "essay" and a.essay_text.strip()]
+    if not essay_answers:
+        return
+    try:
+        from evaluators.services import evaluate_essay
+        from evaluators.models import EssayEvaluation
+    except ImportError:
+        log.warning("evaluators app not available; skipping essay evaluation")
+        return
+
+    for ans in essay_answers:
+        try:
+            result = async_to_sync(evaluate_essay)(
+                essay=ans.essay_text,
+                prompt=ans.question.question_text,
+            )
+            EssayEvaluation.objects.update_or_create(
+                answer=ans,
+                defaults={
+                    "evaluation_data": result.model_dump(),
+                    "feedback": result.feedback,
+                    "error": "",
+                },
+            )
+        except Exception as exc:
+            log.error("Essay evaluation failed for answer %s: %s", ans.id, exc)
+            EssayEvaluation.objects.update_or_create(
+                answer=ans,
+                defaults={
+                    "evaluation_data": {},
+                    "feedback": "",
+                    "error": str(exc),
+                },
+            )
+
+
 @login_required(login_url="/shsat/login/")
 @require_POST
 def test_submit(request, test_id):
@@ -792,6 +835,7 @@ def test_submit(request, test_id):
 
     # Send results email to parent (SHSAT only)
     if attempt.test.exam_type == "hunter":
+        _trigger_essay_evaluations(attempt, answers)
         return redirect("hunter_test_results", attempt_id=attempt.id)
 
     try:
@@ -1202,6 +1246,18 @@ def error_analysis(request, attempt_id):
         "review_sections": [(s["section_code"], s["section"]) for s in section_summary_data],
         "parent_template": "shsat/base_hunter.html" if is_hunter else "shsat/base_shsat.html",
     }
+
+    if is_hunter:
+        try:
+            from evaluators.models import EssayEvaluation
+            essay_evaluations = list(
+                EssayEvaluation.objects.filter(answer__attempt=attempt)
+                .select_related("answer__question")
+            )
+            context["essay_evaluations"] = essay_evaluations
+        except Exception:
+            context["essay_evaluations"] = []
+
     return render(request, "shsat/error_analysis.html", context)
 
 
@@ -1253,8 +1309,13 @@ def save_answer(request):
         parent, _ = Parent.objects.get_or_create(user=request.user)
         attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent, is_completed=False)
         answer, _ = Answer.objects.get_or_create(attempt=attempt, question_id=question_id)
-        answer.selected_answer = selected
-        update_fields = ["selected_answer"]
+        essay_text = data.get("essay_text")
+        if essay_text is not None:
+            answer.essay_text = essay_text
+            update_fields = ["essay_text"]
+        else:
+            answer.selected_answer = selected
+            update_fields = ["selected_answer"]
         if time_spent is not None:
             try:
                 answer.time_spent_seconds = max(0, int(time_spent))
@@ -1364,6 +1425,7 @@ def assign_modules(request):
                 "choice_c": q.choice_c,
                 "choice_d": q.choice_d,
                 "selected": ans.selected_answer if ans else "",
+                "essay_text": ans.essay_text if ans else "",
                 "is_flagged": ans.is_flagged if ans else False,
             })
 

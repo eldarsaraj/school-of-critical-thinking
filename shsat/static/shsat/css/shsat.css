@@ -765,6 +765,33 @@
 }
 
 /* ----------------------------------------------------------
+   Essay textarea
+   ---------------------------------------------------------- */
+.shsat-essay-wrap {
+  margin-bottom: 24px;
+}
+
+.shsat-essay-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 4px;
+  padding: 14px 16px;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #161a1d;
+  background: #fff;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.shsat-essay-textarea:focus {
+  border-color: #161a1d;
+}
+
+/* ----------------------------------------------------------
    Grid-in answer input
    ---------------------------------------------------------- */
 .shsat-gridin {

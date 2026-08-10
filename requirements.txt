@@ -32,3 +32,14 @@ pydyf==0.12.1
 reportlab==4.2.5
 python-dotenv==1.0.1
 stripe==15.3.0
+
+# Essay evaluator
+# Use CPU-only torch to stay under Heroku's 500 MB slug limit
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.5.1+cpu
+nooa
+lexical-diversity
+pyspellchecker
+sentence-transformers
+scikit-learn
+pandas

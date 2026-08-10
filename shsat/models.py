@@ -171,6 +171,7 @@ class Answer(models.Model):
     attempt = models.ForeignKey(TestAttempt, on_delete=models.CASCADE, related_name="answers")
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="answers")
     selected_answer = models.CharField(max_length=1, blank=True, default="")
+    essay_text = models.TextField(blank=True, default="")
     is_correct = models.BooleanField(null=True, blank=True)
     is_flagged = models.BooleanField(default=False)
     time_spent_seconds = models.PositiveIntegerField(null=True, blank=True)

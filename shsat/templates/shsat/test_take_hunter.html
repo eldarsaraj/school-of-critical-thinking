@@ -50,10 +50,12 @@ let currentIdx = 0;
 
 // State maps keyed by question id
 const answers = {};
+const essayTexts = {};
 const flags = {};
 const timeSpent = {};
 function initQuestion(q) {
   answers[q.id] = q.selected || "";
+  if (q.question_type === "essay") essayTexts[q.id] = q.essay_text || "";
   flags[q.id] = q.is_flagged || false;
   timeSpent[q.id] = 0;
 }
@@ -174,9 +176,15 @@ function renderQuestionText(text) {
 
 function buildChoicesHtml(q) {
   if (q.question_type === "essay") {
-    return `<div class="shsat-essay-prompt">
-      <p class="shsat-essay-prompt__note">Essay prompt — no answer selection required.</p>
-      <p class="shsat-essay-prompt__hint">Read the prompt carefully, then select Next to continue.</p>
+    const saved = (essayTexts[q.id] || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return `<div class="hunter-essay-wrap">
+      <textarea id="essayInput_${q.id}" class="hunter-essay-textarea" rows="18"
+        placeholder="Write your essay here…"
+        oninput="saveEssayDebounced(${q.id}, this.value)">${saved}</textarea>
+      <div class="hunter-essay-meta">
+        <span id="wordCount_${q.id}" class="hunter-essay-wordcount">0 words</span>
+        <span class="hunter-essay-saved" id="savedStatus_${q.id}">Saved</span>
+      </div>
     </div>`;
   }
   const choices = [
@@ -231,7 +239,14 @@ function renderQuestion(idx) {
   </div>`;
 
   let html;
-  if (q.passage_text) {
+  if (q.question_type === "essay") {
+    // Full-width essay layout: prompt block on top, textarea below
+    const promptHtml = `<div class="hunter-essay-prompt-block">
+      <div class="hunter-essay-prompt-label">Essay prompt</div>
+      <div class="hunter-essay-prompt-text">${renderQuestionText(q.question_text)}</div>
+    </div>`;
+    html = promptHtml + buildChoicesHtml(q) + navFooter;
+  } else if (q.passage_text) {
     let passageBody = q.passage_text;
     if (q.passage_title) {
       const stripped = passageBody.trimStart();
@@ -260,6 +275,7 @@ function renderQuestion(idx) {
 
   document.getElementById("questionPanel").innerHTML = html;
   updateProgress();
+  if (q.question_type === "essay") initEssayWordCount(q.id);
   window.scrollTo(0, 0);
 }
 
@@ -316,6 +332,42 @@ function toggleFlag(qId) {
     headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
     body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, flagged: flags[qId] }),
   }).catch(console.error);
+}
+
+// ---------------------------------------------------------------------------
+// Essay saving (debounced)
+// ---------------------------------------------------------------------------
+let essayTimer = null;
+function saveEssayDebounced(qId, text) {
+  essayTexts[qId] = text;
+
+  // Update word count
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const wc = document.getElementById(`wordCount_${qId}`);
+  if (wc) wc.textContent = words + (words === 1 ? " word" : " words");
+
+  // Show "Saving…" while debounce is pending
+  const st = document.getElementById(`savedStatus_${qId}`);
+  if (st) { st.textContent = "Saving…"; st.style.color = "rgba(0,0,0,0.35)"; }
+
+  clearTimeout(essayTimer);
+  essayTimer = setTimeout(() => {
+    fetch("/shsat/api/save-answer/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
+      body: JSON.stringify({ attempt_id: ATTEMPT_ID, question_id: qId, essay_text: text }),
+    }).then(() => {
+      if (st) { st.textContent = "Saved"; st.style.color = ""; }
+    }).catch(console.error);
+  }, 800);
+}
+
+// After essay renders, initialise word count from pre-existing text
+function initEssayWordCount(qId) {
+  const text = essayTexts[qId] || "";
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const wc = document.getElementById(`wordCount_${qId}`);
+  if (wc) wc.textContent = words + (words === 1 ? " word" : " words");
 }
 
 // ---------------------------------------------------------------------------
