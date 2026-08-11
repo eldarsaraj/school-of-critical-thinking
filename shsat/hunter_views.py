@@ -147,33 +147,53 @@ def hunter_verify_resend(request):
 # Protected views
 # ---------------------------------------------------------------------------
 
+_SKILL_LABEL_MAP = {
+    "main_idea": "Main Idea",
+    "supporting_detail": "Supporting Detail",
+    "evidence_selection": "Evidence",
+    "inference": "Inference",
+    "vocabulary": "Vocabulary",
+    "authors_craft": "Author's Craft",
+    "cross_passage_synthesis": "Cross-passage",
+    "punctuation": "Punctuation",
+    "usage_agreement": "Usage & Agreement",
+    "sentence_structure": "Sentence Structure",
+    "number_operations": "Number Ops",
+    "ratios_proportions": "Ratios & Proportions",
+    "algebra": "Algebra",
+    "geometry": "Geometry",
+    "statistics_data": "Statistics",
+    "probability": "Probability",
+    "multistep_word_problems": "Multi-step",
+}
+
+_RC_SECTIONS = {"reading_comprehension", "writing"}
+_MATH_SECTIONS = {"quantitative_reasoning", "math_achievement"}
+
+
 @_hunter_required
 def hunter_dashboard(request):
+    import json as _json
+    from collections import defaultdict
+    from evaluators.models import EssayEvaluation
+
     parent = _get_hunter_parent(request)
 
-    # Check email verification
     if not parent.email_verified and not request.user.is_staff:
         return redirect("hunter_verify_pending")
 
-    attempts = (
-        TestAttempt.objects.filter(parent=parent, is_completed=True, test__exam_type="hunter")
+    # All completed non-drill Hunter attempts, oldest first for charts
+    attempts_asc = (
+        TestAttempt.objects.filter(
+            parent=parent, is_completed=True,
+            test__is_drill=False, test__exam_type="hunter",
+        )
         .select_related("test")
-        .order_by("-submitted_at")
+        .order_by("submitted_at")
     )
+    attempts_desc = list(reversed(list(attempts_asc)))
 
-    # Build per-attempt score rows
-    attempt_rows = []
-    for a in attempts:
-        rc = a.ela_correct or 0   # RC mapped to ela_correct in submission
-        qr_ma = a.math_correct or 0  # QR + MA mapped to math_correct
-        composite = a.composite_score or 0
-        attempt_rows.append({
-            "attempt": a,
-            "rc_correct": rc,
-            "qr_ma_correct": qr_ma,
-            "composite": composite,
-        })
-
+    # In-progress
     in_progress = (
         TestAttempt.objects.filter(parent=parent, is_completed=False, test__exam_type="hunter")
         .select_related("test")
@@ -181,11 +201,153 @@ def hunter_dashboard(request):
         .first()
     )
 
+    # Score history — Baseline (is_free) collapsed to one entry; others labelled Benchmark 1, 2…
+    baseline_entries = []
+    benchmark_entries = []
+    for a in attempts_asc:
+        if a.composite_score is None:
+            continue
+        entry = {
+            "date": a.submitted_at.strftime("%b %d, %Y"),
+            "rc": a.ela_correct or 0,
+            "math": a.math_correct or 0,
+            "total": a.composite_score,
+            "source": a.test.title,
+        }
+        if a.test.is_free:
+            baseline_entries.append(entry)
+        else:
+            benchmark_entries.append(entry)
+
+    score_history = []
+    if baseline_entries:
+        e = baseline_entries[-1]
+        e["seq"] = "Baseline"
+        score_history.append(e)
+    for i, e in enumerate(benchmark_entries, 1):
+        e["seq"] = f"Benchmark {i}"
+        score_history.append(e)
+
+    # Practice (drill) scores
+    drill_attempts = (
+        TestAttempt.objects.filter(
+            parent=parent, is_completed=True,
+            test__is_drill=True, test__exam_type="hunter",
+        )
+        .select_related("test")
+        .order_by("submitted_at")
+    )
+    practice_chart_data = [
+        {
+            "label": f"{a.test.title} · {a.submitted_at.strftime('%b %d')}",
+            "rc": a.ela_correct or 0,
+            "math": a.math_correct or 0,
+            "total": a.composite_score or 0,
+        }
+        for a in drill_attempts
+        if a.composite_score is not None
+    ]
+
+    # Latest completed attempt for KPI
+    latest_attempt = attempts_desc[0] if attempts_desc else None
+
+    # Skill accuracy across all completed non-drill answers
+    all_answers = list(
+        Answer.objects.filter(
+            attempt__parent=parent,
+            attempt__is_completed=True,
+            attempt__test__is_drill=False,
+            attempt__test__exam_type="hunter",
+            is_correct__isnull=False,
+        ).select_related("question")
+    )
+
+    skill_stats = {}
+    for ans in all_answers:
+        if ans.question.question_type == "essay":
+            continue
+        skill = ans.question.skill or "unknown"
+        section = ans.question.section
+        if skill not in skill_stats:
+            skill_stats[skill] = {
+                "correct": 0, "total": 0,
+                "time_sum": 0, "time_count": 0,
+                "section": section,
+            }
+        skill_stats[skill]["total"] += 1
+        if ans.is_correct:
+            skill_stats[skill]["correct"] += 1
+        if ans.time_spent_seconds:
+            skill_stats[skill]["time_sum"] += ans.time_spent_seconds
+            skill_stats[skill]["time_count"] += 1
+
+    skill_accuracy_data = []
+    for skill, s in skill_stats.items():
+        if s["total"] == 0 or skill not in _SKILL_LABEL_MAP:
+            continue
+        pct = round(s["correct"] / s["total"] * 100, 1)
+        avg_time = round(s["time_sum"] / s["time_count"] / 60, 2) if s["time_count"] > 0 else None
+        skill_accuracy_data.append({
+            "skill": skill,
+            "label": _SKILL_LABEL_MAP[skill],
+            "section": s["section"],
+            "accuracy": pct,
+            "correct": s["correct"],
+            "total": s["total"],
+            "avg_time": avg_time,
+        })
+    skill_accuracy_data.sort(key=lambda x: x["accuracy"])
+
+    # Focus areas: 3 weakest skills with at least 3 answers
+    focus_areas = [s for s in skill_accuracy_data if s["total"] >= 3][:3]
+
+    # Avg time per question (non-essay)
+    timed_answers = [
+        a for a in all_answers
+        if a.time_spent_seconds is not None and a.question.question_type != "essay"
+    ]
+    avg_time_per_q = (
+        round(sum(a.time_spent_seconds for a in timed_answers) / len(timed_answers) / 60, 1)
+        if timed_answers else None
+    )
+
+    # Essay evaluation (most recent)
+    essay_eval = None
+    try:
+        latest_essay_answer = (
+            Answer.objects.filter(
+                attempt__parent=parent,
+                attempt__is_completed=True,
+                attempt__test__exam_type="hunter",
+                question__question_type="essay",
+            )
+            .select_related("evaluation")
+            .order_by("-attempt__submitted_at")
+            .first()
+        )
+        if latest_essay_answer:
+            ev = latest_essay_answer.evaluation
+            if ev.succeeded:
+                essay_eval = ev.evaluation_data
+    except Exception:
+        pass
+
     context = {
         "parent": parent,
-        "attempt_rows": attempt_rows,
         "in_progress": in_progress,
-        "total_completed": len(attempt_rows),
+        "attempts": attempts_desc,
+        "score_history": score_history,
+        "score_history_json": _json.dumps(score_history),
+        "practice_chart_data": practice_chart_data,
+        "practice_chart_data_json": _json.dumps(practice_chart_data),
+        "latest_attempt": latest_attempt,
+        "skill_accuracy_data": skill_accuracy_data,
+        "skill_accuracy_json": _json.dumps(skill_accuracy_data),
+        "focus_areas": focus_areas,
+        "avg_time_per_q": avg_time_per_q,
+        "has_timing_data": bool(timed_answers),
+        "essay_eval": essay_eval,
+        "tests_completed": len(attempts_desc),
     }
     return render(request, "shsat/hunter_dashboard.html", context)
 

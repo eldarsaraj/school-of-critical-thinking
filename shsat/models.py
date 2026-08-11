@@ -229,3 +229,21 @@ class QuestionReport(models.Model):
 
     def __str__(self):
         return f"Report on {self.question} ({self.created_at:%Y-%m-%d})"
+
+
+# ---------------------------------------------------------------------------
+# Proxy models — used purely for admin separation (no new DB tables)
+# ---------------------------------------------------------------------------
+
+class SHSATParent(Parent):
+    class Meta:
+        proxy = True
+        verbose_name = "SHSAT Parent"
+        verbose_name_plural = "SHSAT Parents"
+
+
+class HunterParent(Parent):
+    class Meta:
+        proxy = True
+        verbose_name = "Hunter Parent"
+        verbose_name_plural = "Hunter Parents"

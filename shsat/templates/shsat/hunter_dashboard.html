@@ -1,11 +1,38 @@
 {% extends "shsat/base_hunter.html" %}
+{% load static %}
 
 {% block title %}Dashboard — Hunter Prep{% endblock %}
 {% block tab_dashboard %}active{% endblock %}
 
 {% block shsat_content %}
-<h1 class="shsat-page-title">Dashboard</h1>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 
+{% comment %}Design tokens{% endcomment %}
+<style>
+:root {
+  --h-correct: #5aab8c;
+  --h-correct-bg: rgba(90,171,140,.12);
+  --h-error: #c4635b;
+  --h-error-bg: rgba(196,99,91,.10);
+  --h-amber: #c49a5a;
+  --h-amber-bg: rgba(196,154,90,.12);
+  --h-neutral: #8896a8;
+}
+</style>
+
+{# ── Page header ── #}
+<div style="margin-bottom:32px;">
+  <h1 class="shsat-page-title" style="margin-bottom:4px;">
+    {% if parent.child_nickname %}{{ parent.child_nickname }}'s Dashboard{% else %}Dashboard{% endif %}
+  </h1>
+  {% if not parent.child_nickname %}
+  <p style="font-size:13px;color:rgba(0,0,0,0.4);margin:0;">
+    Add your child's name in <a href="{% url 'hunter_account' %}" style="color:inherit;text-decoration:underline;">Account settings</a> to personalise this page.
+  </p>
+  {% endif %}
+</div>
+
+{# ── In-progress banner ── #}
 {% if in_progress %}
 <div style="background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.08);padding:16px 20px;margin-bottom:28px;max-width:520px;">
   <p style="font-size:13px;font-weight:600;margin-bottom:4px;">In progress: {{ in_progress.test.title }}</p>
@@ -14,35 +41,342 @@
 </div>
 {% endif %}
 
-{% if attempt_rows %}
-<p class="shsat-section-title">Completed tests</p>
-<div style="margin-bottom:8px;font-size:12px;color:rgba(0,0,0,0.4);display:grid;grid-template-columns:1fr 80px 80px 80px 120px;gap:8px;padding:0 0 6px;border-bottom:1px solid rgba(0,0,0,0.1);">
-  <span>Test</span>
-  <span>RC</span>
-  <span>QR + MA</span>
-  <span>Total</span>
-  <span>Date</span>
-</div>
-{% for row in attempt_rows %}
-<div style="display:grid;grid-template-columns:1fr 80px 80px 80px 120px;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);">
-  <span style="font-size:14px;">{{ row.attempt.test.title }}</span>
-  <span style="font-size:14px;font-weight:600;">{{ row.rc_correct }}</span>
-  <span style="font-size:14px;font-weight:600;">{{ row.qr_ma_correct }}</span>
-  <span style="font-size:14px;font-weight:700;color:#111;">{{ row.composite }}</span>
-  <span style="font-size:12px;color:rgba(0,0,0,0.4);">{{ row.attempt.submitted_at|date:"M j, Y" }}</span>
-</div>
-{% endfor %}
-
-<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;">
-  <a href="{% url 'hunter_error_analysis_list' %}" class="shsat-btn">View Error Analysis &rarr;</a>
-  <a href="{% url 'hunter_test_list' %}" class="shsat-btn shsat-btn--outline">Practice Tests</a>
+{% if not attempts %}
+{# ── Empty state ── #}
+<div style="max-width:480px;">
+  <p style="color:rgba(0,0,0,0.5);margin-bottom:24px;">No completed tests yet. Take the Baseline Test to see your full analysis here.</p>
+  <a href="{% url 'hunter_test_list' %}" class="shsat-btn">See available tests &rarr;</a>
 </div>
 
 {% else %}
-<div style="max-width:480px;">
-  <p style="color:rgba(0,0,0,0.5);margin-bottom:24px;">No completed tests yet. Take your first practice test to see your results here.</p>
-  <a href="{% url 'hunter_test_list' %}" class="shsat-btn">See available tests &rarr;</a>
+
+{# ══════════════════════════════════════════════════════
+   KPI CARDS
+══════════════════════════════════════════════════════ #}
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:36px;">
+
+  {# Latest total score #}
+  <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Latest score</div>
+    {% if latest_attempt %}
+    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:#111;line-height:1;">{{ latest_attempt.composite_score }}</div>
+    <div style="font-size:11px;color:rgba(0,0,0,0.38);margin-top:4px;">{{ latest_attempt.test.title }}</div>
+    {% else %}
+    <div style="font-size:28px;font-weight:700;color:#ccc;">—</div>
+    {% endif %}
+  </div>
+
+  {# Tests completed #}
+  <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Tests completed</div>
+    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:#111;line-height:1;">{{ tests_completed }}</div>
+  </div>
+
+  {# Avg time per question #}
+  <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Avg time / question</div>
+    {% if avg_time_per_q %}
+    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:#111;line-height:1;">{{ avg_time_per_q }}<span style="font-size:14px;font-weight:400;color:rgba(0,0,0,0.45);">m</span></div>
+    {% else %}
+    <div style="font-size:28px;font-weight:700;color:#ccc;">—</div>
+    <div style="font-size:11px;color:rgba(0,0,0,0.38);margin-top:4px;">Not yet available</div>
+    {% endif %}
+  </div>
+
+  {# Essay status #}
+  <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Essay feedback</div>
+    {% if essay_eval %}
+    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:var(--h-correct);line-height:1;">Ready</div>
+    {% else %}
+    <div style="font-size:28px;font-weight:700;color:#ccc;line-height:1;">—</div>
+    <div style="font-size:11px;color:rgba(0,0,0,0.38);margin-top:4px;">Pending AI review</div>
+    {% endif %}
+  </div>
+
 </div>
+
+{# ══════════════════════════════════════════════════════
+   SCORE HISTORY
+══════════════════════════════════════════════════════ #}
+{% if score_history|length > 0 %}
+<p class="shsat-section-title">Score history</p>
+<div style="border:1px solid rgba(0,0,0,0.08);border-radius:6px;padding:20px;margin-bottom:36px;">
+  <div style="position:relative;height:220px;">
+    <canvas id="scoreHistoryChart"></canvas>
+  </div>
+</div>
+{% endif %}
+
+{# ══════════════════════════════════════════════════════
+   SECTION BREAKDOWN TABLE
+══════════════════════════════════════════════════════ #}
+<p class="shsat-section-title">Test scores</p>
+<div style="margin-bottom:36px;">
+  <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 130px 160px;gap:8px;padding:0 0 8px;border-bottom:1px solid rgba(0,0,0,0.1);font-size:11px;font-weight:600;color:rgba(0,0,0,0.4);letter-spacing:.03em;text-transform:uppercase;">
+    <span>Test</span><span>RC</span><span>QR+MA</span><span>Total</span><span>Date</span><span></span>
+  </div>
+  {% for a in attempts %}
+  <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 130px 160px;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);">
+    <span style="font-size:14px;">{{ a.test.title }}</span>
+    <span style="font-size:14px;font-weight:600;">{{ a.ela_correct|default:"—" }}</span>
+    <span style="font-size:14px;font-weight:600;">{{ a.math_correct|default:"—" }}</span>
+    <span style="font-size:14px;font-weight:700;color:#111;">{{ a.composite_score|default:"—" }}</span>
+    <span style="font-size:12px;color:rgba(0,0,0,0.4);">{{ a.submitted_at|date:"M j, Y" }}</span>
+    <span><a href="{% url 'hunter_error_analysis' a.id %}" style="font-size:12px;color:rgba(0,0,0,0.55);">Error analysis &rarr;</a></span>
+  </div>
+  {% endfor %}
+</div>
+
+{# ══════════════════════════════════════════════════════
+   SKILL ACCURACY
+══════════════════════════════════════════════════════ #}
+{% if skill_accuracy_data %}
+<p class="shsat-section-title">Skill accuracy</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px;">
+
+  {# Reading / Writing #}
+  <div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:12px;">Reading &amp; Writing</div>
+    {% for s in skill_accuracy_data %}
+    {% if s.section == "reading_comprehension" or s.section == "writing" %}
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <span style="flex:0 0 130px;font-size:12px;color:rgba(0,0,0,0.65);">{{ s.label }}</span>
+      <div style="flex:1;height:6px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;">
+        <div style="height:100%;width:{{ s.accuracy }}%;background:{% if s.accuracy >= 75 %}var(--h-correct){% elif s.accuracy >= 50 %}var(--h-amber){% else %}var(--h-error){% endif %};border-radius:3px;"></div>
+      </div>
+      <span style="flex:0 0 38px;font-size:12px;font-weight:600;text-align:right;">{{ s.accuracy }}%</span>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  {# Math #}
+  <div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:12px;">Math</div>
+    {% for s in skill_accuracy_data %}
+    {% if s.section == "quantitative_reasoning" or s.section == "math_achievement" %}
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <span style="flex:0 0 130px;font-size:12px;color:rgba(0,0,0,0.65);">{{ s.label }}</span>
+      <div style="flex:1;height:6px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;">
+        <div style="height:100%;width:{{ s.accuracy }}%;background:{% if s.accuracy >= 75 %}var(--h-correct){% elif s.accuracy >= 50 %}var(--h-amber){% else %}var(--h-error){% endif %};border-radius:3px;"></div>
+      </div>
+      <span style="flex:0 0 38px;font-size:12px;font-weight:600;text-align:right;">{{ s.accuracy }}%</span>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+</div>
+{% endif %}
+
+{# ══════════════════════════════════════════════════════
+   TIME PER SKILL
+══════════════════════════════════════════════════════ #}
+{% if has_timing_data and skill_accuracy_data %}
+{% with timed_skills=skill_accuracy_data %}
+{% if timed_skills %}
+<p class="shsat-section-title">Average time per skill</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px;">
+  <div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:12px;">Reading &amp; Writing</div>
+    {% for s in skill_accuracy_data %}
+    {% if s.avg_time and s.section == "reading_comprehension" or s.avg_time and s.section == "writing" %}
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <span style="flex:0 0 130px;font-size:12px;color:rgba(0,0,0,0.65);">{{ s.label }}</span>
+      <div style="flex:1;height:6px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;">
+        <div style="height:100%;width:{% widthratio s.avg_time 5 100 %}%;max-width:100%;background:var(--h-neutral);border-radius:3px;"></div>
+      </div>
+      <span style="flex:0 0 42px;font-size:12px;text-align:right;color:rgba(0,0,0,0.55);">{{ s.avg_time }}m</span>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  <div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:12px;">Math</div>
+    {% for s in skill_accuracy_data %}
+    {% if s.avg_time and s.section == "quantitative_reasoning" or s.avg_time and s.section == "math_achievement" %}
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <span style="flex:0 0 130px;font-size:12px;color:rgba(0,0,0,0.65);">{{ s.label }}</span>
+      <div style="flex:1;height:6px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;">
+        <div style="height:100%;width:{% widthratio s.avg_time 5 100 %}%;max-width:100%;background:var(--h-neutral);border-radius:3px;"></div>
+      </div>
+      <span style="flex:0 0 42px;font-size:12px;text-align:right;color:rgba(0,0,0,0.55);">{{ s.avg_time }}m</span>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endwith %}
+{% endif %}
+
+{# ══════════════════════════════════════════════════════
+   FOCUS AREAS
+══════════════════════════════════════════════════════ #}
+{% if focus_areas %}
+<p class="shsat-section-title">Focus areas</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:36px;">
+  {% for s in focus_areas %}
+  <div style="border:1px solid rgba(196,99,91,.25);border-radius:6px;padding:16px 18px;background:var(--h-error-bg);">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--h-error);margin-bottom:6px;">
+      {% if s.section == "reading_comprehension" or s.section == "writing" %}Reading{% else %}Math{% endif %}
+    </div>
+    <div style="font-size:16px;font-weight:700;color:#111;margin-bottom:6px;">{{ s.label }}</div>
+    <div style="font-size:13px;color:rgba(0,0,0,0.55);">{{ s.correct }}/{{ s.total }} correct &mdash; {{ s.accuracy }}%</div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{# ══════════════════════════════════════════════════════
+   ESSAY FEEDBACK
+══════════════════════════════════════════════════════ #}
+{% if essay_eval %}
+<p class="shsat-section-title">Essay feedback</p>
+<div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:24px;margin-bottom:36px;">
+
+  {# Metric dots #}
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:24px;">
+
+    {% with wc=essay_eval.word_count %}
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Essay length</div>
+      <div style="font-size:20px;font-weight:700;color:#111;">{{ wc }} <span style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);">words</span></div>
+      <div style="font-size:11px;color:rgba(0,0,0,0.4);">Target: 350–500</div>
+    </div>
+    {% endwith %}
+
+    {% with op=essay_eval.on_prompt_relevance %}
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Stays on prompt</div>
+      <div style="font-size:20px;font-weight:700;color:{% if op >= 0.75 %}var(--h-correct){% elif op >= 0.5 %}var(--h-amber){% else %}var(--h-error){% endif %};">{% widthratio op 1 100 %}%</div>
+    </div>
+    {% endwith %}
+
+    {% with ser=essay_eval.spelling_error_rate %}
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Spelling</div>
+      <div style="font-size:20px;font-weight:700;color:{% if ser <= 1 %}var(--h-correct){% elif ser <= 3 %}var(--h-amber){% else %}var(--h-error){% endif %};">{{ ser }} <span style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);">/ 100 words</span></div>
+    </div>
+    {% endwith %}
+
+    {% with sov=essay_eval.sentence_opener_variety %}
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Sentence variety</div>
+      <div style="font-size:20px;font-weight:700;color:{% if sov >= 0.6 %}var(--h-correct){% elif sov >= 0.4 %}var(--h-amber){% else %}var(--h-error){% endif %};">{% widthratio sov 1 100 %}%</div>
+    </div>
+    {% endwith %}
+
+  </div>
+
+  {# Feedback text #}
+  {% if essay_eval.feedback %}
+  <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:20px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:12px;">Feedback</div>
+    <p style="font-family:Georgia,serif;font-size:15px;line-height:1.7;color:#1a1a1a;margin:0;">{{ essay_eval.feedback }}</p>
+  </div>
+  {% endif %}
+
+</div>
+{% endif %}
+
+{# ── Action links ── #}
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
+  <a href="{% url 'hunter_error_analysis_list' %}" class="shsat-btn">Error analysis &rarr;</a>
+  <a href="{% url 'hunter_test_list' %}" class="shsat-btn shsat-btn--outline">Practice tests</a>
+</div>
+
+{% endif %}{# end if attempts #}
+
+{# ══════════════════════════════════════════════════════
+   CHART.JS SCRIPTS
+══════════════════════════════════════════════════════ #}
+{% if score_history %}
+<script>
+(function () {
+  const history = {{ score_history_json|safe }};
+  if (!history.length) return;
+
+  const labels = history.map(e => e.seq);
+  const totals = history.map(e => e.total);
+  const rc     = history.map(e => e.rc);
+  const math   = history.map(e => e.math);
+
+  const ctx = document.getElementById("scoreHistoryChart");
+  if (!ctx) return;
+
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [
+        {
+          label: "Total",
+          data: totals,
+          borderColor: "#1a1a1a",
+          backgroundColor: "rgba(26,26,26,.08)",
+          borderWidth: 2.5,
+          pointRadius: 5,
+          pointBackgroundColor: "#1a1a1a",
+          tension: 0.25,
+          fill: true,
+        },
+        {
+          label: "RC",
+          data: rc,
+          borderColor: "#5aab8c",
+          backgroundColor: "transparent",
+          borderWidth: 1.5,
+          pointRadius: 4,
+          pointBackgroundColor: "#5aab8c",
+          tension: 0.25,
+          borderDash: [4, 3],
+        },
+        {
+          label: "QR + MA",
+          data: math,
+          borderColor: "#8896a8",
+          backgroundColor: "transparent",
+          borderWidth: 1.5,
+          pointRadius: 4,
+          pointBackgroundColor: "#8896a8",
+          tension: 0.25,
+          borderDash: [4, 3],
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: {
+          position: "top",
+          align: "end",
+          labels: { boxWidth: 12, font: { size: 11 }, padding: 16 },
+        },
+        tooltip: {
+          callbacks: {
+            title: (items) => {
+              const idx = items[0].dataIndex;
+              return history[idx].source + " · " + history[idx].date;
+            },
+          },
+        },
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: {
+          beginAtZero: false,
+          ticks: { font: { size: 11 } },
+          grid: { color: "rgba(0,0,0,0.05)" },
+        },
+      },
+    },
+  });
+})();
+</script>
 {% endif %}
 
 {% endblock %}
