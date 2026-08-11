@@ -522,8 +522,13 @@ const P = {
     });
   }
 
-  const elaData  = allData.filter(d => d.section === "ELA");
-  const mathData = allData.filter(d => d.section === "Math");
+  // ELA sections: SHSAT uses "ELA", Hunter uses "reading_comprehension" / "writing"
+  const ELA_SECTIONS  = new Set(["ELA", "reading_comprehension", "writing"]);
+  // Math sections: SHSAT uses "Math", Hunter uses "quantitative_reasoning" / "math_achievement"
+  const MATH_SECTIONS = new Set(["Math", "quantitative_reasoning", "math_achievement"]);
+
+  const elaData  = allData.filter(d => ELA_SECTIONS.has(d.section));
+  const mathData = allData.filter(d => MATH_SECTIONS.has(d.section));
   renderTrapChart("trapChartEla",  "trapElaWrap",  elaData,  P.sections[0]);
   renderTrapChart("trapChartMath", "trapMathWrap", mathData, P.sections[1]);
 })();
