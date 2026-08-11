@@ -833,10 +833,40 @@ def test_submit(request, test_id):
     attempt.total_seconds = elapsed
     attempt.save()
 
-    # Send results email to parent (SHSAT only)
     if attempt.test.exam_type == "hunter":
         _trigger_essay_evaluations(attempt, answers)
+        try:
+            from django.core.mail import send_mail
+            from django.template.loader import render_to_string
+            error_analysis_url = request.build_absolute_uri(
+                f"/hunter/tests/{attempt.id}/error-analysis/"
+            )
+            rc_total = answers.filter(question__section="reading_comprehension").count()
+            qr_total = answers.filter(question__section="quantitative_reasoning").count()
+            ma_total = answers.filter(question__section="math_achievement").count()
+            body = render_to_string("shsat/email_results_hunter.html", {
+                "test_title": attempt.test.title,
+                "rc_correct": rc_correct,
+                "qr_correct": qr_correct,
+                "ma_correct": ma_correct,
+                "rc_total": rc_total,
+                "qr_total": qr_total,
+                "ma_total": ma_total,
+                "error_analysis_url": error_analysis_url,
+            })
+            send_mail(
+                subject=f"Results ready: {attempt.test.title}",
+                message="",
+                from_email=None,
+                recipient_list=[request.user.email],
+                html_message=body,
+                fail_silently=True,
+            )
+        except Exception:
+            pass
         return redirect("hunter_test_results", attempt_id=attempt.id)
+
+    # Send results email to parent (SHSAT only)
 
     try:
         from django.core.mail import send_mail
