@@ -242,12 +242,13 @@ function renderQuestion(idx) {
   if (q.question_type === "essay") {
     // Full-width essay layout: prompt block on top, textarea below.
     // Render entire prompt as one block (don't split into sentence-block divs).
-    const promptBody = esc(q.question_text).replace(/\n\n+/g, "<br><br>").replace(/\n/g, "<br>");
+    const promptParas = q.question_text.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
+    const promptBody = promptParas.map(p =>
+      `<p class="hunter-essay-prompt-para">${esc(p).replace(/\n/g, "<br>")}</p>`
+    ).join("");
     const promptHtml = `<div class="hunter-essay-prompt-block">
       <div class="hunter-essay-prompt-label">Essay prompt</div>
-      <div class="hunter-essay-prompt-text">
-        <div class="shsat-question-text" style="white-space:pre-wrap;">${promptBody}</div>
-      </div>
+      <div class="hunter-essay-prompt-text">${promptBody}</div>
     </div>`;
     html = promptHtml + buildChoicesHtml(q) + navFooter;
   } else if (q.passage_text) {
