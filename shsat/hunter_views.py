@@ -206,6 +206,18 @@ def hunter_dashboard(request):
     )
     attempts_desc = list(reversed(list(attempts_asc)))
 
+    # Question counts per test per section (used for percentage scoring)
+    from .models import Question as _Question
+    from django.db.models import Count as _Count
+    _test_ids = {a.test_id for a in attempts_desc}
+    q_counts = {}
+    for _row in (
+        _Question.objects.filter(test_id__in=_test_ids)
+        .values("test_id", "section")
+        .annotate(n=_Count("id"))
+    ):
+        q_counts.setdefault(_row["test_id"], {})[_row["section"]] = _row["n"]
+
     # In-progress
     in_progress = (
         TestAttempt.objects.filter(parent=parent, is_completed=False, test__exam_type="hunter")
@@ -221,11 +233,15 @@ def hunter_dashboard(request):
     for a in attempts_asc:
         if a.composite_score is None:
             continue
+        _tc = q_counts.get(a.test_id, {})
+        _rc_tot = _tc.get("reading_comprehension", 0)
+        _math_tot = _tc.get("quantitative_reasoning", 0) + _tc.get("math_achievement", 0)
+        _comp_tot = _rc_tot + _math_tot
         entry = {
             "date": a.submitted_at.strftime("%b %d, %Y"),
-            "rc": a.ela_correct or 0,
-            "math": a.math_correct or 0,
-            "total": a.composite_score,
+            "rc": round(a.ela_correct / _rc_tot * 100) if _rc_tot and a.ela_correct is not None else None,
+            "math": round(a.math_correct / _math_tot * 100) if _math_tot and a.math_correct is not None else None,
+            "total": round(a.composite_score / _comp_tot * 100) if _comp_tot else None,
             "source": a.test.title,
         }
         if "baseline" in a.test.title.lower():
@@ -347,17 +363,6 @@ def hunter_dashboard(request):
         pass
 
     # Per-attempt percentage scores for the scores table
-    from .models import Question as _Question
-    from django.db.models import Count as _Count
-    test_ids = {a.test_id for a in attempts_desc}
-    q_counts = {}
-    for row in (
-        _Question.objects.filter(test_id__in=test_ids)
-        .values("test_id", "section")
-        .annotate(n=_Count("id"))
-    ):
-        q_counts.setdefault(row["test_id"], {})[row["section"]] = row["n"]
-
     attempts_with_pct = []
     for a in attempts_desc:
         tc = q_counts.get(a.test_id, {})
