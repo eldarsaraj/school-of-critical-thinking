@@ -192,9 +192,9 @@
 {% endif %}
 
 {% if essay_eval %}
-<p class="shsat-section-title">Essay feedback</p>
+<p class="shsat-section-title">Essay snapshot</p>
 <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:24px;margin-bottom:36px;">
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:24px;">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:20px;">
     {% with wc=essay_eval.word_count %}
     <div>
       <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Essay length</div>
@@ -221,12 +221,7 @@
     </div>
     {% endwith %}
   </div>
-  {% if essay_eval.feedback %}
-  <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:20px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:12px;">Feedback</div>
-    <p style="font-family:Georgia,serif;font-size:15px;line-height:1.7;color:#1a1a1a;margin:0;">{{ essay_eval.feedback }}</p>
-  </div>
-  {% endif %}
+  <p style="font-size:12px;color:rgba(0,0,0,0.4);margin:0;">Full written feedback is in the <a href="{% url 'hunter_error_analysis_list' %}" style="color:rgba(0,0,0,0.55);">Error Analysis</a>.</p>
 </div>
 {% endif %}
 

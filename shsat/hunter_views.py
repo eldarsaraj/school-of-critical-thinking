@@ -201,7 +201,8 @@ def hunter_dashboard(request):
         .first()
     )
 
-    # Score history — Baseline (is_free) collapsed to one entry; others labelled Benchmark 1, 2…
+    # Score history — tests with "baseline" in the title are collapsed to one entry;
+    # others are labelled Benchmark 1, Benchmark 2, …
     baseline_entries = []
     benchmark_entries = []
     for a in attempts_asc:
@@ -214,14 +215,14 @@ def hunter_dashboard(request):
             "total": a.composite_score,
             "source": a.test.title,
         }
-        if a.test.is_free:
+        if "baseline" in a.test.title.lower():
             baseline_entries.append(entry)
         else:
             benchmark_entries.append(entry)
 
     score_history = []
     if baseline_entries:
-        e = baseline_entries[-1]
+        e = baseline_entries[-1]  # most recent baseline attempt
         e["seq"] = "Baseline"
         score_history.append(e)
     for i, e in enumerate(benchmark_entries, 1):
