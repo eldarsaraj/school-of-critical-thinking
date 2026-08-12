@@ -6,8 +6,6 @@
 
 {% block shsat_content %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-
-{% comment %}Design tokens{% endcomment %}
 <style>
 :root {
   --h-correct: #5aab8c;
@@ -20,7 +18,6 @@
 }
 </style>
 
-{# ── Page header ── #}
 <div style="margin-bottom:32px;">
   <h1 class="shsat-page-title" style="margin-bottom:4px;">
     {% if parent.child_nickname %}{{ parent.child_nickname }}'s Dashboard{% else %}Dashboard{% endif %}
@@ -32,7 +29,6 @@
   {% endif %}
 </div>
 
-{# ── In-progress banner ── #}
 {% if in_progress %}
 <div style="background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.08);padding:16px 20px;margin-bottom:28px;max-width:520px;">
   <p style="font-size:13px;font-weight:600;margin-bottom:4px;">In progress: {{ in_progress.test.title }}</p>
@@ -42,7 +38,6 @@
 {% endif %}
 
 {% if not attempts %}
-{# ── Empty state ── #}
 <div style="max-width:480px;">
   <p style="color:rgba(0,0,0,0.5);margin-bottom:24px;">No completed tests yet. Take the Baseline Test to see your full analysis here.</p>
   <a href="{% url 'hunter_test_list' %}" class="shsat-btn">See available tests &rarr;</a>
@@ -50,12 +45,7 @@
 
 {% else %}
 
-{# ══════════════════════════════════════════════════════
-   KPI CARDS
-══════════════════════════════════════════════════════ #}
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:36px;">
-
-  {# Latest total score #}
   <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
     <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Latest score</div>
     {% if latest_attempt %}
@@ -66,13 +56,11 @@
     {% endif %}
   </div>
 
-  {# Tests completed #}
   <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
     <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Tests completed</div>
     <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:#111;line-height:1;">{{ tests_completed }}</div>
   </div>
 
-  {# Avg time per question #}
   <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
     <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Avg time / question</div>
     {% if avg_time_per_q %}
@@ -83,7 +71,6 @@
     {% endif %}
   </div>
 
-  {# Essay status #}
   <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
     <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Essay feedback</div>
     {% if essay_eval %}
@@ -93,12 +80,8 @@
     <div style="font-size:11px;color:rgba(0,0,0,0.38);margin-top:4px;">Pending AI review</div>
     {% endif %}
   </div>
-
 </div>
 
-{# ══════════════════════════════════════════════════════
-   SCORE HISTORY
-══════════════════════════════════════════════════════ #}
 {% if score_history|length > 0 %}
 <p class="shsat-section-title">Score history</p>
 <div style="border:1px solid rgba(0,0,0,0.08);border-radius:6px;padding:20px;margin-bottom:36px;">
@@ -108,9 +91,6 @@
 </div>
 {% endif %}
 
-{# ══════════════════════════════════════════════════════
-   SECTION BREAKDOWN TABLE
-══════════════════════════════════════════════════════ #}
 <p class="shsat-section-title">Test scores</p>
 <div style="margin-bottom:36px;">
   <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 130px 160px;gap:8px;padding:0 0 8px;border-bottom:1px solid rgba(0,0,0,0.1);font-size:11px;font-weight:600;color:rgba(0,0,0,0.4);letter-spacing:.03em;text-transform:uppercase;">
@@ -128,14 +108,9 @@
   {% endfor %}
 </div>
 
-{# ══════════════════════════════════════════════════════
-   SKILL ACCURACY
-══════════════════════════════════════════════════════ #}
 {% if skill_accuracy_data %}
 <p class="shsat-section-title">Skill accuracy</p>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px;">
-
-  {# Reading / Writing #}
   <div>
     <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:12px;">Reading &amp; Writing</div>
     {% for s in skill_accuracy_data %}
@@ -150,8 +125,6 @@
     {% endif %}
     {% endfor %}
   </div>
-
-  {# Math #}
   <div>
     <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:12px;">Math</div>
     {% for s in skill_accuracy_data %}
@@ -166,16 +139,10 @@
     {% endif %}
     {% endfor %}
   </div>
-
 </div>
 {% endif %}
 
-{# ══════════════════════════════════════════════════════
-   TIME PER SKILL
-══════════════════════════════════════════════════════ #}
 {% if has_timing_data and skill_accuracy_data %}
-{% with timed_skills=skill_accuracy_data %}
-{% if timed_skills %}
 <p class="shsat-section-title">Average time per skill</p>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px;">
   <div>
@@ -208,12 +175,7 @@
   </div>
 </div>
 {% endif %}
-{% endwith %}
-{% endif %}
 
-{# ══════════════════════════════════════════════════════
-   FOCUS AREAS
-══════════════════════════════════════════════════════ #}
 {% if focus_areas %}
 <p class="shsat-section-title">Focus areas</p>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:36px;">
@@ -229,16 +191,10 @@
 </div>
 {% endif %}
 
-{# ══════════════════════════════════════════════════════
-   ESSAY FEEDBACK
-══════════════════════════════════════════════════════ #}
 {% if essay_eval %}
 <p class="shsat-section-title">Essay feedback</p>
 <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:24px;margin-bottom:36px;">
-
-  {# Metric dots #}
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:24px;">
-
     {% with wc=essay_eval.word_count %}
     <div>
       <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Essay length</div>
@@ -246,52 +202,41 @@
       <div style="font-size:11px;color:rgba(0,0,0,0.4);">Target: 350–500</div>
     </div>
     {% endwith %}
-
     {% with op=essay_eval.on_prompt_relevance %}
     <div>
       <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Stays on prompt</div>
       <div style="font-size:20px;font-weight:700;color:{% if op >= 0.75 %}var(--h-correct){% elif op >= 0.5 %}var(--h-amber){% else %}var(--h-error){% endif %};">{% widthratio op 1 100 %}%</div>
     </div>
     {% endwith %}
-
     {% with ser=essay_eval.spelling_error_rate %}
     <div>
       <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Spelling</div>
       <div style="font-size:20px;font-weight:700;color:{% if ser <= 1 %}var(--h-correct){% elif ser <= 3 %}var(--h-amber){% else %}var(--h-error){% endif %};">{{ ser }} <span style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);">/ 100 words</span></div>
     </div>
     {% endwith %}
-
     {% with sov=essay_eval.sentence_opener_variety %}
     <div>
       <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Sentence variety</div>
       <div style="font-size:20px;font-weight:700;color:{% if sov >= 0.6 %}var(--h-correct){% elif sov >= 0.4 %}var(--h-amber){% else %}var(--h-error){% endif %};">{% widthratio sov 1 100 %}%</div>
     </div>
     {% endwith %}
-
   </div>
-
-  {# Feedback text #}
   {% if essay_eval.feedback %}
   <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:20px;">
     <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:12px;">Feedback</div>
     <p style="font-family:Georgia,serif;font-size:15px;line-height:1.7;color:#1a1a1a;margin:0;">{{ essay_eval.feedback }}</p>
   </div>
   {% endif %}
-
 </div>
 {% endif %}
 
-{# ── Action links ── #}
 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
   <a href="{% url 'hunter_error_analysis_list' %}" class="shsat-btn">Error analysis &rarr;</a>
   <a href="{% url 'hunter_test_list' %}" class="shsat-btn shsat-btn--outline">Practice tests</a>
 </div>
 
-{% endif %}{# end if attempts #}
+{% endif %}
 
-{# ══════════════════════════════════════════════════════
-   CHART.JS SCRIPTS
-══════════════════════════════════════════════════════ #}
 {% if score_history %}
 <script>
 (function () {
