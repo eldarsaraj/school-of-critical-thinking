@@ -39,7 +39,7 @@ def _load_yaml(path):
 
 def _import_section(test, section_key, rows):
     """
-    section_key: 'ELA' or 'Math'
+    section_key: 'ELA', 'Math', or None (Hunter — use each row's own 'section' field).
     rows: list of question dicts from YAML
     Returns count of questions created.
     """
@@ -91,7 +91,7 @@ def _import_section(test, section_key, rows):
 
         Question.objects.create(
             test=test,
-            section=section_key,
+            section=section_key if section_key is not None else str(row.get("section", "")),
             stage=row.get("stage", "standard"),
             # Support both question_number (new) and number (old)
             question_number=row.get("question_number") or row["number"],
@@ -144,16 +144,27 @@ class Command(BaseCommand):
 
         raw = _load_yaml(path)
 
+        _HUNTER_SECTIONS = {"reading_comprehension", "writing", "quantitative_reasoning", "math_achievement"}
+
         # Auto-detect flat-array vs dict format
         if isinstance(raw, list):
-            # Flat-array format: each item has a 'section' field (ELA or Math)
             title = options["title"]
             if not title:
                 raise CommandError(
                     "YAML is a flat list. Provide a title with --title 'My Test Title'."
                 )
-            ela_rows = [r for r in raw if str(r.get("section", "")).upper() == "ELA"]
-            math_rows = [r for r in raw if str(r.get("section", "")).upper() == "MATH"]
+            # Detect Hunter vs SHSAT by section names
+            sections_present = {str(r.get("section", "")).lower() for r in raw}
+            is_hunter = bool(sections_present & _HUNTER_SECTIONS)
+
+            if is_hunter:
+                hunter_rows = raw  # preserve native section per question
+                ela_rows = math_rows = []
+            else:
+                ela_rows = [r for r in raw if str(r.get("section", "")).upper() == "ELA"]
+                math_rows = [r for r in raw if str(r.get("section", "")).upper() == "MATH"]
+                hunter_rows = []
+
             meta = {
                 "source": options["source"],
                 "is_free": options["free"],
@@ -161,6 +172,7 @@ class Command(BaseCommand):
                 "is_adaptive": options["adaptive"],
                 "routing_threshold": 0.60,
                 "order": options["order"],
+                "exam_type": "hunter" if is_hunter else "shsat",
             }
         else:
             # Dict format: YAML has a 'title' key and ela:/math: sections
@@ -170,6 +182,7 @@ class Command(BaseCommand):
                 raise CommandError("YAML file must have a 'title' field (or pass --title).")
             ela_rows = data.get("ela", [])
             math_rows = data.get("math", [])
+            hunter_rows = []
             meta = {
                 "source": data.get("source", options["source"]),
                 "is_free": data.get("is_free", options["free"]),
@@ -177,6 +190,7 @@ class Command(BaseCommand):
                 "is_adaptive": data.get("is_adaptive", options["adaptive"]),
                 "routing_threshold": data.get("routing_threshold", 0.60),
                 "order": data.get("order", options["order"]),
+                "exam_type": data.get("exam_type", "shsat"),
             }
 
         test, created = Test.objects.get_or_create(title=title, defaults=meta)
@@ -201,12 +215,24 @@ class Command(BaseCommand):
                 setattr(test, k, v)
             test.save()
 
-        ela_count = _import_section(test, "ELA", ela_rows)
-        math_count = _import_section(test, "Math", math_rows)
+        if hunter_rows:
+            # Import each Hunter question preserving its native section
+            total = _import_section(test, None, hunter_rows)
+            by_section = {}
+            for r in hunter_rows:
+                s = str(r.get("section", "unknown"))
+                by_section[s] = by_section.get(s, 0) + 1
+            summary = " + ".join(f"{v} {k}" for k, v in sorted(by_section.items()))
+            self.stdout.write(self.style.SUCCESS(
+                f"Imported '{title}' (Hunter): {summary} = {total} questions."
+            ))
+        else:
+            ela_count = _import_section(test, "ELA", ela_rows)
+            math_count = _import_section(test, "Math", math_rows)
+            self.stdout.write(self.style.SUCCESS(
+                f"Imported '{title}': {ela_count} ELA + {math_count} Math = {ela_count + math_count} questions."
+            ))
 
-        self.stdout.write(self.style.SUCCESS(
-            f"Imported '{title}': {ela_count} ELA + {math_count} Math = {ela_count + math_count} questions."
-        ))
         adaptive_str = f"  Adaptive: YES (threshold {test.routing_threshold:.0%})" if test.is_adaptive else "  Adaptive: no"
-        self.stdout.write(f"  Test ID: {test.id}  |  Published: {test.is_published}  |  Free: {test.is_free}")
+        self.stdout.write(f"  Test ID: {test.id}  |  Published: {test.is_published}  |  Free: {test.is_free}  |  Exam: {test.exam_type}")
         self.stdout.write(adaptive_str)
