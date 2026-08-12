@@ -55,7 +55,7 @@ def _send_hunter_verification_email(request, user, parent):
     verify_url = request.build_absolute_uri(
         f"/shsat/verify-email/{parent.email_verification_token}/"
     )
-    body = render_to_string("shsat/email_verify.html", {"verify_url": verify_url})
+    body = render_to_string("shsat/email_verify_hunter.html", {"verify_url": verify_url})
     send_mail(
         subject="Verify your email — Hunter Prep",
         message=f"Verify your email: {verify_url}",
