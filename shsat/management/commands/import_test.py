@@ -110,6 +110,7 @@ def _import_section(test, section_key, rows):
             choice_b=_norm_choice("B"),
             choice_c=_norm_choice("C"),
             choice_d=_norm_choice("D"),
+            choice_e=_norm_choice("E"),
             # Support both correct_answer (new) and answer (old)
             correct_answer=_norm_answer(row.get("correct_answer") or row.get("answer", "")),
             explanation=row.get("explanation", "").strip(),
