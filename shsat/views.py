@@ -14,6 +14,19 @@ from .forms import SignupForm, LoginForm, ManualScoreForm, NotesForm, AccountFor
 from .scoring import scale_score, compute_placement
 
 
+def _hunter_band(pct):
+    """Map a percentage score to a (label, hex_color) band tuple."""
+    if pct is None:
+        return None, None
+    if pct >= 85:
+        return "Highly Competitive", "#2c6e8a"
+    if pct >= 70:
+        return "Competitive", "#5aab8c"
+    if pct >= 50:
+        return "Developing", "#c49a5a"
+    return "Emerging", "#c4635b"
+
+
 def _staff_required(view_func):
     """Decorator: only allow is_staff users, otherwise redirect to SHSAT login."""
     from functools import wraps
@@ -844,6 +857,13 @@ def test_submit(request, test_id):
             rc_total = answers.filter(question__section="reading_comprehension").count()
             qr_total = answers.filter(question__section="quantitative_reasoning").count()
             ma_total = answers.filter(question__section="math_achievement").count()
+            math_total = qr_total + ma_total
+            comp_total = rc_total + math_total
+            rc_pct = round(rc_correct / rc_total * 100) if rc_total else None
+            qr_pct = round(qr_correct / qr_total * 100) if qr_total else None
+            ma_pct = round(ma_correct / ma_total * 100) if ma_total else None
+            composite_pct = round(attempt.composite_score / comp_total * 100) if comp_total and attempt.composite_score is not None else None
+            composite_band, _ = _hunter_band(composite_pct)
             body = render_to_string("shsat/email_results_hunter.html", {
                 "test_title": attempt.test.title,
                 "rc_correct": rc_correct,
@@ -852,6 +872,11 @@ def test_submit(request, test_id):
                 "rc_total": rc_total,
                 "qr_total": qr_total,
                 "ma_total": ma_total,
+                "rc_pct": rc_pct,
+                "qr_pct": qr_pct,
+                "ma_pct": ma_pct,
+                "composite_pct": composite_pct,
+                "composite_band": composite_band,
                 "error_analysis_url": error_analysis_url,
             })
             send_mail(
@@ -930,6 +955,15 @@ def test_results(request, attempt_id):
         hunter_qr_answers = [a for a in answers if a.question.section == "quantitative_reasoning"]
         hunter_ma_answers = [a for a in answers if a.question.section == "math_achievement"]
         hunter_writing_answers = [a for a in answers if a.question.section == "writing"]
+        _rc_total = len(hunter_rc_answers)
+        _math_total = len(hunter_qr_answers) + len(hunter_ma_answers)
+        _comp_total = _rc_total + _math_total
+        hunter_rc_pct = round(attempt.ela_correct / _rc_total * 100) if _rc_total and attempt.ela_correct is not None else None
+        hunter_math_pct = round(attempt.math_correct / _math_total * 100) if _math_total and attempt.math_correct is not None else None
+        hunter_composite_pct = round(attempt.composite_score / _comp_total * 100) if _comp_total and attempt.composite_score is not None else None
+        hunter_rc_band, hunter_rc_color = _hunter_band(hunter_rc_pct)
+        hunter_math_band, hunter_math_color = _hunter_band(hunter_math_pct)
+        hunter_composite_band, hunter_composite_color = _hunter_band(hunter_composite_pct)
     else:
         order_map = {qid: i for i, qid in enumerate(attempt.started_with or [])}
         ela_answers = sorted(
@@ -941,6 +975,9 @@ def test_results(request, attempt_id):
             key=lambda a: order_map.get(a.question_id, 9999),
         )
         hunter_rc_answers = hunter_qr_answers = hunter_ma_answers = hunter_writing_answers = []
+        hunter_rc_pct = hunter_math_pct = hunter_composite_pct = None
+        hunter_rc_band = hunter_math_band = hunter_composite_band = None
+        hunter_rc_color = hunter_math_color = hunter_composite_color = None
 
     flagged_answers = [a for a in answers if a.is_flagged]
 
@@ -960,6 +997,15 @@ def test_results(request, attempt_id):
         "hunter_ma_answers": hunter_ma_answers,
         "hunter_writing_answers": hunter_writing_answers,
         "hunter_qr_ma_total": len(hunter_qr_answers) + len(hunter_ma_answers),
+        "hunter_rc_pct": hunter_rc_pct,
+        "hunter_math_pct": hunter_math_pct,
+        "hunter_composite_pct": hunter_composite_pct,
+        "hunter_rc_band": hunter_rc_band,
+        "hunter_math_band": hunter_math_band,
+        "hunter_composite_band": hunter_composite_band,
+        "hunter_rc_color": hunter_rc_color,
+        "hunter_math_color": hunter_math_color,
+        "hunter_composite_color": hunter_composite_color,
         "parent_template": "shsat/base_hunter.html" if is_hunter else "shsat/base_shsat.html",
     }
     template = "shsat/test_results_hunter.html" if is_hunter else "shsat/test_results_shsat.html"

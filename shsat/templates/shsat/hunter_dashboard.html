@@ -48,8 +48,11 @@
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:36px;">
   <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
     <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Latest score</div>
-    {% if latest_attempt %}
-    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:#111;line-height:1;">{{ latest_attempt.composite_score }}</div>
+    {% if latest_attempt and latest_composite_pct is not None %}
+    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:#111;line-height:1;">{{ latest_composite_pct }}<span style="font-size:16px;font-weight:400;">%</span></div>
+    {% if latest_composite_band %}
+    <div style="display:inline-block;margin-top:6px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:{{ latest_composite_color }}22;color:{{ latest_composite_color }};">{{ latest_composite_band }}</div>
+    {% endif %}
     <div style="font-size:11px;color:rgba(0,0,0,0.38);margin-top:4px;">{{ latest_attempt.test.title }}</div>
     {% else %}
     <div style="font-size:28px;font-weight:700;color:#ccc;">—</div>
@@ -93,17 +96,24 @@
 
 <p class="shsat-section-title">Test scores</p>
 <div style="margin-bottom:36px;">
-  <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 130px 160px;gap:8px;padding:0 0 8px;border-bottom:1px solid rgba(0,0,0,0.1);font-size:11px;font-weight:600;color:rgba(0,0,0,0.4);letter-spacing:.03em;text-transform:uppercase;">
-    <span>Test</span><span>RC</span><span>QR+MA</span><span>Total</span><span>Date</span><span></span>
+  <div style="display:grid;grid-template-columns:1fr 80px 80px 160px 130px 160px;gap:8px;padding:0 0 8px;border-bottom:1px solid rgba(0,0,0,0.1);font-size:11px;font-weight:600;color:rgba(0,0,0,0.4);letter-spacing:.03em;text-transform:uppercase;">
+    <span>Test</span><span>RC</span><span>QR+MA</span><span>Overall</span><span>Date</span><span></span>
   </div>
-  {% for a in attempts %}
-  <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 130px 160px;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);">
-    <span style="font-size:14px;">{{ a.test.title }}</span>
-    <span style="font-size:14px;font-weight:600;">{{ a.ela_correct|default:"—" }}</span>
-    <span style="font-size:14px;font-weight:600;">{{ a.math_correct|default:"—" }}</span>
-    <span style="font-size:14px;font-weight:700;color:#111;">{{ a.composite_score|default:"—" }}</span>
-    <span style="font-size:12px;color:rgba(0,0,0,0.4);">{{ a.submitted_at|date:"M j, Y" }}</span>
-    <span><a href="{% url 'hunter_error_analysis' a.id %}" style="font-size:12px;color:rgba(0,0,0,0.55);">Error analysis &rarr;</a></span>
+  {% for row in attempts_with_pct %}
+  <div style="display:grid;grid-template-columns:1fr 80px 80px 160px 130px 160px;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);">
+    <span style="font-size:14px;">{{ row.attempt.test.title }}</span>
+    <span style="font-size:14px;font-weight:600;">{% if row.rc_pct is not None %}{{ row.rc_pct }}%{% else %}—{% endif %}</span>
+    <span style="font-size:14px;font-weight:600;">{% if row.math_pct is not None %}{{ row.math_pct }}%{% else %}—{% endif %}</span>
+    <span>
+      {% if row.comp_pct is not None %}
+      <span style="font-size:14px;font-weight:700;color:#111;">{{ row.comp_pct }}%</span>
+      {% if row.comp_band %}
+      <span style="margin-left:6px;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;background:{{ row.comp_color }}22;color:{{ row.comp_color }};">{{ row.comp_band }}</span>
+      {% endif %}
+      {% else %}—{% endif %}
+    </span>
+    <span style="font-size:12px;color:rgba(0,0,0,0.4);">{{ row.attempt.submitted_at|date:"M j, Y" }}</span>
+    <span><a href="{% url 'hunter_error_analysis' row.attempt.id %}" style="font-size:12px;color:rgba(0,0,0,0.55);">Error analysis &rarr;</a></span>
   </div>
   {% endfor %}
 </div>

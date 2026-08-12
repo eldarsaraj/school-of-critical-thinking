@@ -147,6 +147,19 @@ def hunter_verify_resend(request):
 # Protected views
 # ---------------------------------------------------------------------------
 
+def _hunter_band(pct):
+    """Map a percentage score to a (label, hex_color) band tuple."""
+    if pct is None:
+        return None, None
+    if pct >= 85:
+        return "Highly Competitive", "#2c6e8a"
+    if pct >= 70:
+        return "Competitive", "#5aab8c"
+    if pct >= 50:
+        return "Developing", "#c49a5a"
+    return "Emerging", "#c4635b"
+
+
 _SKILL_LABEL_MAP = {
     "main_idea": "Main Idea",
     "supporting_detail": "Supporting Detail",
@@ -333,15 +346,53 @@ def hunter_dashboard(request):
     except Exception:
         pass
 
+    # Per-attempt percentage scores for the scores table
+    from .models import Question as _Question
+    from django.db.models import Count as _Count
+    test_ids = {a.test_id for a in attempts_desc}
+    q_counts = {}
+    for row in (
+        _Question.objects.filter(test_id__in=test_ids)
+        .values("test_id", "section")
+        .annotate(n=_Count("id"))
+    ):
+        q_counts.setdefault(row["test_id"], {})[row["section"]] = row["n"]
+
+    attempts_with_pct = []
+    for a in attempts_desc:
+        tc = q_counts.get(a.test_id, {})
+        rc_total = tc.get("reading_comprehension", 0)
+        math_total = tc.get("quantitative_reasoning", 0) + tc.get("math_achievement", 0)
+        comp_total = rc_total + math_total
+        rc_pct = round(a.ela_correct / rc_total * 100) if rc_total and a.ela_correct is not None else None
+        math_pct = round(a.math_correct / math_total * 100) if math_total and a.math_correct is not None else None
+        comp_pct = round(a.composite_score / comp_total * 100) if comp_total and a.composite_score is not None else None
+        comp_band, comp_color = _hunter_band(comp_pct)
+        attempts_with_pct.append({
+            "attempt": a,
+            "rc_pct": rc_pct,
+            "math_pct": math_pct,
+            "comp_pct": comp_pct,
+            "comp_band": comp_band,
+            "comp_color": comp_color,
+        })
+
+    latest_composite_pct = attempts_with_pct[0]["comp_pct"] if attempts_with_pct else None
+    latest_composite_band, latest_composite_color = _hunter_band(latest_composite_pct)
+
     context = {
         "parent": parent,
         "in_progress": in_progress,
         "attempts": attempts_desc,
+        "attempts_with_pct": attempts_with_pct,
         "score_history": score_history,
         "score_history_json": _json.dumps(score_history),
         "practice_chart_data": practice_chart_data,
         "practice_chart_data_json": _json.dumps(practice_chart_data),
         "latest_attempt": latest_attempt,
+        "latest_composite_pct": latest_composite_pct,
+        "latest_composite_band": latest_composite_band,
+        "latest_composite_color": latest_composite_color,
         "skill_accuracy_data": skill_accuracy_data,
         "skill_accuracy_json": _json.dumps(skill_accuracy_data),
         "focus_areas": focus_areas,

@@ -15,23 +15,29 @@
 <!-- Score display -->
 <div class="shsat-score-display">
   <div class="shsat-score-box">
-    <div class="shsat-score-box__value">{{ attempt.ela_correct }}</div>
+    <div class="shsat-score-box__value">{% if hunter_rc_pct is not None %}{{ hunter_rc_pct }}%{% else %}—{% endif %}</div>
     <div class="shsat-score-box__label">Reading</div>
-    <div style="font-size:13px;color:rgba(0,0,0,0.4);margin-top:6px;">of {{ hunter_rc_answers|length }}</div>
+    {% if hunter_rc_band %}
+    <div style="display:inline-block;margin-top:8px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:{{ hunter_rc_color }}22;color:{{ hunter_rc_color }};">{{ hunter_rc_band }}</div>
+    {% endif %}
+    <div style="font-size:12px;color:rgba(0,0,0,0.35);margin-top:6px;">{{ attempt.ela_correct }} / {{ hunter_rc_answers|length }} correct</div>
   </div>
   <div class="shsat-score-box">
-    <div class="shsat-score-box__value">{{ attempt.math_correct }}</div>
+    <div class="shsat-score-box__value">{% if hunter_math_pct is not None %}{{ hunter_math_pct }}%{% else %}—{% endif %}</div>
     <div class="shsat-score-box__label">QR + Math</div>
-    <div style="font-size:13px;color:rgba(0,0,0,0.4);margin-top:6px;">of {{ hunter_qr_ma_total }}</div>
+    {% if hunter_math_band %}
+    <div style="display:inline-block;margin-top:8px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:{{ hunter_math_color }}22;color:{{ hunter_math_color }};">{{ hunter_math_band }}</div>
+    {% endif %}
+    <div style="font-size:12px;color:rgba(0,0,0,0.35);margin-top:6px;">{{ attempt.math_correct }} / {{ hunter_qr_ma_total }} correct</div>
   </div>
   <div class="shsat-score-box shsat-score-box--composite">
-    <div class="shsat-score-box__value">{{ attempt.composite_score }}</div>
-    <div class="shsat-score-box__label">Total raw</div>
+    <div class="shsat-score-box__value">{% if hunter_composite_pct is not None %}{{ hunter_composite_pct }}%{% else %}—{% endif %}</div>
+    <div class="shsat-score-box__label">Overall</div>
+    {% if hunter_composite_band %}
+    <div style="display:inline-block;margin-top:8px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:{{ hunter_composite_color }}22;color:{{ hunter_composite_color }};">{{ hunter_composite_band }}</div>
+    {% endif %}
   </div>
 </div>
-<p style="font-size:12px;color:rgba(0,0,0,0.35);margin-top:-24px;margin-bottom:32px;">
-  Raw scores only. Hunter does not publish a scaled score formula.
-</p>
 
 <!-- Notes -->
 <p class="shsat-section-title">Notes</p>
