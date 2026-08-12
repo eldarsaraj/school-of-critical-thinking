@@ -50,20 +50,25 @@ def _import_section(test, section_key, rows):
     # E/F/G/H → A/B/C/D normalisation (for R&E Part B answer choices)
     _efgh_to_abcd = {"E": "A", "F": "B", "G": "C", "H": "D"}
 
-    def _norm_answer(ans):
+    def _norm_answer(ans, has_five_choices=False):
         a = str(ans).strip().upper()
+        if has_five_choices:
+            return a
         return _efgh_to_abcd.get(a, a)
 
-    def _norm_distractors(raw):
+    def _norm_distractors(raw, has_five_choices=False):
         if not raw:
             return {}
         result = {}
         for letter, trap in raw.items():
-            normalized_letter = _efgh_to_abcd.get(str(letter).upper(), str(letter).upper())
+            l = str(letter).upper()
+            normalized_letter = l if has_five_choices else _efgh_to_abcd.get(l, l)
             result[normalized_letter] = str(trap).strip()
         return result
 
     for row in rows:
+        has_five_choices = bool(str(row.get("choice_e", "")).strip())
+
         # Support both naming conventions: passage_group_id (new) and passage_id (old)
         passage_id = row.get("passage_group_id") or row.get("passage_id", "")
         passage_title = ""
@@ -100,7 +105,7 @@ def _import_section(test, section_key, rows):
             topic=row.get("topic", ""),
             skill=row.get("skill", ""),
             difficulty=row.get("difficulty", "medium"),
-            distractor_types=_norm_distractors(row.get("distractor_types") or row.get("distractors") or {}),
+            distractor_types=_norm_distractors(row.get("distractor_types") or row.get("distractors") or {}, has_five_choices),
             passage_group_id=passage_id,
             passage_title=passage_title,
             passage_text=passage_text,
@@ -112,7 +117,7 @@ def _import_section(test, section_key, rows):
             choice_d=_norm_choice("D"),
             choice_e=_norm_choice("E"),
             # Support both correct_answer (new) and answer (old)
-            correct_answer=_norm_answer(row.get("correct_answer") or row.get("answer", "")),
+            correct_answer=_norm_answer(row.get("correct_answer") or row.get("answer", ""), has_five_choices),
             explanation=row.get("explanation", "").strip(),
         )
         count += 1
