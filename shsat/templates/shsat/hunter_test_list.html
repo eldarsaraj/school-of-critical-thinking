@@ -10,6 +10,32 @@
 {% if not tests %}
 <p style="color:rgba(0,0,0,0.5);">No tests published yet. Check back soon.</p>
 {% else %}
+
+<!-- Baseline callout -->
+{% for test in tests %}
+{% if "baseline" in test.title|lower %}
+<div style="background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.08);padding:16px 20px;margin-bottom:28px;max-width:560px;">
+  <p style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Start here</p>
+  <p style="font-size:14px;font-weight:600;margin-bottom:4px;">Baseline Test — free</p>
+  <p style="font-size:13px;color:rgba(0,0,0,0.5);margin-bottom:12px;">
+    Take this first. It maps your starting point across all four sections and gives you a
+    complete error analysis so you know exactly what to work on.
+  </p>
+  {% if test.id in completed_ids %}
+    <span class="shsat-btn shsat-btn--sm shsat-btn--done">Completed</span>
+    {% if user.is_staff %}
+      <a href="{% url 'hunter_test_intro' test.id %}" class="shsat-btn shsat-btn--sm shsat-btn--retake" style="margin-left:8px;">Retake</a>
+    {% endif %}
+  {% elif test.id in in_progress_ids %}
+    <a href="{% url 'hunter_test_intro' test.id %}" class="shsat-btn shsat-btn--sm shsat-btn--outline">Resume →</a>
+  {% else %}
+    <a href="{% url 'hunter_test_intro' test.id %}" class="shsat-btn shsat-btn--sm">Start Baseline →</a>
+  {% endif %}
+</div>
+{% endif %}
+{% endfor %}
+
+<!-- All tests list -->
 <ul class="shsat-test-list">
   {% for test in tests %}
   <li class="shsat-test-item">
@@ -37,6 +63,27 @@
     </div>
   </li>
   {% endfor %}
+
+  <!-- Benchmark placeholders — in development -->
+  <li class="shsat-test-item" style="opacity:0.45;">
+    <div>
+      <div class="shsat-test-item__title" style="color:rgba(0,0,0,0.5);">Benchmark Test 1</div>
+      <div class="shsat-test-item__meta">RC · Writing · QR · MA</div>
+    </div>
+    <div>
+      <span style="font-size:11px;font-weight:600;color:rgba(0,0,0,0.4);border:1px solid rgba(0,0,0,0.15);border-radius:4px;padding:3px 8px;letter-spacing:.04em;">In Development</span>
+    </div>
+  </li>
+
+  <li class="shsat-test-item" style="opacity:0.45;">
+    <div>
+      <div class="shsat-test-item__title" style="color:rgba(0,0,0,0.5);">Benchmark Test 2</div>
+      <div class="shsat-test-item__meta">RC · Writing · QR · MA</div>
+    </div>
+    <div>
+      <span style="font-size:11px;font-weight:600;color:rgba(0,0,0,0.4);border:1px solid rgba(0,0,0,0.15);border-radius:4px;padding:3px 8px;letter-spacing:.04em;">In Development</span>
+    </div>
+  </li>
 </ul>
 {% endif %}
 
