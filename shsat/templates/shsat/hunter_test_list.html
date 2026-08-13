@@ -13,6 +13,7 @@
 
 <ul class="shsat-test-list">
   {% for test in tests %}
+  {% if test.is_free or hunter_has_paid %}
   <li class="shsat-test-item">
     <div>
       <div class="shsat-test-item__title">{{ test.title }}</div>
@@ -22,6 +23,7 @@
       <div class="shsat-test-item__meta">
         {{ test.questions.count }} questions · RC · Writing · QR · MA
         {% if test.source %} · {{ test.source }}{% endif %}
+        {% if not test.is_free %}<span style="color:rgba(0,0,0,0.4);"> · Premium</span>{% endif %}
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
@@ -37,8 +39,40 @@
       {% endif %}
     </div>
   </li>
+  {% endif %}
   {% endfor %}
 
+  {% if not hunter_has_paid %}
+  <!-- Upgrade teaser -->
+  <li class="shsat-test-item shsat-test-item--upgrade">
+    <div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:8px;">Benchmark access</div>
+      <div class="shsat-test-item__title" style="font-size:18px;">Unlock both Benchmark Tests + Error Analysis</div>
+      <div class="shsat-test-item__meta" style="margin-top:6px;">
+        One payment, no subscription — less than one session with a Hunter prep tutor.
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <span style="font-size:22px;font-weight:700;letter-spacing:-.01em;">$149</span>
+      <a href="{% url 'hunter_upgrade' %}" class="shsat-btn">See what's included →</a>
+    </div>
+  </li>
+
+  <!-- Locked benchmark tests -->
+  {% for test in tests %}
+  {% if not test.is_free %}
+  <li class="shsat-test-item" style="opacity:0.38;">
+    <div>
+      <div class="shsat-test-item__title">{{ test.title }}</div>
+      <div class="shsat-test-item__meta">{{ test.questions.count }} questions · Unlock above to access</div>
+    </div>
+    <div>
+      <span class="shsat-badge" style="border-color:rgba(0,0,0,0.15);color:rgba(0,0,0,0.35);">Locked</span>
+    </div>
+  </li>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
 </ul>
 {% endif %}
 

@@ -149,8 +149,12 @@ def stripe_webhook(request):
         if getattr(session, "payment_status", None) == "paid":
             metadata = getattr(session, "metadata", None) or {}
             parent_id = metadata.get("parent_id") if hasattr(metadata, "get") else getattr(metadata, "parent_id", None)
+            product_type = metadata.get("product_type") if hasattr(metadata, "get") else getattr(metadata, "product_type", None)
             if parent_id:
-                Parent.objects.filter(id=parent_id).update(has_paid=True)
+                if product_type == "hunter":
+                    Parent.objects.filter(id=parent_id).update(hunter_has_paid=True)
+                else:
+                    Parent.objects.filter(id=parent_id).update(has_paid=True)
 
     return HttpResponse(status=200)
 
@@ -562,7 +566,8 @@ def test_intro(request, test_id):
         if parent.platform == "hunter":
             return redirect("hunter_test_list")
         return redirect("shsat_test_list")
-    if not test.is_published and not test.is_free and not parent.has_paid and not request.user.is_staff:
+    _can_access = parent.hunter_has_paid if test.exam_type == "hunter" else parent.has_paid
+    if not test.is_published and not test.is_free and not _can_access and not request.user.is_staff:
         from django.http import Http404
         raise Http404
     in_progress = TestAttempt.objects.filter(parent=parent, test=test, is_completed=False).first()
@@ -601,7 +606,8 @@ def test_take(request, test_id):
         if parent.platform == "hunter":
             return redirect("hunter_test_list")
         return redirect("shsat_test_list")
-    if not test.is_published and not test.is_free and not parent.has_paid and not request.user.is_staff:
+    _can_access = parent.hunter_has_paid if test.exam_type == "hunter" else parent.has_paid
+    if not test.is_published and not test.is_free and not _can_access and not request.user.is_staff:
         from django.http import Http404
         raise Http404
 

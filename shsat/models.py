@@ -16,6 +16,7 @@ class Parent(models.Model):
     stripe_customer_id = models.CharField(max_length=100, blank=True, default="")
     stripe_subscription_id = models.CharField(max_length=100, blank=True, default="")
     has_paid = models.BooleanField(default=False)
+    hunter_has_paid = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=True)  # True so existing accounts are unaffected
     email_verification_token = models.UUIDField(default=uuid.uuid4, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)

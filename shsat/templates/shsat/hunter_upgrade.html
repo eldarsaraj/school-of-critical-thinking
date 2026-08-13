@@ -1,0 +1,87 @@
+{% extends "shsat/base_hunter.html" %}
+
+{% block title %}Unlock Benchmark Tests — Hunter Prep{% endblock %}
+
+{% block shsat_content %}
+<div class="up-wrap">
+
+  <p class="up-label">Benchmark access</p>
+  <h1 class="up-title">The only full-length Hunter<br>benchmark tests available.</h1>
+  <p class="up-sub">
+    The Baseline Test shows you where your child stands. The Benchmark Tests will tell you
+    whether they're improving — and the error analysis after each one will show you exactly
+    what to work on before exam day.
+  </p>
+
+  <!-- Philosophy note -->
+  <div style="border-top:1px solid rgba(0,0,0,.08);padding-top:28px;margin-bottom:48px;font-size:14px;line-height:1.75;color:rgba(0,0,0,.55);max-width:560px;">
+    Our method is built on the STAR method — Standardized Test Analytics and Reporting. Each test mirrors the Hunter format: Reading Comprehension, Writing, Quantitative Reasoning, and Math Achievement. We coach the mind, not the mouse.
+  </div>
+
+  <!-- What's included -->
+  <div class="up-includes">
+    <p class="up-includes__label">What you get</p>
+    <div class="up-includes__grid">
+      <div class="up-item">
+        <div class="up-item__title">2 Benchmark Tests</div>
+        <div class="up-item__body">Full-length tests — RC, Writing, QR, and Math Achievement — matching the Hunter format and difficulty exactly.</div>
+      </div>
+      <div class="up-item">
+        <div class="up-item__title">Per-attempt error analysis</div>
+        <div class="up-item__body">After every test: which distractor traps caught your child, which skills cost the most points, and where to focus next.</div>
+      </div>
+      <div class="up-item">
+        <div class="up-item__title">Score history dashboard</div>
+        <div class="up-item__body">Track RC and Math percentages across every attempt. See whether your child is improving and how they compare to others on the platform.</div>
+      </div>
+      <div class="up-item">
+        <div class="up-item__title">Permanent access</div>
+        <div class="up-item__body">One payment, no subscription. Tests don't expire. Take them at your own pace through the prep season.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tutor comparison -->
+  <div class="up-compare">
+    <p class="up-compare__label">What else $149 buys you</p>
+    <div class="up-compare__row">
+      <span class="up-compare__item">One session with a Hunter prep tutor in NYC</span>
+      <span class="up-compare__price">$150–300</span>
+    </div>
+    <div class="up-compare__row">
+      <span class="up-compare__item">Hunter prep book (no error analysis)</span>
+      <span class="up-compare__price">$30–50</span>
+    </div>
+    <div class="up-compare__row">
+      <span class="up-compare__item">2 Benchmark Tests + full error analysis — permanent access</span>
+      <span class="up-compare__price up-compare__price--ours">$149</span>
+    </div>
+  </div>
+
+  <!-- Pricing + CTA -->
+  <div class="up-pricing">
+    <span class="up-pricing__early">Early access price</span>
+    <div style="display:flex;align-items:baseline;gap:16px;">
+      <div class="up-pricing__price">$149</div>
+      <div class="up-pricing__price" style="color:#b85c5c;text-decoration:line-through;opacity:0.6;">$249</div>
+    </div>
+    <div class="up-pricing__desc">One payment. Both Benchmark Tests. No subscription, no expiry.</div>
+    <a href="{% url 'hunter_checkout' %}" class="up-cta" style="background:#111;color:#fff;border-color:#111;cursor:pointer;text-decoration:none;">
+      Unlock both Benchmark Tests + Error Analysis — $149
+    </a>
+  </div>
+  <p class="up-cta-note">
+    Secure checkout via Stripe. One payment, no subscription.<br>
+    By completing your purchase you agree to our <a href="{% url 'shsat_terms' %}" target="_blank" style="color:rgba(0,0,0,.55);">Terms of Purchase</a>.
+    All sales are final — no refunds once access is granted.
+  </p>
+
+  <!-- Baseline note -->
+  <div class="up-baseline-note">
+    Not ready to pay yet? The <a href="{% url 'hunter_test_list' %}">free Baseline Test</a> is always
+    available — full-length, full error analysis, no credit card required. Complete it first
+    to see exactly what the platform shows you before deciding.
+  </div>
+
+</div>
+{% endblock %}

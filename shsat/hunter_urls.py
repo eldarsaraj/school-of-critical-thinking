@@ -10,6 +10,12 @@ urlpatterns = [
     path("verify-email/", hunter_views.hunter_verify_pending, name="hunter_verify_pending"),
     path("verify-email/resend/", hunter_views.hunter_verify_resend, name="hunter_verify_resend"),
 
+    # Upgrade / checkout
+    path("upgrade/", hunter_views.hunter_upgrade, name="hunter_upgrade"),
+    path("checkout/", hunter_views.hunter_create_checkout_session, name="hunter_checkout"),
+    path("checkout/success/", hunter_views.hunter_checkout_success, name="hunter_checkout_success"),
+    path("checkout/cancel/", hunter_views.hunter_checkout_cancel, name="hunter_checkout_cancel"),
+
     # Protected
     path("dashboard/", hunter_views.hunter_dashboard, name="hunter_dashboard"),
     path("tests/", hunter_views.hunter_test_list, name="hunter_test_list"),

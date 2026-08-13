@@ -431,6 +431,7 @@ def hunter_test_list(request):
         "tests": tests,
         "completed_ids": completed_ids,
         "in_progress_ids": in_progress_ids,
+        "hunter_has_paid": parent.hunter_has_paid or request.user.is_staff,
     }
     return render(request, "shsat/hunter_test_list.html", context)
 
@@ -489,3 +490,60 @@ def hunter_delete_attempt(request, attempt_id):
     attempt.delete()
     messages.success(request, "Test attempt deleted.")
     return redirect("hunter_account")
+
+
+def hunter_upgrade(request):
+    from django.conf import settings as django_settings
+    return render(request, "shsat/hunter_upgrade.html", {
+        "stripe_publishable_key": django_settings.STRIPE_PUBLISHABLE_KEY,
+    })
+
+
+@login_required(login_url="/hunter/login/")
+def hunter_create_checkout_session(request):
+    import stripe
+    from django.conf import settings as django_settings
+    stripe.api_key = django_settings.STRIPE_SECRET_KEY
+
+    parent, _ = Parent.objects.get_or_create(user=request.user)
+    if parent.hunter_has_paid:
+        return redirect("hunter_test_list")
+
+    success_url = request.build_absolute_uri("/hunter/checkout/success/") + "?session_id={CHECKOUT_SESSION_ID}"
+    cancel_url = request.build_absolute_uri("/hunter/upgrade/")
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        line_items=[{"price": django_settings.STRIPE_HUNTER_PRICE_ID, "quantity": 1}],
+        mode="payment",
+        success_url=success_url,
+        cancel_url=cancel_url,
+        client_reference_id=str(request.user.id),
+        customer_email=request.user.email,
+        metadata={"parent_id": str(parent.id), "product_type": "hunter"},
+    )
+    return redirect(session.url, permanent=False)
+
+
+@login_required(login_url="/hunter/login/")
+def hunter_checkout_success(request):
+    import stripe
+    from django.conf import settings as django_settings
+    session_id = request.GET.get("session_id")
+    if session_id:
+        stripe.api_key = django_settings.STRIPE_SECRET_KEY
+        try:
+            session = stripe.checkout.Session.retrieve(session_id)
+            if session.payment_status == "paid":
+                parent, _ = Parent.objects.get_or_create(user=request.user)
+                if not parent.hunter_has_paid:
+                    parent.hunter_has_paid = True
+                    parent.save(update_fields=["hunter_has_paid"])
+        except stripe.error.StripeError:
+            pass
+    return render(request, "shsat/hunter_checkout_success.html")
+
+
+@login_required(login_url="/hunter/login/")
+def hunter_checkout_cancel(request):
+    return redirect("hunter_upgrade")
