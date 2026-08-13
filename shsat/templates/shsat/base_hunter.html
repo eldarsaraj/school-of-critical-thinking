@@ -18,7 +18,7 @@
       <a href="{% url 'hunter_account' %}" class="shsat-tab {% block tab_account %}{% endblock %}">Account</a>
     </nav>
     {% if user.is_staff or user.shsat_profile.platform == 'both' %}
-    <a href="{% url 'shsat_dashboard' %}" class="shsat-platform-switch">SHSAT ↗</a>
+    <a href="{% url 'shsat_dashboard' %}" class="shsat-platform-switch shsat-platform-switch--red">SHSAT ↗</a>
     {% endif %}
   </div>
   {% endif %}

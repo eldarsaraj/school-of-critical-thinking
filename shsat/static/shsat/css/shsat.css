@@ -45,17 +45,30 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   text-decoration: none;
-  color: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 3px;
   padding: 4px 10px;
-  transition: color 0.12s, border-color 0.12s;
+  transition: opacity 0.12s;
   white-space: nowrap;
 }
 
-.shsat-platform-switch:hover {
-  color: rgba(0, 0, 0, 0.6);
-  border-color: rgba(0, 0, 0, 0.3);
+.shsat-platform-switch--blue {
+  color: #5b8ec4;
+  background: rgba(91, 142, 196, 0.12);
+  border: 1px solid rgba(91, 142, 196, 0.35);
+}
+
+.shsat-platform-switch--blue:hover {
+  background: rgba(91, 142, 196, 0.2);
+}
+
+.shsat-platform-switch--red {
+  color: #c4635b;
+  background: rgba(196, 99, 91, 0.12);
+  border: 1px solid rgba(196, 99, 91, 0.35);
+}
+
+.shsat-platform-switch--red:hover {
+  background: rgba(196, 99, 91, 0.2);
 }
 
 .shsat-tabs {
