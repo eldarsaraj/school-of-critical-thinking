@@ -34,7 +34,7 @@ def _hunter_required(view_func):
             parent = request.user.shsat_profile
         except Parent.DoesNotExist:
             return redirect(f"/hunter/login/?next={request.path}")
-        if parent.platform != "hunter":
+        if parent.platform not in ("hunter", "both"):
             return redirect("shsat_dashboard")
         return view_func(request, *args, **kwargs)
     return wrapped
@@ -80,15 +80,27 @@ def hunter_signup(request):
     if request.user.is_authenticated:
         return redirect("hunter_dashboard")
     form = SignupForm(request.POST or None)
-    if request.method == "POST" and form.is_valid():
-        user = form.save()
-        parent = Parent.objects.create(user=user, platform="hunter", email_verified=False)
-        _send_hunter_verification_email(request, user, parent)
-        user = authenticate(request, email=user.email, password=form.cleaned_data["password1"])
-        if user:
-            login(request, user, backend="shsat.backends.EmailBackend")
-        return redirect("hunter_verify_pending")
-    return render(request, "shsat/hunter_signup.html", {"form": form})
+    existing_shsat = False
+    if request.method == "POST":
+        email = request.POST.get("email", "").strip().lower()
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        try:
+            existing_user = User.objects.get(email__iexact=email)
+            existing_parent = existing_user.shsat_profile
+            if existing_parent.platform == "shsat":
+                existing_shsat = True
+        except (User.DoesNotExist, Parent.DoesNotExist):
+            pass
+        if form.is_valid() and not existing_shsat:
+            user = form.save()
+            parent = Parent.objects.create(user=user, platform="hunter", email_verified=False)
+            _send_hunter_verification_email(request, user, parent)
+            user = authenticate(request, email=user.email, password=form.cleaned_data["password1"])
+            if user:
+                login(request, user, backend="shsat.backends.EmailBackend")
+            return redirect("hunter_verify_pending")
+    return render(request, "shsat/hunter_signup.html", {"form": form, "existing_shsat": existing_shsat})
 
 
 def hunter_login(request):
@@ -107,7 +119,7 @@ def hunter_login(request):
                 return redirect("shsat_dashboard")
         except Parent.DoesNotExist:
             pass
-        return redirect("hunter_dashboard")
+        return redirect(request.GET.get("next") or "hunter_dashboard")
     return render(request, "shsat/hunter_login.html", {"form": form})
 
 
@@ -547,3 +559,13 @@ def hunter_checkout_success(request):
 @login_required(login_url="/hunter/login/")
 def hunter_checkout_cancel(request):
     return redirect("hunter_upgrade")
+
+
+@login_required(login_url="/hunter/login/")
+@require_POST
+def add_shsat_access(request):
+    parent = _get_hunter_parent(request)
+    if parent.platform == "hunter":
+        parent.platform = "both"
+        parent.save(update_fields=["platform"])
+    return redirect("shsat_dashboard")

@@ -8,6 +8,14 @@
   <h1 class="shsat-auth__title">Create account</h1>
   <p class="shsat-auth__sub">Hunter Prep — free to start.</p>
 
+  {% if existing_shsat %}
+  <div style="margin-bottom:20px;padding:14px 18px;border:1px solid rgba(0,0,0,.1);background:rgba(0,0,0,.025);border-radius:4px;">
+    <p style="font-size:14px;font-weight:600;margin:0 0 4px;">You already have an SHSAT account.</p>
+    <p style="font-size:13px;color:rgba(0,0,0,.55);margin:0 0 10px;">Log in to your existing account and add Hunter Prep access from the Account page — no second account needed.</p>
+    <a href="{% url 'shsat_login' %}" class="shsat-btn shsat-btn--sm shsat-btn--outline">Log in to SHSAT →</a>
+  </div>
+  {% endif %}
+
   <form method="post" novalidate>
     {% csrf_token %}
 

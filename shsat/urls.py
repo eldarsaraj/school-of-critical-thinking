@@ -30,6 +30,7 @@ urlpatterns = [
     path("error-analysis/", views.error_analysis_list, name="shsat_error_analysis_list"),
     path("tests/<int:attempt_id>/error-analysis/", views.error_analysis, name="shsat_error_analysis"),
     path("account/", views.account, name="shsat_account"),
+    path("account/add-hunter/", views.add_hunter_access, name="shsat_add_hunter"),
     path("tests/<int:attempt_id>/delete/", views.delete_attempt, name="shsat_delete_attempt"),
 
     # AJAX

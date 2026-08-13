@@ -15,8 +15,8 @@
     <a href="{% url 'shsat_test_list' %}" class="shsat-tab {% block tab_tests %}{% endblock %}">Practice Tests</a>
     <a href="{% url 'shsat_resources' %}" class="shsat-tab {% block tab_resources %}{% endblock %}{% block tab_log %}{% endblock %}">Resources</a>
     <a href="{% url 'shsat_account' %}" class="shsat-tab {% block tab_account %}{% endblock %}">Account</a>
-    {% if user.is_staff %}
-    <a href="{% url 'hunter_dashboard' %}" class="shsat-tab" style="opacity:0.45;font-size:12px;">Hunter ↗</a>
+    {% if user.is_staff or user.shsat_profile.platform == 'both' %}
+    <a href="{% url 'hunter_dashboard' %}" class="shsat-tab" style="opacity:0.5;font-size:12px;">Hunter ↗</a>
     {% endif %}
   </nav>
   {% endif %}

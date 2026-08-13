@@ -178,15 +178,27 @@ def shsat_signup(request):
     if request.user.is_authenticated:
         return redirect("shsat_dashboard")
     form = SignupForm(request.POST or None)
-    if request.method == "POST" and form.is_valid():
-        user = form.save()
-        parent = Parent.objects.create(user=user, platform="shsat", email_verified=False)
-        _send_verification_email(request, user, parent)
-        user = authenticate(request, email=user.email, password=form.cleaned_data["password1"])
-        if user:
-            login(request, user, backend="shsat.backends.EmailBackend")
-        return redirect("shsat_verify_pending")
-    return render(request, "shsat/signup.html", {"form": form})
+    existing_hunter = False
+    if request.method == "POST":
+        email = request.POST.get("email", "").strip().lower()
+        from django.contrib.auth import get_user_model as _get_user_model
+        _User = _get_user_model()
+        try:
+            existing_user = _User.objects.get(email__iexact=email)
+            existing_parent = existing_user.shsat_profile
+            if existing_parent.platform == "hunter":
+                existing_hunter = True
+        except (_User.DoesNotExist, Parent.DoesNotExist):
+            pass
+        if form.is_valid() and not existing_hunter:
+            user = form.save()
+            parent = Parent.objects.create(user=user, platform="shsat", email_verified=False)
+            _send_verification_email(request, user, parent)
+            user = authenticate(request, email=user.email, password=form.cleaned_data["password1"])
+            if user:
+                login(request, user, backend="shsat.backends.EmailBackend")
+            return redirect("shsat_verify_pending")
+    return render(request, "shsat/signup.html", {"form": form, "existing_hunter": existing_hunter})
 
 
 @login_required(login_url="/shsat/login/")
@@ -562,10 +574,11 @@ def test_intro(request, test_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     test = get_object_or_404(Test, id=test_id)
     # Platform guard: ensure user can only access tests for their platform
-    if not request.user.is_staff and test.exam_type != parent.platform:
-        if parent.platform == "hunter":
+    if not request.user.is_staff:
+        if test.exam_type == "hunter" and parent.platform not in ("hunter", "both"):
+            return redirect("shsat_test_list")
+        if test.exam_type == "shsat" and parent.platform not in ("shsat", "both"):
             return redirect("hunter_test_list")
-        return redirect("shsat_test_list")
     _can_access = parent.hunter_has_paid if test.exam_type == "hunter" else parent.has_paid
     if not test.is_published and not test.is_free and not _can_access and not request.user.is_staff:
         from django.http import Http404
@@ -602,10 +615,11 @@ def test_take(request, test_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     test = get_object_or_404(Test, id=test_id)
     # Platform guard
-    if not request.user.is_staff and test.exam_type != parent.platform:
-        if parent.platform == "hunter":
+    if not request.user.is_staff:
+        if test.exam_type == "hunter" and parent.platform not in ("hunter", "both"):
+            return redirect("shsat_test_list")
+        if test.exam_type == "shsat" and parent.platform not in ("shsat", "both"):
             return redirect("hunter_test_list")
-        return redirect("shsat_test_list")
     _can_access = parent.hunter_has_paid if test.exam_type == "hunter" else parent.has_paid
     if not test.is_published and not test.is_free and not _can_access and not request.user.is_staff:
         from django.http import Http404
@@ -1418,6 +1432,16 @@ def account(request):
         "parent": parent,
         "completed_attempts": completed_attempts,
     })
+
+
+@login_required(login_url="/shsat/login/")
+@require_POST
+def add_hunter_access(request):
+    parent, _ = Parent.objects.get_or_create(user=request.user)
+    if parent.platform == "shsat":
+        parent.platform = "both"
+        parent.save(update_fields=["platform"])
+    return redirect("hunter_dashboard")
 
 
 @login_required(login_url="/shsat/login/")

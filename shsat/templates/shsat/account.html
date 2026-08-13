@@ -44,11 +44,26 @@
 <div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
   <p class="shsat-section-title">Access</p>
   {% if parent.has_paid %}
-  <p style="font-size:15px;">Status: <strong>Paid</strong></p>
-  <p style="font-size:14px;color:rgba(0,0,0,0.5);">You have access to all Benchmark Tests.</p>
+  <p style="font-size:15px;">SHSAT: <strong>Paid</strong> — all Benchmark Tests unlocked.</p>
   {% else %}
-  <p style="font-size:15px;">Status: <strong>Free</strong></p>
-  <p style="font-size:14px;color:rgba(0,0,0,0.5);"><a href="{% url 'shsat_upgrade' %}">Upgrade to unlock all Benchmark Tests →</a></p>
+  <p style="font-size:15px;">SHSAT: <strong>Free</strong> — <a href="{% url 'shsat_upgrade' %}">upgrade to unlock Benchmark Tests →</a></p>
+  {% endif %}
+
+  {% if parent.platform == 'both' %}
+  {% if parent.hunter_has_paid %}
+  <p style="font-size:15px;margin-top:10px;">Hunter Prep: <strong>Paid</strong> — both Benchmark Tests unlocked. <a href="{% url 'hunter_dashboard' %}" style="color:rgba(0,0,0,0.45);font-size:13px;">Go to Hunter ↗</a></p>
+  {% else %}
+  <p style="font-size:15px;margin-top:10px;">Hunter Prep: <strong>Free</strong> — <a href="{% url 'hunter_upgrade' %}">upgrade to unlock Benchmark Tests →</a></p>
+  {% endif %}
+  {% else %}
+  <div style="margin-top:20px;padding:16px 20px;border:1px solid rgba(0,0,0,.08);background:rgba(0,0,0,.018);max-width:480px;">
+    <p style="font-size:13px;font-weight:600;margin:0 0 6px;">Prepping for Hunter too?</p>
+    <p style="font-size:13px;color:rgba(0,0,0,.55);margin:0 0 12px;">Add Hunter Prep to this account — same login, separate dashboard and tests.</p>
+    <form method="post" action="{% url 'shsat_add_hunter' %}" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit" class="shsat-btn shsat-btn--sm shsat-btn--outline">Add Hunter Prep access →</button>
+    </form>
+  </div>
   {% endif %}
 </div>
 

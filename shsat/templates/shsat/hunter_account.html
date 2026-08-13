@@ -40,6 +40,32 @@
   <button type="submit" class="shsat-btn">Save changes</button>
 </form>
 
+<div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
+  <p class="shsat-section-title">Access</p>
+  {% if parent.hunter_has_paid %}
+  <p style="font-size:15px;">Hunter Prep: <strong>Paid</strong> — both Benchmark Tests unlocked.</p>
+  {% else %}
+  <p style="font-size:15px;">Hunter Prep: <strong>Free</strong> — <a href="{% url 'hunter_upgrade' %}">upgrade to unlock Benchmark Tests →</a></p>
+  {% endif %}
+
+  {% if parent.platform == 'both' %}
+  {% if parent.has_paid %}
+  <p style="font-size:15px;margin-top:10px;">SHSAT: <strong>Paid</strong> — all Benchmark Tests unlocked. <a href="{% url 'shsat_dashboard' %}" style="color:rgba(0,0,0,0.45);font-size:13px;">Go to SHSAT ↗</a></p>
+  {% else %}
+  <p style="font-size:15px;margin-top:10px;">SHSAT: <strong>Free</strong> — <a href="{% url 'shsat_upgrade' %}">upgrade to unlock Benchmark Tests →</a></p>
+  {% endif %}
+  {% else %}
+  <div style="margin-top:20px;padding:16px 20px;border:1px solid rgba(0,0,0,.08);background:rgba(0,0,0,.018);max-width:480px;">
+    <p style="font-size:13px;font-weight:600;margin:0 0 6px;">Also prepping for SHSAT?</p>
+    <p style="font-size:13px;color:rgba(0,0,0,.55);margin:0 0 12px;">Add SHSAT Prep to this account — same login, separate dashboard and tests.</p>
+    <form method="post" action="{% url 'hunter_add_shsat' %}" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit" class="shsat-btn shsat-btn--sm shsat-btn--outline">Add SHSAT Prep access →</button>
+    </form>
+  </div>
+  {% endif %}
+</div>
+
 {% if completed_attempts %}
 <div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
   <p class="shsat-section-title">Test history</p>

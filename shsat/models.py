@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Parent(models.Model):
-    PLATFORM_CHOICES = [("shsat", "SHSAT"), ("hunter", "Hunter")]
+    PLATFORM_CHOICES = [("shsat", "SHSAT"), ("hunter", "Hunter"), ("both", "Both")]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="shsat_profile")
     platform = models.CharField(max_length=10, choices=PLATFORM_CHOICES, default="shsat")
