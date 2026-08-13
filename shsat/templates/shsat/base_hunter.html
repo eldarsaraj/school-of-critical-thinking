@@ -9,16 +9,18 @@
 <div class="shsat-wrap">
 
   {% if user.is_authenticated %}
-  <nav class="shsat-tabs" aria-label="Hunter Workshop sections">
-    <a href="{% url 'hunter_dashboard' %}" class="shsat-tab {% block tab_dashboard %}{% endblock %}">Dashboard</a>
-    <a href="{% url 'hunter_error_analysis_list' %}" class="shsat-tab {% block tab_error_analysis %}{% endblock %}">Error Analysis</a>
-    <a href="{% url 'hunter_test_list' %}" class="shsat-tab {% block tab_tests %}{% endblock %}">Practice Tests</a>
-    <a href="{% url 'hunter_resources' %}" class="shsat-tab {% block tab_resources %}{% endblock %}">Resources</a>
-    <a href="{% url 'hunter_account' %}" class="shsat-tab {% block tab_account %}{% endblock %}">Account</a>
+  <div class="shsat-nav-wrap">
+    <nav class="shsat-tabs" aria-label="Hunter Workshop sections">
+      <a href="{% url 'hunter_dashboard' %}" class="shsat-tab {% block tab_dashboard %}{% endblock %}">Dashboard</a>
+      <a href="{% url 'hunter_error_analysis_list' %}" class="shsat-tab {% block tab_error_analysis %}{% endblock %}">Error Analysis</a>
+      <a href="{% url 'hunter_test_list' %}" class="shsat-tab {% block tab_tests %}{% endblock %}">Practice Tests</a>
+      <a href="{% url 'hunter_resources' %}" class="shsat-tab {% block tab_resources %}{% endblock %}">Resources</a>
+      <a href="{% url 'hunter_account' %}" class="shsat-tab {% block tab_account %}{% endblock %}">Account</a>
+    </nav>
     {% if user.is_staff or user.shsat_profile.platform == 'both' %}
-    <a href="{% url 'shsat_dashboard' %}" class="shsat-tab" style="opacity:0.5;font-size:12px;">SHSAT ↗</a>
+    <a href="{% url 'shsat_dashboard' %}" class="shsat-platform-switch">SHSAT ↗</a>
     {% endif %}
-  </nav>
+  </div>
   {% endif %}
 
   {% if messages %}

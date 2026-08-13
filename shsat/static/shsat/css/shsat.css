@@ -25,8 +25,39 @@
 }
 
 /* ----------------------------------------------------------
-   Tab bar
+   Tab bar + platform switcher
    ---------------------------------------------------------- */
+.shsat-nav-wrap {
+  position: relative;
+  margin-bottom: 36px;
+}
+
+.shsat-nav-wrap .shsat-tabs {
+  margin-bottom: 0;
+}
+
+.shsat-platform-switch {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+  padding: 4px 10px;
+  transition: color 0.12s, border-color 0.12s;
+  white-space: nowrap;
+}
+
+.shsat-platform-switch:hover {
+  color: rgba(0, 0, 0, 0.6);
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
 .shsat-tabs {
   display: flex;
   flex-wrap: wrap;

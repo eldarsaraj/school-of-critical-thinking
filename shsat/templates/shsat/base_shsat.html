@@ -9,16 +9,18 @@
 <div class="shsat-wrap">
 
   {% if user.is_authenticated %}
-  <nav class="shsat-tabs" aria-label="SHSAT Workshop sections">
-    <a href="{% url 'shsat_dashboard' %}" class="shsat-tab {% block tab_dashboard %}{% endblock %}">Dashboard</a>
-    <a href="{% url 'shsat_error_analysis_list' %}" class="shsat-tab {% block tab_error_analysis %}{% endblock %}">Error Analysis</a>
-    <a href="{% url 'shsat_test_list' %}" class="shsat-tab {% block tab_tests %}{% endblock %}">Practice Tests</a>
-    <a href="{% url 'shsat_resources' %}" class="shsat-tab {% block tab_resources %}{% endblock %}{% block tab_log %}{% endblock %}">Resources</a>
-    <a href="{% url 'shsat_account' %}" class="shsat-tab {% block tab_account %}{% endblock %}">Account</a>
+  <div class="shsat-nav-wrap">
+    <nav class="shsat-tabs" aria-label="SHSAT Workshop sections">
+      <a href="{% url 'shsat_dashboard' %}" class="shsat-tab {% block tab_dashboard %}{% endblock %}">Dashboard</a>
+      <a href="{% url 'shsat_error_analysis_list' %}" class="shsat-tab {% block tab_error_analysis %}{% endblock %}">Error Analysis</a>
+      <a href="{% url 'shsat_test_list' %}" class="shsat-tab {% block tab_tests %}{% endblock %}">Practice Tests</a>
+      <a href="{% url 'shsat_resources' %}" class="shsat-tab {% block tab_resources %}{% endblock %}{% block tab_log %}{% endblock %}">Resources</a>
+      <a href="{% url 'shsat_account' %}" class="shsat-tab {% block tab_account %}{% endblock %}">Account</a>
+    </nav>
     {% if user.is_staff or user.shsat_profile.platform == 'both' %}
-    <a href="{% url 'hunter_dashboard' %}" class="shsat-tab" style="opacity:0.5;font-size:12px;">Hunter ↗</a>
+    <a href="{% url 'hunter_dashboard' %}" class="shsat-platform-switch">Hunter Prep ↗</a>
     {% endif %}
-  </nav>
+  </div>
   {% endif %}
 
   {% if messages %}
