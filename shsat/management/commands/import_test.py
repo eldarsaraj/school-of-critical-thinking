@@ -199,7 +199,9 @@ class Command(BaseCommand):
                 "exam_type": data.get("exam_type", "shsat"),
             }
 
-        test, created = Test.objects.get_or_create(title=title, defaults=meta)
+        test, created = Test.objects.get_or_create(
+            title=title, exam_type=meta["exam_type"], defaults=meta
+        )
 
         if not created:
             if options["replace"]:
