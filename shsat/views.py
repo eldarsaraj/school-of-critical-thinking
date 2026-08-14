@@ -544,11 +544,11 @@ def test_list(request):
     if can_access_paid:
         tests = (
             Test.objects.filter(is_published=True) | Test.objects.filter(is_published=False, is_free=False)
-        ).filter(is_drill=False, exam_type="shsat").distinct().order_by("id")
+        ).filter(is_drill=False, exam_type="shsat").distinct().order_by("order", "id")
         drills = Test.objects.filter(is_drill=True, exam_type="shsat").order_by("order", "id")
     else:
-        tests = Test.objects.filter(is_published=True, is_drill=False, exam_type="shsat")
-        drills = Test.objects.filter(is_drill=True, exam_type="shsat")  # shown as locked teasers
+        tests = Test.objects.filter(is_published=True, is_drill=False, exam_type="shsat").order_by("order", "id")
+        drills = Test.objects.filter(is_drill=True, exam_type="shsat").order_by("order", "id")
 
     completed_ids = set(
         TestAttempt.objects.filter(parent=parent, is_completed=True).values_list("test_id", flat=True)
