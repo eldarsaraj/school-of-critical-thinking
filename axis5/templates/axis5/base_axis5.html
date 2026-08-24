@@ -13,7 +13,17 @@
     {% block header %}
     <header class="ax-header">
       <a href="/" class="ax-logo">School of Critical Thinking</a>
-      {% block header_right %}{% endblock %}
+      <div class="ax-header-right">
+        {% block header_right %}{% endblock %}
+        {% if user.is_authenticated %}
+          {% if user.is_staff %}
+          <a href="{% url 'axis5:item_stats' %}" class="ax-header-link">Stats</a>
+          {% endif %}
+          <a href="{% url 'axis5:logout' %}" class="ax-header-link">Sign out</a>
+        {% else %}
+          <a href="{% url 'axis5:login' %}" class="ax-header-link">Sign in</a>
+        {% endif %}
+      </div>
     </header>
     {% endblock %}
 

@@ -1,0 +1,27 @@
+{% extends "axis5/base_axis5.html" %}
+{% block title %}Sign In — AXIS-5{% endblock %}
+
+{% block content %}
+<div class="ax-auth">
+  <h1 class="ax-auth__title">Sign in</h1>
+
+  <form method="post" class="ax-auth__form" novalidate>
+    {% csrf_token %}
+
+    {% if error %}
+    <div class="ax-error ax-error--block">{{ error }}</div>
+    {% endif %}
+
+    <div class="ax-field">
+      {{ form.email }}
+    </div>
+    <div class="ax-field">
+      {{ form.password }}
+    </div>
+
+    <button type="submit" class="ax-btn ax-btn--primary ax-btn--wide">Sign in →</button>
+  </form>
+
+  <p class="ax-auth__switch">No account? <a href="{% url 'axis5:signup' %}">Create one</a></p>
+</div>
+{% endblock %}

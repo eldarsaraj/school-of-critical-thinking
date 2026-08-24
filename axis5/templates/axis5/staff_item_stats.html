@@ -1,0 +1,63 @@
+{% extends "axis5/base_axis5.html" %}
+{% block title %}Item Statistics — AXIS-5 Staff{% endblock %}
+
+{% block content %}
+<div class="ax-staff">
+  <div class="ax-staff__header">
+    <h1 class="ax-staff__title">Item Statistics</h1>
+    <p class="ax-staff__meta">
+      {{ n_sessions }} unflagged completed session{{ n_sessions|pluralize }}
+      {% if n_flagged %} · {{ n_flagged }} flagged (excluded){% endif %}
+    </p>
+  </div>
+
+  {% if not items_stats %}
+  <p class="ax-muted">No completed unflagged sessions yet.</p>
+  {% else %}
+
+  <div class="ax-staff__legend">
+    <span class="ax-staff__legend-item ax-staff__flag--high">&#x25CF; &gt;90% correct — not discriminating</span>
+    <span class="ax-staff__legend-item ax-staff__flag--low">&#x25CF; &lt;20% correct — broken or wrong key</span>
+    <span class="ax-staff__legend-item ax-staff__flag--fast">&#x25CF; median &lt;5s — too fast</span>
+  </div>
+
+  <table class="ax-stats-table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Dim</th>
+        <th>Format</th>
+        <th class="ax-th-num">N</th>
+        <th class="ax-th-num">% correct</th>
+        <th class="ax-th-num">Median s</th>
+        <th class="ax-th-num">Top ⅓</th>
+        <th class="ax-th-num">Bot ⅓</th>
+        <th>Options (mc)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in items_stats %}
+      <tr class="{% if s.pct != None and s.pct > 90 %}ax-row--high{% elif s.pct != None and s.pct < 20 %}ax-row--low{% elif s.med_secs != None and s.med_secs < 5 %}ax-row--fast{% endif %}">
+        <td class="ax-td-id">{{ s.item_id }}</td>
+        <td>{{ s.dimension }}</td>
+        <td class="ax-td-fmt">{{ s.format }}</td>
+        <td class="ax-td-num">{{ s.n }}</td>
+        <td class="ax-td-num">{% if s.pct != None %}{{ s.pct }}%{% else %}—{% endif %}</td>
+        <td class="ax-td-num">{% if s.med_secs %}{{ s.med_secs }}s{% else %}—{% endif %}</td>
+        <td class="ax-td-num">{% if s.top_pct != None %}<span class="ax-td-top">{{ s.top_pct }}%</span>{% else %}—{% endif %}</td>
+        <td class="ax-td-num">{% if s.bot_pct != None %}<span class="ax-td-bot">{{ s.bot_pct }}%</span>{% else %}—{% endif %}</td>
+        <td class="ax-td-options">
+          {% if s.format == "mc" and s.options %}
+            {% for opt_id, cnt in s.options.items %}
+            <span class="ax-opt-chip">{{ opt_id }}: {{ cnt }}</span>
+            {% endfor %}
+          {% else %}—{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% endif %}
+</div>
+{% endblock %}

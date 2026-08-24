@@ -2,13 +2,17 @@ import hashlib
 import json
 import logging
 import random
+from statistics import median as stat_median
 
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 
-from .forms import StartForm
+from .forms import LoginForm, SignupForm, StartForm
 from .models import Item, Response, Result, Session
 from .services.scoring import SCORING_VERSION, build_form_from_db, score_session
 
@@ -81,14 +85,18 @@ def start(request):
         form = StartForm(request.POST)
         if form.is_valid():
             seq = _build_sequence()
+            user = request.user if request.user.is_authenticated else None
             session = Session.objects.create(
                 email=form.cleaned_data["email"],
+                user=user,
                 form_version=1,
                 state="started",
                 user_agent=request.META.get("HTTP_USER_AGENT", "")[:500],
                 ip_hash=_hash_ip(request),
                 item_sequence=seq,
             )
+            # Store token so signup can claim this session
+            request.session["axis5_pending_token"] = str(session.token)
             return redirect("axis5:item", token=session.token, n=0)
     else:
         form = StartForm()
@@ -478,4 +486,170 @@ def results(request, token):
         "dims_sorted": dims_sorted,
         "strongest": strongest,
         "quality_flags": result.quality_flags,
+    })
+
+# ------------------------------------------------------------------ auth
+
+
+def ax_signup(request):
+    if request.user.is_authenticated:
+        return redirect("axis5:start")
+    if request.method == "POST":
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user, backend="django.contrib.auth.backends.ModelBackend")
+            # Claim any pending anonymous session
+            pending = request.session.pop("axis5_pending_token", None)
+            if pending:
+                try:
+                    s = Session.objects.get(token=pending, user__isnull=True)
+                    s.user = user
+                    s.save(update_fields=["user"])
+                except Session.DoesNotExist:
+                    pass
+            return redirect("axis5:start")
+    else:
+        form = SignupForm()
+    return render(request, "axis5/signup.html", {"form": form})
+
+
+def ax_login(request):
+    if request.user.is_authenticated:
+        return redirect("axis5:start")
+    error = None
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+            password = form.cleaned_data["password"]
+            user = authenticate(request, username=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect(request.GET.get("next") or "axis5:start")
+            error = "Email or password incorrect."
+    else:
+        form = LoginForm()
+    return render(request, "axis5/login.html", {"form": form, "error": error})
+
+
+def ax_logout(request):
+    logout(request)
+    return redirect("axis5:start")
+
+
+# ------------------------------------------------------------------ staff stats
+
+
+@staff_member_required(login_url="/axis5/auth/login/")
+def staff_item_stats(request):
+    # Unflagged completed sessions only
+    all_results = list(
+        Result.objects
+        .filter(quality_flags=[], session__state="completed")
+        .select_related("session")
+        .prefetch_related("session__responses__item")
+    )
+    n_total = Result.objects.filter(session__state="completed").count()
+    n_flagged = n_total - len(all_results)
+
+    if not all_results:
+        return render(request, "axis5/staff_item_stats.html", {
+            "n_sessions": 0, "n_flagged": n_flagged, "items_stats": [],
+        })
+
+    # Items to report on (scored, non-calibration, non-field-test)
+    items_list = list(
+        Item.objects.filter(active=True, scored=True, field_test=False)
+        .exclude(format="tf_confidence_block")
+        .order_by("position")
+    )
+    item_by_id = {it.item_id: it for it in items_list}
+
+    # First pass: collect per-result data into memory
+    result_data = []
+    for result in all_results:
+        payload = result.payload
+        dim_scores = {d: payload["dimensions"][d]["correct"]
+                      for d in payload["dimensions"]}
+        payload_items = payload.get("items", {})
+        resp_items = {}
+        for r in result.session.responses.all():
+            iid = r.item.item_id
+            if r.item.format == "tf_confidence_block":
+                continue
+            pi = payload_items.get(iid)
+            if pi is None or pi.get("scored") is False:
+                continue
+            resp_items[iid] = {
+                "correct": pi.get("correct", False),
+                "ms_total": r.ms_total,
+                "value": r.value,
+            }
+        result_data.append((result, dim_scores, resp_items))
+
+    # Compute top-third / bottom-third split per dimension
+    dim_keys = list(all_results[0].payload["dimensions"].keys())
+    dim_splits = {}
+    for dim in dim_keys:
+        scored = sorted(result_data, key=lambda x: x[1].get(dim, 0))
+        third = max(1, len(scored) // 3)
+        dim_splits[dim] = {
+            "top": {rd[0].id for rd in scored[-third:]},
+            "bottom": {rd[0].id for rd in scored[:third]},
+        }
+
+    # Second pass: accumulate item stats
+    accum = {
+        iid: {"correct": [], "secs": [], "options": {}, "top": [], "bottom": []}
+        for iid in item_by_id
+    }
+    for result, _dim_scores, resp_items in result_data:
+        for iid, rd in resp_items.items():
+            if iid not in accum:
+                continue
+            item = item_by_id[iid]
+            accum[iid]["correct"].append(rd["correct"])
+            if rd["ms_total"]:
+                accum[iid]["secs"].append(rd["ms_total"] / 1000)
+            if item.format == "mc" and isinstance(rd["value"], str):
+                accum[iid]["options"][rd["value"]] = (
+                    accum[iid]["options"].get(rd["value"], 0) + 1
+                )
+            splits = dim_splits.get(item.dimension, {})
+            if result.id in splits.get("top", set()):
+                accum[iid]["top"].append(rd["correct"])
+            if result.id in splits.get("bottom", set()):
+                accum[iid]["bottom"].append(rd["correct"])
+
+    # Build final stats list
+    items_stats = []
+    for iid, item in item_by_id.items():
+        a = accum[iid]
+        n = len(a["correct"])
+        pct_frac = sum(a["correct"]) / n if n else None
+        pct = round(pct_frac * 100) if pct_frac is not None else None
+        med_secs = round(stat_median(a["secs"]), 1) if a["secs"] else None
+        top_frac = sum(a["top"]) / len(a["top"]) if a["top"] else None
+        bot_frac = sum(a["bottom"]) / len(a["bottom"]) if a["bottom"] else None
+        items_stats.append({
+            "item_id": iid,
+            "dimension": item.dimension,
+            "format": item.format,
+            "n": n,
+            "pct": pct,            # integer 0–100 for display
+            "pct_frac": pct_frac,  # 0.0–1.0 for sort
+            "med_secs": med_secs,
+            "options": a["options"],
+            "top_pct": round(top_frac * 100) if top_frac is not None else None,
+            "bot_pct": round(bot_frac * 100) if bot_frac is not None else None,
+        })
+
+    # Sort by % correct ascending (broken / near-broken items first)
+    items_stats.sort(key=lambda x: (x["pct_frac"] is None, x["pct_frac"] or 0))
+
+    return render(request, "axis5/staff_item_stats.html", {
+        "n_sessions": len(all_results),
+        "n_flagged": n_flagged,
+        "items_stats": items_stats,
     })

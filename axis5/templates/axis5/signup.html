@@ -1,0 +1,42 @@
+{% extends "axis5/base_axis5.html" %}
+{% block title %}Create Account — AXIS-5{% endblock %}
+
+{% block content %}
+<div class="ax-auth">
+  <h1 class="ax-auth__title">Create an account</h1>
+  <p class="ax-auth__lead">Save your results and access them any time.</p>
+
+  <form method="post" class="ax-auth__form" novalidate>
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div class="ax-error ax-error--block">{{ form.non_field_errors.0 }}</div>
+    {% endif %}
+
+    <div class="ax-field">
+      {{ form.email }}
+      {% if form.email.errors %}
+      <span class="ax-field__error">{{ form.email.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <div class="ax-field">
+      {{ form.password1 }}
+      {% if form.password1.errors %}
+      <span class="ax-field__error">{{ form.password1.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <div class="ax-field">
+      {{ form.password2 }}
+      {% if form.password2.errors %}
+      <span class="ax-field__error">{{ form.password2.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="ax-btn ax-btn--primary ax-btn--wide">Create account →</button>
+  </form>
+
+  <p class="ax-auth__switch">Already have an account? <a href="{% url 'axis5:login' %}">Sign in</a></p>
+</div>
+{% endblock %}
