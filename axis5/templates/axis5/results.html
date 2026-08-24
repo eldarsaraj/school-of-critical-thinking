@@ -298,7 +298,7 @@
       const y = q.correct ? yBase - Y_JITTER[i % 4] : yBase + Y_JITTER[i % 4];
       return { x, y };
     });
-    const qColors = qs.map(q => q.correct ? COLOR_CORRECT : COLOR_WRONG);
+    const qColors = qs.map(q => q.correct ? 'rgba(90,154,106,0.4)' : 'rgba(196,99,91,0.4)');
 
     new Chart(document.getElementById('dimChart_' + d.key), {
       type: 'scatter',
