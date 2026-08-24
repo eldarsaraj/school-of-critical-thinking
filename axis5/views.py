@@ -480,8 +480,31 @@ def results(request, token):
             strongest = dim
             break
 
-    # Per-question breakdown: stem + correct/wrong for each scored item
+    # Per-question calibration data
     from .models import Item as Axis5Item
+    cal_questions = []
+    if cal:
+        try:
+            cal_item = Axis5Item.objects.get(
+                form_version=result.form_version,
+                format="tf_confidence_block",
+                active=True,
+            )
+            cal_resp_obj = session.responses.filter(item=cal_item).first()
+            if cal_resp_obj:
+                by_id = {r["id"]: r for r in cal_resp_obj.value}
+                for it in cal_item.payload.get("items", []):
+                    r = by_id.get(it["id"], {})
+                    is_correct = bool(r.get("answer")) == bool(it["answer"])
+                    cal_questions.append({
+                        "statement": it.get("statement", ""),
+                        "confidence": float(r.get("confidence", 0)),
+                        "correct": is_correct,
+                    })
+        except Axis5Item.DoesNotExist:
+            pass
+
+    # Per-question breakdown: stem + correct/wrong for each scored item
     items_qs = (
         Axis5Item.objects
         .filter(form_version=result.form_version, active=True, scored=True)
@@ -531,6 +554,7 @@ def results(request, token):
         "poles_by_dim": FORM_META["poles"],
         "dim_blurbs": DIMENSION_BLURBS,
         "per_dim_items": per_dim_items,
+        "cal_questions": cal_questions,
     })
 
 # ------------------------------------------------------------------ auth
