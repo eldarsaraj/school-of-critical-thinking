@@ -86,7 +86,7 @@
   });
 
   {% if item.format == "allocate" %}
-  // Live allocation total with per-slider max capping
+  // Live allocation total — clamp only the moving slider, never touch others
   const allocSliders = document.querySelectorAll('.ax-alloc-slider');
   const totalEl = document.getElementById('ax-alloc-total');
   const required = {{ safe_payload.total|default:100 }};
@@ -98,16 +98,17 @@
     const ok = Math.abs(sum - required) <= 0.51;
     totalEl.className = ok ? 'ax-alloc-sum ax-alloc-sum--ok' : 'ax-alloc-sum ax-alloc-sum--err';
     submitBtn.disabled = !ok;
-    // Prevent any slider from going beyond what the total allows
-    allocSliders.forEach(function (s) {
-      const others = sum - (parseFloat(s.value) || 0);
-      s.max = Math.max(0, required - Math.round(others));
-    });
   }
 
   allocSliders.forEach(slider => {
     slider.addEventListener('input', function () {
-      document.getElementById('alloc-val-' + this.id.replace('alloc_', '')).textContent = this.value;
+      // Clamp this slider to what's left after the others
+      const othersSum = [...allocSliders]
+        .filter(s => s !== this)
+        .reduce((a, s) => a + (parseFloat(s.value) || 0), 0);
+      const budget = Math.max(0, required - othersSum);
+      if (parseFloat(this.value) > budget) this.value = budget;
+      document.getElementById('alloc-val-' + this.id.replace('alloc_', '')).textContent = this.value + '%';
       updateAlloc();
     });
   });

@@ -480,7 +480,7 @@ def results(request, token):
             strongest = dim
             break
 
-    from .services.scoring import FORM_META
+    from .services.scoring import FORM_META, DIMENSION_BLURBS
     return render(request, "axis5/results.html", {
         "session": session,
         "result": result,
@@ -492,6 +492,7 @@ def results(request, token):
         "strongest": strongest,
         "quality_flags": [f for f in result.quality_flags if f != "rapid_responding"],
         "poles_by_dim": FORM_META["poles"],
+        "dim_blurbs": DIMENSION_BLURBS,
     })
 
 # ------------------------------------------------------------------ auth

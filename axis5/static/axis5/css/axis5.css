@@ -777,6 +777,13 @@
   margin: 0 0 10px;
 }
 
+.ax-dim-blurb {
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(0,0,0,0.55);
+  margin: 12px 0 0;
+}
+
 .ax-dim-band {
   font-size: 10px;
   font-weight: 600;

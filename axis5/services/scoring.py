@@ -9,6 +9,46 @@ The function boundaries are preserved 1:1 so tests map across directly.
 
 SCORING_VERSION = 1
 
+DIMENSION_BLURBS = {
+    "U": (
+        "Most situations are governed by distributions rather than certainties, and this measures "
+        "whether your confidence tracks how often you are actually right. Asked for a range they "
+        "are 90\u202f% sure about, typical adults land inside it closer to half the time. Failures "
+        "run in two directions: confidence that outpaces accuracy, and a demand for certainty that "
+        "shows up as deferred decisions and missed windows."
+    ),
+    "M": (
+        "Every framework — a forecast, a segmentation, a rule of thumb — carries assumptions and "
+        "stops working somewhere. This measures whether you can name the assumptions and locate "
+        "the edge. The common failure is applying a model built under one set of conditions to a "
+        "situation where those conditions no longer hold. The rarer one, more frequent among the "
+        "well-educated, is treating all models as equally arbitrary and declining to choose "
+        "between them."
+    ),
+    "C": (
+        "Prediction and intervention are different problems. That people who do X perform better "
+        "tells you something real; making everyone do X often changes nothing, because X marked a "
+        "disposition rather than producing one. This measures whether you track which relationships "
+        "would survive an intervention. It fails toward finding causes in every pattern, and less "
+        "often toward refusing any causal conclusion from observational data."
+    ),
+    "A": (
+        "Findings hold at a level — this person, this team, this population — and reasoning breaks "
+        "when a claim moves between levels without warrant. A group-level association gets applied "
+        "to an individual; one vivid case overrides a sample of five hundred. This measures whether "
+        "the level of your claim stays matched to the level of your evidence. The pull is usually "
+        "toward generalizing past the data, sometimes toward the opposite reflex that treats every "
+        "case as unique."
+    ),
+    "E": (
+        "Knowledge is distributed unevenly across people and institutions, and most of what you "
+        "believe arrived through someone else. This measures how far your beliefs move when "
+        "evidence arrives, and how you weigh a source — domain match, track record, incentive. "
+        "Two failure modes: holding position under counter-evidence, and deferring to credentials "
+        "without checking whether they cover the question actually being asked."
+    ),
+}
+
 FORM_META = {
     "id": "axis5-v1",
     "form_version": 1,
