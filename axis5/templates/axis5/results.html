@@ -75,6 +75,21 @@
       <div class="ax-dim-chart-wrap">
         <canvas id="dimChart_{{ key }}"></canvas>
       </div>
+      {% with qs=per_dim_items|get_item:key %}
+      {% if qs %}
+      <div class="ax-dim-questions">
+        {% for q in qs %}
+        <div class="ax-dq-row">
+          <span class="ax-dq-dot ax-dq-dot--{{ q.correct|yesno:'correct,wrong' }}"></span>
+          <span class="ax-dq-stem">{{ q.stem }}</span>
+          {% if not q.correct and q.pole_label %}
+          <span class="ax-dq-lean">→ {{ q.pole_label }}</span>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
     </div>
     {% endfor %}
   </section>

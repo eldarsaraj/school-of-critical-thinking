@@ -480,7 +480,44 @@ def results(request, token):
             strongest = dim
             break
 
+    # Per-question breakdown: stem + correct/wrong for each scored item
+    from .models import Item as Axis5Item
+    items_qs = (
+        Axis5Item.objects
+        .filter(form_version=result.form_version, active=True, scored=True)
+        .exclude(format="tf_confidence_block")
+        .order_by("position")
+    )
+    item_results = payload.get("items", {})
+    per_dim_items = {}
+    for item in items_qs:
+        p = item.payload
+        if item.format == "two_step":
+            stem = p.get("preamble_emphasis") or p["step1"]["stem"]
+        else:
+            stem = p.get("stem", "")
+        scored_result = item_results.get(item.item_id, {})
+        if scored_result.get("scored") is False:
+            continue
+        per_dim_items.setdefault(item.dimension, []).append({
+            "item_id": item.item_id,
+            "stem": stem,
+            "correct": scored_result.get("correct", False),
+            "pole": scored_result.get("pole"),
+        })
+
     from .services.scoring import FORM_META, DIMENSION_BLURBS
+    poles = FORM_META["poles"]
+    for dim_key, qs in per_dim_items.items():
+        for q in qs:
+            p = q.get("pole")
+            if p == "-":
+                q["pole_label"] = poles[dim_key]["minus"]
+            elif p == "+":
+                q["pole_label"] = poles[dim_key]["plus"]
+            else:
+                q["pole_label"] = None
+
     return render(request, "axis5/results.html", {
         "session": session,
         "result": result,
@@ -493,6 +530,7 @@ def results(request, token):
         "quality_flags": [f for f in result.quality_flags if f != "rapid_responding"],
         "poles_by_dim": FORM_META["poles"],
         "dim_blurbs": DIMENSION_BLURBS,
+        "per_dim_items": per_dim_items,
     })
 
 # ------------------------------------------------------------------ auth

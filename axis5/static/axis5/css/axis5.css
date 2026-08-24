@@ -755,6 +755,45 @@
   margin: 10px 0 12px;
 }
 
+/* Per-question breakdown */
+.ax-dim-questions {
+  margin: 4px 0 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ax-dq-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.ax-dq-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 4px;
+}
+
+.ax-dq-dot--correct { background: #5a9a6a; }
+.ax-dq-dot--wrong   { background: #c4635b; }
+
+.ax-dq-stem {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(0,0,0,0.65);
+  flex: 1;
+}
+
+.ax-dq-lean {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: rgba(0,0,0,0.38);
+  white-space: nowrap;
+}
+
 /* Dimension blocks */
 .ax-dim-block {
   padding: 20px 0 4px;
