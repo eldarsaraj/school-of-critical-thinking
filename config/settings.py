@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "diagnostic",
     "shsat",
     "evaluators",
+    "axis5",
 ]
 
 SITE_ID = 1

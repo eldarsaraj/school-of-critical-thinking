@@ -27,6 +27,7 @@ urlpatterns = [
     path("diagnostic/", include("diagnostic.urls")),
     path("shsat/", include("shsat.urls")),
     path("hunter/", include("shsat.hunter_urls")),
+    path("axis5/", include("axis5.urls")),
     path(
         "python-detective/",
         RedirectView.as_view(

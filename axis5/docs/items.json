@@ -1,0 +1,448 @@
+{
+  "form": {
+    "id": "axis5-v1",
+    "form_version": 1,
+    "scoring_version": 1,
+    "estimated_minutes": 17,
+    "dimensions": {
+      "U": "Uncertainty Handling",
+      "M": "Model Awareness",
+      "C": "Causal Reasoning",
+      "A": "Abstraction Control",
+      "E": "Epistemic Humility"
+    },
+    "poles": {
+      "U": { "minus": "paralysis", "plus": "overconfidence" },
+      "M": { "minus": "literalism", "plus": "model nihilism" },
+      "C": { "minus": "over-attribution", "plus": "causal agnosticism" },
+      "A": { "minus": "overgeneralization", "plus": "particularism" },
+      "E": { "minus": "rigidity", "plus": "over-deference" }
+    }
+  },
+
+  "calibration": {
+    "id": "CAL",
+    "dimension": "U",
+    "instructions": "Mark each statement True or False, then say how confident you are. 50% means you are guessing. 100% means you are certain. There is no penalty for saying you are unsure - we are checking whether your confidence matches your accuracy, not how much you know.",
+    "confidence_scale": { "min": 50, "max": 100, "step": 1 },
+    "items": [
+      { "id": "K1", "statement": "The Pacific Ocean covers more area than all of Earth's land combined.", "answer": true, "difficulty": "medium", "derivation": "Pacific approx 165.2M km2; total land approx 148.9M km2." },
+      { "id": "K2", "statement": "The Great Wall of China is visible to the naked eye from the Moon.", "answer": false, "difficulty": "easy", "derivation": "Not visible. The wall is metres wide; the Moon is approx 384,000 km away." },
+      { "id": "K3", "statement": "Nitrogen makes up more of Earth's atmosphere than oxygen does.", "answer": true, "difficulty": "medium", "derivation": "Nitrogen approx 78 percent, oxygen approx 21 percent." },
+      { "id": "K4", "statement": "A standard deck of cards has more face cards than the English alphabet has letters.", "answer": false, "difficulty": "easy", "derivation": "12 face cards, 26 letters." },
+      { "id": "K5", "statement": "The summit of Mount Everest is the point on Earth's surface farthest from the planet's centre.", "answer": false, "difficulty": "hard", "derivation": "Chimborazo's summit is farther from the centre because Earth bulges at the equator." },
+      { "id": "K6", "statement": "Sound travels faster through water than through air.", "answer": true, "difficulty": "medium", "derivation": "Approx 1,480 m/s in water vs approx 343 m/s in air." },
+      { "id": "K7", "statement": "Australia is wider from east to west than the Moon is across.", "answer": true, "difficulty": "hard", "derivation": "Australia approx 4,000 km east-west; Moon diameter approx 3,475 km." },
+      { "id": "K8", "statement": "Old window glass is thicker at the bottom because glass slowly flows downward over centuries.", "answer": false, "difficulty": "hard", "derivation": "A myth. The thickness is an artefact of crown glass manufacture; glass does not flow measurably at room temperature." }
+    ],
+    "scoring": {
+      "type": "calibration_gap",
+      "note": "gap = mean(confidence)/100 - (n_correct/n_items). Scored as ONE unit toward U.",
+      "unit_correct_if_abs_gap_lte": 0.15,
+      "overconfident_if_gap_gt": 0.15,
+      "underconfident_if_gap_lt": -0.10,
+      "pole_overconfident": "+",
+      "pole_underconfident": "-"
+    }
+  },
+
+  "items": [
+    {
+      "id": "U-01",
+      "dimension": "U",
+      "format": "mc",
+      "tier": 1,
+      "domain": "finance",
+      "tag": "certainty-seeking",
+      "stem": "Choose one:",
+      "options": [
+        { "id": "A", "text": "Act now. 60% chance of a $30,000 gain, 40% chance of an $8,000 loss.", "correct": true },
+        { "id": "B", "text": "Wait three months for a report that will tell you which outcome applies. Waiting reduces the gain to $16,000; the loss becomes $0.", "correct": false, "pole": "-" },
+        { "id": "C", "text": "Decline. $0.", "correct": false, "pole": "-" }
+      ],
+      "derivation": "EV(A) = 0.6*30000 + 0.4*(-8000) = 14800. EV(B) = 0.6*16000 = 9600. EV(C) = 0. Waiting for certainty costs 5200."
+    },
+    {
+      "id": "U-02",
+      "dimension": "U",
+      "format": "mc",
+      "tier": 1,
+      "domain": "mixed",
+      "tag": "tail-blindness",
+      "stem": "In which of these would the single largest event over ten years account for more than half of the ten-year total?",
+      "options": [
+        { "id": "A", "text": "The combined weight of all packages shipped from one depot", "correct": false, "pole": "-" },
+        { "id": "B", "text": "Total insurance payouts for storm damage in a region", "correct": true },
+        { "id": "C", "text": "Total hours worked by a ten-person team", "correct": false, "pole": "-" },
+        { "id": "D", "text": "The combined height of everyone who walks through a train station", "correct": false, "pole": "-" }
+      ],
+      "derivation": "A, C and D are bounded and additive - no single unit can be a large fraction of the total. Storm damage is generated by a process where one event can exceed the sum of all others in the period."
+    },
+
+    {
+      "id": "M-01",
+      "dimension": "M",
+      "format": "select_all",
+      "tier": 2,
+      "domain": "health",
+      "tag": "unexamined assumption",
+      "stem": "A clinic estimates next year's appointment demand by taking this year's number of patients and multiplying by the average number of visits per patient. Select every assumption this method requires.",
+      "options": [
+        { "id": 1, "text": "Patient numbers will stay roughly stable", "target": true },
+        { "id": 2, "text": "Visit frequency will not change", "target": true },
+        { "id": 3, "text": "The clinic has enough staff to meet demand", "target": false },
+        { "id": 4, "text": "No new clinic opens nearby", "target": true },
+        { "id": 5, "text": "The average is not distorted by a small number of very frequent patients", "target": true },
+        { "id": 6, "text": "Appointments are booked in advance", "target": false },
+        { "id": 7, "text": "The clinic's records are digital", "target": false }
+      ],
+      "scoring": { "require_all_targets": true, "max_foils": 0 },
+      "poles": { "under_selection": "-", "over_selection": "+" },
+      "derivation": "An assumption is required if the estimate fails when it fails. Staffing affects whether demand can be met, not what demand is. Option 5 is the subtle target - a mean visit rate carries no information if the distribution is skewed."
+    },
+    {
+      "id": "M-02",
+      "dimension": "M",
+      "format": "scope_grid",
+      "tier": 2,
+      "domain": "environment",
+      "tag": "scope-limit failure",
+      "stem": "A model predicts crop yield from rainfall. It was built on 12 years of data from one region, where irrigation was available throughout. For each new setting: does the model hold, break, or can you not tell from what you have been given?",
+      "choices": ["holds", "breaks", "cant_tell"],
+      "choice_labels": { "holds": "Holds", "breaks": "Breaks", "cant_tell": "Can't tell" },
+      "rows": [
+        { "id": 1, "text": "The same region, next year", "answer": "holds" },
+        { "id": 2, "text": "The same region, after irrigation is removed", "answer": "breaks", "wrong_poles": { "holds": "-", "cant_tell": "-" } },
+        { "id": 3, "text": "A neighbouring region with similar climate and irrigation", "answer": "cant_tell", "wrong_poles": { "breaks": "+", "holds": "-" } },
+        { "id": 4, "text": "A region with double the rainfall range the model was built on", "answer": "breaks", "wrong_poles": { "holds": "-", "cant_tell": "-" } }
+      ],
+      "scoring": { "require_all_rows": true },
+      "derivation": "Irrigation is a condition the model was built under, so removing it changes the relationship. Doubling the rainfall range is extrapolation past observed data. The neighbouring region is genuinely undetermined."
+    },
+    {
+      "id": "M-03",
+      "dimension": "M",
+      "format": "select_all",
+      "tier": 2,
+      "domain": "media",
+      "tag": "reification",
+      "stem": "Mark every sentence that treats a measurement or category as something that acts - something with intentions or causal power of its own.",
+      "options": [
+        { "id": 1, "text": "Engagement fell 12% after the redesign.", "target": false },
+        { "id": 2, "text": "Engagement punished the redesign.", "target": true },
+        { "id": 3, "text": "The algorithm ranks posts by predicted watch time.", "target": false },
+        { "id": 4, "text": "The algorithm decided it didn't like the post.", "target": true },
+        { "id": 5, "text": "Regions with higher unemployment saw more business closures.", "target": false },
+        { "id": 6, "text": "Unemployment is fighting back against the recovery.", "target": true }
+      ],
+      "scoring": { "require_all_targets": true, "max_foils": 0 },
+      "poles": { "under_selection": "-", "over_selection": "+" },
+      "derivation": "The three targets assign intention or agency to a statistic or a function. Option 5 is a legitimate aggregate-level claim - an association between two measured quantities, no agency implied."
+    },
+    {
+      "id": "M-04",
+      "dimension": "M",
+      "format": "allocate",
+      "tier": 2,
+      "domain": "technology",
+      "tag": "single-model rigidity / model nihilism",
+      "stem": "A product's sign-up rate dropped 25%. Three explanations: PRICING - a price rise took effect. ONBOARDING - a new required verification step launched. SEASONALITY - this is a normal annual dip. What you know: the drop began within three days of the verification step. The price rise took effect five months earlier, with no visible effect at the time. Last year's data show a dip in this month, but of about 5%, not 25%. Distribute 100 points across the three.",
+      "total": 100,
+      "options": [
+        { "id": 1, "text": "Pricing" },
+        { "id": 2, "text": "Onboarding" },
+        { "id": 3, "text": "Seasonality" }
+      ],
+      "key": [
+        { "option": 1, "op": "lte", "value": 15 },
+        { "option": 2, "op": "gte", "value": 55 },
+        { "option": 3, "op": "between", "value": [10, 30] }
+      ],
+      "pole_rules": [
+        { "when": { "option": 2, "op": "gte", "value": 90 }, "pole": "-" },
+        { "when": { "option": 1, "op": "gte", "value": 25 }, "pole": "+" }
+      ],
+      "default_pole": "-",
+      "derivation": "Pricing is ruled out by a five-month gap with no effect. Seasonality accounts for roughly a fifth of the observed drop. Onboarding carries the remainder and matches the timing."
+    },
+
+    {
+      "id": "C-01",
+      "dimension": "C",
+      "format": "mc_multi",
+      "tier": 2,
+      "domain": "workplace",
+      "tag": "correlation-causation confusion",
+      "stem": "Employees who use the company's internal wiki score 18% higher on performance reviews.",
+      "reveal_sequentially": false,
+      "parts": [
+        {
+          "id": "a",
+          "stem": "You learn that an employee uses the wiki. How should you revise your estimate of their review score?",
+          "options": [
+            { "id": "up", "text": "Up", "correct": true },
+            { "id": "down", "text": "Down", "correct": false },
+            { "id": "same", "text": "Unchanged", "correct": false }
+          ]
+        },
+        {
+          "id": "b",
+          "stem": "The company now makes wiki use mandatory for everyone. What happens to average review scores?",
+          "options": [
+            { "id": "rise", "text": "They rise", "correct": false },
+            { "id": "fall", "text": "They fall", "correct": false },
+            { "id": "nochange", "text": "Little or no change", "correct": true }
+          ]
+        }
+      ],
+      "scoring": { "require_all_parts": true },
+      "combination_poles": [
+        { "answers": { "a": "up", "b": "rise" }, "pole": "-" },
+        { "answers": { "a": "same", "b": "nochange" }, "pole": "+" }
+      ],
+      "default_pole": "-",
+      "derivation": "Wiki use marks an underlying disposition rather than conferring one. Observing it is informative. Mandating the behaviour does not distribute the disposition. The score is the DIFFERENCE between the two answers."
+    },
+    {
+      "id": "C-02",
+      "dimension": "C",
+      "format": "select_all",
+      "tier": 2,
+      "domain": "everyday",
+      "tag": "hidden variable",
+      "stem": "Children who eat breakfast score higher on school tests. Select every factor that could produce this pattern without breakfast causing anything.",
+      "options": [
+        { "id": 1, "text": "Households that provide breakfast may be more organized in general", "target": true },
+        { "id": 2, "text": "Breakfast contains calories", "target": false },
+        { "id": 3, "text": "Children who sleep badly may skip breakfast and also test worse", "target": true },
+        { "id": 4, "text": "Families under financial strain may skip breakfast and face other disadvantages", "target": true },
+        { "id": 5, "text": "The study included 4,000 children", "target": false },
+        { "id": 6, "text": "Schools that serve breakfast may differ in other ways too", "target": true },
+        { "id": 7, "text": "Tests are usually held in the morning", "target": false }
+      ],
+      "scoring": { "require_all_targets": true, "max_foils": 0 },
+      "poles": { "under_selection": "-", "over_selection": "+" },
+      "derivation": "The four targets each describe a structure producing the association with breakfast doing nothing. Option 7 is the discriminating foil: morning testing describes a pathway THROUGH breakfast, which is a mechanism, not an alternative."
+    },
+    {
+      "id": "C-03",
+      "dimension": "C",
+      "format": "mc",
+      "tier": 2,
+      "domain": "media",
+      "tag": "directional collapse",
+      "stem": "People who report consuming the most political news also report the most political anger. Which explanation is LEAST consistent with this finding?",
+      "options": [
+        { "id": "A", "text": "Angry people seek out more political news.", "correct": false, "pole": "-" },
+        { "id": "B", "text": "Consuming political news increases anger.", "correct": false, "pole": "-" },
+        { "id": "C", "text": "Anger and news consumption are unrelated, and the finding is a coding error.", "correct": true },
+        { "id": "D", "text": "Both rise with strength of prior political commitment.", "correct": false, "pole": "-" }
+      ],
+      "derivation": "A, B and D are all live structures that would produce the observed pattern - reverse causation, forward causation, common cause. C does not explain the finding; it denies it."
+    },
+    {
+      "id": "C-04",
+      "dimension": "C",
+      "format": "scope_grid",
+      "tier": 1,
+      "domain": "environment",
+      "tag": "unconstrained counterfactual",
+      "stem": "Suppose this is how things work: DROUGHT causes LOW RESERVOIR causes WATER RESTRICTIONS. And separately: DROUGHT causes CROP FAILURE causes FOOD PRICE RISE. Answer each.",
+      "choices": ["yes", "no", "unaffected"],
+      "choice_labels": { "yes": "Yes", "no": "No", "unaffected": "It wouldn't be affected" },
+      "rows": [
+        { "id": 1, "text": "If the reservoir had been full - drought unchanged - would there still have been water restrictions?", "answer": "no" },
+        { "id": 2, "text": "If the reservoir had been full, would the crops still have failed?", "answer": "yes", "wrong_poles": { "no": "-", "unaffected": "+" } },
+        { "id": 3, "text": "If there had been no drought, would food prices have risen?", "answer": "no" },
+        { "id": 4, "text": "If food prices had not risen, would there still have been a drought?", "answer": "unaffected", "wrong_poles": { "no": "-", "yes": "-" } }
+      ],
+      "scoring": { "require_all_rows": true },
+      "derivation": "Read directly off the structure. No path from reservoir to crops, so changing the reservoir leaves crops alone. Food prices do not cause droughts. Rows 2 and 4 carry the diagnostic value."
+    },
+
+    {
+      "id": "A-01",
+      "dimension": "A",
+      "format": "mc",
+      "tier": 2,
+      "domain": "health",
+      "tag": "level conflation",
+      "stem": "\"Countries with higher average chocolate consumption have more Nobel laureates per head. So eating chocolate helps individual achievement.\" What is wrong with this reasoning?",
+      "options": [
+        { "id": "A", "text": "The sample of countries is too small", "correct": false, "pole": "-" },
+        { "id": "B", "text": "The evidence describes countries; the conclusion describes individuals - and country averages say nothing about which people ate what", "correct": true },
+        { "id": "C", "text": "Correlation doesn't prove causation", "correct": false, "pole": "-" },
+        { "id": "D", "text": "Nothing - it's a reasonable inference from the data", "correct": false, "pole": "-" }
+      ],
+      "derivation": "This is an ecological inference. Even if the country-level association were causal, nothing in it identifies which individuals consumed chocolate or which became laureates. Option C is true but generic - it applies to any correlational finding and is not the specific failure here."
+    },
+    {
+      "id": "A-02",
+      "dimension": "A",
+      "format": "two_step",
+      "tier": 1,
+      "domain": "workplace",
+      "tag": "anecdotal substitution",
+      "reveal_sequentially": true,
+      "step1": {
+        "stem": "Of 500 people who completed a training programme, 340 said it improved their work. What is the chance the next person says the same?",
+        "input": "percent",
+        "key": { "min": 66, "max": 70 }
+      },
+      "step2": {
+        "stem": "You now meet someone who took the programme and describes, in vivid detail, how it wasted their time. What is your estimate now?",
+        "input": "percent",
+        "key": { "relative_to": "step1", "max_abs_change": 3 }
+      },
+      "gating": { "score_only_if_step1_between": [60, 75], "else_flag": "arithmetic_issue" },
+      "pole_rules": [
+        { "expr": "drop_gt", "value": 3, "pole": "-" },
+        { "expr": "increase", "pole": "-" }
+      ],
+      "derivation": "340/500 = 68.0 percent. Adding one negative case: 340/501 = 67.9 percent. Correct movement is about one seventh of a percentage point. Typical drops are 10 to 20 points."
+    },
+    {
+      "id": "A-03",
+      "dimension": "A",
+      "format": "mc",
+      "tier": 2,
+      "domain": "health",
+      "tag": "overgeneralization",
+      "stem": "A trial of 210 adults aged 40-65 with mild high blood pressure, at four clinics in one city, found a 12% improvement. What is the broadest group this result supports?",
+      "options": [
+        { "id": "A", "text": "Just these 210 people", "correct": false, "pole": "+" },
+        { "id": "B", "text": "Adults aged 40-65 with mild high blood pressure in this city", "correct": true },
+        { "id": "C", "text": "Adults aged 40-65 with mild high blood pressure anywhere", "correct": false, "pole": "-" },
+        { "id": "D", "text": "Adults with high blood pressure generally", "correct": false, "pole": "-" },
+        { "id": "E", "text": "Adults generally", "correct": false, "pole": "-" }
+      ],
+      "derivation": "The sampling frame is four clinics in one city. Extending to anywhere requires a representativeness argument the study does not supply. Refusing to extend past the literal 210 participants discards the point of sampling."
+    },
+    {
+      "id": "A-04",
+      "dimension": "A",
+      "format": "scope_grid",
+      "tier": 2,
+      "domain": "workplace",
+      "tag": "cross-level extrapolation",
+      "stem": "A well-established finding: individuals tend to reciprocate when they receive an unexpected favour. For each use of this principle: within scope, outside scope, or can't tell?",
+      "choices": ["within", "outside", "cant_tell"],
+      "choice_labels": { "within": "Within scope", "outside": "Outside scope", "cant_tell": "Can't tell" },
+      "rows": [
+        { "id": 1, "text": "Helping a colleague before you need anything from them", "answer": "within", "wrong_poles": { "outside": "+", "cant_tell": "+" } },
+        { "id": 2, "text": "A company sending free samples to individual customers", "answer": "within", "wrong_poles": { "outside": "+", "cant_tell": "+" } },
+        { "id": 3, "text": "One country lowering tariffs to prompt another to reciprocate", "answer": "outside", "wrong_poles": { "within": "-", "cant_tell": "-" } },
+        { "id": 4, "text": "One department sending another department a report unprompted", "answer": "cant_tell", "wrong_poles": { "within": "-", "outside": "+" } }
+      ],
+      "scoring": { "require_all_rows": true },
+      "derivation": "The finding concerns individual psychology. Rows 1 and 2 involve individuals receiving something. A state is not a person and has no reciprocity intuition. Row 4 depends on whether individuals in the receiving department experience it personally - the item does not say."
+    },
+
+    {
+      "id": "E-01",
+      "dimension": "E",
+      "format": "two_step",
+      "tier": 1,
+      "domain": "workplace",
+      "tag": "rigidity / base-rate neglect",
+      "reveal_sequentially": true,
+      "preamble_emphasis": "In this industry, 12 out of every 100 suppliers turn out to be unreliable.",
+      "step1": {
+        "stem": "In this industry, 12 out of every 100 suppliers turn out to be unreliable. A screening service flags suppliers. It flags 85 out of every 100 unreliable suppliers - and it also flags 15 out of every 100 reliable ones. Before any screening, what is the chance this supplier is unreliable?",
+        "input": "percent",
+        "key": { "min": 10, "max": 14 }
+      },
+      "step2": {
+        "stem": "The service has now flagged this supplier. What is the chance it is unreliable?",
+        "input": "percent",
+        "key": { "min": 35, "max": 52 }
+      },
+      "pole_rules": [
+        { "expr": "step2_lt", "value": 30, "pole": "-" },
+        { "expr": "step2_gt", "value": 65, "pole": null, "flag": "base_rate_neglect", "note": "A U-dimension failure appearing in an E item. Record the flag; do not assign an E pole." }
+      ],
+      "derivation": "Prior odds 12:88 = 0.136. Likelihood ratio 85/15 = 5.667. Posterior odds 0.773, so P = 43.6 percent."
+    },
+    {
+      "id": "E-02",
+      "dimension": "E",
+      "format": "allocate",
+      "tier": 3,
+      "domain": "environment",
+      "tag": "over-deference / blanket distrust",
+      "stem": "The question: how fast a newly-introduced species will spread through a regional wetland. Four sources disagree. Distribute 100 points by how much weight each deserves.",
+      "total": 100,
+      "options": [
+        { "id": 1, "text": "An ecologist who specializes in invasive species in wetlands, publicly funded" },
+        { "id": 2, "text": "A wildlife biologist with 25 years of experience in this region - working on mammals" },
+        { "id": 3, "text": "A consultancy report commissioned by a developer, with fully documented methods" },
+        { "id": 4, "text": "A science writer with an excellent record of correct predictions about technology" }
+      ],
+      "key": [
+        { "option": 1, "op": "max" },
+        { "option": 4, "op": "lte", "value": 15 },
+        { "op": "none_zero" }
+      ],
+      "pole_rules": [
+        { "when": { "op": "all_equal" }, "pole": "-", "note": "checked first: a flat allocation is false equivalence, and would otherwise match the option-4 rule below" },
+        { "when": { "option": 3, "op": "eq", "value": 0 }, "pole": "-" },
+        { "when": { "option": 4, "op": "gte", "value": 25 }, "pole": "+" },
+        { "when": { "option": 1, "op": "gte", "value": 80 }, "pole": "+" }
+      ],
+      "default_pole": "-",
+      "derivation": "Domain match dominates. Adjacent expertise carries real but reduced weight. An interested source with published methods is discountable but verifiable. Track record in an unrelated field transfers very little - this is the judgment the item tests."
+    },
+    {
+      "id": "E-03",
+      "dimension": "E",
+      "format": "select_all",
+      "tier": 2,
+      "domain": "media",
+      "tag": "premature closure / indiscriminate skepticism",
+      "stem": "A newspaper's subscriptions rose 9% in the quarter it launched a podcast. Select every conclusion this evidence, on its own, establishes.",
+      "options": [
+        { "id": 1, "text": "Subscriptions rose 9%", "target": true, "trivial": true },
+        { "id": 2, "text": "The podcast caused the rise", "target": false },
+        { "id": 3, "text": "The podcast launched in a quarter when subscriptions rose", "target": true },
+        { "id": 4, "text": "The podcast was worth what it cost", "target": false },
+        { "id": 5, "text": "Without the podcast, subscriptions would have risen less", "target": false },
+        { "id": 6, "text": "Something changed at the newspaper that quarter", "target": true, "trivial": true },
+        { "id": 7, "text": "Podcasts help newspapers", "target": false }
+      ],
+      "scoring": { "require_all_targets": true, "max_foils": 0 },
+      "poles": { "under_selection": "-", "over_selection": "-" },
+      "special_rules": [
+        { "if_any_trivial_target_rejected": true, "pole": "+", "flag": "indiscriminate_skepticism", "overrides_pole": true }
+      ],
+      "derivation": "Options 1 and 3 restate what happened. Option 6 follows by definition. The rest require a comparison to what would have happened otherwise, which one quarter's figures cannot supply. Rejecting options 1 or 6 means 'be skeptical' has become a blanket policy."
+    },
+    {
+      "id": "E-04",
+      "dimension": "E",
+      "format": "open_text",
+      "tier": 3,
+      "domain": "workplace",
+      "scored": false,
+      "stem": "Some people argue that organizations should NOT use formal performance metrics. In 60-120 words, state the strongest version of that position - the one its ablest defender would give. Do not argue against it. Do not say whether you agree.",
+      "word_limits": { "min": 60, "max": 120 },
+      "review_rubric": [
+        "Fidelity: would a defender recognize this as their argument?",
+        "Strength: does it use the best reason, or the easiest one to knock down?",
+        "No caricature: no absurd premises, no imputed motives",
+        "Own view suppressed: no rebuttal smuggled in, no 'they claim that...'"
+      ],
+      "strong_answer_markers": [
+        "measures become targets and stop measuring what they measured",
+        "measurable work crowds out valuable unmeasurable work",
+        "measurement changes the behaviour it observes",
+        "gaming costs more than the information is worth"
+      ],
+      "weak_answer_markers": [
+        "people don't like being judged",
+        "it's demotivating",
+        "any sentence beginning 'they claim'"
+      ],
+      "derivation": "Not auto-scored in v1. Store responses for manual review."
+    }
+  ]
+}
