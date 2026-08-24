@@ -66,12 +66,12 @@
           No clear lean in either direction.
         {% endif %}
       </p>
-      <div class="ax-dim-chart-wrap">
-        <canvas id="dimChart_{{ key }}"></canvas>
-      </div>
       {% with blurb=dim_blurbs|get_item:key %}
       {% if blurb %}<p class="ax-dim-blurb">{{ blurb }}</p>{% endif %}
       {% endwith %}
+      <div class="ax-dim-chart-wrap">
+        <canvas id="dimChart_{{ key }}"></canvas>
+      </div>
     </div>
     {% endfor %}
   </section>
