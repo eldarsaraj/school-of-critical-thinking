@@ -1,0 +1,209 @@
+{% extends "axis5/base_axis5.html" %}
+{% block title %}Question {{ n|add:1 }} of {{ total }}{% endblock %}
+
+{% block header_right %}
+<span class="ax-header-count">{{ n|add:1 }} / {{ total }}</span>
+{% endblock %}
+
+{% block progress %}
+<div class="ax-progress-bar" role="progressbar" aria-valuenow="{{ completed }}" aria-valuemax="{{ total }}">
+  <div class="ax-progress-bar__fill" style="width:{{ completed|stringformat:'d' }}%"></div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="ax-item" data-format="{{ item.format }}">
+
+  <div class="ax-item__meta">
+    <span class="ax-item__dim">{{ item.get_dimension_display }}</span>
+  </div>
+
+  {% if error %}
+  <div class="ax-error" role="alert">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" id="ax-item-form" novalidate>
+    {% csrf_token %}
+    <input type="hidden" name="ms_first" id="ax-ms-first" value="0">
+    <input type="hidden" name="ms_total" id="ax-ms-total" value="0">
+    <input type="hidden" name="n_changes" id="ax-n-changes" value="0">
+
+    {% if item.format == "tf_confidence_block" %}
+      {% include "axis5/partials/_tf_confidence_block.html" %}
+
+    {% elif item.format == "mc" %}
+      {% include "axis5/partials/_mc.html" %}
+
+    {% elif item.format == "mc_multi" %}
+      {% include "axis5/partials/_mc_multi.html" %}
+
+    {% elif item.format == "select_all" %}
+      {% include "axis5/partials/_select_all.html" %}
+
+    {% elif item.format == "scope_grid" %}
+      {% include "axis5/partials/_scope_grid.html" %}
+
+    {% elif item.format == "allocate" %}
+      {% include "axis5/partials/_allocate.html" %}
+
+    {% elif item.format == "two_step" %}
+      {% include "axis5/partials/_two_step.html" %}
+
+    {% elif item.format == "open_text" %}
+      {% include "axis5/partials/_open_text.html" %}
+    {% endif %}
+
+    {% if item.format != "two_step" %}
+    <div class="ax-item__actions">
+      <button type="submit" class="ax-btn ax-btn--primary" id="ax-submit-btn">
+        {% if is_last %}Submit{% else %}Continue →{% endif %}
+      </button>
+    </div>
+    {% endif %}
+  </form>
+</div>
+
+<script>
+(function () {
+  const form = document.getElementById('ax-item-form');
+  const t0 = Date.now();
+  let tFirst = null;
+  let changes = 0;
+
+  function onInteract() {
+    if (!tFirst) tFirst = Date.now();
+    changes++;
+    document.getElementById('ax-n-changes').value = changes;
+  }
+
+  document.querySelectorAll('input, textarea, select').forEach(el => {
+    el.addEventListener('change', onInteract);
+    el.addEventListener('input', onInteract);
+  });
+
+  form.addEventListener('submit', function () {
+    document.getElementById('ax-ms-first').value = tFirst ? tFirst - t0 : 0;
+    document.getElementById('ax-ms-total').value = Date.now() - t0;
+  });
+
+  {% if item.format == "allocate" %}
+  // Live allocation total
+  const allocInputs = document.querySelectorAll('.ax-alloc-input');
+  const totalEl = document.getElementById('ax-alloc-total');
+  const required = {{ safe_payload.total|default:100 }};
+  const submitBtn = document.getElementById('ax-submit-btn');
+
+  function updateAlloc() {
+    const sum = [...allocInputs].reduce((a, el) => a + (parseFloat(el.value) || 0), 0);
+    totalEl.textContent = sum.toFixed(0);
+    const ok = Math.abs(sum - required) <= 0.51;
+    totalEl.className = ok ? 'ax-alloc-sum ax-alloc-sum--ok' : 'ax-alloc-sum ax-alloc-sum--err';
+    submitBtn.disabled = !ok;
+  }
+
+  allocInputs.forEach(el => el.addEventListener('input', updateAlloc));
+  updateAlloc();
+  {% endif %}
+
+  {% if item.format == "tf_confidence_block" %}
+  // Confidence sliders: track which have been touched; block submit until all set
+  const touched = new Set();
+  const submitBtn = document.getElementById('ax-submit-btn');
+
+  document.querySelectorAll('.ax-conf-slider').forEach(slider => {
+    slider.addEventListener('input', function () {
+      const id = this.dataset.kid;
+      touched.add(id);
+      this.closest('.ax-cal-row').querySelector('.ax-conf-unset').style.display = 'none';
+      this.closest('.ax-cal-row').querySelector('.ax-conf-val').textContent = this.value + '%';
+      checkReady();
+    });
+  });
+
+  function checkReady() {
+    const allSet = document.querySelectorAll('.ax-conf-slider').length === touched.size;
+    submitBtn.disabled = !allSet;
+  }
+  checkReady();
+  {% endif %}
+
+  {% if item.format == "open_text" %}
+  // Word counter
+  const textarea = document.getElementById('ax-text-input');
+  const counter = document.getElementById('ax-word-count');
+  const minWords = {{ safe_payload.word_limits.min|default:60 }};
+  const maxWords = {{ safe_payload.word_limits.max|default:120 }};
+
+  function countWords(text) {
+    return text.trim() ? text.trim().split(/\s+/).length : 0;
+  }
+
+  textarea.addEventListener('input', function () {
+    const wc = countWords(this.value);
+    counter.textContent = wc + ' word' + (wc === 1 ? '' : 's');
+    counter.className = wc < minWords ? 'ax-word-count ax-word-count--low'
+                      : wc > maxWords ? 'ax-word-count ax-word-count--high'
+                      : 'ax-word-count ax-word-count--ok';
+  });
+  {% endif %}
+
+  {% if item.format == "two_step" and not step1_locked %}
+  // Two-step: AJAX submit of step 1, then reveal step 2
+  const step1Form = document.getElementById('ax-step1-section');
+  const step1Btn = document.getElementById('ax-step1-btn');
+  const step2Section = document.getElementById('ax-step2-section');
+  const step1Input = document.getElementById('ax-step1-input');
+  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+  step1Btn.addEventListener('click', async function () {
+    const val = step1Input.value.trim();
+    if (!val || isNaN(Number(val))) {
+      step1Input.focus();
+      return;
+    }
+    step1Btn.disabled = true;
+    step1Btn.textContent = '…';
+
+    const body = new URLSearchParams({
+      csrfmiddlewaretoken: csrfToken,
+      step1: val,
+      ms_first: tFirst ? tFirst - t0 : 0,
+    });
+
+    try {
+      const res = await fetch('{% url "axis5:step" token=session.token n=n %}', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: body.toString(),
+      });
+
+      if (!res.ok) {
+        const d = await res.json();
+        alert(d.error || 'Something went wrong. Please try again.');
+        step1Btn.disabled = false;
+        step1Btn.textContent = 'Submit estimate';
+        return;
+      }
+
+      const data = await res.json();
+
+      // Lock step 1
+      step1Input.disabled = true;
+      step1Btn.style.display = 'none';
+      step1Form.querySelector('.ax-step-locked').style.display = 'block';
+
+      // Reveal step 2
+      document.getElementById('ax-step2-stem').textContent = data.step2.stem || '';
+      step2Section.style.display = 'block';
+      step2Section.querySelector('input').focus();
+
+    } catch (e) {
+      alert('Network error. Please try again.');
+      step1Btn.disabled = false;
+      step1Btn.textContent = 'Submit estimate';
+    }
+  });
+  {% endif %}
+}());
+</script>
+{% endblock %}

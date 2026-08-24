@@ -1,0 +1,38 @@
+<div class="ax-cal-instructions">{{ safe_payload.instructions }}</div>
+
+<div class="ax-cal-header">
+  <span class="ax-cal-header__stmt">Statement</span>
+  <span class="ax-cal-header__tf">True / False</span>
+  <span class="ax-cal-header__conf">Confidence</span>
+</div>
+
+{% for cal_item in safe_payload.items %}
+<div class="ax-cal-row">
+  <p class="ax-cal-row__stmt">{{ cal_item.statement }}</p>
+
+  <div class="ax-cal-row__tf">
+    <label class="ax-tf-label">
+      <input type="radio" name="answer_{{ cal_item.id }}" value="true" required>
+      <span>True</span>
+    </label>
+    <label class="ax-tf-label">
+      <input type="radio" name="answer_{{ cal_item.id }}" value="false" required>
+      <span>False</span>
+    </label>
+  </div>
+
+  <div class="ax-cal-row__conf">
+    <span class="ax-conf-unset">— set —</span>
+    <input
+      type="range"
+      class="ax-conf-slider"
+      name="confidence_{{ cal_item.id }}"
+      data-kid="{{ cal_item.id }}"
+      min="50" max="100" step="1"
+      style="opacity:0.3;"
+      oninput="this.style.opacity=1;"
+    >
+    <span class="ax-conf-val">—</span>
+  </div>
+</div>
+{% endfor %}

@@ -1,0 +1,15 @@
+{% if safe_payload.stem %}<p class="ax-stem">{{ safe_payload.stem }}</p>{% endif %}
+
+{% for part in safe_payload.parts %}
+<div class="ax-mc-part">
+  <p class="ax-part-stem">{{ part.stem }}</p>
+  <div class="ax-options" role="radiogroup" aria-label="{{ part.stem }}">
+    {% for opt in part.options %}
+    <label class="ax-option">
+      <input type="radio" name="part_{{ part.id }}" value="{{ opt.id }}" required>
+      <span class="ax-option__text">{{ opt.text }}</span>
+    </label>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}

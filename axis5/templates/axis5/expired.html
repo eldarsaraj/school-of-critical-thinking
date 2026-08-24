@@ -1,0 +1,9 @@
+{% extends "axis5/base_axis5.html" %}
+{% block title %}Session Expired{% endblock %}
+{% block content %}
+<div class="ax-message">
+  <h1>Session expired</h1>
+  <p>This assessment session has expired (incomplete sessions are held for 7 days). Please start a new one.</p>
+  <a href="{% url 'axis5:start' %}" class="ax-btn ax-btn--primary">Start again →</a>
+</div>
+{% endblock %}

@@ -89,6 +89,9 @@ class Session(models.Model):
     ip_hash = models.CharField(max_length=64, blank=True)
     # Token for token-based results access (Beta). Becomes FK-based when auth is added.
     token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    # Ordered list of Item PKs for this session (includes any field_test items).
+    # Fixed at session creation; never changes. Used for position/progress tracking.
+    item_sequence = models.JSONField(default=list)
 
     def __str__(self):
         return f"Session {self.pk} <{self.email}> ({self.state})"

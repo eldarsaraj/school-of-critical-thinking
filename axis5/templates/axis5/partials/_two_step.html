@@ -1,0 +1,69 @@
+{% if safe_payload.preamble_emphasis %}
+<div class="ax-preamble">{{ safe_payload.preamble_emphasis }}</div>
+{% endif %}
+
+{# Step 1 #}
+<div id="ax-step1-section" class="ax-step">
+  <p class="ax-step__label">Step 1 of 2</p>
+  <p class="ax-stem">{{ safe_payload.step1.stem }}</p>
+
+  {% if step1_locked %}
+  <div class="ax-step-locked-display">
+    <span class="ax-step-locked-label">Your estimate:</span>
+    <strong>{{ step1_value }}%</strong>
+  </div>
+  {% else %}
+  <div class="ax-step-input-row">
+    <input
+      type="number"
+      id="ax-step1-input"
+      class="ax-input ax-step-input"
+      min="0" max="100" step="1"
+      placeholder="0–100"
+      autocomplete="off"
+    >
+    <span class="ax-step-unit">%</span>
+  </div>
+  <button type="button" class="ax-btn ax-btn--secondary" id="ax-step1-btn">Submit estimate</button>
+  <p class="ax-step-locked" style="display:none;color:rgba(0,0,0,.45);font-size:13px;">Submitted — your estimate is locked.</p>
+  {% endif %}
+</div>
+
+{# Step 2 — hidden until step 1 submitted #}
+<div id="ax-step2-section" class="ax-step" {% if not step1_locked %}style="display:none;"{% endif %}>
+  <p class="ax-step__label">Step 2 of 2</p>
+  <p class="ax-stem" id="ax-step2-stem">
+    {% if step1_locked %}{{ safe_payload.step2.stem }}{% endif %}
+  </p>
+
+  <div class="ax-step-input-row">
+    <input
+      type="number"
+      name="step2"
+      class="ax-input ax-step-input"
+      min="0" max="100" step="1"
+      placeholder="0–100"
+      autocomplete="off"
+      {% if not step1_locked %}disabled{% endif %}
+    >
+    <span class="ax-step-unit">%</span>
+  </div>
+
+  <div class="ax-item__actions">
+    <button type="submit" class="ax-btn ax-btn--primary" {% if not step1_locked %}style="display:none;"{% endif %} id="ax-step2-submit">
+      {% if is_last %}Submit{% else %}Continue →{% endif %}
+    </button>
+  </div>
+</div>
+
+{% if step1_locked %}
+<script>
+// Already at step 2: enable the input and submit
+(function () {
+  const inp = document.querySelector('#ax-step2-section input[name="step2"]');
+  const btn = document.getElementById('ax-step2-submit');
+  if (inp) inp.disabled = false;
+  if (btn) btn.style.display = '';
+}());
+</script>
+{% endif %}

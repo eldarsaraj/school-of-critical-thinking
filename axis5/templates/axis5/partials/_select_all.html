@@ -1,0 +1,11 @@
+{% if safe_payload.stem %}<p class="ax-stem">{{ safe_payload.stem }}</p>{% endif %}
+<p class="ax-select-all-note">Select every statement that applies. There may be more than one correct answer, or none.</p>
+
+<div class="ax-options ax-options--check">
+  {% for opt in safe_payload.options %}
+  <label class="ax-option ax-option--check">
+    <input type="checkbox" name="options" value="{{ opt.id }}">
+    <span class="ax-option__text">{{ opt.text }}</span>
+  </label>
+  {% endfor %}
+</div>

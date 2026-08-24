@@ -1,0 +1,28 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AXIS-5{% endblock %} — School of Critical Thinking</title>
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  <link rel="stylesheet" href="{% static 'axis5/css/axis5.css' %}">
+</head>
+<body>
+  {% block body %}
+  <div class="ax-shell">
+    {% block header %}
+    <header class="ax-header">
+      <a href="/" class="ax-logo">School of Critical Thinking</a>
+      {% block header_right %}{% endblock %}
+    </header>
+    {% endblock %}
+
+    {% block progress %}{% endblock %}
+
+    <main class="ax-main">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+  {% endblock %}
+</body>
+</html>

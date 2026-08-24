@@ -1,0 +1,631 @@
+/* ============================================================
+   AXIS-5 Assessment
+   Design: maximum signal, minimum noise.
+   Typography leads. No decoration.
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   Shell & Layout
+   ---------------------------------------------------------- */
+.ax-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.ax-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  border-bottom: 0.5px solid rgba(0,0,0,0.1);
+}
+
+.ax-logo {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: rgba(0,0,0,0.45);
+  text-transform: uppercase;
+  transition: color 0.12s;
+}
+.ax-logo:hover { color: #161a1d; }
+
+.ax-header-count {
+  font-size: 13px;
+  color: rgba(0,0,0,0.4);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+}
+
+.ax-main {
+  flex: 1;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 56px 32px 80px;
+  width: 100%;
+}
+
+/* ----------------------------------------------------------
+   Progress bar — thin line at top, below header
+   ---------------------------------------------------------- */
+.ax-progress-bar {
+  height: 2px;
+  background: rgba(0,0,0,0.07);
+  position: relative;
+}
+.ax-progress-bar__fill {
+  height: 100%;
+  background: #161a1d;
+  transition: width 0.4s ease;
+  min-width: 2px;
+}
+
+/* ----------------------------------------------------------
+   Buttons
+   ---------------------------------------------------------- */
+.ax-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+  padding: 11px 22px;
+  transition: background 0.12s, opacity 0.12s;
+  text-decoration: none;
+}
+
+.ax-btn--primary {
+  background: #161a1d;
+  color: #fff;
+}
+.ax-btn--primary:hover { background: #2a3035; }
+.ax-btn--primary:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.ax-btn--secondary {
+  background: transparent;
+  color: #161a1d;
+  border: 0.5px solid rgba(0,0,0,0.3);
+}
+.ax-btn--secondary:hover { background: rgba(0,0,0,0.04); }
+
+.ax-btn--wide { width: 100%; justify-content: center; }
+
+/* ----------------------------------------------------------
+   Form inputs
+   ---------------------------------------------------------- */
+.ax-input {
+  font-family: inherit;
+  font-size: 15px;
+  color: #161a1d;
+  background: #fff;
+  border: 0.5px solid rgba(0,0,0,0.25);
+  border-radius: 2px;
+  padding: 10px 14px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.12s;
+  appearance: none;
+}
+.ax-input:focus {
+  outline: none;
+  border-color: rgba(0,0,0,0.5);
+}
+
+.ax-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.5);
+  margin-bottom: 6px;
+}
+
+.ax-field-note {
+  font-size: 13px;
+  color: rgba(0,0,0,0.45);
+  margin: 0 0 10px;
+}
+
+.ax-field-error {
+  font-size: 13px;
+  color: #c4635b;
+  margin: 0 0 8px;
+}
+
+/* ----------------------------------------------------------
+   Start page
+   ---------------------------------------------------------- */
+.ax-start {
+  max-width: 560px;
+}
+
+.ax-start__eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+  margin-bottom: 12px;
+}
+
+.ax-start__title {
+  font-size: 48px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #161a1d;
+  margin: 0 0 20px;
+}
+
+.ax-start__lead {
+  font-size: 17px;
+  line-height: 1.65;
+  color: rgba(0,0,0,0.7);
+  margin: 0 0 24px;
+}
+
+.ax-start__meta {
+  font-size: 13px;
+  color: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.ax-start__dot { color: rgba(0,0,0,0.25); }
+
+.ax-start__dimensions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 36px;
+}
+
+.ax-dim-pill {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.5);
+  border: 0.5px solid rgba(0,0,0,0.18);
+  border-radius: 2px;
+  padding: 4px 10px;
+}
+
+.ax-rule {
+  border: none;
+  border-top: 0.5px solid rgba(0,0,0,0.12);
+  margin: 0 0 32px;
+}
+
+.ax-start__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.ax-start__form .ax-input { margin-bottom: 14px; }
+
+.ax-start__disclaimer {
+  font-size: 12px;
+  color: rgba(0,0,0,0.38);
+  line-height: 1.6;
+  margin-top: 28px;
+}
+
+/* ----------------------------------------------------------
+   Item page
+   ---------------------------------------------------------- */
+.ax-item__meta {
+  margin-bottom: 20px;
+}
+
+.ax-item__dim {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+}
+
+.ax-error {
+  background: rgba(196, 99, 91, 0.08);
+  border-left: 2px solid #c4635b;
+  color: #c4635b;
+  font-size: 14px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  border-radius: 0 2px 2px 0;
+}
+
+.ax-stem {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #161a1d;
+  margin: 0 0 28px;
+  font-weight: 400;
+}
+
+.ax-preamble {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.03);
+  border-left: 2px solid rgba(0,0,0,0.15);
+  padding: 10px 14px;
+  margin: 0 0 24px;
+  border-radius: 0 2px 2px 0;
+}
+
+.ax-item__actions {
+  margin-top: 36px;
+}
+
+/* ----------------------------------------------------------
+   MC / radio options
+   ---------------------------------------------------------- */
+.ax-options {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ax-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 16px;
+  border: 0.5px solid rgba(0,0,0,0.12);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s;
+  background: rgba(255,255,255,0.6);
+}
+.ax-option:hover { background: rgba(0,0,0,0.025); border-color: rgba(0,0,0,0.22); }
+
+.ax-option input[type="radio"],
+.ax-option input[type="checkbox"] {
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: #161a1d;
+}
+
+.ax-option__text {
+  font-size: 15px;
+  line-height: 1.55;
+  color: #161a1d;
+}
+
+.ax-option--check { align-items: flex-start; }
+
+.ax-select-all-note {
+  font-size: 13px;
+  color: rgba(0,0,0,0.45);
+  margin: -12px 0 12px;
+  font-style: italic;
+}
+
+/* MC multi-part */
+.ax-mc-part {
+  margin-bottom: 32px;
+}
+.ax-part-stem {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(0,0,0,0.7);
+  margin: 0 0 12px;
+  font-style: italic;
+}
+
+/* ----------------------------------------------------------
+   Scope grid
+   ---------------------------------------------------------- */
+.ax-grid { margin-top: 8px; }
+
+.ax-grid__header {
+  display: grid;
+  grid-template-columns: 1fr repeat(3, 100px);
+  gap: 0;
+  padding: 0 0 8px;
+  border-bottom: 0.5px solid rgba(0,0,0,0.12);
+  margin-bottom: 4px;
+}
+.ax-grid__col-label {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+  text-align: center;
+}
+
+.ax-grid__row {
+  display: grid;
+  grid-template-columns: 1fr repeat(3, 100px);
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 0.5px solid rgba(0,0,0,0.06);
+  gap: 0;
+}
+.ax-grid__row:last-child { border-bottom: none; }
+
+.ax-grid__row-text {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #161a1d;
+  margin: 0;
+  padding-right: 16px;
+}
+
+.ax-grid__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+.ax-grid__cell input[type="radio"] { accent-color: #161a1d; }
+.ax-grid__choice-label { font-size: 11px; color: rgba(0,0,0,0.4); }
+
+/* ----------------------------------------------------------
+   Allocate
+   ---------------------------------------------------------- */
+.ax-alloc-instruction {
+  font-size: 14px;
+  color: rgba(0,0,0,0.55);
+  margin: -12px 0 20px;
+}
+
+.ax-alloc-grid { display: flex; flex-direction: column; gap: 12px; }
+
+.ax-alloc-row {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border: 0.5px solid rgba(0,0,0,0.12);
+  border-radius: 2px;
+}
+
+.ax-alloc-label {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #161a1d;
+}
+
+.ax-alloc-input {
+  width: 100%;
+  text-align: right;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ax-alloc-total-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 14px;
+  color: rgba(0,0,0,0.5);
+}
+
+.ax-alloc-sum {
+  font-size: 18px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #161a1d;
+  min-width: 32px;
+}
+.ax-alloc-sum--ok { color: #5aab8c; }
+.ax-alloc-sum--err { color: #c4635b; }
+
+/* ----------------------------------------------------------
+   Calibration block
+   ---------------------------------------------------------- */
+.ax-cal-instructions {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(0,0,0,0.6);
+  margin-bottom: 28px;
+  padding: 14px 16px;
+  border-left: 2px solid rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.025);
+}
+
+.ax-cal-header {
+  display: grid;
+  grid-template-columns: 1fr 140px 120px;
+  gap: 16px;
+  padding: 0 0 8px;
+  border-bottom: 0.5px solid rgba(0,0,0,0.12);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+}
+
+.ax-cal-row {
+  display: grid;
+  grid-template-columns: 1fr 140px 120px;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 0.5px solid rgba(0,0,0,0.06);
+}
+.ax-cal-row:last-child { border-bottom: none; }
+
+.ax-cal-row__stmt {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #161a1d;
+  margin: 0;
+}
+
+.ax-cal-row__tf {
+  display: flex;
+  gap: 8px;
+}
+.ax-tf-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: rgba(0,0,0,0.65);
+  cursor: pointer;
+  padding: 6px 10px;
+  border: 0.5px solid rgba(0,0,0,0.18);
+  border-radius: 2px;
+  transition: background 0.1s;
+  white-space: nowrap;
+}
+.ax-tf-label:hover { background: rgba(0,0,0,0.04); }
+.ax-tf-label input { accent-color: #161a1d; }
+
+.ax-cal-row__conf {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ax-conf-unset {
+  font-size: 11px;
+  color: rgba(0,0,0,0.3);
+  white-space: nowrap;
+  position: absolute;
+  pointer-events: none;
+}
+
+.ax-conf-slider {
+  width: 70px;
+  cursor: pointer;
+  accent-color: #161a1d;
+}
+
+.ax-conf-val {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: rgba(0,0,0,0.5);
+  min-width: 32px;
+}
+
+/* ----------------------------------------------------------
+   Two-step
+   ---------------------------------------------------------- */
+.ax-step {
+  margin-bottom: 32px;
+}
+
+.ax-step__label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin: 0 0 10px;
+}
+
+.ax-step-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.ax-step-input {
+  width: 100px;
+  text-align: right;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ax-step-unit {
+  font-size: 18px;
+  color: rgba(0,0,0,0.4);
+}
+
+.ax-step-locked-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.03);
+  border-radius: 2px;
+  font-size: 15px;
+}
+.ax-step-locked-label { color: rgba(0,0,0,0.45); }
+
+/* ----------------------------------------------------------
+   Open text
+   ---------------------------------------------------------- */
+.ax-textarea {
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #161a1d;
+  background: #fff;
+  border: 0.5px solid rgba(0,0,0,0.25);
+  border-radius: 2px;
+  padding: 14px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  transition: border-color 0.12s;
+}
+.ax-textarea:focus { outline: none; border-color: rgba(0,0,0,0.5); }
+
+.ax-open-text__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.ax-word-count {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: rgba(0,0,0,0.4);
+  transition: color 0.15s;
+}
+.ax-word-count--ok { color: #5aab8c; }
+.ax-word-count--low { color: rgba(0,0,0,0.4); }
+.ax-word-count--high { color: #c4635b; }
+
+.ax-word-count-hint {
+  font-size: 12px;
+  color: rgba(0,0,0,0.3);
+}
+
+/* ----------------------------------------------------------
+   Utility pages
+   ---------------------------------------------------------- */
+.ax-message h1,
+.ax-results-stub h1 {
+  font-size: 28px;
+  font-weight: 400;
+  margin: 0 0 16px;
+}
+.ax-message p,
+.ax-results-stub p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(0,0,0,0.6);
+  margin: 0 0 24px;
+}
+
+/* ----------------------------------------------------------
+   Responsive
+   ---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .ax-main { padding: 36px 20px 60px; }
+  .ax-header { padding: 16px 20px; }
+  .ax-start__title { font-size: 36px; }
+  .ax-stem { font-size: 16px; }
+  .ax-cal-header,
+  .ax-cal-row { grid-template-columns: 1fr; gap: 8px; }
+  .ax-cal-header { display: none; }
+  .ax-grid__header,
+  .ax-grid__row { grid-template-columns: 1fr repeat(3, 72px); }
+  .ax-alloc-row { grid-template-columns: 1fr 80px; }
+}

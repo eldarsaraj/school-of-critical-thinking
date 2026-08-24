@@ -9,6 +9,45 @@ The function boundaries are preserved 1:1 so tests map across directly.
 
 SCORING_VERSION = 1
 
+FORM_META = {
+    "id": "axis5-v1",
+    "form_version": 1,
+    "scoring_version": SCORING_VERSION,
+    "dimensions": {
+        "U": "Uncertainty Handling",
+        "M": "Model Awareness",
+        "C": "Causal Reasoning",
+        "A": "Abstraction Control",
+        "E": "Epistemic Humility",
+    },
+    "poles": {
+        "U": {"minus": "paralysis", "plus": "overconfidence"},
+        "M": {"minus": "literalism", "plus": "model nihilism"},
+        "C": {"minus": "over-attribution", "plus": "causal agnosticism"},
+        "A": {"minus": "overgeneralization", "plus": "particularism"},
+        "E": {"minus": "rigidity", "plus": "over-deference"},
+    },
+}
+
+
+def build_form_from_db(form_version=1):
+    """
+    Reconstruct the items.json-shaped form dict from the Item table.
+    Used by the complete view and rescore_all — avoids depending on the JSON file at runtime.
+    """
+    from axis5.models import Item
+    items_qs = Item.objects.filter(form_version=form_version, active=True).order_by("position")
+    calibration_payload = None
+    regular_payloads = []
+    for item in items_qs:
+        if item.format == "tf_confidence_block":
+            calibration_payload = item.payload
+        else:
+            regular_payloads.append(item.payload)
+    if calibration_payload is None:
+        raise ValueError(f"No calibration item found for form_version={form_version}")
+    return {"form": FORM_META, "calibration": calibration_payload, "items": regular_payloads}
+
 BANDS_4 = ["Misaligned", "Misaligned", "Emerging", "Aligned", "Robust"]
 BANDS_3 = ["Misaligned", "Emerging", "Aligned", "Robust"]
 

@@ -1,0 +1,13 @@
+{% extends "axis5/base_axis5.html" %}
+{% block title %}Your Results{% endblock %}
+
+{% block content %}
+<div class="ax-results-stub">
+  <h1>Assessment complete.</h1>
+  <p>Scoring complete. Results page coming in Stage 3.</p>
+  {% if session.email %}
+  <p>A link to your results has been sent to <strong>{{ session.email }}</strong>.</p>
+  {% endif %}
+  <pre style="font-size:12px;opacity:.5;margin-top:32px;">{{ payload|pprint }}</pre>
+</div>
+{% endblock %}

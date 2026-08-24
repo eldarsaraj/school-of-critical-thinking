@@ -1,0 +1,41 @@
+{% extends "axis5/base_axis5.html" %}
+{% block title %}AXIS-5 Assessment{% endblock %}
+
+{% block content %}
+<div class="ax-start">
+  <div class="ax-start__eyebrow">Critical Thinking Assessment</div>
+  <h1 class="ax-start__title">AXIS-5</h1>
+  <p class="ax-start__lead">A structured assessment of five dimensions of critical thinking. Not a personality test. Not a quiz. A diagnostic.</p>
+
+  <div class="ax-start__meta">
+    <span>26 questions</span>
+    <span class="ax-start__dot">·</span>
+    <span>Approximately 17 minutes</span>
+    <span class="ax-start__dot">·</span>
+    <span>Results emailed to you</span>
+  </div>
+
+  <div class="ax-start__dimensions">
+    <div class="ax-dim-pill">Uncertainty Handling</div>
+    <div class="ax-dim-pill">Model Awareness</div>
+    <div class="ax-dim-pill">Causal Reasoning</div>
+    <div class="ax-dim-pill">Abstraction Control</div>
+    <div class="ax-dim-pill">Epistemic Humility</div>
+  </div>
+
+  <hr class="ax-rule">
+
+  <form method="post" class="ax-start__form">
+    {% csrf_token %}
+    <label class="ax-label" for="id_email">Email address</label>
+    <p class="ax-field-note">Your results will be sent here. We do not share your address.</p>
+    {% if form.email.errors %}
+    <p class="ax-field-error">{{ form.email.errors|join:" " }}</p>
+    {% endif %}
+    {{ form.email }}
+    <button type="submit" class="ax-btn ax-btn--primary ax-btn--wide">Begin assessment →</button>
+  </form>
+
+  <p class="ax-start__disclaimer">Results are an indication, not a measurement. Four questions per dimension can tell you roughly where you stand and which direction you lean — not by how much.</p>
+</div>
+{% endblock %}

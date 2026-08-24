@@ -1,0 +1,15 @@
+{% if safe_payload.stem %}<p class="ax-stem">{{ safe_payload.stem }}</p>{% endif %}
+
+<div class="ax-open-text">
+  <textarea
+    id="ax-text-input"
+    name="text"
+    class="ax-textarea"
+    rows="8"
+    placeholder="Write your response here…"
+  ></textarea>
+  <div class="ax-open-text__footer">
+    <span id="ax-word-count" class="ax-word-count">0 words</span>
+    <span class="ax-word-count-hint">{{ safe_payload.word_limits.min|default:60 }}–{{ safe_payload.word_limits.max|default:120 }} words recommended</span>
+  </div>
+</div>
