@@ -49,6 +49,29 @@ DIMENSION_BLURBS = {
     ),
 }
 
+POLE_NOTES = {
+    "U": {
+        "-": "Watch for decisions stalled while waiting for a certainty that never fully arrives.",
+        "+": "Watch for conclusions that outrun the evidence — especially when the stakes are high.",
+    },
+    "M": {
+        "-": "Watch for applying a model outside the conditions that made it valid.",
+        "+": "Watch for refusing to commit to a framework when one is clearly better than the alternatives.",
+    },
+    "C": {
+        "-": "Watch for prescriptions built on correlations that would not survive an intervention.",
+        "+": "Watch for dismissing causal claims where the mechanism is actually well-established.",
+    },
+    "A": {
+        "-": "Watch for group-level findings applied to individuals without checking the fit.",
+        "+": "Watch for treating every case as unique when base rates are informative.",
+    },
+    "E": {
+        "-": "Watch for holding a position after the evidence has shifted the balance.",
+        "+": "Watch for deferring to credentials that do not cover the question actually being asked.",
+    },
+}
+
 FORM_META = {
     "id": "axis5-v1",
     "form_version": 1,

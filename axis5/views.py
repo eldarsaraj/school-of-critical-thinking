@@ -473,6 +473,10 @@ def results(request, token):
         cy = round(170 - cal["accuracy"] * 140, 1)
         cal_chart = {"cx": cx, "cy": cy}
 
+    conf_pct = round(cal["avg_confidence"] * 100) if cal else 0
+    acc_pct = round(cal["accuracy"] * 100) if cal else 0
+    gap_pp = round(abs(cal["gap"]) * 100) if cal else 0
+
     # Strongest pattern: lowest-band dimension with a direction
     strongest = None
     for _key, dim in dims_sorted:
@@ -529,7 +533,7 @@ def results(request, token):
             "pole": scored_result.get("pole"),
         })
 
-    from .services.scoring import FORM_META, DIMENSION_BLURBS
+    from .services.scoring import FORM_META, DIMENSION_BLURBS, POLE_NOTES
     poles = FORM_META["poles"]
     for dim_key, qs in per_dim_items.items():
         for q in qs:
@@ -540,6 +544,47 @@ def results(request, token):
                 q["pole_label"] = poles[dim_key]["plus"]
             else:
                 q["pole_label"] = None
+
+    # Per-dimension pole action notes
+    dim_pole_notes = {}
+    for key, dim in dims_sorted:
+        direction = dim.get("direction")
+        if direction in ("-", "+"):
+            dim_pole_notes[key] = POLE_NOTES.get(key, {}).get(direction)
+        else:
+            dim_pole_notes[key] = None
+
+    # Synthesis logic
+    dims_with_lean = [(k, d) for k, d in dims_sorted if d.get("direction")]
+    synthesis = None
+    if dims_with_lean:
+        bottom_two = [(k, d) for k, d in dims_sorted[:2] if d.get("direction")]
+        if (len(bottom_two) == 2 and
+                bottom_two[0][1]["direction"] == bottom_two[1][1]["direction"]):
+            d1k, d1 = bottom_two[0]
+            d2k, d2 = bottom_two[1]
+            direction = d1["direction"]
+            pole_side = "minus" if direction == "-" else "plus"
+            synthesis = {
+                "type": "aligned_weak",
+                "dim1": d1["name"],
+                "dim2": d2["name"],
+                "pole1": poles[d1k][pole_side],
+                "pole2": poles[d2k][pole_side],
+            }
+        else:
+            minus_dims = [(k, d) for k, d in dims_with_lean if d["direction"] == "-"]
+            plus_dims  = [(k, d) for k, d in dims_with_lean if d["direction"] == "+"]
+            dominant = minus_dims if len(minus_dims) >= len(plus_dims) else plus_dims
+            if len(dominant) >= 3:
+                direction = dominant[0][1]["direction"]
+                pole_side = "minus" if direction == "-" else "plus"
+                synthesis = {
+                    "type": "dominant",
+                    "count": len(dominant),
+                    "total_lean": len(dims_with_lean),
+                    "pole_names": [poles[k][pole_side] for k, d in dominant],
+                }
 
     return render(request, "axis5/results.html", {
         "session": session,
@@ -555,6 +600,11 @@ def results(request, token):
         "dim_blurbs": DIMENSION_BLURBS,
         "per_dim_items": per_dim_items,
         "cal_questions": cal_questions,
+        "conf_pct": conf_pct,
+        "acc_pct": acc_pct,
+        "gap_pp": gap_pp,
+        "dim_pole_notes": dim_pole_notes,
+        "synthesis": synthesis,
     })
 
 # ------------------------------------------------------------------ auth

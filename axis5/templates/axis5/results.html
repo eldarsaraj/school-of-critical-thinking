@@ -34,6 +34,15 @@
       {% elif calibration.verdict == "underconfident" %}Underconfident
       {% else %}Well Calibrated{% endif %}
     </span>
+    <p class="ax-cal-stat-line">
+      <span class="ax-cal-stat-num">{{ conf_pct }}%</span><span class="ax-cal-stat-label">confidence</span>
+      <span class="ax-cal-stat-arrow">→</span>
+      <span class="ax-cal-stat-num">{{ acc_pct }}%</span><span class="ax-cal-stat-label">accuracy</span>
+      <span class="ax-cal-stat-sep">·</span>
+      <span class="ax-cal-stat-gap ax-cal-stat-gap--{{ calibration.verdict }}">
+        {% if calibration.verdict == "overconfident" %}+{% elif calibration.verdict == "underconfident" %}−{% endif %}{{ gap_pp }}&thinsp;pp gap
+      </span>
+    </p>
     <p class="ax-cal-dash__desc">
       {% if calibration.verdict == "overconfident" %}
         Your confidence ran ahead of your accuracy. You were more certain than the evidence warranted — a pattern that tends to cut short information-gathering and second-checking.
@@ -55,6 +64,12 @@
       <canvas id="radarChart"></canvas>
     </div>
     <p class="ax-results-section__sub">Sorted from weakest to strongest below. The horizontal axis of each chart shows which pole you lean toward; the vertical axis shows your score.</p>
+    <div class="ax-band-legend">
+      <span class="ax-bl-item"><span class="ax-bl-dot ax-bl-dot--misaligned"></span>Misaligned</span>
+      <span class="ax-bl-item"><span class="ax-bl-dot ax-bl-dot--emerging"></span>Emerging</span>
+      <span class="ax-bl-item"><span class="ax-bl-dot ax-bl-dot--aligned"></span>Aligned</span>
+      <span class="ax-bl-item"><span class="ax-bl-dot ax-bl-dot--robust"></span>Robust</span>
+    </div>
 
     {% for key, dim in dims_sorted %}
     <div class="ax-dim-block">
@@ -69,6 +84,9 @@
           No clear lean in either direction.
         {% endif %}
       </p>
+      {% with note=dim_pole_notes|get_item:key %}
+      {% if note %}<p class="ax-dim-pole-note">{{ note }}</p>{% endif %}
+      {% endwith %}
       {% with blurb=dim_blurbs|get_item:key %}
       {% if blurb %}<p class="ax-dim-blurb">{{ blurb }}</p>{% endif %}
       {% endwith %}
@@ -80,15 +98,27 @@
   </section>
 
   <!-- ── Most Notable Pattern ──────────────────────────────── -->
-  {% if strongest %}
+  {% if synthesis or strongest %}
   <section class="ax-results-section">
-    <h2 class="ax-results-section__title">Most Notable Pattern</h2>
+    <h2 class="ax-results-section__title">Pattern</h2>
+    {% if synthesis %}
+      {% if synthesis.type == "aligned_weak" %}
+      <p class="ax-pattern-text">
+        Your two weakest dimensions — <strong>{{ synthesis.dim1 }}</strong> and <strong>{{ synthesis.dim2 }}</strong> — both lean in the same direction (<em>{{ synthesis.pole1 }}</em> and <em>{{ synthesis.pole2 }}</em>). Errors that cluster at the same pole across independent dimensions point to a stable tendency rather than isolated knowledge gaps.
+      </p>
+      {% elif synthesis.type == "dominant" %}
+      <p class="ax-pattern-text">
+        {{ synthesis.count }} of your {{ synthesis.total_lean }} dimensions with a directional lean all pull the same way ({% for p in synthesis.pole_names %}<em>{{ p }}</em>{% if not forloop.last %}, {% endif %}{% endfor %}). A bias consistent across independent domains is harder to attribute to specific knowledge gaps.
+      </p>
+      {% endif %}
+    {% elif strongest %}
     <p class="ax-pattern-text">
       Your clearest pattern is in <strong>{{ strongest.name }}</strong>:
       a consistent lean toward <strong>{{ strongest.direction_label }}</strong>.
       This is the dimension where your responses were most consistent —
       and where targeted work is most likely to have an effect.
     </p>
+    {% endif %}
   </section>
   {% endif %}
 
