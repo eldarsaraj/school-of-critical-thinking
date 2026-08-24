@@ -262,16 +262,13 @@
 .ax-start__sample p:last-child { margin-bottom: 0; }
 
 .ax-start__radar-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   margin: 0 0 32px;
 }
 
 .ax-start__radar-caption {
   font-size: 11px;
   color: rgba(0,0,0,0.3);
-  margin-top: 8px;
+  margin-top: 4px;
   font-style: italic;
   text-align: center;
 }
