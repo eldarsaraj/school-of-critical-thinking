@@ -59,23 +59,17 @@
 
   <form method="post" class="ax-start__form">
     {% csrf_token %}
-    <div class="ax-start__form-row">
-      <div class="ax-start__form-field">
-        <label class="ax-label" for="id_name">Your name</label>
-        {% if form.name.errors %}
-        <p class="ax-field-error">{{ form.name.errors|join:" " }}</p>
-        {% endif %}
-        {{ form.name }}
-      </div>
-      <div class="ax-start__form-field">
-        <label class="ax-label" for="id_email">Email address</label>
-        <p class="ax-field-note">Your results will be sent here. We do not share your address.</p>
-        {% if form.email.errors %}
-        <p class="ax-field-error">{{ form.email.errors|join:" " }}</p>
-        {% endif %}
-        {{ form.email }}
-      </div>
-    </div>
+    <label class="ax-label" for="id_name">Your name</label>
+    {% if form.name.errors %}
+    <p class="ax-field-error">{{ form.name.errors|join:" " }}</p>
+    {% endif %}
+    {{ form.name }}
+    <label class="ax-label" for="id_email">Email address</label>
+    <p class="ax-field-note">Your results will be sent here. We do not share your address.</p>
+    {% if form.email.errors %}
+    <p class="ax-field-error">{{ form.email.errors|join:" " }}</p>
+    {% endif %}
+    {{ form.email }}
     <button type="submit" class="ax-btn ax-btn--primary ax-btn--wide">Begin →</button>
   </form>
 
