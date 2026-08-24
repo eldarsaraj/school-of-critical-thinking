@@ -1,15 +1,53 @@
 {% extends "axis5/base_axis5.html" %}
 {% block title %}Axis-5 — Critical Thinking Assessment{% endblock %}
 
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+{% endblock %}
+
 {% block ax_content %}
 <div class="ax-start">
   <h1 class="ax-start__title">Axis-5</h1>
 
-  <p class="ax-start__lead">Critical thinking is the degree to which your mental model has the same shape as the reality you're operating within. Nobody is uniformly good at it because it's a complex set of skills. For example, someone who reads a spreadsheet perfectly can still miss a confounder; someone who spots every confounder can still be badly calibrated about risk.</p>
+  <p class="ax-start__lead">Critical thinking is the degree to which your mental model has the same shape as the reality you are operating in. Nobody is uniformly good at it, because it is not one skill. Someone who reads a spreadsheet perfectly can still miss a confounder; someone who spots every confounder can still be badly calibrated about risk.</p>
 
-  <p class="ax-start__lead">Axis-5 is a critical thinking test that measures five of these separately — uncertainty, model awareness, causal reasoning, abstraction control, and trust distribution — in about fifteen minutes. It's a one-of-a-kind test, aimed not to measure your intelligence (that's a separate ability) but your practical reasoning skills.</p>
+  <p class="ax-start__lead">Axis-5 measures five of these separately. We believe critical thinking is displayed across five unique and non-overlapping dimensions: uncertainty, model awareness, causal reasoning, abstraction control, and trust distribution. In this version of the test, in about fifteen minutes you'll get a complete baseline assessment of your critical thinking skills across these dimensions.</p>
 
-  <p class="ax-start__lead">Answer these questions honestly and without any external assistance (no googling or using AI). What you will get as a result is an alignment report: how well calibrated your mind is to external reality. Use the results as a guidance for your further development.</p>
+  <p class="ax-start__lead">Most questions have answers that follow from arithmetic or logic rather than opinion, so this is not a personality quiz: you can be wrong, and somewhere you will be. It is also not an intelligence test. Intelligence is largely fixed; these five are trainable, which is the only reason measuring them is worth your time.</p>
+
+  <p class="ax-start__lead"><strong>Uncertainty</strong> — whether your confidence tracks how often you are actually right. <strong>Model awareness</strong> — whether you can see the assumptions and the edges of the frameworks you use. <strong>Causal reasoning</strong> — whether you can tell which relationships would survive an intervention. <strong>Abstraction control</strong> — whether your claims stay at the level your evidence supports. <strong>Trust distribution</strong> — how you weigh sources, and how far your beliefs move when evidence arrives.</p>
+
+  <hr class="ax-rule">
+
+  <h2 class="ax-start__section-title">What the report tells you</h2>
+
+  <p class="ax-start__lead">The report produces five bands, one per dimension — and for each, the direction you fail in. This direction is actionable: someone who finds causes in every pattern and someone who refuses to draw any causal conclusion cannot score identically and need opposite corrections.</p>
+
+  <p class="ax-start__lead">You also get your calibration curve: your average stated confidence against how often you were right. Most people have never seen that number for themselves.</p>
+
+  <p class="ax-start__lead">What a line from the report looks like:</p>
+
+  <blockquote class="ax-start__sample">
+    <p>On those eight statements you were 82% confident on average. You were right 61% of the time.</p>
+    <p>Causal reasoning — Emerging. You lean toward seeing causes where there may only be patterns. When a story is available, you stop looking for a mechanism.</p>
+  </blockquote>
+
+  <div class="ax-start__radar-wrap">
+    <canvas id="ax-start-radar" width="340" height="300"></canvas>
+    <p class="ax-start__radar-caption">Hypothetical profile — your results will look different.</p>
+  </div>
+
+  <hr class="ax-rule">
+
+  <h2 class="ax-start__section-title">Before you start</h2>
+
+  <p class="ax-start__lead">This test is built for people whose work is mostly decisions. If you are an analyst, manager, engineer, clinician, or a founder — this test is for you.</p>
+
+  <p class="ax-start__lead">When you answer the questions, do it without external help — no search, no AI. This is not about fairness. Several questions measure the correspondence between your confidence and your accuracy, so outsourcing a judgment produces a well-calibrated report about somebody else, not you. Using external help would be a waste of your time.</p>
+
+  <p class="ax-start__lead">What you will get at the end is an alignment report: how closely your reasoning matches the structure of the situations you are reasoning about.</p>
+
+  <hr class="ax-rule">
 
   <div class="ax-start__meta">
     <span>19 questions</span>
@@ -19,25 +57,81 @@
     <span>Results emailed to you</span>
   </div>
 
-  <hr class="ax-rule">
-
   <form method="post" class="ax-start__form">
     {% csrf_token %}
-    <label class="ax-label" for="id_name">Your name</label>
-    {% if form.name.errors %}
-    <p class="ax-field-error">{{ form.name.errors|join:" " }}</p>
-    {% endif %}
-    {{ form.name }}
-    <label class="ax-label" for="id_email">Email address</label>
-    <p class="ax-field-note">Your results will be sent here. We do not share your address.</p>
-    {% if form.email.errors %}
-    <p class="ax-field-error">{{ form.email.errors|join:" " }}</p>
-    {% endif %}
-    {{ form.email }}
+    <div class="ax-start__form-row">
+      <div class="ax-start__form-field">
+        <label class="ax-label" for="id_name">Your name</label>
+        {% if form.name.errors %}
+        <p class="ax-field-error">{{ form.name.errors|join:" " }}</p>
+        {% endif %}
+        {{ form.name }}
+      </div>
+      <div class="ax-start__form-field">
+        <label class="ax-label" for="id_email">Email address</label>
+        <p class="ax-field-note">Your results will be sent here. We do not share your address.</p>
+        {% if form.email.errors %}
+        <p class="ax-field-error">{{ form.email.errors|join:" " }}</p>
+        {% endif %}
+        {{ form.email }}
+      </div>
+    </div>
     <button type="submit" class="ax-btn ax-btn--primary ax-btn--wide">Begin →</button>
   </form>
 
-  <p class="ax-start__disclaimer">This is an indication, not a measurement. Four questions per dimension can show you roughly where you stand and which direction you lean — not by how much.</p>
-  <p class="ax-start__footnote">Beta version. Larger test coming soon.</p>
+  <p class="ax-start__footnote">Free during beta. A longer version with scored results follows.</p>
 </div>
+
+<script>
+(function () {
+  const ctx = document.getElementById('ax-start-radar');
+  if (!ctx) return;
+
+  const DIM_LABELS = ['Uncertainty', 'Model\nAwareness', 'Causal\nReasoning', 'Abstraction\nControl', 'Trust\nDistribution'];
+  const SAMPLE_DATA = [55, 40, 72, 60, 78];
+
+  const DIM_COLOR = 'rgba(107, 132, 160, 0.7)';
+  const DIM_BG    = 'rgba(107, 132, 160, 0.12)';
+
+  new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: DIM_LABELS,
+      datasets: [{
+        data: SAMPLE_DATA,
+        borderColor: DIM_COLOR,
+        backgroundColor: DIM_BG,
+        borderWidth: 1.5,
+        pointRadius: 4,
+        pointBackgroundColor: DIM_COLOR,
+        pointBorderColor: '#fff',
+        pointBorderWidth: 1.5,
+      }],
+    },
+    options: {
+      responsive: false,
+      scales: {
+        r: {
+          min: 0,
+          max: 100,
+          ticks: {
+            stepSize: 25,
+            display: false,
+          },
+          grid: { color: 'rgba(0,0,0,0.07)' },
+          angleLines: { color: 'rgba(0,0,0,0.07)' },
+          pointLabels: {
+            font: { size: 12, family: "'EB Garamond', Georgia, serif" },
+            color: 'rgba(0,0,0,0.55)',
+          },
+        },
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: false },
+      },
+    },
+  });
+}());
+</script>
 {% endblock ax_content %}
