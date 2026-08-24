@@ -87,44 +87,38 @@
   });
 
   {% if item.format == "allocate" %}
-  // Live allocation total
-  const allocInputs = document.querySelectorAll('.ax-alloc-input');
+  // Live allocation total (sliders)
+  const allocSliders = document.querySelectorAll('.ax-alloc-slider');
   const totalEl = document.getElementById('ax-alloc-total');
   const required = {{ safe_payload.total|default:100 }};
   const submitBtn = document.getElementById('ax-submit-btn');
 
   function updateAlloc() {
-    const sum = [...allocInputs].reduce((a, el) => a + (parseFloat(el.value) || 0), 0);
+    const sum = [...allocSliders].reduce((a, el) => a + (parseFloat(el.value) || 0), 0);
     totalEl.textContent = sum.toFixed(0);
     const ok = Math.abs(sum - required) <= 0.51;
     totalEl.className = ok ? 'ax-alloc-sum ax-alloc-sum--ok' : 'ax-alloc-sum ax-alloc-sum--err';
     submitBtn.disabled = !ok;
   }
 
-  allocInputs.forEach(el => el.addEventListener('input', updateAlloc));
+  allocSliders.forEach(slider => {
+    slider.addEventListener('input', function () {
+      document.getElementById('alloc-val-' + this.id.replace('alloc_', '')).textContent = this.value;
+      updateAlloc();
+    });
+  });
   updateAlloc();
   {% endif %}
 
   {% if item.format == "tf_confidence_block" %}
-  // Confidence sliders: track which have been touched; block submit until all set
-  const touched = new Set();
-  const submitBtn = document.getElementById('ax-submit-btn');
-
+  // Confidence sliders: update display on move
   document.querySelectorAll('.ax-conf-slider').forEach(slider => {
+    // Show initial value
+    slider.closest('.ax-cal-row').querySelector('.ax-conf-val').textContent = slider.value + '%';
     slider.addEventListener('input', function () {
-      const id = this.dataset.kid;
-      touched.add(id);
-      this.closest('.ax-cal-row').querySelector('.ax-conf-unset').style.display = 'none';
       this.closest('.ax-cal-row').querySelector('.ax-conf-val').textContent = this.value + '%';
-      checkReady();
     });
   });
-
-  function checkReady() {
-    const allSet = document.querySelectorAll('.ax-conf-slider').length === touched.size;
-    submitBtn.disabled = !allSet;
-  }
-  checkReady();
   {% endif %}
 
   {% if item.format == "open_text" %}
@@ -194,8 +188,12 @@
 
       // Reveal step 2
       document.getElementById('ax-step2-stem').textContent = data.step2.stem || '';
+      const step2Input = step2Section.querySelector('input[name="step2"]');
+      const step2Submit = document.getElementById('ax-step2-submit');
+      step2Input.disabled = false;
+      step2Submit.style.display = '';
       step2Section.style.display = 'block';
-      step2Section.querySelector('input').focus();
+      step2Input.focus();
 
     } catch (e) {
       alert('Network error. Please try again.');

@@ -1,26 +1,18 @@
 {% extends "axis5/base_axis5.html" %}
-{% block title %}AXIS-5 Assessment{% endblock %}
+{% block title %}AXIS-5 — Critical Thinking Assessment{% endblock %}
 
 {% block content %}
 <div class="ax-start">
-  <div class="ax-start__eyebrow">Critical Thinking Assessment</div>
+  <div class="ax-start__eyebrow">School of Critical Thinking</div>
   <h1 class="ax-start__title">AXIS-5</h1>
-  <p class="ax-start__lead">A structured assessment of five dimensions of critical thinking. Not a personality test. Not a quiz. A diagnostic.</p>
+  <p class="ax-start__lead">Most thinking errors aren't random — they follow predictable patterns. AXIS-5 measures five dimensions where those patterns appear: how you handle uncertainty, how you build and use mental models, how you reason about cause and effect, how you move between abstract and concrete thinking, and how much weight you give to your own judgment versus others'. The assessment takes around 20 minutes. You'll receive a detailed report.</p>
 
   <div class="ax-start__meta">
-    <span>26 questions</span>
+    <span>19 questions</span>
     <span class="ax-start__dot">·</span>
-    <span>Approximately 17 minutes</span>
+    <span>~20 minutes</span>
     <span class="ax-start__dot">·</span>
     <span>Results emailed to you</span>
-  </div>
-
-  <div class="ax-start__dimensions">
-    <div class="ax-dim-pill">Uncertainty Handling</div>
-    <div class="ax-dim-pill">Model Awareness</div>
-    <div class="ax-dim-pill">Causal Reasoning</div>
-    <div class="ax-dim-pill">Abstraction Control</div>
-    <div class="ax-dim-pill">Epistemic Humility</div>
   </div>
 
   <hr class="ax-rule">
@@ -33,9 +25,9 @@
     <p class="ax-field-error">{{ form.email.errors|join:" " }}</p>
     {% endif %}
     {{ form.email }}
-    <button type="submit" class="ax-btn ax-btn--primary ax-btn--wide">Begin assessment →</button>
+    <button type="submit" class="ax-btn ax-btn--primary ax-btn--wide">Begin →</button>
   </form>
 
-  <p class="ax-start__disclaimer">Results are an indication, not a measurement. Four questions per dimension can tell you roughly where you stand and which direction you lean — not by how much.</p>
+  <p class="ax-start__disclaimer">This is an indication, not a measurement. Four questions per dimension can show you roughly where you stand and which direction you lean — not by how much.</p>
 </div>
 {% endblock %}

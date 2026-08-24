@@ -1,129 +1,284 @@
 {% extends "axis5/base_axis5.html" %}
 {% block title %}Your Results — AXIS-5{% endblock %}
 
-{% block content %}
-<div class="ax-results">
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+{% endblock %}
 
-  <div class="ax-results__header">
-    <h1 class="ax-results__title">AXIS-5 Assessment</h1>
-    <p class="ax-results__subtitle">Critical Thinking Diagnostic — Form v{{ result.form_version }}</p>
+{% block content %}
+<div class="ax-dashboard">
+
+  <!-- ── Header ────────────────────────────────────────────── -->
+  <div class="ax-dash-header">
+    <div class="ax-dash-header__left">
+      <p class="ax-dash-eyebrow">AXIS-5 Critical Thinking Assessment</p>
+      <h1 class="ax-dash-title">Your Results</h1>
+    </div>
+    <div class="ax-dash-header__right">
+      <p class="ax-dash-meta">Form v{{ result.form_version }} · Scored {{ result.computed_at|date:"N j, Y" }}</p>
+      {% if quality_flags %}
+      <p class="ax-dash-flags">
+        {% for f in quality_flags %}<span class="ax-flag">{{ f|title }}</span>{% endfor %}
+      </p>
+      {% endif %}
+    </div>
   </div>
 
-  <!-- ─── Calibration panel ─────────────────────────────────────── -->
-  <section class="ax-results-section">
-    <h2 class="ax-results__section-label">Confidence calibration</h2>
+  <!-- ── Main grid ─────────────────────────────────────────── -->
+  <div class="ax-dash-grid">
 
-    <div class="ax-cal-panel">
+    <!-- Calibration panel -->
+    <section class="ax-dash-card ax-dash-card--cal">
+      <h2 class="ax-dash-card__title">Confidence Calibration</h2>
       {% if calibration %}
-      <div class="ax-cal-panel__text">
-        <p class="ax-cal-verdict ax-cal-verdict--{{ calibration.verdict }}">
-          {% if calibration.verdict == "overconfident" %}Overconfident
-          {% elif calibration.verdict == "underconfident" %}Underconfident
-          {% else %}Well calibrated{% endif %}
-        </p>
-        <p class="ax-cal-desc">
-          {% if calibration.verdict == "overconfident" %}
-            Your confidence in your answers was higher than your accuracy. You were more sure than the results warranted — a common pattern that tends to close off the information-gathering that good judgment requires.
-          {% elif calibration.verdict == "underconfident" %}
-            Your accuracy exceeded your stated confidence. You knew more than you thought, or were more cautious than the evidence required. Underconfidence can look like epistemic humility but often reflects something closer to risk aversion.
-          {% else %}
-            Your confidence tracked your accuracy. You had a reasonable sense of what you knew and what you didn't — the foundation of reliable judgment under uncertainty.
-          {% endif %}
-        </p>
-      </div>
-
-      <div class="ax-cal-panel__chart">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
-             class="ax-cal-svg" aria-label="Calibration chart: confidence vs accuracy">
-
-          <!-- Grid background -->
-          <rect x="30" y="30" width="140" height="140" fill="none" stroke="#e8e4dc" stroke-width="1"/>
-
-          <!-- Diagonal: perfect calibration line -->
-          <line x1="30" y1="170" x2="170" y2="30"
-                stroke="#b8b4ac" stroke-width="1" stroke-dasharray="4 3"/>
-
-          <!-- Region labels -->
-          <text x="155" y="165" class="ax-svg-region" text-anchor="end">overconfident</text>
-          <text x="45" y="42" class="ax-svg-region" text-anchor="start">underconfident</text>
-
-          <!-- Respondent point -->
-          {% if cal_chart %}
-          <circle cx="{{ cal_chart.cx }}" cy="{{ cal_chart.cy }}"
-                  r="5" class="ax-cal-point ax-cal-point--{{ calibration.verdict }}"/>
-          {% endif %}
-
-          <!-- Axis labels -->
-          <text x="100" y="196" text-anchor="middle" class="ax-svg-label">Confidence</text>
-          <text x="10" y="100" text-anchor="middle"
-                transform="rotate(-90 10 100)" class="ax-svg-label">Accuracy</text>
-        </svg>
-        <p class="ax-cal-chart-note">The dot shows where you sit. The dashed line is where confidence equals accuracy.</p>
+      <div class="ax-cal-dash">
+        <div class="ax-cal-dash__verdict">
+          <span class="ax-cal-verdict-badge ax-cal-verdict-badge--{{ calibration.verdict }}">
+            {% if calibration.verdict == "overconfident" %}Overconfident
+            {% elif calibration.verdict == "underconfident" %}Underconfident
+            {% else %}Well Calibrated{% endif %}
+          </span>
+          <p class="ax-cal-dash__desc">
+            {% if calibration.verdict == "overconfident" %}
+              Your confidence ran ahead of your accuracy. You were more certain than the evidence warranted — a pattern that tends to cut short information-gathering and second-checking.
+            {% elif calibration.verdict == "underconfident" %}
+              Your accuracy exceeded your stated confidence. You knew more than you claimed to. This can look like epistemic humility but often reflects excessive caution or risk aversion.
+            {% else %}
+              Your confidence tracked your accuracy closely. You had a reliable sense of what you knew and what you didn't — the foundation of good judgment under uncertainty.
+            {% endif %}
+          </p>
+        </div>
+        <div class="ax-cal-dash__chart">
+          <canvas id="calChart"></canvas>
+          <p class="ax-cal-chart-note">Your position relative to the calibration line. Points below the line are overconfident; above are underconfident.</p>
+        </div>
       </div>
       {% else %}
       <p class="ax-muted">Calibration data unavailable.</p>
       {% endif %}
-    </div>
-  </section>
+    </section>
 
-  <!-- ─── Five dimensions ───────────────────────────────────────── -->
-  <section class="ax-results-section">
-    <h2 class="ax-results__section-label">Five dimensions</h2>
-    <p class="ax-results__section-note">Sorted from weakest to strongest.</p>
+    <!-- Dimensions panel -->
+    <section class="ax-dash-card ax-dash-card--dims">
+      <h2 class="ax-dash-card__title">Five Dimensions</h2>
+      <p class="ax-dash-card__sub">Sorted from weakest to strongest.</p>
+      <canvas id="dimChart" class="ax-dim-chart"></canvas>
 
-    <div class="ax-dims">
-      {% for key, dim in dims_sorted %}
-      <div class="ax-dim">
-        <div class="ax-dim__header">
-          <span class="ax-dim__name">{{ dim.name }}</span>
-          <span class="ax-dim__band ax-dim__band--{{ dim.band|lower }}">{{ dim.band }}</span>
+      <div class="ax-dim-details">
+        {% for key, dim in dims_sorted %}
+        <div class="ax-dim-detail">
+          <div class="ax-dim-detail__header">
+            <span class="ax-dim-detail__name">{{ dim.name }}</span>
+            <span class="ax-dim-band ax-dim-band--{{ dim.band|lower }}">{{ dim.band }}</span>
+          </div>
+          <p class="ax-dim-detail__direction">
+            {% if dim.direction_label %}
+              Leans toward <strong>{{ dim.direction_label }}</strong>.
+            {% else %}
+              No clear lean in either direction.
+            {% endif %}
+          </p>
         </div>
-
-        <!-- Four-segment band bar -->
-        <div class="ax-band-bar" aria-label="{{ dim.band }}">
-          <div class="ax-band-seg {% if dim.band == 'Misaligned' %}ax-band-seg--active ax-band-seg--misaligned{% endif %}"></div>
-          <div class="ax-band-seg {% if dim.band == 'Emerging' %}ax-band-seg--active ax-band-seg--emerging{% endif %}"></div>
-          <div class="ax-band-seg {% if dim.band == 'Aligned' %}ax-band-seg--active ax-band-seg--aligned{% endif %}"></div>
-          <div class="ax-band-seg {% if dim.band == 'Robust' %}ax-band-seg--active ax-band-seg--robust{% endif %}"></div>
-        </div>
-
-        <p class="ax-dim__direction">
-          {% if dim.direction_label %}
-            You lean toward <strong>{{ dim.direction_label }}</strong> in this dimension.
-          {% else %}
-            No clear lean in either direction here.
-          {% endif %}
-        </p>
+        {% endfor %}
       </div>
-      {% endfor %}
-    </div>
-  </section>
+    </section>
 
-  <!-- ─── Strongest pattern ─────────────────────────────────────── -->
-  {% if strongest %}
-  <section class="ax-results-section">
-    <h2 class="ax-results__section-label">Most notable pattern</h2>
-    <p class="ax-strongest">
-      Your clearest pattern is in <strong>{{ strongest.name }}</strong>:
-      a lean toward <strong>{{ strongest.direction_label }}</strong>.
-      This is the dimension where your responses were most consistent —
-      and where targeted work is most likely to have an effect.
-    </p>
-  </section>
-  {% endif %}
+    <!-- Strongest pattern -->
+    {% if strongest %}
+    <section class="ax-dash-card ax-dash-card--pattern">
+      <h2 class="ax-dash-card__title">Most Notable Pattern</h2>
+      <p class="ax-pattern-text">
+        Your clearest pattern is in <strong>{{ strongest.name }}</strong>:
+        a consistent lean toward <strong>{{ strongest.direction_label }}</strong>.
+        This is the dimension where your responses were most consistent —
+        and where targeted work is most likely to have an effect.
+      </p>
+    </section>
+    {% endif %}
 
-  <!-- ─── Honest limits ─────────────────────────────────────────── -->
+  </div><!-- /.ax-dash-grid -->
+
+  <!-- ── Honest limits ─────────────────────────────────────── -->
   <div class="ax-honest-limits">
     This is an indication, not a measurement. Four questions per dimension can show you roughly where you stand and which direction you lean. They can't tell you by how much.
   </div>
 
-  <!-- ─── Actions ───────────────────────────────────────────────── -->
-  <div class="ax-results__actions">
+  <!-- ── Actions ───────────────────────────────────────────── -->
+  <div class="ax-dash-actions">
     <a href="{% url 'axis5:start' %}" class="ax-btn ax-btn--ghost">Take again →</a>
     <a href="/" class="ax-btn ax-btn--ghost">Return to site →</a>
   </div>
+  <p class="ax-results__save-note">Bookmark this page — it is your permanent link to these results.</p>
 
-  <p class="ax-results__save-note">Save this page URL — it is your permanent link to these results.</p>
+</div><!-- /.ax-dashboard -->
 
-</div>
+<script>
+(function () {
+  const BAND_SCORE = { Misaligned: 1, Emerging: 2, Aligned: 3, Robust: 4 };
+  const BAND_COLOR = {
+    Misaligned: '#c4635b',
+    Emerging:   '#c8943a',
+    Aligned:    '#5b8ec4',
+    Robust:     '#5a9a6a',
+  };
+
+  // ── Calibration scatter chart ──────────────────────────────
+  {% if calibration and cal_chart %}
+  (function () {
+    const conf = {{ calibration.avg_confidence }};
+    const acc  = {{ calibration.accuracy }};
+
+    // Diagonal: perfect calibration line from (0.5,0.5) to (1.0,1.0)
+    const diag = [
+      { x: 0.5, y: 0.5 },
+      { x: 1.0, y: 1.0 },
+    ];
+
+    const verdictColor = {
+      overconfident:  '#c4635b',
+      underconfident: '#5b8ec4',
+      calibrated:     '#5a9a6a',
+    }['{{ calibration.verdict }}'] || '#161a1d';
+
+    new Chart(document.getElementById('calChart'), {
+      type: 'scatter',
+      data: {
+        datasets: [
+          {
+            label: 'Perfect calibration',
+            data: diag,
+            type: 'line',
+            borderColor: 'rgba(0,0,0,0.2)',
+            borderDash: [5, 4],
+            borderWidth: 1.5,
+            pointRadius: 0,
+            fill: false,
+            tension: 0,
+          },
+          {
+            label: 'You',
+            data: [{ x: conf, y: acc }],
+            backgroundColor: verdictColor,
+            borderColor: verdictColor,
+            pointRadius: 8,
+            pointHoverRadius: 10,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 1,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                if (ctx.datasetIndex === 1) {
+                  return [
+                    `Confidence: ${Math.round(conf * 100)}%`,
+                    `Accuracy: ${Math.round(acc * 100)}%`,
+                  ];
+                }
+                return null;
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            min: 0.45,
+            max: 1.05,
+            title: { display: true, text: 'Confidence', color: 'rgba(0,0,0,0.45)', font: { size: 11 } },
+            ticks: {
+              callback: v => Math.round(v * 100) + '%',
+              color: 'rgba(0,0,0,0.4)',
+              font: { size: 11 },
+            },
+            grid: { color: 'rgba(0,0,0,0.06)' },
+          },
+          y: {
+            min: -0.05,
+            max: 1.05,
+            title: { display: true, text: 'Accuracy', color: 'rgba(0,0,0,0.45)', font: { size: 11 } },
+            ticks: {
+              callback: v => Math.round(v * 100) + '%',
+              color: 'rgba(0,0,0,0.4)',
+              font: { size: 11 },
+            },
+            grid: { color: 'rgba(0,0,0,0.06)' },
+          },
+        },
+      },
+    });
+  }());
+  {% endif %}
+
+  // ── Dimensions horizontal bar chart ───────────────────────
+  (function () {
+    const dims = [
+      {% for key, dim in dims_sorted %}
+      {
+        label: '{{ dim.name }}',
+        band: '{{ dim.band }}',
+        score: {{ dim.correct }},
+        total: {{ dim.total }},
+      },
+      {% endfor %}
+    ];
+
+    const labels = dims.map(d => d.label);
+    const data   = dims.map(d => BAND_SCORE[d.band]);
+    const colors = dims.map(d => BAND_COLOR[d.band]);
+
+    new Chart(document.getElementById('dimChart'), {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          data,
+          backgroundColor: colors.map(c => c + '33'),
+          borderColor: colors,
+          borderWidth: 2,
+          borderRadius: 2,
+          borderSkipped: false,
+        }],
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const d = dims[ctx.dataIndex];
+                return `${d.band} (${d.score}/${d.total} correct)`;
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            min: 0,
+            max: 4,
+            ticks: {
+              stepSize: 1,
+              callback: v => ['', 'Misaligned', 'Emerging', 'Aligned', 'Robust'][v] || '',
+              color: 'rgba(0,0,0,0.4)',
+              font: { size: 11 },
+            },
+            grid: { color: 'rgba(0,0,0,0.06)' },
+          },
+          y: {
+            ticks: { color: 'rgba(0,0,0,0.65)', font: { size: 12 } },
+            grid: { display: false },
+          },
+        },
+      },
+    });
+  }());
+}());
+</script>
 {% endblock %}

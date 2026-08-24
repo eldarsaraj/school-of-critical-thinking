@@ -1,28 +1,29 @@
 {% if safe_payload.stem %}<p class="ax-stem">{{ safe_payload.stem }}</p>{% endif %}
 
-<p class="ax-alloc-instruction">Distribute <strong>{{ safe_payload.total|default:100 }} points</strong> across the options below. Any allocation is accepted.</p>
+<p class="ax-alloc-instruction">Distribute <strong>{{ safe_payload.total|default:100 }} points</strong> across the options. Adjust the sliders until the total reaches {{ safe_payload.total|default:100 }}.</p>
 
 <div class="ax-alloc-grid">
   {% for opt in safe_payload.options %}
   <div class="ax-alloc-row">
-    <label class="ax-alloc-label" for="alloc_{{ opt.id }}">{{ opt.text }}</label>
-    <div class="ax-alloc-input-wrap">
+    <label class="ax-alloc-label">{{ opt.text }}</label>
+    <div class="ax-alloc-slider-wrap">
       <input
-        type="number"
-        class="ax-alloc-input ax-input"
+        type="range"
+        class="ax-alloc-input ax-alloc-slider"
         id="alloc_{{ opt.id }}"
         name="alloc_{{ opt.id }}"
         min="0" max="{{ safe_payload.total|default:100 }}"
         value="0"
-        required
+        step="1"
       >
+      <span class="ax-alloc-val" id="alloc-val-{{ opt.id }}">0</span>
     </div>
   </div>
   {% endfor %}
 </div>
 
 <div class="ax-alloc-total-row">
-  <span>Total:</span>
+  <span class="ax-alloc-total-label">Total:</span>
   <span id="ax-alloc-total" class="ax-alloc-sum">0</span>
-  <span>/ {{ safe_payload.total|default:100 }}</span>
+  <span class="ax-alloc-total-of">/ {{ safe_payload.total|default:100 }}</span>
 </div>

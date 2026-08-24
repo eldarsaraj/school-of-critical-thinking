@@ -50,6 +50,7 @@ def _build_sequence(form_version=1):
     """
     scored = list(
         Item.objects.filter(form_version=form_version, active=True, field_test=False)
+        .exclude(format="open_text")
         .order_by("position")
         .values_list("id", flat=True)
     )
