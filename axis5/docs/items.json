@@ -9,7 +9,7 @@
       "M": "Model Awareness",
       "C": "Causal Reasoning",
       "A": "Abstraction Control",
-      "E": "Epistemic Humility"
+      "E": "Trust Distribution"
     },
     "poles": {
       "U": { "minus": "paralysis", "plus": "overconfidence" },
@@ -247,9 +247,9 @@
       "tier": 1,
       "domain": "environment",
       "tag": "unconstrained counterfactual",
-      "stem": "Suppose this is how things work: DROUGHT causes LOW RESERVOIR causes WATER RESTRICTIONS. And separately: DROUGHT causes CROP FAILURE causes FOOD PRICE RISE. Answer each.",
+      "stem": "Suppose this is how things work:\n\nDROUGHT → LOW RESERVOIR → WATER RESTRICTIONS\n\nAnd separately:\n\nDROUGHT → CROP FAILURE → FOOD PRICE RISE\n\nAnswer each question about this system.",
       "choices": ["yes", "no", "unaffected"],
-      "choice_labels": { "yes": "Yes", "no": "No", "unaffected": "It wouldn't be affected" },
+      "choice_labels": { "yes": "Yes", "no": "No", "unaffected": "Unrelated" },
       "rows": [
         { "id": 1, "text": "If the reservoir had been full - drought unchanged - would there still have been water restrictions?", "answer": "no" },
         { "id": 2, "text": "If the reservoir had been full, would the crops still have failed?", "answer": "yes", "wrong_poles": { "no": "-", "unaffected": "+" } },
@@ -270,7 +270,7 @@
       "stem": "\"Countries with higher average chocolate consumption have more Nobel laureates per head. So eating chocolate helps individual achievement.\" What is wrong with this reasoning?",
       "options": [
         { "id": "A", "text": "The sample of countries is too small", "correct": false, "pole": "-" },
-        { "id": "B", "text": "The evidence describes countries; the conclusion describes individuals - and country averages say nothing about which people ate what", "correct": true },
+        { "id": "B", "text": "It uses country-level data to draw a conclusion about individual people", "correct": true },
         { "id": "C", "text": "Correlation doesn't prove causation", "correct": false, "pole": "-" },
         { "id": "D", "text": "Nothing - it's a reasonable inference from the data", "correct": false, "pole": "-" }
       ],
@@ -325,7 +325,7 @@
       "tier": 2,
       "domain": "workplace",
       "tag": "cross-level extrapolation",
-      "stem": "A well-established finding: individuals tend to reciprocate when they receive an unexpected favour. For each use of this principle: within scope, outside scope, or can't tell?",
+      "stem": "Research finding: people tend to reciprocate when given an unexpected favour. For each situation below, does this principle apply — or does it go beyond what the finding covers?",
       "choices": ["within", "outside", "cant_tell"],
       "choice_labels": { "within": "Within scope", "outside": "Outside scope", "cant_tell": "Can't tell" },
       "rows": [
@@ -348,7 +348,7 @@
       "reveal_sequentially": true,
       "preamble_emphasis": "In this industry, 12 out of every 100 suppliers turn out to be unreliable.",
       "step1": {
-        "stem": "In this industry, 12 out of every 100 suppliers turn out to be unreliable. A screening service flags suppliers. It flags 85 out of every 100 unreliable suppliers - and it also flags 15 out of every 100 reliable ones. Before any screening, what is the chance this supplier is unreliable?",
+        "stem": "A screening service flags suppliers. It flags 85 out of every 100 unreliable suppliers — and also 15 out of every 100 reliable ones. Before any screening, what is the chance this supplier is unreliable?",
         "input": "percent",
         "key": { "min": 10, "max": 14 }
       },

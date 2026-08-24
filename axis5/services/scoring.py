@@ -18,7 +18,7 @@ FORM_META = {
         "M": "Model Awareness",
         "C": "Causal Reasoning",
         "A": "Abstraction Control",
-        "E": "Epistemic Humility",
+        "E": "Trust Distribution",
     },
     "poles": {
         "U": {"minus": "paralysis", "plus": "overconfidence"},

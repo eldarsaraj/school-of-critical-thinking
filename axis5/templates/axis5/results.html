@@ -1,4 +1,5 @@
 {% extends "axis5/base_axis5.html" %}
+{% load ax_tags %}
 {% block title %}Your Results — AXIS-5{% endblock %}
 
 {% block extra_head %}
@@ -42,9 +43,7 @@
         Your confidence tracked your accuracy closely. You had a reliable sense of what you knew and what you didn't — the foundation of good judgment under uncertainty.
       {% endif %}
     </p>
-    <div class="ax-chart-wrap ax-chart-wrap--square">
-      <canvas id="calChart"></canvas>
-    </div>
+    <canvas id="calChart" class="ax-cal-chart"></canvas>
     <p class="ax-cal-chart-note">Points below the diagonal are overconfident; above are underconfident.</p>
   </section>
   {% endif %}
@@ -52,7 +51,7 @@
   <!-- ── Five Dimensions ───────────────────────────────────── -->
   <section class="ax-results-section">
     <h2 class="ax-results-section__title">Five Dimensions</h2>
-    <p class="ax-results-section__sub">Sorted from weakest to strongest.</p>
+    <p class="ax-results-section__sub">Sorted from weakest to strongest. The horizontal axis shows which pole you lean toward; the vertical axis shows your score.</p>
 
     {% for key, dim in dims_sorted %}
     <div class="ax-dim-block">
@@ -67,7 +66,7 @@
           No clear lean in either direction.
         {% endif %}
       </p>
-      <div class="ax-chart-wrap ax-chart-wrap--dim">
+      <div class="ax-dim-chart-wrap">
         <canvas id="dimChart_{{ key }}"></canvas>
       </div>
     </div>
@@ -141,8 +140,8 @@
             data: [{ x: conf, y: acc }],
             backgroundColor: verdictColor,
             borderColor: verdictColor,
-            pointRadius: 8,
-            pointHoverRadius: 10,
+            pointRadius: 10,
+            pointHoverRadius: 12,
           },
         ],
       },
@@ -168,15 +167,13 @@
         },
         scales: {
           x: {
-            min: 0,
-            max: 1,
+            min: 0, max: 1,
             title: { display: true, text: 'Confidence', color: 'rgba(0,0,0,0.45)', font: { size: 11 } },
             ticks: { callback: v => Math.round(v * 100) + '%', color: 'rgba(0,0,0,0.4)', font: { size: 11 } },
             grid: { color: 'rgba(0,0,0,0.06)' },
           },
           y: {
-            min: 0,
-            max: 1,
+            min: 0, max: 1,
             title: { display: true, text: 'Accuracy', color: 'rgba(0,0,0,0.45)', font: { size: 11 } },
             ticks: { callback: v => Math.round(v * 100) + '%', color: 'rgba(0,0,0,0.4)', font: { size: 11 } },
             grid: { color: 'rgba(0,0,0,0.06)' },
@@ -187,7 +184,7 @@
   }());
   {% endif %}
 
-  // ── Per-dimension scatter charts ───────────────────────────
+  // ── Per-dimension 2D scatter charts ───────────────────────
   const dimData = [
     {% for key, dim in dims_sorted %}
     {
@@ -196,34 +193,42 @@
       band: '{{ dim.band }}',
       score: {{ dim.correct }},
       total: {{ dim.total }},
+      direction: '{{ dim.direction|default:"" }}',
+      direction_label: '{{ dim.direction_label|default:"" }}',
+      minus_pole: '{{ poles_by_dim|get_item:key|get_item:"minus" }}',
+      plus_pole:  '{{ poles_by_dim|get_item:key|get_item:"plus" }}',
     },
     {% endfor %}
   ];
 
   dimData.forEach(function (d) {
     const color = BAND_COLOR[d.band] || '#161a1d';
-    const pct = d.score / d.total;
+    const scoreY = d.score / d.total;
+    // X position: minus pole = 0.2, balanced = 0.5, plus pole = 0.8
+    const dirX = d.direction === '-' ? 0.2 : d.direction === '+' ? 0.8 : 0.5;
+
+    const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 
     new Chart(document.getElementById('dimChart_' + d.key), {
       type: 'scatter',
       data: {
         datasets: [
-          // horizontal baseline
+          // vertical center divider
           {
-            data: [{ x: 0, y: 0.5 }, { x: 1, y: 0.5 }],
+            data: [{ x: 0.5, y: 0 }, { x: 0.5, y: 1 }],
             type: 'line',
-            borderColor: 'rgba(0,0,0,0.1)',
+            borderColor: 'rgba(0,0,0,0.08)',
+            borderDash: [4, 3],
             borderWidth: 1,
             pointRadius: 0,
             fill: false,
             tension: 0,
           },
-          // "aligned" threshold at 75%
+          // horizontal performance reference at 75%
           {
-            data: [{ x: 0.75, y: 0 }, { x: 0.75, y: 1 }],
+            data: [{ x: 0, y: 0.75 }, { x: 1, y: 0.75 }],
             type: 'line',
-            borderColor: 'rgba(0,0,0,0.1)',
-            borderDash: [4, 3],
+            borderColor: 'rgba(0,0,0,0.06)',
             borderWidth: 1,
             pointRadius: 0,
             fill: false,
@@ -231,24 +236,26 @@
           },
           // score dot
           {
-            data: [{ x: pct, y: 0.5 }],
+            data: [{ x: dirX, y: scoreY }],
             backgroundColor: color,
             borderColor: color,
-            pointRadius: 8,
-            pointHoverRadius: 10,
+            pointRadius: 10,
+            pointHoverRadius: 12,
           },
         ],
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
+        aspectRatio: 1.8,
         plugins: {
           legend: { display: false },
           tooltip: {
             callbacks: {
               label: (ctx) => {
                 if (ctx.datasetIndex === 2) {
-                  return `${d.score} / ${d.total} correct (${Math.round(pct * 100)}%)`;
+                  const lean = d.direction_label ? `leans ${d.direction_label}` : 'balanced';
+                  return [`${d.score}/${d.total} correct`, lean];
                 }
                 return null;
               },
@@ -260,14 +267,28 @@
             min: 0,
             max: 1,
             ticks: {
-              callback: v => Math.round(v * 100) + '%',
-              color: 'rgba(0,0,0,0.4)',
-              font: { size: 11 },
-              maxTicksLimit: 5,
+              maxTicksLimit: 3,
+              callback: function (v) {
+                if (v <= 0.01) return cap(d.minus_pole);
+                if (v >= 0.99) return cap(d.plus_pole);
+                return '—';
+              },
+              color: 'rgba(0,0,0,0.38)',
+              font: { size: 10 },
             },
             grid: { color: 'rgba(0,0,0,0.05)' },
           },
-          y: { min: 0, max: 1, display: false },
+          y: {
+            min: 0,
+            max: 1,
+            title: { display: true, text: 'Score', color: 'rgba(0,0,0,0.38)', font: { size: 10 } },
+            ticks: {
+              callback: v => Math.round(v * 100) + '%',
+              color: 'rgba(0,0,0,0.38)',
+              font: { size: 10 },
+            },
+            grid: { color: 'rgba(0,0,0,0.05)' },
+          },
         },
       },
     });

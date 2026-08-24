@@ -1,11 +1,13 @@
 {% if safe_payload.stem %}<p class="ax-stem">{{ safe_payload.stem }}</p>{% endif %}
 {% if safe_payload.preamble_emphasis %}<p class="ax-preamble">{{ safe_payload.preamble_emphasis }}</p>{% endif %}
 
-<div class="ax-options" role="radiogroup">
-  {% for opt in safe_payload.options %}
-  <label class="ax-option">
-    <input type="radio" name="answer" value="{{ opt.id }}" required>
-    <span class="ax-option__text">{{ opt.text }}</span>
-  </label>
-  {% endfor %}
+<div class="ax-choices-box">
+  <div class="ax-options" role="radiogroup">
+    {% for opt in safe_payload.options %}
+    <label class="ax-option">
+      <input type="radio" name="answer" value="{{ opt.id }}" required>
+      <span class="ax-option__text">{{ opt.text }}</span>
+    </label>
+    {% endfor %}
+  </div>
 </div>

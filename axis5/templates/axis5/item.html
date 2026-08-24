@@ -5,18 +5,14 @@
 <span class="ax-header-count">{{ n|add:1 }} / {{ total }}</span>
 {% endblock %}
 
-{% block progress %}
-<div class="ax-progress-bar" role="progressbar" aria-valuenow="{{ completed }}" aria-valuemax="{{ total }}">
-  <div class="ax-progress-bar__fill" style="width:{{ completed|stringformat:'d' }}%"></div>
-</div>
-{% endblock %}
+{% block progress %}{% endblock %}
 
 {% block content %}
-<div class="ax-item" data-format="{{ item.format }}">
+<div class="ax-progress-bar" role="progressbar" aria-valuenow="{{ completed }}" aria-valuemax="{{ total }}">
+  <div class="ax-progress-bar__fill" style="width:{{ progress_pct }}%"></div>
+</div>
 
-  <div class="ax-item__meta">
-    <span class="ax-item__dim">{{ item.get_dimension_display }}</span>
-  </div>
+<div class="ax-item" data-format="{{ item.format }}">
 
   {% if error %}
   <div class="ax-error" role="alert">{{ error }}</div>
@@ -55,6 +51,9 @@
 
     {% if item.format != "two_step" %}
     <div class="ax-item__actions">
+      {% if prev_n is not None %}
+      <a href="{% url 'axis5:item' token=session.token n=prev_n %}" class="ax-btn ax-btn--secondary">← Back</a>
+      {% else %}<span></span>{% endif %}
       <button type="submit" class="ax-btn ax-btn--primary" id="ax-submit-btn">
         {% if is_last %}Submit{% else %}Continue →{% endif %}
       </button>
@@ -87,7 +86,7 @@
   });
 
   {% if item.format == "allocate" %}
-  // Live allocation total (sliders)
+  // Live allocation total with per-slider max capping
   const allocSliders = document.querySelectorAll('.ax-alloc-slider');
   const totalEl = document.getElementById('ax-alloc-total');
   const required = {{ safe_payload.total|default:100 }};
@@ -99,6 +98,11 @@
     const ok = Math.abs(sum - required) <= 0.51;
     totalEl.className = ok ? 'ax-alloc-sum ax-alloc-sum--ok' : 'ax-alloc-sum ax-alloc-sum--err';
     submitBtn.disabled = !ok;
+    // Prevent any slider from going beyond what the total allows
+    allocSliders.forEach(function (s) {
+      const others = sum - (parseFloat(s.value) || 0);
+      s.max = Math.max(0, required - Math.round(others));
+    });
   }
 
   allocSliders.forEach(slider => {
@@ -113,7 +117,6 @@
   {% if item.format == "tf_confidence_block" %}
   // Confidence sliders: update display on move
   document.querySelectorAll('.ax-conf-slider').forEach(slider => {
-    // Show initial value
     slider.closest('.ax-cal-row').querySelector('.ax-conf-val').textContent = slider.value + '%';
     slider.addEventListener('input', function () {
       this.closest('.ax-cal-row').querySelector('.ax-conf-val').textContent = this.value + '%';

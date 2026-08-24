@@ -11,7 +11,7 @@ class Item(models.Model):
         ("M", "Model Awareness"),
         ("C", "Causal Reasoning"),
         ("A", "Abstraction Control"),
-        ("E", "Epistemic Humility"),
+        ("E", "Trust Distribution"),
     ]
     FORMAT_CHOICES = [
         ("tf_confidence_block", "True/False + Confidence Block"),

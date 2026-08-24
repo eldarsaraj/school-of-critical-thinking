@@ -144,6 +144,7 @@ def item(request, token, n):
     ).exclude(value__has_key="_step1_locked").count()
 
     safe = _strip_payload(current.payload)
+    progress_pct = round(completed_count * 100 / len(items)) if items else 0
 
     return render(request, "axis5/item.html", {
         "session": session,
@@ -151,8 +152,10 @@ def item(request, token, n):
         "safe_payload": safe,
         "safe_payload_json": json.dumps(safe),
         "n": n,
+        "prev_n": n - 1 if n > 0 else None,
         "total": len(items),
         "completed": completed_count,
+        "progress_pct": progress_pct,
         "step1_locked": step1_locked,
         "step1_value": step1_value,
         "is_last": n == len(items) - 1,
@@ -477,6 +480,7 @@ def results(request, token):
             strongest = dim
             break
 
+    from .services.scoring import FORM_META
     return render(request, "axis5/results.html", {
         "session": session,
         "result": result,
@@ -487,6 +491,7 @@ def results(request, token):
         "dims_sorted": dims_sorted,
         "strongest": strongest,
         "quality_flags": [f for f in result.quality_flags if f != "rapid_responding"],
+        "poles_by_dim": FORM_META["poles"],
     })
 
 # ------------------------------------------------------------------ auth

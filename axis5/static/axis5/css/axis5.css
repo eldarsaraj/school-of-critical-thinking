@@ -68,6 +68,7 @@
   height: 2px;
   background: rgba(0,0,0,0.07);
   position: relative;
+  margin-bottom: 40px;
 }
 .ax-progress-bar__fill {
   height: 100%;
@@ -230,19 +231,16 @@
   margin-top: 28px;
 }
 
+.ax-start__footnote {
+  font-size: 12px;
+  color: rgba(0,0,0,0.3);
+  margin-top: 6px;
+  font-style: italic;
+}
+
 /* ----------------------------------------------------------
    Item page
    ---------------------------------------------------------- */
-.ax-item__meta {
-  margin-bottom: 20px;
-}
-
-.ax-item__dim {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.35);
-}
 
 .ax-error {
   background: rgba(196, 99, 91, 0.08);
@@ -275,6 +273,18 @@
 
 .ax-item__actions {
   margin-top: 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Choices box: subtle warm tint separating prompt from answers */
+.ax-choices-box {
+  margin-top: 20px;
+  background: rgba(196, 99, 91, 0.05);
+  border-radius: 4px;
+  padding: 16px 16px 12px;
 }
 
 /* ----------------------------------------------------------
@@ -553,6 +563,12 @@
   margin-top: 12px;
 }
 
+.ax-step-btn {
+  margin-left: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 .ax-step-input {
   width: 100px;
   text-align: right;
@@ -722,14 +738,16 @@
   line-height: 1.5;
 }
 
-/* Chart wrappers */
-.ax-chart-wrap--square {
-  max-width: 380px;
+/* Full-width calibration chart (Chart.js handles square via aspectRatio: 1) */
+.ax-cal-chart {
+  display: block;
+  width: 100% !important;
+  margin-top: 20px;
 }
 
-.ax-chart-wrap--dim {
-  height: 60px;
-  margin-top: 8px;
+/* Dimension charts */
+.ax-dim-chart-wrap {
+  margin: 10px 0 12px;
 }
 
 /* Dimension blocks */

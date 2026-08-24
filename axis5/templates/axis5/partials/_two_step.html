@@ -13,18 +13,20 @@
     <strong>{{ step1_value }}%</strong>
   </div>
   {% else %}
-  <div class="ax-step-input-row">
-    <input
-      type="number"
-      id="ax-step1-input"
-      class="ax-input ax-step-input"
-      min="0" max="100" step="1"
-      placeholder="0–100"
-      autocomplete="off"
-    >
-    <span class="ax-step-unit">%</span>
+  <div class="ax-choices-box">
+    <div class="ax-step-input-row">
+      <input
+        type="number"
+        id="ax-step1-input"
+        class="ax-input ax-step-input"
+        min="0" max="100" step="1"
+        placeholder="0–100"
+        autocomplete="off"
+      >
+      <span class="ax-step-unit">%</span>
+      <button type="button" class="ax-btn ax-btn--secondary ax-step-btn" id="ax-step1-btn">Submit estimate</button>
+    </div>
   </div>
-  <button type="button" class="ax-btn ax-btn--secondary" id="ax-step1-btn">Submit estimate</button>
   <p class="ax-step-locked" style="display:none;color:rgba(0,0,0,.45);font-size:13px;">Submitted — your estimate is locked.</p>
   {% endif %}
 </div>
@@ -36,29 +38,33 @@
     {% if step1_locked %}{{ safe_payload.step2.stem }}{% endif %}
   </p>
 
-  <div class="ax-step-input-row">
-    <input
-      type="number"
-      name="step2"
-      class="ax-input ax-step-input"
-      min="0" max="100" step="1"
-      placeholder="0–100"
-      autocomplete="off"
-      {% if not step1_locked %}disabled{% endif %}
-    >
-    <span class="ax-step-unit">%</span>
+  <div class="ax-choices-box">
+    <div class="ax-step-input-row">
+      <input
+        type="number"
+        name="step2"
+        class="ax-input ax-step-input"
+        min="0" max="100" step="1"
+        placeholder="0–100"
+        autocomplete="off"
+        {% if not step1_locked %}disabled{% endif %}
+      >
+      <span class="ax-step-unit">%</span>
+    </div>
   </div>
+</div>
 
-  <div class="ax-item__actions">
-    <button type="submit" class="ax-btn ax-btn--primary" {% if not step1_locked %}style="display:none;"{% endif %} id="ax-step2-submit">
-      {% if is_last %}Submit{% else %}Continue →{% endif %}
-    </button>
-  </div>
+<div class="ax-item__actions" id="ax-two-step-actions">
+  {% if prev_n is not None %}
+  <a href="{% url 'axis5:item' token=session.token n=prev_n %}" class="ax-btn ax-btn--secondary">← Back</a>
+  {% else %}<span></span>{% endif %}
+  <button type="submit" class="ax-btn ax-btn--primary" {% if not step1_locked %}style="display:none;"{% endif %} id="ax-step2-submit">
+    {% if is_last %}Submit{% else %}Continue →{% endif %}
+  </button>
 </div>
 
 {% if step1_locked %}
 <script>
-// Already at step 2: enable the input and submit
 (function () {
   const inp = document.querySelector('#ax-step2-section input[name="step2"]');
   const btn = document.getElementById('ax-step2-submit');

@@ -1,23 +1,24 @@
 {% load ax_tags %}
-{% if safe_payload.stem %}<p class="ax-stem">{{ safe_payload.stem }}</p>{% endif %}
+{% if safe_payload.stem %}<p class="ax-stem">{{ safe_payload.stem|linebreaksbr }}</p>{% endif %}
 
-<div class="ax-grid" role="group">
-  <div class="ax-grid__header" aria-hidden="true">
-    <span class="ax-grid__row-label"></span>
-    {% for choice in safe_payload.choices %}
-    <span class="ax-grid__col-label">{{ safe_payload.choice_labels|get_item:choice }}</span>
+<div class="ax-choices-box">
+  <div class="ax-grid" role="group">
+    <div class="ax-grid__header" aria-hidden="true">
+      <span class="ax-grid__row-label"></span>
+      {% for choice in safe_payload.choices %}
+      <span class="ax-grid__col-label">{{ safe_payload.choice_labels|get_item:choice }}</span>
+      {% endfor %}
+    </div>
+
+    {% for row in safe_payload.rows %}
+    <div class="ax-grid__row" role="radiogroup" aria-label="{{ row.text }}">
+      <p class="ax-grid__row-text">{{ row.text }}</p>
+      {% for choice in safe_payload.choices %}
+      <label class="ax-grid__cell">
+        <input type="radio" name="row_{{ row.id }}" value="{{ choice }}" required>
+      </label>
+      {% endfor %}
+    </div>
     {% endfor %}
   </div>
-
-  {% for row in safe_payload.rows %}
-  <div class="ax-grid__row" role="radiogroup" aria-label="{{ row.text }}">
-    <p class="ax-grid__row-text">{{ row.text }}</p>
-    {% for choice in safe_payload.choices %}
-    <label class="ax-grid__cell">
-      <input type="radio" name="row_{{ row.id }}" value="{{ choice }}" required>
-      <span class="ax-grid__choice-label">{{ safe_payload.choice_labels|get_item:choice }}</span>
-    </label>
-    {% endfor %}
-  </div>
-  {% endfor %}
 </div>
