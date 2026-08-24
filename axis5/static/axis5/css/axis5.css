@@ -747,8 +747,7 @@
 
 /* Radar overview chart */
 .ax-radar-wrap {
-  max-width: 360px;
-  margin: 16px auto 24px;
+  margin: 16px 0 24px;
 }
 
 /* Dimension charts */
