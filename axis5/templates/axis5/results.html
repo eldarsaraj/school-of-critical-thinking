@@ -75,21 +75,6 @@
       <div class="ax-dim-chart-wrap">
         <canvas id="dimChart_{{ key }}"></canvas>
       </div>
-      {% with qs=per_dim_items|get_item:key %}
-      {% if qs %}
-      <div class="ax-dim-questions">
-        {% for q in qs %}
-        <div class="ax-dq-row">
-          <span class="ax-dq-dot ax-dq-dot--{{ q.correct|yesno:'correct,wrong' }}"></span>
-          <span class="ax-dq-stem">{{ q.stem }}</span>
-          {% if not q.correct and q.pole_label %}
-          <span class="ax-dq-lean">→ {{ q.pole_label }}</span>
-          {% endif %}
-        </div>
-        {% endfor %}
-      </div>
-      {% endif %}
-      {% endwith %}
     </div>
     {% endfor %}
   </section>
@@ -120,6 +105,8 @@
   <p class="ax-results__save-note">Bookmark this page — it is your permanent link to these results.</p>
 
 </div>
+
+{{ per_dim_items|json_script:"ax-per-dim-data" }}
 
 <script>
 (function () {
@@ -290,19 +277,29 @@
     });
   }());
 
-  dimData.forEach(function (d) {
-    const color = BAND_COLOR[d.band] || '#161a1d';
-    const scoreY = d.score / d.total;
-    // X position: minus pole = 0.2, balanced = 0.5, plus pole = 0.8
-    const dirX = d.direction === '-' ? 0.2 : d.direction === '+' ? 0.8 : 0.5;
+  const perDimData = JSON.parse(document.getElementById('ax-per-dim-data').textContent);
+  const JITTER = [-0.07, 0.07, -0.03, 0.03];
+  const COLOR_CORRECT = '#5a9a6a';
+  const COLOR_WRONG   = '#c4635b';
 
+  dimData.forEach(function (d) {
     const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+    const qs = perDimData[d.key] || [];
+
+    // Build per-question scatter points
+    const points = qs.map(function (q, i) {
+      const poleX = q.pole === '-' ? 0.2 : q.pole === '+' ? 0.8 : 0.5;
+      const x = Math.min(0.96, Math.max(0.04, poleX + (JITTER[i % 4] || 0)));
+      const y = q.correct ? 0.82 : 0.28;
+      return { x, y };
+    });
+    const ptColors = qs.map(q => q.correct ? COLOR_CORRECT : COLOR_WRONG);
 
     new Chart(document.getElementById('dimChart_' + d.key), {
       type: 'scatter',
       data: {
         datasets: [
-          // vertical center divider
+          // vertical centre divider
           {
             data: [{ x: 0.5, y: 0 }, { x: 0.5, y: 1 }],
             type: 'line',
@@ -313,23 +310,24 @@
             fill: false,
             tension: 0,
           },
-          // horizontal performance reference at 75%
+          // horizontal separator between correct / wrong zones
           {
-            data: [{ x: 0, y: 0.75 }, { x: 1, y: 0.75 }],
+            data: [{ x: 0, y: 0.55 }, { x: 1, y: 0.55 }],
             type: 'line',
-            borderColor: 'rgba(0,0,0,0.06)',
+            borderColor: 'rgba(0,0,0,0.07)',
             borderWidth: 1,
             pointRadius: 0,
             fill: false,
             tension: 0,
           },
-          // score dot
+          // per-question dots
           {
-            data: [{ x: dirX, y: scoreY }],
-            backgroundColor: color,
-            borderColor: color,
-            pointRadius: 10,
-            pointHoverRadius: 12,
+            data: points,
+            backgroundColor: ptColors,
+            borderColor: '#fff',
+            borderWidth: 1.5,
+            pointRadius: 8,
+            pointHoverRadius: 10,
           },
         ],
       },
@@ -342,11 +340,12 @@
           tooltip: {
             callbacks: {
               label: (ctx) => {
-                if (ctx.datasetIndex === 2) {
-                  const lean = d.direction_label ? `leans ${d.direction_label}` : 'balanced';
-                  return [`${d.score}/${d.total} correct`, lean];
-                }
-                return null;
+                if (ctx.datasetIndex !== 2) return null;
+                const q = qs[ctx.dataIndex];
+                if (!q) return null;
+                const stem = q.stem.length > 90 ? q.stem.slice(0, 90) + '…' : q.stem;
+                if (q.correct) return [stem, '✓ Correct'];
+                return [stem, q.pole_label ? '→ ' + q.pole_label : '✗ Incorrect'];
               },
             },
           },
@@ -370,11 +369,14 @@
           y: {
             min: 0,
             max: 1,
-            title: { display: true, text: 'Score', color: 'rgba(0,0,0,0.38)', font: { size: 10 } },
             ticks: {
-              callback: v => Math.round(v * 100) + '%',
-              color: 'rgba(0,0,0,0.38)',
-              font: { size: 10 },
+              callback: v => {
+                if (v >= 0.78 && v <= 0.86) return '✓';
+                if (v >= 0.24 && v <= 0.32) return '✗';
+                return '';
+              },
+              color: 'rgba(0,0,0,0.35)',
+              font: { size: 11 },
             },
             grid: { color: 'rgba(0,0,0,0.05)' },
           },
