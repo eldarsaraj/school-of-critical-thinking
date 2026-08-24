@@ -622,9 +622,7 @@
    Results dashboard
    ---------------------------------------------------------- */
 .ax-dashboard {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 40px 32px 80px;
+  padding: 40px 0 80px;
 }
 
 /* Header */
@@ -633,7 +631,7 @@
   justify-content: space-between;
   align-items: flex-end;
   padding-bottom: 24px;
-  margin-bottom: 28px;
+  margin-bottom: 0;
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
@@ -675,30 +673,14 @@
   letter-spacing: 0.03em;
 }
 
-/* Dashboard grid */
-.ax-dash-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 20px;
-  margin-bottom: 20px;
+/* Sections */
+.ax-results-section {
+  padding: 32px 0 0;
+  margin-bottom: 40px;
+  border-top: 0.5px solid rgba(0,0,0,0.1);
 }
 
-/* Cards */
-.ax-dash-card {
-  background: rgba(255,255,255,0.6);
-  border: 0.5px solid rgba(0,0,0,0.1);
-  border-radius: 4px;
-  padding: 28px 28px 24px;
-}
-
-.ax-dash-card--cal { grid-column: 1; }
-.ax-dash-card--dims { grid-column: 2; }
-.ax-dash-card--pattern {
-  grid-column: 1 / -1;
-}
-
-.ax-dash-card__title {
+.ax-results-section__title {
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -707,22 +689,16 @@
   margin: 0 0 16px;
 }
 
-.ax-dash-card__sub {
+.ax-results-section__sub {
   font-size: 12px;
   color: rgba(0,0,0,0.38);
-  margin: -8px 0 16px;
+  margin: -8px 0 20px;
 }
 
-/* Calibration inside card */
-.ax-cal-dash {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
+/* Calibration */
 .ax-cal-verdict-badge {
   display: inline-block;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   letter-spacing: -0.01em;
   margin-bottom: 10px;
@@ -736,11 +712,7 @@
   font-size: 14px;
   line-height: 1.65;
   color: rgba(0,0,0,0.65);
-  margin: 0;
-}
-
-.ax-cal-dash__chart {
-  flex: 1;
+  margin: 0 0 20px;
 }
 
 .ax-cal-chart-note {
@@ -750,35 +722,41 @@
   line-height: 1.5;
 }
 
-/* Dimensions chart */
-.ax-dim-chart {
-  display: block;
-  width: 100% !important;
-  height: 180px !important;
-  margin-bottom: 20px;
+/* Chart wrappers */
+.ax-chart-wrap--square {
+  max-width: 380px;
 }
 
-.ax-dim-details {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.ax-chart-wrap--dim {
+  height: 60px;
+  margin-top: 8px;
 }
 
-.ax-dim-detail {
-  padding: 10px 0;
+/* Dimension blocks */
+.ax-dim-block {
+  padding: 20px 0 4px;
   border-top: 0.5px solid rgba(0,0,0,0.07);
 }
 
-.ax-dim-detail__header {
+.ax-dim-block:first-of-type { border-top: none; }
+
+.ax-dim-block__header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 
-.ax-dim-detail__name {
-  font-size: 13px;
-  color: rgba(0,0,0,0.8);
+.ax-dim-block__name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #161a1d;
+}
+
+.ax-dim-block__direction {
+  font-size: 12px;
+  color: rgba(0,0,0,0.45);
+  margin: 0 0 10px;
 }
 
 .ax-dim-band {
@@ -793,14 +771,7 @@
 .ax-dim-band--aligned    { color: #5b8ec4; }
 .ax-dim-band--robust     { color: #5a9a6a; }
 
-.ax-dim-detail__direction {
-  font-size: 12px;
-  color: rgba(0,0,0,0.45);
-  margin: 0;
-  line-height: 1.5;
-}
-
-/* Strongest pattern card */
+/* Most notable pattern */
 .ax-pattern-text {
   font-size: 15px;
   line-height: 1.7;

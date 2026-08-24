@@ -24,79 +24,68 @@
     </div>
   </div>
 
-  <!-- ── Main grid ─────────────────────────────────────────── -->
-  <div class="ax-dash-grid">
-
-    <!-- Calibration panel -->
-    <section class="ax-dash-card ax-dash-card--cal">
-      <h2 class="ax-dash-card__title">Confidence Calibration</h2>
-      {% if calibration %}
-      <div class="ax-cal-dash">
-        <div class="ax-cal-dash__verdict">
-          <span class="ax-cal-verdict-badge ax-cal-verdict-badge--{{ calibration.verdict }}">
-            {% if calibration.verdict == "overconfident" %}Overconfident
-            {% elif calibration.verdict == "underconfident" %}Underconfident
-            {% else %}Well Calibrated{% endif %}
-          </span>
-          <p class="ax-cal-dash__desc">
-            {% if calibration.verdict == "overconfident" %}
-              Your confidence ran ahead of your accuracy. You were more certain than the evidence warranted — a pattern that tends to cut short information-gathering and second-checking.
-            {% elif calibration.verdict == "underconfident" %}
-              Your accuracy exceeded your stated confidence. You knew more than you claimed to. This can look like epistemic humility but often reflects excessive caution or risk aversion.
-            {% else %}
-              Your confidence tracked your accuracy closely. You had a reliable sense of what you knew and what you didn't — the foundation of good judgment under uncertainty.
-            {% endif %}
-          </p>
-        </div>
-        <div class="ax-cal-dash__chart">
-          <canvas id="calChart"></canvas>
-          <p class="ax-cal-chart-note">Your position relative to the calibration line. Points below the line are overconfident; above are underconfident.</p>
-        </div>
-      </div>
+  <!-- ── Confidence Calibration ────────────────────────────── -->
+  {% if calibration %}
+  <section class="ax-results-section">
+    <h2 class="ax-results-section__title">Confidence Calibration</h2>
+    <span class="ax-cal-verdict-badge ax-cal-verdict-badge--{{ calibration.verdict }}">
+      {% if calibration.verdict == "overconfident" %}Overconfident
+      {% elif calibration.verdict == "underconfident" %}Underconfident
+      {% else %}Well Calibrated{% endif %}
+    </span>
+    <p class="ax-cal-dash__desc">
+      {% if calibration.verdict == "overconfident" %}
+        Your confidence ran ahead of your accuracy. You were more certain than the evidence warranted — a pattern that tends to cut short information-gathering and second-checking.
+      {% elif calibration.verdict == "underconfident" %}
+        Your accuracy exceeded your stated confidence. You knew more than you claimed to. This can look like epistemic humility but often reflects excessive caution or risk aversion.
       {% else %}
-      <p class="ax-muted">Calibration data unavailable.</p>
+        Your confidence tracked your accuracy closely. You had a reliable sense of what you knew and what you didn't — the foundation of good judgment under uncertainty.
       {% endif %}
-    </section>
+    </p>
+    <div class="ax-chart-wrap ax-chart-wrap--square">
+      <canvas id="calChart"></canvas>
+    </div>
+    <p class="ax-cal-chart-note">Points below the diagonal are overconfident; above are underconfident.</p>
+  </section>
+  {% endif %}
 
-    <!-- Dimensions panel -->
-    <section class="ax-dash-card ax-dash-card--dims">
-      <h2 class="ax-dash-card__title">Five Dimensions</h2>
-      <p class="ax-dash-card__sub">Sorted from weakest to strongest.</p>
-      <canvas id="dimChart" class="ax-dim-chart"></canvas>
+  <!-- ── Five Dimensions ───────────────────────────────────── -->
+  <section class="ax-results-section">
+    <h2 class="ax-results-section__title">Five Dimensions</h2>
+    <p class="ax-results-section__sub">Sorted from weakest to strongest.</p>
 
-      <div class="ax-dim-details">
-        {% for key, dim in dims_sorted %}
-        <div class="ax-dim-detail">
-          <div class="ax-dim-detail__header">
-            <span class="ax-dim-detail__name">{{ dim.name }}</span>
-            <span class="ax-dim-band ax-dim-band--{{ dim.band|lower }}">{{ dim.band }}</span>
-          </div>
-          <p class="ax-dim-detail__direction">
-            {% if dim.direction_label %}
-              Leans toward <strong>{{ dim.direction_label }}</strong>.
-            {% else %}
-              No clear lean in either direction.
-            {% endif %}
-          </p>
-        </div>
-        {% endfor %}
+    {% for key, dim in dims_sorted %}
+    <div class="ax-dim-block">
+      <div class="ax-dim-block__header">
+        <span class="ax-dim-block__name">{{ dim.name }}</span>
+        <span class="ax-dim-band ax-dim-band--{{ dim.band|lower }}">{{ dim.band }}</span>
       </div>
-    </section>
-
-    <!-- Strongest pattern -->
-    {% if strongest %}
-    <section class="ax-dash-card ax-dash-card--pattern">
-      <h2 class="ax-dash-card__title">Most Notable Pattern</h2>
-      <p class="ax-pattern-text">
-        Your clearest pattern is in <strong>{{ strongest.name }}</strong>:
-        a consistent lean toward <strong>{{ strongest.direction_label }}</strong>.
-        This is the dimension where your responses were most consistent —
-        and where targeted work is most likely to have an effect.
+      <p class="ax-dim-block__direction">
+        {% if dim.direction_label %}
+          Leans toward <strong>{{ dim.direction_label }}</strong>.
+        {% else %}
+          No clear lean in either direction.
+        {% endif %}
       </p>
-    </section>
-    {% endif %}
+      <div class="ax-chart-wrap ax-chart-wrap--dim">
+        <canvas id="dimChart_{{ key }}"></canvas>
+      </div>
+    </div>
+    {% endfor %}
+  </section>
 
-  </div><!-- /.ax-dash-grid -->
+  <!-- ── Most Notable Pattern ──────────────────────────────── -->
+  {% if strongest %}
+  <section class="ax-results-section">
+    <h2 class="ax-results-section__title">Most Notable Pattern</h2>
+    <p class="ax-pattern-text">
+      Your clearest pattern is in <strong>{{ strongest.name }}</strong>:
+      a consistent lean toward <strong>{{ strongest.direction_label }}</strong>.
+      This is the dimension where your responses were most consistent —
+      and where targeted work is most likely to have an effect.
+    </p>
+  </section>
+  {% endif %}
 
   <!-- ── Honest limits ─────────────────────────────────────── -->
   <div class="ax-honest-limits">
@@ -105,16 +94,15 @@
 
   <!-- ── Actions ───────────────────────────────────────────── -->
   <div class="ax-dash-actions">
-    <a href="{% url 'axis5:start' %}" class="ax-btn ax-btn--ghost">Take again →</a>
-    <a href="/" class="ax-btn ax-btn--ghost">Return to site →</a>
+    <a href="{% url 'axis5:start' %}" class="ax-btn ax-btn--primary">Take again →</a>
+    <a href="/" class="ax-btn ax-btn--secondary">Return to site →</a>
   </div>
   <p class="ax-results__save-note">Bookmark this page — it is your permanent link to these results.</p>
 
-</div><!-- /.ax-dashboard -->
+</div>
 
 <script>
 (function () {
-  const BAND_SCORE = { Misaligned: 1, Emerging: 2, Aligned: 3, Robust: 4 };
   const BAND_COLOR = {
     Misaligned: '#c4635b',
     Emerging:   '#c8943a',
@@ -122,18 +110,11 @@
     Robust:     '#5a9a6a',
   };
 
-  // ── Calibration scatter chart ──────────────────────────────
+  // ── Calibration scatter ────────────────────────────────────
   {% if calibration and cal_chart %}
   (function () {
     const conf = {{ calibration.avg_confidence }};
     const acc  = {{ calibration.accuracy }};
-
-    // Diagonal: perfect calibration line from (0.5,0.5) to (1.0,1.0)
-    const diag = [
-      { x: 0.5, y: 0.5 },
-      { x: 1.0, y: 1.0 },
-    ];
-
     const verdictColor = {
       overconfident:  '#c4635b',
       underconfident: '#5b8ec4',
@@ -146,9 +127,9 @@
         datasets: [
           {
             label: 'Perfect calibration',
-            data: diag,
+            data: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
             type: 'line',
-            borderColor: 'rgba(0,0,0,0.2)',
+            borderColor: 'rgba(0,0,0,0.18)',
             borderDash: [5, 4],
             borderWidth: 1.5,
             pointRadius: 0,
@@ -187,25 +168,17 @@
         },
         scales: {
           x: {
-            min: 0.45,
-            max: 1.05,
+            min: 0,
+            max: 1,
             title: { display: true, text: 'Confidence', color: 'rgba(0,0,0,0.45)', font: { size: 11 } },
-            ticks: {
-              callback: v => Math.round(v * 100) + '%',
-              color: 'rgba(0,0,0,0.4)',
-              font: { size: 11 },
-            },
+            ticks: { callback: v => Math.round(v * 100) + '%', color: 'rgba(0,0,0,0.4)', font: { size: 11 } },
             grid: { color: 'rgba(0,0,0,0.06)' },
           },
           y: {
-            min: -0.05,
-            max: 1.05,
+            min: 0,
+            max: 1,
             title: { display: true, text: 'Accuracy', color: 'rgba(0,0,0,0.45)', font: { size: 11 } },
-            ticks: {
-              callback: v => Math.round(v * 100) + '%',
-              color: 'rgba(0,0,0,0.4)',
-              font: { size: 11 },
-            },
+            ticks: { callback: v => Math.round(v * 100) + '%', color: 'rgba(0,0,0,0.4)', font: { size: 11 } },
             grid: { color: 'rgba(0,0,0,0.06)' },
           },
         },
@@ -214,38 +187,59 @@
   }());
   {% endif %}
 
-  // ── Dimensions horizontal bar chart ───────────────────────
-  (function () {
-    const dims = [
-      {% for key, dim in dims_sorted %}
-      {
-        label: '{{ dim.name }}',
-        band: '{{ dim.band }}',
-        score: {{ dim.correct }},
-        total: {{ dim.total }},
-      },
-      {% endfor %}
-    ];
+  // ── Per-dimension scatter charts ───────────────────────────
+  const dimData = [
+    {% for key, dim in dims_sorted %}
+    {
+      key: '{{ key }}',
+      name: '{{ dim.name }}',
+      band: '{{ dim.band }}',
+      score: {{ dim.correct }},
+      total: {{ dim.total }},
+    },
+    {% endfor %}
+  ];
 
-    const labels = dims.map(d => d.label);
-    const data   = dims.map(d => BAND_SCORE[d.band]);
-    const colors = dims.map(d => BAND_COLOR[d.band]);
+  dimData.forEach(function (d) {
+    const color = BAND_COLOR[d.band] || '#161a1d';
+    const pct = d.score / d.total;
 
-    new Chart(document.getElementById('dimChart'), {
-      type: 'bar',
+    new Chart(document.getElementById('dimChart_' + d.key), {
+      type: 'scatter',
       data: {
-        labels,
-        datasets: [{
-          data,
-          backgroundColor: colors.map(c => c + '33'),
-          borderColor: colors,
-          borderWidth: 2,
-          borderRadius: 2,
-          borderSkipped: false,
-        }],
+        datasets: [
+          // horizontal baseline
+          {
+            data: [{ x: 0, y: 0.5 }, { x: 1, y: 0.5 }],
+            type: 'line',
+            borderColor: 'rgba(0,0,0,0.1)',
+            borderWidth: 1,
+            pointRadius: 0,
+            fill: false,
+            tension: 0,
+          },
+          // "aligned" threshold at 75%
+          {
+            data: [{ x: 0.75, y: 0 }, { x: 0.75, y: 1 }],
+            type: 'line',
+            borderColor: 'rgba(0,0,0,0.1)',
+            borderDash: [4, 3],
+            borderWidth: 1,
+            pointRadius: 0,
+            fill: false,
+            tension: 0,
+          },
+          // score dot
+          {
+            data: [{ x: pct, y: 0.5 }],
+            backgroundColor: color,
+            borderColor: color,
+            pointRadius: 8,
+            pointHoverRadius: 10,
+          },
+        ],
       },
       options: {
-        indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
@@ -253,8 +247,10 @@
           tooltip: {
             callbacks: {
               label: (ctx) => {
-                const d = dims[ctx.dataIndex];
-                return `${d.band} (${d.score}/${d.total} correct)`;
+                if (ctx.datasetIndex === 2) {
+                  return `${d.score} / ${d.total} correct (${Math.round(pct * 100)}%)`;
+                }
+                return null;
               },
             },
           },
@@ -262,23 +258,20 @@
         scales: {
           x: {
             min: 0,
-            max: 4,
+            max: 1,
             ticks: {
-              stepSize: 1,
-              callback: v => ['', 'Misaligned', 'Emerging', 'Aligned', 'Robust'][v] || '',
+              callback: v => Math.round(v * 100) + '%',
               color: 'rgba(0,0,0,0.4)',
               font: { size: 11 },
+              maxTicksLimit: 5,
             },
-            grid: { color: 'rgba(0,0,0,0.06)' },
+            grid: { color: 'rgba(0,0,0,0.05)' },
           },
-          y: {
-            ticks: { color: 'rgba(0,0,0,0.65)', font: { size: 12 } },
-            grid: { display: false },
-          },
+          y: { min: 0, max: 1, display: false },
         },
       },
     });
-  }());
+  });
 }());
 </script>
 {% endblock %}

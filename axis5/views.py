@@ -486,7 +486,7 @@ def results(request, token):
         "dimensions": payload["dimensions"],
         "dims_sorted": dims_sorted,
         "strongest": strongest,
-        "quality_flags": result.quality_flags,
+        "quality_flags": [f for f in result.quality_flags if f != "rapid_responding"],
     })
 
 # ------------------------------------------------------------------ auth
