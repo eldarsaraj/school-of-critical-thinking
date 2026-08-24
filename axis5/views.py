@@ -453,12 +453,29 @@ def results(request, token):
         key=lambda x: band_order.get(x[1]["band"], 0),
     )
 
+    # SVG chart coordinates for calibration panel (viewBox 0 0 200 200, inner 30-170)
+    cal = payload.get("calibration")
+    cal_chart = None
+    if cal:
+        cx = round(30 + cal["avg_confidence"] * 140, 1)
+        cy = round(170 - cal["accuracy"] * 140, 1)
+        cal_chart = {"cx": cx, "cy": cy}
+
+    # Strongest pattern: lowest-band dimension with a direction
+    strongest = None
+    for _key, dim in dims_sorted:
+        if dim.get("direction_label"):
+            strongest = dim
+            break
+
     return render(request, "axis5/results.html", {
         "session": session,
         "result": result,
         "payload": payload,
-        "calibration": payload.get("calibration"),
+        "calibration": cal,
+        "cal_chart": cal_chart,
         "dimensions": payload["dimensions"],
         "dims_sorted": dims_sorted,
+        "strongest": strongest,
         "quality_flags": result.quality_flags,
     })

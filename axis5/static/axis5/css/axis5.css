@@ -598,6 +598,212 @@
 }
 
 /* ----------------------------------------------------------
+   Results page
+   ---------------------------------------------------------- */
+.ax-results {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+.ax-results__header {
+  margin-bottom: 48px;
+}
+
+.ax-results__title {
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+}
+
+.ax-results__subtitle {
+  font-size: 13px;
+  color: rgba(0,0,0,0.4);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.ax-results-section {
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: 0.5px solid rgba(0,0,0,0.1);
+}
+
+.ax-results__section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+  margin: 0 0 20px;
+}
+
+.ax-results__section-note {
+  font-size: 13px;
+  color: rgba(0,0,0,0.45);
+  margin: -12px 0 20px;
+}
+
+/* Calibration panel */
+.ax-cal-panel {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 32px;
+  align-items: start;
+}
+
+.ax-cal-verdict {
+  font-size: 22px;
+  font-weight: 400;
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+}
+
+.ax-cal-verdict--overconfident { color: #c4635b; }
+.ax-cal-verdict--underconfident { color: #5b8ec4; }
+.ax-cal-verdict--calibrated { color: #5a9a6a; }
+
+.ax-cal-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.7);
+  margin: 0;
+}
+
+.ax-cal-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.ax-svg-label {
+  font-size: 9px;
+  fill: rgba(0,0,0,0.4);
+  font-family: inherit;
+}
+
+.ax-svg-region {
+  font-size: 7px;
+  fill: rgba(0,0,0,0.3);
+  font-family: inherit;
+}
+
+.ax-cal-point {
+  fill: #161a1d;
+}
+.ax-cal-point--overconfident { fill: #c4635b; }
+.ax-cal-point--underconfident { fill: #5b8ec4; }
+.ax-cal-point--calibrated { fill: #5a9a6a; }
+
+.ax-cal-chart-note {
+  font-size: 11px;
+  color: rgba(0,0,0,0.38);
+  margin: 8px 0 0;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Dimension rows */
+.ax-dims {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.ax-dim__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.ax-dim__name {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.ax-dim__band {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ax-dim__band--misaligned { color: #c4635b; }
+.ax-dim__band--emerging { color: #b08040; }
+.ax-dim__band--aligned { color: #5b8ec4; }
+.ax-dim__band--robust { color: #5a9a6a; }
+
+/* Four-segment band bar */
+.ax-band-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  margin-bottom: 10px;
+}
+
+.ax-band-seg {
+  height: 5px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 2px;
+}
+
+.ax-band-seg--active { opacity: 1; }
+.ax-band-seg--misaligned { background: #c4635b; }
+.ax-band-seg--emerging { background: #c8943a; }
+.ax-band-seg--aligned { background: #5b8ec4; }
+.ax-band-seg--robust { background: #5a9a6a; }
+
+.ax-dim__direction {
+  font-size: 14px;
+  color: rgba(0,0,0,0.55);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* Strongest pattern */
+.ax-strongest {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.7);
+  margin: 0;
+  padding: 20px 24px;
+  background: rgba(0,0,0,0.025);
+  border-left: 2px solid rgba(0,0,0,0.12);
+}
+
+/* Honest limits */
+.ax-honest-limits {
+  font-size: 13px;
+  color: rgba(0,0,0,0.45);
+  line-height: 1.6;
+  padding: 20px 0;
+  border-top: 0.5px solid rgba(0,0,0,0.1);
+  border-bottom: 0.5px solid rgba(0,0,0,0.1);
+  margin-bottom: 32px;
+  font-style: italic;
+}
+
+/* Actions */
+.ax-results__actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ax-results__save-note {
+  font-size: 12px;
+  color: rgba(0,0,0,0.38);
+  margin: 0;
+}
+
+.ax-muted {
+  color: rgba(0,0,0,0.4);
+  font-size: 14px;
+}
+
+/* ----------------------------------------------------------
    Utility pages
    ---------------------------------------------------------- */
 .ax-message h1,
@@ -628,4 +834,8 @@
   .ax-grid__header,
   .ax-grid__row { grid-template-columns: 1fr repeat(3, 72px); }
   .ax-alloc-row { grid-template-columns: 1fr 80px; }
+  /* Results */
+  .ax-results { padding: 32px 20px 60px; }
+  .ax-cal-panel { grid-template-columns: 1fr; }
+  .ax-results__actions { flex-direction: column; }
 }
