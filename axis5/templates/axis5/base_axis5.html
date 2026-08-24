@@ -1,39 +1,12 @@
-{% load static %}<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}AXIS-5{% endblock %} — School of Critical Thinking</title>
-  <link rel="stylesheet" href="{% static 'css/site.css' %}">
-  <link rel="stylesheet" href="{% static 'axis5/css/axis5.css' %}">
-  {% block extra_head %}{% endblock %}
-</head>
-<body>
-  {% block body %}
-  <div class="ax-shell">
-    {% block header %}
-    <header class="ax-header">
-      <a href="/" class="ax-logo">School of Critical Thinking</a>
-      <div class="ax-header-right">
-        {% block header_right %}{% endblock %}
-        {% if user.is_authenticated %}
-          {% if user.is_staff %}
-          <a href="{% url 'axis5:item_stats' %}" class="ax-header-link">Stats</a>
-          {% endif %}
-          <a href="{% url 'axis5:logout' %}" class="ax-header-link">Sign out</a>
-        {% else %}
-          <a href="{% url 'axis5:login' %}" class="ax-header-link">Sign in</a>
-        {% endif %}
-      </div>
-    </header>
-    {% endblock %}
+{% extends "base.html" %}
+{% load static %}
 
-    {% block progress %}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'axis5/css/axis5.css' %}">
+{% endblock %}
 
-    <main class="ax-main">
-      {% block content %}{% endblock %}
-    </main>
-  </div>
-  {% endblock %}
-</body>
-</html>
+{% block content %}
+<div class="ax-main">
+  {% block ax_content %}{% endblock %}
+</div>
+{% endblock %}

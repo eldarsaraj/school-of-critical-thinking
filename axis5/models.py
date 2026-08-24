@@ -80,6 +80,8 @@ class Session(models.Model):
     )
     # Email captured at start. Used to send the results link in Beta.
     email = models.EmailField(blank=True)
+    # Name captured at start. Displayed on the results page.
+    name = models.CharField(max_length=120, blank=True)
     form_version = models.PositiveSmallIntegerField(default=1)
     started_at = models.DateTimeField(auto_now_add=True)
     completed_at = models.DateTimeField(null=True, blank=True)

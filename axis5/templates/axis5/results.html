@@ -4,16 +4,16 @@
 
 {% block extra_head %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-{% endblock %}
+{% endblock extra_head %}
 
-{% block content %}
+{% block ax_content %}
 <div class="ax-dashboard">
 
   <!-- ── Header ────────────────────────────────────────────── -->
   <div class="ax-dash-header">
     <div class="ax-dash-header__left">
       <p class="ax-dash-eyebrow">AXIS-5 Critical Thinking Assessment</p>
-      <h1 class="ax-dash-title">Your Results</h1>
+      <h1 class="ax-dash-title">{% if session.name %}{{ session.name }}'s Results{% else %}Your Results{% endif %}</h1>
     </div>
     <div class="ax-dash-header__right">
       <p class="ax-dash-meta">Form v{{ result.form_version }} · Scored {{ result.computed_at|date:"N j, Y" }}</p>
@@ -460,4 +460,4 @@
   });
 }());
 </script>
-{% endblock %}
+{% endblock ax_content %}

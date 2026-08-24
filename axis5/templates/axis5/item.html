@@ -1,13 +1,7 @@
 {% extends "axis5/base_axis5.html" %}
 {% block title %}Question {{ n|add:1 }} of {{ total }}{% endblock %}
 
-{% block header_right %}
-<span class="ax-header-count">{{ n|add:1 }} / {{ total }}</span>
-{% endblock %}
-
-{% block progress %}{% endblock %}
-
-{% block content %}
+{% block ax_content %}
 <div class="ax-progress-bar" role="progressbar" aria-valuenow="{{ completed }}" aria-valuemax="{{ total }}">
   <div class="ax-progress-bar__fill" style="width:{{ progress_pct }}%"></div>
 </div>
@@ -208,4 +202,4 @@
   {% endif %}
 }());
 </script>
-{% endblock %}
+{% endblock ax_content %}

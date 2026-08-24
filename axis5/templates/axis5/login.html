@@ -1,7 +1,7 @@
 {% extends "axis5/base_axis5.html" %}
 {% block title %}Sign In — AXIS-5{% endblock %}
 
-{% block content %}
+{% block ax_content %}
 <div class="ax-auth">
   <h1 class="ax-auth__title">Sign in</h1>
 
@@ -24,4 +24,4 @@
 
   <p class="ax-auth__switch">No account? <a href="{% url 'axis5:signup' %}">Create one</a></p>
 </div>
-{% endblock %}
+{% endblock ax_content %}

@@ -1,7 +1,7 @@
 {% extends "axis5/base_axis5.html" %}
 {% block title %}AXIS-5 — Critical Thinking Assessment{% endblock %}
 
-{% block content %}
+{% block ax_content %}
 <div class="ax-start">
   <h1 class="ax-start__title">AXIS-5</h1>
 
@@ -23,6 +23,11 @@
 
   <form method="post" class="ax-start__form">
     {% csrf_token %}
+    <label class="ax-label" for="id_name">Your name</label>
+    {% if form.name.errors %}
+    <p class="ax-field-error">{{ form.name.errors|join:" " }}</p>
+    {% endif %}
+    {{ form.name }}
     <label class="ax-label" for="id_email">Email address</label>
     <p class="ax-field-note">Your results will be sent here. We do not share your address.</p>
     {% if form.email.errors %}
@@ -35,4 +40,4 @@
   <p class="ax-start__disclaimer">This is an indication, not a measurement. Four questions per dimension can show you roughly where you stand and which direction you lean — not by how much.</p>
   <p class="ax-start__footnote">Beta version. Larger test coming soon.</p>
 </div>
-{% endblock %}
+{% endblock ax_content %}

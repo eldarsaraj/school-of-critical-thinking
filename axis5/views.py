@@ -88,6 +88,7 @@ def start(request):
             seq = _build_sequence()
             user = request.user if request.user.is_authenticated else None
             session = Session.objects.create(
+                name=form.cleaned_data["name"],
                 email=form.cleaned_data["email"],
                 user=user,
                 form_version=1,

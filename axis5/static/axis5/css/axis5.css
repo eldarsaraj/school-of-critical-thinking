@@ -54,10 +54,9 @@
 .ax-header-link:hover { color: #161a1d; }
 
 .ax-main {
-  flex: 1;
   max-width: 680px;
   margin: 0 auto;
-  padding: 56px 32px 80px;
+  padding: 8px 0 40px;
   width: 100%;
 }
 
@@ -1086,7 +1085,7 @@
    Responsive
    ---------------------------------------------------------- */
 @media (max-width: 600px) {
-  .ax-main { padding: 36px 20px 60px; }
+  .ax-main { padding: 4px 0 40px; }
   .ax-header { padding: 16px 20px; }
   .ax-start__title { font-size: 36px; }
   .ax-stem { font-size: 16px; }

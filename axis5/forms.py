@@ -3,6 +3,15 @@ from django.contrib.auth.models import User
 
 
 class StartForm(forms.Form):
+    name = forms.CharField(
+        label="Your name",
+        max_length=120,
+        widget=forms.TextInput(attrs={
+            "placeholder": "Full name",
+            "autocomplete": "name",
+            "class": "ax-input",
+        }),
+    )
     email = forms.EmailField(
         label="Email address",
         widget=forms.EmailInput(attrs={
@@ -14,6 +23,9 @@ class StartForm(forms.Form):
 
     def clean_email(self):
         return self.cleaned_data["email"].strip().lower()
+
+    def clean_name(self):
+        return self.cleaned_data["name"].strip()
 
 
 _INPUT = {"class": "ax-input"}
