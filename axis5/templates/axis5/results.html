@@ -210,12 +210,19 @@
   // ── Radar chart ─────────────────────────────────────────
   (function () {
     const ORDER = ['U', 'M', 'C', 'A', 'E'];
+    const DIM_COLOR = {
+      U: '#7ba3c4',  // dusty blue
+      M: '#7aaa8a',  // sage green
+      C: '#c47878',  // muted rose
+      A: '#a68fc4',  // dusty lavender
+      E: '#c4a464',  // warm amber
+    };
     const byKey = {};
     dimData.forEach(d => byKey[d.key] = d);
 
-    const labels  = ORDER.map(k => byKey[k] ? byKey[k].name : k);
-    const scores  = ORDER.map(k => byKey[k] ? Math.round(byKey[k].score / byKey[k].total * 100) : 0);
-    const ptColors = ORDER.map(k => byKey[k] ? (BAND_COLOR[byKey[k].band] || '#161a1d') : '#161a1d');
+    const labels   = ORDER.map(k => byKey[k] ? byKey[k].name : k);
+    const scores   = ORDER.map(k => byKey[k] ? Math.round(byKey[k].score / byKey[k].total * 100) : 0);
+    const ptColors = ORDER.map(k => DIM_COLOR[k] || '#161a1d');
 
     new Chart(document.getElementById('radarChart'), {
       type: 'radar',
@@ -227,9 +234,10 @@
           borderColor: 'rgba(91,142,196,0.7)',
           borderWidth: 2,
           pointBackgroundColor: ptColors,
-          pointBorderColor: ptColors,
-          pointRadius: 5,
-          pointHoverRadius: 7,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 1.5,
+          pointRadius: 7,
+          pointHoverRadius: 9,
         }],
       },
       options: {
