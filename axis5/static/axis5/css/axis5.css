@@ -815,12 +815,19 @@
 
 /* Radar overview chart */
 .ax-radar-title {
+  font-size: 17px;
+  font-weight: 700;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #161a1d;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+}
+
+.ax-radar-sub {
   font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.5);
-  margin: 0 0 10px;
+  color: rgba(0,0,0,0.45);
+  line-height: 1.6;
+  margin: 0 0 14px;
 }
 
 .ax-radar-wrap {
