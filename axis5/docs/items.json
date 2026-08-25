@@ -57,7 +57,7 @@
       "stem": "Choose one:",
       "options": [
         { "id": "A", "text": "Act now. 60% chance of a $30,000 gain, 40% chance of an $8,000 loss.", "correct": true },
-        { "id": "B", "text": "Wait three months for a report that will tell you which outcome applies. Waiting reduces the gain to $16,000; the loss becomes $0.", "correct": false, "pole": "-" },
+        { "id": "B", "text": "Wait three months for a change in probabilities. Gain becomes 75% and loss becomes 25%. Waiting reduces the gain to $16,000; the loss becomes $3,000.", "correct": false, "pole": "-" },
         { "id": "C", "text": "Decline. $0.", "correct": false, "pole": "-" }
       ],
       "derivation": "EV(A) = 0.6*30000 + 0.4*(-8000) = 14800. EV(B) = 0.6*16000 = 9600. EV(C) = 0. Waiting for certainty costs 5200."
@@ -107,7 +107,7 @@
       "tier": 2,
       "domain": "environment",
       "tag": "scope-limit failure",
-      "stem": "A model predicts crop yield from rainfall. It was built on 12 years of data from one region, where irrigation was available throughout. For each new setting: does the model hold, break, or can you not tell from what you have been given?",
+      "stem": "An agricultural model predicts crop yield from rainfall. It was built on 12 years of data from one region, where irrigation was available throughout. Imagine other people want to use this model for agricultural prediction elsewhere. For each new setting, decide if the model holds, breaks, or you cannot tell from what you have been given",
       "choices": ["holds", "breaks", "cant_tell"],
       "choice_labels": { "holds": "Holds", "breaks": "Breaks", "cant_tell": "Can't tell" },
       "rows": [
@@ -126,7 +126,7 @@
       "tier": 2,
       "domain": "media",
       "tag": "reification",
-      "stem": "Mark every sentence that treats a measurement or category as something that acts - something with intentions or causal power of its own.",
+      "stem": "Mark every sentence that you think doesn't properly describe the underlying phenomenon.",
       "options": [
         { "id": 1, "text": "Engagement fell 12% after the redesign.", "target": false },
         { "id": 2, "text": "Engagement punished the redesign.", "target": true },
@@ -146,7 +146,7 @@
       "tier": 2,
       "domain": "technology",
       "tag": "single-model rigidity / model nihilism",
-      "stem": "A product's sign-up rate dropped 25%. Three explanations: PRICING - a price rise took effect. ONBOARDING - a new required verification step launched. SEASONALITY - this is a normal annual dip. What you know: the drop began within three days of the verification step. The price rise took effect five months earlier, with no visible effect at the time. Last year's data show a dip in this month, but of about 5%, not 25%. Distribute 100 points across the three.",
+      "stem": "You're head of strategy and sales in your company. A product's sign-up rate dropped 25%. There are three explanations: 1) A price rise took effect. 2) A new required onboarding verification step was launched. 3) It's a seasonal dip that occurs every year. What you know: the drop began within three days of the verification step. The price rise took effect five months earlier, with no visible effect at the time. Last year's data show a dip in this month, but of about 5%, not 25%. What are the most likely causes?Distribute 100 points across the three.",
       "total": 100,
       "options": [
         { "id": 1, "text": "Pricing" },
@@ -173,7 +173,7 @@
       "tier": 2,
       "domain": "workplace",
       "tag": "correlation-causation confusion",
-      "stem": "Employees who use the company's internal wiki score 18% higher on performance reviews.",
+      "stem": "Employees who use the company's internal wiki score 18% higher on performance reviews. You're asked to predict their performance this year.",
       "reveal_sequentially": false,
       "parts": [
         {
@@ -210,7 +210,7 @@
       "tier": 2,
       "domain": "everyday",
       "tag": "hidden variable",
-      "stem": "Children who eat breakfast score higher on school tests. Select every factor that could produce this pattern without breakfast causing anything.",
+      "stem": "Children who eat breakfast score higher on school tests. Select every factor consistent with the claim that breakfast is not the cause of the higher scores.",
       "options": [
         { "id": 1, "text": "Households that provide breakfast may be more organized in general", "target": true },
         { "id": 2, "text": "Breakfast contains calories", "target": false },
@@ -225,21 +225,21 @@
       "derivation": "The four targets each describe a structure producing the association with breakfast doing nothing. Option 7 is the discriminating foil: morning testing describes a pathway THROUGH breakfast, which is a mechanism, not an alternative."
     },
     {
-      "id": "C-03",
-      "dimension": "C",
-      "format": "mc",
-      "tier": 2,
-      "domain": "media",
-      "tag": "directional collapse",
-      "stem": "People who report consuming the most political news also report the most political anger. Which explanation is LEAST consistent with this finding?",
-      "options": [
-        { "id": "A", "text": "Angry people seek out more political news.", "correct": false, "pole": "-" },
-        { "id": "B", "text": "Consuming political news increases anger.", "correct": false, "pole": "-" },
-        { "id": "C", "text": "Anger and news consumption are unrelated, and the finding is a coding error.", "correct": true },
-        { "id": "D", "text": "Both rise with strength of prior political commitment.", "correct": false, "pole": "-" }
-      ],
-      "derivation": "A, B and D are all live structures that would produce the observed pattern - reverse causation, forward causation, common cause. C does not explain the finding; it denies it."
-    },
+    "id": "C-03",
+    "dimension": "C",
+    "format": "mc",
+    "tier": 2,
+    "domain": "health",
+    "tag": "directional collapse",
+    "stem": "In a hospital, wards that hold a daily safety briefing have fewer medication errors. The briefings were introduced one ward at a time over two years. The scheduling office set the order based on room availability, not on how many errors a ward had. In each ward, errors began to fall in the month after that ward's briefings started. Which explanation does this evidence best support?",
+    "options": [
+      { "id": "A", "text": "Wards that already had fewer errors were given briefings first.", "correct": false, "pole": "+" },
+      { "id": "B", "text": "Both the briefings and the lower error rates come from better staffing on those wards.", "correct": false, "pole": "+" },
+      { "id": "C", "text": "The briefings reduce medication errors.", "correct": true },
+      { "id": "D", "text": "No causal direction can be established without a randomized trial.", "correct": false, "pole": "+" }
+    ],
+    "derivation": "Two facts do the work. The rollout order was set by room availability rather than by error counts, which rules out A. And errors fell in each ward in the month after that ward's own start date - a stable difference in staffing would not produce drops timed to each ward's individual start, which rules out B. D overstates: a staggered rollout with assignment unrelated to the outcome constrains direction well, even without randomization."
+  },
     {
       "id": "C-04",
       "dimension": "C",
@@ -247,11 +247,11 @@
       "tier": 1,
       "domain": "environment",
       "tag": "unconstrained counterfactual",
-      "stem": "Suppose this is how things work:\n\nDROUGHT → LOW RESERVOIR → WATER RESTRICTIONS\n\nAnd separately:\n\nDROUGHT → CROP FAILURE → FOOD PRICE RISE\n\nAnswer each question about this system.",
+      "stem": "Suppose this is how things work (arrows denote a causal relation):\n\nDrought → Low reservoir → Water restrictions\n\nAnd separately:\n\nDrought → Crop failure → Food price rise\n\nAnswer each question about this system.",
       "choices": ["yes", "no", "unaffected"],
       "choice_labels": { "yes": "Yes", "no": "No", "unaffected": "Unrelated" },
       "rows": [
-        { "id": 1, "text": "If the reservoir had been full - drought unchanged - would there still have been water restrictions?", "answer": "no" },
+        { "id": 1, "text": "If the reservoir had been full, would there still have been water restrictions?", "answer": "no" },
         { "id": 2, "text": "If the reservoir had been full, would the crops still have failed?", "answer": "yes", "wrong_poles": { "no": "-", "unaffected": "+" } },
         { "id": 3, "text": "If there had been no drought, would food prices have risen?", "answer": "no" },
         { "id": 4, "text": "If food prices had not risen, would there still have been a drought?", "answer": "unaffected", "wrong_poles": { "no": "-", "yes": "-" } }
@@ -260,21 +260,21 @@
       "derivation": "Read directly off the structure. No path from reservoir to crops, so changing the reservoir leaves crops alone. Food prices do not cause droughts. Rows 2 and 4 carry the diagnostic value."
     },
 
-    {
+        {
       "id": "A-01",
       "dimension": "A",
       "format": "mc",
       "tier": 2,
-      "domain": "health",
+      "domain": "finance",
       "tag": "level conflation",
-      "stem": "\"Countries with higher average chocolate consumption have more Nobel laureates per head. So eating chocolate helps individual achievement.\" What is wrong with this reasoning?",
+      "stem": "A bank finds that branches with a higher share of long-tenured loan officers have lower default rates. It concludes: assign long-tenured officers to our riskiest individual loans, and those loans will default less. Assume the data are accurate, the sample of branches is large, and the branch-level relationship is genuinely causal. What is still wrong with the conclusion?",
       "options": [
-        { "id": "A", "text": "The sample of countries is too small", "correct": false, "pole": "-" },
-        { "id": "B", "text": "It uses country-level data to draw a conclusion about individual people", "correct": true },
-        { "id": "C", "text": "Correlation doesn't prove causation", "correct": false, "pole": "-" },
-        { "id": "D", "text": "Nothing - it's a reasonable inference from the data", "correct": false, "pole": "-" }
+        { "id": "A", "text": "Default rates are a lagging measure, so they may not reflect the quality of current lending decisions.", "correct": false, "pole": "-" },
+        { "id": "B", "text": "A branch's overall rate may come from factors no single officer controls, so it need not carry to individual loans.", "correct": true },
+        { "id": "C", "text": "Some third factor could be raising tenure and lowering defaults at the same time.", "correct": false, "pole": "-" },
+        { "id": "D", "text": "The number of branches studied may be too small to support a general claim.", "correct": false, "pole": "-" }
       ],
-      "derivation": "This is an ecological inference. Even if the country-level association were causal, nothing in it identifies which individuals consumed chocolate or which became laureates. Option C is true but generic - it applies to any correlational finding and is not the specific failure here."
+      "derivation": "An ecological inference. The stem stipulates away every distractor: A is a data-quality objection, excluded by 'the data are accurate'; C is confounding, excluded by 'genuinely causal'; D is sample size, excluded by 'the sample is large'. What survives is the level shift - a branch-level effect may run through caseload mix, supervision, or local underwriting norms, none of which transfer to a single officer on a single loan. Choosing A, C or D indicates reaching for a stock objection without reading the stipulations."
     },
     {
       "id": "A-02",
@@ -325,7 +325,7 @@
       "tier": 2,
       "domain": "workplace",
       "tag": "cross-level extrapolation",
-      "stem": "Research finding: people tend to reciprocate when given an unexpected favour. For each situation below, does this principle apply — or does it go beyond what the finding covers?",
+      "stem": "Research finding: people tend to reciprocate when given an unexpected favour. For each situation below, does this principle apply, or does it go beyond what the finding covers?",
       "choices": ["within", "outside", "cant_tell"],
       "choice_labels": { "within": "Within scope", "outside": "Outside scope", "cant_tell": "Can't tell" },
       "rows": [
@@ -346,9 +346,8 @@
       "domain": "workplace",
       "tag": "rigidity / base-rate neglect",
       "reveal_sequentially": true,
-      "preamble_emphasis": "In this industry, 12 out of every 100 suppliers turn out to be unreliable.",
       "step1": {
-        "stem": "A screening service flags suppliers. It flags 85 out of every 100 unreliable suppliers — and also 15 out of every 100 reliable ones. Before any screening, what is the chance this supplier is unreliable?",
+        "stem": "Imagine an industry in which 12 out of every 100 suppliers of a product turn out to be unreliable. Your company hires a screening service to flag suppliers. It flags 85 out of every 100 unreliable suppliers, and also 15 out of every 100 reliable ones. Before any screening, what is the chance this supplier is unreliable?",
         "input": "percent",
         "key": { "min": 10, "max": 14 }
       },
@@ -370,7 +369,7 @@
       "tier": 3,
       "domain": "environment",
       "tag": "over-deference / blanket distrust",
-      "stem": "The question: how fast a newly-introduced species will spread through a regional wetland. Four sources disagree. Distribute 100 points by how much weight each deserves.",
+      "stem": "You're a government official in charge of environmental policy. You must decide how to weigh different sources of information. The question you're facing: how fast a newly-introduced species will spread through a regional wetland. Four sources disagree. Distribute 100 points by how much weight each deserves.",
       "total": 100,
       "options": [
         { "id": 1, "text": "An ecologist who specializes in invasive species in wetlands, publicly funded" },

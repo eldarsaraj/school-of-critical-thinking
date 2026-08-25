@@ -13,20 +13,17 @@
     <strong>{{ step1_value }}%</strong>
   </div>
   {% else %}
-  <div class="ax-choices-box">
-    <div class="ax-step-input-row">
-      <input
-        type="number"
-        id="ax-step1-input"
-        class="ax-input ax-step-input"
-        min="0" max="100" step="1"
-        placeholder="0–100"
-        autocomplete="off"
-      >
-      <span class="ax-step-unit">%</span>
-      <button type="button" class="ax-btn ax-btn--secondary ax-step-btn" id="ax-step1-btn">Submit estimate</button>
-    </div>
+  <div class="ax-step-slider-wrap">
+    <input
+      type="range"
+      id="ax-step1-input"
+      class="ax-step-slider"
+      min="0" max="100" step="1"
+      value="50"
+    >
+    <span class="ax-step-slider-val" id="ax-step1-val">50%</span>
   </div>
+  <button type="button" class="ax-btn ax-btn--secondary ax-step-btn" id="ax-step1-btn">Submit estimate</button>
   <p class="ax-step-locked" style="display:none;color:rgba(0,0,0,.45);font-size:13px;">Submitted — your estimate is locked.</p>
   {% endif %}
 </div>
@@ -38,19 +35,17 @@
     {% if step1_locked %}{{ safe_payload.step2.stem }}{% endif %}
   </p>
 
-  <div class="ax-choices-box">
-    <div class="ax-step-input-row">
-      <input
-        type="number"
-        name="step2"
-        class="ax-input ax-step-input"
-        min="0" max="100" step="1"
-        placeholder="0–100"
-        autocomplete="off"
-        {% if not step1_locked %}disabled{% endif %}
-      >
-      <span class="ax-step-unit">%</span>
-    </div>
+  <div class="ax-step-slider-wrap">
+    <input
+      type="range"
+      name="step2"
+      class="ax-step-slider"
+      id="ax-step2-slider"
+      min="0" max="100" step="1"
+      value="50"
+      {% if not step1_locked %}disabled{% endif %}
+    >
+    <span class="ax-step-slider-val" id="ax-step2-val">50%</span>
   </div>
 </div>
 
@@ -70,6 +65,12 @@
   const btn = document.getElementById('ax-step2-submit');
   if (inp) inp.disabled = false;
   if (btn) btn.style.display = '';
+  // Sync display
+  const val = document.getElementById('ax-step2-val');
+  if (inp && val) {
+    val.textContent = inp.value + '%';
+    inp.addEventListener('input', function () { val.textContent = this.value + '%'; });
+  }
 }());
 </script>
 {% endif %}

@@ -139,20 +139,33 @@
   });
   {% endif %}
 
+  {% if item.format == "two_step" %}
+  // Two-step sliders: sync value display
+  const step1Slider = document.getElementById('ax-step1-input');
+  const step1Val    = document.getElementById('ax-step1-val');
+  const step2Slider = document.getElementById('ax-step2-slider');
+  const step2Val    = document.getElementById('ax-step2-val');
+
+  if (step1Slider && step1Val) {
+    step1Val.textContent = step1Slider.value + '%';
+    step1Slider.addEventListener('input', function () { step1Val.textContent = this.value + '%'; });
+  }
+  if (step2Slider && step2Val) {
+    step2Val.textContent = step2Slider.value + '%';
+    step2Slider.addEventListener('input', function () { step2Val.textContent = this.value + '%'; });
+  }
+  {% endif %}
+
   {% if item.format == "two_step" and not step1_locked %}
   // Two-step: AJAX submit of step 1, then reveal step 2
   const step1Form = document.getElementById('ax-step1-section');
-  const step1Btn = document.getElementById('ax-step1-btn');
+  const step1Btn  = document.getElementById('ax-step1-btn');
   const step2Section = document.getElementById('ax-step2-section');
-  const step1Input = document.getElementById('ax-step1-input');
-  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+  const step1Input   = document.getElementById('ax-step1-input');
+  const csrfToken    = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
   step1Btn.addEventListener('click', async function () {
-    const val = step1Input.value.trim();
-    if (!val || isNaN(Number(val))) {
-      step1Input.focus();
-      return;
-    }
+    const val = step1Input.value;
     step1Btn.disabled = true;
     step1Btn.textContent = '…';
 
@@ -186,7 +199,7 @@
 
       // Reveal step 2
       document.getElementById('ax-step2-stem').textContent = data.step2.stem || '';
-      const step2Input = step2Section.querySelector('input[name="step2"]');
+      const step2Input  = step2Section.querySelector('input[name="step2"]');
       const step2Submit = document.getElementById('ax-step2-submit');
       step2Input.disabled = false;
       step2Submit.style.display = '';

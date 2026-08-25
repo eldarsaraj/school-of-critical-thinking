@@ -60,16 +60,11 @@
   <!-- ── Five Dimensions ───────────────────────────────────── -->
   <section class="ax-results-section">
     <h2 class="ax-results-section__title">Five Dimensions</h2>
+    <p class="ax-radar-title">Your Critical Alignment</p>
     <div class="ax-radar-wrap">
       <canvas id="radarChart"></canvas>
     </div>
     <p class="ax-results-section__sub">Sorted from weakest to strongest below. The horizontal axis of each chart shows which pole you lean toward; the vertical axis shows your score.</p>
-    <div class="ax-band-legend">
-      <span class="ax-bl-item"><span class="ax-bl-dot ax-bl-dot--misaligned"></span>Misaligned</span>
-      <span class="ax-bl-item"><span class="ax-bl-dot ax-bl-dot--emerging"></span>Emerging</span>
-      <span class="ax-bl-item"><span class="ax-bl-dot ax-bl-dot--aligned"></span>Aligned</span>
-      <span class="ax-bl-item"><span class="ax-bl-dot ax-bl-dot--robust"></span>Robust</span>
-    </div>
 
     {% for key, dim in dims_sorted %}
     <div class="ax-dim-block">
@@ -79,7 +74,7 @@
       </div>
       <p class="ax-dim-block__direction">
         {% if dim.direction_label %}
-          Leans toward <strong>{{ dim.direction_label }}</strong>.
+          You lean toward <strong>{{ dim.direction_label }}</strong>.
         {% else %}
           No clear lean in either direction.
         {% endif %}
@@ -92,6 +87,12 @@
       {% endwith %}
       <div class="ax-dim-chart-wrap">
         <canvas id="dimChart_{{ key }}"></canvas>
+      </div>
+      <div class="ax-band-legend">
+        <span class="ax-bl-item"><span class="ax-bl-dot ax-bl-dot--misaligned"></span>Misaligned</span>
+        <span class="ax-bl-item"><span class="ax-bl-dot ax-bl-dot--emerging"></span>Emerging</span>
+        <span class="ax-bl-item"><span class="ax-bl-dot ax-bl-dot--aligned"></span>Aligned</span>
+        <span class="ax-bl-item"><span class="ax-bl-dot ax-bl-dot--robust"></span>Robust</span>
       </div>
     </div>
     {% endfor %}

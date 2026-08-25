@@ -328,12 +328,12 @@
   gap: 12px;
 }
 
-/* Choices box: subtle warm tint separating prompt from answers */
+/* Choices box */
 .ax-choices-box {
   margin-top: 20px;
-  background: rgba(196, 99, 91, 0.05);
+  background: transparent;
   border-radius: 4px;
-  padding: 16px 16px 12px;
+  padding: 0;
 }
 
 /* ----------------------------------------------------------
@@ -613,9 +613,28 @@
 }
 
 .ax-step-btn {
-  margin-left: auto;
+  margin-top: 12px;
   white-space: nowrap;
-  flex-shrink: 0;
+}
+
+.ax-step-slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.ax-step-slider {
+  flex: 1;
+  accent-color: #161a1d;
+}
+
+.ax-step-slider-val {
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+  color: #161a1d;
+  min-width: 3.5ch;
+  text-align: right;
 }
 
 .ax-step-input {
@@ -746,11 +765,11 @@
 }
 
 .ax-results-section__title {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(0,0,0,0.4);
+  color: rgba(0,0,0,0.65);
   margin: 0 0 16px;
 }
 
@@ -795,8 +814,17 @@
 }
 
 /* Radar overview chart */
+.ax-radar-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.5);
+  margin: 0 0 10px;
+}
+
 .ax-radar-wrap {
-  margin: 16px 0 24px;
+  margin: 0 0 24px;
 }
 
 /* Dimension charts */
@@ -807,11 +835,11 @@
 
 /* Dimension blocks */
 .ax-dim-block {
-  padding: 20px 0 4px;
-  border-top: 0.5px solid rgba(0,0,0,0.07);
+  padding: 36px 0 4px;
+  border-top: 1px solid rgba(0,0,0,0.1);
 }
 
-.ax-dim-block:first-of-type { border-top: none; }
+.ax-dim-block:first-of-type { border-top: none; padding-top: 20px; }
 
 .ax-dim-block__header {
   display: flex;
@@ -821,9 +849,11 @@
 }
 
 .ax-dim-block__name {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 17px;
+  font-weight: 700;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #161a1d;
+  letter-spacing: -0.01em;
 }
 
 .ax-dim-block__direction {
@@ -881,11 +911,11 @@
 .ax-cal-stat-gap--underconfident { color: #5b8ec4; }
 .ax-cal-stat-gap--calibrated     { color: #5a9a6a; }
 
-/* Band legend */
+/* Band legend — used under each dimension chart */
 .ax-band-legend {
   display: flex;
-  gap: 16px;
-  margin: 8px 0 20px;
+  gap: 14px;
+  margin: 8px 0 0;
   flex-wrap: wrap;
 }
 
