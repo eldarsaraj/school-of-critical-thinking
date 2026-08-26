@@ -786,30 +786,31 @@ def _trigger_essay_evaluations(attempt, answers):
         log.warning("evaluators app not available; skipping essay evaluation")
         return
 
-    for ans in essay_answers:
-        try:
-            result = async_to_sync(evaluate_essay)(
-                essay=ans.essay_text,
-                prompt=ans.question.question_text,
-            )
-            EssayEvaluation.objects.update_or_create(
-                answer=ans,
-                defaults={
-                    "evaluation_data": result.model_dump(),
-                    "feedback": result.feedback,
-                    "error": "",
-                },
-            )
-        except Exception as exc:
-            log.error("Essay evaluation failed for answer %s: %s", ans.id, exc)
-            EssayEvaluation.objects.update_or_create(
-                answer=ans,
-                defaults={
-                    "evaluation_data": {},
-                    "feedback": "",
-                    "error": str(exc),
-                },
-            )
+    try:
+        for ans in essay_answers:
+            try:
+                result = async_to_sync(evaluate_essay)(
+                    essay=ans.essay_text,
+                    prompt=ans.question.question_text,
+                )
+                EssayEvaluation.objects.update_or_create(
+                    answer=ans,
+                    defaults={
+                        "evaluation_data": result.model_dump(),
+                        "feedback": result.feedback,
+                        "error": "",
+                    },
+                )
+            except Exception as exc:
+                log.error("Essay evaluation failed for answer %s: %s", ans.id, exc)
+                EssayEvaluation.objects.update_or_create(
+                    answer=ans,
+                    defaults={
+                        "evaluation_data": {},
+                        "feedback": "",
+                        "error": str(exc),
+                    },
+                )
     finally:
         _db_conn.close()
 
