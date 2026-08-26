@@ -266,7 +266,7 @@ function renderQuestion(idx) {
     const laterRouting = questions.slice(idx + 1).some(nq => nq.section === q.section && nq.is_routing);
     if (laterRouting) return false;
     const alreadyAssigned = q.section === "ELA" ? elaModuleAssigned : mathModuleAssigned;
-    return _assigning[q.section] && !alreadyAssigned;
+    return (_assigning[q.section] || _assignFailed[q.section]) && !alreadyAssigned;
   })();
 
   const assignmentFailed = IS_ADAPTIVE && _assignFailed[q.section];
