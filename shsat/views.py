@@ -789,9 +789,12 @@ def _trigger_essay_evaluations(attempt, answers):
     try:
         for ans in essay_answers:
             try:
+                import re as _re
+                _reqs = _re.findall(r'^\s*[-•*]\s*(.+)', ans.question.question_text, _re.MULTILINE)
                 result = async_to_sync(evaluate_essay)(
                     essay=ans.essay_text,
                     prompt=ans.question.question_text,
+                    requirements=_reqs if _reqs else None,
                 )
                 EssayEvaluation.objects.update_or_create(
                     answer=ans,
