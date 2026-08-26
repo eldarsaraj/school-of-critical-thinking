@@ -272,8 +272,10 @@ function renderQuestion(idx) {
     return _assigning[q.section] && !alreadyAssigned;
   })();
 
-  const showSubmit = atEnd && (!IS_ADAPTIVE || modulesAssigned);
-  const showLoading = !showSubmit && (atEnd || sectionAwaitingModules);
+  const assignmentFailed = IS_ADAPTIVE && _assignFailed[q.section];
+  const showSubmit  = atEnd && (!IS_ADAPTIVE || modulesAssigned);
+  const showLoading = !showSubmit && !assignmentFailed && (atEnd || sectionAwaitingModules);
+  const showRetry   = !showSubmit && assignmentFailed && (atEnd || sectionAwaitingModules);
 
   const navFooter = `<div class="shsat-question-footer">
     <div class="shsat-question-footer__info">
@@ -297,9 +299,12 @@ function renderQuestion(idx) {
     <div style="display:flex;gap:12px;margin-top:8px;">
       ${showSubmit
         ? `<button type="button" onclick="confirmSubmit()" class="shsat-btn" style="background:#a4161a;border-color:#a4161a;color:#fff;">Submit test</button>`
-        : (showLoading
+        : showRetry
+          ? `<span style="font-size:13px;color:#a4161a;margin-right:8px;">Failed to load next questions.</span>
+             <button type="button" onclick="retryModuleAssignment('${q.section}')" class="shsat-btn">Retry &rarr;</button>`
+          : showLoading
             ? `<button type="button" disabled class="shsat-btn" style="opacity:0.4;cursor:not-allowed;">Loading next questions…</button>`
-            : `<button type="button" onclick="goTo(${idx + 1})" class="shsat-btn">Next →</button>`)
+            : `<button type="button" onclick="goTo(${idx + 1})" class="shsat-btn">Next →</button>`
       }
     </div>
   </div>`;
@@ -444,24 +449,37 @@ function checkSectionRoutingComplete(section) {
   }
 }
 
-const _assigning = { ELA: false, Math: false };
+const _assigning   = { ELA: false, Math: false };
+const _assignFailed = { ELA: false, Math: false };
+
+function retryModuleAssignment(section) {
+  _assignFailed[section] = false;
+  requestSectionModules(section);
+}
 
 function requestSectionModules(section) {
   const alreadyAssigned = section === "ELA" ? elaModuleAssigned : mathModuleAssigned;
   if (_assigning[section] || alreadyAssigned) return;
   _assigning[section] = true;
-  renderQuestion(currentIdx);  // Immediately disable Next while waiting
+  _assignFailed[section] = false;
+  renderQuestion(currentIdx);  // show "Loading…" while waiting
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 20000);
 
   fetch("/shsat/api/assign-modules/", {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF_TOKEN },
     body: JSON.stringify({ attempt_id: ATTEMPT_ID, section }),
+    signal: controller.signal,
   })
   .then(r => r.json())
   .then(data => {
+    clearTimeout(timeoutId);
     if (data.status === "error") {
       console.error("Module assignment error:", data.message);
       _assigning[section] = false;
+      _assignFailed[section] = true;
       renderQuestion(currentIdx);
       return;
     }
@@ -493,8 +511,11 @@ function requestSectionModules(section) {
     }
   })
   .catch(err => {
+    clearTimeout(timeoutId);
     console.error("Module assignment failed:", err);
     _assigning[section] = false;
+    _assignFailed[section] = true;
+    renderQuestion(currentIdx);  // unblock the user
   });
 }
 
