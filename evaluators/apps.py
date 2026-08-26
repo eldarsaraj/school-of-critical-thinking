@@ -42,7 +42,16 @@ def get_evaluator():
         from nooa.unifiedllm.registry import get_llm_client
         from .agent import build_evaluator
         logger.info("evaluators: building NOOA EssayEvaluator (model=%s)…", nooa_model)
-        _evaluator = build_evaluator(get_llm_client(nooa_model))
+        # Derive the API key from the provider prefix so litellm routes correctly.
+        # e.g. "groq/openai/gpt-oss-120b" → check GROQ_API_KEY
+        import os
+        client_kwargs = {}
+        prefix = nooa_model.split("/")[0].upper()
+        env_key = f"{prefix}_API_KEY"
+        api_key = os.environ.get(env_key)
+        if api_key:
+            client_kwargs["api_key"] = api_key
+        _evaluator = build_evaluator(get_llm_client(nooa_model, **client_kwargs))
         logger.info("evaluators: NOOA EssayEvaluator ready")
     return _evaluator
 
