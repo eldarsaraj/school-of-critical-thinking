@@ -66,6 +66,16 @@
 {% endif %}
 
 <!-- Essay evaluation (Hunter only) -->
+{% if is_hunter and essay_eval_pending %}
+<div style="margin:24px 0;padding:16px 20px;background:#fffbe6;border:1px solid #ffe58f;border-radius:8px;display:flex;align-items:center;gap:16px;">
+  <span style="font-size:20px;">⏳</span>
+  <div>
+    <p style="margin:0 0 4px;font-weight:600;color:#614700;">Essay evaluation in progress</p>
+    <p style="margin:0;font-size:13px;color:#614700;">Your essay is being analysed — this usually takes about 15 seconds. Refresh the page to see your results.</p>
+  </div>
+  <a href="" onclick="location.reload();return false;" style="margin-left:auto;padding:6px 16px;background:#faad14;color:#fff;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;">Refresh</a>
+</div>
+{% endif %}
 {% if is_hunter and essay_eval_items %}
 {% for item in essay_eval_items %}
 {% with ev=item.ev d=item.d %}
@@ -574,5 +584,10 @@ const P = {
     }
   });
 })();
+
+{% if essay_eval_pending %}
+// Auto-refresh in 12s while essay evaluation is still pending
+setTimeout(() => location.reload(), 12000);
+{% endif %}
 </script>
 {% endblock %}

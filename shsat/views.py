@@ -1358,6 +1358,11 @@ def error_analysis(request, attempt_id):
         try:
             from evaluators.models import EssayEvaluation
 
+            # Detect whether essay answers exist but haven't been evaluated yet
+            essay_answer_count = answers.filter(question__question_type="essay").count()
+            evaluated_count = EssayEvaluation.objects.filter(answer__attempt=attempt).count()
+            context["essay_eval_pending"] = essay_answer_count > 0 and evaluated_count == 0
+
             def _clamp(v, lo=0, hi=100):
                 return max(lo, min(hi, int(v)))
 
