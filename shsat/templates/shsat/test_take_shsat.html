@@ -261,13 +261,22 @@ function renderQuestion(idx) {
 
   const atEnd = idx >= questions.length - 1;
 
-  // For adaptive tests: are we at the last routing question of a section with assignment in flight?
-  const sectionAwaitingModules = IS_ADAPTIVE && q.is_routing && (() => {
-    const laterRouting = questions.slice(idx + 1).some(nq => nq.section === q.section && nq.is_routing);
-    if (laterRouting) return false;
-    const alreadyAssigned = q.section === "ELA" ? elaModuleAssigned : mathModuleAssigned;
-    return (_assigning[q.section] || _assignFailed[q.section]) && !alreadyAssigned;
+  // For adaptive tests: detect if we're on the last routing question of a section.
+  const isLastRoutingForSection = IS_ADAPTIVE && q.is_routing && (() => {
+    return !questions.slice(idx + 1).some(nq => nq.section === q.section && nq.is_routing);
   })();
+  const alreadyAssigned = q.section === "ELA" ? elaModuleAssigned : mathModuleAssigned;
+
+  // Auto-trigger module assignment the moment the student reaches the last routing question,
+  // even if some earlier routing questions were skipped (unanswered).
+  if (isLastRoutingForSection && !alreadyAssigned && !_assigning[q.section] && !_assignFailed[q.section]) {
+    requestSectionModules(q.section);  // sets _assigning=true, then re-renders with Loading button
+    return;
+  }
+
+  // Are we awaiting module assignment (in-flight or failed)?
+  const sectionAwaitingModules = isLastRoutingForSection && !alreadyAssigned &&
+    (_assigning[q.section] || _assignFailed[q.section]);
 
   const assignmentFailed = IS_ADAPTIVE && _assignFailed[q.section];
   const showSubmit  = atEnd && (!IS_ADAPTIVE || modulesAssigned);
