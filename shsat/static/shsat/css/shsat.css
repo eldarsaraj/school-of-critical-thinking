@@ -1650,7 +1650,9 @@
 }
 
 .shsat-passage--scroll {
-  overflow-x: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 62vh;
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-left: 3px solid rgba(0, 0, 0, 0.18);
   padding: 20px 18px 20px 14px;
