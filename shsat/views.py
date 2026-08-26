@@ -768,9 +768,12 @@ def test_take(request, test_id):
 
 
 def _trigger_essay_evaluations(attempt, answers):
-    """Evaluate any essay answers attached to the attempt using the NOOA agent."""
+    """Evaluate any essay answers attached to the attempt using the NOOA agent.
+    Runs in a background thread — must close its own DB connection on exit.
+    """
     import logging
     from asgiref.sync import async_to_sync
+    from django.db import connection as _db_conn
 
     log = logging.getLogger(__name__)
     essay_answers = [a for a in answers if a.question.question_type == "essay" and a.essay_text.strip()]
@@ -807,6 +810,8 @@ def _trigger_essay_evaluations(attempt, answers):
                     "error": str(exc),
                 },
             )
+    finally:
+        _db_conn.close()
 
 
 @login_required(login_url="/shsat/login/")
@@ -867,7 +872,12 @@ def test_submit(request, test_id):
     attempt.save()
 
     if attempt.test.exam_type == "hunter":
-        _trigger_essay_evaluations(attempt, answers)
+        import threading
+        threading.Thread(
+            target=_trigger_essay_evaluations,
+            args=(attempt, list(answers)),
+            daemon=True,
+        ).start()
         try:
             from django.core.mail import send_mail
             from django.template.loader import render_to_string
