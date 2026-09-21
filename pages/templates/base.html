@@ -56,9 +56,9 @@
         </button>
 
         <nav class="site-nav" aria-label="Primary">
-          <a href="/test-prep/">Test Prep</a>
           <a href="/curriculum/">Curriculum</a>
-          <a href="/axis5/">Axis-5</a>
+          <a href="/test-prep/">Test Prep</a>
+          <a href="/about/">About</a>
           <a href="/articles/">Articles</a>
         </nav>
       </div>
@@ -75,7 +75,7 @@
       <div class="container site-footer__inner">
         <div class="site-footer__left">
           <p class="site-footer__brand">The School of Critical Thinking</p>
-          <p class="site-footer__tagline">Teaching people to think clearly at every age.</p>
+          <p class="site-footer__tagline">Helping parents raise kids who can think for themselves.</p>
           <form class="footer-capture" method="post" action="{% url 'newsletter_signup' %}">
             {% csrf_token %}
             <div style="display:none;" aria-hidden="true">
@@ -91,6 +91,7 @@
           <a href="/about/">About</a>
           <a href="/curriculum/">Curriculum</a>
           <a href="/test-prep/">Test Prep</a>
+          <a href="/axis5/">Axis-5</a>
           <a href="/organizations/">Organizations</a>
           <a href="/contact/">Contact</a>
         </nav>

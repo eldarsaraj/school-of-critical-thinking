@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}The School of Critical Thinking{% endblock %}
+{% block title %}The School of Critical Thinking — Helping parents raise critical thinkers{% endblock %}
 
-{% block meta_description %}<meta name="description" content="Precision SHSAT preparation and a critical thinking curriculum for students ages 8–16. Built on scientific test design, error analysis, and the conviction that good reasoning transfers.">{% endblock %}
+{% block meta_description %}<meta name="description" content="Helping parents raise kids who can think for themselves. A critical thinking curriculum and precision test prep for ages 8–16.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="The School of Critical Thinking" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="The School of Critical Thinking" />
-  <meta property="og:description" content="Precision SHSAT preparation and a critical thinking curriculum for students ages 8–16." />
+  <meta property="og:description" content="Helping parents raise kids who can think for themselves. A critical thinking curriculum and precision test prep for ages 8–16." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The School of Critical Thinking" />
-  <meta name="twitter:description" content="Precision SHSAT preparation and a critical thinking curriculum for students ages 8–16." />
+  <meta name="twitter:description" content="Helping parents raise kids who can think for themselves. A critical thinking curriculum and precision test prep for ages 8–16." />
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 {% endblock %}
 
@@ -27,35 +27,78 @@
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <section class="home-hero home-hero--full">
   <div class="home-hero__text">
-    <h1 class="home-hero__title">We don't teach the test.<br>We train the thinking behind it.</h1>
+    <h1 class="home-hero__title">Raise a child who can think for themselves.</h1>
     <p class="home-hero__sub">
-      Every competitive admissions test is a proxy for a set of reasoning skills that will
-      serve your child for life. Our program teaches those skills directly, through precision
-      test preparation and a structured critical thinking curriculum, so your child can do
-      well on the test and even better in the years that follow.
+      Most education teaches kids what to think. We teach them how. Our curriculum
+      covers the foundations of clear reasoning — patterns, causality, uncertainty,
+      models, and decisions — so your child develops the habits of mind that no
+      exam, algorithm, or shortcut can replace.
     </p>
     <div class="home-hero__actions">
-      <a href="/test-prep/" class="home-hero__btn">See test prep &rarr;</a>
-      <a href="/curriculum/" class="home-hero__btn home-hero__btn--ghost">See the curriculum</a>
+      <a href="/curriculum/" class="home-hero__btn">See the curriculum &rarr;</a>
+      <a href="/test-prep/" class="home-hero__btn home-hero__btn--ghost">Explore test prep</a>
     </div>
   </div>
 </section>
 
-<!-- ── Test Prep Feature ──────────────────────────────────────────────────── -->
+<!-- ── Curriculum ─────────────────────────────────────────────────────────── -->
 <section class="home-feature">
-  <p class="home-feature__label">Scientific approach to test prep</p>
+  <p class="home-feature__label">Critical Thinking Curriculum</p>
   <div class="home-feature__header">
-    <h2 class="home-feature__title">Reverse-engineered from the source.</h2>
+    <h2 class="home-feature__title">Five foundations of clear thinking.</h2>
     <p class="home-feature__sub">
-      Most test prep is guesswork. Tutors and prep centers work from experience and intuition,
-      not from a systematic analysis of what each test actually measures. We do the opposite.
-      Every test on this platform is built by reading the official materials carefully and working
-      backwards from the answer rationales, using test theory, cognitive science, and the
-      principles of critical thinking. What you get is adaptive tests, an intuitive dashboard,
-      and a precision error analysis that shows exactly where your child should focus next.
-      Currently available for the SHSAT, with more tests in development.
+      The curriculum is built around five things every young person needs to understand
+      about how the world actually works: patterns, causality, uncertainty, models, and
+      decision-making. It covers ages 8 to 16, one lesson per week, and fits alongside
+      whatever curriculum you already use. This isn't a collection of puzzles or logic
+      games — it's a structured program that teaches your child to notice what's actually
+      happening, question what they're told, and make better decisions because of it.
     </p>
   </div>
+
+  <div class="home-feature__meta">
+    <div class="home-feature__meta-item">
+      <p class="home-feature__meta-title">Patterns</p>
+      <p class="home-feature__meta-body">Recognizing structure in information — what repeats, what breaks, and what that tells you.</p>
+    </div>
+    <div class="home-feature__meta-item">
+      <p class="home-feature__meta-title">Causality</p>
+      <p class="home-feature__meta-body">Understanding why things happen — and why "because it came first" is not a good enough answer.</p>
+    </div>
+    <div class="home-feature__meta-item">
+      <p class="home-feature__meta-title">Uncertainty</p>
+      <p class="home-feature__meta-body">Getting comfortable with not knowing — and learning to act well anyway.</p>
+    </div>
+    <div class="home-feature__meta-item">
+      <p class="home-feature__meta-title">Models</p>
+      <p class="home-feature__meta-body">Every explanation is a simplification. Learning to use models without mistaking them for reality.</p>
+    </div>
+  </div>
+
+  <div class="home-feature__cta">
+    <a href="/curriculum/" class="home-hero__btn">See the full curriculum &rarr;</a>
+    <p class="home-feature__cta-note">Module 1 book available now on Amazon. Ages 8–16, one lesson per week.</p>
+  </div>
+</section>
+
+<!-- ── Test Prep ──────────────────────────────────────────────────────────── -->
+<section class="home-secondary">
+  <div class="home-secondary__inner">
+    <div class="home-secondary__text">
+      <p class="home-secondary__label">Precision Test Prep</p>
+      <h2 class="home-secondary__title">When your child can think clearly, test scores follow.</h2>
+      <p class="home-secondary__body">
+        Every competitive admissions test is a proxy for reasoning skills. We reverse-engineer
+        those skills from the official materials and teach them directly — through adaptive
+        practice tests, detailed error analysis, and a scoring model that never flatters.
+        The same thinking foundations that drive the curriculum also drive the test prep.
+        Currently available for the SHSAT, with more exams coming.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="home-feature">
 
   {% include "pages/includes/demo_dashboard.html" %}
 
@@ -84,36 +127,20 @@
   </div>
 </section>
 
-<!-- ── Curriculum ─────────────────────────────────────────────────────────── -->
-<section class="home-secondary">
-  <div class="home-secondary__inner">
-    <div class="home-secondary__text">
-      <p class="home-secondary__label">Critical Thinking Curriculum</p>
-      <h2 class="home-secondary__title">Comprehensive method to teach your child critical thinking.</h2>
-      <p class="home-secondary__body">
-        For families who want more than test readiness, we offer a structured program to prepare your
-        child for the intellectual challenges of high school and beyond. The curriculum is built around  
-        five foundations of clear thinking: patterns, causality, uncertainty, models, and decision-making.
-        Covers ages 8 to 16. One lesson per week, can be integrated alongside any existing curriculum.
-        This is the same analytical rigour that drives our test preparation, built into a long-form 
-        curriculum that will last a lifetime.
-      </p>
-      <a href="/curriculum/" class="home-secondary__cta">See the curriculum &rarr;</a>
-    </div>
+<!-- ── Founder ────────────────────────────────────────────────────────────── -->
+<section class="home-founder">
+  <div class="home-founder__photo-wrap">
+    <img src="{% static 'images/founder-photo.png' %}" alt="Eldar Sarajlic" class="home-founder__photo">
   </div>
-</section>
-
-<!-- ── Diagnostic ─────────────────────────────────────────────────────────── -->
-<section class="home-diagnostic-cta">
-  <p class="home-section-label">For adults and older students</p>
-  <h2 class="home-diagnostic-cta__title">Take the free Thinking Diagnostic</h2>
-  <p class="home-diagnostic-cta__desc">
-    Do you want to test your own critical thinking skills, identify gaps, and get a personalized curriculum
-    to improve your reasoning? Take our free Thinking Diagnostic. A fifteen-minute assessment that maps your 
-    reasoning against 16 cognitive patterns. The same analytical framework that underpins our test preparation 
-    methodology applied to your own thinking. Completely free, no account required.
-  </p>
-  <a href="{% url 'diagnostic_intro' %}" class="home-diagnostic-cta__btn">Take the diagnostic &rarr;</a>
+  <div class="home-founder__text">
+    <p class="home-founder__bio" style="font-size: 15px; color: rgba(0,0,0,0.75); margin-bottom: 6px;"><strong>Eldar Sarajlic</strong></p>
+    <p class="home-founder__bio">
+      Academic philosopher turned educator. I built this school because I wanted
+      something that actually teaches thinking — not test tricks, not trivia,
+      not "critical thinking" as a buzzword. The real thing.
+    </p>
+    <a href="/about/" class="home-founder__link">More about the school &rarr;</a>
+  </div>
 </section>
 
 {% endblock %}
