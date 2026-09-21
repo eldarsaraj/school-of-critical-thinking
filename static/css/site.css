@@ -1724,7 +1724,6 @@ a.curriculum-book:hover .curriculum-book__title {
   font-size: 15px;
   line-height: 1.7;
   color: rgba(0,0,0,0.75);
-  max-width: 64ch;
   margin-bottom: 36px;
 }
 
@@ -1998,7 +1997,6 @@ a.curriculum-book:hover .curriculum-book__title {
   line-height: 1.7;
   color: rgba(0,0,0,0.65);
   margin: 0;
-  max-width: 60ch;
 }
 
 /* Module book promo section */
