@@ -178,6 +178,65 @@
   </div>
   {% endif %}
 
+  {% if module.seminar %}
+  <hr class="module-rule">
+
+  <!-- Seminar -->
+  <section class="module-seminar">
+    <p class="module-eyebrow">Live instruction</p>
+    <h2 class="module-seminar__title">{{ module.seminar.title }}</h2>
+    <p class="module-seminar__subtitle">{{ module.seminar.subtitle }}</p>
+
+    <div class="module-glance" style="margin-top: 24px;">
+      <dl class="module-glance__list">
+        <div class="module-glance__row">
+          <dt class="module-glance__label">Duration</dt>
+          <dd class="module-glance__value">{{ module.seminar.duration }}</dd>
+        </div>
+        <div class="module-glance__row">
+          <dt class="module-glance__label">Format</dt>
+          <dd class="module-glance__value">{{ module.seminar.format }}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <h3 class="module-section-title" style="margin-top: 48px;">Why this skill, and why now</h3>
+    {% for para in module.seminar.why %}
+    <p class="module-description">{{ para }}</p>
+    {% endfor %}
+
+    <h3 class="module-section-title" style="margin-top: 48px;">It's also practical</h3>
+    {% for para in module.seminar.practical %}
+    <p class="module-description">{{ para }}</p>
+    {% endfor %}
+
+    <h3 class="module-section-title" style="margin-top: 48px;">Our method</h3>
+    {% for para in module.seminar.method %}
+    <p class="module-description">{{ para }}</p>
+    {% endfor %}
+
+    <h3 class="module-section-title" style="margin-top: 48px;">The twelve lessons</h3>
+    <div class="module-seminar__lessons">
+      {% for lesson in module.seminar.lessons %}
+      <div class="module-seminar__lesson">
+        <p class="module-seminar__lesson-num">{{ lesson.numeral }}.</p>
+        <div>
+          <p class="module-seminar__lesson-title">{{ lesson.title }}</p>
+          <p class="module-seminar__lesson-desc">{{ lesson.description }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <h3 class="module-section-title" style="margin-top: 48px;">Outcome</h3>
+    <p class="module-description">{{ module.seminar.outcome }}</p>
+
+    <div style="margin-top: 40px;">
+      <a href="/contact/" class="module-buy-btn">Enquire about this seminar →</a>
+    </div>
+  </section>
+  {% endif %}
+
 {% else %}
 
   <!-- Coming soon state -->

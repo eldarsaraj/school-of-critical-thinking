@@ -115,6 +115,221 @@ MODULES = [
             ),
             "buy_url": "https://www.amazon.com/dp/B0GX6NJ22H",
         },
+        "seminar": {
+            "title": "The foundation of critical thinking: pattern recognition",
+            "subtitle": "Level I, Module One — a six-week seminar for children ages 8–12",
+            "duration": "6 weeks · 2 hours per session · 12 lessons total",
+            "format": "In-person or online",
+            "why": [
+                (
+                    "If you're a parent worrying about what an AI-dominated future "
+                    "will bring your children, you're not alone. There are many of us, "
+                    "and we worry for a good reason. We're not irrational."
+                ),
+                (
+                    "You've seen the pace of the technology. It can look as though "
+                    "every ability humans developed over millions of years of evolution "
+                    "is suddenly up for grabs."
+                ),
+                (
+                    "But the picture is not that bleak. It only looks like that because "
+                    "it rests on a misunderstanding."
+                ),
+                (
+                    "Artificial intelligence is exceptionally good at pattern recognition. "
+                    "It is, in a sense, the only thing these systems do: they take in "
+                    "enormous quantities of material and hand back the regularities they "
+                    "find in it."
+                ),
+                (
+                    "But a machine that finds patterns will find them everywhere, "
+                    "including places where they don't exist. Chatbots are confident even "
+                    "when they hallucinate because they can't really tell the difference "
+                    "between truth and fiction. All they have are statistical averages "
+                    "computed from data humans feed them."
+                ),
+                (
+                    "Producing patterns is now free and effectively infinite, which "
+                    "leaves judging them as the scarce ability: understanding how and "
+                    "why patterns form, how they can be used to learn about the world, "
+                    "and how they can even deceive us."
+                ),
+                (
+                    "This is the only moat humans have against this encroaching "
+                    "technology. We can understand patterns on a deeper level."
+                ),
+                (
+                    "But to do that, humans must learn pattern recognition. It's not a "
+                    "skill we're born with. It is one that must be consciously trained, "
+                    "through lessons and activities that build it from scratch."
+                ),
+                (
+                    "This is the reason why The School of Critical Thinking exists. We "
+                    "train young minds skills that will make their future resilient, no "
+                    "matter the technology. Our first module teaches pattern recognition "
+                    "as the foundation of critical thinking, a skill that will serve them "
+                    "for life."
+                ),
+            ],
+            "practical": [
+                (
+                    "Pattern recognition is not just a skill aimed far into the child's "
+                    "future. It is also the substrate of every aptitude and admissions test "
+                    "your child will take during their education years. Number series, "
+                    "figure analogies, matrix reasoning, sequence completion, reading "
+                    "comprehension and logical-reasoning sections of standardized tests: "
+                    "all of them measure the same underlying ability, only in different "
+                    "notation."
+                ),
+                (
+                    "Our method teaches children pattern recognition skills they will use "
+                    "immediately in their life. It will help them see the structure beneath "
+                    "all complexity, both in the classroom and in everyday life."
+                ),
+            ],
+            "method": [
+                (
+                    "The seminar is run over six weeks, with two lessons covered in each "
+                    "2-hour meeting, for a total of 12 lessons."
+                ),
+                (
+                    "Each session follows the same structure: a problem on the board, a "
+                    "short exposition, a hands-on exercise, and a lively discussion. Each "
+                    "week the class is given a question with no settled answer and required "
+                    "to argue it out, with reasons, under supervision. Children of this age "
+                    "are capable of far more of this than they are usually asked for."
+                ),
+                (
+                    "Every child keeps a Pattern Notebook from the first session. Each week "
+                    "carries a single observational assignment (such as tracking one variable "
+                    "for seven days, identifying a hidden rule, or recording five instances "
+                    "of some pattern) which is brought back and examined. There are no "
+                    "worksheets and no other homework."
+                ),
+            ],
+            "lessons": [
+                {
+                    "numeral": "I",
+                    "title": "The Hidden Order of the World",
+                    "description": (
+                        "Locating structure in ordinary surroundings. Students produce, "
+                        "compare, and classify their own first set of observations."
+                    ),
+                },
+                {
+                    "numeral": "II",
+                    "title": "Finding the Rule",
+                    "description": (
+                        "The distinction between a pattern and the rule that generates it. "
+                        "Students interrogate a concealed rule through proposed examples, "
+                        "and encounter the central difficulty: the first rule that fits is "
+                        "rarely the only rule that fits."
+                    ),
+                },
+                {
+                    "numeral": "III",
+                    "title": "Sorting the World",
+                    "description": (
+                        "Classification as an instrument rather than a discovery. The same "
+                        "set of objects is sorted under three incompatible schemes, and the "
+                        "class examines what each scheme makes visible and what it hides."
+                    ),
+                },
+                {
+                    "numeral": "IV",
+                    "title": "Structural Similarity",
+                    "description": (
+                        "Analogy treated as a formal operation. Students identify shared "
+                        "structure across unrelated domains (such as a circulatory system "
+                        "and a road network, a school year and a product cycle) and locate "
+                        "the point at which the correspondence breaks down."
+                    ),
+                },
+                {
+                    "numeral": "V",
+                    "title": "Rates of Change",
+                    "description": (
+                        "The difference between additive and multiplicative growth, and why "
+                        "the second is consistently underestimated. Worked with paper, grid, "
+                        "and arithmetic the students perform themselves."
+                    ),
+                },
+                {
+                    "numeral": "VI",
+                    "title": "Periodicity",
+                    "description": (
+                        "Patterns are sometimes cyclical across different scales: the day, "
+                        "the week, the year, and each repeating pattern exhibits its own "
+                        "behaviour. Students track one cycle for a week and present the result."
+                    ),
+                },
+                {
+                    "numeral": "VII",
+                    "title": "Inference From Effects",
+                    "description": (
+                        "Reasoning to a rule that cannot be observed directly. Students "
+                        "interrogate a black-box function and reconstruct the rules of an "
+                        "unexplained game from play alone."
+                    ),
+                },
+                {
+                    "numeral": "VIII",
+                    "title": "Regularity in Human Behaviour",
+                    "description": (
+                        "Humans are patterned creatures. Students learn why populations are "
+                        "predictable where individuals are not. The class predicts its own "
+                        "behaviour, records the outcome, and considers who else performs this "
+                        "operation on them commercially."
+                    ),
+                },
+                {
+                    "numeral": "IX",
+                    "title": "False Structure",
+                    "description": (
+                        "The point at which the seminar turns on its own subject. Students "
+                        "learn about apophenia (the tendency to see patterns where they "
+                        "don't exist), coincidence, and superstition — the mind's tendency "
+                        "to produce structures where none exist."
+                    ),
+                },
+                {
+                    "numeral": "X",
+                    "title": "The Appearance of Randomness",
+                    "description": (
+                        "Why genuine randomness looks less random than people expect. "
+                        "Students generate fabricated and real sequences and learn to "
+                        "distinguish them by the distribution of streaks."
+                    ),
+                },
+                {
+                    "numeral": "XI",
+                    "title": "Evaluating a Pattern",
+                    "description": (
+                        "Two criteria for trust: frequency of observation and the presence "
+                        "of a mechanism. Correlation and causation are separated by worked "
+                        "example, and the class is shown how the same data yields opposing "
+                        "conclusions under selective presentation."
+                    ),
+                },
+                {
+                    "numeral": "XII",
+                    "title": "Assessment and Presentation",
+                    "description": (
+                        "Each student presents one pattern tracked across the full term: "
+                        "the observation, the rule inferred, the prediction made, and the "
+                        "outcome. A failed prediction correctly analysed is assessed as "
+                        "highly as a successful one. Parents attend."
+                    ),
+                },
+            ],
+            "outcome": (
+                "Students leave with four questions asked by habit rather than instruction: "
+                "Is there a pattern here? What is the rule? How many times have I observed "
+                "it? What is producing it? Twelve hours produce a disposition, not a "
+                "transformation, but the disposition is the one that compounds, and its "
+                "effects are visible for many years ahead."
+            ),
+        },
         "prev_slug": None,
         "prev_title": None,
         "next_slug": "chance-and-uncertainty",

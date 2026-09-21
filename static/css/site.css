@@ -1951,6 +1951,56 @@ a.curriculum-book:hover .curriculum-book__title {
   background: #2a3035;
 }
 
+/* Module seminar section */
+.module-seminar__title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 8px 0 6px;
+  line-height: 1.35;
+}
+
+.module-seminar__subtitle {
+  font-size: 15px;
+  color: rgba(0,0,0,0.5);
+  margin: 0 0 8px;
+}
+
+.module-seminar__lessons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.module-seminar__lesson {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+}
+
+.module-seminar__lesson-num {
+  flex: 0 0 36px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0,0,0,0.4);
+  margin: 0;
+}
+
+.module-seminar__lesson-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  line-height: 1.4;
+}
+
+.module-seminar__lesson-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.65);
+  margin: 0;
+  max-width: 60ch;
+}
+
 /* Module book promo section */
 .module-book {
   margin-top: 32px;
