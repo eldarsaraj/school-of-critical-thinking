@@ -200,6 +200,7 @@ main { padding: 48px 24px; }
 
 .home-hero__image {
   margin-top: 48px;
+  margin-bottom: -1px;
 }
 
 .home-hero__image img {
@@ -3792,7 +3793,7 @@ a.curriculum-book:hover .curriculum-book__title {
 .home-hero--full {
   max-width: 680px;
   padding-top: 56px;
-  padding-bottom: 64px;
+  padding-bottom: 0;
 }
 .home-hero--full .home-hero__sub {
   max-width: 60ch;
