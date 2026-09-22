@@ -105,8 +105,22 @@ def module_detail(request, slug):
     module = MODULES_BY_SLUG.get(slug)
     if module is None:
         raise Http404("Module not found")
+    return render(request, "pages/module_detail.html", {"module": module})
+
+
+def module_book(request, slug):
+    module = MODULES_BY_SLUG.get(slug)
+    if module is None or not module.get("book"):
+        raise Http404("Page not found")
     downloaded = request.GET.get("downloaded") == "1"
-    return render(request, "pages/module_detail.html", {"module": module, "downloaded": downloaded})
+    return render(request, "pages/module_book.html", {"module": module, "downloaded": downloaded})
+
+
+def module_seminar(request, slug):
+    module = MODULES_BY_SLUG.get(slug)
+    if module is None or not module.get("seminar"):
+        raise Http404("Page not found")
+    return render(request, "pages/module_seminar.html", {"module": module})
 
 
 def download_sample(request):

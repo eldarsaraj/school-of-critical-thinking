@@ -15,6 +15,8 @@ urlpatterns = [
     path("curriculum/", views.families, name="curriculum"),
     path("curriculum/download-sample/", views.download_sample, name="download_sample"),
     path("curriculum/sample-lesson.pdf", views.sample_pdf, name="sample_pdf"),
+    path("curriculum/<slug:slug>/book/", views.module_book, name="module_book"),
+    path("curriculum/<slug:slug>/seminar/", views.module_seminar, name="module_seminar"),
     path("curriculum/<slug:slug>/", views.module_detail, name="module_detail"),
     path("curriculum/waitlist/", views.waitlist_signup, name="waitlist_signup"),
     # Legacy /families/ URLs — permanent redirects for SEO

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ module.seminar.title }} – The School of Critical Thinking{% endblock %}
+
+{% block meta_description %}<meta name="description" content="{{ module.seminar.subtitle|truncatechars:155 }}">{% endblock %}
+
+{% block content %}
+
+<p class="module-breadcrumb">
+  <a href="/curriculum/">Curriculum</a>
+  <span class="module-breadcrumb__sep">→</span>
+  <a href="{% url 'module_detail' module.slug %}">{{ module.title }}</a>
+  <span class="module-breadcrumb__sep">→</span>
+  Live Instruction
+</p>
+
+{% if module.seminar_illustration %}
+<div class="module-illustration">
+  <img src="{% static module.seminar_illustration %}" alt="">
+</div>
+{% endif %}
+
+<section class="module-seminar">
+  <p class="module-eyebrow">Live instruction</p>
+  <h1 class="module-seminar__title">{{ module.seminar.title }}</h1>
+  <p class="module-seminar__subtitle">{{ module.seminar.subtitle }}</p>
+
+  <div class="module-glance" style="margin-top: 24px;">
+    <dl class="module-glance__list">
+      <div class="module-glance__row">
+        <dt class="module-glance__label">Duration</dt>
+        <dd class="module-glance__value">{{ module.seminar.duration }}</dd>
+      </div>
+      <div class="module-glance__row">
+        <dt class="module-glance__label">Format</dt>
+        <dd class="module-glance__value">{{ module.seminar.format }}</dd>
+      </div>
+    </dl>
+  </div>
+
+  <h2 class="module-section-title" style="margin-top: 48px;">Why this skill, and why now</h2>
+  {% for para in module.seminar.why %}
+  <p class="module-description">{{ para }}</p>
+  {% endfor %}
+
+  <h2 class="module-section-title" style="margin-top: 48px;">It's also practical</h2>
+  {% for para in module.seminar.practical %}
+  <p class="module-description">{{ para }}</p>
+  {% endfor %}
+
+  <h2 class="module-section-title" style="margin-top: 48px;">Our method</h2>
+  {% for para in module.seminar.method %}
+  <p class="module-description">{{ para }}</p>
+  {% endfor %}
+
+  <h2 class="module-section-title" style="margin-top: 48px;">The twelve lessons</h2>
+  <div class="module-seminar__lessons">
+    {% for lesson in module.seminar.lessons %}
+    <div class="module-seminar__lesson">
+      <p class="module-seminar__lesson-num">{{ lesson.numeral }}.</p>
+      <div>
+        <p class="module-seminar__lesson-title">{{ lesson.title }}</p>
+        <p class="module-seminar__lesson-desc">{{ lesson.description }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <h2 class="module-section-title" style="margin-top: 48px;">Outcome</h2>
+  <p class="module-description">{{ module.seminar.outcome }}</p>
+
+  <div style="margin-top: 40px;">
+    <a href="/contact/" class="module-buy-btn">Enquire about this seminar →</a>
+  </div>
+</section>
+
+{% endblock %}
