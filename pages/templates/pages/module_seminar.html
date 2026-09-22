@@ -15,6 +15,10 @@
   Live Instruction
 </p>
 
+<p class="module-eyebrow">Level {{ module.level }} · Module {{ module.number }} · Live Instruction</p>
+<h1 class="module-page-title">Pattern recognition for ages 8 to 12</h1>
+<p class="module-page-subtitle">Instructor-led seminar; six weeks, small group, no preparation needed</p>
+
 {% if module.seminar_illustration %}
 <div class="module-illustration">
   <img src="{% static module.seminar_illustration %}" alt="">
@@ -22,11 +26,7 @@
 {% endif %}
 
 <section class="module-seminar">
-  <p class="module-eyebrow">Live instruction</p>
-  <h1 class="module-seminar__title">{{ module.seminar.title }}</h1>
-  <p class="module-seminar__subtitle">{{ module.seminar.subtitle }}</p>
-
-  <div class="module-glance" style="margin-top: 24px;">
+  <div class="module-glance">
     <dl class="module-glance__list">
       <div class="module-glance__row">
         <dt class="module-glance__label">Duration</dt>

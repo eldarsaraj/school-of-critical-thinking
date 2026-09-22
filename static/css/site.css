@@ -1741,11 +1741,26 @@ a.curriculum-book:hover .curriculum-book__title {
 
 /* At a Glance block */
 .module-glance {
-  margin: 0 0 40px 0;
+  margin: 40px 0 40px 0;
   padding: 20px 24px;
   background: rgba(0,0,0,0.025);
   border-left: 2px solid rgba(0,0,0,0.12);
-  max-width: 640px;
+}
+
+.module-page-title {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 34px;
+  line-height: 1.18;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.02em;
+}
+
+.module-page-subtitle {
+  font-size: 17px;
+  line-height: 1.5;
+  color: rgba(0,0,0,0.55);
+  margin: 0 0 8px 0;
 }
 
 .module-glance__list {

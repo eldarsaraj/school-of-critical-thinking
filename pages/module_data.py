@@ -117,7 +117,7 @@ MODULES = [
         },
         "seminar": {
             "title": "The foundation of critical thinking: pattern recognition",
-            "subtitle": "Level I, Module One — a six-week seminar for children ages 8–12",
+            "subtitle": "Level I, Module One; a six-week seminar for children ages 8 to 12",
             "duration": "6 weeks · 2 hours per session · 12 lessons total",
             "format": "In-person or online",
             "why": [
@@ -212,7 +212,7 @@ MODULES = [
                     "numeral": "1",
                     "title": "Finding patterns in everyday life",
                     "description": (
-                        "Your child learns to spot structure in ordinary surroundings — "
+                        "Your child learns to spot structure in ordinary surroundings: "
                         "in nature, in numbers, in daily routines. They produce, compare, "
                         "and classify their own first set of observations."
                     ),
@@ -232,16 +232,16 @@ MODULES = [
                     "description": (
                         "The same set of objects gets sorted under three different schemes. "
                         "Children see that how you classify something changes what you "
-                        "notice — and what you miss."
+                        "notice, and what you miss."
                     ),
                 },
                 {
                     "numeral": "4",
                     "title": "How different things can work the same way",
                     "description": (
-                        "Children find shared structure across unrelated domains — a "
+                        "Children find shared structure across unrelated domains: a "
                         "circulatory system and a road network, a school year and a "
-                        "product cycle — and learn where the comparison breaks down."
+                        "product cycle. They learn where the comparison breaks down."
                     ),
                 },
                 {
@@ -257,8 +257,8 @@ MODULES = [
                     "numeral": "6",
                     "title": "Patterns that repeat in cycles",
                     "description": (
-                        "Some patterns are cyclical — the day, the week, the seasons — "
-                        "and each cycle has its own behaviour. Children track one cycle "
+                        "Some patterns are cyclical: the day, the week, the seasons. "
+                        "Each cycle has its own behaviour. Children track one cycle "
                         "for a week and present what they find."
                     ),
                 },
@@ -266,7 +266,7 @@ MODULES = [
                     "numeral": "7",
                     "title": "Figuring out hidden rules",
                     "description": (
-                        "Sometimes you can't see the rule directly — you have to work it "
+                        "Sometimes you can't see the rule directly; you have to work it "
                         "out from what happens. Children reconstruct the rules of an "
                         "unexplained game from play alone."
                     ),

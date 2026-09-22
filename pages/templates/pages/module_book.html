@@ -15,13 +15,15 @@
   The Book
 </p>
 
+<p class="module-eyebrow">Level {{ module.level }} · Module {{ module.number }} · The Book</p>
+<h1 class="module-page-title">Teach your kids to see patterns</h1>
+<p class="module-page-subtitle">Self-paced curriculum for homeschooling families</p>
+
 {% if module.book_illustration %}
 <div class="module-illustration">
   <img src="{% static module.book_illustration %}" alt="">
 </div>
 {% endif %}
-
-<p class="module-eyebrow">The book</p>
 
 <div class="module-book">
   <div class="module-book__inner">
@@ -33,7 +35,7 @@
     <img class="module-book__cover" src="{% static module.book.cover %}" alt="Cover: {{ module.book.title }}">
     {% endif %}
     <div class="module-book__body">
-      <h1 class="module-book__title">{{ module.book.title }}</h1>
+      <h2 class="module-book__title">{{ module.book.title }}</h2>
       <p class="module-book__tagline">{{ module.book.tagline }}</p>
     </div>
   </div>
