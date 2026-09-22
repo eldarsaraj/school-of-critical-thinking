@@ -11,6 +11,7 @@ MODULES = [
         "is_available": True,
         "amazon_url": None,   # fill once the Amazon listing is live
         "has_sample": True,
+        "hero_image": "images/module-1_image-1.png",
         "description": (
             "Children encounter patterns constantly, in sequences, in nature, in other "
             "people's behavior, but rarely stop to ask whether those patterns are real "
