@@ -209,92 +209,90 @@ MODULES = [
             ],
             "lessons": [
                 {
-                    "numeral": "I",
-                    "title": "The Hidden Order of the World",
+                    "numeral": "1",
+                    "title": "Finding patterns in everyday life",
                     "description": (
-                        "Locating structure in ordinary surroundings. Students produce, "
-                        "compare, and classify their own first set of observations."
+                        "Your child learns to spot structure in ordinary surroundings — "
+                        "in nature, in numbers, in daily routines. They produce, compare, "
+                        "and classify their own first set of observations."
                     ),
                 },
                 {
-                    "numeral": "II",
-                    "title": "Finding the Rule",
+                    "numeral": "2",
+                    "title": "What's the rule behind the pattern?",
                     "description": (
-                        "The distinction between a pattern and the rule that generates it. "
-                        "Students interrogate a concealed rule through proposed examples, "
-                        "and encounter the central difficulty: the first rule that fits is "
-                        "rarely the only rule that fits."
+                        "A pattern is one thing; the rule that produces it is another. "
+                        "Children learn to tell the difference, and discover that the "
+                        "first rule that fits is rarely the only rule that fits."
                     ),
                 },
                 {
-                    "numeral": "III",
-                    "title": "Sorting the World",
+                    "numeral": "3",
+                    "title": "Sorting things in different ways",
                     "description": (
-                        "Classification as an instrument rather than a discovery. The same "
-                        "set of objects is sorted under three incompatible schemes, and the "
-                        "class examines what each scheme makes visible and what it hides."
+                        "The same set of objects gets sorted under three different schemes. "
+                        "Children see that how you classify something changes what you "
+                        "notice — and what you miss."
                     ),
                 },
                 {
-                    "numeral": "IV",
-                    "title": "Structural Similarity",
+                    "numeral": "4",
+                    "title": "How different things can work the same way",
                     "description": (
-                        "Analogy treated as a formal operation. Students identify shared "
-                        "structure across unrelated domains (such as a circulatory system "
-                        "and a road network, a school year and a product cycle) and locate "
-                        "the point at which the correspondence breaks down."
+                        "Children find shared structure across unrelated domains — a "
+                        "circulatory system and a road network, a school year and a "
+                        "product cycle — and learn where the comparison breaks down."
                     ),
                 },
                 {
-                    "numeral": "V",
-                    "title": "Rates of Change",
+                    "numeral": "5",
+                    "title": "Why some things grow faster than you'd expect",
                     "description": (
-                        "The difference between additive and multiplicative growth, and why "
-                        "the second is consistently underestimated. Worked with paper, grid, "
-                        "and arithmetic the students perform themselves."
+                        "The difference between steady growth and compounding growth, "
+                        "and why the second one surprises everyone. Worked with paper, "
+                        "grid, and arithmetic the children do themselves."
                     ),
                 },
                 {
-                    "numeral": "VI",
-                    "title": "Periodicity",
+                    "numeral": "6",
+                    "title": "Patterns that repeat in cycles",
                     "description": (
-                        "Patterns are sometimes cyclical across different scales: the day, "
-                        "the week, the year, and each repeating pattern exhibits its own "
-                        "behaviour. Students track one cycle for a week and present the result."
+                        "Some patterns are cyclical — the day, the week, the seasons — "
+                        "and each cycle has its own behaviour. Children track one cycle "
+                        "for a week and present what they find."
                     ),
                 },
                 {
-                    "numeral": "VII",
-                    "title": "Inference From Effects",
+                    "numeral": "7",
+                    "title": "Figuring out hidden rules",
                     "description": (
-                        "Reasoning to a rule that cannot be observed directly. Students "
-                        "interrogate a black-box function and reconstruct the rules of an "
+                        "Sometimes you can't see the rule directly — you have to work it "
+                        "out from what happens. Children reconstruct the rules of an "
                         "unexplained game from play alone."
                     ),
                 },
                 {
-                    "numeral": "VIII",
-                    "title": "Regularity in Human Behaviour",
+                    "numeral": "8",
+                    "title": "Why people are more predictable than they think",
                     "description": (
-                        "Humans are patterned creatures. Students learn why populations are "
-                        "predictable where individuals are not. The class predicts its own "
-                        "behaviour, records the outcome, and considers who else performs this "
-                        "operation on them commercially."
+                        "Humans are patterned creatures. Children learn why groups are "
+                        "predictable even when individuals aren't. The class predicts "
+                        "its own behaviour, records the result, and asks: who else does "
+                        "this to us?"
                     ),
                 },
                 {
-                    "numeral": "IX",
-                    "title": "False Structure",
+                    "numeral": "9",
+                    "title": "When your brain invents patterns that aren't there",
                     "description": (
-                        "The point at which the seminar turns on its own subject. Students "
-                        "learn about apophenia (the tendency to see patterns where they "
-                        "don't exist), coincidence, and superstition — the mind's tendency "
-                        "to produce structures where none exist."
+                        "The seminar turns on its own subject. Children learn about "
+                        "coincidence, superstition, and the mind's tendency to see "
+                        "structure where none exists."
                     ),
                 },
                 {
-                    "numeral": "X",
-                    "title": "The Appearance of Randomness",
+                    "numeral": "10",
+                    "title": "Why real randomness looks strange",
                     "description": (
                         "Why genuine randomness looks less random than people expect. "
                         "Students generate fabricated and real sequences and learn to "
@@ -302,23 +300,22 @@ MODULES = [
                     ),
                 },
                 {
-                    "numeral": "XI",
-                    "title": "Evaluating a Pattern",
+                    "numeral": "11",
+                    "title": "How to tell if a pattern is worth trusting",
                     "description": (
-                        "Two criteria for trust: frequency of observation and the presence "
-                        "of a mechanism. Correlation and causation are separated by worked "
-                        "example, and the class is shown how the same data yields opposing "
-                        "conclusions under selective presentation."
+                        "Two tests: how often have you seen it, and is there a reason "
+                        "it should exist? Children learn the difference between correlation "
+                        "and causation, and see how the same data can tell opposite stories."
                     ),
                 },
                 {
-                    "numeral": "XII",
-                    "title": "Assessment and Presentation",
+                    "numeral": "12",
+                    "title": "Present your own discovery",
                     "description": (
-                        "Each student presents one pattern tracked across the full term: "
-                        "the observation, the rule inferred, the prediction made, and the "
-                        "outcome. A failed prediction correctly analysed is assessed as "
-                        "highly as a successful one. Parents attend."
+                        "Each child presents one pattern they tracked across the full term: "
+                        "what they observed, the rule they inferred, the prediction they made, "
+                        "and whether it held up. A failed prediction correctly analysed is "
+                        "valued as highly as a successful one. Parents attend."
                     ),
                 },
             ],
