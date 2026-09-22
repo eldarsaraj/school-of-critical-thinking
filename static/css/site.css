@@ -1973,7 +1973,6 @@ a.curriculum-book:hover .curriculum-book__title {
 .module-illustration img {
   display: block;
   width: 100%;
-  max-width: 640px;
   height: auto;
 }
 
