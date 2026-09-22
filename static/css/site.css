@@ -1721,15 +1721,15 @@ a.curriculum-book:hover .curriculum-book__title {
 }
 
 .module-description {
-  font-size: 15px;
-  line-height: 1.7;
-  color: rgba(0,0,0,0.75);
+  font-size: 17px;
+  line-height: 1.8;
+  color: rgba(0,0,0,0.82);
   margin-bottom: 36px;
 }
 
 .module-section-title {
   margin: 0 0 4px 0;
-  font-size: 18px;
+  font-size: 22px;
 }
 
 .module-units-meta {
@@ -1775,8 +1775,8 @@ a.curriculum-book:hover .curriculum-book__title {
 }
 
 .module-glance__label {
-  padding: 5px 20px 5px 0;
-  font-size: 13px;
+  padding: 6px 20px 6px 0;
+  font-size: 15px;
   font-weight: 600;
   color: rgba(0,0,0,0.55);
   white-space: nowrap;
@@ -1784,9 +1784,9 @@ a.curriculum-book:hover .curriculum-book__title {
 }
 
 .module-glance__value {
-  padding: 5px 0;
-  font-size: 13px;
-  line-height: 1.5;
+  padding: 6px 0;
+  font-size: 15px;
+  line-height: 1.6;
   color: rgba(0,0,0,0.8);
   border-top: 0.5px solid rgba(0,0,0,0.07);
 }
@@ -1851,21 +1851,21 @@ a.curriculum-book:hover .curriculum-book__title {
 
 .module-unit__title {
   margin: 0 0 8px 0;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
 }
 
 .module-unit__desc {
   margin: 0;
-  font-size: 13px;
-  line-height: 1.65;
-  color: rgba(0,0,0,0.6);
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.65);
 }
 
 .module-how-list {
   margin: 12px 0 0 0;
   padding-left: 18px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
   color: rgba(0,0,0,0.7);
 }
@@ -2071,15 +2071,15 @@ a.curriculum-book:hover .curriculum-book__title {
 }
 
 .module-seminar__lesson-title {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
   margin: 0 0 4px;
   line-height: 1.4;
 }
 
 .module-seminar__lesson-desc {
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.75;
   color: rgba(0,0,0,0.65);
   margin: 0;
 }
