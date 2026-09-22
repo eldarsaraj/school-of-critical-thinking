@@ -42,6 +42,9 @@
   <h2 class="module-section-title" style="margin-top: 48px;">Why this skill, and why now</h2>
   {% for para in module.seminar.why %}
   <p class="module-description">{{ para }}</p>
+  {% if forloop.counter == 3 %}
+  <img class="module-inline-img" src="{% static 'images/live-instruction_image-1.png' %}" alt="">
+  {% endif %}
   {% endfor %}
 
   <h2 class="module-section-title" style="margin-top: 48px;">It's also practical</h2>

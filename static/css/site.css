@@ -1976,6 +1976,13 @@ a.curriculum-book:hover .curriculum-book__title {
   height: auto;
 }
 
+.module-inline-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 12px 0;
+}
+
 /* Module pathway cards */
 .module-pathways {
   display: flex;
