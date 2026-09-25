@@ -1,0 +1,139 @@
+/* ----------------------------------------------------------
+   Hunter-specific overrides
+   Loaded in addition to shsat.css by Hunter test templates.
+   Keeps Hunter passage behaviour separate from SHSAT so changes
+   to one cannot accidentally break the other.
+   ---------------------------------------------------------- */
+
+/* Passage column: fixed 510px track so long nowrap lines cannot blow
+   out the two-column layout. The passage box handles all overflow. */
+.shsat-passage-layout {
+  grid-template-columns: 510px 1fr;
+}
+
+.shsat-passage-col {
+  width: 510px;
+  max-width: 510px;
+  /* no overflow property — let the scroll box own it entirely */
+}
+
+/* Passage scroll box: vertical scroll keeps tall passages accessible
+   while sticky; horizontal scroll handles lines longer than 510px.
+   width:100% + box-sizing so padding doesn't push past the 510px cap. */
+.shsat-passage--scroll {
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: calc(100vh - 60px);
+}
+
+/* Flex-gutter line rendering: each passage line is a flex row with
+   a fixed gutter on the left (shows line number or stays blank) and
+   the text body on the right. Numbers are structurally bound to their
+   line — no JS measurement, no drift on resize.
+   Text is allowed to wrap — the number still anchors to the start
+   of each original line, which is all that matters for "see line 5." */
+.shsat-passage-prose {
+  padding-left: 0;       /* gutter is handled by flex, not padding */
+}
+
+.shsat-passage-line {
+  display: flex;
+  align-items: flex-start;
+}
+
+.shsat-lnum-cell {
+  flex: 0 0 28px;
+  text-align: right;
+  padding-right: 6px;
+  font-size: 10px;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.3);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.78;     /* match .shsat-passage-prose line-height */
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+.shsat-lnum-body {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word; /* prevent single long words from overflowing */
+}
+
+/* ----------------------------------------------------------
+   Hunter essay question layout
+   ---------------------------------------------------------- */
+
+.hunter-essay-prompt-block {
+  margin-bottom: 28px;
+  border-left: 3px solid #a4161a;
+  padding: 4px 0 4px 22px;
+}
+
+.hunter-essay-prompt-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a4161a;
+  margin-bottom: 14px;
+}
+
+.hunter-essay-prompt-para {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-style: italic;
+  line-height: 1.65;
+  color: #1a1a1a;
+  margin: 0 0 10px;
+}
+
+.hunter-essay-prompt-para:last-child {
+  margin-bottom: 0;
+}
+
+.hunter-essay-wrap {
+  margin-bottom: 24px;
+}
+
+.hunter-essay-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 4px;
+  padding: 16px 18px;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #161a1d;
+  background: #fff;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+  min-height: 360px;
+}
+
+.hunter-essay-textarea:focus {
+  border-color: #a4161a;
+  box-shadow: 0 0 0 2px rgba(164, 22, 26, 0.08);
+}
+
+.hunter-essay-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.hunter-essay-wordcount {
+  color: rgba(0, 0, 0, 0.45);
+  font-variant-numeric: tabular-nums;
+}
+
+.hunter-essay-saved {
+  color: rgba(0, 0, 0, 0.35);
+}

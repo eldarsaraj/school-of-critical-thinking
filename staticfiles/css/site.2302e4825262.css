@@ -201,6 +201,7 @@ main { padding: 48px 24px; }
 .home-hero__image {
   margin-top: 48px;
   margin-bottom: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 .home-hero__image img {
   display: block;
@@ -984,7 +985,7 @@ main { padding: 48px 24px; }
   width: 12px;
   height: 12px;
   margin-left: 6px;
-  background: url("/static/images/proof-mark.png") no-repeat center / contain;
+  background: url("/static/images/proof-mark.89aa18369fc0.png") no-repeat center / contain;
   vertical-align: middle;
   opacity: 0.9;
 }
@@ -4065,7 +4066,7 @@ a.curriculum-book:hover .curriculum-book__title {
 
 /* ── Home: Secondary (Curriculum) section ──────────────────────────────── */
 .home-secondary {
-  padding: 32px 0 64px;
+  padding: 64px 0;
   border-top: 1px solid rgba(0,0,0,.08);
 }
 
