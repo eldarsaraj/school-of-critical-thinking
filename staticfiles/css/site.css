@@ -201,6 +201,9 @@ main { padding: 48px 24px; }
 .home-hero__image {
   margin-top: 48px;
   margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  line-height: 0;
 }
 .home-hero__image img {
   display: block;
