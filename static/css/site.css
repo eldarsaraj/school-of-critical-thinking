@@ -200,9 +200,9 @@ main { padding: 48px 24px; }
 
 .home-hero__image {
   margin-top: 48px;
-  margin-bottom: -1px;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
 }
-
 .home-hero__image img {
   display: block;
   width: 100%;
