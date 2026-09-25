@@ -3934,6 +3934,33 @@ a.curriculum-book:hover .curriculum-book__title {
   line-height: 1.7;
   color: rgba(0,0,0,0.6);
 }
+.home-hero__sub--cta {
+  color: rgba(0,0,0,0.85);
+  font-weight: 500;
+}
+.home-hero__eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+  margin: 0 0 16px 0;
+}
+.home-hero__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+.home-chip {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  padding: 5px 12px;
+  border: 1px solid rgba(0,0,0,0.12);
+  color: rgba(0,0,0,0.5);
+}
 
 /* ── Home: SHSAT Feature section ───────────────────────────────────────── */
 .home-feature {

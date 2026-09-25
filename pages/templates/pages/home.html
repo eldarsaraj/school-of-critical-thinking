@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}The School of Critical Thinking — Helping parents raise critical thinkers{% endblock %}
+{% block title %}SHSAT and Hunter Test Prep — The School of Critical Thinking{% endblock %}
 
-{% block meta_description %}<meta name="description" content="Helping parents raise kids who can think for themselves. A critical thinking curriculum and precision test prep for ages 8–16.">{% endblock %}
+{% block meta_description %}<meta name="description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Every question human-written, every wrong answer error-tagged. Free baseline test with full error analysis.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="The School of Critical Thinking" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="The School of Critical Thinking" />
-  <meta property="og:description" content="Helping parents raise kids who can think for themselves. A critical thinking curriculum and precision test prep for ages 8–16." />
+  <meta property="og:title" content="SHSAT and Hunter Test Prep — The School of Critical Thinking" />
+  <meta property="og:description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Free baseline test with full error analysis." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="The School of Critical Thinking" />
-  <meta name="twitter:description" content="Helping parents raise kids who can think for themselves. A critical thinking curriculum and precision test prep for ages 8–16." />
+  <meta name="twitter:title" content="SHSAT and Hunter Test Prep — The School of Critical Thinking" />
+  <meta name="twitter:description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Free baseline test with full error analysis." />
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 {% endblock %}
 
@@ -27,111 +27,88 @@
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <section class="home-hero home-hero--full">
   <div class="home-hero__text">
-    <h1 class="home-hero__title">Raise a child who can think for themselves.</h1>
+    <p class="home-hero__eyebrow">New York · SHSAT and Hunter</p>
+    <h1 class="home-hero__title">The exam is the lock. Thinking is the key.</h1>
     <p class="home-hero__sub">
-      Most education teaches kids what to think. We teach them how. Our curriculum
-      covers the foundations of clear reasoning (things like patterns, causality, uncertainty,
-      models, and decisions) so your child develops the habits of mind that no
-      exam, algorithm, or shortcut can replace.
+      I reverse-engineered the SHSAT and Hunter from the official corpus.
+      Statistical and linguistic analysis of the real items, then every
+      practice question written by hand to hit the same traps.
+    </p>
+    <p class="home-hero__sub home-hero__sub--cta">
+      Start with a free baseline test. Full exam, full error analysis, no credit card.
     </p>
     <div class="home-hero__actions">
-      <a href="/curriculum/" class="home-hero__btn">See the curriculum &rarr;</a>
-      <a href="/test-prep/" class="home-hero__btn home-hero__btn--ghost">Explore test prep</a>
+      <a href="/shsat/" class="home-hero__btn">Start the free baseline test</a>
+      <a href="/articles/how-i-reverse-engineered-the-shsat/" class="home-hero__btn home-hero__btn--ghost">My method</a>
     </div>
-  </div>
-  <div class="home-hero__image">
-    <img src="{% static 'images/hero-image.png' %}" alt="">
+    <div class="home-hero__chips">
+      <span class="home-chip">Human-written</span>
+      <span class="home-chip">Official corpus</span>
+      <span class="home-chip">Error tagged</span>
+      <span class="home-chip">SHSAT + Hunter</span>
+    </div>
   </div>
 </section>
 
-<!-- ── Curriculum ─────────────────────────────────────────────────────────── -->
+<!-- ── After the baseline ───────────────────────────────────────────────── -->
 <section class="home-feature">
-  <p class="home-feature__label">Critical Thinking Curriculum</p>
+  <p class="home-feature__label">After the baseline</p>
   <div class="home-feature__header">
-    <h2 class="home-feature__title">Five foundations of clear thinking.</h2>
-    <p class="home-feature__sub">
-      The curriculum is built around five things every young person needs to understand
-      about how the world actually works: patterns, causality, uncertainty, models, and
-      decision-making. It covers ages 8 to 16, one lesson per week, and fits alongside
-      whatever curriculum you already use. This isn't a collection of puzzles or logic
-      games, but a structured and deliberately designedprogram that teaches your child 
-      to notice what's actually happening, question what they're told, and make better 
-      decisions because of it.
-    </p>
+    <h2 class="home-feature__title">You get a report that tells you exactly what went wrong.</h2>
   </div>
 
   <div class="home-feature__meta">
     <div class="home-feature__meta-item">
-      <p class="home-feature__meta-title">Patterns</p>
-      <p class="home-feature__meta-body">Recognizing structure in the world, and learning how to derive insight from it.</p>
+      <p class="home-feature__meta-title">The exact mistake</p>
+      <p class="home-feature__meta-body">Not "needs improvement in reading comprehension." The specific misread that made a wrong answer look right to your child.</p>
     </div>
     <div class="home-feature__meta-item">
-      <p class="home-feature__meta-title">Causality</p>
-      <p class="home-feature__meta-body">Understanding why things happen, and how to benefit from that understanding.</p>
+      <p class="home-feature__meta-title">What it costs</p>
+      <p class="home-feature__meta-body">One error type repeated across 40 questions bleeds points from every section. The report shows how many points each mistake pattern is costing the composite.</p>
     </div>
     <div class="home-feature__meta-item">
-      <p class="home-feature__meta-title">Uncertainty</p>
-      <p class="home-feature__meta-body">Developing statistical thinking and learning to make decisions in the face of incomplete information.</p>
-    </div>
-    <div class="home-feature__meta-item">
-      <p class="home-feature__meta-title">Models</p>
-      <p class="home-feature__meta-body">Developing intuitions about how the world works and using them to make predictions.</p>
-    </div>
-    <div class="home-feature__meta-item">
-      <p class="home-feature__meta-title">Decision-making</p>
-      <p class="home-feature__meta-body">Learning to evaluate options and make choices based on evidence and reasoning.</p>
-    </div>
-  </div>
-
-  <div class="home-feature__cta">
-    <a href="/curriculum/" class="home-hero__btn">See the full curriculum &rarr;</a>
-    <p class="home-feature__cta-note">Module 1 book available now on Amazon. Ages 8–16, one lesson per week.</p>
-  </div>
-</section>
-
-<!-- ── Test Prep ──────────────────────────────────────────────────────────── -->
-<section class="home-secondary">
-  <div class="home-secondary__inner">
-    <div class="home-secondary__text">
-      <p class="home-secondary__label">Precision Test Prep</p>
-      <h2 class="home-secondary__title">When your child can think clearly, test scores follow.</h2>
-      <p class="home-secondary__body">
-        Every competitive admissions test is a proxy for reasoning skills. We reverse-engineer
-        those skills from the official materials and teach them directly, through adaptive
-        practice tests, detailed error analysis, and a rigorous scoring model.
-        The same thinking foundations that drive the curriculum also drive the test prep.
-        Currently available for NYC parents looking into the SHSAT and Hunter High School, with more tests coming.
-      </p>
+      <p class="home-feature__meta-title">What to do next</p>
+      <p class="home-feature__meta-body">Practice items built around that mistake, so your child stops rehearsing what they already know and starts working on what they actually get wrong.</p>
     </div>
   </div>
 </section>
 
+<!-- ── Dashboard proof ──────────────────────────────────────────────────── -->
 <section class="home-feature">
 
   {% include "pages/includes/demo_dashboard.html" %}
 
-  <div class="home-feature__meta">
-    <div class="home-feature__meta-item">
-      <p class="home-feature__meta-title">Adaptive practice tests</p>
-      <p class="home-feature__meta-body">Tests route the student to the next set of questions based on their performance, matching the real adaptive structure of the exams. Our scoring is conservative, so your child never thinks they're more prepared than they actually are.</p>
-    </div>
-    <div class="home-feature__meta-item">
-      <p class="home-feature__meta-title">Distractor trap analysis</p>
-      <p class="home-feature__meta-body">Every wrong answer is tagged by the specific reasoning error behind it. After each test, your child sees which traps caught them and how often, so review is targeted, not random.</p>
-    </div>
-    <div class="home-feature__meta-item">
-      <p class="home-feature__meta-title">Accuracy by skill area</p>
-      <p class="home-feature__meta-body">Broken down by section and skill so you know exactly which areas are costing the most points (and by how much) across every test your child has taken.</p>
-    </div>
-    <div class="home-feature__meta-item">
-      <p class="home-feature__meta-title">Built from official materials</p>
-      <p class="home-feature__meta-body">Every question on this platform was written by reading the official test handbooks and working backwards from the answer rationales. Not guesswork, but a systematic reconstruction of what each test actually measures.</p>
+</section>
+
+<!-- ── Book ──────────────────────────────────────────────────────────────── -->
+<section class="home-feature">
+  <p class="home-feature__label">Book</p>
+  <div class="home-feature__header">
+    <h2 class="home-feature__title">Seeing Patterns</h2>
+    <p class="home-feature__sub">
+      52 weekly lessons, ages 8 to 12. Use it if the report says the gap is
+      pattern versus coincidence.
+    </p>
+  </div>
+  <div class="home-feature__cta">
+    <div class="home-hero__actions">
+      <a href="/curriculum/module-1/book/" class="home-hero__btn">Read a free lesson</a>
+      <a href="https://www.amazon.com/How-World-Works-Seeing-Patterns/dp/B0GX6NJ22H/" class="home-hero__btn home-hero__btn--ghost" target="_blank" rel="noopener">Amazon</a>
     </div>
   </div>
+</section>
 
-  <div class="home-feature__cta">
-    <a href="/test-prep/" class="home-hero__btn">Explore test prep &rarr;</a>
-    <p class="home-feature__cta-note">Start with the free SHSAT Baseline Test — 114 questions, full error analysis, no credit card required.</p>
+<!-- ── Curriculum (below the fold) ──────────────────────────────────────── -->
+<section class="home-secondary">
+  <div class="home-secondary__inner">
+    <p class="home-secondary__label">Critical Thinking Curriculum</p>
+    <h2 class="home-secondary__title">Not prepping for an exam? The same thinking skills apply without a deadline.</h2>
+    <p class="home-secondary__body">
+      One lesson a week on how patterns, causes, and incomplete information
+      actually work. For families who want their children to think clearly
+      whether or not there is a test at the end.
+    </p>
+    <a href="/curriculum/" class="home-secondary__cta">See the curriculum &rarr;</a>
   </div>
 </section>
 
@@ -143,10 +120,10 @@
   <div class="home-founder__text">
     <p class="home-founder__bio" style="font-size: 15px; color: rgba(0,0,0,0.75); margin-bottom: 6px;"><strong>Eldar Sarajlic</strong></p>
     <p class="home-founder__bio">
-      Academic philosopher and an evangelist for critical thinking and parent-led education. 
-      I built this school for my kid and yours, because I wanted to raise a child who can think for themselves.
+      Academic philosopher. I built this because I wanted test prep that
+      actually teaches thinking, not just test prep that teaches the test.
     </p>
-    <a href="/about/" class="home-founder__link">More about the school &rarr;</a>
+    <a href="/about/" class="home-founder__link">More about me &rarr;</a>
   </div>
 </section>
 
