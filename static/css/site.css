@@ -4355,6 +4355,27 @@ a.curriculum-book:hover .curriculum-book__title {
   line-height: 1.75;
   color: rgba(0,0,0,.58);
 }
+.tp-chart {
+  margin: 28px 0 8px;
+}
+.tp-chart img {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.tp-chart-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 28px 0 8px;
+}
+.tp-chart-pair .tp-chart { margin: 0; }
+.tp-chart-pair .tp-chart img { max-width: 100%; }
+@media (max-width: 600px) {
+  .tp-chart-pair { grid-template-columns: 1fr; }
+}
 
 /* ==========================================================================
    SHSAT landing page  (shsat/landing.html — extends base.html)
