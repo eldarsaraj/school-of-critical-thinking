@@ -30,9 +30,10 @@
     <p class="home-hero__eyebrow">New York · SHSAT and Hunter</p>
     <h1 class="home-hero__title">The exam is the lock. Thinking is the key.</h1>
     <p class="home-hero__sub">
-      I reverse-engineered the SHSAT and Hunter from the official corpus.
-      Statistical and linguistic analysis of the real items, then every
-      practice question written by hand to hit the same traps.
+      The only durable way to master the SHSAT and Hunter exams is through rigorous, 
+      error-tagged practice rooted in developing your child's critical thinking skills, 
+      rather than cramming a bunch of random (often AI-generated)practice questions. 
+      Doing exactly that is the whole mission of The School of Critical Thinking. 
     </p>
     <p class="home-hero__sub home-hero__sub--cta">
       Start with a free baseline test. Full exam, full error analysis, no credit card.
@@ -43,6 +44,10 @@
     </div>
   </div>
 </section>
+
+<div class="home-hero__image">
+  <img src="{% static 'images/hero-image.png' %}" alt="">
+</div>
 
 <!-- ── Test cards ────────────────────────────────────────────────────────── -->
 <div class="tp-grid" style="margin-top: 48px;">
@@ -83,12 +88,8 @@
 
 </div>
 
-<div class="home-hero__image">
-  <img src="{% static 'images/hero-image.png' %}" alt="">
-</div>
-
 <!-- ── After the baseline ───────────────────────────────────────────────── -->
-<section class="home-feature">
+<section class="home-feature" style="border-top: none; padding-top: 48px;">
   <p class="home-feature__label">After the baseline</p>
   <div class="home-feature__header">
     <h2 class="home-feature__title">You get a report that tells you exactly what went wrong.</h2>
@@ -108,31 +109,9 @@
       <p class="home-feature__meta-body">Practice items built around that mistake, so your child stops rehearsing what they already know and starts working on what they actually get wrong.</p>
     </div>
   </div>
-</section>
-
-<!-- ── Dashboard proof ──────────────────────────────────────────────────── -->
-<section class="home-feature">
 
   {% include "pages/includes/demo_dashboard.html" %}
 
-</section>
-
-<!-- ── Book ──────────────────────────────────────────────────────────────── -->
-<section class="home-feature">
-  <p class="home-feature__label">Book</p>
-  <div class="home-feature__header">
-    <h2 class="home-feature__title">Seeing Patterns</h2>
-    <p class="home-feature__sub">
-      52 weekly lessons, ages 8 to 12. Use it if the report says the gap is
-      pattern versus coincidence.
-    </p>
-  </div>
-  <div class="home-feature__cta">
-    <div class="home-hero__actions">
-      <a href="/curriculum/module-1/book/" class="home-hero__btn">Read a free lesson</a>
-      <a href="https://www.amazon.com/How-World-Works-Seeing-Patterns/dp/B0GX6NJ22H/" class="home-hero__btn home-hero__btn--ghost" target="_blank" rel="noopener">Amazon</a>
-    </div>
-  </div>
 </section>
 
 <!-- ── Curriculum (below the fold) ──────────────────────────────────────── -->
@@ -157,8 +136,8 @@
   <div class="home-founder__text">
     <p class="home-founder__bio" style="font-size: 15px; color: rgba(0,0,0,0.75); margin-bottom: 6px;"><strong>Eldar Sarajlic</strong></p>
     <p class="home-founder__bio">
-      Academic philosopher. I built this because I wanted test prep that
-      actually teaches thinking, not just test prep that teaches the test.
+      Academic philosopher and university professor of critical thinking. 
+      I built this for my own child first, and then decided to share it with other families.
     </p>
     <a href="/about/" class="home-founder__link">More about me &rarr;</a>
   </div>
