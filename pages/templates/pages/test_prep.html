@@ -3,44 +3,139 @@
 
 {% block title %}Test Prep — The School of Critical Thinking{% endblock %}
 
-{% block meta_description %}<meta name="description" content="Precision test preparation for NYC's most competitive admissions exams. Reverse-engineered from official sources, with adaptive tests and error analysis that shows exactly why wrong answers are wrong.">{% endblock %}
+{% block meta_description %}<meta name="description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Statistical and linguistic analysis of real items, human-written questions, named distractor traps, and full error analysis.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="The School of Critical Thinking" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Test Prep — The School of Critical Thinking" />
-  <meta property="og:description" content="Precision test preparation built from official sources. Adaptive tests, named distractor traps, and error analysis that targets the reasoning skills that drive real score improvement." />
+  <meta property="og:description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Statistical and linguistic analysis of real items, human-written questions, and full error analysis." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Test Prep — The School of Critical Thinking" />
-  <meta name="twitter:description" content="Precision test preparation built from official sources." />
+  <meta name="twitter:description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus." />
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'shsat/css/shsat.css' %}">
 {% endblock %}
 
 {% block content %}
 
-<!-- Hero -->
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <div class="tp-hero">
-  <p class="tp-hero__label">Standardized Test Preparation</p>
-  <h1 class="tp-hero__title">Built from the source.<br>Not guessing at it.</h1>
+  <p class="tp-hero__label">My method</p>
+  <h1 class="tp-hero__title">How I reverse-engineered the SHSAT and Hunter.</h1>
   <p class="tp-hero__sub">
-    Every test on this platform was reverse-engineered from official materials.
-    Adaptive scoring, identified distractor traps, and error analysis that shows not just
-    which answers were wrong, but why, and what to do about it.
+    Most test prep platforms generate questions with AI or write them from intuition
+    about what "looks like" the real test. I did something different. I took the official
+    DOE handbooks and Hunter sample materials apart, ran statistical and linguistic analysis
+    on the real items, and used the results to write every practice question by hand.
   </p>
 </div>
 
-<!-- Test cards -->
+<!-- ── Step 1: The corpus ──────────────────────────────────────────────── -->
+<div class="tp-method">
+  <p class="tp-method__label">01 — The corpus</p>
+  <h2 class="tp-method__title">Start with what the test makers actually published.</h2>
+  <p class="tp-method__body">
+    The DOE publishes sample tests and answer rationales for the SHSAT. Hunter publishes
+    sample items for each section. These are not study guides written by third parties.
+    They are the test maker's own items, with the test maker's own explanations for why
+    each wrong answer is wrong. That is the corpus. Everything I build starts there.
+  </p>
+</div>
+
+<!-- ── Step 2: Analysis ────────────────────────────────────────────────── -->
+<div class="tp-method">
+  <p class="tp-method__label">02 — Analysis</p>
+  <h2 class="tp-method__title">What makes a wrong answer attractive?</h2>
+  <p class="tp-method__body">
+    I read every answer rationale the DOE published and categorized the reasoning errors
+    behind each wrong answer. Not "this is wrong because it contradicts the passage" but
+    the specific cognitive move that makes a student pick it: surface-level word matching,
+    extreme language that sounds authoritative, a causal claim that reverses cause and effect,
+    a conclusion that is true but answers a different question.
+  </p>
+  <p class="tp-method__body">
+    The SHSAT ELA alone has 13 distinct reading comprehension trap types and 12 editing trap
+    types. Each one exploits a different failure in how a student reads or reasons. Math has
+    its own set: sign errors, unit confusion, off-by-one miscounts, and several cognitive traps
+    like anchoring on the first plausible number or confusing a rate with a total.
+  </p>
+</div>
+
+<!-- ── Step 3: Construction ────────────────────────────────────────────── -->
+<div class="tp-method">
+  <p class="tp-method__label">03 — Construction</p>
+  <h2 class="tp-method__title">Build questions that hit the same traps.</h2>
+  <p class="tp-method__body">
+    Every question on this platform is written by hand, not generated. The wrong answers
+    are deliberate: each one is tagged with the specific trap type it represents, so the
+    question does not just test whether a student knows the answer. It tests whether they
+    can resist the particular misread that the real exam exploits.
+  </p>
+  <p class="tp-method__body">
+    Questions are constructed according to latent variable theory and factor analysis,
+    which means they are designed to measure the same underlying skills that the real
+    test measures. A practice question that is "hard" for the wrong reasons teaches nothing.
+    A practice question that is hard because it contains the same cognitive trap as the
+    real item teaches the student exactly what they need to learn.
+  </p>
+</div>
+
+<!-- ── Step 4: Error analysis ──────────────────────────────────────────── -->
+<div class="tp-method">
+  <p class="tp-method__label">04 — Error analysis</p>
+  <h2 class="tp-method__title">Every wrong answer has a name.</h2>
+  <p class="tp-method__body">
+    After each test, the platform does not just show a score. It shows which trap types
+    caught your child and how often. If a student keeps falling for "true but irrelevant"
+    distractors in reading comprehension, that is a specific, trainable problem. If they
+    keep making sign errors in algebra, that is a different problem with a different fix.
+  </p>
+  <p class="tp-method__body">
+    The error analysis breaks down accuracy by skill area, shows time per question,
+    tracks which mistake patterns persist across multiple tests, and projects school
+    placement against real cutoff scores. A parent should never have to guess where
+    the problem is.
+  </p>
+</div>
+
+<!-- ── Step 5: No AI ──────────────────────────────────────────────────── -->
+<div class="tp-method">
+  <p class="tp-method__label">05 — No AI feedback</p>
+  <h2 class="tp-method__title">Every explanation was written by a person.</h2>
+  <p class="tp-method__body">
+    Many test prep platforms use language models to generate explanations on the fly.
+    I do not. Every explanation your child sees after a wrong answer was written, reviewed,
+    and structured by me. There is no chatbot interpolating between training data and
+    calling it feedback. When the explanation says "this answer is wrong because it
+    confuses correlation with cause," that sentence was written because I looked at the
+    question, identified the trap, and wrote the explanation to address it directly.
+  </p>
+</div>
+
+<div class="module-illustration" style="margin-top: 48px; margin-bottom: 0;">
+  <img src="{% static 'images/test-prep_image-1.png' %}" alt="">
+</div>
+
+<!-- ── Test cards ────────────────────────────────────────────────────────── -->
+<div class="tp-method">
+  <p class="tp-method__label">Available now</p>
+  <h2 class="tp-method__title">Choose your exam.</h2>
+</div>
+
 <div class="tp-grid">
 
-  <!-- SHSAT — active -->
   <div class="tp-card">
     <span class="tp-card__badge tp-card__badge--active">Available now</span>
     <div class="tp-card__name">SHSAT</div>
     <div class="tp-card__full">Specialized High Schools Admissions Test</div>
     <p class="tp-card__desc">
-      NYC's most competitive high school admissions test. Our platform is built from the
+      NYC's most competitive high school admissions test. Built from the
       official DOE handbooks: adaptive tests, 28 distractor traps, and precision
       error analysis by skill and difficulty.
     </p>
@@ -49,10 +144,9 @@
       <li>Adaptive routing: routes to easy or hard module</li>
       <li>Per-attempt error analysis: which traps caught you, which skills cost the most points</li>
     </ul>
-    <a href="/shsat/" class="tp-card__cta">Start SHSAT prep →</a>
+    <a href="/shsat/" class="tp-card__cta">Start SHSAT prep &rarr;</a>
   </div>
 
-  <!-- Hunter — active -->
   <div class="tp-card">
     <span class="tp-card__badge tp-card__badge--active">Available now</span>
     <div class="tp-card__name">Hunter</div>
@@ -64,30 +158,21 @@
     </p>
     <ul class="tp-card__facts">
       <li>Free Baseline Test (full error analysis)</li>
-      <li>RC · Writing · Quantitative Reasoning · Math Achievement</li>
+      <li>RC, Writing, Quantitative Reasoning, Math Achievement</li>
       <li>For 7th grade entry (tested in 6th grade)</li>
     </ul>
-    <a href="/hunter/" class="tp-card__cta">Start Hunter prep →</a>
+    <a href="/hunter/" class="tp-card__cta">Start Hunter prep &rarr;</a>
   </div>
 
 </div>
 
-<div class="module-illustration" style="margin-top: 48px; margin-bottom: 0;">
-  <img src="{% static 'images/test-prep_image-1.png' %}" alt="">
-</div>
-
-<!-- Method strip -->
-<div class="tp-method">
-  <p class="tp-method__label">The approach</p>
-  <h2 class="tp-method__title">Scientific rigor, applied to test prep.</h2>
-  <p class="tp-method__body">
-    Each test we build starts the same way: reading the official materials carefully and
-    working backwards from the answer rationales. Questions are constructed according to
-    latent variable theory, ensuring they measure what the actual test measures. Wrong
-    answers are tagged by trap type, so your child learns not just what they got wrong,
-    but the specific reasoning error behind it. Every explanation a student sees was written 
-    and structured by a person, and not generated on the fly by a chatbot.
+<!-- ── CTA ──────────────────────────────────────────────────────────────── -->
+<div class="tp-method" style="text-align: center; padding: 56px 0 64px;">
+  <h2 class="tp-method__title">Start with the Baseline Test. It's free.</h2>
+  <p class="tp-method__body" style="margin-bottom: 28px;">
+    114 questions. Full error analysis. No credit card required.
   </p>
+  <a href="/shsat/" class="home-hero__btn">Start the free baseline test</a>
 </div>
 
 {% endblock %}
