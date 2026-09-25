@@ -201,9 +201,11 @@ main { padding: 48px 24px; }
 .home-hero__image {
   margin-top: 48px;
   margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
   line-height: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.home-hero__image + .tp-grid {
+  border-top: none;
 }
 .home-hero__image img {
   display: block;
@@ -4241,7 +4243,6 @@ a.curriculum-book:hover .curriculum-book__title {
   font-size: 17px;
   line-height: 1.7;
   color: rgba(0,0,0,0.58);
-  max-width: 560px;
 }
 
 /* ── Test cards ── */
