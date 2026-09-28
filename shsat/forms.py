@@ -59,11 +59,10 @@ DISTRACTOR_CHOICES = [
 class TestForm(forms.ModelForm):
     class Meta:
         model = Test
-        fields = ["title", "source", "order", "exam_type", "is_free", "is_published", "is_adaptive", "routing_threshold"]
+        fields = ["title", "source", "order", "is_free", "is_published", "is_adaptive", "routing_threshold"]
         labels = {
             "source": "Source (e.g. Official SHSAT Handbook 2025)",
             "order": "Display order (lower = first)",
-            "exam_type": "Exam type (SHSAT or Hunter)",
             "routing_threshold": "Routing threshold (0.0–1.0, e.g. 0.60 = 60%)",
         }
 
