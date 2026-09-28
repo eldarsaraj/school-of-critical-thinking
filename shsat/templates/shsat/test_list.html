@@ -85,13 +85,13 @@
   {% for drill in drills %}
   <li class="shsat-test-item {% if not can_access_paid %}shsat-test-item--drill-locked{% endif %}">
     <div>
-      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:4px;">Math drill</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:4px;">{% if drill.ela_questions.count and drill.math_questions.count %}ELA + Math drill{% elif drill.ela_questions.count %}ELA drill{% else %}Math drill{% endif %}</div>
       <div class="shsat-test-item__title">{{ drill.title }}</div>
       {% if drill.description %}
       <div style="font-size:14px;color:rgba(0,0,0,0.55);margin:3px 0 2px;">{{ drill.description }}</div>
       {% endif %}
       <div class="shsat-test-item__meta">
-        {{ drill.displayed_question_count }} questions · Math only · No time limit
+        {% if drill.ela_questions.count and drill.math_questions.count %}{{ drill.ela_questions.count }} ELA + {{ drill.math_questions.count }} Math questions{% elif drill.ela_questions.count %}{{ drill.ela_questions.count }} ELA questions{% else %}{{ drill.math_questions.count }} Math questions{% endif %} · No time limit
         {% if not can_access_paid %} · <span style="color:rgba(0,0,0,0.4);">Included with upgrade</span>{% endif %}
       </div>
     </div>

@@ -11,7 +11,7 @@
   {% if is_drill %}
   <div class="shsat-intro__rule">
     <div class="shsat-intro__rule-label">Questions</div>
-    <div>{{ math_count }} Math questions</div>
+    <div>{% if ela_count and math_count %}{{ ela_count }} ELA + {{ math_count }} Math questions{% elif ela_count %}{{ ela_count }} ELA questions{% else %}{{ math_count }} Math questions{% endif %}</div>
   </div>
   <div class="shsat-intro__rule">
     <div class="shsat-intro__rule-label">Time allowed</div>
@@ -51,11 +51,11 @@
   {% else %}
   <div class="shsat-intro__rule">
     <div class="shsat-intro__rule-label">ELA questions</div>
-    <div>57</div>
+    <div>{{ ela_count }}</div>
   </div>
   <div class="shsat-intro__rule">
     <div class="shsat-intro__rule-label">Math questions</div>
-    <div>57</div>
+    <div>{{ math_count }}</div>
   </div>
   <div class="shsat-intro__rule">
     <div class="shsat-intro__rule-label">Time allowed</div>
