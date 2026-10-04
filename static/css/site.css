@@ -4333,6 +4333,13 @@ a.curriculum-book:hover .curriculum-book__title {
   font-style: italic;
 }
 
+/* ── Article promo card ── */
+.home-article-promo:hover { border-color: rgba(0,0,0,.22); }
+@media (max-width: 540px) {
+  .home-article-promo { flex-direction: column; gap: 12px; }
+  .home-article-promo img { width: 100%; height: auto; max-height: 160px; }
+}
+
 /* ── Method strip ── */
 .tp-method {
   border-top: 1px solid rgba(0,0,0,.08);
