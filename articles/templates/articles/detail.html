@@ -77,20 +77,19 @@
     <section class="continuation" aria-label="Context">
       <p class="continuation__label">What next?</p>
       <p class="continuation__text">
-        This article is part of the School of Critical Thinking's curriculum.
-        There are two ways to go deeper.
+        Start with a free baseline test. Full exam, full error analysis, no credit card.
       </p>
 
       <div class="continuation__cards">
-        <a class="continuation__card" href="/diagnostic/">
-          <p class="continuation__card-title">Take the diagnostic</p>
-          <p class="continuation__card-desc">A free 15-minute assessment that identifies your specific thinking gaps and recommends where to start.</p>
-          <span class="continuation__card-link">Start the diagnostic →</span>
+        <a class="continuation__card" href="/shsat/">
+          <p class="continuation__card-title">SHSAT Prep</p>
+          <p class="continuation__card-desc">Full-length adaptive practice tests reverse-engineered from the official DOE handbooks. Free baseline test with error analysis.</p>
+          <span class="continuation__card-link">Start SHSAT prep →</span>
         </a>
-        <a class="continuation__card" href="/families/">
-          <p class="continuation__card-title">Browse the curriculum</p>
-          <p class="continuation__card-desc">52 lessons per level. Ages 8 to 16. Built around the five structures that govern how the world actually works.</p>
-          <span class="continuation__card-link">See the curriculum →</span>
+        <a class="continuation__card" href="/test-prep/">
+          <p class="continuation__card-title">See the science behind it</p>
+          <p class="continuation__card-desc">How we analyzed over 1,300 questions and five thousand answer choices to figure out what the SHSAT is really made of.</p>
+          <span class="continuation__card-link">See the method →</span>
         </a>
       </div>
     </section>
@@ -128,20 +127,13 @@
       </section>
     {% endif %}
 
-    <!-- Article email CTA -->
-    <section class="article-cta" aria-label="Free sample lesson">
-      <p class="article-cta__label">Free resource</p>
+    <!-- Test prep CTA -->
+    <section class="article-cta" aria-label="Test prep">
+      <p class="article-cta__label">Free baseline test</p>
       <p class="article-cta__text">
-        If this article interests you, download a free sample lesson from
-        <em>Seeing Patterns</em>, the first module of the School's curriculum.
+        100 questions. Full error analysis. No credit card required.
       </p>
-      <form class="article-cta__form" method="post" action="{% url 'download_sample' %}">
-        {% csrf_token %}
-        <input type="hidden" name="source" value="article-cta">
-        <input class="article-cta__input" type="email" name="email"
-               placeholder="Your email address" required autocomplete="email">
-        <button class="article-cta__btn" type="submit">Download sample lesson</button>
-      </form>
+      <a href="/shsat/" class="article-cta__btn" style="display:inline-block;text-decoration:none;text-align:center;">Start the free baseline test &rarr;</a>
     </section>
 
     <!-- Author bio -->
@@ -150,11 +142,10 @@
       <div class="author-bio__text">
         <p class="author-bio__name">Eldar Sarajlic</p>
         <p class="author-bio__desc">
-          Philosopher, parent, and founder of the School of Critical Thinking.
-          He has taught logic, critical thinking, and philosophy at the university level for over a decade.
-          The School is built on the same rigorous foundations, made accessible from age 8 and applied in organizations.
+          Academic philosopher and university professor of critical thinking.
+          I built this for my own child first, and then decided to share it with other families.
         </p>
-        <a class="author-bio__link" href="/about/">About the School →</a>
+        <a class="author-bio__link" href="/about/">More about me →</a>
       </div>
     </section>
 
