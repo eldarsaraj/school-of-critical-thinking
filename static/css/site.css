@@ -92,8 +92,9 @@ header a {
 /* Logo sizing (no squish) */
 .logo img {
   display: block;
-  height: 100px;
+  height: 120px;
   width: auto;
+  margin-left: -16px;
 }
 
 /* Primary nav links */
@@ -2797,7 +2798,7 @@ a.curriculum-book:hover .curriculum-book__title {
   .logo { grid-area: logo; min-width: 0; }
 
   .logo img {
-    height: 88px;
+    height: 100px;
     width: auto;
     max-width: 100%;
     display: block;
