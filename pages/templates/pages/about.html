@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}About - The School of Critical Thinking{% endblock %}
+{% block title %}About - School of Critical Thinking{% endblock %}
 
 {% block meta_description %}<meta name="description" content="Founded by a philosopher and parent. The School of Critical Thinking teaches people at every age to resist entropy: to bring order to chaos through better thinking.">{% endblock %}
 
 {% block social_meta %}
-  <meta property="og:site_name" content="The School of Critical Thinking" />
+  <meta property="og:site_name" content="School of Critical Thinking" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="About - The School of Critical Thinking" />
+  <meta property="og:title" content="About - School of Critical Thinking" />
   <meta property="og:description" content="Founded by a philosopher and parent. Teaching people at every age to bring order to chaos through better thinking." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="About - The School of Critical Thinking" />
+  <meta name="twitter:title" content="About - School of Critical Thinking" />
   <meta name="twitter:description" content="Founded by a philosopher and parent. Teaching people at every age to bring order to chaos through better thinking." />
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 {% endblock %}

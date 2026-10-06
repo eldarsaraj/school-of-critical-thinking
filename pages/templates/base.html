@@ -6,15 +6,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{% block title %}The School of Critical Thinking{% endblock %}</title>
+    <title>{% block title %}School of Critical Thinking{% endblock %}</title>
 
     {% block meta_description %}<meta name="description" content="Teaching people to think clearly at every age. A curriculum for families, learners, and organizations, built on one idea: critical thinking is the act of resisting entropy.">{% endblock %}
 
     {% block social_meta %}
-      <meta property="og:site_name" content="The School of Critical Thinking" />
+      <meta property="og:site_name" content="School of Critical Thinking" />
       <meta property="og:type" content="website" />
 
-      <meta property="og:title" content="The School of Critical Thinking" />
+      <meta property="og:title" content="School of Critical Thinking" />
       <meta property="og:description" content="Teaching people to think clearly at every age." />
 
       {# Canonical URL of the current page #}
@@ -25,10 +25,10 @@
 
       {# Twitter #}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="The School of Critical Thinking" />
+      <meta name="twitter:title" content="School of Critical Thinking" />
       <meta name="twitter:description" content="Teaching people to think clearly at every age." />
       <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
-      <meta name="twitter:image:alt" content="The School of Critical Thinking" />
+      <meta name="twitter:image:alt" content="School of Critical Thinking" />
     {% endblock %}
 
     <link rel="canonical" href="{{ request.build_absolute_uri }}" />
@@ -45,7 +45,7 @@
     <header class="site-header">
       <div class="container site-header__inner">
         <a href="/" class="logo" aria-label="Home">
-          <img src="{% static 'images/logo.png' %}" alt="The School of Critical Thinking">
+          <img src="{% static 'images/logo.png' %}" alt="School of Critical Thinking">
         </a>
 
         <button
@@ -74,7 +74,7 @@
 
       <div class="container site-footer__inner">
         <div class="site-footer__left">
-          <p class="site-footer__brand">The School of Critical Thinking</p>
+          <p class="site-footer__brand">School of Critical Thinking</p>
           <p class="site-footer__tagline">Test prep built on data, not guesswork.</p>
           <form class="footer-capture" method="post" action="{% url 'newsletter_signup' %}">
             {% csrf_token %}

@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Contact - The School of Critical Thinking{% endblock %}
+{% block title %}Contact - School of Critical Thinking{% endblock %}
 
 {% block meta_description %}<meta name="description" content="Get in touch with the School of Critical Thinking. Questions about the curriculum, workshops, or anything else.">{% endblock %}
 
 {% block social_meta %}
-  <meta property="og:site_name" content="The School of Critical Thinking" />
+  <meta property="og:site_name" content="School of Critical Thinking" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Contact - The School of Critical Thinking" />
+  <meta property="og:title" content="Contact - School of Critical Thinking" />
   <meta property="og:description" content="Questions about the curriculum, workshops, or anything else." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Contact - The School of Critical Thinking" />
+  <meta name="twitter:title" content="Contact - School of Critical Thinking" />
   <meta name="twitter:description" content="Questions about the curriculum, workshops, or anything else." />
 {% endblock %}
 

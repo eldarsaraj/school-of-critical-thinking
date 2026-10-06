@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ article.title }} – The School of Critical Thinking{% endblock %}
+{% block title %}{{ article.title }} – School of Critical Thinking{% endblock %}
 
 {% block meta_description %}<meta name="description" content="{% if article.summary %}{{ article.summary }}{% else %}An article from the School of Critical Thinking.{% endif %}">{% endblock %}
 
 {% block social_meta %}
   {# Per-article Open Graph + Twitter override (fixes "shares like homepage") #}
-  <meta property="og:site_name" content="The School of Critical Thinking" />
+  <meta property="og:site_name" content="School of Critical Thinking" />
   <meta property="og:type" content="article" />
   {% if article.published_at %}<meta property="article:published_time" content="{{ article.published_at|date:'c' }}" />{% endif %}
   {% if article.author %}<meta name="author" content="{{ article.author }}">{% endif %}
