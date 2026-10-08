@@ -3,13 +3,13 @@
 
 {% block title %}Test Prep — School of Critical Thinking{% endblock %}
 
-{% block meta_description %}<meta name="description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Statistical and linguistic analysis of real items, human-written questions, named distractor traps, and full error analysis.">{% endblock %}
+{% block meta_description %}<meta name="description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Human-written questions, named distractor traps, and full error analysis.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="School of Critical Thinking" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Test Prep — School of Critical Thinking" />
-  <meta property="og:description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Statistical and linguistic analysis of real items, human-written questions, and full error analysis." />
+  <meta property="og:description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Human-written questions, named distractor traps, and full error analysis." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -26,127 +26,20 @@
 
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <div class="tp-hero">
-  <p class="tp-hero__label">My method</p>
-  <h1 class="tp-hero__title">Scientific and data-based approach to test prep.</h1>
+  <p class="tp-hero__label">Test Prep</p>
+  <h1 class="tp-hero__title">Practice tests built from the data, not from guesswork.</h1>
   <p class="tp-hero__sub">
-    Here's the truth few test-prep companies will tell you: nobody really knows how
-    the SHSAT and Hunter tests are really constructed and what they truly measure.
-    The Department of Education (DOE) never releases the guidelines or the scoring 
-    rubrics. So, everyone offering test-prep is basically guessing. What I do is, in 
-    some sense, no different than that. But, instead of guessing using intuition or 
-    anecdotal evidence, I rely on systematic, scientific, and data-based analysis of 
-    the actual test material. Here's how I did it:
+    Every question on this platform is written by hand to hit the same traps the real
+    test uses. Every wrong answer is tagged by trap type. After each test, the error
+    analysis shows which mistake patterns are costing your child points — and what to
+    work on next.
   </p>
-  
   <p class="tp-hero__sub">
-    For the SHSAT, I collected eight years of DOE-released test samples: more than a 
-    thousand pages of test material, close to a hundred reading passages, roughly 1,300 
-    questions, and more than five thousand answer choices. Then I ran statistical and 
-    linguistic analysis on all of it to figure out what this test is really made of.
-
-    I did the same for Hunter. You can see some details of my SHSAT analysis below.
+    Want to see how we built it? <a href="/analytics/" style="color: rgba(0,0,0,0.55); border-bottom: 1px solid rgba(0,0,0,0.2); text-decoration: none;">Read about our analytics methodology &rarr;</a>
   </p>
-
-  <p class="tp-hero__sub">
-    Everything on this platform is built from those findings. Every practice question,
-    every distractor, every error tag.
-  </p>
-</div>
-
-<div class="home-hero__image" style="margin-top: 12px; max-width: 660px;">
-  <img src="{% static 'images/test-prep-bar-image.png' %}" alt="" style="max-width: 576px; margin: 0 auto;">
-</div>
-
-<!-- ── Reading complexity ──────────────────────────────────────────────── -->
-<div class="tp-method">
-  <p class="tp-method__label">01 — What students are up against</p>
-  <h2 class="tp-method__title">SHSAT passages read at an 11th grade level.</h2>
-  <p class="tp-method__body">
-    The students taking SHSAT are eighth-graders. My analysis of reading complexity
-    across all released passages (using the Flesch-Kincaid Grade Level scale) shows
-    they are expected to read three grades above their level. Some passages run
-    at genuine college-level difficulty.
-  </p>
-  <div class="tp-chart">
-    <img src="https://res.cloudinary.com/dd40pgoh0/image/upload/v1/media/articles/inline/chart-5_spfnc7" alt="SHSAT reading complexity trend across years, showing average grade level just under 11">
+  <div style="margin-top: 20px;">
+    <a href="/tutor/" class="home-hero__btn home-hero__btn--secondary">For tutors</a>
   </div>
-</div>
-
-<!-- ── Question types ──────────────────────────────────────────────────── -->
-<div class="tp-method">
-  <p class="tp-method__label">02 — What the test actually asks</p>
-  <h2 class="tp-method__title">More than a third of questions ask the reader to draw an inference.</h2>
-  <p class="tp-method__body">
-    I classified every reading comprehension question by the kind of task it requires.
-    Interpretation and inference dominate. Nearly a third ask about the author's rhetorical
-    or narrative choices. This tells students exactly where to focus their prep.
-  </p>
-  <div class="tp-chart">
-    <img src="https://res.cloudinary.com/dd40pgoh0/image/upload/v1/media/articles/inline/chart-9_r0j2ha" alt="Distribution of SHSAT reading comprehension question types">
-  </div>
-</div>
-
-<!-- ── Distractor traps ────────────────────────────────────────────────── -->
-<div class="tp-method">
-  <p class="tp-method__label">03 — How wrong answers are engineered</p>
-  <h2 class="tp-method__title">Every wrong answer on the SHSAT is designed to catch a specific mistake.</h2>
-  <p class="tp-method__body">
-    I analyzed every wrong answer choice in the ELA reading comprehension section
-    and categorized them by trap type. A misidentified detail points to something
-    genuinely in the passage, but not the thing the question asks about. A wrong
-    concept sounds reasonable but rests on a misunderstanding. The partly-true-but-wrong
-    trap is the cruelest: accurate in part, which is exactly what makes a hurried
-    student grab it.
-  </p>
-  <div class="tp-chart">
-    <img src="https://res.cloudinary.com/dd40pgoh0/image/upload/v1/media/articles/inline/chart-13_h6nfcx" alt="Most common reading comprehension distractor types on the SHSAT">
-  </div>
-</div>
-
-<!-- ── Math ─────────────────────────────────────────────────────────────── -->
-<div class="tp-method">
-  <p class="tp-method__label">04 — Math is not immune</p>
-  <h2 class="tp-method__title">Ratios, proportions, and algebra sit on top. The traps are in the setup.</h2>
-  <p class="tp-method__body">
-    The math section is organized around several sub-topics, with ratios/proportions
-    and algebra as the most frequently tested skills. More than half of all math
-    distractors offer answer choices based on a wrong setup of the problem. The rest
-    prey on small, predictable mistakes: arithmetic slips, premature answers, or a
-    dropped sign before the parentheses.
-  </p>
-  <div class="tp-chart-pair">
-    <div class="tp-chart">
-      <img src="https://res.cloudinary.com/dd40pgoh0/image/upload/v1/media/articles/inline/chart-15_guxhnm" alt="Distribution of math question skills on the SHSAT">
-    </div>
-    <div class="tp-chart">
-      <img src="https://res.cloudinary.com/dd40pgoh0/image/upload/v1/media/articles/inline/chart-16_kvflll" alt="Most common math distractor strategies on the SHSAT">
-    </div>
-  </div>
-</div>
-
-<!-- ── What I built from this ──────────────────────────────────────────── -->
-<div class="tp-method">
-  <p class="tp-method__label">05 — What I built from this</p>
-  <h2 class="tp-method__title">Practice tests that reflect the real distribution.</h2>
-  <p class="tp-method__body">
-    I took everything I learned and built Baseline and Benchmark tests that reflect,
-    as exactly as mathematically possible, the real distribution of complexity, skills,
-    and distractors used by the DOE. Every question is written by hand to hit the same
-    traps the real test uses. Every wrong answer is tagged by trap type. Every explanation
-    was written and structured by a person, not generated by a chatbot.
-  </p>
-  <p class="tp-method__body">
-    After each test, the error analysis shows which trap types caught your child and
-    how often, breaks down accuracy by skill area, tracks which mistake patterns persist
-    across tests, and projects school placement against real cutoff scores.
-  </p>
-  <p class="tp-method__body" style="margin-top: 12px;">
-    <a href="/articles/how-i-reverse-engineered-the-shsat/" style="color: rgba(0,0,0,0.55); font-size: 14px; border-bottom: 1px solid rgba(0,0,0,0.2); text-decoration: none;">Read the full analysis &rarr;</a>
-  </p>
-</div>
-
-<div class="module-illustration" style="margin-top: 48px; margin-bottom: 0;">
-  <img src="{% static 'images/test-prep_image-1.png' %}" alt="">
 </div>
 
 <!-- ── Test cards ────────────────────────────────────────────────────────── -->

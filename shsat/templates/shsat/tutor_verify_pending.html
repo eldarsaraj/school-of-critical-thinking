@@ -1,0 +1,22 @@
+{% extends "shsat/base_tutor.html" %}
+
+{% block title %}Verify your email — Tutor Portal{% endblock %}
+
+{% block shsat_content %}
+<div class="shsat-auth">
+  <h1 class="shsat-auth__title">Check your email</h1>
+  <p class="shsat-auth__sub">
+    We sent a verification link to <strong>{{ email }}</strong>.
+    Click it to activate your account.
+  </p>
+
+  {% if resent %}
+  <p style="color:#2c6e8a;font-size:14px;margin-top:12px;">Verification email resent.</p>
+  {% endif %}
+
+  <form method="post" action="{% url 'tutor_verify_resend' %}" style="margin-top:24px;">
+    {% csrf_token %}
+    <button type="submit" class="shsat-btn shsat-btn--outline">Resend verification email</button>
+  </form>
+</div>
+{% endblock %}

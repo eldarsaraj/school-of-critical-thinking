@@ -1,0 +1,11 @@
+{% extends "shsat/base_tutor.html" %}
+
+{% block title %}Subscription Active — Tutor Portal{% endblock %}
+
+{% block shsat_content %}
+<div class="shsat-auth">
+  <h1 class="shsat-auth__title">Subscription active</h1>
+  <p class="shsat-auth__sub">Your students now have access to all Benchmark Tests. Share your invite code to get started.</p>
+  <a href="{% url 'tutor_dashboard' %}" class="shsat-btn" style="margin-top:20px;">Go to dashboard</a>
+</div>
+{% endblock %}

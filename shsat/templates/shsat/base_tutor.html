@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Tutor Portal — {{ block.super }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'shsat/css/shsat.css' %}">
+
+<div class="shsat-wrap">
+
+  {% if user.is_authenticated %}
+  <div class="shsat-nav-wrap">
+    <nav class="shsat-tabs" aria-label="Tutor Portal sections">
+      <a href="{% url 'tutor_dashboard' %}" class="shsat-tab {% if active_tab == 'shsat' %}active{% endif %}">SHSAT</a>
+      <a href="{% url 'tutor_dashboard_hunter' %}" class="shsat-tab {% if active_tab == 'hunter' %}active{% endif %}">Hunter</a>
+      <a href="{% url 'tutor_pricing' %}" class="shsat-tab {% block tab_pricing %}{% endblock %}">Pricing</a>
+      <a href="{% url 'tutor_account' %}" class="shsat-tab {% block tab_account %}{% endblock %}">Account</a>
+    </nav>
+  </div>
+  {% endif %}
+
+  {% if messages %}
+  <ul class="shsat-messages">
+    {% for message in messages %}
+    <li class="shsat-message shsat-message--{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% block shsat_content %}{% endblock %}
+
+</div>
+{% endblock %}

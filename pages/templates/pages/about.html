@@ -1,78 +1,75 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}About - School of Critical Thinking{% endblock %}
+{% block title %}About — School of Critical Thinking{% endblock %}
 
-{% block meta_description %}<meta name="description" content="Founded by a philosopher and parent. The School of Critical Thinking teaches people at every age to resist entropy: to bring order to chaos through better thinking.">{% endblock %}
+{% block meta_description %}<meta name="description" content="Founded by a philosopher and parent. Test analytics built by a reasoning researcher who reverse-engineered 1,368 SHSAT questions and identified 28 distractor traps.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="School of Critical Thinking" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="About - School of Critical Thinking" />
-  <meta property="og:description" content="Founded by a philosopher and parent. Teaching people at every age to bring order to chaos through better thinking." />
+  <meta property="og:title" content="About — School of Critical Thinking" />
+  <meta property="og:description" content="Test analytics built by a reasoning researcher who reverse-engineered 1,368 SHSAT questions and identified 28 distractor traps." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="About - School of Critical Thinking" />
-  <meta name="twitter:description" content="Founded by a philosopher and parent. Teaching people at every age to bring order to chaos through better thinking." />
+  <meta name="twitter:title" content="About — School of Critical Thinking" />
+  <meta name="twitter:description" content="Test analytics built by a reasoning researcher who reverse-engineered 1,368 SHSAT questions." />
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 {% endblock %}
 
 {% block content %}
 
-<h1>About the School</h1>
+<h1>About</h1>
 
 <div class="about-narrative">
 
   <p>
-    At the moment in history when machines are taking over more and more of what used to be
-    exclusively human territory, the ability to think critically is more important than ever.
-    Our children's future will depend on this skill.
+    I grew up during the Bosnian war. School was sporadic, sometimes dangerous, and the
+    curriculum was whatever a teacher could improvise between air-raid sirens. What I
+    learned from that isn't a heartwarming lesson about resilience: it's that education
+    is fragile, that the structures people rely on can disappear overnight, and that the
+    only thing nobody can take from you is the way you think.
   </p>
 
   <p>
-    But critical thinking doesn't come naturally to anyone. It needs to be built through deliberate,
-    precise effort, meeting children where they are and targeting the specific intellectual
-    abilities that need development. Nowhere is this more relevant right now than in standardized
-    testing. In New York City, exams like the SHSAT and Hunter entrance test are very often the
-    only path smart and deserving children have towards a high-quality public education. The
-    difference between getting in and not getting in frequently comes down to a handful of
-    questions, and those questions are designed to exploit specific reasoning errors that most
-    students never learn to recognize.
+    That conviction eventually led me to philosophy. Much later I earned a Ph.D., 
+    spent more than a decade teaching critical thinking and  philosophy at the City University of
+    New York, and published research on reasoning, education, and the ethics of upbringing.
+    Philosophy trained me to take arguments apart and find the hidden joints. It also made
+    me a compulsive data reader.
   </p>
 
   <p>
-    After more than a decade teaching philosophy at the City University of New York, and watching
-    my own daughter approach these exams, I decided to do something about it. I am a philosopher
-    of education with an analytical mind and a knack for data analysis, so I did what felt natural:
-    I collected every official test the DOE has published, ran statistical and linguistic analysis
-    on the questions, categorized every wrong answer by the specific cognitive trap it exploits,
-    and built a battery of practice tests that replicate those traps precisely. I built it for
-    my daughter first, and then it seemed wrong to keep it private.
+    When my daughter reached the age for New York City's specialized high school admissions
+    tests, I did what felt natural: I collected every official test the DOE has published 
+    (eight years of sample material, close to a hundred reading passages, 1,368 questions,
+    and more than five thousand answer choices) and ran statistical and linguistic analysis
+    on the entire corpus. I mapped reading complexity by year, classified every question by
+    cognitive task, and tagged every wrong answer by the specific trap it sets. Twenty-eight
+    identified traps in total. Nobody had done this before, at least not publicly. Then I did
+    the same for the Hunter test.
   </p>
 
   <p>
-    That is the core of this platform: test preparation rooted in understanding how these exams
-    actually work, not in drilling random practice questions. Every item is written by hand to hit
-    the same traps the real test uses. Every wrong answer is tagged by error type. After each test,
-    parents get a report that shows exactly which mistakes their child is making and what those
-    mistakes are costing the composite score.
+    What came out of that work is this platform and the Baseline and Benchmark tests 
+    your child can take. Every practice test mirrors the real distribution of skills, 
+    difficulty, and traps. Every wrong answer is error-tagged. After each test, parents 
+    and tutors get a report that shows exactly which reasoning mistakes children fell for 
+    — not "needs improvement in reading comprehension," but the specific traps that 
+    made a wrong answer look right.
   </p>
 
   <p>
-    Beyond test prep, I also develop a critical thinking curriculum for children ages 8 to 16,
-    organized around the five structures that govern how the world actually works: patterns,
-    causality, uncertainty, models, and decisions. The curriculum and the test prep share the
-    same foundation. The score gets a child through the door. The thinking is what keeps them there.
+    I built it for my daughter first. Then it seemed wrong to keep private what could
+    help other families facing the same exams with the same uncertainty.
+
+    I hope you find this useful. If there's anything I can do to help, feel free to reach out.
   </p>
 
   <div class="about-cta">
-    <a href="/test-prep/" class="about-cta__btn">Explore test prep &rarr;</a>
-    <a href="/curriculum/" class="about-cta__btn about-cta__btn--ghost">See the curriculum &rarr;</a>
-  </div>
-
-  <div class="module-illustration" style="margin-top: 48px; margin-bottom: 0;">
-    <img src="{% static 'images/about_image-1.png' %}" alt="">
+    <a href="/analytics/" class="about-cta__btn">See our analytics &rarr;</a>
+    <a href="/test-prep/" class="about-cta__btn about-cta__btn--ghost">Explore test prep &rarr;</a>
   </div>
 
   <div class="about-founder-intro">
@@ -86,12 +83,6 @@
         education. He published numerous scholarly studies in the world's leading academic
         and popular publications over the last decade. His passion is helping young people acquire thinking
         skills desperately needed in the world dominated by technology.
-      </p>
-      <p class="about-founder-intro__bio">
-        His approach is rooted in the same tradition of truth-seeking as academic
-        philosophy, but applied to the real problems that people face: decisions
-        under uncertainty, reasoning about complex systems, and maintaining judgment
-        when working alongside AI.
       </p>
     </div>
   </div>

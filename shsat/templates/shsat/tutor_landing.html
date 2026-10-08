@@ -1,0 +1,378 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}For Tutors — School of Critical Thinking{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'shsat/css/shsat.css' %}">
+
+<div class="about-narrative">
+
+  <h1 style="max-width:660px;">Built for tutors who want the precision data, not just the score.</h1>
+
+    <p>
+      We give you precise feedback on your students' progress so you can direct your
+      teaching efforts where they'll be most effective.
+    </p>
+
+    <p>
+      Decades of research in education show that the strongest predictor of students'
+      success is precise feedback on items they struggle with the most.
+    </p>
+
+    <p>
+      Unlike most test-prep platforms, we dig deep into student test data. We don't
+      only report the areas they struggle with, but we identify each answer choice trap
+      they fall into. The feedback is based on careful, scientific, and human
+      reverse-engineering of each test, and precise identification of the entire
+      distribution of answer choice distractors.
+    </p>
+
+    <div style="border:1px solid rgba(0,0,0,.08);background:rgba(0,0,0,.015);padding:28px 32px;margin:36px 0;">
+      <h2 style="font-size:20px;margin:0 0 16px;">How it works</h2>
+
+      <p>
+        You assign your students our tests, they complete them at your timeline, and you
+        get a precise report on their attempt: a full dashboard with granular data about
+        correct and incorrect answers, time taken per each section and question, as well
+        as a precise error analysis, showing exactly which traps caught them the most,
+        suggesting areas for improvement. You can share these with your students, their
+        parents, and use them for your own prepping efforts.
+      </p>
+
+      <p>
+        According to research, this is the only way students will improve. And the more
+        they get better, the more your reputation and monthly sign-ups grow.
+      </p>
+
+      <p style="margin-bottom:0;">
+        Each of your students will have a full Baseline test (so you can establish the
+        starting point) and four full Benchmark tests, so you can track their progress
+        over time. In addition to these, they will have access to a battery of five Focus
+        sets, containing additional ELA and math questions that will help them hammer out
+        those weak skills.
+      </p>
+    </div>
+
+    <!-- ── Mock tutor dashboard ────────────────────────────────────────────── -->
+    <div style="margin-top:12px;">
+      <div class="home-demo">
+        <div class="home-demo__header">
+          <span class="home-demo__badge">Live example</span>
+          <span class="home-demo__title">Your Tutor Dashboard</span>
+          <span class="home-demo__subtitle">4 students · Baseline + 4 Benchmarks</span>
+        </div>
+
+        <div class="shsat-stat-grid">
+          <div class="shsat-stat-card">
+            <div class="shsat-stat-card__label">Active students</div>
+            <div class="shsat-stat-card__value">4</div>
+          </div>
+          <div class="shsat-stat-card">
+            <div class="shsat-stat-card__label">Group average</div>
+            <div class="shsat-stat-card__value">512</div>
+          </div>
+          <div class="shsat-stat-card">
+            <div class="shsat-stat-card__label">Tests completed</div>
+            <div class="shsat-stat-card__value">20</div>
+          </div>
+          <div class="shsat-stat-card">
+            <div class="shsat-stat-card__label">Avg accuracy</div>
+            <div class="shsat-stat-card__value">71%</div>
+          </div>
+        </div>
+
+        <p class="shsat-section-title">Class progress</p>
+        <div id="mockTutorPills" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;"></div>
+        <div class="shsat-chart-wrap">
+          <canvas id="mockTutorChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Mock student detail (Sofia M.) ────────────────────────────────── -->
+    <div style="margin-top:12px;">
+      <div class="home-demo">
+        <div class="home-demo__header">
+          <span class="home-demo__badge">Student view</span>
+          <span class="home-demo__title">Sofia M.'s Dashboard</span>
+          <span class="home-demo__subtitle">5 tests completed · click any student to see this</span>
+        </div>
+
+        <div class="shsat-stat-grid">
+          <div class="shsat-stat-card">
+            <div class="shsat-stat-card__value">489</div>
+            <div class="shsat-stat-card__label">Latest composite</div>
+          </div>
+          <div class="shsat-stat-card">
+            <div class="shsat-stat-card__value">5</div>
+            <div class="shsat-stat-card__label">Tests completed</div>
+          </div>
+          <div class="shsat-stat-card">
+            <div class="shsat-stat-card__value">+44</div>
+            <div class="shsat-stat-card__label">Score improvement</div>
+          </div>
+          <div class="shsat-stat-card">
+            <div class="shsat-stat-card__value">1.3m</div>
+            <div class="shsat-stat-card__label">Avg time / question</div>
+          </div>
+        </div>
+
+        <p class="shsat-section-title">Sofia M.'s score history</p>
+        <div class="shsat-chart-wrap">
+          <canvas id="mockSofiaChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div style="border-left:3px solid rgba(0,0,0,.12);padding:20px 0 20px 24px;margin:40px 0;">
+      <h2 style="font-size:17px;margin:0 0 18px;color:rgba(0,0,0,.55);font-weight:600;letter-spacing:.02em;">Good to know</h2>
+      <p style="font-size:15px;margin:0 0 14px;"><strong>What exams are covered?</strong> SHSAT and Hunter, on separate tabs. SHSAT has 1 Baseline + 4 Benchmarks; Hunter has 1 Baseline + 2 Benchmarks. Both included, one account.</p>
+      <p style="font-size:15px;margin:0 0 14px;"><strong>How do students join?</strong> You get a unique invite code. Students enter it during signup and appear on your dashboard instantly.</p>
+      <p style="font-size:15px;margin:0 0 14px;"><strong>What do parents see?</strong> Parents get their own login with the same dashboard — scores, error analysis, everything. You look professional without extra work.</p>
+      <p style="font-size:15px;margin:0;"><strong>Is student data private?</strong> Each student's data is visible only to you and their parent. Students in your group cannot see each other's results.</p>
+    </div>
+
+    <p>
+      Behind this platform are years of experience in education, analytics, and
+      upbringing of a child in New York City. I'm a father with a kid whose prepping
+      for SHSAT too, and I'm using this exact platform to prepare her for it. I am also
+      a professional academic (I'm a full-time professor of critical thinking at CUNY)
+      passionate about data mining and analytics. I took the entire SHSAT apart
+      (1,368 questions from 12 official DOE sample tests) and identified 28 traps across
+      both ELA and math section. Every wrong answer in Baseline and Benchmark tests maps
+      to one, and you'll get to see each of them on your student report.
+    </p>
+
+    <p>
+      I'm not a tutor; I'm not competing with you. I'm giving you a precise diagnostic
+      layer underneath how you already teach.
+    </p>
+
+    <div style="border-top:1px solid rgba(0,0,0,.08);margin-top:40px;padding-top:32px;">
+      <h2 style="font-size:20px;margin-bottom:12px;">Founding Tutors pilot program</h2>
+      <p>
+        The free Founding Tutors pilot program runs through January 2027 for a select
+        group of qualified tutors. Reach out in the form below to find out if you qualify.
+      </p>
+    </div>
+
+  </div>
+
+<!-- ── Contact form ────────────────────────────────────────────────────── -->
+<div style="max-width:660px;margin-top:32px;">
+
+    {% if sent %}
+      <p class="contact-success" role="status">
+        Message sent. I will reply by email.
+      </p>
+    {% endif %}
+
+    {% if errors %}
+      <p class="contact-error" role="alert">
+        Please fix the fields below and try again.
+      </p>
+    {% endif %}
+
+    <form method="post" class="contact-form" novalidate>
+      {% csrf_token %}
+      <div style="display:none;" aria-hidden="true">
+        <input type="text" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="contact-form__field">
+        <label for="id_name">Name</label>
+        <input
+          type="text"
+          name="name"
+          id="id_name"
+          required
+          autocomplete="name"
+          value="{{ form.name|default:'' }}"
+          aria-invalid="{% if errors.name %}true{% else %}false{% endif %}"
+        >
+        {% if errors.name %}
+          <p class="contact-form__error">{{ errors.name }}</p>
+        {% endif %}
+      </div>
+
+      <div class="contact-form__field">
+        <label for="id_email">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="id_email"
+          required
+          autocomplete="email"
+          value="{{ form.email|default:'' }}"
+          aria-invalid="{% if errors.email %}true{% else %}false{% endif %}"
+        >
+        {% if errors.email %}
+          <p class="contact-form__error">{{ errors.email }}</p>
+        {% endif %}
+      </div>
+
+      <div class="contact-form__field">
+        <label for="id_message">Message</label>
+        <textarea
+          name="message"
+          id="id_message"
+          rows="5"
+          required
+          placeholder="Tell us about your tutoring practice and your students…"
+          aria-invalid="{% if errors.message %}true{% else %}false{% endif %}"
+        >{{ form.message|default:'' }}</textarea>
+        {% if errors.message %}
+          <p class="contact-form__error">{{ errors.message }}</p>
+        {% endif %}
+      </div>
+
+      <p class="contact-form__action">
+        <button type="submit">Send message</button>
+      </p>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+(function () {
+  var colours = ["#5b8ec4", "#c4635b", "#5aab8c", "#c49a5a"];
+  var labels = ["Baseline", "Benchmark 1", "Benchmark 2", "Benchmark 3", "Benchmark 4"];
+
+  var students = [
+    { name: "Alex R.",   scores: [393, 458, 487, 507, 558] },
+    { name: "Maria K.",  scores: [421, 462, 489, 501, 524] },
+    { name: "James T.",  scores: [368, 412, 438, 460, 478] },
+    { name: "Sofia M.",  scores: [445, 471, 490, 498, 489] },
+  ];
+
+  var datasets = students.map(function (s, i) {
+    return {
+      label: s.name,
+      data: s.scores,
+      borderColor: colours[i],
+      backgroundColor: "transparent",
+      pointBackgroundColor: colours[i],
+      borderWidth: 2,
+      tension: 0.2,
+      pointRadius: 4,
+      spanGaps: true,
+    };
+  });
+
+  var chart = new Chart(document.getElementById("mockTutorChart").getContext("2d"), {
+    type: "line",
+    data: { labels: labels, datasets: datasets },
+    options: {
+      responsive: true,
+      aspectRatio: 2.5,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function (item) { return " " + item.dataset.label + ": " + item.raw; }
+          }
+        }
+      },
+      scales: {
+        y: { min: 300, max: 600, grid: { color: "rgba(0,0,0,0.06)" },
+             ticks: { font: { size: 12 }, stepSize: 50 } },
+        x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      }
+    }
+  });
+
+  var pillsWrap = document.getElementById("mockTutorPills");
+  var visible = {};
+  students.forEach(function (_, i) { visible[i] = true; });
+
+  students.forEach(function (s, i) {
+    var pill = document.createElement("button");
+    pill.textContent = s.name;
+    pill.style.cssText =
+      "padding:5px 14px;font-size:12px;font-weight:600;border:none;cursor:pointer;" +
+      "background:" + colours[i] + ";color:#fff;font-family:inherit;";
+    pill.addEventListener("click", function () {
+      if (visible[i]) {
+        delete visible[i];
+        chart.setDatasetVisibility(i, false);
+        pill.style.opacity = "0.25";
+      } else {
+        visible[i] = true;
+        chart.setDatasetVisibility(i, true);
+        pill.style.opacity = "1";
+      }
+      chart.update();
+    });
+    pillsWrap.appendChild(pill);
+  });
+
+  /* ── Sofia M. individual chart ──────────────────────────────────────── */
+  var sofiaScores = [445, 471, 490, 498, 489];
+  var sofiaEla    = [218, 234, 248, 251, 240];
+  var sofiaMath   = [227, 237, 242, 247, 249];
+
+  new Chart(document.getElementById("mockSofiaChart").getContext("2d"), {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Composite",
+          data: sofiaScores,
+          borderColor: "#c49a5a",
+          backgroundColor: "transparent",
+          pointBackgroundColor: "#c49a5a",
+          borderWidth: 2.5,
+          tension: 0.2,
+          pointRadius: 5,
+        },
+        {
+          label: "ELA",
+          data: sofiaEla,
+          borderColor: "rgba(90,171,140,0.6)",
+          backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(90,171,140,0.6)",
+          borderWidth: 1.5,
+          borderDash: [5, 3],
+          tension: 0.2,
+          pointRadius: 3,
+        },
+        {
+          label: "Math",
+          data: sofiaMath,
+          borderColor: "rgba(91,142,196,0.6)",
+          backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(91,142,196,0.6)",
+          borderWidth: 1.5,
+          borderDash: [5, 3],
+          tension: 0.2,
+          pointRadius: 3,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      aspectRatio: 2.5,
+      plugins: {
+        legend: {
+          display: true,
+          labels: { boxWidth: 12, font: { size: 12 } }
+        },
+        tooltip: {
+          callbacks: {
+            label: function (item) { return " " + item.dataset.label + ": " + item.raw; }
+          }
+        }
+      },
+      scales: {
+        y: { min: 200, max: 550, grid: { color: "rgba(0,0,0,0.06)" },
+             ticks: { font: { size: 12 }, stepSize: 50 } },
+        x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      }
+    }
+  });
+})();
+</script>
+{% endblock %}

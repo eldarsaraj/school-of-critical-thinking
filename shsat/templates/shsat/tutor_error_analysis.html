@@ -1,0 +1,305 @@
+{% extends "shsat/base_tutor.html" %}
+{% load static %}
+
+{% block title %}Error Analysis — {{ student_name }} — Tutor Portal{% endblock %}
+{% block tab_dashboard %}active{% endblock %}
+
+{% block shsat_content %}
+<!-- Header -->
+<div style="margin-bottom:32px;">
+  <a href="{% url 'tutor_student_detail' parent_id %}" style="font-size:13px;color:rgba(0,0,0,0.45);text-decoration:none;">&larr; Back to {{ student_name }}'s dashboard</a>
+  <h1 class="shsat-page-title" style="margin-top:12px;">Error Analysis</h1>
+  <p class="shsat-page-subtitle">
+    {{ attempt.test.title }} · {{ attempt.submitted_at|date:"F j, Y" }}
+    {% if not is_hunter %} · Composite <strong>{{ attempt.composite_score }}</strong>{% endif %}
+    · <strong>{{ accuracy_pct }}%</strong> accuracy ({{ total_correct }}/{{ total_answered }} answered)
+  </p>
+</div>
+
+<!-- Section overview -->
+<p class="shsat-section-title">Section overview</p>
+<div style="display:grid;grid-template-columns:1fr 220px;gap:24px;align-items:stretch;margin-bottom:40px;">
+  <div class="shsat-chart-wrap" style="margin-bottom:0;display:flex;align-items:stretch;min-height:200px;">
+    <canvas id="sectionOverviewChart" style="width:100%;height:100%;"></canvas>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    {% for s in section_summary_data %}
+    <div style="flex:1;padding:14px 18px;border:1px solid rgba(0,0,0,0.08);border-radius:8px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:3px;">{{ s.section }}</div>
+      <div style="font-size:22px;font-weight:700;color:#161a1d;line-height:1;">{{ s.accuracy_pct }}%</div>
+      <div style="font-size:12px;color:rgba(0,0,0,0.5);margin-top:2px;">{{ s.correct }}/{{ s.total }}{% if s.has_time %} · {{ s.time_minutes }}m{% endif %}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{{ section_summary_data|json_script:"sectionSummaryData" }}
+
+<!-- Wrong answers by skill -->
+<p class="shsat-section-title">Wrong answers by skill</p>
+{% if skill_errors_data %}
+<div class="shsat-chart-wrap">
+  <canvas id="skillErrorChart"></canvas>
+</div>
+{% else %}
+<p style="color:rgba(0,0,0,0.4);font-size:15px;margin-bottom:36px;">No wrong answers — perfect score!</p>
+{% endif %}
+{{ skill_errors_data|json_script:"skillErrorData" }}
+
+<!-- Distractor trap analysis -->
+{% if trap_data %}
+<p class="shsat-section-title" style="margin-top:12px;">Distractor trap analysis</p>
+<div id="trapElaWrap" class="shsat-chart-wrap" style="display:none;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
+  <canvas id="trapChartEla"></canvas>
+</div>
+<div id="trapMathWrap" class="shsat-chart-wrap" style="display:none;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
+  <canvas id="trapChartMath"></canvas>
+</div>
+{% endif %}
+{{ trap_data|json_script:"trapData" }}
+
+<!-- Difficulty breakdown -->
+<p class="shsat-section-title" style="margin-top:12px;">Performance by difficulty</p>
+<div class="shsat-diff-bars" style="margin-bottom:36px;">
+  {% for d in diff_breakdown %}
+  {% if d.total %}
+  {% widthratio d.errors d.total 100 as err_pct %}
+  <div class="shsat-diff-bar-row">
+    <div class="shsat-diff-bar-label">{{ d.label }}</div>
+    <div class="shsat-diff-bar-track">
+      <div class="shsat-diff-bar-fill
+        {% if d.label == 'Easy' %}shsat-diff-bar-fill--easy{% elif d.label == 'Medium' %}shsat-diff-bar-fill--medium{% else %}shsat-diff-bar-fill--hard{% endif %}"
+        style="width:{{ err_pct }}%;"></div>
+    </div>
+    <div class="shsat-diff-bar-stat">{{ d.errors }}/{{ d.total }} wrong <span style="color:rgba(0,0,0,0.4);font-size:11px;">({{ err_pct }}%)</span></div>
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+
+<!-- Time vs Accuracy scatter -->
+{% if has_timing %}
+<p class="shsat-section-title">Time vs. accuracy</p>
+<div class="shsat-chart-wrap">
+  <canvas id="scatterChart"></canvas>
+</div>
+{% endif %}
+{{ scatter_data|json_script:"scatterData" }}
+
+<!-- Recommendations -->
+{% if recommendations %}
+<p class="shsat-section-title" style="margin-top:48px;">Targeted recommendations</p>
+<div class="shsat-focus-grid">
+  {% for r in recommendations %}
+  <div class="shsat-focus-card">
+    <div class="shsat-focus-card__skill">{{ r.label }}</div>
+    <div class="shsat-focus-card__accuracy {% if r.accuracy < 60 %}shsat-focus-card__accuracy--danger{% elif r.accuracy < 80 %}shsat-focus-card__accuracy--warn{% else %}shsat-focus-card__accuracy--ok{% endif %}">{{ r.accuracy }}%</div>
+    <div class="shsat-focus-card__detail">{{ r.wrong }} wrong of {{ r.total }} attempted</div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Full Question Review -->
+<p class="shsat-section-title" style="margin-top:56px;">Question review</p>
+
+{% for section_code, section_label in review_sections %}
+<p style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:28px 0 10px;">{{ section_label }}</p>
+
+{% for q in question_review %}
+{% if q.section == section_code %}
+
+{% if q.is_correct %}
+<div class="shsat-qrow shsat-qrow--correct">
+  <span class="shsat-qrow__icon">&#10003;</span>
+  <span class="shsat-qrow__num">Q{{ q.number }}</span>
+  <span class="shsat-qrow__text">{{ q.text|truncatechars:90 }}</span>
+  <span class="shsat-qrow__skill">{{ q.skill }}</span>
+</div>
+
+{% elif q.unanswered %}
+<div class="shsat-qrow shsat-qrow--unanswered">
+  <span class="shsat-qrow__icon">&mdash;</span>
+  <span class="shsat-qrow__num">Q{{ q.number }}</span>
+  <span class="shsat-qrow__text">{{ q.text|truncatechars:90 }}</span>
+  <span class="shsat-qrow__skill" style="color:#f59e0b;">Not answered</span>
+</div>
+
+{% else %}
+<div class="shsat-qcard">
+  <div class="shsat-qcard__header">
+    <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;">
+      <span class="shsat-qrow__icon shsat-qrow__icon--wrong">&#10007;</span>
+      <span style="font-weight:600;font-size:14px;">Q{{ q.number }}</span>
+      <span class="shsat-badge-pill shsat-badge-pill--{{ q.difficulty|lower }}">{{ q.difficulty }}</span>
+      <span class="shsat-badge-pill shsat-badge-pill--skill">{{ q.skill }}</span>
+    </div>
+    <p class="shsat-qcard__text">{{ q.text }}</p>
+  </div>
+
+  {% if q.choices %}
+  <div class="shsat-qcard__choices">
+    {% for choice in q.choices %}
+    <div class="shsat-choice shsat-choice--{{ choice.status }}">
+      <span class="shsat-choice__letter">{{ choice.letter }}</span>
+      <span class="shsat-choice__text">{{ choice.text }}</span>
+      {% if choice.status == "correct" %}<span class="shsat-choice__tag shsat-choice__tag--correct">Correct answer</span>{% endif %}
+      {% if choice.status == "wrong" %}<span class="shsat-choice__tag shsat-choice__tag--wrong">Student's answer</span>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div style="font-size:13px;color:rgba(0,0,0,0.5);padding:12px 16px;">
+    Grid-in — answered: <strong>{{ q.student_answer }}</strong> · Correct: <strong>{{ q.correct_answer }}</strong>
+  </div>
+  {% endif %}
+
+  {% if q.distractor_type %}
+  <div class="shsat-qcard__trap">
+    <span class="shsat-trap-label">Trap:</span> {{ q.distractor_type|title }}
+  </div>
+  {% endif %}
+
+  {% if q.explanation %}
+  <div class="shsat-qcard__explanation">
+    <span class="shsat-explanation-label">Explanation</span>
+    <p>{{ q.explanation }}</p>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+<div style="margin-top:48px;">
+  <a href="{% url 'tutor_student_detail' parent_id %}" class="shsat-btn shsat-btn--outline">&larr; Back to {{ student_name }}'s dashboard</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const P = {
+  correct: "#5aab8c", wrong: "#c4635b", warn: "#c49a5a",
+  neutral: "#8896a8", grid: "rgba(0,0,0,0.06)",
+  sections: ["#5b8ec4", "#c4635b", "#7aab6e", "#a07ac4"],
+};
+
+// Section overview chart
+(function () {
+  const el = document.getElementById("sectionOverviewChart");
+  if (!el) return;
+  const data = JSON.parse(document.getElementById("sectionSummaryData").textContent);
+  const hasTime = data.some(s => s.has_time);
+  const ABBREV = {"Reading Comprehension":"RC","Quantitative Reasoning":"QR","Math Achievement":"MA","ELA":"ELA","Math":"Math"};
+  function abbrev(s) { return ABBREV[s] || s; }
+
+  if (!hasTime) {
+    new Chart(el.getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: data.map(s => abbrev(s.section)),
+        datasets: [
+          { label: "Correct", data: data.map(s => s.correct), backgroundColor: P.correct, borderWidth: 0, barThickness: 48 },
+          { label: "Wrong/skip", data: data.map(s => s.total - s.correct), backgroundColor: P.wrong, borderWidth: 0, barThickness: 48 },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: "bottom", labels: { font: { size: 12 }, boxWidth: 12, padding: 14 } } },
+        scales: {
+          x: { stacked: true, grid: { display: false }, ticks: { font: { size: 14, weight: "600" } } },
+          y: { stacked: true, grid: { color: P.grid }, ticks: { stepSize: 5, font: { size: 11 } } }
+        }
+      }
+    });
+    return;
+  }
+  const labels = data.map(s => abbrev(s.section));
+  const correctT = data.map(s => +(s.time_minutes * s.accuracy_pct / 100).toFixed(1));
+  const wrongT = data.map(s => +(s.time_minutes * (1 - s.accuracy_pct / 100)).toFixed(1));
+  new Chart(el.getContext("2d"), {
+    type: "bar",
+    data: { labels, datasets: [
+      { label: "Correct", data: correctT, backgroundColor: P.correct, borderWidth: 0, barThickness: 64 },
+      { label: "Wrong", data: wrongT, backgroundColor: P.wrong, borderWidth: 0, barThickness: 64 },
+    ]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom", labels: { font: { size: 12 }, boxWidth: 14, padding: 14 } } },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 14, weight: "600" } } },
+        y: { stacked: true, grid: { color: P.grid }, ticks: { font: { size: 11 }, callback: v => v + " min" } }
+      }
+    }
+  });
+})();
+
+// Skill errors chart
+(function () {
+  const el = document.getElementById("skillErrorChart");
+  if (!el) return;
+  const data = JSON.parse(document.getElementById("skillErrorData").textContent);
+  if (!data.length) return;
+  new Chart(el.getContext("2d"), {
+    type: "bar",
+    data: { labels: data.map(d => d.label), datasets: [{ label: "Wrong answers", data: data.map(d => d.count), backgroundColor: P.wrong, borderWidth: 0, barThickness: 18 }] },
+    options: {
+      indexAxis: "y", responsive: true, aspectRatio: Math.max(1.6, 4 / Math.max(data.length, 2)),
+      plugins: { legend: { display: false } },
+      scales: { x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } }, y: { grid: { display: false }, ticks: { font: { size: 12 } } } }
+    }
+  });
+})();
+
+// Distractor trap charts
+(function () {
+  const allData = JSON.parse(document.getElementById("trapData").textContent);
+  if (!allData.length) return;
+  function renderTrapChart(canvasId, wrapId, sectionData, color) {
+    if (!sectionData.length) return;
+    document.getElementById(wrapId).style.display = "";
+    new Chart(document.getElementById(canvasId).getContext("2d"), {
+      type: "bar",
+      data: { labels: sectionData.map(d => d.label), datasets: [{ label: "Times caught", data: sectionData.map(d => d.count), backgroundColor: color, borderWidth: 0, barThickness: 18 }] },
+      options: { indexAxis: "y", responsive: true, aspectRatio: Math.max(1.4, 4 / Math.max(sectionData.length, 2)),
+        plugins: { legend: { display: false } },
+        scales: { x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } }, y: { grid: { display: false }, ticks: { font: { size: 12 } } } }
+      }
+    });
+  }
+  const ELA_SECTIONS = new Set(["ELA", "reading_comprehension", "writing"]);
+  const MATH_SECTIONS = new Set(["Math", "quantitative_reasoning", "math_achievement"]);
+  function agg(data) { const m={}; data.forEach(d=>{m[d.label]=(m[d.label]||0)+d.count}); return Object.entries(m).map(([l,c])=>({label:l,count:c})).sort((a,b)=>b.count-a.count); }
+  renderTrapChart("trapChartEla", "trapElaWrap", agg(allData.filter(d=>ELA_SECTIONS.has(d.section))), P.sections[0]);
+  renderTrapChart("trapChartMath", "trapMathWrap", agg(allData.filter(d=>MATH_SECTIONS.has(d.section))), P.sections[1]);
+})();
+
+// Scatter chart
+(function () {
+  const el = document.getElementById("scatterChart");
+  if (!el) return;
+  const raw = JSON.parse(document.getElementById("scatterData").textContent);
+  if (!raw.length) return;
+  const sections = [...new Set(raw.map(d => d.section))];
+  const datasets = [];
+  sections.forEach((sec, i) => {
+    const col = P.sections[i % P.sections.length];
+    datasets.push({ label: sec + " correct", data: raw.filter(d => d.section === sec && d.y === 1).map(d => ({x:d.x,y:1})), backgroundColor: col, pointRadius: 5 });
+    datasets.push({ label: sec + " wrong", data: raw.filter(d => d.section === sec && d.y === 0).map(d => ({x:d.x,y:0})), backgroundColor: col + "80", pointRadius: 5 });
+  });
+  new Chart(el.getContext("2d"), {
+    type: "scatter", data: { datasets },
+    options: {
+      responsive: true, aspectRatio: 3,
+      plugins: { legend: { position: "top", align: "end", labels: { font: { size: 12 }, boxWidth: 12, padding: 16 } } },
+      scales: {
+        x: { title: { display: true, text: "Time (seconds)", font: { size: 12 } }, grid: { color: P.grid } },
+        y: { min: -0.2, max: 1.2, ticks: { stepSize: 1, callback: v => v === 1 ? "Correct" : v === 0 ? "Wrong" : "" }, grid: { color: P.grid } }
+      }
+    }
+  });
+})();
+</script>
+{% endblock %}

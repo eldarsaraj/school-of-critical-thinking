@@ -38,6 +38,7 @@
   {% endif %}
   {% endfor %}
 
+  <input type="hidden" name="save_account" value="1">
   <button type="submit" class="shsat-btn">Save changes</button>
 </form>
 
@@ -65,6 +66,29 @@
     </form>
   </div>
   {% endif %}
+</div>
+
+<div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
+  <p class="shsat-section-title">Tutor</p>
+  {% if linked_tutors %}
+  <p style="font-size:14px;color:rgba(0,0,0,.6);margin:0 0 12px;">You are linked to:</p>
+  {% for lt in linked_tutors %}
+  <p style="font-size:15px;margin:4px 0;"><strong>{{ lt.tutor.user.first_name }}</strong>{% if lt.tutor.business_name %} — {{ lt.tutor.business_name }}{% endif %}</p>
+  {% endfor %}
+  {% endif %}
+  <div style="margin-top:16px;padding:16px 20px;border:1px solid rgba(0,0,0,.08);background:rgba(0,0,0,.018);max-width:480px;">
+    <p style="font-size:13px;font-weight:600;margin:0 0 6px;">Join a tutor</p>
+    <p style="font-size:13px;color:rgba(0,0,0,.55);margin:0 0 12px;">Enter the invite code your tutor gave you.</p>
+    <form method="post" style="display:flex;gap:8px;align-items:center;">
+      {% csrf_token %}
+      <input type="text" name="tutor_code" maxlength="12" placeholder="e.g. PROF7K3M" style="padding:8px 12px;border:1px solid rgba(0,0,0,.15);font-size:14px;font-family:monospace;letter-spacing:.1em;text-transform:uppercase;width:160px;">
+      <input type="hidden" name="join_tutor" value="1">
+      <button type="submit" class="shsat-btn shsat-btn--sm shsat-btn--outline">Join</button>
+    </form>
+    {% if tutor_code_error %}
+    <p style="font-size:13px;color:#a4161a;margin:8px 0 0;">{{ tutor_code_error }}</p>
+    {% endif %}
+  </div>
 </div>
 
 {% if completed_attempts %}

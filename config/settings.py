@@ -169,6 +169,9 @@ STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
 STRIPE_PRICE_ID = os.environ.get("STRIPE_PRICE_ID", "")
 STRIPE_HUNTER_PRICE_ID = os.environ.get("STRIPE_HUNTER_PRICE_ID", "")
 STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
+STRIPE_TUTOR_PRICE_ID_10 = os.environ.get("STRIPE_TUTOR_PRICE_ID_10", "")
+STRIPE_TUTOR_PRICE_ID_25 = os.environ.get("STRIPE_TUTOR_PRICE_ID_25", "")
+STRIPE_TUTOR_PRICE_ID_UNL = os.environ.get("STRIPE_TUTOR_PRICE_ID_UNL", "")
 
 # --- SHSAT Prep ---
 SHSAT_FREE_TEST_LIMIT = 1
@@ -195,6 +198,7 @@ DEFAULT_FROM_EMAIL = os.environ.get(
     "DEFAULT_FROM_EMAIL",
     "The School of Critical Thinking <hello@schoolofcriticalthinking.com>",
 )
+CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "eldar@schoolofcriticalthinking.org")
 
 LOGGING = {
     "version": 1,

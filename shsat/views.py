@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.conf import settings
 
-from .models import Parent, Test, Question, TestAttempt, Answer, ManualScore, CutoffScore, QuestionReport
+from .models import Parent, Test, Question, TestAttempt, Answer, ManualScore, CutoffScore, QuestionReport, TutorStudent
 from .forms import SignupForm, LoginForm, ManualScoreForm, NotesForm, AccountForm, QuestionEditForm, TestForm
 from .scoring import scale_score, compute_placement
 
@@ -57,6 +57,14 @@ def _require_shsat(view_func):
             return redirect("hunter_dashboard")
         return view_func(request, *args, **kwargs)
     return wrapped
+
+
+def _student_has_tutor_access(parent):
+    """Return True if any linked tutor has an active subscription."""
+    return TutorStudent.objects.filter(
+        parent=parent,
+        tutor__subscription_status="active",
+    ).exists()
 
 
 # ---------------------------------------------------------------------------
@@ -150,11 +158,36 @@ def stripe_webhook(request):
             metadata = getattr(session, "metadata", None) or {}
             parent_id = metadata.get("parent_id") if hasattr(metadata, "get") else getattr(metadata, "parent_id", None)
             product_type = metadata.get("product_type") if hasattr(metadata, "get") else getattr(metadata, "product_type", None)
-            if parent_id:
+            tutor_id = metadata.get("tutor_id") if hasattr(metadata, "get") else getattr(metadata, "tutor_id", None)
+            if tutor_id and product_type == "tutor":
+                from .models import Tutor
+                student_limit = int(metadata.get("student_limit", "10")) if hasattr(metadata, "get") else 10
+                Tutor.objects.filter(id=tutor_id).update(
+                    subscription_status="active",
+                    student_limit=student_limit,
+                    stripe_subscription_id=getattr(session, "subscription", "") or "",
+                    stripe_customer_id=getattr(session, "customer", "") or "",
+                )
+            elif parent_id:
                 if product_type == "hunter":
                     Parent.objects.filter(id=parent_id).update(hunter_has_paid=True)
                 else:
                     Parent.objects.filter(id=parent_id).update(has_paid=True)
+
+    elif event.type == "customer.subscription.updated":
+        sub = event.data.object
+        sub_id = sub.id
+        status = getattr(sub, "status", "")
+        from .models import Tutor
+        status_map = {"active": "active", "past_due": "past_due", "canceled": "canceled", "unpaid": "past_due"}
+        new_status = status_map.get(status, "canceled")
+        Tutor.objects.filter(stripe_subscription_id=sub_id).update(subscription_status=new_status)
+
+    elif event.type == "customer.subscription.deleted":
+        sub = event.data.object
+        sub_id = sub.id
+        from .models import Tutor
+        Tutor.objects.filter(stripe_subscription_id=sub_id).update(subscription_status="canceled")
 
     return HttpResponse(status=200)
 
@@ -193,6 +226,15 @@ def shsat_signup(request):
         if form.is_valid() and not existing_hunter:
             user = form.save()
             parent = Parent.objects.create(user=user, platform="shsat", email_verified=False)
+            # Link to tutor if code provided
+            tutor_code = form.cleaned_data.get("tutor_code", "").strip().upper()
+            if tutor_code:
+                from .models import Tutor, TutorStudent
+                try:
+                    tutor = Tutor.objects.get(invite_code=tutor_code)
+                    TutorStudent.objects.get_or_create(tutor=tutor, parent=parent)
+                except Tutor.DoesNotExist:
+                    pass
             _send_verification_email(request, user, parent)
             user = authenticate(request, email=user.email, password=form.cleaned_data["password1"])
             if user:
@@ -539,7 +581,7 @@ def delete_manual_score(request, score_id):
 @_require_shsat
 def test_list(request):
     parent, _ = Parent.objects.get_or_create(user=request.user)
-    can_access_paid = parent.has_paid or request.user.is_staff
+    can_access_paid = parent.has_paid or _student_has_tutor_access(parent) or request.user.is_staff
 
     if can_access_paid:
         tests = (
@@ -579,7 +621,7 @@ def test_intro(request, test_id):
             return redirect("shsat_test_list")
         if test.exam_type == "shsat" and parent.platform not in ("shsat", "both"):
             return redirect("hunter_test_list")
-    _can_access = parent.hunter_has_paid if test.exam_type == "hunter" else parent.has_paid
+    _can_access = (parent.hunter_has_paid or _student_has_tutor_access(parent)) if test.exam_type == "hunter" else (parent.has_paid or _student_has_tutor_access(parent))
     if not test.is_published and not test.is_free and not _can_access and not request.user.is_staff:
         from django.http import Http404
         raise Http404
@@ -620,7 +662,7 @@ def test_take(request, test_id):
             return redirect("shsat_test_list")
         if test.exam_type == "shsat" and parent.platform not in ("shsat", "both"):
             return redirect("hunter_test_list")
-    _can_access = parent.hunter_has_paid if test.exam_type == "hunter" else parent.has_paid
+    _can_access = (parent.hunter_has_paid or _student_has_tutor_access(parent)) if test.exam_type == "hunter" else (parent.has_paid or _student_has_tutor_access(parent))
     if not test.is_published and not test.is_free and not _can_access and not request.user.is_staff:
         from django.http import Http404
         raise Http404
@@ -874,6 +916,39 @@ def test_submit(request, test_id):
     attempt.submitted_at = timezone.now()
     attempt.total_seconds = elapsed
     attempt.save()
+
+    # Notify linked tutors
+    try:
+        from django.core.mail import send_mail as _send
+        from .models import TutorStudent
+        parent = attempt.parent
+        tutor_links = TutorStudent.objects.filter(parent=parent).select_related("tutor")
+        for link in tutor_links:
+            tutor = link.tutor
+            if not tutor.user.email:
+                continue
+            student_name = link.nickname or parent.child_name or parent.user.get_full_name()
+            test_title = attempt.test.title
+            if attempt.test.exam_type == "hunter":
+                detail_url = request.build_absolute_uri(
+                    f"/tutor/students/{parent.id}/hunter/"
+                )
+            else:
+                detail_url = request.build_absolute_uri(
+                    f"/tutor/students/{parent.id}/"
+                )
+            _send(
+                subject=f"{student_name} finished {test_title}",
+                message=(
+                    f"{student_name} just completed {test_title}.\n\n"
+                    f"View their results: {detail_url}"
+                ),
+                from_email=None,
+                recipient_list=[tutor.user.email],
+                fail_silently=True,
+            )
+    except Exception:
+        pass
 
     if attempt.test.exam_type == "hunter":
         import threading
@@ -1436,20 +1511,50 @@ def error_analysis(request, attempt_id):
 @_require_shsat
 def account(request):
     parent, _ = Parent.objects.get_or_create(user=request.user)
-    form = AccountForm(request.POST or None, instance=parent, user=request.user)
-    if request.method == "POST" and form.is_valid():
+
+    # Handle tutor code submission
+    tutor_code_error = ""
+    if request.method == "POST" and "join_tutor" in request.POST:
+        code = request.POST.get("tutor_code", "").strip().upper()
+        if code:
+            from .models import Tutor, TutorStudent
+            try:
+                tutor = Tutor.objects.get(invite_code=code)
+                if TutorStudent.objects.filter(tutor=tutor, parent=parent).exists():
+                    tutor_code_error = "You are already linked to this tutor."
+                elif tutor.students.count() >= tutor.student_limit:
+                    tutor_code_error = "This tutor's class is full."
+                else:
+                    TutorStudent.objects.create(tutor=tutor, parent=parent)
+                    messages.success(request, f"Linked to tutor {tutor.user.first_name}.")
+                    return redirect("shsat_account")
+            except Tutor.DoesNotExist:
+                tutor_code_error = "Invalid tutor code."
+        else:
+            tutor_code_error = "Please enter a code."
+
+    form = AccountForm(request.POST if "save_account" in request.POST else None, instance=parent, user=request.user)
+    if request.method == "POST" and "save_account" in request.POST and form.is_valid():
         form.save()
         messages.success(request, "Account updated.")
         return redirect("shsat_account")
+
     completed_attempts = (
         TestAttempt.objects.filter(parent=parent, is_completed=True)
         .select_related("test")
         .order_by("submitted_at")
     )
+
+    # Get linked tutors
+    from .models import TutorStudent
+    linked_tutors = TutorStudent.objects.filter(parent=parent).select_related("tutor__user")
+
     return render(request, "shsat/account.html", {
         "form": form,
         "parent": parent,
         "completed_attempts": completed_attempts,
+        "tutor_code_error": tutor_code_error,
+        "linked_tutors": linked_tutors,
     })
 
 

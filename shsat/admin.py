@@ -7,6 +7,7 @@ from .models import (
     Parent, SHSATParent, HunterParent,
     Test, Question, TestAttempt, Answer,
     ManualScore, CutoffScore, QuestionReport,
+    Tutor, TutorStudent,
 )
 
 
@@ -189,3 +190,46 @@ class QuestionReportAdmin(admin.ModelAdmin):
     def reason_preview(self, obj):
         return obj.reason[:80] if obj.reason else "—"
     reason_preview.short_description = "Reason"
+
+
+# ---------------------------------------------------------------------------
+# Tutors
+# ---------------------------------------------------------------------------
+
+class TutorStudentInline(admin.TabularInline):
+    model = TutorStudent
+    extra = 0
+    fields = ["parent", "nickname", "added_at"]
+    readonly_fields = ["added_at"]
+
+
+@admin.register(Tutor)
+class TutorAdmin(admin.ModelAdmin):
+    list_display = ["get_email", "business_name", "invite_code", "subscription_status", "student_count", "created_at"]
+    list_filter = ["subscription_status"]
+    search_fields = ["user__email", "user__first_name", "business_name", "invite_code"]
+    readonly_fields = ["invite_code", "created_at"]
+    inlines = [TutorStudentInline]
+
+    def get_email(self, obj):
+        return obj.user.email
+    get_email.short_description = "Email"
+    get_email.admin_order_field = "user__email"
+
+    def student_count(self, obj):
+        return obj.students.count()
+    student_count.short_description = "Students"
+
+
+@admin.register(TutorStudent)
+class TutorStudentAdmin(admin.ModelAdmin):
+    list_display = ["get_tutor_email", "get_parent_email", "nickname", "added_at"]
+    search_fields = ["tutor__user__email", "parent__user__email", "nickname"]
+
+    def get_tutor_email(self, obj):
+        return obj.tutor.user.email
+    get_tutor_email.short_description = "Tutor"
+
+    def get_parent_email(self, obj):
+        return obj.parent.user.email
+    get_parent_email.short_description = "Student"

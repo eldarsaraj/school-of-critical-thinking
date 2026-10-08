@@ -28,5 +28,6 @@ urlpatterns = [
     path("learners/", views.learners, name="learners"),
     path("thank-you/", views.thank_you, name="thank_you"),
     path("test-prep/", views.test_prep, name="test_prep"),
+    path("analytics/", views.analytics, name="analytics"),
     path("robots.txt", robots_txt, name="robots_txt"),
 ]

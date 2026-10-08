@@ -1,0 +1,99 @@
+{% extends "shsat/base_tutor.html" %}
+
+{% block title %}Account — Tutor Portal{% endblock %}
+{% block tab_account %}active{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">Account settings</h1>
+<p class="shsat-page-subtitle">{{ user.email }}</p>
+
+<form method="post" novalidate style="max-width:520px;">
+  {% csrf_token %}
+
+  {% if form.non_field_errors %}
+  <div class="contact-form__error" style="margin-bottom:16px;">
+    {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+  </div>
+  {% endif %}
+
+  {% for field in form %}
+  <div class="contact-form__field">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {% if field.errors %}
+    <span class="contact-form__error">{{ field.errors|join:" " }}</span>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <input type="hidden" name="save_account" value="1">
+  <button type="submit" class="shsat-btn">Save changes</button>
+</form>
+
+<!-- Invite code -->
+<div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
+  <p class="shsat-section-title">Invite code</p>
+  <div style="padding:16px 20px;border:1px solid rgba(0,0,0,.08);background:rgba(0,0,0,.018);max-width:480px;">
+    <div style="font-family:monospace;font-size:22px;font-weight:700;letter-spacing:.15em;">{{ tutor.invite_code }}</div>
+    <p style="font-size:13px;color:rgba(0,0,0,.45);margin:8px 0 0;">Share this with students. They enter it during signup or from their account page.</p>
+  </div>
+</div>
+
+<!-- Subscription -->
+<div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
+  <p class="shsat-section-title">Subscription</p>
+  {% if tutor.subscription_status == 'active' %}
+  <p style="font-size:15px;"><strong>Active</strong> — up to {{ tutor.student_limit }} students.</p>
+  {% elif tutor.subscription_status == 'past_due' %}
+  <p style="font-size:15px;color:#c49a5a;"><strong>Past due</strong> — please update your payment method.</p>
+  {% elif tutor.subscription_status == 'canceled' %}
+  <p style="font-size:15px;color:#c4635b;"><strong>Canceled</strong> — <a href="{% url 'tutor_pricing' %}">resubscribe</a> to restore student access.</p>
+  {% else %}
+  <p style="font-size:15px;"><strong>Free</strong> — <a href="{% url 'tutor_pricing' %}">subscribe to give students paid-test access</a>.</p>
+  {% endif %}
+</div>
+
+<!-- Students -->
+<div style="margin-top:48px;border-top:1px solid rgba(0,0,0,0.08);padding-top:24px;">
+  <p class="shsat-section-title">Students ({{ student_links|length }}/{{ tutor.student_limit }})</p>
+  {% if student_links %}
+  <table class="shsat-table" style="max-width:600px;">
+    <thead>
+      <tr><th>Student</th><th>Email</th><th>Joined</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for ts in student_links %}
+      <tr>
+        <td>
+          <form method="post" style="display:inline;">
+            {% csrf_token %}
+            <input type="hidden" name="update_nickname" value="1">
+            <input type="hidden" name="ts_id" value="{{ ts.id }}">
+            <input type="text" name="nickname" value="{{ ts.nickname }}" placeholder="{{ ts.parent.child_nickname|default:ts.parent.user.first_name }}"
+                   style="border:1px solid rgba(0,0,0,.1);padding:4px 8px;font-size:13px;width:120px;">
+            <button type="submit" style="background:none;border:none;cursor:pointer;font-size:12px;color:rgba(0,0,0,.4);padding:0 4px;">save</button>
+          </form>
+        </td>
+        <td style="font-size:13px;color:rgba(0,0,0,.5);">{{ ts.parent.user.email }}</td>
+        <td style="font-size:13px;">{{ ts.added_at|date:"M d, Y" }}</td>
+        <td>
+          <form method="post" style="display:inline;" onsubmit="return confirm('Remove this student?');">
+            {% csrf_token %}
+            <input type="hidden" name="remove_student" value="1">
+            <input type="hidden" name="ts_id" value="{{ ts.id }}">
+            <button type="submit" style="background:none;border:none;cursor:pointer;font-size:13px;color:#a4161a;padding:0;">Remove</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p style="font-size:14px;color:rgba(0,0,0,.45);">No students yet. Share your invite code to get started.</p>
+  {% endif %}
+</div>
+
+<div style="margin-top:36px;">
+  <a href="{% url 'tutor_logout' %}" class="shsat-btn shsat-btn--danger">Log out</a>
+</div>
+{% endblock %}

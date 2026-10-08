@@ -1,0 +1,210 @@
+{% extends "shsat/base_tutor.html" %}
+{% load static %}
+
+{% block title %}Dashboard — Tutor Portal{% endblock %}
+
+{% block shsat_content %}
+<h1 class="shsat-page-title">{% if is_hunter %}Hunter{% else %}SHSAT{% endif %} Dashboard</h1>
+
+{# Stat cards #}
+<div class="shsat-stat-grid">
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__label">Active students</div>
+    <div class="shsat-stat-card__value">{{ active_students }}</div>
+  </div>
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__label">Class average</div>
+    <div class="shsat-stat-card__value">{% if class_avg %}{{ class_avg }}{% if is_hunter %}%{% endif %}{% else %}—{% endif %}</div>
+  </div>
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__label">Tests completed</div>
+    <div class="shsat-stat-card__value">{{ total_tests }}</div>
+  </div>
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__label">Avg accuracy</div>
+    <div class="shsat-stat-card__value">{% if avg_accuracy %}{{ avg_accuracy }}%{% else %}—{% endif %}</div>
+  </div>
+</div>
+
+{# Invite code card #}
+<div class="shsat-stat-card" style="margin:24px 0;max-width:480px;">
+  <div class="shsat-stat-card__label">Your invite code</div>
+  <div style="font-family:monospace;font-size:22px;font-weight:700;letter-spacing:.15em;margin:8px 0;">{{ tutor.invite_code }}</div>
+  <p style="font-size:13px;color:rgba(0,0,0,.45);margin:0;">Share this with students. They enter it during signup or from their account page.</p>
+</div>
+
+{# Class progress chart #}
+{{ student_histories_json|json_script:"studentHistories" }}
+<div id="classChartSection" style="margin-top:32px;display:none;">
+  <p class="shsat-section-title">Class progress</p>
+  <div id="classChartPills" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;"></div>
+  <div class="shsat-chart-wrap">
+    <canvas id="classProgressChart"></canvas>
+  </div>
+</div>
+
+{# Student roster #}
+{% if students %}
+<div style="margin-top:32px;">
+  <p class="shsat-section-title">Students</p>
+  <table class="shsat-table">
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Grade</th>
+        {% if is_hunter %}
+        <th>Latest Score</th>
+        <th>RC</th>
+        <th>QR+MA</th>
+        {% else %}
+        <th>Latest Score</th>
+        <th>ELA</th>
+        <th>Math</th>
+        {% endif %}
+        <th>Tests</th>
+        <th>Last Active</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in students %}
+      <tr style="cursor:pointer;" onclick="window.location='{% if is_hunter %}{% url 'tutor_student_detail_hunter' s.parent.id %}{% else %}{% url 'tutor_student_detail' s.parent.id %}{% endif %}'">
+        <td><strong>{{ s.name }}</strong></td>
+        <td>{{ s.grade|default:"—" }}</td>
+        {% if is_hunter %}
+        <td>
+          {% if s.latest_pct is not None %}
+          <strong{% if s.latest_pct >= 85 %} style="color:#2c6e8a"{% elif s.latest_pct >= 70 %} style="color:#5aab8c"{% elif s.latest_pct >= 50 %} style="color:#c49a5a"{% endif %}>{{ s.latest_pct }}%</strong>
+          {% else %}—{% endif %}
+        </td>
+        <td>{% if s.latest_rc_pct is not None %}{{ s.latest_rc_pct }}%{% else %}—{% endif %}</td>
+        <td>{% if s.latest_math_pct is not None %}{{ s.latest_math_pct }}%{% else %}—{% endif %}</td>
+        {% else %}
+        <td>
+          {% if s.latest_composite %}
+          <strong{% if s.latest_composite >= 500 %} style="color:#2c6e8a"{% elif s.latest_composite >= 450 %} style="color:#c49a5a"{% endif %}>{{ s.latest_composite }}</strong>
+          {% else %}—{% endif %}
+        </td>
+        <td>{{ s.latest_ela|default:"—" }}</td>
+        <td>{{ s.latest_math|default:"—" }}</td>
+        {% endif %}
+        <td>{{ s.test_count }}</td>
+        <td>{% if s.last_active %}{{ s.last_active|date:"M d" }}{% else %}—{% endif %}</td>
+        <td style="color:rgba(0,0,0,.25);font-size:18px;">&#8250;</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div style="margin-top:32px;padding:24px;border:1px solid rgba(0,0,0,.06);background:rgba(0,0,0,.015);text-align:center;">
+  <p style="font-size:15px;color:rgba(0,0,0,.45);margin:0;">No students yet — share your invite code to get started.</p>
+</div>
+{% endif %}
+
+{# Class-wide skill weakness heatmap #}
+{% if skill_accuracy_data %}
+<div style="margin-top:40px;">
+  <p class="shsat-section-title">Class skill accuracy</p>
+  <div class="shsat-skill-heat">
+    {% for s in skill_accuracy_data %}
+    <div class="shsat-skill-tile shsat-skill-tile--{% if s.section == 'ELA' or s.section == 'reading_comprehension' or s.section == 'writing' %}ela{% else %}math{% endif %}"
+         style="--pct:{{ s.accuracy }}">
+      <span class="shsat-skill-tile__label">{{ s.label }}</span>
+      <span class="shsat-skill-tile__pct">{{ s.accuracy }}%</span>
+      <span class="shsat-skill-tile__n">{{ s.correct }}/{{ s.total }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+(function () {
+  var histories = JSON.parse(document.getElementById("studentHistories").textContent);
+  if (!histories.length) return;
+
+  document.getElementById("classChartSection").style.display = "";
+
+  var colours = [
+    "#5b8ec4", "#c4635b", "#5aab8c", "#c49a5a",
+    "#8896a8", "#7c6bc4", "#c45b96", "#4aaa7a",
+  ];
+
+  var labelSet = [];
+  histories.forEach(function (h) {
+    h.scores.forEach(function (s) {
+      if (labelSet.indexOf(s.label) === -1) labelSet.push(s.label);
+    });
+  });
+
+  var datasets = histories.map(function (h, i) {
+    var colour = colours[i % colours.length];
+    var dataMap = {};
+    h.scores.forEach(function (s) { dataMap[s.label] = s.score; });
+    return {
+      label: h.name,
+      data: labelSet.map(function (l) { return dataMap[l] != null ? dataMap[l] : null; }),
+      borderColor: colour,
+      backgroundColor: "transparent",
+      pointBackgroundColor: colour,
+      borderWidth: 2,
+      tension: 0.2,
+      pointRadius: 4,
+      spanGaps: true,
+    };
+  });
+
+  var isHunter = {{ is_hunter|yesno:"true,false" }};
+
+  var chart = new Chart(document.getElementById("classProgressChart").getContext("2d"), {
+    type: "line",
+    data: { labels: labelSet, datasets: datasets },
+    options: {
+      responsive: true,
+      aspectRatio: 2.5,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: function (items) { return items[0].label; },
+            label: function (item) { return " " + item.dataset.label + ": " + item.raw + (isHunter ? "%" : ""); },
+          }
+        }
+      },
+      scales: {
+        y: { grid: { color: "rgba(0,0,0,0.06)" },
+             ticks: { font: { size: 12 }, callback: function (v) { return isHunter ? v + "%" : v; } } },
+        x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      }
+    }
+  });
+
+  var pillsWrap = document.getElementById("classChartPills");
+  var visible = {};
+  histories.forEach(function (_, i) { visible[i] = true; });
+
+  histories.forEach(function (h, i) {
+    var pill = document.createElement("button");
+    pill.textContent = h.name;
+    pill.style.cssText =
+      "padding:5px 14px;font-size:12px;font-weight:600;border:none;cursor:pointer;" +
+      "background:" + colours[i % colours.length] + ";color:#fff;font-family:inherit;";
+    pill.addEventListener("click", function () {
+      if (visible[i]) {
+        delete visible[i];
+        chart.setDatasetVisibility(i, false);
+        pill.style.opacity = "0.25";
+      } else {
+        visible[i] = true;
+        chart.setDatasetVisibility(i, true);
+        pill.style.opacity = "1";
+      }
+      chart.update();
+    });
+    pillsWrap.appendChild(pill);
+  });
+})();
+</script>
+{% endblock %}

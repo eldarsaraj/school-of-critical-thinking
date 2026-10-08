@@ -3,11 +3,30 @@ from django.http import Http404, FileResponse, HttpResponse
 from django.utils import timezone
 from django.template import loader
 from django.conf import settings
+from django.core.mail import send_mail
 
 
 from .book_data import BOOKS
 from .models import ContactMessage, CurriculumLead, ModuleWaitlist, NewsletterSubscriber
 from .module_data import MODULES_BY_SLUG
+
+
+def _notify_contact(name, email, message, source=""):
+    """Send an email notification to the site owner when a contact form is submitted."""
+    subject = f"New contact form message from {name}"
+    if source:
+        subject += f" ({source})"
+    body = f"From: {name} <{email}>\nSource: {source or 'contact page'}\n\n{message}"
+    try:
+        send_mail(
+            subject=subject,
+            message=body,
+            from_email=None,
+            recipient_list=[settings.CONTACT_EMAIL],
+            fail_silently=True,
+        )
+    except Exception:
+        pass
 
 
 def home(request):
@@ -16,6 +35,10 @@ def home(request):
 
 def test_prep(request):
     return render(request, "pages/test_prep.html")
+
+
+def analytics(request):
+    return render(request, "pages/analytics.html")
 
 
 def about(request):
@@ -53,6 +76,7 @@ def organizations(request):
             errors["message"] = "Message is required."
         if not errors:
             ContactMessage.objects.create(name=name, email=email, message=message)
+            _notify_contact(name, email, message, source="organizations")
             return redirect("/organizations/?sent=1")
         return render(request, "pages/organizations.html", {
             "errors": errors,
@@ -201,6 +225,7 @@ def contact(request):
                 email=email,
                 message=message,
             )
+            _notify_contact(name, email, message, source=source or "contact")
             # Redirect to avoid duplicate submits on refresh
             return redirect(f"{reverse('contact')}?sent=1&path={path}&from={source}")
 

@@ -14,8 +14,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 
-from .models import Parent, Test, TestAttempt, Answer
+from .models import Parent, Test, TestAttempt, Answer, TutorStudent
 from .forms import SignupForm, LoginForm, NotesForm, AccountForm
+from .views import _student_has_tutor_access
 
 
 # ---------------------------------------------------------------------------
@@ -443,7 +444,7 @@ def hunter_test_list(request):
         "tests": tests,
         "completed_ids": completed_ids,
         "in_progress_ids": in_progress_ids,
-        "hunter_has_paid": parent.hunter_has_paid or request.user.is_staff,
+        "hunter_has_paid": parent.hunter_has_paid or _student_has_tutor_access(parent) or request.user.is_staff,
     }
     return render(request, "shsat/hunter_test_list.html", context)
 

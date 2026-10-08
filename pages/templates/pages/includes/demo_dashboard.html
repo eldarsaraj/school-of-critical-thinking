@@ -1,28 +1,29 @@
 {% load static %}
 <!-- ── Live demo dashboard ─────────────────────────────────────────────────
-     Mock data: child "Alex", 3 tests completed (Baseline + 2 Benchmarks),
-     showing realistic improvement. All data is hardcoded — no DB involved.
+     Mock data: child "Alex", 5 tests completed (Baseline + 4 Benchmarks),
+     showing improvement from 393 to 558 (above Stuyvesant cutoff).
+     All data is hardcoded — no DB involved.
 ─────────────────────────────────────────────────────────────────────────── -->
 <div class="home-demo">
 
   <div class="home-demo__header">
     <span class="home-demo__badge">Live example</span>
     <span class="home-demo__title">Alex's Dashboard</span>
-    <span class="home-demo__subtitle">3 tests completed · Baseline + 2 Benchmarks</span>
+    <span class="home-demo__subtitle">5 tests completed · Baseline + 4 Benchmarks</span>
   </div>
 
   <!-- Stat cards -->
   <div class="shsat-stat-grid">
     <div class="shsat-stat-card">
-      <div class="shsat-stat-card__value">447</div>
+      <div class="shsat-stat-card__value">558</div>
       <div class="shsat-stat-card__label">Latest composite</div>
     </div>
     <div class="shsat-stat-card">
-      <div class="shsat-stat-card__value">3</div>
+      <div class="shsat-stat-card__value">5</div>
       <div class="shsat-stat-card__label">Tests completed</div>
     </div>
     <div class="shsat-stat-card">
-      <div class="shsat-stat-card__value">+54</div>
+      <div class="shsat-stat-card__value">+165</div>
       <div class="shsat-stat-card__label">Score improvement</div>
     </div>
     <div class="shsat-stat-card">
@@ -47,77 +48,74 @@
       <button class="demo-cutoff-pill" data-cutoff="397" data-school="Lehman">Lehman</button>
     </div>
   </div>
-  <p style="font-size:12px;color:rgba(0,0,0,0.38);margin:-20px 0 28px;line-height:1.6;">
-    Dotted lines show projected scores for upcoming tests based on current improvement rate.
-  </p>
 
   <!-- School placement heatmap -->
   <p class="shsat-section-title">School placement (2026 cutoffs)</p>
   <div class="shsat-heat-grid">
-    <div class="shsat-heat-tile" style="background:#a4161a;" title="Stuyvesant — cutoff 552">
+    <div class="shsat-heat-tile" style="background:#1a7f3c;" title="Stuyvesant — cutoff 552">
       <div class="shsat-heat-tile__school">Stuy</div>
-      <div class="shsat-heat-tile__gap">−105</div>
+      <div class="shsat-heat-tile__gap">+6</div>
       <div class="shsat-heat-tile__cutoff">cutoff 552</div>
     </div>
-    <div class="shsat-heat-tile" style="background:#b5540a;" title="High School of American Studies — cutoff 509">
+    <div class="shsat-heat-tile" style="background:#1a7f3c;" title="High School of American Studies — cutoff 509">
       <div class="shsat-heat-tile__school">HSAS</div>
-      <div class="shsat-heat-tile__gap">−62</div>
+      <div class="shsat-heat-tile__gap">+49</div>
       <div class="shsat-heat-tile__cutoff">cutoff 509</div>
     </div>
-    <div class="shsat-heat-tile" style="background:#b5540a;" title="Bronx Science — cutoff 496">
+    <div class="shsat-heat-tile" style="background:#1a7f3c;" title="Bronx Science — cutoff 496">
       <div class="shsat-heat-tile__school">BxSci</div>
-      <div class="shsat-heat-tile__gap">−49</div>
+      <div class="shsat-heat-tile__gap">+62</div>
       <div class="shsat-heat-tile__cutoff">cutoff 496</div>
     </div>
-    <div class="shsat-heat-tile" style="background:#b5540a;" title="Staten Island Tech — cutoff 492">
+    <div class="shsat-heat-tile" style="background:#1a7f3c;" title="Staten Island Tech — cutoff 492">
       <div class="shsat-heat-tile__school">SI Tech</div>
-      <div class="shsat-heat-tile__gap">−45</div>
+      <div class="shsat-heat-tile__gap">+66</div>
       <div class="shsat-heat-tile__cutoff">cutoff 492</div>
     </div>
-    <div class="shsat-heat-tile" style="background:#8a6700;" title="Brooklyn Tech — cutoff 465">
+    <div class="shsat-heat-tile" style="background:#1a7f3c;" title="Brooklyn Tech — cutoff 465">
       <div class="shsat-heat-tile__school">BkTech</div>
-      <div class="shsat-heat-tile__gap">−18</div>
+      <div class="shsat-heat-tile__gap">+93</div>
       <div class="shsat-heat-tile__cutoff">cutoff 465</div>
     </div>
     <div class="shsat-heat-tile" style="background:#1a7f3c;" title="Queens Science — cutoff 412">
       <div class="shsat-heat-tile__school">QSci</div>
-      <div class="shsat-heat-tile__gap">+35</div>
+      <div class="shsat-heat-tile__gap">+146</div>
       <div class="shsat-heat-tile__cutoff">cutoff 412</div>
     </div>
     <div class="shsat-heat-tile" style="background:#1a7f3c;" title="City College HS — cutoff 405">
       <div class="shsat-heat-tile__school">CCNY</div>
-      <div class="shsat-heat-tile__gap">+42</div>
+      <div class="shsat-heat-tile__gap">+153</div>
       <div class="shsat-heat-tile__cutoff">cutoff 405</div>
     </div>
     <div class="shsat-heat-tile" style="background:#1a7f3c;" title="Lehman — cutoff 397">
       <div class="shsat-heat-tile__school">Lehman</div>
-      <div class="shsat-heat-tile__gap">+50</div>
+      <div class="shsat-heat-tile__gap">+161</div>
       <div class="shsat-heat-tile__cutoff">cutoff 397</div>
     </div>
   </div>
   <p style="font-size:13px;color:rgba(0,0,0,0.45);margin:14px 0 6px;">
-    Based on latest composite score of <strong>447</strong>. Colour indicates distance from cutoff.
+    Based on latest composite score of <strong>558</strong>. Colour indicates distance from cutoff.
   </p>
   <p style="font-size:12px;color:rgba(0,0,0,0.35);margin:0 0 36px;">
     Estimated only. Actual SHSAT scaling varies by year and is not published by the DOE.
   </p>
 
   <!-- Practice test scores bar chart -->
-  <p class="shsat-section-title" style="margin-top:32px;">Practice test scores</p>
+  <p class="shsat-section-title" style="margin-top:32px;">Scores and time per test</p>
   <div class="shsat-chart-wrap">
     <canvas id="demoAttemptsChart"></canvas>
   </div>
 
-  <!-- Accuracy by skill -->
-  <p class="shsat-section-title" style="margin-top:48px;">Accuracy by skill</p>
+  <!-- Distractor trap analysis -->
+  <p class="shsat-section-title" style="margin-top:48px;">Distractor trap analysis</p>
+  <p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Which answer traps caught Alex most often.</p>
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
   <div class="shsat-chart-wrap">
-    <canvas id="demoSkillChart"></canvas>
+    <canvas id="demoTrapChartEla"></canvas>
   </div>
-
-  <!-- Avg time per skill -->
-  <p class="shsat-section-title" style="margin-top:32px;">Avg time per skill (minutes)</p>
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:20px 0 12px;">Math</p>
   <div class="shsat-chart-wrap">
-    <canvas id="demoTimeChart"></canvas>
+    <canvas id="demoTrapChartMath"></canvas>
   </div>
 
   <!-- Focus areas -->
@@ -176,56 +174,48 @@
   };
 
   // ── Mock data ─────────────────────────────────────────────────────────────
+  // Progression: big jump after Baseline (error analysis effect), steady climb,
+  // then another jump between Benchmark 3 and 4 (traps finally internalized).
   const history = [
     { seq: "Baseline",    date: "Mar 1, 2025",  source: "Platform test", ela: 198, math: 195, composite: 393 },
-    { seq: "Benchmark 1", date: "Apr 5, 2025",  source: "Platform test", ela: 212, math: 208, composite: 420 },
-    { seq: "Benchmark 2", date: "May 10, 2025", source: "Platform test", ela: 228, math: 219, composite: 447 },
+    { seq: "Benchmark 1", date: "Apr 12, 2025", source: "Platform test", ela: 232, math: 226, composite: 458 },
+    { seq: "Benchmark 2", date: "May 24, 2025", source: "Platform test", ela: 246, math: 241, composite: 487 },
+    { seq: "Benchmark 3", date: "Jul 5, 2025",  source: "Platform test", ela: 255, math: 252, composite: 507 },
+    { seq: "Benchmark 4", date: "Aug 23, 2025", source: "Platform test", ela: 281, math: 277, composite: 558 },
   ];
 
   const attemptsData = [
-    { label: "Baseline",    ela: 198, math: 195, composite: 393, minutes: 142 },
-    { label: "Benchmark 1", ela: 212, math: 208, composite: 420, minutes: 136 },
-    { label: "Benchmark 2", ela: 228, math: 219, composite: 447, minutes: 128 },
+    { label: "Baseline",    ela: 198, math: 195, composite: 393, minutes: 192 },
+    { label: "Benchmark 1", ela: 232, math: 226, composite: 458, minutes: 184 },
+    { label: "Benchmark 2", ela: 246, math: 241, composite: 487, minutes: 179 },
+    { label: "Benchmark 3", ela: 255, math: 252, composite: 507, minutes: 174 },
+    { label: "Benchmark 4", ela: 281, math: 277, composite: 558, minutes: 177 },
   ];
 
-  const skills = [
-    { label: "Logical reasoning",    accuracy: 48, correct: 24, total: 50,  avg_time: 2.8 },
-    { label: "Main idea",            accuracy: 55, correct: 33, total: 60,  avg_time: 2.1 },
-    { label: "Evidence & inference", accuracy: 62, correct: 37, total: 60,  avg_time: 1.9 },
-    { label: "Word problems",        accuracy: 67, correct: 47, total: 70,  avg_time: 2.5 },
-    { label: "Algebra",              accuracy: 73, correct: 51, total: 70,  avg_time: 2.2 },
-    { label: "Arithmetic",           accuracy: 76, correct: 53, total: 70,  avg_time: 1.6 },
-    { label: "Reading comprehension",accuracy: 79, correct: 55, total: 70,  avg_time: 2.3 },
-    { label: "Geometry",             accuracy: 83, correct: 58, total: 70,  avg_time: 1.4 },
-    { label: "Grammar",              accuracy: 86, correct: 60, total: 70,  avg_time: 1.2 },
-    { label: "Vocabulary",           accuracy: 88, correct: 44, total: 50,  avg_time: 1.0 },
+  const elaTraps = [
+    { label: "Too Narrow",           count: 11 },
+    { label: "Misidentified Detail", count: 7 },
+    { label: "Surface Match",        count: 6 },
+    { label: "True but Irrelevant",  count: 5 },
+    { label: "Less Precise",         count: 4 },
+    { label: "Partly True but Wrong",count: 3 },
+    { label: "Inference Leap",       count: 2 },
+    { label: "Too Broad",            count: 1 },
+  ];
+  const mathTraps = [
+    { label: "Wrong Setup",          count: 9 },
+    { label: "Arithmetic Slip",      count: 6 },
+    { label: "Partial Answer",       count: 5 },
+    { label: "Sign Error",           count: 4 },
+    { label: "Last Step Trap",       count: 3 },
+    { label: "Wrong Formula",        count: 2 },
+    { label: "Misread Question",     count: 1 },
   ];
 
-  // ── Projection ───────────────────────────────────────────────────────────
-  const projScores = [
-    { seq: "Benchmark 3 ↑", ela: 241, math: 232, composite: 473 },
-    { seq: "Benchmark 4 ↑", ela: 252, math: 243, composite: 495 },
-    { seq: "Benchmark 5 ↑", ela: 260, math: 251, composite: 511 },
-  ];
-
-  const realLabels = history.map(d => d.seq);
-  const projLabels = projScores.map(d => d.seq);
-  const allLabels  = [...realLabels, ...projLabels];
-  const bridgeIdx  = history.length - 1;
-
-  function makeProjArr(realArr, projArr) {
-    const out = Array(allLabels.length).fill(null);
-    realArr.forEach((v, i) => { out[i] = v; });
-    [realArr[bridgeIdx], ...projArr].forEach((v, i) => { out[bridgeIdx + i] = v; });
-    return out;
-  }
-
+  const allLabels = history.map(d => d.seq);
   const compReal  = history.map(d => d.composite);
   const elaReal   = history.map(d => d.ela);
   const mathReal  = history.map(d => d.math);
-  const compProj  = makeProjArr(compReal, projScores.map(d => d.composite));
-  const elaProj   = makeProjArr(elaReal,  projScores.map(d => d.ela));
-  const mathProj  = makeProjArr(mathReal, projScores.map(d => d.math));
 
   // ── Score history chart ───────────────────────────────────────────────────
   const scoreCtx = document.getElementById("demoScoreChart").getContext("2d");
@@ -243,18 +233,6 @@
         { label: "Math", data: mathReal,
           borderColor: P.math, backgroundColor: "transparent", pointBackgroundColor: P.math,
           borderWidth: 2, tension: 0.2, pointRadius: 4 },
-        { label: "Composite (projected)", data: compProj,
-          borderColor: "rgba(61,79,99,0.28)", backgroundColor: "transparent",
-          pointBackgroundColor: "rgba(61,79,99,0.22)", borderWidth: 1.5, borderDash: [4, 4],
-          tension: 0.2, pointRadius: 3 },
-        { label: "ELA (projected)", data: elaProj,
-          borderColor: "rgba(91,142,196,0.3)", backgroundColor: "transparent",
-          pointBackgroundColor: "rgba(91,142,196,0.25)", borderWidth: 1.5, borderDash: [4, 4],
-          tension: 0.2, pointRadius: 3 },
-        { label: "Math (projected)", data: mathProj,
-          borderColor: "rgba(196,99,91,0.3)", backgroundColor: "transparent",
-          pointBackgroundColor: "rgba(196,99,91,0.25)", borderWidth: 1.5, borderDash: [4, 4],
-          tension: 0.2, pointRadius: 3 },
       ],
     },
     options: {
@@ -263,20 +241,14 @@
       plugins: {
         legend: {
           display: true, position: "top", align: "end",
-          labels: { boxWidth: 14, font: { size: 12 }, padding: 18,
-                    filter: item => !item.text.includes("projected") }
+          labels: { boxWidth: 14, font: { size: 12 }, padding: 18 }
         },
         tooltip: {
           callbacks: {
             title: items => {
-              const idx = items[0].dataIndex;
-              if (idx < history.length) {
-                const d = history[idx];
-                return `${d.seq} · ${d.date}`;
-              }
-              return items[0].label;
-            },
-            footer: items => items[0].dataIndex >= history.length ? "Projected improvement" : ""
+              const d = history[items[0].dataIndex];
+              return `${d.seq} · ${d.date}`;
+            }
           }
         },
         annotation: { annotations: {} }
@@ -355,72 +327,44 @@
         x: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 } } },
         y: { stacked: true, min: 0, max: 700, grid: { color: P.grid },
              ticks: { font: { size: 12 }, stepSize: 100 } },
-        yTime: { position: "right", min: 0, max: 180, grid: { display: false },
+        yTime: { position: "right", min: 0, max: 240, grid: { display: false },
                  ticks: { font: { size: 11 }, color: "rgba(100,80,0,0.7)", callback: v => v + "m" },
                  title: { display: true, text: "Time (min)", color: "rgba(100,80,0,0.7)", font: { size: 11 } } }
       }
     }
   });
 
-  // ── Accuracy by skill chart ───────────────────────────────────────────────
-  new Chart(document.getElementById("demoSkillChart").getContext("2d"), {
-    type: "bar",
-    data: {
-      labels: skills.map(s => s.label),
-      datasets: [{
-        label: "Accuracy %",
-        data: skills.map(s => s.accuracy),
-        backgroundColor: skills.map(s => s.accuracy < 60 ? P.wrong : s.accuracy < 80 ? P.warn : P.correct),
-        borderWidth: 0,
-        barThickness: 16,
-      }],
-    },
-    options: {
-      indexAxis: "y",
-      responsive: true,
-      aspectRatio: 1.8,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: { label: item => ` ${skills[item.dataIndex].accuracy}% (${skills[item.dataIndex].correct}/${skills[item.dataIndex].total})` }
+  // ── Distractor trap charts ────────────────────────────────────────────────
+  function renderTrapChart(canvasId, traps, color) {
+    new Chart(document.getElementById(canvasId).getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: traps.map(t => t.label),
+        datasets: [{
+          label: "Times caught",
+          data: traps.map(t => t.count),
+          backgroundColor: color,
+          borderWidth: 0,
+          barThickness: 16,
+        }],
+      },
+      options: {
+        indexAxis: "y",
+        responsive: true,
+        aspectRatio: 1.8,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: item => ` ${item.raw} times` } }
+        },
+        scales: {
+          x: { min: 0, grid: { color: P.grid },
+               ticks: { font: { size: 11 }, stepSize: 2 } },
+          y: { grid: { display: false }, ticks: { font: { size: 12 } } }
         }
-      },
-      scales: {
-        x: { min: 0, max: 100, grid: { color: P.grid },
-             ticks: { font: { size: 11 }, callback: v => v + "%" } },
-        y: { grid: { display: false }, ticks: { font: { size: 12 } } }
       }
-    }
-  });
-
-  // ── Avg time per skill chart ──────────────────────────────────────────────
-  const timedSkills = [...skills].sort((a, b) => b.avg_time - a.avg_time);
-  new Chart(document.getElementById("demoTimeChart").getContext("2d"), {
-    type: "bar",
-    data: {
-      labels: timedSkills.map(s => s.label),
-      datasets: [{
-        label: "Avg minutes",
-        data: timedSkills.map(s => s.avg_time),
-        backgroundColor: P.neutral,
-        borderWidth: 0,
-        barThickness: 16,
-      }],
-    },
-    options: {
-      indexAxis: "y",
-      responsive: true,
-      aspectRatio: 1.8,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: item => ` ${item.raw} min avg` } }
-      },
-      scales: {
-        x: { min: 0, grid: { color: P.grid },
-             ticks: { font: { size: 11 }, callback: v => v + "m" } },
-        y: { grid: { display: false }, ticks: { font: { size: 12 } } }
-      }
-    }
-  });
+    });
+  }
+  renderTrapChart("demoTrapChartEla",  elaTraps,  P.ela);
+  renderTrapChart("demoTrapChartMath", mathTraps, P.math);
 })();
 </script>

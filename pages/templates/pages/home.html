@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}SHSAT and Hunter Test Prep — School of Critical Thinking{% endblock %}
+{% block title %}Standardized tests, reverse-engineered — School of Critical Thinking{% endblock %}
 
-{% block meta_description %}<meta name="description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Every question human-written, every wrong answer error-tagged. Free baseline test with full error analysis.">{% endblock %}
+{% block meta_description %}<meta name="description" content="We data-mine real exams — 1,368 SHSAT questions and counting — and turn them into precise readiness reports for students, parents, and tutors.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="School of Critical Thinking" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="SHSAT and Hunter Test Prep — School of Critical Thinking" />
-  <meta property="og:description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Free baseline test with full error analysis." />
+  <meta property="og:title" content="Standardized tests, reverse-engineered — School of Critical Thinking" />
+  <meta property="og:description" content="We data-mine real exams — 1,368 SHSAT questions and counting — and turn them into precise readiness reports for students, parents, and tutors." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="SHSAT and Hunter Test Prep — School of Critical Thinking" />
-  <meta name="twitter:description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Free baseline test with full error analysis." />
+  <meta name="twitter:title" content="Standardized tests, reverse-engineered — School of Critical Thinking" />
+  <meta name="twitter:description" content="We data-mine real exams and turn them into precise readiness reports for students, parents, and tutors." />
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 {% endblock %}
 
@@ -28,20 +28,15 @@
 <section class="home-hero home-hero--full">
   <div class="home-hero__text">
     <p class="home-hero__eyebrow">New York · SHSAT and Hunter</p>
-    <h1 class="home-hero__title">Stop prepping in the dark.</h1>
+    <h1 class="home-hero__title">Standardized tests, reverse-engineered.</h1>
     <p class="home-hero__sub">
-      The only durable way to master the SHSAT and Hunter exams is through rigorous, 
-      precision-based practice that tells you exactly what are the errors your child
-      is making, rather than cramming a bunch of random (often AI-generated) practice 
-      questions. We reverse-engineer tests to discover the underlying skills and traps 
-      that determine success.
-    </p>
-    <p class="home-hero__sub home-hero__sub--cta">
-      Start with a free baseline test. Full exam, full error analysis, no credit card.
+      We data-mine real exams (1,368 SHSAT questions and counting) and turn
+      them into precise readiness reports for students, parents, and tutors.
     </p>
     <div class="home-hero__actions">
       <a href="/shsat/" class="home-hero__btn">Start the free baseline test</a>
-      <a href="/test-prep/" class="home-hero__btn home-hero__btn--ghost">See the science behind it</a>
+      <a href="/tutor/" class="home-hero__btn home-hero__btn--secondary">For tutors</a>
+      <a href="/analytics/" class="home-hero__btn home-hero__btn--ghost">See the science behind it</a>
     </div>
   </div>
 </section>
@@ -132,7 +127,7 @@
     <p class="home-secondary__label">Critical Thinking Curriculum</p>
     <h2 class="home-secondary__title">Not prepping for an exam? Boost your child's thinking skills with our unique curriculum.</h2>
     <p class="home-secondary__body">
-      A detailed lesson plan centered on developing your child's ability to recognize patterns, 
+      A detailed lesson plan centered on developing your child's ability to recognize patterns,
       understand causes, and reason successfully in a world full of distractions.
     </p>
     <a href="/curriculum/" class="home-secondary__cta">See the curriculum &rarr;</a>
@@ -147,7 +142,7 @@
   <div class="home-founder__text">
     <p class="home-founder__bio" style="font-size: 15px; color: rgba(0,0,0,0.75); margin-bottom: 6px;"><strong>Eldar Sarajlic</strong></p>
     <p class="home-founder__bio">
-      Academic philosopher and university professor of critical thinking. 
+      Academic philosopher and university professor of critical thinking.
       I built this for my own child first, and then decided to share it with other families.
     </p>
     <a href="/about/" class="home-founder__link">More about me &rarr;</a>

@@ -1,3 +1,4 @@
+import string
 import uuid
 
 from django.db import models
@@ -248,3 +249,53 @@ class HunterParent(Parent):
         proxy = True
         verbose_name = "Hunter Parent"
         verbose_name_plural = "Hunter Parents"
+
+
+def _generate_invite_code():
+    import random
+    chars = string.ascii_uppercase + string.digits
+    while True:
+        code = "".join(random.choices(chars, k=8))
+        if not Tutor.objects.filter(invite_code=code).exists():
+            return code
+
+
+class Tutor(models.Model):
+    SUBSCRIPTION_CHOICES = [
+        ("free", "Free"),
+        ("active", "Active"),
+        ("past_due", "Past Due"),
+        ("canceled", "Canceled"),
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="tutor_profile")
+    business_name = models.CharField(max_length=200, blank=True, default="")
+    invite_code = models.CharField(max_length=12, unique=True)
+    stripe_customer_id = models.CharField(max_length=100, blank=True, default="")
+    stripe_subscription_id = models.CharField(max_length=100, blank=True, default="")
+    subscription_status = models.CharField(max_length=20, choices=SUBSCRIPTION_CHOICES, default="free")
+    student_limit = models.PositiveSmallIntegerField(default=5)
+    email_verified = models.BooleanField(default=False)
+    email_verification_token = models.UUIDField(default=uuid.uuid4, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.email} (tutor)"
+
+    def save(self, *args, **kwargs):
+        if not self.invite_code:
+            self.invite_code = _generate_invite_code()
+        super().save(*args, **kwargs)
+
+
+class TutorStudent(models.Model):
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name="students")
+    parent = models.ForeignKey(Parent, on_delete=models.CASCADE, related_name="tutors")
+    nickname = models.CharField(max_length=100, blank=True, default="")
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = [("tutor", "parent")]
+
+    def __str__(self):
+        return f"{self.tutor} → {self.parent}"

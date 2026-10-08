@@ -186,6 +186,15 @@ main { padding: 48px 24px; }
 
 .home-hero__btn:hover { background: #2a3035; }
 
+.home-hero__btn--secondary {
+  background: #6b7280;
+  color: #fff;
+}
+
+.home-hero__btn--secondary:hover {
+  background: #4b5563;
+}
+
 .home-hero__btn--ghost {
   background: transparent;
   color: #161a1d;
