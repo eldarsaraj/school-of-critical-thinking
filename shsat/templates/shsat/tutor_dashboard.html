@@ -27,10 +27,14 @@
 </div>
 
 {# Invite code card #}
-<div class="shsat-stat-card" style="margin:24px 0;max-width:480px;">
+<div class="shsat-stat-card" style="margin:24px 0;max-width:540px;">
   <div class="shsat-stat-card__label">Your invite code</div>
   <div style="font-family:monospace;font-size:22px;font-weight:700;letter-spacing:.15em;margin:8px 0;">{{ tutor.invite_code }}</div>
-  <p style="font-size:13px;color:rgba(0,0,0,.45);margin:0;">Share this with students. They enter it during signup or from their account page.</p>
+  <p style="font-size:13px;color:rgba(0,0,0,.45);margin:0 0 10px;">Send your students this link and code. They sign up, enter the code, and appear on your dashboard.</p>
+  <p style="font-size:13px;margin:0;">
+    <span style="color:rgba(0,0,0,.45);">Student signup link:</span>
+    <a href="/shsat/signup/" style="font-family:monospace;color:#5b8ec4;text-decoration:none;border-bottom:1px solid rgba(91,142,196,.3);">{{ request.scheme }}://{{ request.get_host }}/shsat/signup/</a>
+  </p>
 </div>
 
 {# Class progress chart #}

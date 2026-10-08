@@ -1124,9 +1124,9 @@ def tutor_account(request):
 # ---------------------------------------------------------------------------
 
 TUTOR_TIERS = [
-    {"name": "Starter", "students": 10, "setting": "STRIPE_TUTOR_PRICE_ID_10"},
-    {"name": "Professional", "students": 25, "setting": "STRIPE_TUTOR_PRICE_ID_25"},
-    {"name": "Unlimited", "students": 999, "setting": "STRIPE_TUTOR_PRICE_ID_UNL"},
+    {"name": "Starter", "students": 5, "price": "Free", "setting": ""},
+    {"name": "Professional", "students": 25, "price": "$29/mo", "setting": "STRIPE_TUTOR_PRICE_ID_25"},
+    {"name": "Unlimited", "students": 999, "price": "$79/mo", "setting": "STRIPE_TUTOR_PRICE_ID_UNL"},
 ]
 
 
@@ -1138,7 +1138,9 @@ def tutor_pricing(request):
         tiers.append({
             "name": t["name"],
             "students": t["students"],
-            "price_id": getattr(settings, t["setting"], ""),
+            "price": t["price"],
+            "price_id": getattr(settings, t["setting"], "") if t["setting"] else "",
+            "is_current": t["students"] == tutor.student_limit,
         })
     return render(request, "shsat/tutor_pricing.html", {
         "tutor": tutor,
