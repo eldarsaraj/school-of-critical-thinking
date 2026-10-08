@@ -7,6 +7,10 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 
 from django.contrib import admin
 from django.urls import path, include, re_path
+
+admin.site.site_header = "School of Critical Thinking"
+admin.site.site_title = "Admin"
+admin.site.index_title = "Dashboard"
 from django.conf import settings
 from django.views.static import serve
 from django.contrib.sitemaps.views import sitemap

@@ -5,8 +5,8 @@ from django.http import HttpResponse
 
 from .models import (
     Parent, SHSATParent, HunterParent,
-    Test, Question, TestAttempt, Answer,
-    ManualScore, CutoffScore, QuestionReport,
+    Test, TestAttempt, Answer,
+    QuestionReport,
     Tutor, TutorStudent,
 )
 
@@ -49,6 +49,7 @@ class _BaseParentAdmin(admin.ModelAdmin):
     list_display = ["get_email", "child_nickname", "child_grade", "has_paid", "created_at"]
     search_fields = ["user__email", "user__first_name", "child_nickname"]
     list_filter = ["has_paid", "child_grade"]
+    ordering = ["-created_at"]
 
     def get_email(self, obj):
         return obj.user.email
@@ -81,21 +82,13 @@ class HunterParentAdmin(_BaseParentAdmin):
 
 
 # ---------------------------------------------------------------------------
-# Tests — separated by exam_type
+# Tests — read-only overview
 # ---------------------------------------------------------------------------
-
-class QuestionInline(admin.TabularInline):
-    model = Question
-    extra = 0
-    fields = ["section", "question_number", "question_type", "topic", "difficulty", "correct_answer"]
-    ordering = ["section", "question_number"]
-
 
 @admin.register(Test)
 class TestAdmin(admin.ModelAdmin):
     list_display = ["title", "exam_type", "source", "is_free", "is_drill", "is_published", "order", "total_questions"]
     list_filter = ["exam_type", "is_free", "is_drill", "is_published"]
-    inlines = [QuestionInline]
 
     def total_questions(self, obj):
         return obj.questions.count()
@@ -103,18 +96,7 @@ class TestAdmin(admin.ModelAdmin):
 
 
 # ---------------------------------------------------------------------------
-# Questions
-# ---------------------------------------------------------------------------
-
-@admin.register(Question)
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ["test", "section", "question_number", "question_type", "topic", "difficulty", "correct_answer"]
-    list_filter = ["test__exam_type", "test", "section", "difficulty", "question_type"]
-    search_fields = ["question_text", "topic"]
-
-
-# ---------------------------------------------------------------------------
-# Test Attempts — separated by exam type via filter
+# Test Attempts
 # ---------------------------------------------------------------------------
 
 class AnswerInline(admin.TabularInline):
@@ -126,10 +108,17 @@ class AnswerInline(admin.TabularInline):
 
 @admin.register(TestAttempt)
 class TestAttemptAdmin(admin.ModelAdmin):
-    list_display = ["parent", "get_exam_type", "test", "started_at", "is_completed", "composite_score"]
+    list_display = ["get_parent_email", "get_exam_type", "test", "is_completed", "composite_score", "submitted_at"]
     list_filter = ["test__exam_type", "is_completed", "test"]
+    search_fields = ["parent__user__email", "parent__child_nickname"]
     readonly_fields = ["started_at", "submitted_at"]
+    ordering = ["-submitted_at"]
     inlines = [AnswerInline]
+
+    def get_parent_email(self, obj):
+        return obj.parent.user.email
+    get_parent_email.short_description = "Parent"
+    get_parent_email.admin_order_field = "parent__user__email"
 
     def get_exam_type(self, obj):
         return obj.test.exam_type.upper()
@@ -138,28 +127,7 @@ class TestAttemptAdmin(admin.ModelAdmin):
 
 
 # ---------------------------------------------------------------------------
-# Manual Scores (SHSAT only)
-# ---------------------------------------------------------------------------
-
-@admin.register(ManualScore)
-class ManualScoreAdmin(admin.ModelAdmin):
-    list_display = ["parent", "source_name", "date", "ela_correct", "math_correct"]
-    list_filter = ["source_name"]
-    search_fields = ["parent__user__email", "source_name"]
-
-
-# ---------------------------------------------------------------------------
-# Cutoff Scores (SHSAT only)
-# ---------------------------------------------------------------------------
-
-@admin.register(CutoffScore)
-class CutoffScoreAdmin(admin.ModelAdmin):
-    list_display = ["school_short", "school_name", "admissions_year", "cutoff_score", "approximate_seats"]
-    list_filter = ["admissions_year"]
-
-
-# ---------------------------------------------------------------------------
-# Question Reports (both platforms)
+# Question Reports
 # ---------------------------------------------------------------------------
 
 @admin.register(QuestionReport)
@@ -169,6 +137,7 @@ class QuestionReportAdmin(admin.ModelAdmin):
     list_editable = ["resolved"]
     search_fields = ["question__question_text", "reason", "parent__user__email"]
     readonly_fields = ["question", "attempt", "parent", "reason", "created_at"]
+    ordering = ["-created_at"]
 
     def short_question(self, obj):
         return str(obj.question)
@@ -205,10 +174,11 @@ class TutorStudentInline(admin.TabularInline):
 
 @admin.register(Tutor)
 class TutorAdmin(admin.ModelAdmin):
-    list_display = ["get_email", "business_name", "invite_code", "subscription_status", "student_count", "created_at"]
+    list_display = ["get_email", "business_name", "invite_code", "subscription_status", "student_limit", "student_count", "created_at"]
     list_filter = ["subscription_status"]
     search_fields = ["user__email", "user__first_name", "business_name", "invite_code"]
     readonly_fields = ["invite_code", "created_at"]
+    ordering = ["-created_at"]
     inlines = [TutorStudentInline]
 
     def get_email(self, obj):
@@ -218,13 +188,14 @@ class TutorAdmin(admin.ModelAdmin):
 
     def student_count(self, obj):
         return obj.students.count()
-    student_count.short_description = "Students"
+    student_count.short_description = "Linked"
 
 
 @admin.register(TutorStudent)
 class TutorStudentAdmin(admin.ModelAdmin):
     list_display = ["get_tutor_email", "get_parent_email", "nickname", "added_at"]
     search_fields = ["tutor__user__email", "parent__user__email", "nickname"]
+    ordering = ["-added_at"]
 
     def get_tutor_email(self, obj):
         return obj.tutor.user.email

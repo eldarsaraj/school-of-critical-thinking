@@ -46,11 +46,11 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "cloudinary",
     "cloudinary_storage",
+    "shsat",
+    "evaluators",
     "pages",
     "articles",
     "diagnostic",
-    "shsat",
-    "evaluators",
     "axis5",
 ]
 

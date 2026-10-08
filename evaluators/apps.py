@@ -59,6 +59,7 @@ def get_evaluator():
 class EvaluatorsConfig(AppConfig):
     name = "evaluators"
     default_auto_field = "django.db.models.BigAutoField"
+    verbose_name = "Essay Evaluations"
 
     def ready(self):
         """Load only the local Brysbaert dict at startup. Everything else is lazy."""
