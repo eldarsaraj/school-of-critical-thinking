@@ -232,6 +232,14 @@
   margin-bottom: 36px;
   background: transparent;
 }
+@media (max-width: 600px) {
+  .shsat-chart-wrap {
+    padding: 14px;
+  }
+  .shsat-chart-wrap canvas {
+    min-height: 260px !important;
+  }
+}
 
 
 /* ----------------------------------------------------------
