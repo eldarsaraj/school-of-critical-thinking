@@ -292,7 +292,7 @@ const P = {
   new Chart(el.getContext("2d"), {
     type: "scatter", data: { datasets },
     options: {
-      responsive: true, aspectRatio: chartAR(3),
+      responsive: true, aspectRatio: chartAR(3, 1.4),
       plugins: { legend: { position: "top", align: "end", labels: { font: { size: 12 }, boxWidth: 12, padding: 16 } } },
       scales: {
         x: { title: { display: true, text: "Time (seconds)", font: { size: 12 } }, grid: { color: P.grid } },

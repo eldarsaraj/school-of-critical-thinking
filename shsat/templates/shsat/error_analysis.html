@@ -572,7 +572,7 @@ const P = {
     type: "scatter",
     data: { datasets },
     options: {
-      responsive: true, aspectRatio: chartAR(3),
+      responsive: true, aspectRatio: chartAR(3, 1.4),
       plugins: {
         legend: { position: "top", align: "end", labels: { font: { size: 12 }, boxWidth: 12, padding: 16 } },
         tooltip: { callbacks: { label: item => ` ${item.raw.x}s — ${item.raw.y ? "correct" : "wrong"}` } }
