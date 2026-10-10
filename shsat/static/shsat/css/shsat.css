@@ -236,9 +236,6 @@
   .shsat-chart-wrap {
     padding: 14px;
   }
-  .shsat-chart-wrap canvas {
-    min-height: 260px !important;
-  }
 }
 
 
