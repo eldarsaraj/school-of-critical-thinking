@@ -41,9 +41,10 @@
     {% block extra_head %}{% endblock %}
     <script>
       /* Chart.js aspect-ratio helper: taller charts on narrow screens */
+      var _isMobile = window.matchMedia("(max-width: 600px)").matches;
       function chartAR(desktop, mobile) {
-        mobile = mobile || (desktop <= 2 ? desktop : desktop * 0.55);
-        return window.innerWidth < 600 ? mobile : desktop;
+        if (!mobile) mobile = desktop <= 2 ? desktop : Math.min(desktop * 0.5, 1.3);
+        return _isMobile ? mobile : desktop;
       }
     </script>
   </head>
