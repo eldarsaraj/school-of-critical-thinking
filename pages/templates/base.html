@@ -39,6 +39,13 @@
     <link rel="stylesheet" href="{% static 'css/site.css' %}">
     {% block extra_css %}{% endblock %}
     {% block extra_head %}{% endblock %}
+    <script>
+      /* Chart.js aspect-ratio helper: taller charts on narrow screens */
+      function chartAR(desktop, mobile) {
+        mobile = mobile || (desktop <= 2 ? desktop : desktop * 0.55);
+        return window.innerWidth < 600 ? mobile : desktop;
+      }
+    </script>
   </head>
 
   <body>
@@ -110,14 +117,6 @@
           btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
         });
       })();
-    </script>
-
-    <script>
-      /* Chart.js aspect-ratio helper: taller charts on narrow screens */
-      function chartAR(desktop, mobile) {
-        mobile = mobile || (desktop <= 2 ? desktop : desktop * 0.55);
-        return window.innerWidth < 600 ? mobile : desktop;
-      }
     </script>
 
   </body>
