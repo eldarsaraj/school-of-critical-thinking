@@ -112,5 +112,13 @@
       })();
     </script>
 
+    <script>
+      /* Chart.js aspect-ratio helper: taller charts on narrow screens */
+      function chartAR(desktop, mobile) {
+        mobile = mobile || (desktop <= 2 ? desktop : desktop * 0.55);
+        return window.innerWidth < 600 ? mobile : desktop;
+      }
+    </script>
+
   </body>
 </html>

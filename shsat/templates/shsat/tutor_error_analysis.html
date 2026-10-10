@@ -246,7 +246,7 @@ const P = {
     type: "bar",
     data: { labels: data.map(d => d.label), datasets: [{ label: "Wrong answers", data: data.map(d => d.count), backgroundColor: P.wrong, borderWidth: 0, barThickness: 18 }] },
     options: {
-      indexAxis: "y", responsive: true, aspectRatio: Math.max(1.6, 4 / Math.max(data.length, 2)),
+      indexAxis: "y", responsive: true, aspectRatio: chartAR(Math.max(1.6, 4 / Math.max(data.length, 2))),
       plugins: { legend: { display: false } },
       scales: { x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } }, y: { grid: { display: false }, ticks: { font: { size: 12 } } } }
     }
@@ -263,7 +263,7 @@ const P = {
     new Chart(document.getElementById(canvasId).getContext("2d"), {
       type: "bar",
       data: { labels: sectionData.map(d => d.label), datasets: [{ label: "Times caught", data: sectionData.map(d => d.count), backgroundColor: color, borderWidth: 0, barThickness: 18 }] },
-      options: { indexAxis: "y", responsive: true, aspectRatio: Math.max(1.4, 4 / Math.max(sectionData.length, 2)),
+      options: { indexAxis: "y", responsive: true, aspectRatio: chartAR(Math.max(1.4, 4 / Math.max(sectionData.length, 2))),
         plugins: { legend: { display: false } },
         scales: { x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } }, y: { grid: { display: false }, ticks: { font: { size: 12 } } } }
       }
@@ -292,7 +292,7 @@ const P = {
   new Chart(el.getContext("2d"), {
     type: "scatter", data: { datasets },
     options: {
-      responsive: true, aspectRatio: 3,
+      responsive: true, aspectRatio: chartAR(3),
       plugins: { legend: { position: "top", align: "end", labels: { font: { size: 12 }, boxWidth: 12, padding: 16 } } },
       scales: {
         x: { title: { display: true, text: "Time (seconds)", font: { size: 12 } }, grid: { color: P.grid } },
