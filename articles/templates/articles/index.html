@@ -1,13 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %}Articles – School of Critical Thinking{% endblock %}
+{% block title %}Research – School of Critical Thinking{% endblock %}
 
 {% block content %}
 
   <section class="articles-intro">
     <h1>Research</h1>
-    <p>Writing on thinking, learning, and how the mind makes sense of the world.</p>
+    <p>Data-driven analysis of standardized tests, test-taking strategy, and the science of thinking.</p>
   </section>
+
+  <!-- ── Filters + Search ────────────────────────────────────────────────── -->
+  <div class="articles-filters">
+    <div class="articles-filters__pills">
+      <a href="{% url 'articles_index' %}{% if query %}?q={{ query }}{% endif %}"
+         class="articles-pill{% if not current_category %} articles-pill--active{% endif %}">All</a>
+      {% for value, label in categories %}
+      <a href="{% url 'articles_index' %}?category={{ value }}{% if query %}&q={{ query }}{% endif %}"
+         class="articles-pill{% if current_category == value %} articles-pill--active{% endif %}">{{ label }}</a>
+      {% endfor %}
+    </div>
+    <form class="articles-search" method="get" action="{% url 'articles_index' %}">
+      {% if current_category %}
+      <input type="hidden" name="category" value="{{ current_category }}">
+      {% endif %}
+      <input type="text" name="q" value="{{ query }}" placeholder="Search articles…" class="articles-search__input" aria-label="Search articles">
+    </form>
+  </div>
 
   <section class="cards">
     {% for a in page_obj %}
@@ -17,9 +35,15 @@
             <a href="{% url 'articles_detail' a.slug %}">{{ a.title }}</a>
           </h2>
 
-          {% if a.published_at %}
-            <p class="card__meta"><time datetime="{{ a.published_at|date:'Y-m-d' }}">{{ a.published_at|date:"F j, Y" }}</time></p>
-          {% endif %}
+          <p class="card__meta">
+            {% if a.published_at %}
+              <time datetime="{{ a.published_at|date:'Y-m-d' }}">{{ a.published_at|date:"F j, Y" }}</time>
+            {% endif %}
+            {% if a.category %}
+              {% if a.published_at %} · {% endif %}
+              <a href="{% url 'articles_index' %}?category={{ a.category }}" class="card__category">{{ a.get_category_display }}</a>
+            {% endif %}
+          </p>
 
           {% if a.summary %}
             <p class="card__summary">{{ a.summary }}</p>
@@ -39,13 +63,14 @@
         {% endif %}
       </article>
     {% empty %}
-      <p>No published articles yet.</p>
+      <p style="color:rgba(0,0,0,.45);margin-top:24px;">No articles found{% if query %} for "{{ query }}"{% endif %}{% if current_category %} in this category{% endif %}.</p>
     {% endfor %}
   </section>
 
+  {% if page_obj.paginator.num_pages > 1 %}
   <nav class="pagination" aria-label="Articles pagination">
     {% if page_obj.has_previous %}
-      <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if query %}q={{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">Previous</a>
     {% endif %}
 
     <span class="pagination__meta">
@@ -53,8 +78,9 @@
     </span>
 
     {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}">Next</a>
+      <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if query %}q={{ query }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
     {% endif %}
   </nav>
+  {% endif %}
 
 {% endblock %}

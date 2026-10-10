@@ -10,6 +10,11 @@ class Article(models.Model):
         DRAFT = "draft", "Draft"
         PUBLISHED = "published", "Published"
 
+    class Category(models.TextChoices):
+        SHSAT = "shsat", "SHSAT"
+        HUNTER = "hunter", "Hunter"
+        CRITICAL_THINKING = "critical-thinking", "Critical Thinking"
+
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=220, unique=True)
 
@@ -32,6 +37,13 @@ class Article(models.Model):
         max_length=10,
         choices=Status.choices,
         default=Status.DRAFT,
+    )
+
+    category = models.CharField(
+        max_length=30,
+        choices=Category.choices,
+        blank=True,
+        default="",
     )
 
     published_at = models.DateTimeField(blank=True, null=True)

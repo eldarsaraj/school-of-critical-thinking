@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator
+from django.db import models
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from bs4 import BeautifulSoup
@@ -12,10 +13,31 @@ def index(request):
     qs = Article.objects.filter(status=Article.Status.PUBLISHED).order_by(
         "-published_at", "-created_at"
     )
+
+    category = request.GET.get("category", "")
+    query = request.GET.get("q", "").strip()
+
+    if category:
+        qs = qs.filter(category=category)
+    if query:
+        qs = qs.filter(
+            models.Q(title__icontains=query)
+            | models.Q(summary__icontains=query)
+            | models.Q(content_markdown__icontains=query)
+        )
+
     paginator = Paginator(qs, 6)
     page_number = request.GET.get("page", 1)
     page_obj = paginator.get_page(page_number)
-    return render(request, "articles/index.html", {"page_obj": page_obj})
+
+    categories = Article.Category.choices
+
+    return render(request, "articles/index.html", {
+        "page_obj": page_obj,
+        "categories": categories,
+        "current_category": category,
+        "query": query,
+    })
 
 
 def detail(request, slug):

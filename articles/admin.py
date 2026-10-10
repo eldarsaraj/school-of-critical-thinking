@@ -28,8 +28,8 @@ class ArticleImageInline(admin.TabularInline):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ("title", "author", "status", "published_at")
-    list_filter = ("status", "author")
+    list_display = ("title", "author", "category", "status", "published_at")
+    list_filter = ("status", "category", "author")
     search_fields = ("title", "author", "slug", "content_markdown")
     prepopulated_fields = {"slug": ("title",)}
     readonly_fields = ("preview_html",)
@@ -48,7 +48,7 @@ class ArticleAdmin(admin.ModelAdmin):
         ]
 
     fieldsets = (
-        (None, {"fields": ("title", "slug", "author", "status", "published_at")}),
+        (None, {"fields": ("title", "slug", "author", "category", "status", "published_at")}),
         (
             "Index summary (required for published articles)",
             {"fields": ("summary", "cover_image")},
