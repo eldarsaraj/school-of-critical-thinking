@@ -194,7 +194,7 @@ Chart.register(emptyStatePlugin);
     },
     options: {
       _emptyMessage: "No test data yet",
-      responsive: true, aspectRatio: chartAR(2, 1.2),
+      responsive: true, aspectRatio: chartAR(2.5, 1.2),
       plugins: {
         legend: { display: true, position: "top", align: "end",
           labels: { boxWidth: 14, font: { size: 12 }, padding: 18 } },
@@ -260,7 +260,7 @@ Chart.register(emptyStatePlugin);
     },
     options: {
       _emptyMessage: "No test data yet",
-      responsive: true, aspectRatio: chartAR(2, 1.2),
+      responsive: true, aspectRatio: chartAR(2.5, 1.2),
       plugins: {
         legend: { display: true, position: "top", align: "end", labels: { boxWidth: 14, font: { size: 12 }, padding: 18 } },
         tooltip: { callbacks: { footer: (items) => { const d = data[items[0].dataIndex]; return d ? "Composite: " + d.composite : ""; } } }
