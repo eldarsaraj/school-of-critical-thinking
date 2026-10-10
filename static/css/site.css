@@ -802,7 +802,8 @@ main { padding: 48px 24px; }
   font-family: inherit;
   text-decoration: none;
   color: rgba(0,0,0,.45);
-  border: 1px solid rgba(0,0,0,.1);
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 20px;
   background: transparent;
   transition: all .15s;
 }
@@ -812,8 +813,8 @@ main { padding: 48px 24px; }
 }
 .articles-pill--active {
   color: #fff;
-  background: rgba(0,0,0,.7);
-  border-color: rgba(0,0,0,.7);
+  background: rgba(0,0,0,.72);
+  border-color: rgba(0,0,0,.72);
 }
 .articles-pill--active:hover {
   color: #fff;
@@ -825,14 +826,16 @@ main { padding: 48px 24px; }
   font-family: inherit;
   font-size: 13px;
   padding: 6px 14px;
-  border: 1px solid rgba(0,0,0,.1);
-  background: rgba(0,0,0,.015);
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 20px;
+  background: rgba(255,255,255,.6);
   width: 200px;
   outline: none;
   transition: border-color .15s;
 }
 .articles-search__input:focus {
-  border-color: rgba(0,0,0,.3);
+  border-color: rgba(0,0,0,.35);
+  background: #fff;
 }
 .card__category {
   font-size: 12px;
