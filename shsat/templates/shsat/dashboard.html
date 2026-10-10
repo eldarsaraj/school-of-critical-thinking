@@ -332,7 +332,7 @@ function makeProjData(arr) {
     options: {
       _emptyMessage: "Take a test or log a score to see your history",
       responsive: true,
-      aspectRatio: chartAR(2.5, 1.2),
+      aspectRatio: chartAR(2, 1.2),
       plugins: {
         legend: {
           display: true, position: "top", align: "end",
@@ -455,7 +455,7 @@ function makeProjData(arr) {
     options: {
       _emptyMessage: "Complete a practice test to see your scores here",
       responsive: true,
-      aspectRatio: chartAR(2.5, 1.2),
+      aspectRatio: chartAR(2, 1.2),
       plugins: {
         legend: {
           display: true, position: "top", align: "end",
@@ -549,7 +549,7 @@ function makeProjData(arr) {
     },
     options: {
       responsive: true,
-      aspectRatio: chartAR(3, 1.4),
+      aspectRatio: chartAR(2.5, 1.2),
       onHover: (event, _elements, chart) => {
         if (!chart.scales.x || event.x === null) return;
         const lineX = chart.scales.x.getPixelForValue(score);
@@ -668,7 +668,7 @@ function makeProjData(arr) {
       },
       options: {
         indexAxis: "y", responsive: true,
-        aspectRatio: chartAR(timed.length > 6 ? 1.8 : 2.5, 1.2),
+        aspectRatio: chartAR(timed.length > 6 ? 1.6 : 2, 1.2),
         plugins: {
           legend: { display: false },
           tooltip: { callbacks: { label: (item) => ` ${item.raw} min avg` } }
