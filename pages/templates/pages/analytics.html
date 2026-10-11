@@ -212,4 +212,42 @@
   <a href="/test-prep/" class="home-hero__btn">See available tests</a>
 </div>
 
+<!-- Lightbox overlay -->
+<div class="lightbox-overlay" id="lightbox" aria-hidden="true">
+  <button class="lightbox-overlay__close" aria-label="Close">&times;</button>
+  <img class="lightbox-overlay__img" src="" alt="">
+</div>
+
+<script>
+(function () {
+  var overlay = document.getElementById("lightbox");
+  if (!overlay) return;
+  var lbImg = overlay.querySelector(".lightbox-overlay__img");
+  var closeBtn = overlay.querySelector(".lightbox-overlay__close");
+
+  document.querySelectorAll(".tp-chart img").forEach(function (img) {
+    img.style.cursor = "zoom-in";
+    img.addEventListener("click", function () {
+      lbImg.src = this.src;
+      lbImg.alt = this.alt;
+      overlay.classList.add("lightbox-overlay--active");
+      overlay.setAttribute("aria-hidden", "false");
+    });
+  });
+
+  function close() {
+    overlay.classList.remove("lightbox-overlay--active");
+    overlay.setAttribute("aria-hidden", "true");
+  }
+
+  overlay.addEventListener("click", function (e) {
+    if (e.target === overlay || e.target === closeBtn) close();
+  });
+  closeBtn.addEventListener("click", close);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") close();
+  });
+})();
+</script>
+
 {% endblock %}
