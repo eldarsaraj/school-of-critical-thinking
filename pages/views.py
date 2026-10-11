@@ -30,7 +30,13 @@ def _notify_contact(name, email, message, source=""):
 
 
 def home(request):
-    return render(request, "pages/home.html")
+    from articles.models import Article
+    latest_article = (
+        Article.objects.filter(status=Article.Status.PUBLISHED)
+        .order_by("-published_at")
+        .first()
+    )
+    return render(request, "pages/home.html", {"latest_article": latest_article})
 
 
 def test_prep(request):
