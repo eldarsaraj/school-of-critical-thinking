@@ -65,6 +65,20 @@
       </div>
     </section>
 
+    <!-- Subscribe -->
+    <section class="article-subscribe">
+      <p class="article-subscribe__label">Stay sharp</p>
+      <p class="article-subscribe__text">New research and test-prep insights, straight to your inbox.</p>
+      <form class="article-subscribe__form" method="post" action="{% url 'newsletter_signup' %}">
+        {% csrf_token %}
+        <div style="display:none;" aria-hidden="true">
+          <input type="text" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <input class="article-subscribe__input" type="email" name="email" placeholder="Your email" required>
+        <button class="article-subscribe__btn" type="submit">Subscribe</button>
+      </form>
+    </section>
+
     <!-- Social sharing -->
     <div class="article-share">
       <span class="article-share__label">Share</span>
@@ -150,4 +164,42 @@
     </section>
 
   </article>
+
+  <!-- Lightbox overlay -->
+  <div class="lightbox-overlay" id="lightbox" aria-hidden="true">
+    <button class="lightbox-overlay__close" aria-label="Close">&times;</button>
+    <img class="lightbox-overlay__img" src="" alt="">
+  </div>
+
+  <script>
+  (function () {
+    var overlay = document.getElementById("lightbox");
+    if (!overlay) return;
+    var lbImg = overlay.querySelector(".lightbox-overlay__img");
+    var closeBtn = overlay.querySelector(".lightbox-overlay__close");
+
+    document.querySelectorAll(".essay__content img, .essay__cover img").forEach(function (img) {
+      img.style.cursor = "zoom-in";
+      img.addEventListener("click", function () {
+        lbImg.src = this.src;
+        lbImg.alt = this.alt;
+        overlay.classList.add("lightbox-overlay--active");
+        overlay.setAttribute("aria-hidden", "false");
+      });
+    });
+
+    function close() {
+      overlay.classList.remove("lightbox-overlay--active");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay || e.target === closeBtn) close();
+    });
+    closeBtn.addEventListener("click", close);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") close();
+    });
+  })();
+  </script>
 {% endblock %}
