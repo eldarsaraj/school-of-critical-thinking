@@ -3469,7 +3469,9 @@ a.curriculum-book:hover .curriculum-book__title {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.85);
+  background-color: rgba(255,254,248,0.97);
+  background-image: radial-gradient(rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 18px 18px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease;
@@ -3498,7 +3500,7 @@ a.curriculum-book:hover .curriculum-book__title {
   right: 20px;
   background: none;
   border: none;
-  color: rgba(255,255,255,0.7);
+  color: rgba(0,0,0,0.35);
   font-size: 32px;
   line-height: 1;
   cursor: pointer;
@@ -3507,7 +3509,7 @@ a.curriculum-book:hover .curriculum-book__title {
 }
 
 .lightbox-overlay__close:hover {
-  color: #fff;
+  color: #111;
 }
 
 
