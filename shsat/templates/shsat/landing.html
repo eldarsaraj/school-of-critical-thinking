@@ -16,11 +16,11 @@
   <h1 class="sl-hero__title">A score alone doesn't tell you what went wrong, and what to study next.</h1>
   <p class="sl-hero__sub">
     We do. After one practice test, you'll see the specific mistake patterns costing
-    your child points — ranked by impact, named by type, and matched to the exact
+    your child points, ranked by impact, named by type, and matched to the exact
     reasoning error behind each one. No more studying blind. No more guessing what to fix first.
   </p>
   <p class="sl-hero__sub">
-    You don't walk away with a number. You walk away with a map of how your child thinks.
+    You don't walk away with a number, but with a map of how your child thinks.
   </p>
   <div class="sl-hero__actions">
     {% if user.is_authenticated %}
@@ -52,7 +52,7 @@
       <h2 class="sl-diff-card__title">No AI chatbot feedback. Not one line.</h2>
       <p class="sl-diff-card__body">
         Every explanation your child sees after a wrong answer was written and structured
-        by a person — precise, deliberate, reviewed. There is no language model
+        by a person: precise, deliberate, reviewed. There is no language model
         generating feedback on the fly.
       </p>
     </div>
@@ -62,7 +62,7 @@
       <h2 class="sl-diff-card__title">Reverse-engineered from the actual test</h2>
       <p class="sl-diff-card__body">
         We analyzed 1,368 questions from eight years of DOE-released sample tests.
-        Every practice question is built from that data — same reading levels,
+        Every practice question is built from that data: same reading levels,
         same skill distributions, same trap types. Not guesswork; just statistics.
       </p>
     </div>
@@ -71,9 +71,10 @@
       <p class="sl-diff-card__marker">04</p>
       <h2 class="sl-diff-card__title">If you want a shortcut, this isn't it</h2>
       <p class="sl-diff-card__body">
-        There are no tricks to game the SHSAT. There is understanding why wrong answers
-        look right, and training your child to see through them. That takes work.
-        This platform tells you exactly where to put that work.
+        There are no tricks to game the SHSAT, no matter what anybody tells you. 
+        There is only understanding why wrong answers
+        look right, and training your child to see through them. That takes work, and it is hard.
+        This platform makes it a bit easier by telling you exactly where to focus the most.
       </p>
     </div>
 
@@ -125,7 +126,7 @@
           <span class="sl-trap-demo__choice-letter">A</span>
           <span class="sl-trap-demo__choice-text">The orchard has calmly accepted its own death, waiting for the end the way a sleeper drifts off.</span>
         </button>
-        <button class="sl-trap-demo__choice" data-key="B" data-correct="false" data-trap="Partly true but wrong" data-explain="The 'ghost of an apple' and 'memory of weight' are real details — but the poem's point is future renewal, not survival on memory alone.">
+        <button class="sl-trap-demo__choice" data-key="B" data-correct="false" data-trap="Partly true but wrong" data-explain="The 'ghost of an apple' and 'memory of weight' are real details, but the poem's point is future renewal, not survival on memory alone.">
           <span class="sl-trap-demo__choice-letter">B</span>
           <span class="sl-trap-demo__choice-text">The orchard endures the winter by living on the memory of the fruit it once bore, sustained by its past rather than any future.</span>
         </button>
@@ -149,7 +150,7 @@
   </div>
 
   <p class="sl-trap-demo__footnote">
-    This is one question from one test. Our error analysis does this across all 100 — then
+    This is one question from one test. Our error analysis does this across all 100, and then
     shows you which trap types your child falls for most, and how many points each one costs.
   </p>
 </section>
@@ -161,7 +162,8 @@
   <p class="sl-preview__sub">
     After every test, you see exactly what went wrong: the 3 skills costing the most
     points, the trap types your child keeps falling for, projected placement at every
-    specialized high school, and what to study next — so Monday's session isn't random.
+    specialized high school, and what to study next, so your next prep session isn't random
+    but focused only on what matters.
   </p>
   {% include "pages/includes/demo_dashboard.html" %}
 </section>
@@ -172,7 +174,7 @@
   <div class="sl-features__grid">
     <div class="sl-feature">
       <p class="sl-feature__title">The 3 skills costing the most points</p>
-      <p class="sl-feature__body">Accuracy broken down by ELA and Math skill area. You'll know whether Inference or Algebra is the bigger problem — and by how many points.</p>
+      <p class="sl-feature__body">Accuracy broken down by ELA and Math skill area. You'll know whether Inference or Algebra is the bigger problem (and by how many points).</p>
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">Which traps keep catching your child</p>
@@ -180,7 +182,7 @@
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">Where your child actually places</p>
-      <p class="sl-feature__body">Projected cutoff distances for all eight specialized high schools. Not inflated. Not flattering. The number you need to plan around.</p>
+      <p class="sl-feature__body">Projected cutoff distances for all eight specialized high schools and where your child is likely to place based on their latest performance.</p>
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">A score that won't mislead you</p>
@@ -188,7 +190,7 @@
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">Adaptive difficulty, like the real test</p>
-      <p class="sl-feature__body">The baseline routes into harder or easier modules based on performance — the same structure as the actual SHSAT — so the score reflects real readiness.</p>
+      <p class="sl-feature__body">The baseline routes into harder or easier modules based on performance, so the score reflects real readiness.</p>
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">Progress across every attempt</p>
@@ -200,11 +202,11 @@
 <!-- ── Philosophy ────────────────────────────────────────────────────────── -->
 <section class="sl-philosophy">
   <p class="sl-philosophy__label">Why we built this</p>
-  <h2 class="sl-philosophy__title">A mistake should never be wasted.</h2>
+  <h2 class="sl-philosophy__title">Most test prep is built for a student who doesn't exist.</h2>
   <div class="sl-philosophy__body">
-    <p>A wrong answer tells you exactly how a student is thinking — and that's something a raw score never will. That conviction is the reason this platform exists.</p>
-    <p>Our method works from both ends. Before your child ever sits down, our analytics take the exam apart: statistical and linguistic analysis of every question and reading passage, so we know what each item is really measuring and where it buries its traps. After the test, the error analysis goes to work on the mistakes — tracing each one back to the specific reasoning that produced it.</p>
-    <p>The whole point of preparing for a test like the SHSAT is to learn the reasoning skills that will serve your child for life. The test will come and go. What remains is the ability to think clearly, reason carefully, and make good decisions under pressure. That's what we actually teach.</p>
+    <p>Generic study plans assume every child has the same gaps. They don't. One child loses points on inference traps. Another on comma splices. A third understands the math but misreads what the question is asking. A prep plan that treats them identically wastes everyone's time.</p>
+    <p>I built this platform because I believe anything can be reverse-engineered to first principles — including a standardized test. So I took apart eight years of DOE-released exams, question by question, trap by trap, and built practice tests that mirror the real thing down to the reading levels and distractor patterns. Then I built the analytics to show you exactly where your child's reasoning breaks down, so you stop studying blind and start working on what actually matters.</p>
+    <p>The SHSAT will come and go. What stays is the ability to think clearly under pressure, to see through a wrong answer that looks right, and to reason carefully when it counts. That's what this platform actually teaches.</p>
   </div>
 </section>
 
