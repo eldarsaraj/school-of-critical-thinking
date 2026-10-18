@@ -4884,3 +4884,202 @@ a.curriculum-book:hover .curriculum-book__title {
   font-size: 13px;
   color: rgba(0,0,0,.42);
 }
+
+/* ── Interactive trap demo (SHSAT landing) ── */
+.sl-trap-demo {
+  padding: 64px 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+.sl-trap-demo__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.38);
+  margin-bottom: 16px;
+}
+.sl-trap-demo__title {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 32px;
+  max-width: 520px;
+}
+.sl-trap-demo__box {
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.sl-trap-demo__passage {
+  padding: 32px 32px 28px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+.sl-trap-demo__passage-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.35);
+  margin-bottom: 16px;
+}
+.sl-trap-demo__passage-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(0,0,0,.7);
+}
+.sl-trap-demo__passage-text p {
+  margin: 0 0 14px;
+}
+.sl-trap-demo__passage-text p:last-child {
+  margin: 0;
+}
+.sl-trap-demo__question {
+  padding: 28px 32px 32px;
+}
+.sl-trap-demo__q-text {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  margin-bottom: 20px;
+}
+.sl-trap-demo__choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sl-trap-demo__choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: border-color .15s, background .15s;
+  width: 100%;
+}
+.sl-trap-demo__choice:hover {
+  border-color: rgba(0,0,0,.25);
+  background: rgba(0,0,0,.02);
+}
+.sl-trap-demo__choice-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,.18);
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(0,0,0,.5);
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.sl-trap-demo__choice-text {
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(0,0,0,.75);
+}
+
+/* States after answering */
+.sl-trap-demo__choice--disabled {
+  cursor: default;
+  pointer-events: none;
+}
+.sl-trap-demo__choice--correct {
+  border-color: var(--color-correct);
+  background: var(--color-correct-bg);
+}
+.sl-trap-demo__choice--correct .sl-trap-demo__choice-letter {
+  background: var(--color-correct);
+  color: #fff;
+  border-color: var(--color-correct);
+}
+.sl-trap-demo__choice--wrong {
+  border-color: var(--color-error);
+  background: var(--color-error-bg);
+}
+.sl-trap-demo__choice--wrong .sl-trap-demo__choice-letter {
+  background: var(--color-error);
+  color: #fff;
+  border-color: var(--color-error);
+}
+.sl-trap-demo__choice--dimmed {
+  opacity: .4;
+}
+
+/* Result feedback */
+.sl-trap-demo__result {
+  margin-top: 20px;
+  padding: 20px 22px;
+  border-radius: 3px;
+  font-size: 15px;
+  line-height: 1.6;
+  animation: sl-fade-in .25s ease;
+}
+.sl-trap-demo__result--correct {
+  background: var(--color-correct-bg);
+  border: 1px solid rgba(90,171,140,.25);
+}
+.sl-trap-demo__result--wrong {
+  background: var(--color-error-bg);
+  border: 1px solid rgba(196,99,91,.25);
+}
+.sl-trap-demo__result-trap {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--color-error);
+  background: rgba(196,99,91,.1);
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+.sl-trap-demo__result-explain {
+  color: rgba(0,0,0,.65);
+}
+@keyframes sl-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Reset button */
+.sl-trap-demo__reset {
+  margin-top: 16px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  letter-spacing: .02em;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+  transition: background .12s;
+}
+.sl-trap-demo__reset:hover {
+  background: rgba(0,0,0,.04);
+}
+
+/* Footnote */
+.sl-trap-demo__footnote {
+  margin-top: 24px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(0,0,0,.45);
+  max-width: 580px;
+}
+
+@media (max-width: 600px) {
+  .sl-trap-demo__passage { padding: 24px 20px 20px; }
+  .sl-trap-demo__question { padding: 20px 20px 24px; }
+  .sl-trap-demo__title { font-size: 24px; }
+  .sl-trap-demo__choice { padding: 12px 14px; gap: 10px; }
+}

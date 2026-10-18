@@ -13,7 +13,7 @@
 
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <div class="sl-hero">
-  <h1 class="sl-hero__title">A score tells you your child got 40 questions wrong. It doesn't tell you which 40, why, or what to study Monday morning.</h1>
+  <h1 class="sl-hero__title">A score alone doesn't tell you what went wrong, and what to study next.</h1>
   <p class="sl-hero__sub">
     We do. After one practice test, you'll see the specific mistake patterns costing
     your child points — ranked by impact, named by type, and matched to the exact
@@ -53,7 +53,7 @@
       <p class="sl-diff-card__body">
         Every explanation your child sees after a wrong answer was written and structured
         by a person — precise, deliberate, reviewed. There is no language model
-        generating feedback on the fly and calling it instruction.
+        generating feedback on the fly.
       </p>
     </div>
 
@@ -63,7 +63,7 @@
       <p class="sl-diff-card__body">
         We analyzed 1,368 questions from eight years of DOE-released sample tests.
         Every practice question is built from that data — same reading levels,
-        same skill distributions, same trap types. Not guesswork. Statistics.
+        same skill distributions, same trap types. Not guesswork; just statistics.
       </p>
     </div>
 
@@ -80,18 +80,78 @@
   </div>
 </section>
 
-<!-- ── Trap example ────────────────────────────────────────────────────── -->
-<section class="sl-philosophy">
-  <p class="sl-philosophy__label">See it in action</p>
-  <h2 class="sl-philosophy__title">Here's how an SHSAT trap actually works.</h2>
-  <div class="sl-philosophy__body">
-    <p>A reading passage describes a scientist who initially doubted a new theory but, after reviewing the evidence, changed her position. The question asks: <em>which best describes the scientist's approach?</em></p>
-    <p><strong>Choice A:</strong> She was open-minded and revised her view based on evidence.<br>
-    <strong>Choice B:</strong> She was skeptical and reluctant to accept new ideas.</p>
-    <p>Most students pick B. It's not wrong about the passage — she <em>was</em> skeptical. But B describes her initial reaction, not her overall approach. The question asks about the approach, which includes the revision. A is the answer.</p>
-    <p>This is a <strong>partly-true-but-wrong</strong> trap — the most common distractor type on the SHSAT. It gives you something genuinely from the passage, which is exactly what makes a student under time pressure grab it. Our error analysis catches this. It names the trap, shows how often your child falls for it, and tracks whether it resolves across tests.</p>
-    <p>A tutor sees a wrong answer. We see a pattern.</p>
+<!-- ── Interactive trap demo ────────────────────────────────────────────── -->
+<section class="sl-trap-demo">
+  <p class="sl-trap-demo__label">See it in action</p>
+  <h2 class="sl-trap-demo__title">Try a real question. Click any answer.</h2>
+
+  <div class="sl-trap-demo__box" id="trapDemo">
+
+    <div class="sl-trap-demo__passage">
+      <p class="sl-trap-demo__passage-title">The Winter Orchard</p>
+      <div class="sl-trap-demo__passage-text">
+        <p>Nobody comes to the orchard now.<br>
+        The gate has forgotten the shape of a hand,<br>
+        and the path, uncertain, loses itself<br>
+        in a grammar of weeds gone to seed.</p>
+
+        <p>The trees stand in their black arithmetic,<br>
+        each branch a subtraction against the sky,<br>
+        holding nothing — no leaf, no fruit —<br>
+        only the cold geometry of having borne.</p>
+
+        <p>And yet the shapes are the same shapes:<br>
+        this bough still cups the ghost of an apple,<br>
+        that fork still cradles the memory of weight<br>
+        it carried through a hundred vanished summers.</p>
+
+        <p>A stranger would call them dead.<br>
+        But the roots are only reading the dark,<br>
+        counting, the way a sleeper counts,<br>
+        the slow arithmetic back toward light.</p>
+
+        <p>What looks like ending is a kind of waiting,<br>
+        a patience so deep it resembles stone.<br>
+        The orchard is not finished with the world.<br>
+        It is only holding its breath.</p>
+      </div>
+    </div>
+
+    <div class="sl-trap-demo__question">
+      <p class="sl-trap-demo__q-text">Which statement best expresses a central idea of the poem?</p>
+
+      <div class="sl-trap-demo__choices">
+        <button class="sl-trap-demo__choice" data-key="A" data-correct="false" data-trap="Changes meaning" data-explain="This uses the poem's own 'sleeper' image but sends it toward death — when the roots are counting toward light, toward return, not extinction.">
+          <span class="sl-trap-demo__choice-letter">A</span>
+          <span class="sl-trap-demo__choice-text">The orchard has calmly accepted its own death, waiting for the end the way a sleeper drifts off.</span>
+        </button>
+        <button class="sl-trap-demo__choice" data-key="B" data-correct="false" data-trap="Partly true but wrong" data-explain="The 'ghost of an apple' and 'memory of weight' are real details — but the poem's point is future renewal, not survival on memory alone.">
+          <span class="sl-trap-demo__choice-letter">B</span>
+          <span class="sl-trap-demo__choice-text">The orchard endures the winter by living on the memory of the fruit it once bore, sustained by its past rather than any future.</span>
+        </button>
+        <button class="sl-trap-demo__choice" data-key="C" data-correct="true" data-explain="Correct. The poem turns on the difference between how the orchard looks (dead) and what it is (alive, dormant, counting 'the slow arithmetic back toward light').">
+          <span class="sl-trap-demo__choice-letter">C</span>
+          <span class="sl-trap-demo__choice-text">Though it appears dead, the orchard is alive and dormant, its bare stillness a patient waiting for spring's return.</span>
+        </button>
+        <button class="sl-trap-demo__choice" data-key="D" data-correct="false" data-trap="Too broad" data-explain="This lifts off into a grand abstraction far larger and vaguer than the specific, hopeful dormancy the poem actually describes.">
+          <span class="sl-trap-demo__choice-letter">D</span>
+          <span class="sl-trap-demo__choice-text">Life and death are not opposites but merely different names for how patiently a living thing is willing to wait.</span>
+        </button>
+      </div>
+
+      <div class="sl-trap-demo__result" id="trapResult" style="display:none;">
+        <div class="sl-trap-demo__result-inner" id="trapResultInner"></div>
+      </div>
+
+      <button class="sl-trap-demo__reset" id="trapReset" style="display:none;">Try again</button>
+    </div>
+
   </div>
+
+  <p class="sl-trap-demo__footnote">
+    This is one question from one test. Our error analysis does this across all 100 — then
+    shows you which trap types your child falls for most, and how many points each one costs.
+  </p>
 </section>
 
 <!-- ── Platform preview ───────────────────────────────────────────────────── -->
@@ -159,5 +219,66 @@
   {% endif %}
   <p class="sl-no-ai">Every week of prep without a diagnosis is a week of studying blind.</p>
 </section>
+
+<script>
+(function(){
+  var demo = document.getElementById('trapDemo');
+  if (!demo) return;
+  var choices = demo.querySelectorAll('.sl-trap-demo__choice');
+  var result = document.getElementById('trapResult');
+  var inner = document.getElementById('trapResultInner');
+  var reset = document.getElementById('trapReset');
+  var answered = false;
+
+  choices.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (answered) return;
+      answered = true;
+
+      var isCorrect = btn.getAttribute('data-correct') === 'true';
+      var trap = btn.getAttribute('data-trap');
+      var explain = btn.getAttribute('data-explain');
+
+      // Find the correct choice
+      var correctBtn = demo.querySelector('[data-correct="true"]');
+
+      // Dim all, then highlight selected and correct
+      choices.forEach(function(c){ c.classList.add('sl-trap-demo__choice--disabled','sl-trap-demo__choice--dimmed'); });
+
+      btn.classList.remove('sl-trap-demo__choice--dimmed');
+      if (isCorrect) {
+        btn.classList.add('sl-trap-demo__choice--correct');
+      } else {
+        btn.classList.add('sl-trap-demo__choice--wrong');
+        correctBtn.classList.remove('sl-trap-demo__choice--dimmed');
+        correctBtn.classList.add('sl-trap-demo__choice--correct');
+      }
+
+      // Build result
+      var html = '';
+      if (isCorrect) {
+        result.className = 'sl-trap-demo__result sl-trap-demo__result--correct';
+        html = '<p class="sl-trap-demo__result-explain">' + explain + '</p>';
+      } else {
+        result.className = 'sl-trap-demo__result sl-trap-demo__result--wrong';
+        html = '<p class="sl-trap-demo__result-trap">Trap: ' + trap + '</p>';
+        html += '<p class="sl-trap-demo__result-explain">' + explain + '</p>';
+      }
+      inner.innerHTML = html;
+      result.style.display = 'block';
+      reset.style.display = 'inline-block';
+    });
+  });
+
+  reset.addEventListener('click', function(){
+    answered = false;
+    choices.forEach(function(c){
+      c.classList.remove('sl-trap-demo__choice--disabled','sl-trap-demo__choice--dimmed','sl-trap-demo__choice--correct','sl-trap-demo__choice--wrong');
+    });
+    result.style.display = 'none';
+    reset.style.display = 'none';
+  });
+})();
+</script>
 
 {% endblock %}
