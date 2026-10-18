@@ -3,7 +3,7 @@
 
 {% block title %}SHSAT Prep — School of Critical Thinking{% endblock %}
 
-{% block meta_description %}<meta name="description" content="Full-length SHSAT practice tests reverse-engineered from the official DOE handbooks. Adaptive scoring, per-question error analysis, and a method that teaches you why wrong answers exist.">{% endblock %}
+{% block meta_description %}<meta name="description" content="Your child got 40 questions wrong. Which 40? Why? What do you study Monday morning? Our SHSAT practice tests answer all three — with trap-by-trap error analysis, not generic scores.">{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'shsat/css/shsat.css' %}">
@@ -13,144 +13,151 @@
 
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <div class="sl-hero">
-  <h1 class="sl-hero__title">Learn to think,<br>not just answer.</h1>
+  <h1 class="sl-hero__title">A score tells you your child got 40 questions wrong. It doesn't tell you which 40, why, or what to study Monday morning.</h1>
   <p class="sl-hero__sub">
-    The whole point of preparing for a test like SHSAT is to learn the reasoning 
-    skills that will serve your child for life. The test will come and go, and no matter 
-    how well they do, what remains is the ability to think clearly, reason carefully, and 
-    make good decisions under pressure. To teach those skills, while preparing them fo the test,
-    we built a method based on scientific principles, precision-based error analysis, and a deep 
-    understanding of how the SHSAT works.
+    We do. After one practice test, you'll see the specific mistake patterns costing
+    your child points — ranked by impact, named by type, and matched to the exact
+    reasoning error behind each one. No more studying blind. No more guessing what to fix first.
+  </p>
+  <p class="sl-hero__sub">
+    You don't walk away with a number. You walk away with a map of how your child thinks.
   </p>
   <div class="sl-hero__actions">
     {% if user.is_authenticated %}
       <a href="{% url 'shsat_dashboard' %}" class="sl-btn">Your account &rarr;</a>
     {% else %}
-      <a href="{% url 'shsat_signup' %}" class="sl-btn">Start with the free Baseline Test &rarr;</a>
+      <a href="{% url 'shsat_signup' %}" class="sl-btn">Start the free Baseline Test &rarr;</a>
       <a href="{% url 'shsat_login' %}" class="sl-btn sl-btn--ghost">Log in</a>
     {% endif %}
   </div>
 </div>
 
-<!-- ── Three differentiators ─────────────────────────────────────────────── -->
+<!-- ── Objection handlers ──────────────────────────────────────────────── -->
 <section class="sl-diff">
-  <p class="sl-diff__label">Why this is different</p>
+  <p class="sl-diff__label">Skeptical? Good.</p>
   <div class="sl-diff__grid">
 
     <div class="sl-diff-card">
-      <p class="sl-diff-card__marker">01 — Method</p>
-      <h2 class="sl-diff-card__title">Reverse-engineered from the source</h2>
+      <p class="sl-diff-card__marker">01</p>
+      <h2 class="sl-diff-card__title">Our scores are deliberately conservative</h2>
       <p class="sl-diff-card__body">
-        Every question, explanation, and distractor label was written by reading the official
-        DOE handbooks and working backwards from the answer rationales. The questions are also
-        constructed according to latent variable theory and factor analysis, ensuring they
-        measure what the SHSAT actually measures. This is not guesswork; it's a methodical, 
-        scientific approach to test prep. It's nerdy, but it works.
+        We'd rather tell you the uncomfortable truth now than let the test do it in November.
+        Every scaled score on this platform is calibrated to under-promise. If your child
+        hits a cutoff here, they'll hit it on test day.
       </p>
     </div>
 
     <div class="sl-diff-card">
-      <p class="sl-diff-card__marker">02 — Analysis</p>
-      <h2 class="sl-diff-card__title">Every wrong answer has a name</h2>
+      <p class="sl-diff-card__marker">02</p>
+      <h2 class="sl-diff-card__title">No AI chatbot feedback. Not one line.</h2>
       <p class="sl-diff-card__body">
-        There are several ways to be wrong on SHSAT ELA and Math questions. Our error analysis 
-        tags every wrong answer with the specific trap it falls into, so your child learns not just that 
-        an answer is wrong, but why it's wrong and how to avoid it. After each test, the error analysis 
-        shows which trap caught your child and how often, so review is targeted, not random.
-      </p>
-    </div>
-
-    <div class="sl-diff-card">
-      <p class="sl-diff-card__marker">03 — Integrity</p>
-      <h2 class="sl-diff-card__title">No AI chatbot feedback</h2>
-      <p class="sl-diff-card__body">
-        Many prep platforms use AI to generate explanations on the fly. We don't.
         Every explanation your child sees after a wrong answer was written and structured
-        by a person: precise, deliberate, and reviewed. There is no language model
-        interpolating between training data and calling it feedback.
+        by a person — precise, deliberate, reviewed. There is no language model
+        generating feedback on the fly and calling it instruction.
       </p>
     </div>
 
     <div class="sl-diff-card">
-      <p class="sl-diff-card__marker">04 — Philosophy</p>
-      <h2 class="sl-diff-card__title">Conservative scoring</h2>
+      <p class="sl-diff-card__marker">03</p>
+      <h2 class="sl-diff-card__title">Reverse-engineered from the actual test</h2>
       <p class="sl-diff-card__body">
-        Our scoring is intentionally conservative. We don't want your child to think they're more 
-        prepared than they actually are. The dashboard shows their projected school placement, 
-        and the error analysis shows which skills are costing them points. The goal is to identify 
-        gaps and focus training on the areas that will yield the most improvement.
+        We analyzed 1,368 questions from eight years of DOE-released sample tests.
+        Every practice question is built from that data — same reading levels,
+        same skill distributions, same trap types. Not guesswork. Statistics.
       </p>
     </div>
 
+    <div class="sl-diff-card">
+      <p class="sl-diff-card__marker">04</p>
+      <h2 class="sl-diff-card__title">If you want a shortcut, this isn't it</h2>
+      <p class="sl-diff-card__body">
+        There are no tricks to game the SHSAT. There is understanding why wrong answers
+        look right, and training your child to see through them. That takes work.
+        This platform tells you exactly where to put that work.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Trap example ────────────────────────────────────────────────────── -->
+<section class="sl-philosophy">
+  <p class="sl-philosophy__label">See it in action</p>
+  <h2 class="sl-philosophy__title">Here's how an SHSAT trap actually works.</h2>
+  <div class="sl-philosophy__body">
+    <p>A reading passage describes a scientist who initially doubted a new theory but, after reviewing the evidence, changed her position. The question asks: <em>which best describes the scientist's approach?</em></p>
+    <p><strong>Choice A:</strong> She was open-minded and revised her view based on evidence.<br>
+    <strong>Choice B:</strong> She was skeptical and reluctant to accept new ideas.</p>
+    <p>Most students pick B. It's not wrong about the passage — she <em>was</em> skeptical. But B describes her initial reaction, not her overall approach. The question asks about the approach, which includes the revision. A is the answer.</p>
+    <p>This is a <strong>partly-true-but-wrong</strong> trap — the most common distractor type on the SHSAT. It gives you something genuinely from the passage, which is exactly what makes a student under time pressure grab it. Our error analysis catches this. It names the trap, shows how often your child falls for it, and tracks whether it resolves across tests.</p>
+    <p>A tutor sees a wrong answer. We see a pattern.</p>
   </div>
 </section>
 
 <!-- ── Platform preview ───────────────────────────────────────────────────── -->
 <section class="sl-preview">
-  <p class="sl-preview__label">The platform</p>
-  <h2 class="sl-preview__title">Precision data, not generic feedback</h2>
+  <p class="sl-preview__label">After the baseline</p>
+  <h2 class="sl-preview__title">Stop wondering if the prep is working.</h2>
   <p class="sl-preview__sub">
-    After every test, you get a full breakdown: scaled scores, school placement,
-    accuracy by skill, time per question, and a distractor trap analysis
-    that shows exactly which answer patterns are costing you points.
+    After every test, you see exactly what went wrong: the 3 skills costing the most
+    points, the trap types your child keeps falling for, projected placement at every
+    specialized high school, and what to study next — so Monday's session isn't random.
   </p>
   {% include "pages/includes/demo_dashboard.html" %}
 </section>
 
-<!-- ── Philosophy ────────────────────────────────────────────────────────── -->
-<section class="sl-philosophy">
-  <p class="sl-philosophy__label">Our Philosophy</p>
-  <h2 class="sl-philosophy__title">Thinking first. Technology second.</h2>
-  <div class="sl-philosophy__body">
-    <p>There are a few things you should know about us. First, we are not in the business of selling quick solutions to test prep. There are no shorcuts to learning and thinking. We are razor-sharp focused on the idea that successful learning depends on understanding where students come from, intellectually. That's why we believe that a mistake should never be wasted; it tells you exactly how a student is thinking, and that's something a raw score never will. That conviction is the reason the School of Critical Thinking exists, and it runs through everything we put in front of you.</p>
-    <p>Our method works from both ends. Before your child ever sits down, our front-end analytics take the exam apart: statistical and linguistic analysis of every question and reading passage, so we know what each item is really measuring and where it buries its traps. After the test, our back-end analytics go to work on the mistakes, diagnosing them, tracing each error back to the specific reasoning that produced it. Baseline test, benchmark tests, error analysis. You don't walk away with a number; you walk away with a map of how your child thinks.</p>
-    <p>We also make a choice that may puzzle some parents. The real SHSAT now comes wrapped in a polished digital interface — drag-and-drop, point-and-click, the works. We skip all of that. Prep should train the one thing that actually decides the outcome — critical thinking — and nothing else. Our kids are digital natives; teaching them to drag a box across a screen is not where the hard part lives, and we won't burn their hours pretending it is.</p>
-    <p>We coach the mind, not the mouse. Everything else is decoration.</p>
-  </div>
- 
-</section>
-
 <!-- ── Features ──────────────────────────────────────────────────────────── -->
 <section class="sl-features">
-  <p class="sl-features__label">What you get</p>
+  <p class="sl-features__label">What you walk away with</p>
   <div class="sl-features__grid">
     <div class="sl-feature">
-      <p class="sl-feature__title">Adaptive practice test</p>
-      <p class="sl-feature__body">Routes you into harder or easier questions based on your routing section performance, matching the same adaptive structure as the real SHSAT.</p>
+      <p class="sl-feature__title">The 3 skills costing the most points</p>
+      <p class="sl-feature__body">Accuracy broken down by ELA and Math skill area. You'll know whether Inference or Algebra is the bigger problem — and by how many points.</p>
     </div>
     <div class="sl-feature">
-      <p class="sl-feature__title">Honest scaled scores</p>
-      <p class="sl-feature__body">Conservative score estimates that won't mislead you into thinking you're more ready than you are. Calibrated against known cutoffs.</p>
+      <p class="sl-feature__title">Which traps keep catching your child</p>
+      <p class="sl-feature__body">Every wrong answer is tagged by trap type. You'll see which patterns repeat across the whole test, so review targets the habit, not just the question.</p>
     </div>
     <div class="sl-feature">
-      <p class="sl-feature__title">Distractor trap labels</p>
-      <p class="sl-feature__body">Every wrong answer you select is tagged by trap type. Review becomes structural, not random. You learn your specific failure pattern.</p>
+      <p class="sl-feature__title">Where your child actually places</p>
+      <p class="sl-feature__body">Projected cutoff distances for all eight specialized high schools. Not inflated. Not flattering. The number you need to plan around.</p>
     </div>
     <div class="sl-feature">
-      <p class="sl-feature__title">School placement tracking</p>
-      <p class="sl-feature__body">Projected cutoff distances for all eight NYC specialized high schools, updated each attempt so you can track your closing gap.</p>
+      <p class="sl-feature__title">A score that won't mislead you</p>
+      <p class="sl-feature__body">Conservative scaled scores calibrated against real cutoffs. If we say your child is within range of Stuyvesant, they are.</p>
     </div>
     <div class="sl-feature">
-      <p class="sl-feature__title">Accuracy by skill</p>
-      <p class="sl-feature__body">Broken down across ELA and Math skill areas, so you know whether Inference or Algebra is costing you more points.</p>
+      <p class="sl-feature__title">Adaptive difficulty, like the real test</p>
+      <p class="sl-feature__body">The baseline routes into harder or easier modules based on performance — the same structure as the actual SHSAT — so the score reflects real readiness.</p>
     </div>
     <div class="sl-feature">
-      <p class="sl-feature__title">Score history and projection</p>
-      <p class="sl-feature__body">Track progress across attempts and log scores from other test books. The dashboard projects your trajectory through five full tests.</p>
+      <p class="sl-feature__title">Progress across every attempt</p>
+      <p class="sl-feature__body">Score history, trajectory projection, and the ability to log scores from other prep books. One dashboard that tracks everything.</p>
     </div>
+  </div>
+</section>
+
+<!-- ── Philosophy ────────────────────────────────────────────────────────── -->
+<section class="sl-philosophy">
+  <p class="sl-philosophy__label">Why we built this</p>
+  <h2 class="sl-philosophy__title">A mistake should never be wasted.</h2>
+  <div class="sl-philosophy__body">
+    <p>A wrong answer tells you exactly how a student is thinking — and that's something a raw score never will. That conviction is the reason this platform exists.</p>
+    <p>Our method works from both ends. Before your child ever sits down, our analytics take the exam apart: statistical and linguistic analysis of every question and reading passage, so we know what each item is really measuring and where it buries its traps. After the test, the error analysis goes to work on the mistakes — tracing each one back to the specific reasoning that produced it.</p>
+    <p>The whole point of preparing for a test like the SHSAT is to learn the reasoning skills that will serve your child for life. The test will come and go. What remains is the ability to think clearly, reason carefully, and make good decisions under pressure. That's what we actually teach.</p>
   </div>
 </section>
 
 <!-- ── CTA ────────────────────────────────────────────────────────────────── -->
 <section class="sl-cta">
-  <h2 class="sl-cta__title">Start with the Baseline Test, free</h2>
-  <p class="sl-cta__sub">100 questions. Full error analysis. No credit card required.</p>
+  <h2 class="sl-cta__title">Start with the free Baseline Test</h2>
+  <p class="sl-cta__sub">100 questions. Full trap-by-trap error analysis. No credit card.</p>
   {% if user.is_authenticated %}
     <a href="{% url 'shsat_dashboard' %}" class="sl-btn">Your account &rarr;</a>
   {% else %}
     <a href="{% url 'shsat_signup' %}" class="sl-btn">Create a free account &rarr;</a>
   {% endif %}
-  <p class="sl-no-ai">No AI chatbot feedback. Every explanation is written and structured by a person.</p>
+  <p class="sl-no-ai">Every week of prep without a diagnosis is a week of studying blind.</p>
 </section>
 
 {% endblock %}
