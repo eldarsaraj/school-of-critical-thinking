@@ -171,6 +171,16 @@
     <img class="lightbox-overlay__img" src="" alt="">
   </div>
 
+  <!-- Auto-resize widget iframes to match their content height -->
+  <script>
+  window.addEventListener('message', function (e) {
+    if (!e.data || e.data.type !== 'sct-widget-height') return;
+    document.querySelectorAll('iframe.sct-widget').forEach(function (f) {
+      if (f.contentWindow === e.source) f.style.height = e.data.height + 'px';
+    });
+  });
+  </script>
+
   <script>
   (function () {
     var overlay = document.getElementById("lightbox");
