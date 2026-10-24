@@ -47,7 +47,7 @@ button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 <div class="stat"><small>Estimate</small><b id="est">+0.0</b></div>
 </div>
 <canvas id="fig" height="280" aria-label="Chart of the test's estimate of the student after each question"></canvas>
-<div class="legend"><span style="color:var(--a)">the test's estimate</span><span class="dash" style="color:var(--b)" id="truthLeg">true level</span><span class="plain" style="color:var(--muted)">● right ○ wrong (placed at the question's difficulty)</span></div>
+<div class="legend"><span style="color:var(--a)">estimate ± 1 SD</span><span class="dash" style="color:var(--b)" id="truthLeg">true level</span><span class="plain" style="color:var(--muted)">● right ○ wrong (placed at the question's difficulty)</span></div>
 </div>
 <script>
 (function(){
@@ -74,14 +74,15 @@ const STUDS=()=>[[-1,'Weaker student',css('--b')],[0,'Average student',css('--mu
 function reportHeight(){var h=Math.ceil(document.documentElement.getBoundingClientRect().height);try{parent.postMessage({type:'sct-widget-height',height:h},'*')}catch(e){}try{var fs=parent.document.querySelectorAll('iframe.sct-widget');for(var i=0;i<fs.length;i++){if(fs[i].contentWindow===window)fs[i].style.height=h+'px'}}catch(e){}}
 window.addEventListener('load',reportHeight);
 try{new ResizeObserver(reportHeight).observe(document.body)}catch(e){window.addEventListener('resize',reportHeight)}
-let mode='sim',post,hist,qs,truth=1;
-function reset(){post=prior();hist=[0];qs=[];draw()}
-function answer(r){if(qs.length>=20)return;const b=nextB(hist[hist.length-1]);qs.push({b,r});post=post.map((w,i)=>w*(r?P(G[i],b):1-P(G[i],b)));hist.push(summ(post).est);draw()}
+let mode='sim',post,hist,sds,qs,truth=1;
+function reset(){post=prior();hist=[0];sds=[1];qs=[];draw()}
+function answer(r){if(qs.length>=20)return;const b=nextB(hist[hist.length-1]);qs.push({b,r});post=post.map((w,i)=>w*(r?P(G[i],b):1-P(G[i],b)));const s=summ(post);hist.push(s.est);sds.push(s.sd);draw()}
 function step(){const b=nextB(hist[hist.length-1]);answer(rng()<P(truth,b)?1:0)}
 function draw(){const last=hist[hist.length-1];document.getElementById('qn').textContent=qs.length+' / 20';document.getElementById('nd').textContent=qs.length>=20?'done':fmt(nextB(last));document.getElementById('est').textContent=fmt(last);
 const [x,w,h]=setup(document.getElementById('fig'));const L=30,R=10,T=10,B=26,pw=w-L-R,ph=h-T-B;const X=i=>L+i/20*pw,Y=v=>T+(3-v)/6*ph;x.font='11px '+MONO;
 x.strokeStyle=css('--rule');x.fillStyle=css('--muted');x.lineWidth=1;[-3,-2,-1,0,1,2,3].forEach(v=>{x.beginPath();x.moveTo(L,Y(v));x.lineTo(w-R,Y(v));x.stroke();x.fillText(v>0?'+'+v:v,2,Y(v)+4)});[0,5,10,15,20].forEach(i=>x.fillText(i,X(i)-4,h-8));
 if(mode==='sim'){x.strokeStyle=css('--b');x.setLineDash([6,5]);x.lineWidth=2;x.beginPath();x.moveTo(L,Y(truth));x.lineTo(w-R,Y(truth));x.stroke();x.setLineDash([])}
+x.fillStyle=css('--a');x.globalAlpha=0.12;x.beginPath();hist.forEach((e,i)=>{const top=Y(e+sds[i]);i?x.lineTo(X(i),top):x.moveTo(X(i),top)});for(let i=hist.length-1;i>=0;i--)x.lineTo(X(i),Y(hist[i]-sds[i]));x.closePath();x.fill();x.globalAlpha=1;
 x.strokeStyle=css('--a');x.lineWidth=2.5;x.beginPath();hist.forEach((e,i)=>i?x.lineTo(X(i),Y(e)):x.moveTo(X(i),Y(e)));x.stroke();
 x.fillStyle=css('--a');hist.forEach((e,i)=>{x.beginPath();x.arc(X(i),Y(e),2.5,0,7);x.fill()});
 qs.forEach((q,i)=>{const px=X(i+.5),py=Y(q.b);x.beginPath();x.arc(px,py,4.5,0,7);if(q.r){x.fillStyle=css('--ink');x.fill()}else{x.strokeStyle=css('--ink');x.lineWidth=1.5;x.stroke()}});}
