@@ -71,7 +71,7 @@ function curveAxes(c){const [x,w,h]=setup(c);const L=36,R=10,T=10,B=26,pw=w-L-R,
 function curve(g,f,col,w,dash){const{x,X,Y}=g;x.strokeStyle=col;x.lineWidth=w;x.setLineDash(dash||[]);x.beginPath();for(let t=-3;t<=3.001;t+=.05){const px=X(t),py=Y(f(t));t===-3?x.moveTo(px,py):x.lineTo(px,py)}x.stroke();x.setLineDash([])}
 function dots(g,studs,f){studs.forEach(([t,,col])=>{g.x.fillStyle=col;g.x.beginPath();g.x.arc(g.X(t),g.Y(f(t)),6,0,7);g.x.fill()})}
 const STUDS=()=>[[-1,'Weaker student',css('--b')],[0,'Average student',css('--muted')],[1,'Stronger student',css('--a')]];
-var _lh=0;function reportHeight(){var el=document.querySelector('.bench');if(!el)return;var h=Math.ceil(el.offsetHeight);if(h===_lh)return;_lh=h;try{parent.postMessage({type:'sct-widget-height',height:h},'*')}catch(e){}}
+var _lh=0;function reportHeight(){var el=document.querySelector('.bench');if(!el)return;var h=Math.ceil(el.offsetHeight);if(h===_lh)return;_lh=h;try{if(window.frameElement)window.frameElement.style.height=h+'px'}catch(e){}try{parent.postMessage({type:'sct-widget-height',height:h},'*')}catch(e){}}
 window.addEventListener('load',reportHeight);
 try{new ResizeObserver(reportHeight).observe(document.body)}catch(e){window.addEventListener('resize',reportHeight)}
 const TB=0.8,TA=1.4;let N=30,calib=null;const BINS=[];for(let k=0;k<10;k++)BINS.push(-2.5+k*0.5+0.25);
@@ -80,7 +80,7 @@ let best=-Infinity,bb=0,ba=1;for(let b=-3;b<=3.0001;b+=0.05)for(let a=0.1;a<=4.0
 calib={n,r,b:bb,a:ba};draw();}
 function draw(){if(!calib)return;const g=curveAxes(document.getElementById('fig'));curve(g,t=>P(t,TB,TA),css('--muted'),1.5,[5,4]);curve(g,t=>P(t,calib.b,calib.a),css('--a'),2.5);
 const mx=Math.max(...calib.n);calib.n.forEach((c,k)=>{if(!c)return;g.x.fillStyle=css('--ink');g.x.globalAlpha=.75;g.x.beginPath();g.x.arc(g.X(BINS[k]),g.Y(calib.r[k]/c),3+6*Math.sqrt(c/mx),0,7);g.x.fill();g.x.globalAlpha=1});
-document.getElementById('eb').textContent=fmt(calib.b);document.getElementById('ea').textContent=calib.a.toFixed(1)+' · '+sharp(calib.a);}
+document.getElementById('eb').textContent=fmt(calib.b);document.getElementById('ea').textContent=calib.a.toFixed(1)+' · '+sharp(calib.a);reportHeight()}
 document.querySelectorAll('[data-n]').forEach(btn=>btn.addEventListener('click',()=>{N=+btn.dataset.n;document.querySelectorAll('[data-n]').forEach(o=>o.setAttribute('aria-pressed',o===btn));simulate()}));
 document.getElementById('rerun').addEventListener('click',simulate);window.addEventListener('resize',draw);
 simulate();rng=Math.random;

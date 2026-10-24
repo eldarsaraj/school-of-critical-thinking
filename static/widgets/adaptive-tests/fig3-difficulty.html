@@ -63,12 +63,12 @@ function curveAxes(c){const [x,w,h]=setup(c);const L=36,R=10,T=10,B=26,pw=w-L-R,
 function curve(g,f,col,w,dash){const{x,X,Y}=g;x.strokeStyle=col;x.lineWidth=w;x.setLineDash(dash||[]);x.beginPath();for(let t=-3;t<=3.001;t+=.05){const px=X(t),py=Y(f(t));t===-3?x.moveTo(px,py):x.lineTo(px,py)}x.stroke();x.setLineDash([])}
 function dots(g,studs,f){studs.forEach(([t,,col])=>{g.x.fillStyle=col;g.x.beginPath();g.x.arc(g.X(t),g.Y(f(t)),6,0,7);g.x.fill()})}
 const STUDS=()=>[[-1,'Weaker student',css('--b')],[0,'Average student',css('--muted')],[1,'Stronger student',css('--a')]];
-var _lh=0;function reportHeight(){var el=document.querySelector('.bench');if(!el)return;var h=Math.ceil(el.offsetHeight);if(h===_lh)return;_lh=h;try{parent.postMessage({type:'sct-widget-height',height:h},'*')}catch(e){}}
+var _lh=0;function reportHeight(){var el=document.querySelector('.bench');if(!el)return;var h=Math.ceil(el.offsetHeight);if(h===_lh)return;_lh=h;try{if(window.frameElement)window.frameElement.style.height=h+'px'}catch(e){}try{parent.postMessage({type:'sct-widget-height',height:h},'*')}catch(e){}}
 window.addEventListener('load',reportHeight);
 try{new ResizeObserver(reportHeight).observe(document.body)}catch(e){window.addEventListener('resize',reportHeight)}
 const diff=document.getElementById('diff');
 function draw(){const b=+diff.value;document.getElementById('diffv').textContent=fmt(b);const g=curveAxes(document.getElementById('fig'));const f=t=>P(t,b);curve(g,f,css('--ink'),2.5);const st=STUDS();dots(g,st,f);
-document.getElementById('chips').innerHTML=st.map(([t,n,col])=>`<span class="chip"><i style="background:${col}"></i>${n} (${fmt(t)}): <b>${Math.round(f(t)*100)}%</b></span>`).join('');}
+document.getElementById('chips').innerHTML=st.map(([t,n,col])=>`<span class="chip"><i style="background:${col}"></i>${n} (${fmt(t)}): <b>${Math.round(f(t)*100)}%</b></span>`).join('');reportHeight()}
 diff.addEventListener('input',draw);window.addEventListener('resize',draw);draw();
 })();
 </script>

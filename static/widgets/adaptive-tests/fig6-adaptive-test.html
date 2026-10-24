@@ -71,7 +71,7 @@ function curveAxes(c){const [x,w,h]=setup(c);const L=36,R=10,T=10,B=26,pw=w-L-R,
 function curve(g,f,col,w,dash){const{x,X,Y}=g;x.strokeStyle=col;x.lineWidth=w;x.setLineDash(dash||[]);x.beginPath();for(let t=-3;t<=3.001;t+=.05){const px=X(t),py=Y(f(t));t===-3?x.moveTo(px,py):x.lineTo(px,py)}x.stroke();x.setLineDash([])}
 function dots(g,studs,f){studs.forEach(([t,,col])=>{g.x.fillStyle=col;g.x.beginPath();g.x.arc(g.X(t),g.Y(f(t)),6,0,7);g.x.fill()})}
 const STUDS=()=>[[-1,'Weaker student',css('--b')],[0,'Average student',css('--muted')],[1,'Stronger student',css('--a')]];
-var _lh=0;function reportHeight(){var el=document.querySelector('.bench');if(!el)return;var h=Math.ceil(el.offsetHeight);if(h===_lh)return;_lh=h;try{parent.postMessage({type:'sct-widget-height',height:h},'*')}catch(e){}}
+var _lh=0;function reportHeight(){var el=document.querySelector('.bench');if(!el)return;var h=Math.ceil(el.offsetHeight);if(h===_lh)return;_lh=h;try{if(window.frameElement)window.frameElement.style.height=h+'px'}catch(e){}try{parent.postMessage({type:'sct-widget-height',height:h},'*')}catch(e){}}
 window.addEventListener('load',reportHeight);
 try{new ResizeObserver(reportHeight).observe(document.body)}catch(e){window.addEventListener('resize',reportHeight)}
 let mode='sim',post,hist,sds,qs,truth=1;
@@ -85,7 +85,7 @@ if(mode==='sim'){x.strokeStyle=css('--b');x.setLineDash([6,5]);x.lineWidth=2;x.b
 x.fillStyle=css('--a');x.globalAlpha=0.12;x.beginPath();hist.forEach((e,i)=>{const top=Y(e+sds[i]);i?x.lineTo(X(i),top):x.moveTo(X(i),top)});for(let i=hist.length-1;i>=0;i--)x.lineTo(X(i),Y(hist[i]-sds[i]));x.closePath();x.fill();x.globalAlpha=1;
 x.strokeStyle=css('--a');x.lineWidth=2.5;x.beginPath();hist.forEach((e,i)=>i?x.lineTo(X(i),Y(e)):x.moveTo(X(i),Y(e)));x.stroke();
 x.fillStyle=css('--a');hist.forEach((e,i)=>{x.beginPath();x.arc(X(i),Y(e),2.5,0,7);x.fill()});
-qs.forEach((q,i)=>{const px=X(i+.5),py=Y(q.b);x.beginPath();x.arc(px,py,4.5,0,7);if(q.r){x.fillStyle=css('--ink');x.fill()}else{x.strokeStyle=css('--ink');x.lineWidth=1.5;x.stroke()}});}
+qs.forEach((q,i)=>{const px=X(i+.5),py=Y(q.b);x.beginPath();x.arc(px,py,4.5,0,7);if(q.r){x.fillStyle=css('--ink');x.fill()}else{x.strokeStyle=css('--ink');x.lineWidth=1.5;x.stroke()}});reportHeight()}
 const truthEl=document.getElementById('truth');truthEl.addEventListener('input',()=>{truth=+truthEl.value;document.getElementById('truthv').textContent=fmt(truth);reset()});
 document.getElementById('next').onclick=step;document.getElementById('run').onclick=()=>{while(qs.length<20)step()};
 document.getElementById('reset').onclick=reset;document.getElementById('reset2').onclick=reset;document.getElementById('right').onclick=()=>answer(1);document.getElementById('wrong').onclick=()=>answer(0);
