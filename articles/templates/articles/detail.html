@@ -173,12 +173,25 @@
 
   <!-- Auto-resize widget iframes to match their content height -->
   <script>
-  window.addEventListener('message', function (e) {
-    if (!e.data || e.data.type !== 'sct-widget-height') return;
+  (function () {
+    function fitWidgets() {
+      document.querySelectorAll('iframe.sct-widget').forEach(function (f) {
+        try {
+          var bench = f.contentDocument && f.contentDocument.querySelector('.bench');
+          if (bench) {
+            var h = Math.ceil(bench.offsetHeight);
+            if (h > 50) f.style.height = h + 'px';
+          }
+        } catch (e) {}
+      });
+    }
+    /* fit each iframe as it loads (handles lazy loading) */
     document.querySelectorAll('iframe.sct-widget').forEach(function (f) {
-      if (f.contentWindow === e.source) f.style.height = e.data.height + 'px';
+      f.addEventListener('load', function () { setTimeout(fitWidgets, 60); });
     });
-  });
+    /* refit on orientation change */
+    window.addEventListener('resize', fitWidgets);
+  })();
   </script>
 
   <script>
