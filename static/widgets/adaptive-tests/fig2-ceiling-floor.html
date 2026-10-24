@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Difficulty has a ceiling and a floor</title>
+<title>Difficulty has a ceiling (and a floor)</title>
 <style>
 :root{--paper:#f5f1e6;--ink:#1c1b18;--muted:#5f5a4e;--rule:#cfc7b2;--bench:#fbf8f0;--a:#2348b8;--b:#b4532a;--cap:rgba(120,110,90,.12);
 --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;--sans:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color-scheme:light}
 html,body{margin:0;background:transparent;color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
 .bench{background:transparent;border:1px solid var(--rule);padding:16px;box-sizing:border-box}
 canvas,svg{display:block;width:100%}
+.label{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
 .cap{font-size:13.5px;color:var(--muted);margin:10px 0 0}
 .row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:10px 0}
 .row label{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
@@ -35,7 +36,7 @@ button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 </style>
 </head>
 <body>
-<div class="bench"><svg id="fig" viewBox="0 0 640 300" role="img" aria-labelledby="t"><title id="t">Student A answers every question correctly and climbs until question 8, then stays at the hardest level. Student B misses most questions and drops to the easiest level.</title></svg></div>
+<div class="bench"><div class="label">Fig. 2 · Difficulty has a ceiling (and a floor)</div><svg id="fig" viewBox="0 0 640 300" role="img" aria-labelledby="t"><title id="t">Student A answers every question correctly and climbs until question 8, then stays at the hardest level. Student B misses most questions and drops to the easiest level.</title></svg></div>
 <script>
 (function(){
 const C=0.25,A0=1.2;
@@ -58,7 +59,7 @@ function curveAxes(c){const [x,w,h]=setup(c);const L=36,R=10,T=10,B=26,pw=w-L-R,
 function curve(g,f,col,w,dash){const{x,X,Y}=g;x.strokeStyle=col;x.lineWidth=w;x.setLineDash(dash||[]);x.beginPath();for(let t=-3;t<=3.001;t+=.05){const px=X(t),py=Y(f(t));t===-3?x.moveTo(px,py):x.lineTo(px,py)}x.stroke();x.setLineDash([])}
 function dots(g,studs,f){studs.forEach(([t,,col])=>{g.x.fillStyle=col;g.x.beginPath();g.x.arc(g.X(t),g.Y(f(t)),6,0,7);g.x.fill()})}
 const STUDS=()=>[[-1,'Weaker student',css('--b')],[0,'Average student',css('--muted')],[1,'Stronger student',css('--a')]];
-function reportHeight(){try{parent.postMessage({type:'sct-widget-height',height:Math.ceil(document.documentElement.getBoundingClientRect().height)},'*')}catch(e){}}
+function reportHeight(){var h=Math.ceil(document.documentElement.getBoundingClientRect().height);try{parent.postMessage({type:'sct-widget-height',height:h},'*')}catch(e){}try{var fs=parent.document.querySelectorAll('iframe.sct-widget');for(var i=0;i<fs.length;i++){if(fs[i].contentWindow===window)fs[i].style.height=h+'px'}}catch(e){}}
 window.addEventListener('load',reportHeight);
 try{new ResizeObserver(reportHeight).observe(document.body)}catch(e){window.addEventListener('resize',reportHeight)}
 const CA=runPattern(Array(20).fill(1),1.7),CB=runPattern([0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0],1.7);

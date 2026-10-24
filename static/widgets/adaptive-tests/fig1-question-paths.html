@@ -10,6 +10,7 @@
 html,body{margin:0;background:transparent;color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
 .bench{background:transparent;border:1px solid var(--rule);padding:16px;box-sizing:border-box}
 canvas,svg{display:block;width:100%}
+.label{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
 .cap{font-size:13.5px;color:var(--muted);margin:10px 0 0}
 .row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:10px 0}
 .row label{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
@@ -35,7 +36,7 @@ button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 </style>
 </head>
 <body>
-<div class="bench"><svg id="fig" viewBox="0 0 640 300" role="img" aria-labelledby="t"><title id="t">On a fixed test both students see the same questions, which get gradually harder. On an adaptive test, Student A's questions climb in difficulty and Student B's drop.</title></svg></div>
+<div class="bench"><div class="label">Fig. 1 · Which questions each student sees</div><svg id="fig" viewBox="0 0 640 300" role="img" aria-labelledby="t"><title id="t">On a fixed test both students see the same questions, which get gradually harder. On an adaptive test, Student A's questions climb in difficulty and Student B's drop.</title></svg></div>
 <script>
 (function(){
 const C=0.25,A0=1.2;
@@ -58,7 +59,7 @@ function curveAxes(c){const [x,w,h]=setup(c);const L=36,R=10,T=10,B=26,pw=w-L-R,
 function curve(g,f,col,w,dash){const{x,X,Y}=g;x.strokeStyle=col;x.lineWidth=w;x.setLineDash(dash||[]);x.beginPath();for(let t=-3;t<=3.001;t+=.05){const px=X(t),py=Y(f(t));t===-3?x.moveTo(px,py):x.lineTo(px,py)}x.stroke();x.setLineDash([])}
 function dots(g,studs,f){studs.forEach(([t,,col])=>{g.x.fillStyle=col;g.x.beginPath();g.x.arc(g.X(t),g.Y(f(t)),6,0,7);g.x.fill()})}
 const STUDS=()=>[[-1,'Weaker student',css('--b')],[0,'Average student',css('--muted')],[1,'Stronger student',css('--a')]];
-function reportHeight(){try{parent.postMessage({type:'sct-widget-height',height:Math.ceil(document.documentElement.getBoundingClientRect().height)},'*')}catch(e){}}
+function reportHeight(){var h=Math.ceil(document.documentElement.getBoundingClientRect().height);try{parent.postMessage({type:'sct-widget-height',height:h},'*')}catch(e){}try{var fs=parent.document.querySelectorAll('iframe.sct-widget');for(var i=0;i<fs.length;i++){if(fs[i].contentWindow===window)fs[i].style.height=h+'px'}}catch(e){}}
 window.addEventListener('load',reportHeight);
 try{new ResizeObserver(reportHeight).observe(document.body)}catch(e){window.addEventListener('resize',reportHeight)}
 const SA=runPattern(RA),SB=runPattern(RB);const FIXED=[-1.6,-1.1,-0.7,-0.4,0,0.2,0.5,0.9,1.3,1.8];
