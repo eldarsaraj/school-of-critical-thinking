@@ -78,6 +78,83 @@
   </div>
 </section>
 
+<!-- ── Interactive trap demo ────────────────────────────────────────────── -->
+<section class="sl-trap-demo">
+  <p class="sl-trap-demo__label">See it in action</p>
+  <h2 class="sl-trap-demo__title">Try a real question. Click any answer.</h2>
+
+  <div class="sl-trap-demo__box" id="trapDemo">
+
+    <div class="sl-trap-demo__passage">
+      <p class="sl-trap-demo__passage-title">The Rule That Never Says No</p>
+      <div class="sl-trap-demo__passage-text">
+        <p>A horoscope never tells you something that couldn't be true. "You value loyalty but have been let down." "A challenge at work will test your patience." These are not predictions. They are descriptions so broad that almost anyone, reading almost any one of them, will find a fit — not because the stars are accurate, but because the statement was never specific enough to be wrong.</p>
+
+        <p>Psychologists call this the Barnum effect, after the showman who understood that a vague positive statement will be claimed by nearly every listener as personally meaningful. The key is not that people are gullible. It is that the statement has been engineered to be unfalsifiable: there is no possible life to which "you sometimes doubt yourself" does not apply.</p>
+
+        <p>The trouble is not confined to astrology columns. The same structure — a claim shaped so that no evidence could ever count against it — appears in advertising, in political promises, and in the kind of advice that sounds wise precisely because it commits to nothing. The rule that never says no is not a rule at all. It is a sentence dressed up as one.</p>
+      </div>
+    </div>
+
+    <div class="sl-trap-demo__question">
+      <p class="sl-trap-demo__q-text">The passage is mainly concerned with</p>
+
+      <div class="sl-trap-demo__choices">
+        <button class="sl-trap-demo__choice" data-key="A" data-correct="true" data-explain="Correct. The passage's thesis is that unfalsifiable statements feel true only because they are too vague to be wrong — and that this structure appears well beyond horoscopes.">
+          <span class="sl-trap-demo__choice-letter">A</span>
+          <span class="sl-trap-demo__choice-text">explaining why statements that can never be proven wrong feel convincing even though they say very little</span>
+        </button>
+        <button class="sl-trap-demo__choice" data-key="B" data-correct="false" data-trap="Too narrow" data-explain="The passage uses horoscopes as its opening example, but the argument extends to advertising, politics, and vague advice — horoscopes are the illustration, not the subject.">
+          <span class="sl-trap-demo__choice-letter">B</span>
+          <span class="sl-trap-demo__choice-text">showing that horoscopes rely on deliberately vague language to appear accurate</span>
+        </button>
+        <button class="sl-trap-demo__choice" data-key="C" data-correct="false" data-trap="Too narrow" data-explain="The Barnum effect is named and explained in one paragraph, but the passage is about the broader pattern of unfalsifiable claims — the Barnum effect is the mechanism, not the main concern.">
+          <span class="sl-trap-demo__choice-letter">C</span>
+          <span class="sl-trap-demo__choice-text">defining the Barnum effect and describing the research behind it</span>
+        </button>
+        <button class="sl-trap-demo__choice" data-key="D" data-correct="false" data-trap="Opposite" data-explain="The passage explicitly says 'the key is not that people are gullible.' It shifts blame to the structure of the statement, not to the reader's credulity.">
+          <span class="sl-trap-demo__choice-letter">D</span>
+          <span class="sl-trap-demo__choice-text">arguing that people are easily fooled because they want to believe flattering things about themselves</span>
+        </button>
+        <button class="sl-trap-demo__choice" data-key="E" data-correct="false" data-trap="Partly true but wrong" data-explain="The final paragraph mentions advertising and politics, but as examples of the same unfalsifiable structure — the passage is not comparing fields, it is showing one pattern across many.">
+          <span class="sl-trap-demo__choice-letter">E</span>
+          <span class="sl-trap-demo__choice-text">comparing the persuasive techniques used in astrology with those used in advertising and politics</span>
+        </button>
+      </div>
+
+      <div class="sl-trap-demo__result" id="trapResult" style="display:none;">
+        <div class="sl-trap-demo__result-inner" id="trapResultInner"></div>
+      </div>
+
+      <button class="sl-trap-demo__reset" id="trapReset" style="display:none;">Try again</button>
+    </div>
+
+  </div>
+
+  <p class="sl-trap-demo__footnote">
+    This is one question from one passage. Our error analysis does this across the entire test —
+    reading, writing, and math — then shows you which trap types your child falls for most
+    and how many points each one costs.
+  </p>
+</section>
+
+<!-- ── Essay scoring demo ──────────────────────────────────────────────── -->
+<section class="sl-essay-demo">
+  <p class="sl-essay-demo__label">Essay scoring preview</p>
+  <h2 class="sl-essay-demo__title">See how the writing section is scored.</h2>
+  <p class="sl-essay-demo__intro">
+    Hunter's entrance exam includes an essay. Our scoring uses hard-coded, deterministic
+    metrics that reveal what good writing looks like — the same qualities real readers
+    at Hunter look for. No AI generates scores. Type or paste a few sentences and click Score.
+  </p>
+
+  <div class="sl-essay-demo__box" id="essayDemo">
+    <textarea class="sl-essay-demo__textarea" id="essayInput" placeholder="Type or paste a short paragraph here..." rows="6"></textarea>
+    <button class="sl-essay-demo__btn" id="essayScore">Score this</button>
+    <div class="sl-essay-demo__metrics" id="essayMetrics" style="display:none;"></div>
+  </div>
+</section>
+
 <!-- ── Platform preview ───────────────────────────────────────────────────── -->
 <section class="sl-preview">
   <p class="sl-preview__label">After the baseline</p>
@@ -143,5 +220,116 @@
   {% endif %}
   <p class="sl-no-ai">Every week of prep without a diagnosis is a week of studying blind.</p>
 </section>
+
+<!-- ── Demo scripts ────────────────────────────────────────────────────── -->
+<script>
+/* Trap demo */
+(function(){
+  var demo = document.getElementById('trapDemo');
+  if (!demo) return;
+  var choices = demo.querySelectorAll('.sl-trap-demo__choice');
+  var result = document.getElementById('trapResult');
+  var inner = document.getElementById('trapResultInner');
+  var reset = document.getElementById('trapReset');
+  var answered = false;
+
+  choices.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (answered) return;
+      answered = true;
+
+      var isCorrect = btn.getAttribute('data-correct') === 'true';
+      var trap = btn.getAttribute('data-trap');
+      var explain = btn.getAttribute('data-explain');
+      var correctBtn = demo.querySelector('[data-correct="true"]');
+
+      choices.forEach(function(c){ c.classList.add('sl-trap-demo__choice--disabled','sl-trap-demo__choice--dimmed'); });
+
+      btn.classList.remove('sl-trap-demo__choice--dimmed');
+      if (isCorrect) {
+        btn.classList.add('sl-trap-demo__choice--correct');
+      } else {
+        btn.classList.add('sl-trap-demo__choice--wrong');
+        correctBtn.classList.remove('sl-trap-demo__choice--dimmed');
+        correctBtn.classList.add('sl-trap-demo__choice--correct');
+      }
+
+      var html = '';
+      if (isCorrect) {
+        result.className = 'sl-trap-demo__result sl-trap-demo__result--correct';
+        html = '<p class="sl-trap-demo__result-explain">' + explain + '</p>';
+      } else {
+        result.className = 'sl-trap-demo__result sl-trap-demo__result--wrong';
+        html = '<p class="sl-trap-demo__result-trap">Trap: ' + trap + '</p>';
+        html += '<p class="sl-trap-demo__result-explain">' + explain + '</p>';
+      }
+      inner.innerHTML = html;
+      result.style.display = 'block';
+      reset.style.display = 'inline-block';
+    });
+  });
+
+  reset.addEventListener('click', function(){
+    answered = false;
+    choices.forEach(function(c){
+      c.classList.remove('sl-trap-demo__choice--disabled','sl-trap-demo__choice--dimmed','sl-trap-demo__choice--correct','sl-trap-demo__choice--wrong');
+    });
+    result.style.display = 'none';
+    reset.style.display = 'none';
+  });
+})();
+
+/* Essay scoring demo */
+(function(){
+  var input = document.getElementById('essayInput');
+  var btn = document.getElementById('essayScore');
+  var metrics = document.getElementById('essayMetrics');
+  if (!input || !btn || !metrics) return;
+
+  btn.addEventListener('click', function(){
+    var text = input.value.trim();
+    if (!text) return;
+
+    /* Tokenise */
+    var words = text.split(/\s+/).filter(function(w){ return w.length > 0; });
+    var wordCount = words.length;
+
+    /* Sentences: split on . ! ? followed by space or end */
+    var sentences = text.split(/(?<=[.!?])\s+/).filter(function(s){ return s.trim().length > 0; });
+    var sentCount = sentences.length || 1;
+
+    var avgLen = Math.round((wordCount / sentCount) * 10) / 10;
+
+    /* Sentence variety: standard deviation of sentence lengths */
+    var sentLengths = sentences.map(function(s){ return s.split(/\s+/).filter(function(w){ return w.length > 0; }).length; });
+    var mean = sentLengths.reduce(function(a,b){ return a+b; }, 0) / sentLengths.length;
+    var variance = sentLengths.reduce(function(a,l){ return a + Math.pow(l - mean, 2); }, 0) / sentLengths.length;
+    var sd = Math.round(Math.sqrt(variance) * 10) / 10;
+
+    /* Vocabulary range: unique words / total words */
+    var lower = words.map(function(w){ return w.toLowerCase().replace(/[^a-z']/g, ''); }).filter(function(w){ return w.length > 0; });
+    var unique = {};
+    lower.forEach(function(w){ unique[w] = true; });
+    var vocabRange = lower.length > 0 ? Math.round((Object.keys(unique).length / lower.length) * 100) : 0;
+
+    /* Opener variety: unique first words / sentence count */
+    var openers = {};
+    sentences.forEach(function(s){
+      var fw = s.trim().split(/\s+/)[0];
+      if (fw) openers[fw.toLowerCase().replace(/[^a-z']/g, '')] = true;
+    });
+    var openerPct = sentCount > 0 ? Math.round((Object.keys(openers).length / sentCount) * 100) : 0;
+
+    metrics.innerHTML =
+      '<div class="sl-essay-demo__metric"><p class="sl-essay-demo__metric-value">' + wordCount + '</p><p class="sl-essay-demo__metric-label">Words</p></div>' +
+      '<div class="sl-essay-demo__metric"><p class="sl-essay-demo__metric-value">' + sentCount + '</p><p class="sl-essay-demo__metric-label">Sentences</p></div>' +
+      '<div class="sl-essay-demo__metric"><p class="sl-essay-demo__metric-value">' + avgLen + '</p><p class="sl-essay-demo__metric-label">Avg sentence length</p></div>' +
+      '<div class="sl-essay-demo__metric"><p class="sl-essay-demo__metric-value">' + sd + '</p><p class="sl-essay-demo__metric-label">Sentence variety (SD)</p></div>' +
+      '<div class="sl-essay-demo__metric"><p class="sl-essay-demo__metric-value">' + vocabRange + '%</p><p class="sl-essay-demo__metric-label">Vocabulary range</p></div>' +
+      '<div class="sl-essay-demo__metric"><p class="sl-essay-demo__metric-value">' + openerPct + '%</p><p class="sl-essay-demo__metric-label">Opener variety</p></div>';
+    metrics.style.display = 'grid';
+  });
+})();
+</script>
 
 {% endblock %}
