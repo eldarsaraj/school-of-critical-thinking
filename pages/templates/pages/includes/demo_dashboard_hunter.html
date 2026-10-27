@@ -1,5 +1,6 @@
 <!-- ── Hunter live demo dashboard ────────────────────────────────────────────
-     Mock data: child "Jordan", Baseline completed + 1 Benchmark in progress
+     Mock data: child "Jordan", Baseline + 4 Benchmarks completed
+     Shows significant improvement across all tests.
      All data is hardcoded — no DB involved.
 ──────────────────────────────────────────────────────────────────────────── -->
 <div class="home-demo">
@@ -7,22 +8,22 @@
   <div class="home-demo__header">
     <span class="home-demo__badge">Live example</span>
     <span class="home-demo__title">Jordan's Dashboard</span>
-    <span class="home-demo__subtitle">1 test completed · Baseline</span>
+    <span class="home-demo__subtitle">5 tests completed · Baseline + 4 Benchmarks</span>
   </div>
 
   <!-- KPI cards -->
   <div class="shsat-stat-grid">
     <div class="shsat-stat-card">
-      <div class="shsat-stat-card__value" style="font-size:26px;">68%</div>
+      <div class="shsat-stat-card__value" style="font-size:26px;">89%</div>
       <div class="shsat-stat-card__label">Latest score</div>
-      <div style="display:inline-block;margin-top:6px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#5aab8c22;color:#5aab8c;">Competitive</div>
+      <div style="display:inline-block;margin-top:6px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#5aab8c22;color:#5aab8c;">Highly Competitive</div>
     </div>
     <div class="shsat-stat-card">
-      <div class="shsat-stat-card__value">1</div>
+      <div class="shsat-stat-card__value">5</div>
       <div class="shsat-stat-card__label">Tests completed</div>
     </div>
     <div class="shsat-stat-card">
-      <div class="shsat-stat-card__value">1.4m</div>
+      <div class="shsat-stat-card__value">1.1m</div>
       <div class="shsat-stat-card__label">Avg time / question</div>
     </div>
     <div class="shsat-stat-card">
@@ -41,22 +42,22 @@
   </p>
 
   <!-- Section breakdown -->
-  <p class="shsat-section-title">Score by section — Baseline</p>
+  <p class="shsat-section-title">Score by section — Benchmark 4</p>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:28px;">
     <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:14px 16px;text-align:center;">
-      <div style="font-size:22px;font-weight:700;color:#111;">72%</div>
+      <div style="font-size:22px;font-weight:700;color:#111;">92%</div>
       <div style="font-size:11px;color:rgba(0,0,0,0.4);margin:4px 0 6px;">Reading</div>
-      <div style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;background:#5aab8c22;color:#5aab8c;">Competitive</div>
+      <div style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;background:#5aab8c22;color:#5aab8c;">Highly Competitive</div>
     </div>
     <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:14px 16px;text-align:center;">
-      <div style="font-size:22px;font-weight:700;color:#111;">64%</div>
+      <div style="font-size:22px;font-weight:700;color:#111;">86%</div>
       <div style="font-size:11px;color:rgba(0,0,0,0.4);margin:4px 0 6px;">QR + Math</div>
-      <div style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;background:#c49a5a22;color:#c49a5a;">Developing</div>
+      <div style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;background:#5aab8c22;color:#5aab8c;">Highly Competitive</div>
     </div>
     <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:14px 16px;text-align:center;">
-      <div style="font-size:22px;font-weight:700;color:#111;">68%</div>
+      <div style="font-size:22px;font-weight:700;color:#111;">89%</div>
       <div style="font-size:11px;color:rgba(0,0,0,0.4);margin:4px 0 6px;">Overall</div>
-      <div style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;background:#5aab8c22;color:#5aab8c;">Competitive</div>
+      <div style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;background:#5aab8c22;color:#5aab8c;">Highly Competitive</div>
     </div>
   </div>
 
@@ -65,58 +66,48 @@
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;">
     <div>
       <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:10px;">Reading &amp; Writing</div>
-      {% for skill, pct, color in demo_hunter_reading_skills %}
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
-        <span style="flex:0 0 110px;font-size:12px;color:rgba(0,0,0,0.65);">{{ skill }}</span>
-        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;">
-          <div style="height:100%;width:{{ pct }}%;background:{{ color }};border-radius:3px;"></div>
-        </div>
-        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">{{ pct }}%</span>
-      </div>
-      {% empty %}
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
         <span style="flex:0 0 110px;font-size:12px;color:rgba(0,0,0,0.65);">Main Idea</span>
-        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:80%;background:#5aab8c;border-radius:3px;"></div></div>
-        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">80%</span>
+        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:95%;background:#5aab8c;border-radius:3px;"></div></div>
+        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">95%</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
         <span style="flex:0 0 110px;font-size:12px;color:rgba(0,0,0,0.65);">Inference</span>
-        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:64%;background:#c49a5a;border-radius:3px;"></div></div>
-        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">64%</span>
+        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:88%;background:#5aab8c;border-radius:3px;"></div></div>
+        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">88%</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
         <span style="flex:0 0 110px;font-size:12px;color:rgba(0,0,0,0.65);">Vocabulary</span>
-        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:75%;background:#5aab8c;border-radius:3px;"></div></div>
-        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">75%</span>
+        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:91%;background:#5aab8c;border-radius:3px;"></div></div>
+        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">91%</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
         <span style="flex:0 0 110px;font-size:12px;color:rgba(0,0,0,0.65);">Evidence</span>
-        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:58%;background:#c49a5a;border-radius:3px;"></div></div>
-        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">58%</span>
+        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:85%;background:#5aab8c;border-radius:3px;"></div></div>
+        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">85%</span>
       </div>
-      {% endfor %}
     </div>
     <div>
       <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:10px;">Math</div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
         <span style="flex:0 0 110px;font-size:12px;color:rgba(0,0,0,0.65);">Algebra</span>
-        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:70%;background:#5aab8c;border-radius:3px;"></div></div>
-        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">70%</span>
+        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:90%;background:#5aab8c;border-radius:3px;"></div></div>
+        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">90%</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
         <span style="flex:0 0 110px;font-size:12px;color:rgba(0,0,0,0.65);">Geometry</span>
-        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:55%;background:#c49a5a;border-radius:3px;"></div></div>
-        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">55%</span>
+        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:82%;background:#5aab8c;border-radius:3px;"></div></div>
+        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">82%</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
         <span style="flex:0 0 110px;font-size:12px;color:rgba(0,0,0,0.65);">Number Ops</span>
-        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:68%;background:#5aab8c;border-radius:3px;"></div></div>
-        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">68%</span>
+        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:88%;background:#5aab8c;border-radius:3px;"></div></div>
+        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">88%</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
         <span style="flex:0 0 110px;font-size:12px;color:rgba(0,0,0,0.65);">Multi-step</span>
-        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:42%;background:#c4635b;border-radius:3px;"></div></div>
-        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">42%</span>
+        <div style="flex:1;height:5px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;"><div style="height:100%;width:78%;background:#5aab8c;border-radius:3px;"></div></div>
+        <span style="flex:0 0 34px;font-size:12px;font-weight:600;text-align:right;">78%</span>
       </div>
     </div>
   </div>
@@ -124,20 +115,20 @@
   <!-- Focus areas -->
   <p class="shsat-section-title">Focus areas</p>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:8px;">
-    <div style="border:1px solid rgba(196,99,91,.25);border-radius:6px;padding:14px 16px;background:rgba(196,99,91,.06);">
-      <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#c4635b;margin-bottom:5px;">Math</div>
+    <div style="border:1px solid rgba(196,154,90,.25);border-radius:6px;padding:14px 16px;background:rgba(196,154,90,.06);">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#c49a5a;margin-bottom:5px;">Math</div>
       <div style="font-size:14px;font-weight:700;color:#111;margin-bottom:4px;">Multi-step</div>
-      <div style="font-size:12px;color:rgba(0,0,0,0.5);">7/17 correct — 42%</div>
+      <div style="font-size:12px;color:rgba(0,0,0,0.5);">14/18 correct — 78%</div>
     </div>
-    <div style="border:1px solid rgba(196,99,91,.25);border-radius:6px;padding:14px 16px;background:rgba(196,99,91,.06);">
-      <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#c4635b;margin-bottom:5px;">Reading</div>
-      <div style="font-size:14px;font-weight:700;color:#111;margin-bottom:4px;">Evidence</div>
-      <div style="font-size:12px;color:rgba(0,0,0,0.5);">7/12 correct — 58%</div>
-    </div>
-    <div style="border:1px solid rgba(196,99,91,.25);border-radius:6px;padding:14px 16px;background:rgba(196,99,91,.06);">
-      <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#c4635b;margin-bottom:5px;">Math</div>
+    <div style="border:1px solid rgba(196,154,90,.25);border-radius:6px;padding:14px 16px;background:rgba(196,154,90,.06);">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#c49a5a;margin-bottom:5px;">Math</div>
       <div style="font-size:14px;font-weight:700;color:#111;margin-bottom:4px;">Geometry</div>
-      <div style="font-size:12px;color:rgba(0,0,0,0.5);">6/11 correct — 55%</div>
+      <div style="font-size:12px;color:rgba(0,0,0,0.5);">9/11 correct — 82%</div>
+    </div>
+    <div style="border:1px solid rgba(90,171,140,.25);border-radius:6px;padding:14px 16px;background:rgba(90,171,140,.06);">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#5aab8c;margin-bottom:5px;">Reading</div>
+      <div style="font-size:14px;font-weight:700;color:#111;margin-bottom:4px;">Evidence</div>
+      <div style="font-size:12px;color:rgba(0,0,0,0.5);">10/12 correct — 85%</div>
     </div>
   </div>
 
@@ -150,11 +141,11 @@
   new Chart(ctx, {
     type: "line",
     data: {
-      labels: ["Baseline"],
+      labels: ["Baseline", "Bench 1", "Bench 2", "Bench 3", "Bench 4"],
       datasets: [
         {
           label: "Overall",
-          data: [68],
+          data: [68, 74, 79, 84, 89],
           borderColor: "#1a1a1a",
           backgroundColor: "rgba(26,26,26,.08)",
           borderWidth: 2.5,
@@ -165,7 +156,7 @@
         },
         {
           label: "RC",
-          data: [72],
+          data: [72, 78, 84, 88, 92],
           borderColor: "#5aab8c",
           backgroundColor: "transparent",
           borderWidth: 1.5,
@@ -176,7 +167,7 @@
         },
         {
           label: "QR+MA",
-          data: [64],
+          data: [64, 70, 74, 80, 86],
           borderColor: "#8896a8",
           backgroundColor: "transparent",
           borderWidth: 1.5,
