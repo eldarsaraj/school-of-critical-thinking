@@ -13,14 +13,16 @@
 
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <div class="sl-hero">
-  <h1 class="sl-hero__title">A score alone doesn't tell you what went wrong, and what to study next.</h1>
+  <h1 class="sl-hero__title">Is your child ready for the SHSAT? Let's find out.</h1>
   <p class="sl-hero__sub">
-    We do. After one practice test, you'll see the specific mistake patterns costing
-    your child points, ranked by impact, named by type, and matched to the exact
-    reasoning error behind each one. No more studying blind. No more guessing what to fix first.
+    Your child may be a genius (or a dumbass, we're not judging), but that doesn't mean 
+    they're ready for the SHSAT. The test is a tricky beast that fools even adults. There's
+    only one way to know which is it: by taking a diagnostic test. 
   </p>
   <p class="sl-hero__sub">
-    You don't walk away with a number, but with a map of how your child thinks.
+    We're not here to sell you a diagnostic. You can take it for free. Our Baseline test
+    will tell you exactly how ready they are for the test, and what exactly you should do
+    in case they're not.
   </p>
   <div class="sl-hero__actions">
     {% if user.is_authenticated %}
@@ -34,26 +36,27 @@
 
 <!-- ── Objection handlers ──────────────────────────────────────────────── -->
 <section class="sl-diff">
-  <p class="sl-diff__label">Skeptical? Good.</p>
+  <p class="sl-diff__label">Here's why we're different.</p>
   <div class="sl-diff__grid">
 
     <div class="sl-diff-card">
       <p class="sl-diff-card__marker">01</p>
       <h2 class="sl-diff-card__title">Our scores are deliberately conservative</h2>
       <p class="sl-diff-card__body">
-        We'd rather tell you the uncomfortable truth now than let the test do it in November.
-        Every scaled score on this platform is calibrated to under-promise. If your child
+        We're not afraid of telling you that your child sucks at reading comprehension.
+        It's better you hear it from us than hear it in November. That's why we never inflate
+        our scores. Every scaled score on this platform is calibrated to under-promise. If your child
         hits a cutoff here, they'll hit it on test day.
       </p>
     </div>
 
     <div class="sl-diff-card">
       <p class="sl-diff-card__marker">02</p>
-      <h2 class="sl-diff-card__title">No AI chatbot feedback. Not one line.</h2>
+      <h2 class="sl-diff-card__title">No AI chatbot feedback. We're human (imperfectly so)</h2>
       <p class="sl-diff-card__body">
-        Every explanation your child sees after a wrong answer was written and structured
-        by a person: precise, deliberate, reviewed. There is no language model
-        generating feedback on the fly.
+        Every ambitious fool can hook up a API and create a series of SHSAT-sounding practice questions, 
+        and "review lessons." We don't do that. Our tests have been created using tools of psychometrics
+        and educational measurement, and they're designed by a person, during one long hot NYC summer.
       </p>
     </div>
 
@@ -61,9 +64,10 @@
       <p class="sl-diff-card__marker">03</p>
       <h2 class="sl-diff-card__title">Reverse-engineered from the actual test</h2>
       <p class="sl-diff-card__body">
-        We analyzed 1,368 questions from eight years of DOE-released sample tests.
-        Every practice question is built from that data: same reading levels,
-        same skill distributions, same trap types. Not guesswork; just statistics.
+        Before we even wrote one question, we analyzed 1,368 questions from eight years 
+        of DOE-released sample tests. Why? Because that's what we do (and because we're slightly OCD).
+        Every test question here is built from that data: same reading levels, same skill distributions, 
+        same trap types. There's no guesswork here; only statistics (and a lot of coffee).
       </p>
     </div>
 
@@ -71,10 +75,10 @@
       <p class="sl-diff-card__marker">04</p>
       <h2 class="sl-diff-card__title">If you want a shortcut, this isn't it</h2>
       <p class="sl-diff-card__body">
-        There are no tricks to game the SHSAT, no matter what anybody tells you. 
-        There is only understanding why wrong answers
-        look right, and training your child to see through them. That takes work, and it is hard.
-        This platform makes it a bit easier by telling you exactly where to focus the most.
+        If you want a quick solution to your test problem, look elsewhere. You must know that 
+        there are no tricks to game the SHSAT, no matter what anybody tells you. 
+        There is only hard work, both by you (the parent or a tutor) and by your child (or student).
+        This platform makes it a bit easier by telling you exactly where to focus most of your efforts.
       </p>
     </div>
 
@@ -84,7 +88,7 @@
 <!-- ── Interactive trap demo ────────────────────────────────────────────── -->
 <section class="sl-trap-demo">
   <p class="sl-trap-demo__label">See it in action</p>
-  <h2 class="sl-trap-demo__title">Try a real question. Click any answer.</h2>
+  <h2 class="sl-trap-demo__title">Here's a taste of a real question. Click any answer.</h2>
 
   <div class="sl-trap-demo__box" id="trapDemo">
 
@@ -150,20 +154,21 @@
   </div>
 
   <p class="sl-trap-demo__footnote">
-    This is one question from one test. Our error analysis does this across all 100, and then
-    shows you which trap types your child falls for most, and how many points each one costs.
+    This is one question from one test. Our error analysis does this for all 100 of them, and then
+    shows you which trap types your child falls for most. At the end, you get a surgical diagnosis of
+    your child's readiness for the test.
   </p>
 </section>
 
 <!-- ── Platform preview ───────────────────────────────────────────────────── -->
 <section class="sl-preview">
   <p class="sl-preview__label">After the baseline</p>
-  <h2 class="sl-preview__title">Stop wondering if the prep is working.</h2>
+  <h2 class="sl-preview__title">Don't spend a dime on prep until you know it's working.</h2>
   <p class="sl-preview__sub">
-    After every test, you see exactly what went wrong: the 3 skills costing the most
-    points, the trap types your child keeps falling for, projected placement at every
-    specialized high school, and what to study next, so your next prep session isn't random
-    but focused only on what matters.
+    The aim of our Baseline and Benchmark tests is to give you a scientifically precise picture 
+    of your child's readiness for the SHSAT. Don't spend blindly on a test prep (if you really have 
+    money to waste, then sure, go ahead) before you know what exactly your child should prep for. 
+    Check below to see the example of a dashboard with your child's error analysis.
   </p>
   {% include "pages/includes/demo_dashboard.html" %}
 </section>
@@ -173,20 +178,20 @@
   <p class="sl-features__label">What you walk away with</p>
   <div class="sl-features__grid">
     <div class="sl-feature">
-      <p class="sl-feature__title">The 3 skills costing the most points</p>
-      <p class="sl-feature__body">Accuracy broken down by ELA and Math skill area. You'll know whether Inference or Algebra is the bigger problem (and by how many points).</p>
+      <p class="sl-feature__title">Skills your child really rocks (and sucks) in</p>
+      <p class="sl-feature__body">A detailed breakdown of your child's strenghts and weaknesses across all skill areas.</p>
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">Which traps keep catching your child</p>
-      <p class="sl-feature__body">Every wrong answer is tagged by trap type. You'll see which patterns repeat across the whole test, so review targets the habit, not just the question.</p>
+      <p class="sl-feature__body">Every wrong answer is tagged by trap type. You'll see which patterns repeat across the whole test, so you can hammer on those.</p>
     </div>
     <div class="sl-feature">
-      <p class="sl-feature__title">Where your child actually places</p>
+      <p class="sl-feature__title">Can your child really get into Stuyvesant?</p>
       <p class="sl-feature__body">Projected cutoff distances for all eight specialized high schools and where your child is likely to place based on their latest performance.</p>
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">A score that won't mislead you</p>
-      <p class="sl-feature__body">Conservative scaled scores calibrated against real cutoffs. If we say your child is within range of Stuyvesant, they are.</p>
+      <p class="sl-feature__body">Conservative scaled scores calibrated to prevent overestimation. If we say your child is within range of Stuyvesant, they are.</p>
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">Adaptive difficulty, like the real test</p>
@@ -194,7 +199,7 @@
     </div>
     <div class="sl-feature">
       <p class="sl-feature__title">Progress across every attempt</p>
-      <p class="sl-feature__body">Score history, trajectory projection, and the ability to log scores from other prep books. One dashboard that tracks everything.</p>
+      <p class="sl-feature__body">Score history, trajectory projection, and the ability to log scores from other prep books. You'll be able to track everything.</p>
     </div>
   </div>
 </section>
@@ -202,11 +207,18 @@
 <!-- ── Philosophy ────────────────────────────────────────────────────────── -->
 <section class="sl-philosophy">
   <p class="sl-philosophy__label">Why we built this</p>
-  <h2 class="sl-philosophy__title">Most test prep is built for a student who doesn't exist.</h2>
+  <h2 class="sl-philosophy__title">Honestly, a lot of test prep out there is just bullshit.</h2>
   <div class="sl-philosophy__body">
-    <p>Generic study plans assume every child has the same gaps. They don't. One child loses points on inference traps. Another on comma splices. A third understands the math but misreads what the question is asking. A prep plan that treats them identically wastes everyone's time.</p>
-    <p>I built this platform because I believe anything can be reverse-engineered to first principles — including a standardized test. So I took apart eight years of DOE-released exams, question by question, trap by trap, and built practice tests that mirror the real thing down to the reading levels and distractor patterns. Then I built the analytics to show you exactly where your child's reasoning breaks down, so you stop studying blind and start working on what actually matters.</p>
-    <p>The SHSAT will come and go. What stays is the ability to think clearly under pressure, to see through a wrong answer that looks right, and to reason carefully when it counts. That's what this platform actually teaches.</p>
+    <p>Let's be honest here: most test prep is just a way to make money off of stressed parents and students. 
+      When these gigantic test-prep companies sell their expertise by saying how X% of their students
+      have gotten offers from Stuyvesant or Bronx Science, they're counting on your ignorance of statistics:
+      even if that is true, you can't really tell those kids got in because of the prep or because of their 
+      natural ability. This is called selection bias. Smart parents will know that and be cautios before
+    they spend their entire vacation saving for a week of test prep (in case you haven't noticed, test prep
+    is waaaaaay too expensive).</p>
+    <p>We don't do that. We focus on helping your child improve. We give you information and intelligence. 
+      What you choose to do with that is up to you.
+    </p>
   </div>
 </section>
 
@@ -219,7 +231,7 @@
   {% else %}
     <a href="{% url 'shsat_signup' %}" class="sl-btn">Create a free account &rarr;</a>
   {% endif %}
-  <p class="sl-no-ai">Every week of prep without a diagnosis is a week of studying blind.</p>
+  <p class="sl-no-ai">Be a critical thinking parent, not an ATM for the test prep industry.</p>
 </section>
 
 <script>
