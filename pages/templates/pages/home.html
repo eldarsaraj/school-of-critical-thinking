@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Standardized tests, reverse-engineered — School of Critical Thinking{% endblock %}
+{% block title %}Education Analytics — School of Critical Thinking{% endblock %}
 
-{% block meta_description %}<meta name="description" content="We data-mine real exams — 1,368 SHSAT questions and counting — and turn them into precise readiness reports for students, parents, and tutors.">{% endblock %}
+{% block meta_description %}<meta name="description" content="Data analytics and reverse engineering of standardized tests to empower parents, students, and tutors.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="School of Critical Thinking" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Standardized tests, reverse-engineered — School of Critical Thinking" />
-  <meta property="og:description" content="We data-mine real exams — 1,368 SHSAT questions and counting — and turn them into precise readiness reports for students, parents, and tutors." />
+  <meta property="og:title" content="Education Analytics — School of Critical Thinking" />
+  <meta property="og:description" content="Data analytics and reverse engineering of standardized tests to empower parents, students, and tutors." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Standardized tests, reverse-engineered — School of Critical Thinking" />
-  <meta name="twitter:description" content="We data-mine real exams and turn them into precise readiness reports for students, parents, and tutors." />
+  <meta name="twitter:title" content="Education Analytics — School of Critical Thinking" />
+  <meta name="twitter:description" content="Data analytics and reverse engineering of standardized tests to empower parents, students, and tutors." />
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 {% endblock %}
 
@@ -27,11 +27,12 @@
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <section class="home-hero home-hero--full">
   <div class="home-hero__text">
-    <p class="home-hero__eyebrow">New York · SHSAT and Hunter</p>
+    <p class="home-hero__eyebrow">Education Analytics · SHSAT and Hunter</p>
     <h1 class="home-hero__title">Standardized tests, reverse-engineered.</h1>
     <p class="home-hero__sub">
-      We data-mine real exams (1,368 SHSAT questions and counting) and turn
-      them into precise readiness reports for students, parents, and tutors.
+      We use data analytics to empower parents make better decisions about test prep.
+      We data-mine real exams (SHSAT, Hunter) and turn them into precise readiness
+      reports for students, parents, and tutors.
     </p>
     <div class="home-hero__actions">
       <a href="/shsat/" class="home-hero__btn">Start the free baseline test</a>
