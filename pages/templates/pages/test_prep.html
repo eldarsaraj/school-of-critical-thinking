@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Test Prep — School of Critical Thinking{% endblock %}
+{% block title %}Education Analytics — School of Critical Thinking{% endblock %}
 
-{% block meta_description %}<meta name="description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Human-written questions, named distractor traps, and full error analysis.">{% endblock %}
+{% block meta_description %}<meta name="description" content="Data-driven diagnostic tests for SHSAT and Hunter, built from statistical analysis of the official exam corpus. Full error analysis after every test.">{% endblock %}
 
 {% block social_meta %}
   <meta property="og:site_name" content="School of Critical Thinking" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Test Prep — School of Critical Thinking" />
-  <meta property="og:description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus. Human-written questions, named distractor traps, and full error analysis." />
+  <meta property="og:title" content="Education Analytics — School of Critical Thinking" />
+  <meta property="og:description" content="Data-driven diagnostic tests for SHSAT and Hunter, built from statistical analysis of the official exam corpus. Full error analysis after every test." />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Test Prep — School of Critical Thinking" />
-  <meta name="twitter:description" content="SHSAT and Hunter test prep reverse-engineered from the official corpus." />
+  <meta name="twitter:title" content="Education Analytics — School of Critical Thinking" />
+  <meta name="twitter:description" content="Data-driven diagnostic tests for SHSAT and Hunter, built from statistical analysis of the official exam corpus." />
   <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.png' %}" />
 {% endblock %}
 
@@ -26,12 +26,12 @@
 
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <div class="tp-hero">
-  <p class="tp-hero__label">Test Prep</p>
-  <h1 class="tp-hero__title">Every practice test ends with a diagnosis, not just a score.</h1>
+  <p class="tp-hero__label">Education Analytics</p>
+  <h1 class="tp-hero__title">Every test ends with a diagnosis, not just a score.</h1>
   <p class="tp-hero__sub">
-    Each test is reverse-engineered from the official exam corpus. After your child finishes,
-    you see exactly which skills cost the most points, which wrong-answer traps keep repeating,
-    and what to study next — so the next prep session targets what actually matters.
+    Each test is built using statistical analysis of the official exam corpus — real question
+    distributions, real skill weightings, real trap structures. After your child finishes,
+    you see exactly which reasoning patterns cost the most points and what to work on next.
   </p>
   <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
     <a href="/tutor/" class="home-hero__btn home-hero__btn--secondary">For tutors</a>
@@ -54,7 +54,7 @@
       <li>See which mistake patterns repeat and what to study next</li>
       <li>Conservative scores calibrated against real admissions cutoffs</li>
     </ul>
-    <a href="/shsat/" class="tp-card__cta">Start SHSAT prep &rarr;</a>
+    <a href="/shsat/" class="tp-card__cta">Start SHSAT diagnostic &rarr;</a>
   </div>
 
   <div class="tp-card">
@@ -70,7 +70,7 @@
       <li>RC, Writing, Quantitative Reasoning, Math Achievement</li>
       <li>For 7th grade entry (tested in 6th grade)</li>
     </ul>
-    <a href="/hunter/" class="tp-card__cta">Start Hunter prep &rarr;</a>
+    <a href="/hunter/" class="tp-card__cta">Start Hunter diagnostic &rarr;</a>
   </div>
 
 </div>
