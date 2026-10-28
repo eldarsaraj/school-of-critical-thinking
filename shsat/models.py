@@ -251,6 +251,20 @@ class HunterParent(Parent):
         verbose_name_plural = "Hunter Parents"
 
 
+class SHSATTestAttempt(TestAttempt):
+    class Meta:
+        proxy = True
+        verbose_name = "SHSAT Test Attempt"
+        verbose_name_plural = "SHSAT Test Attempts"
+
+
+class HunterTestAttempt(TestAttempt):
+    class Meta:
+        proxy = True
+        verbose_name = "Hunter Test Attempt"
+        verbose_name_plural = "Hunter Test Attempts"
+
+
 def _generate_invite_code():
     import random
     chars = string.ascii_uppercase + string.digits

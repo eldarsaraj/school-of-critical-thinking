@@ -5,7 +5,7 @@ from django.http import HttpResponse
 
 from .models import (
     Parent, SHSATParent, HunterParent,
-    Test, TestAttempt, Answer,
+    Test, TestAttempt, SHSATTestAttempt, HunterTestAttempt, Answer,
     QuestionReport,
     Tutor, TutorStudent,
 )
@@ -106,10 +106,9 @@ class AnswerInline(admin.TabularInline):
     readonly_fields = ["is_correct"]
 
 
-@admin.register(TestAttempt)
-class TestAttemptAdmin(admin.ModelAdmin):
-    list_display = ["get_parent_email", "get_exam_type", "test", "is_completed", "composite_score", "submitted_at"]
-    list_filter = ["test__exam_type", "is_completed", "test"]
+class _BaseTestAttemptAdmin(admin.ModelAdmin):
+    list_display = ["get_parent_email", "test", "is_completed", "composite_score", "submitted_at"]
+    list_filter = ["is_completed", "test"]
     search_fields = ["parent__user__email", "parent__child_nickname"]
     readonly_fields = ["started_at", "submitted_at"]
     ordering = ["-submitted_at"]
@@ -120,10 +119,17 @@ class TestAttemptAdmin(admin.ModelAdmin):
     get_parent_email.short_description = "Parent"
     get_parent_email.admin_order_field = "parent__user__email"
 
-    def get_exam_type(self, obj):
-        return obj.test.exam_type.upper()
-    get_exam_type.short_description = "Platform"
-    get_exam_type.admin_order_field = "test__exam_type"
+
+@admin.register(SHSATTestAttempt)
+class SHSATTestAttemptAdmin(_BaseTestAttemptAdmin):
+    def get_queryset(self, request):
+        return super().get_queryset(request).filter(test__exam_type="shsat")
+
+
+@admin.register(HunterTestAttempt)
+class HunterTestAttemptAdmin(_BaseTestAttemptAdmin):
+    def get_queryset(self, request):
+        return super().get_queryset(request).filter(test__exam_type="hunter")
 
 
 # ---------------------------------------------------------------------------
