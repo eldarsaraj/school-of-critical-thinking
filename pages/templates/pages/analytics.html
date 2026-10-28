@@ -29,35 +29,54 @@
   <p class="tp-hero__label">Methodology</p>
   <h1 class="tp-hero__title">A two-layered analysis aimed at one thing: precision.</h1>
   <p class="tp-hero__sub">
-    The New York City Department of Education does not publish scoring rubrics,
-    question-design guidelines, or difficulty specifications for the SHSAT or
-    Hunter entrance exams. Every test-prep provider is, to some degree, working
-    from incomplete information.
+    When you learn a bit about how the standardized tests work, it becomes really
+    infuriating to read all the marketing done by big test-prep companies because
+    they're rarely honest about one thing: nobody really knows how exactly various
+    tests are made.
+    
+    For example, official institution (like the New York City Department of Education)
+    do not publish scoring rubrics, question-design guidelines, or difficulty specifications 
+    for the tests they administer (like the SHSAT). So, every test-prep provider is, 
+    to some degree, working from incomplete information. Everybody's tapping in the dark, 
+    yet only few will admit that.
   </p>
   <p class="tp-hero__sub">
-    This platform takes a different approach. Rather than relying on intuition or
-    anecdotal teaching experience, I built two distinct analytical layers — one
-    facing the exam itself, the other facing the student — using methods drawn
-    from statistics, machine learning, and natural language processing.
+    This platform takes a different approach. First, we admit that we don't have a crystal
+    ball (or a psychic ability) to peer inside the test-makers' minds.
+    But that doesn't mean we can't uncover some truths about the test structure by applying 
+    other methods. And that's exactly what we do.
+    
+    We use methods drawn from statistics, machine learning, and natural language processing
+    to discover how standardized tests are made: what skills they look for, how they shape
+    their questions, what kinds of traps and distractors they use, and similar. We use what 
+    we find to inform parents and tutors about the test, and to make our own diagnostic tests
+    that tell you how prepared students are for them. 
+
     The result is a preparatory and analytic system where every question, 
     every distractor, and every diagnostic metric is grounded in data.
   </p>
   <p class="tp-hero__sub">
     My name is Eldar Sarajlic. I hold a Ph.D. in philosophy and serve as an
     Associate Professor at the City University of New York. My academic work
-    focuses on reasoning, judgment, and education. This platform is the applied
-    extension of that research — fully human-designed, not AI-generated.
+    focuses on reasoning, judgment, and education. Test prep is extremely expensive
+    (and often ineffective). My goal is to help you get the intelligence you need so
+    your child succeeds without you breaking your bank.
+  </p>
+    <p class="tp-hero__sub">
+    What you will see below is a taste of our analytic approach to reverse-engineering
+    standardized tests. For more specific analyses, please visit the Research section of this
+    site.
   </p>
 </div>
 
 <!-- ── Front-end analytics ─────────────────────────────────────────────── -->
 <div class="tp-method">
   <p class="tp-method__label">01 — Front-end analytics: examining the test</p>
-  <h2 class="tp-method__title">Before any student sits down, the exam itself is the first subject of study.</h2>
+  <h2 class="tp-method__title">Everything is grounded in data, not guesswork.</h2>
   <p class="tp-method__body">
-    I collected eight years of DOE-released sample tests — over a thousand pages
-    of material comprising 1,368 questions and more than 5,000 individual answer
-    choices. This corpus was then subjected to systematic analysis:
+    We collect official sample tests (for example, for the SHSAT we collected 
+    over a thousand pages of material comprising 1,368 questions and more than 
+    5,000 individual answer choices) and subject them to systematic analysis:
     Flesch-Kincaid readability scoring across all reading passages,
     NLP-based classification of every question by cognitive task,
     a distractor taxonomy that categorizes each wrong answer by the type of
@@ -65,11 +84,10 @@
     mapping of skills, topics, and difficulty levels across test years.
   </p>
   <p class="tp-method__body">
-    The objective is to reverse-engineer what these exams actually measure —
+    The objective is to reverse-engineer what these exams actually measure: 
     not what they claim to measure, but what the data reveals about their
-    construction. The sections below present some of the key findings.
-    I will publish more detailed analyses in the Research section of this
-    site.
+    construction. The analysis and data below show how we did this for the SHSAT, 
+    but the approach is the same for all tests we analyze.
   </p>
 </div>
 
@@ -166,11 +184,11 @@
 <!-- ── Philosophy ──────────────────────────────────────────────────────── -->
 <div class="tp-method">
   <p class="tp-method__label">07 — Philosophy of education</p>
-  <h2 class="tp-method__title">My goal is not to teach tricks, but reasoning.</h2>
+  <h2 class="tp-method__title">Our goal is not to teach tricks, but reasoning.</h2>
   <p class="tp-method__body">
     Standardized test performance is, at its core, a measure of critical thinking
     under constraint. The analytics on this platform exist to identify precisely
-    where a student's reasoning breaks down — not merely where an answer is wrong.
+    where a student's reasoning breaks down, not merely where an answer is wrong.
     A wrong answer caused by misreading a question, by falling for a plausible
     distractor, or by rushing past a key detail represents three entirely different
     failures, each requiring a different intervention. Good tutors know this well.
@@ -189,8 +207,8 @@
     The front-end analysis produced Baseline and Benchmark tests that replicate,
     as closely as the data permits, the actual distribution of reading complexity,
     question types, skill areas, and distractor strategies used by the DOE. Every
-    question is carefully crafted and double-checked by a human, not AI. 
-    Every wrong answer is tagged by trap type. Every explanation is structured by a person.
+    question is carefully crafted and double-checked by a (coffee-powered and slightly OCD)
+    human, not AI. 
   </p>
   <p class="tp-method__body">
     The back-end analysis turns each completed test into a detailed diagnostic:
