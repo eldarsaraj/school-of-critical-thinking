@@ -215,10 +215,11 @@ main { padding: 48px 24px; }
   border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 .home-hero--full + .home-hero__image {
-  margin-top: 48px;
+  margin-top: 64px;
 }
 .home-hero__image + .tp-grid {
   border-top: none;
+  margin-top: 12px;
 }
 .home-hero__image img {
   display: block;
