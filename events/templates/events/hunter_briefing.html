@@ -18,7 +18,8 @@
 
 {% else %}
 
-  <h1>Hunter Analytics: A Data-Driven Briefing to Help You Understand the Test</h1>
+  <h1 style="margin-top: 16px;">Hunter Analytics</h1>
+  <p style="font-size: 20px; line-height: 1.4; color: rgba(0,0,0,0.65); margin: -10px 0 28px 0; max-width: 640px;">A Data-Driven Briefing to Help You Understand the Test</p>
 
   <p style="max-width: 640px; line-height: 1.7; margin-bottom: 8px;">
     A free Zoom session for parents exploring the Hunter College High School entrance test.
@@ -29,26 +30,6 @@
   <p style="max-width: 640px; line-height: 1.7; margin-bottom: 32px;">
     Two sessions available. Pick the one that works for you.
   </p>
-
-  <div style="max-width: 640px; margin-bottom: 40px; padding: 24px 24px 16px; border: 0.5px solid rgba(0,0,0,0.10); border-radius: 10px; background: rgba(255, 254, 248, 0.85);">
-    <p style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.55); margin: 0 0 10px 0;">Who are we?</p>
-    <p style="font-size: 16px; line-height: 1.7; color: rgba(0,0,0,0.78); margin: 0 0 14px 0;">
-      We're not a tutoring company. The School of Critical Thinking is a research and analytics
-      organization that uses <strong>machine learning and NLP to reverse-engineer standardized
-      tests</strong> — pulling apart question structures, score distributions, and difficulty patterns
-      that aren't visible to the naked eye.
-    </p>
-    <p style="font-size: 16px; line-height: 1.7; color: rgba(0,0,0,0.78); margin: 0 0 14px 0;">
-      We don't sell test prep. We don't have a tutoring program.
-      What we offer is the analysis itself, presented clearly, so you can make
-      <strong>your own decisions</strong> based on data, not on marketing from companies that profit from your anxiety.
-    </p>
-    <p style="font-size: 16px; line-height: 1.7; color: rgba(0,0,0,0.78); margin: 0;">
-      The briefing is led by <strong>Eldar Sarajlic, Ph.D.</strong> — Associate Professor at the
-      City University of New York, published researcher on reasoning and education, and the person
-      behind the data analysis you'll see in the session. This briefing is free.
-    </p>
-  </div>
 
   <form class="contact-form" method="post" action="/hunter-briefing/" novalidate>
     {% csrf_token %}
@@ -103,10 +84,11 @@
     </div>
 
     <div class="contact-form__field">
-      <label style="font-weight: normal; cursor: pointer;">
+      <label style="font-weight: normal; cursor: pointer; display: flex; align-items: baseline; gap: 6px;">
         <input type="checkbox" name="opt_in_newsletter"
+               style="flex-shrink: 0; position: relative; top: 1px;"
                {% if form.opt_in_newsletter %}checked{% endif %}>
-        Send me the slides and occasional research updates
+        <span>Send me the slides and occasional research updates</span>
       </label>
     </div>
 
@@ -114,6 +96,27 @@
       <button type="submit">Register</button>
     </p>
   </form>
+
+  <div style="max-width: 640px; margin-top: 48px; padding: 24px 24px 16px; border: 0.5px solid rgba(0,0,0,0.10); border-radius: 10px; background: rgba(255, 254, 248, 0.85);">
+    <p style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.55); margin: 0 0 10px 0;">Who are we?</p>
+    <p style="font-size: 16px; line-height: 1.7; color: rgba(0,0,0,0.78); margin: 0 0 14px 0;">
+      We're not a tutoring company. The School of Critical Thinking is a research and analytics
+      organization that uses <strong>machine learning and NLP to reverse-engineer standardized
+      tests</strong> — pulling apart question structures, score distributions, and difficulty patterns
+      that aren't visible to the naked eye.
+    </p>
+    <p style="font-size: 16px; line-height: 1.7; color: rgba(0,0,0,0.78); margin: 0 0 14px 0;">
+      We don't sell test prep. We don't have a tutoring program.
+      What we offer is the analysis itself, presented clearly, so you can make
+      <strong>your own decisions</strong> based on data, not on marketing from companies that profit
+      from your anxiety.
+    </p>
+    <p style="font-size: 16px; line-height: 1.7; color: rgba(0,0,0,0.78); margin: 0;">
+      The briefing is led by <strong>Eldar Sarajlic, Ph.D.</strong> — Associate Professor at the
+      City University of New York, published researcher on reasoning and education, and the person
+      behind the data analysis you'll see in the session. This briefing is free.
+    </p>
+  </div>
 
 {% endif %}
 
