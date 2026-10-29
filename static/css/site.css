@@ -214,6 +214,9 @@ main { padding: 48px 24px; }
   line-height: 0;
   border-bottom: 1px solid rgba(0,0,0,0.08);
 }
+.home-hero--full + .home-hero__image {
+  margin-top: 48px;
+}
 .home-hero__image + .tp-grid {
   border-top: none;
 }
