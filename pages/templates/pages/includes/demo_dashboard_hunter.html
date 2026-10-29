@@ -1,5 +1,5 @@
 <!-- ── Hunter live demo dashboard ────────────────────────────────────────────
-     Mock data: child "Jordan", Baseline + 4 Benchmarks completed
+     Mock data: child "Jordan", Baseline + 2 Benchmarks completed
      Shows significant improvement across all tests.
      All data is hardcoded — no DB involved.
 ──────────────────────────────────────────────────────────────────────────── -->
@@ -8,7 +8,7 @@
   <div class="home-demo__header">
     <span class="home-demo__badge">Live example</span>
     <span class="home-demo__title">Jordan's Dashboard</span>
-    <span class="home-demo__subtitle">5 tests completed · Baseline + 4 Benchmarks</span>
+    <span class="home-demo__subtitle">3 tests completed · Baseline + 2 Benchmarks</span>
   </div>
 
   <!-- KPI cards -->
@@ -19,7 +19,7 @@
       <div style="display:inline-block;margin-top:6px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#5aab8c22;color:#5aab8c;">Highly Competitive</div>
     </div>
     <div class="shsat-stat-card">
-      <div class="shsat-stat-card__value">5</div>
+      <div class="shsat-stat-card__value">3</div>
       <div class="shsat-stat-card__label">Tests completed</div>
     </div>
     <div class="shsat-stat-card">
@@ -42,7 +42,7 @@
   </p>
 
   <!-- Section breakdown -->
-  <p class="shsat-section-title">Score by section — Benchmark 4</p>
+  <p class="shsat-section-title">Score by section — Benchmark 2</p>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:28px;">
     <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:14px 16px;text-align:center;">
       <div style="font-size:22px;font-weight:700;color:#111;">92%</div>
@@ -141,11 +141,11 @@
   new Chart(ctx, {
     type: "line",
     data: {
-      labels: ["Baseline", "Bench 1", "Bench 2", "Bench 3", "Bench 4"],
+      labels: ["Baseline", "Bench 1", "Bench 2"],
       datasets: [
         {
           label: "Overall",
-          data: [68, 74, 79, 84, 89],
+          data: [68, 79, 89],
           borderColor: "#1a1a1a",
           backgroundColor: "rgba(26,26,26,.08)",
           borderWidth: 2.5,
@@ -156,7 +156,7 @@
         },
         {
           label: "RC",
-          data: [72, 78, 84, 88, 92],
+          data: [72, 84, 92],
           borderColor: "#5aab8c",
           backgroundColor: "transparent",
           borderWidth: 1.5,
@@ -167,7 +167,7 @@
         },
         {
           label: "QR+MA",
-          data: [64, 70, 74, 80, 86],
+          data: [64, 74, 86],
           borderColor: "#8896a8",
           backgroundColor: "transparent",
           borderWidth: 1.5,
