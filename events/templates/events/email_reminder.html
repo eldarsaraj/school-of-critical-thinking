@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reminder</title>
+</head>
+<body style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 24px; color: #1a1a1a; line-height: 1.7;">
+
+  <p style="margin: 0 0 24px 0;">{{ registration.name }},</p>
+
+  {% if hours_label == "24h" %}
+  <p style="margin: 0 0 16px 0;">
+    Your Hunter Test Briefing is <strong>tomorrow</strong>.
+  </p>
+  {% else %}
+  <p style="margin: 0 0 16px 0;">
+    Your Hunter Test Briefing starts in <strong>1 hour</strong>.
+  </p>
+  {% endif %}
+
+  <p style="margin: 0 0 8px 0;"><strong>Date:</strong> {{ session.date_time|date:"l, N j, Y" }}</p>
+  <p style="margin: 0 0 8px 0;"><strong>Time:</strong> {{ session.date_time|date:"g:i A e" }}</p>
+  <p style="margin: 0 0 24px 0;">
+    <strong>Zoom link:</strong>
+    <a href="{{ session.zoom_link }}" style="color: #1a1a1a;">{{ session.zoom_link }}</a>
+  </p>
+
+  <p style="margin: 0 0 16px 0;">See you there.</p>
+
+  <hr style="border: none; border-top: 1px solid #ddd; margin: 32px 0;">
+
+  <p style="margin: 0; font-size: 14px; color: #555;">
+    School of Critical Thinking
+  </p>
+
+</body>
+</html>

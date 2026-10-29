@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "cloudinary",
     "cloudinary_storage",
+    "events",
     "shsat",
     "evaluators",
     "pages",

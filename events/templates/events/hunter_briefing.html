@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Hunter Test Briefing — School of Critical Thinking{% endblock %}
+
+{% block meta_description %}<meta name="description" content="Register for a free Zoom briefing on the Hunter College High School entrance test. Learn how the test works, what scores mean, and how to prepare.">{% endblock %}
+
+{% block content %}
+
+{% if registered %}
+
+  <h1>You're registered.</h1>
+  <p style="max-width: 600px; line-height: 1.7; margin-bottom: 16px;">
+    Check your email for a confirmation with the Zoom link and a calendar invite.
+    We'll also send you a reminder before the session.
+  </p>
+  <p><a href="/">Back to home</a></p>
+
+{% else %}
+
+  <h1>Hunter Test Briefing</h1>
+
+  <p style="max-width: 640px; line-height: 1.7; margin-bottom: 8px;">
+    A free Zoom session for parents exploring the Hunter College High School entrance test.
+    We'll cover how the test works, what the scores mean, and how to prepare — based on
+    data analysis of real exams, not marketing claims.
+  </p>
+  <p style="max-width: 640px; line-height: 1.7; margin-bottom: 32px;">
+    Two sessions available. Pick the one that works for you.
+  </p>
+
+  <form class="contact-form" method="post" action="/hunter-briefing/" novalidate>
+    {% csrf_token %}
+    <div style="display:none;" aria-hidden="true">
+      <input type="text" name="website" tabindex="-1" autocomplete="off">
+    </div>
+    <input type="hidden" name="source" value="{{ form.source|default:src }}">
+
+    {% if errors %}
+      <p class="contact-error" role="alert">Please fix the fields below and try again.</p>
+    {% endif %}
+
+    <div class="contact-form__field">
+      <label for="id_name">Your name</label>
+      {% if errors.name %}<p class="contact-form__error">{{ errors.name }}</p>{% endif %}
+      <input type="text" id="id_name" name="name"
+             value="{{ form.name|default:'' }}" required autocomplete="name"
+             aria-invalid="{% if errors.name %}true{% else %}false{% endif %}">
+    </div>
+
+    <div class="contact-form__field">
+      <label for="id_email">Email address</label>
+      {% if errors.email %}<p class="contact-form__error">{{ errors.email }}</p>{% endif %}
+      <input type="email" id="id_email" name="email"
+             value="{{ form.email|default:'' }}" required autocomplete="email"
+             aria-invalid="{% if errors.email %}true{% else %}false{% endif %}">
+    </div>
+
+    <div class="contact-form__field">
+      <label>Choose a session</label>
+      {% if errors.session %}<p class="contact-form__error">{{ errors.session }}</p>{% endif %}
+      {% for s in sessions %}
+        <label style="display: block; margin: 8px 0; font-weight: normal; cursor: pointer;">
+          <input type="radio" name="session" value="{{ s.id }}"
+                 {% if form.session == s.id|stringformat:"d" %}checked{% endif %}>
+          {{ s.title }} — {{ s.date_time|date:"l, N j \a\t g:i A e" }}
+        </label>
+      {% empty %}
+        <p style="color: #888;">No sessions currently available.</p>
+      {% endfor %}
+    </div>
+
+    <div class="contact-form__field">
+      <label for="id_school">Child's school <span style="color: #888; font-weight: normal;">(optional)</span></label>
+      <input type="text" id="id_school" name="school"
+             value="{{ form.school|default:'' }}" autocomplete="organization">
+    </div>
+
+    <div class="contact-form__field">
+      <label for="id_question">What's your biggest question about the Hunter test? <span style="color: #888; font-weight: normal;">(optional)</span></label>
+      <textarea id="id_question" name="question" rows="3">{{ form.question|default:'' }}</textarea>
+    </div>
+
+    <div class="contact-form__field">
+      <label style="font-weight: normal; cursor: pointer;">
+        <input type="checkbox" name="opt_in_newsletter"
+               {% if form.opt_in_newsletter %}checked{% endif %}>
+        Send me the slides and occasional research updates
+      </label>
+    </div>
+
+    <p class="contact-form__action">
+      <button type="submit">Register</button>
+    </p>
+  </form>
+
+{% endif %}
+
+{% endblock %}

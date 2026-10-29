@@ -15,6 +15,7 @@ admin.site.index_title = "Dashboard"
 # Force admin app ordering: priority apps first, low-priority last
 _ADMIN_APP_ORDER = [
     "shsat",          # Test Prep — parents, tutors, attempts
+    "events",         # Event registrations
     "evaluators",     # Essay Evaluations
     "pages",          # Leads & Messages
     "articles",       # Research articles
@@ -47,6 +48,7 @@ sitemaps = {
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("articles/", include("articles.urls")),
+    path("", include("events.urls")),
     path("", include("pages.urls")),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path("diagnostic/", include("diagnostic.urls")),

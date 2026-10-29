@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You're registered</title>
+</head>
+<body style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 24px; color: #1a1a1a; line-height: 1.7;">
+
+  <p style="margin: 0 0 24px 0;">{{ registration.name }},</p>
+
+  <p style="margin: 0 0 16px 0;">
+    You're registered for <strong>{{ session.title }}</strong>.
+  </p>
+
+  <p style="margin: 0 0 8px 0;"><strong>Date:</strong> {{ session.date_time|date:"l, N j, Y" }}</p>
+  <p style="margin: 0 0 8px 0;"><strong>Time:</strong> {{ session.date_time|date:"g:i A e" }}</p>
+  <p style="margin: 0 0 24px 0;">
+    <strong>Zoom link:</strong>
+    <a href="{{ session.zoom_link }}" style="color: #1a1a1a;">{{ session.zoom_link }}</a>
+  </p>
+
+  <p style="margin: 0 0 16px 0;">
+    A calendar invite (.ics file) is attached to this email. Add it to your calendar so you don't forget.
+  </p>
+
+  <p style="margin: 0 0 16px 0;">
+    We'll send you a reminder the day before and one hour before the session.
+  </p>
+
+  <hr style="border: none; border-top: 1px solid #ddd; margin: 32px 0;">
+
+  <p style="margin: 0; font-size: 14px; color: #555;">
+    School of Critical Thinking
+  </p>
+
+</body>
+</html>
