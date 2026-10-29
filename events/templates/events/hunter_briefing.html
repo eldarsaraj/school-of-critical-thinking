@@ -18,7 +18,7 @@
 
 {% else %}
 
-  <h1>Hunter Test Analytics: A Data-Driven Briefing to Help You Understand the Test</h1>
+  <h1>Hunter Analytics: A Data-Driven Briefing to Help You Understand the Test</h1>
 
   <p style="max-width: 640px; line-height: 1.7; margin-bottom: 8px;">
     A free Zoom session for parents exploring the Hunter College High School entrance test.
@@ -26,16 +26,29 @@
     what the scores mean, and how to choose test prep. 
   </p>
 
-  <p style="max-width: 640px; line-height: 1.7; margin-bottom: 12px;">
+  <p style="max-width: 640px; line-height: 1.7; margin-bottom: 32px;">
     Two sessions available. Pick the one that works for you.
   </p>
 
-  <p style="max-width: 640px; line-height: 1.7; margin-bottom: 32px; font-size: 0.92em; color: #555;">
-    The School of Critical Thinking is a research and analytics organization, not a test prep service.
-    We use machine learning and natural language processing to reverse-engineer standardized tests
-    and uncover the patterns inside them. We don't sell tutoring. What we offer is
-    the analysis itself — so parents can make informed decisions with real data, not marketing.
-  </p>
+  <div style="max-width: 640px; margin-bottom: 40px; padding: 24px 24px 16px; border: 0.5px solid rgba(0,0,0,0.10); border-radius: 10px; background: rgba(255, 254, 248, 0.85);">
+    <p style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.55); margin: 0 0 10px 0;">Who are we?</p>
+    <p style="font-size: 16px; line-height: 1.7; color: rgba(0,0,0,0.78); margin: 0 0 14px 0;">
+      We're not a tutoring company. The School of Critical Thinking is a research and analytics
+      organization that uses <strong>machine learning and NLP to reverse-engineer standardized
+      tests</strong> — pulling apart question structures, score distributions, and difficulty patterns
+      that aren't visible to the naked eye.
+    </p>
+    <p style="font-size: 16px; line-height: 1.7; color: rgba(0,0,0,0.78); margin: 0 0 14px 0;">
+      We don't sell test prep. We don't have a tutoring program.
+      What we offer is the analysis itself, presented clearly, so you can make
+      <strong>your own decisions</strong> based on data, not on marketing from companies that profit from your anxiety.
+    </p>
+    <p style="font-size: 16px; line-height: 1.7; color: rgba(0,0,0,0.78); margin: 0;">
+      The briefing is led by <strong>Eldar Sarajlic, Ph.D.</strong> — Associate Professor at the
+      City University of New York, published researcher on reasoning and education, and the person
+      behind the data analysis you'll see in the session. This briefing is free.
+    </p>
+  </div>
 
   <form class="contact-form" method="post" action="/hunter-briefing/" novalidate>
     {% csrf_token %}
