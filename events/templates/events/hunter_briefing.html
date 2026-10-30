@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static tz %}
 
-{% block title %}Hunter Test Briefing — School of Critical Thinking{% endblock %}
+{% block title %}Inside the Hunter Test — School of Critical Thinking{% endblock %}
 
 {% block meta_description %}<meta name="description" content="Register for a free Zoom briefing on the Hunter College High School entrance test. Learn how the test works, what scores mean, and how to prepare.">{% endblock %}
 
@@ -22,13 +22,70 @@
   <p style="font-size: 20px; line-height: 1.4; color: rgba(0,0,0,0.65); margin: -10px 0 28px 0; max-width: 640px;">A Data-Driven Briefing to Help You Understand the Test</p>
 
   <p style="max-width: 640px; line-height: 1.7; margin-bottom: 8px;">
-    A free Zoom session for parents exploring the Hunter College High School entrance test.
-    We'll present findings of our extensive data analysis of the test, covering how the test works, 
-    what the scores mean, and how to choose test prep. 
+    The Hunter High School test is a complex standardized test created by experts whose inner workings are
+    not available to the wider public. Most parents rely on previous test-takers and tutors to
+    guide them through preparation. Given the highly competitive nature of the admission process, this creates
+    an imbalance between parents who have access to high-quality information about the test and those who don't.
   </p>
 
-  <p style="max-width: 640px; line-height: 1.7; margin-bottom: 32px;">
-    Two sessions available. Pick the one that works for you.
+  <p style="max-width: 640px; line-height: 1.7; margin-bottom: 8px;">
+    But what if we could use publicly available information to reverse-engineer the test and uncover its inner
+    workings using data-driven analysis?
+  </p>
+
+  <p style="max-width: 640px; line-height: 1.7; margin-bottom: 24px;">
+    That's the mission of the School of Critical Thinking. Over the past several months, we have
+    analyzed every aspect of the test — the skills it measures, the traps it sets, and the structure
+    of its reading passages. Here's a taste of what we found.
+  </p>
+
+  <!-- ── Preview: Skills breakdown ────────────────────────────────────── -->
+  <div style="max-width: 640px; margin-bottom: 28px;">
+    <p style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.45); margin: 0 0 10px 0;">From the briefing</p>
+    <img src="{% static 'images/briefing-chart-skills.png' %}" alt="Breakdown of what Hunter reading questions test — inference dominates at 41%" style="width: 100%; display: block; border-radius: 8px;">
+    <p style="font-size: 14px; line-height: 1.6; color: rgba(0,0,0,0.6); margin: 10px 0 0 0;">
+      41% of reading questions test inference — the ability to draw conclusions from what's implied, not stated.
+      That's more than word meaning, figurative language, and tone combined. If your child's prep
+      isn't heavily focused on inference, the time is being spent in the wrong place.
+    </p>
+  </div>
+
+  <!-- ── Preview: Passage complexity ──────────────────────────────────── -->
+  <div style="max-width: 640px; margin-bottom: 28px;">
+    <img src="{% static 'images/briefing-chart-sentences.png' %}" alt="Average sentence length across Hunter reading passages" style="width: 100%; display: block; border-radius: 8px;">
+    <p style="font-size: 14px; line-height: 1.6; color: rgba(0,0,0,0.6); margin: 10px 0 0 0;">
+      Not all passages are created equal. Our analysis of sentence length, vocabulary density, and
+      syntactic complexity reveals which types of texts the Hunter test favors — and how wide the
+      difficulty range really is. We'll show you what makes certain passages harder than others and
+      what your child should be reading to prepare.
+    </p>
+  </div>
+
+  <!-- ── Preview: Answer traps ────────────────────────────────────────── -->
+  <div style="max-width: 640px; margin-bottom: 28px;">
+    <img src="{% static 'images/briefing-chart-traps.png' %}" alt="Wrong answers are semantically designed around the correct answer" style="width: 100%; display: block; border-radius: 8px;">
+    <p style="font-size: 14px; line-height: 1.6; color: rgba(0,0,0,0.6); margin: 10px 0 0 0;">
+      Using NLP, we measured how semantically similar wrong answers are to correct ones.
+      The result is striking: wrong answers on the Hunter test aren't random — they are
+      deliberately built around the meaning of the correct answer. This is how the test tricks
+      students who "kind of" understand the passage but can't distinguish between close options.
+      We'll break down exactly how these traps work and what to do about them.
+    </p>
+  </div>
+
+  <p style="max-width: 640px; line-height: 1.7; margin-bottom: 8px;">
+    This is just a sample. In the full briefing, we'll also cover scoring mechanics, section-by-section
+    strategy, how to evaluate test prep options, and what the data says about which skills actually
+    move the needle.
+  </p>
+
+  <p style="max-width: 640px; line-height: 1.7; margin-bottom: 8px;">
+    We're inviting parents to a free Zoom session to walk through our findings. Two sessions available —
+    pick the one that works for you.
+  </p>
+
+  <p style="max-width: 640px; line-height: 1.7; margin-bottom: 32px; font-size: 15px; color: rgba(0,0,0,0.55);">
+    No sales pitch. No upsell. Just data.
   </p>
 
   <form class="contact-form" method="post" action="/hunter-briefing/" novalidate>
