@@ -18,7 +18,8 @@
 
 {% else %}
 
-  <h1 style="margin-top: 16px;">Inside the Hunter Test</h1>
+  <p style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.45); margin: 0 0 10px 0; font-weight: 600;">Event for Parents</p>
+  <h1 style="margin-top: 0;">Inside the Hunter Test</h1>
   <p style="font-size: 20px; line-height: 1.4; color: rgba(0,0,0,0.65); margin: -10px 0 28px 0; max-width: 640px;">A Data-Driven Briefing to Help You Understand the Test</p>
 
   <p style="max-width: 640px; line-height: 1.7; margin-bottom: 8px;">
@@ -26,11 +27,14 @@
     not available to the wider public. Most parents rely on previous test-takers and tutors to
     guide them through preparation. Given the highly competitive nature of the admission process, this creates
     an imbalance between parents who have access to high-quality information about the test and those who don't.
+    This is just a fancy way of saying that some parents can and others can't affort tutoring. Unless you have
+    been living under a golden dome (or Jeff Bezos is your sugardaddy), you know how expensive test prep in 
+    NYC can be.
   </p>
 
   <p style="max-width: 640px; line-height: 1.7; margin-bottom: 8px;">
-    But what if we could use publicly available information to reverse-engineer the test and uncover its inner
-    workings using data-driven analysis?
+    <strong>But what if we could use publicly available information to reverse-engineer the test and uncover its inner
+    workings using data-driven analysis?</strong>
   </p>
 
   <p style="max-width: 640px; line-height: 1.7; margin-bottom: 24px;">
@@ -44,9 +48,11 @@
     <p style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.45); margin: 0 0 10px 0;">From the briefing</p>
     <img src="{% static 'images/briefing-chart-skills.png' %}" alt="Breakdown of what Hunter reading questions test — inference dominates at 41%" style="width: 100%; display: block; border-radius: 8px;">
     <p style="font-size: 14px; line-height: 1.6; color: rgba(0,0,0,0.6); margin: 10px 0 0 0;">
-      41% of reading questions test inference — the ability to draw conclusions from what's implied, not stated.
+      41% of reading questions test inference — the ability to draw conclusions from what's implied, 
+      and not explicitly stated.
+      
       That's more than word meaning, figurative language, and tone combined. If your child's prep
-      isn't heavily focused on inference, the time is being spent in the wrong place.
+      isn't heavily focused on inference, you're missing the mark.
     </p>
   </div>
 
@@ -55,7 +61,7 @@
     <img src="{% static 'images/briefing-chart-sentences.png' %}" alt="Average sentence length across Hunter reading passages" style="width: 100%; display: block; border-radius: 8px;">
     <p style="font-size: 14px; line-height: 1.6; color: rgba(0,0,0,0.6); margin: 10px 0 0 0;">
       Not all passages are created equal. Our analysis of sentence length, vocabulary density, and
-      syntactic complexity reveals which types of texts the Hunter test favors — and how wide the
+      syntactic complexity reveals which types of texts the Hunter test favors, and how wide the
       difficulty range really is. We'll show you what makes certain passages harder than others and
       what your child should be reading to prepare.
     </p>
@@ -65,8 +71,10 @@
   <div style="max-width: 640px; margin-bottom: 28px;">
     <img src="{% static 'images/briefing-chart-traps.png' %}" alt="Wrong answers are semantically designed around the correct answer" style="width: 100%; display: block; border-radius: 8px;">
     <p style="font-size: 14px; line-height: 1.6; color: rgba(0,0,0,0.6); margin: 10px 0 0 0;">
-      Using NLP, we measured how semantically similar wrong answers are to correct ones.
-      The result is striking: wrong answers on the Hunter test aren't random — they are
+      Using NLP (Natural Language Processing, for my fellow nerds), we measured how semantically similar 
+      wrong answers are to correct ones.
+      
+      The result is striking: wrong answers on the Hunter test aren't random: they are
       deliberately built around the meaning of the correct answer. This is how the test tricks
       students who "kind of" understand the passage but can't distinguish between close options.
       We'll break down exactly how these traps work and what to do about them.
@@ -74,18 +82,18 @@
   </div>
 
   <p style="max-width: 640px; line-height: 1.7; margin-bottom: 8px;">
-    This is just a sample. In the full briefing, we'll also cover scoring mechanics, section-by-section
-    strategy, how to evaluate test prep options, and what the data says about which skills actually
-    move the needle.
+    This is just a sample. In the full briefing, we'll cover more of similar findings, section-by-section.
+    We'll talk how this translates into prep strategy, how to evaluate test prep options, and what the data 
+    says about which skills can actually make a dent.
   </p>
 
   <p style="max-width: 640px; line-height: 1.7; margin-bottom: 8px;">
-    We're inviting parents to a free Zoom session to walk through our findings. Two sessions available —
+    We're inviting parents to a free Zoom session to walk through our findings. Two sessions are available —
     pick the one that works for you.
   </p>
 
   <p style="max-width: 640px; line-height: 1.7; margin-bottom: 32px; font-size: 15px; color: rgba(0,0,0,0.55);">
-    No sales pitch. No upsell. Just data.
+    BTW, this is not a tutoring pitch: we do not offer tutoring. Our job is analytics.
   </p>
 
   <form class="contact-form" method="post" action="/hunter-briefing/" novalidate>
@@ -163,13 +171,13 @@
   <div style="max-width: 640px; margin-top: 48px; padding: 24px 24px 16px; border: 0.5px solid rgba(0,0,0,0.10); border-radius: 10px; background: rgba(255, 254, 248, 0.85);">
     <p style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.55); margin: 0 0 10px 0;">Who are we?</p>
     <p style="font-size: 16px; line-height: 1.7; color: rgba(0,0,0,0.78); margin: 0 0 14px 0;">
-      We're not a tutoring company. The School of Critical Thinking is a research and analytics
+      The School of Critical Thinking is a research and analytics
       organization that uses <strong>machine learning and NLP to reverse-engineer standardized
       tests</strong> — pulling apart question structures, score distributions, and difficulty patterns
       that aren't visible to the naked eye.
     </p>
     <p style="font-size: 16px; line-height: 1.7; color: rgba(0,0,0,0.78); margin: 0 0 14px 0;">
-      We don't sell test prep. We don't have a tutoring program.
+      We don't sell test prep, and we don't have a tutoring program.
       What we offer is the analysis itself, presented clearly, so you can make
       <strong>your own decisions</strong> based on data, not on marketing from companies that profit
       from your anxiety.
@@ -177,7 +185,7 @@
     <p style="font-size: 16px; line-height: 1.7; color: rgba(0,0,0,0.78); margin: 0;">
       The briefing is led by <strong>Eldar Sarajlic, Ph.D.</strong> — Associate Professor at the
       City University of New York, published researcher on reasoning and education, and the person
-      behind the data analysis you'll see in the session. This briefing is free.
+      behind the data analysis you'll see in the session. Also, this briefing is free.
     </p>
   </div>
 
