@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static tz %}
 
 {% block title %}Hunter Test Briefing — School of Critical Thinking{% endblock %}
 
@@ -61,6 +61,7 @@
     <div class="contact-form__field">
       <label>Choose a session</label>
       {% if errors.session %}<p class="contact-form__error">{{ errors.session }}</p>{% endif %}
+      {% timezone "America/New_York" %}
       {% for s in sessions %}
         <label style="display: flex; align-items: flex-start; gap: 12px; margin: 10px 0; padding: 14px 16px; border: 1px solid rgba(0,0,0,0.12); border-radius: 8px; cursor: pointer; font-weight: normal; text-transform: none; font-size: 15px; letter-spacing: 0; color: rgba(0,0,0,0.85); transition: border-color .15s;">
           <input type="radio" name="session" value="{{ s.id }}"
@@ -68,12 +69,13 @@
                  {% if form.session == s.id|stringformat:"d" %}checked{% endif %}>
           <span>
             <strong style="display: block; margin-bottom: 2px;">{{ s.date_time|date:"l, N j, Y" }}</strong>
-            <span style="color: rgba(0,0,0,0.55); font-size: 14px;">{{ s.date_time|date:"g:i A e" }}{% if s.title %} — {{ s.title }}{% endif %}</span>
+            <span style="color: rgba(0,0,0,0.55); font-size: 14px;">{{ s.date_time|date:"g:i A" }} ET{% if s.title %} — {{ s.title }}{% endif %}</span>
           </span>
         </label>
       {% empty %}
         <p style="color: #888;">No sessions currently available.</p>
       {% endfor %}
+      {% endtimezone %}
     </div>
 
     <div class="contact-form__field">
