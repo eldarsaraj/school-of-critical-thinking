@@ -20,7 +20,11 @@
 
   <p style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.45); margin: 0 0 10px 0; font-weight: 600;">Event for Parents</p>
   <h1 style="margin-top: 0;">Inside the Hunter Test</h1>
-  <p style="font-size: 20px; line-height: 1.4; color: rgba(0,0,0,0.65); margin: -10px 0 28px 0; max-width: 640px;">A Data-Driven Briefing to Help You Understand the Test</p>
+  <p style="font-size: 20px; line-height: 1.4; color: rgba(0,0,0,0.65); margin: -10px 0 20px 0; max-width: 640px;">A Data-Driven Briefing to Help You Understand the Test</p>
+
+  <p style="margin: 0 0 32px 0;">
+    <a href="#register" style="display: inline-block; padding: 11px 22px; font-size: 14px; font-weight: 600; font-family: inherit; background: #161a1d; color: #fff; text-decoration: none;">Register for free</a>
+  </p>
 
   <p style="max-width: 640px; line-height: 1.7; margin-bottom: 8px;">
     The Hunter High School test is a complex standardized test created by experts whose inner workings are
@@ -97,7 +101,7 @@
     BTW, this is not a tutoring pitch: we do not offer tutoring. Our job is analytics.
   </p>
 
-  <form class="contact-form" method="post" action="/hunter-briefing/" novalidate>
+  <form id="register" class="contact-form" method="post" action="/hunter-briefing/" novalidate>
     {% csrf_token %}
     <div style="display:none;" aria-hidden="true">
       <input type="text" name="website" tabindex="-1" autocomplete="off">
