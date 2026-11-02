@@ -3553,6 +3553,201 @@ a.curriculum-book:hover .curriculum-book__title {
   color: #111;
 }
 
+/* ======================================================
+   RESEARCH INDEX: Magazine Layout
+   ====================================================== */
+
+.research-hero {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+  max-width: 1000px;
+  margin: 32px auto 0 auto;
+}
+
+.research-featured {
+  display: flex;
+  flex-direction: column;
+}
+
+.research-featured__img-link {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.research-featured__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.research-featured__body {}
+
+.research-featured__meta {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+  margin: 0 0 8px 0;
+}
+
+.research-featured__title {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 12px 0;
+}
+
+.research-featured__title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.research-featured__title a:hover {
+  opacity: 0.7;
+}
+
+.research-featured__summary {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(0,0,0,0.65);
+  margin: 0 0 16px 0;
+}
+
+.research-featured__cta {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+  padding-bottom: 2px;
+  transition: border-color 0.15s;
+}
+
+.research-featured__cta:hover {
+  border-color: #111;
+}
+
+/* Sidebar */
+.research-sidebar {
+  border-left: 1px solid rgba(0,0,0,0.08);
+  padding-left: 28px;
+}
+
+.research-sidebar__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin: 0 0 20px 0;
+}
+
+.research-sidebar__item {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.research-sidebar__item:first-of-type {
+  padding-top: 0;
+}
+
+.research-sidebar__item:last-of-type {
+  border-bottom: none;
+}
+
+.research-sidebar__title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0 0 4px 0;
+}
+
+.research-sidebar__title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.research-sidebar__title a:hover {
+  opacity: 0.7;
+}
+
+.research-sidebar__meta {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin: 0 0 8px 0;
+}
+
+/* Share links (compact) */
+.research-share {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.research-share__btn {
+  display: inline-block;
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: rgba(0,0,0,0.35);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 2px;
+  transition: border-color 0.12s, color 0.12s;
+}
+
+.research-share__btn:hover {
+  border-color: rgba(0,0,0,0.3);
+  color: rgba(0,0,0,0.7);
+}
+
+.research-share--card {
+  margin-top: 10px;
+}
+
+/* Section divider */
+.research-divider {
+  margin-top: 48px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.research-divider__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+}
+
+/* Mobile: research hero */
+@media (max-width: 640px) {
+  .research-hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .research-sidebar {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding-top: 20px;
+  }
+
+  .research-featured__title {
+    font-size: 22px;
+  }
+}
+
 
 /* ======================================================
    HOME: THESIS SECTION

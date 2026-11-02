@@ -16,6 +16,7 @@ def index(request):
 
     category = request.GET.get("category", "")
     query = request.GET.get("q", "").strip()
+    is_filtered = bool(category or query)
 
     if category:
         qs = qs.filter(category=category)
@@ -26,17 +27,31 @@ def index(request):
             | models.Q(content_markdown__icontains=query)
         )
 
-    paginator = Paginator(qs, 6)
-    page_number = request.GET.get("page", 1)
-    page_obj = paginator.get_page(page_number)
+    featured = None
+    sidebar_articles = []
 
-    categories = Article.Category.choices
+    if not is_filtered:
+        all_articles = list(qs[:6])
+        if all_articles:
+            featured = all_articles[0]
+            sidebar_articles = all_articles[1:5]
+            remaining_qs = qs[5:]
+        else:
+            remaining_qs = qs
+    else:
+        remaining_qs = qs
+
+    paginator = Paginator(remaining_qs, 6)
+    page_obj = paginator.get_page(request.GET.get("page", 1))
 
     return render(request, "articles/index.html", {
+        "featured": featured,
+        "sidebar_articles": sidebar_articles,
         "page_obj": page_obj,
-        "categories": categories,
+        "categories": Article.Category.choices,
         "current_category": category,
         "query": query,
+        "is_filtered": is_filtered,
     })
 
 

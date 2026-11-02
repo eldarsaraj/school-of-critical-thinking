@@ -6,10 +6,74 @@
 
   <section class="articles-intro">
     <h1>Research</h1>
-    <p>Data-driven analysis of standardized tests, test-taking strategy, and the science of thinking.</p>
+    <p>Rigorous analysis of standardized tests, test-taking strategy, and the science of thinking.</p>
   </section>
 
-  <!-- ── Filters + Search ────────────────────────────────────────────────── -->
+  {% if featured and not is_filtered %}
+  <!-- ── Hero: Featured + Sidebar ──────────────────────────────────────── -->
+  <section class="research-hero">
+    <article class="research-featured">
+      {% if featured.cover_image %}
+        <a href="{% url 'articles_detail' featured.slug %}" class="research-featured__img-link">
+          <img class="research-featured__img" src="{{ featured.cover_image.url }}" alt="{{ featured.title }}">
+        </a>
+      {% endif %}
+      <div class="research-featured__body">
+        <p class="research-featured__meta">
+          {% if featured.published_at %}
+            <time datetime="{{ featured.published_at|date:'Y-m-d' }}">{{ featured.published_at|date:"F j, Y" }}</time>
+          {% endif %}
+          {% if featured.category %}
+            {% if featured.published_at %} · {% endif %}
+            <a href="{% url 'articles_index' %}?category={{ featured.category }}" class="card__category">{{ featured.get_category_display }}</a>
+          {% endif %}
+        </p>
+        <h2 class="research-featured__title">
+          <a href="{% url 'articles_detail' featured.slug %}">{{ featured.title }}</a>
+        </h2>
+        {% if featured.summary %}
+          <p class="research-featured__summary">{{ featured.summary }}</p>
+        {% endif %}
+        <div class="research-share">
+          <a class="research-share__btn" href="https://twitter.com/intent/tweet?url={{ request.scheme }}://{{ request.get_host }}{% url 'articles_detail' featured.slug %}&text={{ featured.title|urlencode }}" target="_blank" rel="noopener">X</a>
+          <a class="research-share__btn" href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ request.get_host }}{% url 'articles_detail' featured.slug %}" target="_blank" rel="noopener">Facebook</a>
+          <a class="research-share__btn" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.scheme }}://{{ request.get_host }}{% url 'articles_detail' featured.slug %}&title={{ featured.title|urlencode }}" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <a href="{% url 'articles_detail' featured.slug %}" class="research-featured__cta">Read &rarr;</a>
+      </div>
+    </article>
+
+    {% if sidebar_articles %}
+    <aside class="research-sidebar">
+      <p class="research-sidebar__label">Latest</p>
+      {% for a in sidebar_articles %}
+      <div class="research-sidebar__item">
+        <h3 class="research-sidebar__title">
+          <a href="{% url 'articles_detail' a.slug %}">{{ a.title }}</a>
+        </h3>
+        <p class="research-sidebar__meta">
+          {% if a.published_at %}
+            <time datetime="{{ a.published_at|date:'Y-m-d' }}">{{ a.published_at|date:"F j, Y" }}</time>
+          {% endif %}
+        </p>
+        <div class="research-share">
+          <a class="research-share__btn" href="https://twitter.com/intent/tweet?url={{ request.scheme }}://{{ request.get_host }}{% url 'articles_detail' a.slug %}&text={{ a.title|urlencode }}" target="_blank" rel="noopener">X</a>
+          <a class="research-share__btn" href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ request.get_host }}{% url 'articles_detail' a.slug %}" target="_blank" rel="noopener">Facebook</a>
+          <a class="research-share__btn" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.scheme }}://{{ request.get_host }}{% url 'articles_detail' a.slug %}&title={{ a.title|urlencode }}" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+      {% endfor %}
+    </aside>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <!-- ── All Articles ──────────────────────────────────────────────────── -->
+  {% if page_obj or is_filtered %}
+  <div class="research-divider">
+    <span class="research-divider__label">All Articles</span>
+  </div>
+
   <div class="articles-filters">
     <div class="articles-filters__pills">
       <a href="{% url 'articles_index' %}{% if query %}?q={{ query }}{% endif %}"
@@ -34,7 +98,6 @@
           <h2 class="card__title">
             <a href="{% url 'articles_detail' a.slug %}">{{ a.title }}</a>
           </h2>
-
           <p class="card__meta">
             {% if a.published_at %}
               <time datetime="{{ a.published_at|date:'Y-m-d' }}">{{ a.published_at|date:"F j, Y" }}</time>
@@ -44,22 +107,19 @@
               <a href="{% url 'articles_index' %}?category={{ a.category }}" class="card__category">{{ a.get_category_display }}</a>
             {% endif %}
           </p>
-
           {% if a.summary %}
             <p class="card__summary">{{ a.summary }}</p>
-          {% else %}
-            <p class="card__summary">
-              <em>Summary coming soon.</em>
-            </p>
           {% endif %}
+          <div class="research-share research-share--card">
+            <a class="research-share__btn" href="https://twitter.com/intent/tweet?url={{ request.scheme }}://{{ request.get_host }}{% url 'articles_detail' a.slug %}&text={{ a.title|urlencode }}" target="_blank" rel="noopener">X</a>
+            <a class="research-share__btn" href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ request.get_host }}{% url 'articles_detail' a.slug %}" target="_blank" rel="noopener">Facebook</a>
+            <a class="research-share__btn" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.scheme }}://{{ request.get_host }}{% url 'articles_detail' a.slug %}&title={{ a.title|urlencode }}" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
         </div>
-
         {% if a.cover_image %}
-          <a
-            class="card__thumb"
-            href="{% url 'articles_detail' a.slug %}"
-            aria-label="Read: {{ a.title }}"
-          ><img src="{{ a.cover_image.url }}" alt="{{ a.title }}"></a>
+          <a class="card__thumb" href="{% url 'articles_detail' a.slug %}" aria-label="Read: {{ a.title }}">
+            <img src="{{ a.cover_image.url }}" alt="{{ a.title }}">
+          </a>
         {% endif %}
       </article>
     {% empty %}
@@ -72,15 +132,14 @@
     {% if page_obj.has_previous %}
       <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if query %}q={{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">Previous</a>
     {% endif %}
-
     <span class="pagination__meta">
       Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
     </span>
-
     {% if page_obj.has_next %}
       <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if query %}q={{ query }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
     {% endif %}
   </nav>
+  {% endif %}
   {% endif %}
 
 {% endblock %}
