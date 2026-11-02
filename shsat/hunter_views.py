@@ -500,7 +500,11 @@ def hunter_error_analysis_list(request):
 def hunter_delete_attempt(request, attempt_id):
     parent = _get_hunter_parent(request)
     attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent)
-    attempt.delete()
+    if attempt.is_completed:
+        attempt.delete()
+    else:
+        attempt.is_abandoned = True
+        attempt.save(update_fields=["is_abandoned"])
     messages.success(request, "Test attempt deleted.")
     return redirect("hunter_account")
 

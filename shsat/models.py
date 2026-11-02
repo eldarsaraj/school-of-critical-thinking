@@ -161,6 +161,7 @@ class TestAttempt(models.Model):
     math_scaled = models.PositiveSmallIntegerField(null=True, blank=True)
     composite_score = models.PositiveSmallIntegerField(null=True, blank=True)
     notes = models.TextField(blank=True, default="")
+    is_abandoned = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-started_at"]

@@ -625,12 +625,16 @@ def test_intro(request, test_id):
     if not test.is_published and not test.is_free and not _can_access and not request.user.is_staff:
         from django.http import Http404
         raise Http404
-    in_progress = TestAttempt.objects.filter(parent=parent, test=test, is_completed=False).first()
+    in_progress = TestAttempt.objects.filter(parent=parent, test=test, is_completed=False, is_abandoned=False).first()
     completed_attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=True).order_by("-submitted_at").first()
+    # Count all attempts (completed + in-progress + abandoned) to enforce retake limit
+    total_attempts = TestAttempt.objects.filter(parent=parent, test=test).count()
+    can_start_over = bool(in_progress) and total_attempts < 2 and not test.is_drill
     is_hunter_test = test.exam_type == "hunter"
     context = {
         "test": test,
         "in_progress": in_progress,
+        "can_start_over": can_start_over,
         "completed_attempt": completed_attempt if not request.user.is_staff else None,
         "ela_count": test.ela_questions().count(),
         "math_count": test.math_questions().count(),
@@ -641,6 +645,7 @@ def test_intro(request, test_id):
         "url_test_take": "hunter_test_take" if is_hunter_test else "shsat_test_take",
         "url_test_list": "hunter_test_list" if is_hunter_test else "shsat_test_list",
         "url_test_results": "hunter_test_results" if is_hunter_test else "shsat_test_results",
+        "url_start_over": "hunter_start_over" if is_hunter_test else "shsat_start_over",
     }
     if is_hunter_test:
         context["hunter_sections"] = [
@@ -669,8 +674,15 @@ def test_take(request, test_id):
 
     # Block retake: if already completed, send to results (staff bypass)
     completed_attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=True).order_by("-submitted_at").first()
-    attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=False).first()
+    attempt = TestAttempt.objects.filter(parent=parent, test=test, is_completed=False, is_abandoned=False).first()
     if not attempt:
+        # Enforce max 2 attempts (1 original + 1 retake) for non-staff, non-drill
+        total_attempts = TestAttempt.objects.filter(parent=parent, test=test).count()
+        if not request.user.is_staff and not test.is_drill and total_attempts >= 2:
+            intro_url = "hunter_test_intro" if test.exam_type == "hunter" else "shsat_test_intro"
+            from django.contrib import messages as msg
+            msg.info(request, "You have used your one allowed retake for this test.")
+            return redirect(intro_url, test_id=test.id)
         if completed_attempt and not request.user.is_staff:
             from django.contrib import messages
             messages.info(request, f"You have already completed {test.title}.")
@@ -866,10 +878,10 @@ def test_submit(request, test_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     # If already completed (double-submit), redirect to results gracefully
     completed = TestAttempt.objects.filter(test_id=test_id, parent=parent, is_completed=True).order_by("-submitted_at").first()
-    if completed and not TestAttempt.objects.filter(test_id=test_id, parent=parent, is_completed=False).exists():
+    if completed and not TestAttempt.objects.filter(test_id=test_id, parent=parent, is_completed=False, is_abandoned=False).exists():
         _r = "hunter_test_results" if completed.test.exam_type == "hunter" else "shsat_test_results"
         return redirect(_r, attempt_id=completed.id)
-    attempt = get_object_or_404(TestAttempt, test_id=test_id, parent=parent, is_completed=False)
+    attempt = get_object_or_404(TestAttempt, test_id=test_id, parent=parent, is_completed=False, is_abandoned=False)
 
     answers = Answer.objects.filter(attempt=attempt).select_related("question")
 
@@ -1573,9 +1585,42 @@ def add_hunter_access(request):
 def delete_attempt(request, attempt_id):
     parent, _ = Parent.objects.get_or_create(user=request.user)
     attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent)
-    attempt.delete()
+    if attempt.is_completed:
+        # Completed attempts are hard-deleted (e.g. from account page)
+        attempt.delete()
+    else:
+        # In-progress attempts are soft-deleted so we can count retakes
+        attempt.is_abandoned = True
+        attempt.save(update_fields=["is_abandoned"])
     messages.success(request, "Test attempt deleted.")
     return redirect("shsat_account")
+
+
+@login_required(login_url="/shsat/login/")
+@require_POST
+def start_over(request, test_id):
+    """Abandon an in-progress attempt and redirect to start fresh (one retake allowed)."""
+    parent, _ = Parent.objects.get_or_create(user=request.user)
+    test = get_object_or_404(Test, id=test_id)
+    in_progress = TestAttempt.objects.filter(
+        parent=parent, test=test, is_completed=False, is_abandoned=False
+    ).first()
+    if not in_progress:
+        messages.info(request, "No in-progress attempt to abandon.")
+        intro_url = "hunter_test_intro" if test.exam_type == "hunter" else "shsat_test_intro"
+        return redirect(intro_url, test_id=test.id)
+    # Enforce max 2 total attempts
+    total_attempts = TestAttempt.objects.filter(parent=parent, test=test).count()
+    if total_attempts >= 2 and not request.user.is_staff:
+        messages.info(request, "You have already used your one allowed retake.")
+        intro_url = "hunter_test_intro" if test.exam_type == "hunter" else "shsat_test_intro"
+        return redirect(intro_url, test_id=test.id)
+    # Soft-delete the in-progress attempt
+    in_progress.is_abandoned = True
+    in_progress.save(update_fields=["is_abandoned"])
+    messages.success(request, "Previous attempt abandoned. Starting fresh.")
+    intro_url = "hunter_test_intro" if test.exam_type == "hunter" else "shsat_test_intro"
+    return redirect(intro_url, test_id=test.id)
 
 
 # ---------------------------------------------------------------------------
@@ -1594,7 +1639,7 @@ def save_answer(request):
         time_spent = data.get("time_spent")
 
         parent, _ = Parent.objects.get_or_create(user=request.user)
-        attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent, is_completed=False)
+        attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent, is_completed=False, is_abandoned=False)
         answer, _ = Answer.objects.get_or_create(attempt=attempt, question_id=question_id)
         essay_text = data.get("essay_text")
         if essay_text is not None:
@@ -1630,7 +1675,7 @@ def assign_modules(request):
         section = data.get("section", "ELA")  # 'ELA' or 'Math'
 
         parent, _ = Parent.objects.get_or_create(user=request.user)
-        attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent, is_completed=False)
+        attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent, is_completed=False, is_abandoned=False)
 
         # Idempotent: if this section already assigned, return its current state
         if section == "ELA" and attempt.ela_module:
@@ -1739,7 +1784,7 @@ def flag_question(request):
         flagged = data.get("flagged", False)
 
         parent, _ = Parent.objects.get_or_create(user=request.user)
-        attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent, is_completed=False)
+        attempt = get_object_or_404(TestAttempt, id=attempt_id, parent=parent, is_completed=False, is_abandoned=False)
         answer, _ = Answer.objects.get_or_create(attempt=attempt, question_id=question_id)
         answer.is_flagged = flagged
         answer.save(update_fields=["is_flagged"])

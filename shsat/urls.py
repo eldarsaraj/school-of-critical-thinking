@@ -32,6 +32,7 @@ urlpatterns = [
     path("account/", views.account, name="shsat_account"),
     path("account/add-hunter/", views.add_hunter_access, name="shsat_add_hunter"),
     path("tests/<int:attempt_id>/delete/", views.delete_attempt, name="shsat_delete_attempt"),
+    path("tests/<int:test_id>/start-over/", views.start_over, name="shsat_start_over"),
 
     # AJAX
     path("api/save-answer/", views.save_answer, name="shsat_save_answer"),

@@ -46,7 +46,7 @@
   </div>
   <div class="shsat-intro__rule">
     <div class="shsat-intro__rule-label">Attempts</div>
-    <div>This test can be taken <strong>once only</strong>. If you exit before finishing, your answers are saved and you can resume — but you cannot retake the test from the beginning.</div>
+    <div>If you exit before finishing, your answers are saved and you can resume. You may abandon an in-progress attempt and start over <strong>once</strong>.</div>
   </div>
   {% else %}
   <div class="shsat-intro__rule">
@@ -71,7 +71,7 @@
   </div>
   <div class="shsat-intro__rule">
     <div class="shsat-intro__rule-label">Attempts</div>
-    <div>This test can be taken <strong>once only</strong>. If you exit before finishing, your answers are saved and you can resume — but you cannot retake the test from the beginning.</div>
+    <div>If you exit before finishing, your answers are saved and you can resume. You may abandon an in-progress attempt and start over <strong>once</strong>.</div>
   </div>
   {% endif %}
 
@@ -90,6 +90,17 @@
         <a href="{% url url_test_take test.id %}" class="shsat-btn">Resume</a>
         <a href="{% url url_test_list %}" class="shsat-btn shsat-btn--outline">Back to tests</a>
       </div>
+      {% if can_start_over %}
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(0,0,0,0.08);">
+        <p style="font-size:13px;color:rgba(0,0,0,0.45);margin-bottom:10px;">
+          Want to start from scratch? You can abandon this attempt and retake the test once.
+        </p>
+        <form method="post" action="{% url url_start_over test.id %}" onsubmit="return confirm('Abandon this attempt and start over? All your current answers will be lost. You will not be able to do this again.');">
+          {% csrf_token %}
+          <button type="submit" class="shsat-btn shsat-btn--outline" style="font-size:13px;">Abandon &amp; start over</button>
+        </form>
+      </div>
+      {% endif %}
     {% elif is_drill or hunter_sections %}
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
         <a href="{% url url_test_take test.id %}" class="shsat-btn">Start →</a>

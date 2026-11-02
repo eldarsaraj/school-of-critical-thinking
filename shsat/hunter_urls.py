@@ -23,6 +23,7 @@ urlpatterns = [
     path("account/", hunter_views.hunter_account, name="hunter_account"),
     path("account/add-shsat/", hunter_views.add_shsat_access, name="hunter_add_shsat"),
     path("tests/<int:attempt_id>/delete/", hunter_views.hunter_delete_attempt, name="hunter_delete_attempt"),
+    path("tests/<int:test_id>/start-over/", views.start_over, name="hunter_start_over"),
 
     # Test-taking (shared views, Hunter-aware)
     path("tests/<int:test_id>/", views.test_intro, name="hunter_test_intro"),
