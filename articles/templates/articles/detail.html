@@ -46,6 +46,11 @@
             {% if article.published_at %}<time datetime="{{ article.published_at|date:'Y-m-d' }}">{{ article.published_at|date:"F j, Y" }}</time>{% endif %}
           </span>
         </div>
+        <div class="research-share">
+          <a class="research-share__btn" href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ article.title|urlencode }}" target="_blank" rel="noopener">X</a>
+          <a class="research-share__btn" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}" target="_blank" rel="noopener">Facebook</a>
+          <a class="research-share__btn" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode }}&title={{ article.title|urlencode }}" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
       {% endif %}
 
       {% if article.cover_image %}
