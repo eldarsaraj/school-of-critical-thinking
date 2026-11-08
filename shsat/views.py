@@ -297,12 +297,14 @@ def shsat_login(request):
     if request.method == "POST" and form.is_valid():
         user = form.cleaned_data["user"]
         login(request, user, backend="shsat.backends.EmailBackend")
-        # Redirect Hunter-platform users to their dashboard
+        # Upgrade hunter-only users to "both" when they log in via SHSAT
         try:
-            if user.shsat_profile.platform == "hunter" and not user.is_staff:
-                return redirect("hunter_dashboard")
+            parent = user.shsat_profile
+            if parent.platform == "hunter":
+                parent.platform = "both"
+                parent.save(update_fields=["platform"])
         except Parent.DoesNotExist:
-            pass
+            Parent.objects.create(user=user, platform="shsat")
         return redirect(request.GET.get("next") or "shsat_dashboard")
     return render(request, "shsat/login.html", {"form": form})
 
