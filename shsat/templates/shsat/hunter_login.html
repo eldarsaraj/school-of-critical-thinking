@@ -30,7 +30,10 @@
     <button type="submit" class="shsat-btn" style="width:100%;">Log in</button>
   </form>
 
-  <p style="margin-top:20px; font-size:14px; color:rgba(0,0,0,0.5);">
+  <p style="margin-top:12px; font-size:14px; color:rgba(0,0,0,0.5);">
+    <a href="{% url 'password_reset' %}" style="color:#111;">Forgot password?</a>
+  </p>
+  <p style="margin-top:8px; font-size:14px; color:rgba(0,0,0,0.5);">
     No account yet? <a href="{% url 'hunter_signup' %}" style="color:#111;">Create one free</a>
   </p>
 </div>
