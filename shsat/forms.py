@@ -118,11 +118,17 @@ class QuestionEditForm(forms.ModelForm):
         return instance
 
 
+GRADE_CHOICES = [("", "— Select grade —")] + [(str(g), f"Grade {g}") for g in range(4, 10)]
+
+
 class SignupForm(forms.Form):
     first_name = forms.CharField(max_length=150, label="Your first name")
     email = forms.EmailField(label="Email address")
     password1 = forms.CharField(widget=forms.PasswordInput, label="Password")
     password2 = forms.CharField(widget=forms.PasswordInput, label="Confirm password")
+    child_grade = forms.ChoiceField(
+        choices=GRADE_CHOICES, required=False, label="Child's current grade",
+    )
     tutor_code = forms.CharField(
         max_length=12, required=False, label="Tutor code (optional)",
         help_text="If your tutor gave you a code, enter it here.",

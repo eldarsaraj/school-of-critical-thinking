@@ -20,6 +20,7 @@ class Parent(models.Model):
     hunter_has_paid = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=True)  # True so existing accounts are unaffected
     email_verification_token = models.UUIDField(default=uuid.uuid4, unique=True)
+    signup_source = models.CharField(max_length=50, blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -162,6 +163,7 @@ class TestAttempt(models.Model):
     composite_score = models.PositiveSmallIntegerField(null=True, blank=True)
     notes = models.TextField(blank=True, default="")
     is_abandoned = models.BooleanField(default=False)
+    last_activity_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ["-started_at"]
@@ -178,6 +180,7 @@ class Answer(models.Model):
     is_correct = models.BooleanField(null=True, blank=True)
     is_flagged = models.BooleanField(default=False)
     time_spent_seconds = models.PositiveIntegerField(null=True, blank=True)
+    saved_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = [("attempt", "question")]

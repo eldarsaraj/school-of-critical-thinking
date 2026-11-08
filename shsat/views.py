@@ -227,7 +227,13 @@ def shsat_signup(request):
             pass
         if form.is_valid() and not existing_hunter:
             user = form.save()
-            parent = Parent.objects.create(user=user, platform="shsat", email_verified=False)
+            grade = form.cleaned_data.get("child_grade")
+            signup_source = request.GET.get("source", "")[:50]
+            parent = Parent.objects.create(
+                user=user, platform="shsat", email_verified=False,
+                child_grade=int(grade) if grade else None,
+                signup_source=signup_source,
+            )
             # Link to tutor if code provided
             tutor_code = form.cleaned_data.get("tutor_code", "").strip().upper()
             if tutor_code:
@@ -1668,6 +1674,8 @@ def save_answer(request):
             except (TypeError, ValueError):
                 pass
         answer.save(update_fields=update_fields)
+        from django.utils import timezone
+        TestAttempt.objects.filter(id=attempt_id).update(last_activity_at=timezone.now())
         return JsonResponse({"status": "ok"})
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=400)

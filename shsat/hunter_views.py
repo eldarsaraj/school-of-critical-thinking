@@ -99,7 +99,13 @@ def hunter_signup(request):
             pass
         if form.is_valid() and not existing_shsat:
             user = form.save()
-            parent = Parent.objects.create(user=user, platform="hunter", email_verified=False)
+            grade = form.cleaned_data.get("child_grade")
+            signup_source = request.GET.get("source", "")[:50]
+            parent = Parent.objects.create(
+                user=user, platform="hunter", email_verified=False,
+                child_grade=int(grade) if grade else None,
+                signup_source=signup_source,
+            )
             _send_hunter_verification_email(request, user, parent)
             user = authenticate(request, email=user.email, password=form.cleaned_data["password1"])
             if user:
