@@ -46,15 +46,20 @@ export_hunter_parents_csv.short_description = "Export selected as CSV"
 # ---------------------------------------------------------------------------
 
 class _BaseParentAdmin(admin.ModelAdmin):
-    list_display = ["get_email", "child_nickname", "child_grade", "has_paid", "created_at"]
+    list_display = ["get_email", "child_nickname", "child_grade", "get_source", "has_paid", "created_at"]
     search_fields = ["user__email", "user__first_name", "child_nickname"]
-    list_filter = ["has_paid", "child_grade"]
+    list_filter = ["has_paid", "child_grade", "signup_source"]
     ordering = ["-created_at"]
 
     def get_email(self, obj):
         return obj.user.email
     get_email.short_description = "Email"
     get_email.admin_order_field = "user__email"
+
+    def get_source(self, obj):
+        return obj.signup_source or "google / direct"
+    get_source.short_description = "Source"
+    get_source.admin_order_field = "signup_source"
 
 
 # ---------------------------------------------------------------------------
