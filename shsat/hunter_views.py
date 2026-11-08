@@ -34,6 +34,9 @@ def _hunter_required(view_func):
         try:
             parent = request.user.shsat_profile
         except Parent.DoesNotExist:
+            # No Parent profile — log out to avoid redirect loop, then
+            # send to login so they can use the right account
+            logout(request)
             return redirect(f"/hunter/login/?next={request.path}")
         if parent.platform not in ("hunter", "both"):
             return redirect("shsat_dashboard")
@@ -106,7 +109,19 @@ def hunter_signup(request):
 
 def hunter_login(request):
     if request.user.is_authenticated:
-        return redirect("hunter_dashboard")
+        # Only redirect to hunter dashboard if user actually has hunter access
+        if request.user.is_staff:
+            return redirect("hunter_dashboard")
+        try:
+            parent = request.user.shsat_profile
+            if parent.platform in ("hunter", "both"):
+                return redirect("hunter_dashboard")
+            # SHSAT-only user — send them to their own dashboard
+            return redirect("shsat_dashboard")
+        except Parent.DoesNotExist:
+            # Logged in but no Parent profile (e.g. tutor) — log out so they
+            # can log in with the right account instead of looping
+            logout(request)
     form = LoginForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
         user = form.cleaned_data["user"]
