@@ -36,7 +36,7 @@ stripe==15.3.0
 # Essay evaluator
 # Use CPU-only torch to stay under Heroku's 500 MB slug limit
 --extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.5.1+cpu
+torch==2.6.0+cpu
 nooa
 lexical-diversity
 pyspellchecker
