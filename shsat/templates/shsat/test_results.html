@@ -38,12 +38,12 @@
   <div class="shsat-score-box">
     <div class="shsat-score-box__value">{{ attempt.ela_scaled }}</div>
     <div class="shsat-score-box__label">ELA scaled</div>
-    <div style="font-size:13px;color:rgba(0,0,0,0.4);margin-top:6px;">{{ attempt.ela_correct }} correct of 57</div>
+    <div style="font-size:13px;color:rgba(0,0,0,0.4);margin-top:6px;">{{ attempt.ela_correct }} correct of {{ ela_total }}</div>
   </div>
   <div class="shsat-score-box">
     <div class="shsat-score-box__value">{{ attempt.math_scaled }}</div>
     <div class="shsat-score-box__label">Math scaled</div>
-    <div style="font-size:13px;color:rgba(0,0,0,0.4);margin-top:6px;">{{ attempt.math_correct }} correct of 57</div>
+    <div style="font-size:13px;color:rgba(0,0,0,0.4);margin-top:6px;">{{ attempt.math_correct }} correct of {{ math_total }}</div>
   </div>
   <div class="shsat-score-box shsat-score-box--composite">
     <div class="shsat-score-box__value">{{ attempt.composite_score }}</div>

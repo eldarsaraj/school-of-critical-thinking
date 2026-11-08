@@ -647,8 +647,8 @@ def test_intro(request, test_id):
         "in_progress": in_progress,
         "can_start_over": can_start_over,
         "completed_attempt": completed_attempt if not request.user.is_staff else None,
-        "ela_count": test.ela_questions().count(),
-        "math_count": test.math_questions().count(),
+        "ela_count": (test.questions.filter(section="ELA", stage__in=["routing", "easy_module"]).count() if test.is_adaptive else test.ela_questions().count()),
+        "math_count": (test.questions.filter(section="Math", stage__in=["routing", "easy_module"]).count() if test.is_adaptive else test.math_questions().count()),
         "duration_hours": settings.SHSAT_TEST_DURATION_SECONDS // 3600,
         "is_drill": test.is_drill,
         "parent_template": "shsat/base_hunter.html" if is_hunter_test else "shsat/base_shsat.html",
@@ -1121,10 +1121,15 @@ def test_results(request, attempt_id):
 
     flagged_answers = [a for a in answers if a.is_flagged]
 
+    ela_total = len(ela_answers)
+    math_total = len(math_answers)
+
     context = {
         "attempt": attempt,
         "ela_answers": ela_answers,
         "math_answers": math_answers,
+        "ela_total": ela_total,
+        "math_total": math_total,
         "flagged_answers": flagged_answers,
         "placement_data": placement_data,
         "notes_form": notes_form,

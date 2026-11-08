@@ -144,7 +144,7 @@ function updateProgress() {
   const q = questions[currentIdx];
   const displayNum = q.display_index;
   const sectionQs = questions.filter(sq => sq.section === q.section);
-  const total = IS_ADAPTIVE ? 57 : sectionQs.length;
+  const total = sectionQs.length;
   const pct = (displayNum / total) * 100;
   const label = SECTION_LABELS[q.section] || q.section;
 

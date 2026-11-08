@@ -73,12 +73,13 @@ def _build_table(anchors: list[tuple[int, int]]) -> dict[int, int]:
 
 
 # Easy-module path: conservative — easier questions earn less per correct answer
-# ~40/57 (70%) needed for Brooklyn Tech territory (~253/section)
-# ~35/57 (61%) needed for Brooklyn Latin territory (~248/section)
+# ~40/57 (70%) needed for Brooklyn Latin territory (~248/section)
+# ~35/57 (61%) → ~242/section (below Brooklyn Latin)
+# Flattened in the 21-40 range to prevent overconfidence on easy-module scores
 # Ceiling: 57/57 → 350/section (composite 700) — all-time record is 689
 _EASY_ANCHORS = [
-    (0, 200), (7, 203), (14, 208), (21, 216), (28, 230),
-    (35, 248), (40, 253), (46, 285), (50, 310), (57, 350),
+    (0, 200), (7, 203), (14, 208), (21, 212), (28, 224),
+    (35, 242), (40, 248), (46, 280), (50, 310), (57, 350),
 ]
 
 # Hard-module path: more generous — harder questions earn more per correct answer
