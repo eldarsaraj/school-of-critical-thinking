@@ -54,7 +54,9 @@ def _require_shsat(view_func):
         except Parent.DoesNotExist:
             return view_func(request, *args, **kwargs)
         if parent.platform == "hunter":
-            return redirect("hunter_dashboard")
+            from django.contrib.auth import logout
+            logout(request)
+            return redirect(f"/shsat/login/?next={request.path}")
         return view_func(request, *args, **kwargs)
     return wrapped
 
@@ -283,13 +285,14 @@ def verify_email(request, token):
 
 def shsat_login(request):
     if request.user.is_authenticated:
-        # Redirect Hunter users away from SHSAT login
         try:
-            if request.user.shsat_profile.platform == "hunter" and not request.user.is_staff:
-                return redirect("hunter_dashboard")
+            platform = request.user.shsat_profile.platform
         except Parent.DoesNotExist:
-            pass
-        return redirect("shsat_dashboard")
+            platform = None
+        if platform in ("shsat", "both") or request.user.is_staff:
+            return redirect("shsat_dashboard")
+        # Hunter-only user — log out so they see the SHSAT login page
+        logout(request)
     form = LoginForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
         user = form.cleaned_data["user"]

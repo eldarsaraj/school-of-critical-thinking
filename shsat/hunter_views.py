@@ -39,7 +39,8 @@ def _hunter_required(view_func):
             logout(request)
             return redirect(f"/hunter/login/?next={request.path}")
         if parent.platform not in ("hunter", "both"):
-            return redirect("shsat_dashboard")
+            logout(request)
+            return redirect(f"/hunter/login/?next={request.path}")
         return view_func(request, *args, **kwargs)
     return wrapped
 
@@ -116,8 +117,8 @@ def hunter_login(request):
             parent = request.user.shsat_profile
             if parent.platform in ("hunter", "both"):
                 return redirect("hunter_dashboard")
-            # SHSAT-only user — send them to their own dashboard
-            return redirect("shsat_dashboard")
+            # SHSAT-only user — log out so they see the Hunter login page
+            logout(request)
         except Parent.DoesNotExist:
             # Logged in but no Parent profile (e.g. tutor) — log out so they
             # can log in with the right account instead of looping
