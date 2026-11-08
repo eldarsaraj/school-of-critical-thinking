@@ -963,6 +963,14 @@ def test_submit(request, test_id):
         pass
 
     if attempt.test.exam_type == "hunter":
+        # Pre-load heavy models in the main thread so torch/nn are imported
+        # before the daemon thread starts (torch lazy modules break otherwise).
+        try:
+            from evaluators.apps import get_embedder, get_evaluator
+            get_embedder()
+            get_evaluator()
+        except Exception:
+            pass
         import threading
         threading.Thread(
             target=_trigger_essay_evaluations,
