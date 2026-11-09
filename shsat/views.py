@@ -563,6 +563,7 @@ def dashboard(request):
         "platform_mean": platform_mean,
         "platform_std": platform_std,
         "platform_n": platform_n,
+        "has_paid": parent.has_paid,
     }
     return render(request, "shsat/dashboard.html", context)
 
@@ -1553,6 +1554,8 @@ def error_analysis(request, attempt_id):
         "total_time_minutes": round(total_time_minutes, 0) if has_section_time else None,
         "review_sections": [(s["section_code"], s["section"]) for s in section_summary_data],
         "parent_template": "shsat/base_hunter.html" if is_hunter else "shsat/base_shsat.html",
+        "has_paid": parent.has_paid,
+        "is_baseline": attempt.test.is_free,
     }
 
     if is_hunter:
