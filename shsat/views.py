@@ -1540,6 +1540,7 @@ def error_analysis(request, attempt_id):
         "total_answered": total_answered,
         "skill_errors_data": skill_errors_data,
         "trap_data": trap_data,
+        "trap_free_count": max(1, len(trap_data) // 5) if trap_data else 0,
         "diff_breakdown": diff_breakdown,
         "scatter_data": scatter_data,
         "has_timing": len(scatter_data) > 0,

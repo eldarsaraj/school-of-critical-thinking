@@ -100,14 +100,16 @@
   Complete a practice test to see where your score sits relative to other students.
 </p>
 {% endif %}
+{% endif %}
 
-<!-- Recent attempts bar chart -->
+<!-- Recent attempts bar chart (visible to all users) -->
 <p class="shsat-section-title" style="margin-top:32px;">Practice test scores</p>
 <div class="shsat-chart-wrap">
   <canvas id="attemptsChart"></canvas>
 </div>
 {{ attempts_chart_data|json_script:"attemptsChartData" }}
 
+{% if has_paid %}
 <!-- Recent manual scores -->
 {% if manual_scores %}
 <p class="shsat-section-title" style="margin-top:32px;">Logged scores</p>
@@ -462,9 +464,8 @@ function makeProjData(arr) {
   });
 })();
 
-{% if has_paid %}
 // ---------------------------------------------------------------------------
-// Attempts stacked bar chart
+// Attempts stacked bar chart (visible to all users)
 // ---------------------------------------------------------------------------
 (function () {
   const data = JSON.parse(document.getElementById("attemptsChartData").textContent);
@@ -547,6 +548,7 @@ function makeProjData(arr) {
   });
 })();
 
+{% if has_paid %}
 // ---------------------------------------------------------------------------
 // Score distribution chart
 // ---------------------------------------------------------------------------

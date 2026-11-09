@@ -398,16 +398,30 @@
 
 {% if trap_data %}
 <p class="shsat-section-title">Distractor trap analysis</p>
-<div class="shsat-teaser-locked-wrap" style="margin-bottom:36px;">
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Which answer traps caught you most often.</p>
+<!-- Blurred: top traps (locked) -->
+<div class="shsat-teaser-locked-wrap" style="margin-bottom:12px;">
   <div class="shsat-teaser-locked">
     {% for t in trap_data %}
+    {% if forloop.revcounter > trap_free_count %}
     <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:14px;">
       <span>{{ t.label }}</span>
       <span style="color:rgba(0,0,0,.4);">{{ t.count }}x</span>
     </div>
+    {% endif %}
     {% endfor %}
   </div>
 </div>
+<!-- Visible: bottom 20% of traps (free preview) -->
+{% for t in trap_data %}
+{% if forloop.revcounter <= trap_free_count %}
+<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:14px;">
+  <span>{{ t.label }}</span>
+  <span style="color:rgba(0,0,0,.4);">{{ t.count }}x</span>
+</div>
+{% endif %}
+{% endfor %}
+<div style="margin-bottom:36px;"></div>
 {% endif %}
 
 {% if recommendations %}
