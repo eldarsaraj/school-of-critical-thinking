@@ -33,6 +33,7 @@
 </div>
 
 {{ q_list|json_script:"questionData" }}
+{{ section_totals|json_script:"sectionTotals" }}
 
 <form method="post" action="{% url 'shsat_test_submit' test.id %}" id="submitForm" style="display:none;">
   {% csrf_token %}
@@ -148,11 +149,12 @@ const SECTION_LABELS = {
 // ---------------------------------------------------------------------------
 // Progress bar
 // ---------------------------------------------------------------------------
+const sectionTotals = JSON.parse(document.getElementById("sectionTotals").textContent);
+
 function updateProgress() {
   const q = questions[currentIdx];
   const displayNum = q.display_index;
-  const sectionQs = questions.filter(sq => sq.section === q.section);
-  const total = sectionQs.length;
+  const total = sectionTotals[q.section] || questions.filter(sq => sq.section === q.section).length;
   const pct = (displayNum / total) * 100;
   const label = SECTION_LABELS[q.section] || q.section;
 

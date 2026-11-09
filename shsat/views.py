@@ -819,6 +819,17 @@ def test_take(request, test_id):
 
     modules_assigned = bool(attempt.ela_module)
 
+    # Expected total questions per section (for progress bar display).
+    # For adaptive SHSAT tests, the full section has 50 questions (routing + module)
+    # even though only routing questions are loaded initially.
+    if test.is_adaptive and test.exam_type == "shsat":
+        section_totals = {}
+        for sec in set(q.section for q in ordered_questions):
+            total_in_section = test.questions.filter(section=sec).count()
+            section_totals[sec] = total_in_section
+    else:
+        section_totals = {sec: count for sec, count in section_counters.items()}
+
     context = {
         "test": test,
         "attempt": attempt,
@@ -829,6 +840,7 @@ def test_take(request, test_id):
         "modules_assigned": modules_assigned,
         "ela_module": attempt.ela_module,
         "math_module": attempt.math_module,
+        "section_totals": section_totals,
     }
     template = "shsat/test_take_hunter.html" if test.exam_type == "hunter" else "shsat/test_take_shsat.html"
     return render(request, template, context)
