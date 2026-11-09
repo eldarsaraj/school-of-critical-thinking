@@ -362,7 +362,7 @@ Chart.register(emptyStatePlugin);
 const _history = JSON.parse(document.getElementById("scoreChartData").textContent);
 
 function buildProjection(history) {
-  const totalTests = 6; // Baseline + Test 1..5
+  const totalTests = 5; // Baseline + Benchmark 1..4
   const isLog = d => d.seq.toLowerCase().startsWith("log");
   const testHistory = history.filter(d => !isLog(d));
   const numProj = Math.max(0, totalTests - testHistory.length);
