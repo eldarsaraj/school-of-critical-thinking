@@ -450,8 +450,24 @@ def dashboard(request):
                 trap_by_attempt.setdefault(ans.attempt_id, {})
                 trap_by_attempt[ans.attempt_id][key] = trap_by_attempt[ans.attempt_id].get(key, 0) + 1
 
+    # Compute total wrong per section for percentage calculation
+    ELA_SECTIONS = {"ELA", "reading_comprehension", "writing"}
+    MATH_SECTIONS = {"Math", "quantitative_reasoning", "math_achievement"}
+    total_wrong_ela = sum(v for (s, _), v in trap_aggregate.items() if s in ELA_SECTIONS)
+    total_wrong_math = sum(v for (s, _), v in trap_aggregate.items() if s in MATH_SECTIONS)
+
     dash_trap_data = sorted(
-        [{"label": label, "section": section, "count": v} for (section, label), v in trap_aggregate.items()],
+        [
+            {
+                "label": label,
+                "section": section,
+                "count": v,
+                "pct": round(v / (total_wrong_ela if section in ELA_SECTIONS else total_wrong_math) * 100, 1)
+                if (total_wrong_ela if section in ELA_SECTIONS else total_wrong_math) > 0
+                else 0,
+            }
+            for (section, label), v in trap_aggregate.items()
+        ],
         key=lambda x: x["count"], reverse=True,
     )
 
@@ -459,29 +475,23 @@ def dashboard(request):
     top_trap_label = dash_trap_data[0]["label"] if dash_trap_data else None
     top_trap_count = dash_trap_data[0]["count"] if dash_trap_data else 0
 
-    # Trap trend data: top 5 traps over time (chronological attempts)
+    # Sankey data: bipartite flow from tests → top 5 traps
     attempts_asc = list(reversed(list(attempts)))  # oldest first
     top_5_traps = [(s, l) for (s, l), _ in sorted(trap_aggregate.items(), key=lambda x: x[1], reverse=True)[:5]]
-    trap_trend_data = {
-        "labels": [],
-        "series": [],
-    }
+    sankey_data = []
     if top_5_traps and attempts_asc:
         for a in attempts_asc:
-            if a.test.title.lower().startswith("baseline"):
-                trap_trend_data["labels"].append("Baseline")
-            else:
-                trap_trend_data["labels"].append(a.test.title)
-        for (section, label) in top_5_traps:
-            ELA_SECTIONS = {"ELA", "reading_comprehension", "writing"}
-            MATH_SECTIONS = {"Math", "quantitative_reasoning", "math_achievement"}
-            sec_label = "ELA" if section in ELA_SECTIONS else ("Math" if section in MATH_SECTIONS else section)
-            series = {
-                "label": label,
-                "section": sec_label,
-                "data": [trap_by_attempt.get(a.id, {}).get((section, label), 0) for a in attempts_asc],
-            }
-            trap_trend_data["series"].append(series)
+            test_label = "Baseline" if a.test.title.lower().startswith("baseline") else a.test.title
+            per_attempt = trap_by_attempt.get(a.id, {})
+            for (section, label) in top_5_traps:
+                flow = per_attempt.get((section, label), 0)
+                if flow > 0:
+                    sec_label = "ELA" if section in ELA_SECTIONS else ("Math" if section in MATH_SECTIONS else section)
+                    sankey_data.append({
+                        "from": test_label,
+                        "to": f"{label} ({sec_label})",
+                        "flow": flow,
+                    })
 
     skill_stats = {}   # skill -> {correct, total, time_sum, time_count, section}
     # Per-attempt skill tracking for consistency analysis
@@ -624,7 +634,7 @@ def dashboard(request):
         "platform_n": platform_n,
         "has_paid": parent.has_paid,
         "dash_trap_data": dash_trap_data,
-        "trap_trend_data": trap_trend_data,
+        "sankey_data": sankey_data,
         "top_trap_label": top_trap_label,
         "top_trap_count": top_trap_count,
     }
@@ -1388,14 +1398,17 @@ def error_analysis(request, attempt_id):
 
     wrong_answers = [a for a in answers if a.selected_answer and not a.is_correct]
 
-    # Wrong answers by skill
+    # Wrong answers by skill (with section for treemap coloring)
     skill_errors = {}
     for ans in wrong_answers:
         skill = ans.question.skill or "unknown"
         label = skill_label_map.get(skill, skill)
-        skill_errors[label] = skill_errors.get(label, 0) + 1
+        section = ans.question.section or "unknown"
+        if label not in skill_errors:
+            skill_errors[label] = {"count": 0, "section": section}
+        skill_errors[label]["count"] += 1
     skill_errors_data = sorted(
-        [{"label": k, "count": v} for k, v in skill_errors.items()],
+        [{"label": k, "count": v["count"], "section": v["section"]} for k, v in skill_errors.items()],
         key=lambda x: x["count"], reverse=True
     )
 
@@ -1424,35 +1437,26 @@ def error_analysis(request, attempt_id):
             trap_counts[key] = trap_counts.get(key, 0) + 1
             trap_questions.setdefault(key, []).append(ans.question.question_number)
             _dist_key_for_label[clean_label] = trap
+    # Compute total wrong per section for percentage
+    ELA_SECTIONS = {"ELA", "reading_comprehension", "writing"}
+    MATH_SECTIONS = {"Math", "quantitative_reasoning", "math_achievement"}
+    _trap_total_ela = sum(v for (s, _), v in trap_counts.items() if s in ELA_SECTIONS)
+    _trap_total_math = sum(v for (s, _), v in trap_counts.items() if s in MATH_SECTIONS)
+
     trap_data = sorted(
-        [{"label": label, "section": section, "count": v} for (section, label), v in trap_counts.items()],
+        [
+            {
+                "label": label,
+                "section": section,
+                "count": v,
+                "pct": round(v / (_trap_total_ela if section in ELA_SECTIONS else _trap_total_math) * 100, 1)
+                if (_trap_total_ela if section in ELA_SECTIONS else _trap_total_math) > 0
+                else 0,
+            }
+            for (section, label), v in trap_counts.items()
+        ],
         key=lambda x: x["count"], reverse=True
     )
-
-    # Build trap detail cards for traps occurring 2+ times
-    from .trap_descriptions import TRAP_DESCRIPTIONS
-    trap_cards = []
-    for (section, label), count in sorted(trap_counts.items(), key=lambda x: x[1], reverse=True):
-        if count < 2:
-            continue
-        trap_key = _dist_key_for_label.get(label, "")
-        desc_data = TRAP_DESCRIPTIONS.get(trap_key, {})
-        q_nums = sorted(trap_questions.get((section, label), []))
-        section_label = section
-        ELA_SECTIONS = {"ELA", "reading_comprehension", "writing"}
-        MATH_SECTIONS = {"Math", "quantitative_reasoning", "math_achievement"}
-        if section in ELA_SECTIONS:
-            section_label = "ELA"
-        elif section in MATH_SECTIONS:
-            section_label = "Math"
-        trap_cards.append({
-            "label": label,
-            "section": section_label,
-            "count": count,
-            "description": desc_data.get("description", ""),
-            "remediation": desc_data.get("remediation", ""),
-            "questions": q_nums,
-        })
 
     # Difficulty breakdown of wrong answers
     diff_errors = {"easy": 0, "medium": 0, "hard": 0}
@@ -1470,7 +1474,36 @@ def error_analysis(request, attempt_id):
         {"label": "Hard", "errors": diff_errors["hard"], "total": diff_totals["hard"]},
     ]
 
-    # Time vs accuracy scatter (only if timing data exists)
+    # Time bucket accuracy bars (replaces scatter plot)
+    _time_buckets = [
+        ("<30s", 0, 30),
+        ("30–60s", 30, 60),
+        ("60–120s", 60, 120),
+        (">120s", 120, float("inf")),
+    ]
+    _bucket_stats = {label: {"correct": 0, "total": 0} for label, _, _ in _time_buckets}
+    for ans in answers:
+        if ans.selected_answer and ans.time_spent_seconds is not None:
+            for label, lo, hi in _time_buckets:
+                if lo <= ans.time_spent_seconds < hi:
+                    _bucket_stats[label]["total"] += 1
+                    if ans.is_correct:
+                        _bucket_stats[label]["correct"] += 1
+                    break
+    time_bucket_data = []
+    for label, _, _ in _time_buckets:
+        s = _bucket_stats[label]
+        if s["total"] > 0:
+            pct = round(s["correct"] / s["total"] * 100, 1)
+            time_bucket_data.append({
+                "label": label,
+                "correct": s["correct"],
+                "total": s["total"],
+                "pct": pct,
+            })
+    has_timing = len(time_bucket_data) > 0
+
+    # Legacy scatter data (kept for compatibility)
     scatter_data = []
     for ans in answers:
         if ans.selected_answer and ans.time_spent_seconds is not None:
@@ -1632,11 +1665,10 @@ def error_analysis(request, attempt_id):
         "total_answered": total_answered,
         "skill_errors_data": skill_errors_data,
         "trap_data": trap_data,
-        "trap_cards": trap_cards,
-        "trap_free_count": max(1, len(trap_data) // 5) if trap_data else 0,
         "diff_breakdown": diff_breakdown,
         "scatter_data": scatter_data,
-        "has_timing": len(scatter_data) > 0,
+        "time_bucket_data": time_bucket_data,
+        "has_timing": has_timing,
         "recommendations": recommendations,
         "section_summary_data": section_summary_data,
         "has_section_time": has_section_time,

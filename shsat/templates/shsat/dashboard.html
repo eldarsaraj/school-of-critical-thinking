@@ -99,11 +99,13 @@
   <canvas id="dashTrapChartMath"></canvas>
 </div>
 
-<!-- Trap trend over time -->
-<div id="trapTrendWrap" class="shsat-chart-wrap" style="display:none;margin-top:16px;">
-  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Top traps over time</p>
-  <canvas id="trapTrendChart"></canvas>
+<!-- Sankey: tests → top traps -->
+{% if sankey_data %}
+<div id="sankeyWrap" class="shsat-chart-wrap" style="margin-top:16px;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Trap flow across tests</p>
+  <canvas id="sankeyChart"></canvas>
 </div>
+{% endif %}
 
 {% else %}
 {# Unpaid: show real trap bar charts blurred #}
@@ -126,7 +128,7 @@
 <div class="shsat-teaser-locked-wrap" style="margin-bottom:12px;">
   <div class="shsat-teaser-locked">
     <div class="shsat-chart-wrap" style="height:160px;background:rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:center;">
-      <span style="font-size:14px;color:rgba(0,0,0,0.3);">Trap trend over time</span>
+      <span style="font-size:14px;color:rgba(0,0,0,0.3);">Trap flow across tests</span>
     </div>
   </div>
 </div>
@@ -144,19 +146,21 @@
 {% endif %}
 {% endif %}
 {{ dash_trap_data|json_script:"dashTrapData" }}
-{{ trap_trend_data|json_script:"trapTrendData" }}
+{{ sankey_data|json_script:"sankeyData" }}
 
 {% if has_paid %}
-<!-- Skill accuracy heatmap -->
+<!-- Skill accuracy radar charts -->
 {% if skill_accuracy_data %}
 <p class="shsat-section-title" style="margin-top:48px;">Accuracy by skill</p>
-<div id="skillElaWrap" style="display:none;margin-bottom:24px;">
-  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
-  <div id="skillHeatEla" class="shsat-skill-heat"></div>
-</div>
-<div id="skillMathWrap" style="display:none;margin-bottom:24px;">
-  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
-  <div id="skillHeatMath" class="shsat-skill-heat"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+  <div id="skillRadarElaWrap" class="shsat-chart-wrap" style="display:none;">
+    <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
+    <canvas id="skillRadarEla"></canvas>
+  </div>
+  <div id="skillRadarMathWrap" class="shsat-chart-wrap" style="display:none;">
+    <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
+    <canvas id="skillRadarMath"></canvas>
+  </div>
 </div>
 {{ skill_accuracy_data|json_script:"skillChartData" }}
 {% endif %}
@@ -289,6 +293,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-sankey@0.19.1/dist/chartjs-chart-sankey.min.js"></script>
 <script>
 // ---------------------------------------------------------------------------
 // Shared palette
@@ -599,7 +604,7 @@ function makeProjData(arr) {
 })();
 
 // ---------------------------------------------------------------------------
-// Dashboard trap bar charts (rendered for both paid & unpaid — blurred for unpaid)
+// Dashboard trap bar charts — percentages, top 5 (rendered for both paid & unpaid)
 // ---------------------------------------------------------------------------
 (function () {
   const el = document.getElementById("dashTrapData");
@@ -609,24 +614,26 @@ function makeProjData(arr) {
 
   function renderTrapChart(canvasId, wrapId, sectionData, color) {
     if (!sectionData.length) return;
+    const top5 = sectionData.slice(0, 5);
     const wrap = document.getElementById(wrapId);
     if (!wrap) return;
     wrap.style.display = "";
     new Chart(document.getElementById(canvasId).getContext("2d"), {
       type: "bar",
       data: {
-        labels: sectionData.map(d => d.label),
-        datasets: [{ label: "Times caught", data: sectionData.map(d => d.count), backgroundColor: color, borderWidth: 0, barThickness: 18 }]
+        labels: top5.map(d => d.label),
+        datasets: [{ label: "% of wrong answers", data: top5.map(d => d.pct), backgroundColor: color, borderWidth: 0, barThickness: 18 }]
       },
       options: {
         indexAxis: "y", responsive: true,
-        aspectRatio: chartAR(Math.max(1.4, 4 / Math.max(sectionData.length, 2))),
+        aspectRatio: chartAR(Math.max(1.4, 4 / Math.max(top5.length, 2))),
         plugins: {
           legend: { display: false },
-          tooltip: { callbacks: { label: item => ` ${item.raw}×` } }
+          tooltip: { callbacks: { label: item => ` ${item.raw}% (${sectionData[item.dataIndex].count}×)` } }
         },
         scales: {
-          x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } },
+          x: { min: 0, max: 100, ticks: { font: { size: 11 }, callback: v => v + "%" }, grid: { color: P.grid },
+               title: { display: true, text: "% of wrong answers", font: { size: 11 }, color: "rgba(0,0,0,0.4)" } },
           y: { grid: { display: false }, ticks: { font: { size: 12 } } }
         }
       }
@@ -638,10 +645,14 @@ function makeProjData(arr) {
 
   function aggregateByLabel(data) {
     const byLabel = {};
-    data.forEach(d => { byLabel[d.label] = (byLabel[d.label] || 0) + d.count; });
+    data.forEach(d => {
+      if (!byLabel[d.label]) byLabel[d.label] = { count: 0, pct: 0 };
+      byLabel[d.label].count += d.count;
+      byLabel[d.label].pct += d.pct;
+    });
     return Object.entries(byLabel)
-      .map(([label, count]) => ({ label, count }))
-      .sort((a, b) => b.count - a.count);
+      .map(([label, v]) => ({ label, count: v.count, pct: Math.round(v.pct * 10) / 10 }))
+      .sort((a, b) => b.pct - a.pct);
   }
 
   const elaData  = aggregateByLabel(allData.filter(d => ELA_SECTIONS.has(d.section)));
@@ -652,44 +663,59 @@ function makeProjData(arr) {
 
 {% if has_paid %}
 // ---------------------------------------------------------------------------
-// Trap trend line chart — top 5 traps over time
+// Sankey diagram — test → trap flow
 // ---------------------------------------------------------------------------
 (function () {
-  const el = document.getElementById("trapTrendChart");
+  const el = document.getElementById("sankeyChart");
   if (!el) return;
-  const trendEl = document.getElementById("trapTrendData");
-  if (!trendEl) return;
-  const trend = JSON.parse(trendEl.textContent);
-  if (!trend.labels || !trend.labels.length || !trend.series || !trend.series.length) return;
+  const dataEl = document.getElementById("sankeyData");
+  if (!dataEl) return;
+  const flows = JSON.parse(dataEl.textContent);
+  if (!flows.length) return;
 
-  document.getElementById("trapTrendWrap").style.display = "";
+  // Assign columns: tests on left (0), traps on right (1)
+  const testNodes = new Set(flows.map(f => f.from));
+  const trapNodes = new Set(flows.map(f => f.to));
+  const columnMap = {};
+  testNodes.forEach(n => { columnMap[n] = 0; });
+  trapNodes.forEach(n => { columnMap[n] = 1; });
 
-  const COLORS = ["#5b8ec4", "#c4635b", "#7aab6e", "#a07ac4", "#c49a5a"];
-  const datasets = trend.series.map((s, i) => ({
-    label: s.label + " (" + s.section + ")",
-    data: s.data,
-    borderColor: COLORS[i % COLORS.length],
-    backgroundColor: "transparent",
-    pointBackgroundColor: COLORS[i % COLORS.length],
-    borderWidth: 2,
-    tension: 0.2,
-    pointRadius: 4,
-  }));
+  // Priority: tests sorted chronologically (already in order), traps by total flow
+  const trapTotals = {};
+  flows.forEach(f => { trapTotals[f.to] = (trapTotals[f.to] || 0) + f.flow; });
+  const priorityMap = {};
+  let pi = 0;
+  testNodes.forEach(n => { priorityMap[n] = pi++; });
+  const sortedTraps = Object.entries(trapTotals).sort((a, b) => b[1] - a[1]);
+  sortedTraps.forEach(([n], i) => { priorityMap[n] = i; });
 
   new Chart(el.getContext("2d"), {
-    type: "line",
-    data: { labels: trend.labels, datasets },
+    type: "sankey",
+    data: {
+      datasets: [{
+        label: "Trap flow",
+        data: flows,
+        colorFrom: P.ela,
+        colorTo: P.wrong,
+        colorMode: "gradient",
+        column: columnMap,
+        priority: priorityMap,
+        borderWidth: 0,
+      }]
+    },
     options: {
       responsive: true,
       aspectRatio: chartAR(2.5, 1.2),
       plugins: {
-        legend: { position: "bottom", labels: { font: { size: 11 }, boxWidth: 12, padding: 14 } },
-        tooltip: { callbacks: { label: item => ` ${item.dataset.label}: ${item.raw}×` } }
-      },
-      scales: {
-        x: { grid: { display: false }, ticks: { font: { size: 12 } } },
-        y: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid },
-             title: { display: true, text: "Times caught", font: { size: 11 }, color: "rgba(0,0,0,0.4)" } }
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: item => {
+              const d = item.raw;
+              return `${d.from} → ${d.to}: ${d.flow}×`;
+            }
+          }
+        }
       }
     }
   });
@@ -800,48 +826,81 @@ function makeProjData(arr) {
 })();
 
 // ---------------------------------------------------------------------------
-// Skill accuracy CSS tile heatmap — one grid per section
+// Skill accuracy radar charts — one per section
 // ---------------------------------------------------------------------------
 (function () {
   const el = document.getElementById("skillChartData");
   if (!el) return;
   const allSkills = JSON.parse(el.textContent);
 
-  function lerpColor(t, r0, g0, b0, r1, g1, b1) {
-    return `rgb(${Math.round(r0+t*(r1-r0))},${Math.round(g0+t*(g1-g0))},${Math.round(b0+t*(b1-b0))})`;
-  }
-  function tileTextColor(t) {
-    return t > 0.55 ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.65)";
-  }
+  const ELA_SECTIONS  = new Set(["ELA", "reading_comprehension", "writing"]);
+  const MATH_SECTIONS = new Set(["Math", "quantitative_reasoning", "math_achievement"]);
 
-  const ELA_LIGHT  = [213, 230, 247];
-  const ELA_DARK   = [29,  74,  130];
-  const MATH_LIGHT = [247, 213, 210];
-  const MATH_DARK  = [130, 29,  22];
-
-  function renderSkillHeat(containerId, wrapId, skills, lightRgb, darkRgb) {
+  function renderRadar(canvasId, wrapId, skills, fillColor, borderColor) {
     if (!skills.length) return;
     document.getElementById(wrapId).style.display = "";
-    const container = document.getElementById(containerId);
-    skills.forEach(s => {
-      const t = s.accuracy / 100;
-      const bg = lerpColor(t, ...lightRgb, ...darkRgb);
-      const fg = tileTextColor(t);
-      const tile = document.createElement("div");
-      tile.className = "shsat-skill-tile";
-      tile.style.background = bg;
-      tile.style.color = fg;
-      tile.title = `${s.label}: ${s.accuracy}% (${s.correct}/${s.total})`;
-      tile.innerHTML =
-        `<div class="shsat-skill-tile__label">${s.label}</div>` +
-        `<div class="shsat-skill-tile__pct">${s.accuracy}%</div>` +
-        `<div class="shsat-skill-tile__count">${s.correct}/${s.total}</div>`;
-      container.appendChild(tile);
+    const ctx = document.getElementById(canvasId).getContext("2d");
+
+    // Target ring at 80%
+    const targetData = skills.map(() => 80);
+
+    new Chart(ctx, {
+      type: "radar",
+      data: {
+        labels: skills.map(s => s.label),
+        datasets: [
+          {
+            label: "Accuracy",
+            data: skills.map(s => s.accuracy),
+            backgroundColor: fillColor,
+            borderColor: borderColor,
+            borderWidth: 2,
+            pointBackgroundColor: borderColor,
+            pointRadius: 3,
+          },
+          {
+            label: "80% target",
+            data: targetData,
+            backgroundColor: "transparent",
+            borderColor: "rgba(0,0,0,0.18)",
+            borderWidth: 1.5,
+            borderDash: [5, 4],
+            pointRadius: 0,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        aspectRatio: 1,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: item => {
+                if (item.datasetIndex === 1) return "Target: 80%";
+                const s = skills[item.dataIndex];
+                return ` ${s.accuracy}% (${s.correct}/${s.total})`;
+              }
+            }
+          }
+        },
+        scales: {
+          r: {
+            min: 0, max: 100,
+            ticks: { stepSize: 20, font: { size: 10 }, backdropColor: "transparent" },
+            pointLabels: { font: { size: 11 } },
+            grid: { color: "rgba(0,0,0,0.06)" },
+            angleLines: { color: "rgba(0,0,0,0.06)" },
+          }
+        }
+      }
     });
   }
 
-  renderSkillHeat("skillHeatEla",  "skillElaWrap",  allSkills.filter(s => s.section === "ELA"),  ELA_LIGHT, ELA_DARK);
-  renderSkillHeat("skillHeatMath", "skillMathWrap", allSkills.filter(s => s.section === "Math"), MATH_LIGHT, MATH_DARK);
+  const elaSkills  = allSkills.filter(s => ELA_SECTIONS.has(s.section));
+  const mathSkills = allSkills.filter(s => MATH_SECTIONS.has(s.section));
+  renderRadar("skillRadarEla",  "skillRadarElaWrap",  elaSkills,  "rgba(91,142,196,0.2)", P.ela);
+  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(196,99,91,0.2)",  P.math);
 })();
 {% endif %}
 </script>

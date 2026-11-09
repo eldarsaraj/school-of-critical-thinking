@@ -52,33 +52,8 @@
   <canvas id="trapChartMath"></canvas>
 </div>
 
-<!-- Trap detail cards -->
-{% if trap_cards %}
-<div style="margin-top:8px;">
-  {% for card in trap_cards %}
-  <div class="shsat-trap-card">
-    <div class="shsat-trap-card__header">
-      <span class="shsat-trap-card__name">{{ card.label }}</span>
-      <span class="shsat-trap-card__meta">{{ card.section }} · {{ card.count }}x</span>
-    </div>
-    {% if card.description %}
-    <p class="shsat-trap-card__desc">{{ card.description }}</p>
-    {% endif %}
-    {% if card.remediation %}
-    <div class="shsat-trap-card__remediation">
-      <span class="shsat-trap-card__remediation-label">What to do:</span> {{ card.remediation }}
-    </div>
-    {% endif %}
-    {% if card.questions %}
-    <p class="shsat-trap-card__questions">Questions: {% for q in card.questions %}Q{{ q }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-    {% endif %}
-  </div>
-  {% endfor %}
-</div>
-{% endif %}
-
 {% else %}
-{# Unpaid: show real trap bar charts blurred + 1 unblurred card (least frequent) #}
+{# Unpaid: show real trap bar charts blurred #}
 <p class="shsat-section-title" style="margin-top:12px;">Distractor Trap Analysis</p>
 <p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Which wrong-answer patterns caught your child on this test.</p>
 <div class="shsat-teaser-locked-wrap" style="margin-bottom:12px;">
@@ -93,48 +68,6 @@
     </div>
   </div>
 </div>
-
-{# Show 1 unblurred trap card (the least frequent) as a teaser #}
-{% if trap_cards %}
-{% with last_card=trap_cards|last %}
-<div class="shsat-trap-card">
-  <div class="shsat-trap-card__header">
-    <span class="shsat-trap-card__name">{{ last_card.label }}</span>
-    <span class="shsat-trap-card__meta">{{ last_card.section }} · {{ last_card.count }}x</span>
-  </div>
-  {% if last_card.description %}
-  <p class="shsat-trap-card__desc">{{ last_card.description }}</p>
-  {% endif %}
-  {% if last_card.remediation %}
-  <div class="shsat-trap-card__remediation">
-    <span class="shsat-trap-card__remediation-label">What to do:</span> {{ last_card.remediation }}
-  </div>
-  {% endif %}
-  {% if last_card.questions %}
-  <p class="shsat-trap-card__questions">Questions: {% for q in last_card.questions %}Q{{ q }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-  {% endif %}
-</div>
-{% endwith %}
-
-{# Blur remaining cards #}
-{% if trap_cards|length > 1 %}
-<div class="shsat-teaser-locked-wrap" style="margin-bottom:12px;">
-  <div class="shsat-teaser-locked">
-    {% for card in trap_cards %}
-    {% if not forloop.last %}
-    <div class="shsat-trap-card" style="margin-bottom:8px;">
-      <div class="shsat-trap-card__header">
-        <span class="shsat-trap-card__name">{{ card.label }}</span>
-        <span class="shsat-trap-card__meta">{{ card.section }} · {{ card.count }}x</span>
-      </div>
-      <p class="shsat-trap-card__desc">{{ card.description }}</p>
-    </div>
-    {% endif %}
-    {% endfor %}
-  </div>
-</div>
-{% endif %}
-{% endif %}
 
 <!-- Upgrade CTA for trap section -->
 <div style="border:1px solid rgba(0,0,0,0.12);padding:20px 24px;margin:20px 0 36px;max-width:560px;border-radius:8px;">
@@ -151,11 +84,11 @@
 {{ trap_data|json_script:"trapData" }}
 
 {% if has_paid %}
-<!-- Wrong answers by skill -->
+<!-- Wrong answers by skill — treemap -->
 <p class="shsat-section-title">Wrong answers by skill</p>
 {% if skill_errors_data %}
 <div class="shsat-chart-wrap">
-  <canvas id="skillErrorChart"></canvas>
+  <canvas id="skillTreemap"></canvas>
 </div>
 {% else %}
 <p style="color:rgba(0,0,0,0.4);font-size:15px;margin-bottom:36px;">No wrong answers — perfect score!</p>
@@ -299,36 +232,15 @@
 {% endfor %}
 {% endif %}
 
-<!-- Difficulty breakdown — CSS bars, not a donut -->
-<p class="shsat-section-title" style="margin-top:12px;">Performance by difficulty</p>
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Easy errors are highest-priority — they are recoverable points on familiar material.</p>
-<div class="shsat-diff-bars" style="margin-bottom:36px;">
-  {% for d in diff_breakdown %}
-  {% if d.total %}
-  {% widthratio d.errors d.total 100 as err_pct %}
-  {% widthratio d.errors d.total 1 as err_int %}
-  <div class="shsat-diff-bar-row">
-    <div class="shsat-diff-bar-label">{{ d.label }}</div>
-    <div class="shsat-diff-bar-track">
-      <div class="shsat-diff-bar-fill
-        {% if d.label == 'Easy' %}shsat-diff-bar-fill--easy{% elif d.label == 'Medium' %}shsat-diff-bar-fill--medium{% else %}shsat-diff-bar-fill--hard{% endif %}"
-        style="width:{{ err_pct }}%;"></div>
-    </div>
-    <div class="shsat-diff-bar-stat">{{ d.errors }}/{{ d.total }} wrong <span style="color:rgba(0,0,0,0.4);font-size:11px;">({{ err_pct }}%)</span></div>
-  </div>
-  {% endif %}
-  {% endfor %}
-</div>
-
-<!-- Time vs Accuracy scatter (only if timing data) -->
+<!-- Speed vs accuracy — time buckets -->
 {% if has_timing %}
-<p class="shsat-section-title">Time vs. accuracy</p>
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Each dot is one question. Reveals rushing or overthinking patterns.</p>
+<p class="shsat-section-title" style="margin-top:12px;">Speed vs. accuracy</p>
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Does spending more time help? Find your child's sweet spot.</p>
 <div class="shsat-chart-wrap">
-  <canvas id="scatterChart"></canvas>
+  <canvas id="timeBucketChart"></canvas>
 </div>
 {% endif %}
-{{ scatter_data|json_script:"scatterData" }}
+{{ time_bucket_data|json_script:"timeBucketData" }}
 
 <!-- Recommendations -->
 {% if recommendations %}
@@ -529,6 +441,7 @@
 {% endif %}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@4.2.0/dist/chartjs-chart-treemap.min.js"></script>
 <script>
 const P = {
   correct:  "#5aab8c",
@@ -621,7 +534,7 @@ const P = {
 })();
 
 // ---------------------------------------------------------------------------
-// Distractor trap bars — one chart per section (rendered for both paid & unpaid)
+// Distractor trap bars — percentages, top 5 per section
 // ---------------------------------------------------------------------------
 (function () {
   const allData = JSON.parse(document.getElementById("trapData").textContent);
@@ -629,24 +542,26 @@ const P = {
 
   function renderTrapChart(canvasId, wrapId, sectionData, color) {
     if (!sectionData.length) return;
+    const top5 = sectionData.slice(0, 5);
     const wrap = document.getElementById(wrapId);
     if (!wrap) return;
     wrap.style.display = "";
     new Chart(document.getElementById(canvasId).getContext("2d"), {
       type: "bar",
       data: {
-        labels: sectionData.map(d => d.label),
-        datasets: [{ label: "Times caught", data: sectionData.map(d => d.count), backgroundColor: color, borderWidth: 0, barThickness: 18 }]
+        labels: top5.map(d => d.label),
+        datasets: [{ label: "% of wrong answers", data: top5.map(d => d.pct), backgroundColor: color, borderWidth: 0, barThickness: 18 }]
       },
       options: {
         indexAxis: "y", responsive: true,
-        aspectRatio: chartAR(Math.max(1.4, 4 / Math.max(sectionData.length, 2))),
+        aspectRatio: chartAR(Math.max(1.4, 4 / Math.max(top5.length, 2))),
         plugins: {
           legend: { display: false },
-          tooltip: { callbacks: { label: item => ` ${item.raw}×` } }
+          tooltip: { callbacks: { label: item => ` ${item.raw}% (${sectionData[item.dataIndex].count}×)` } }
         },
         scales: {
-          x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } },
+          x: { min: 0, max: 100, ticks: { font: { size: 11 }, callback: v => v + "%" }, grid: { color: P.grid },
+               title: { display: true, text: "% of wrong answers", font: { size: 11 }, color: "rgba(0,0,0,0.4)" } },
           y: { grid: { display: false }, ticks: { font: { size: 12 } } }
         }
       }
@@ -658,10 +573,14 @@ const P = {
 
   function aggregateByLabel(data) {
     const byLabel = {};
-    data.forEach(d => { byLabel[d.label] = (byLabel[d.label] || 0) + d.count; });
+    data.forEach(d => {
+      if (!byLabel[d.label]) byLabel[d.label] = { count: 0, pct: 0 };
+      byLabel[d.label].count += d.count;
+      byLabel[d.label].pct += d.pct;
+    });
     return Object.entries(byLabel)
-      .map(([label, count]) => ({ label, count }))
-      .sort((a, b) => b.count - a.count);
+      .map(([label, v]) => ({ label, count: v.count, pct: Math.round(v.pct * 10) / 10 }))
+      .sort((a, b) => b.pct - a.pct);
   }
 
   const elaData  = aggregateByLabel(allData.filter(d => ELA_SECTIONS.has(d.section)));
@@ -672,61 +591,107 @@ const P = {
 
 {% if has_paid %}
 // ---------------------------------------------------------------------------
-// Wrong answers by skill — horizontal bar
+// Wrong answers by skill — treemap
 // ---------------------------------------------------------------------------
 (function () {
-  const el = document.getElementById("skillErrorChart");
+  const el = document.getElementById("skillTreemap");
   if (!el) return;
   const data = JSON.parse(document.getElementById("skillErrorData").textContent);
   if (!data.length) return;
 
+  const ELA_SECTIONS  = new Set(["ELA", "reading_comprehension", "writing"]);
+
   new Chart(el.getContext("2d"), {
-    type: "bar",
+    type: "treemap",
     data: {
-      labels: data.map(d => d.label),
-      datasets: [{ label: "Wrong answers", data: data.map(d => d.count), backgroundColor: P.wrong, borderWidth: 0, barThickness: 18 }]
+      datasets: [{
+        tree: data,
+        key: "count",
+        labels: {
+          display: true,
+          formatter: (ctx) => {
+            const d = data[ctx.dataIndex];
+            return d ? [d.label, d.count + " wrong"] : "";
+          },
+          color: "#fff",
+          font: [{ size: 13, weight: "600" }, { size: 11 }],
+        },
+        backgroundColor: (ctx) => {
+          const d = data[ctx.dataIndex];
+          if (!d) return "#888";
+          return ELA_SECTIONS.has(d.section) ? P.sections[0] : P.sections[1];
+        },
+        borderWidth: 2,
+        borderColor: "#fff",
+        spacing: 1,
+      }]
     },
     options: {
-      indexAxis: "y", responsive: true,
-      aspectRatio: chartAR(Math.max(1.6, 4 / Math.max(data.length, 2))),
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } },
-        y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      responsive: true,
+      aspectRatio: chartAR(2.5, 1.4),
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: (items) => {
+              const d = data[items[0].dataIndex];
+              return d ? d.label : "";
+            },
+            label: (item) => {
+              const d = data[item.dataIndex];
+              return d ? ` ${d.count} wrong answers` : "";
+            }
+          }
+        }
       }
     }
   });
 })();
 
 // ---------------------------------------------------------------------------
-// Time vs Accuracy scatter — dynamic section coloring
+// Speed vs accuracy — time bucket bars
 // ---------------------------------------------------------------------------
 (function () {
-  const el = document.getElementById("scatterChart");
+  const el = document.getElementById("timeBucketChart");
   if (!el) return;
-  const raw = JSON.parse(document.getElementById("scatterData").textContent);
-  if (!raw.length) return;
+  const dataEl = document.getElementById("timeBucketData");
+  if (!dataEl) return;
+  const data = JSON.parse(dataEl.textContent);
+  if (!data.length) return;
 
-  const sections = [...new Set(raw.map(d => d.section))];
-  const datasets = [];
-  sections.forEach((sec, i) => {
-    const col = P.sections[i % P.sections.length];
-    datasets.push({ label: sec + " correct", data: raw.filter(d => d.section === sec && d.y === 1).map(d => ({x:d.x, y:1})), backgroundColor: col,                    pointRadius: 5 });
-    datasets.push({ label: sec + " wrong",   data: raw.filter(d => d.section === sec && d.y === 0).map(d => ({x:d.x, y:0})), backgroundColor: col + "80", pointRadius: 5 });
-  });
+  const colors = data.map(d => d.pct >= 75 ? P.correct : d.pct >= 50 ? P.warn : P.wrong);
 
   new Chart(el.getContext("2d"), {
-    type: "scatter",
-    data: { datasets },
+    type: "bar",
+    data: {
+      labels: data.map(d => d.label),
+      datasets: [{
+        label: "Accuracy %",
+        data: data.map(d => d.pct),
+        backgroundColor: colors,
+        borderWidth: 0,
+        barThickness: 48,
+      }]
+    },
     options: {
-      responsive: true, aspectRatio: chartAR(3, 1.4),
+      responsive: true,
+      aspectRatio: chartAR(2.5, 1.4),
       plugins: {
-        legend: { position: "top", align: "end", labels: { font: { size: 12 }, boxWidth: 12, padding: 16 } },
-        tooltip: { callbacks: { label: item => ` ${item.raw.x}s — ${item.raw.y ? "correct" : "wrong"}` } }
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: item => {
+              const d = data[item.dataIndex];
+              return ` ${d.pct}% correct (${d.correct}/${d.total})`;
+            }
+          }
+        }
       },
       scales: {
-        x: { title: { display: true, text: "Time spent (seconds)", font: { size: 12 } }, grid: { color: P.grid }, ticks: { font: { size: 11 } } },
-        y: { min: -0.2, max: 1.2, ticks: { stepSize: 1, callback: v => v === 1 ? "Correct" : v === 0 ? "Wrong" : "" }, grid: { color: P.grid } }
+        x: { grid: { display: false }, ticks: { font: { size: 12 } } },
+        y: { min: 0, max: 100, grid: { color: P.grid },
+             ticks: { font: { size: 11 }, callback: v => v + "%" },
+             title: { display: true, text: "Accuracy %", font: { size: 11 }, color: "rgba(0,0,0,0.4)" } }
       }
     }
   });
