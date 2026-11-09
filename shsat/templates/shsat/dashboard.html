@@ -31,8 +31,7 @@
 </div>
 
 <!-- Score chart -->
-<p class="shsat-section-title">{% if parent.child_nickname %}{{ parent.child_nickname }}'s Score History{% else %}Score History{% endif %}</p>
-<div class="shsat-chart-wrap">
+<div class="shsat-chart-wrap" style="padding-top:8px;">
   <canvas id="scoreChart"></canvas>
   <div class="shsat-cutoff-pills" id="cutoffPills">
     <span class="shsat-cutoff-pills__label">Show cutoff for:</span>
@@ -45,6 +44,7 @@
 </div>
 {{ score_history|json_script:"scoreChartData" }}
 {{ cutoffs_list|json_script:"cutoffsData" }}
+<script id="childNickname" type="application/json">"{% if parent.child_nickname %}{{ parent.child_nickname }}{% endif %}"</script>
 {% if score_history %}
 <p style="font-size:12px;color:rgba(0,0,0,0.38);margin:-20px 0 28px;line-height:1.6;">
   Dotted lines show projected scores for upcoming tests. Projections assume consistent weekly practice — actual improvement depends on study effort and focus areas.
@@ -311,15 +311,25 @@
 // Shared palette
 // ---------------------------------------------------------------------------
 const P = {
-  ela:       "#5b8ec4",
-  math:      "#c4635b",
-  correct:   "#5aab8c",
-  wrong:     "#c4635b",
-  warn:      "#c49a5a",
-  neutral:   "#8896a8",
-  composite: "#3d4f63",
-  grid:      "rgba(0,0,0,0.06)",
+  ela:       "#7a8775",
+  math:      "#ab553f",
+  correct:   "#7a8775",
+  wrong:     "#ab553f",
+  warn:      "#c58350",
+  neutral:   "#aba784",
+  composite: "#240f05",
+  grid:      "#eee2d3",
+  accent:    "#dda78c",
+  amber:     "#c58350",
+  bg:        "#fffef8",
 };
+// Typography constants
+const F = {
+  title:  "'Helvetica Neue', Helvetica, Arial, sans-serif",
+  label:  "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif",
+  labelLight: "300 11px 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif",
+};
+const titleColor = "#240f05";
 
 // Plugin: draw a centered message when a chart has no data
 const emptyStatePlugin = {
@@ -332,8 +342,8 @@ const emptyStatePlugin = {
     ctx.save();
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.font = "500 14px system-ui, -apple-system, sans-serif";
-    ctx.fillStyle = "rgba(0,0,0,0.22)";
+    ctx.font = "400 14px " + F.label;
+    ctx.fillStyle = "#aba784";
     ctx.fillText(msg, width / 2, height / 2);
     ctx.restore();
   }
@@ -405,9 +415,11 @@ function makeProjData(arr) {
   const allLabels = _allLabels;
   const isEmpty = history.length === 0;
   const ctx = document.getElementById("scoreChart").getContext("2d");
+  const childName = JSON.parse(document.getElementById("childNickname").textContent);
+  const chartTitle = childName ? childName + "'s score history" : "Score history";
 
-  const greyLine = { borderColor: "rgba(0,0,0,0.10)", backgroundColor: "transparent",
-                     pointBackgroundColor: "rgba(0,0,0,0.10)", borderWidth: 2, tension: 0.2, pointRadius: 4 };
+  const greyLine = { borderColor: "#eee2d3", backgroundColor: "transparent",
+                     pointBackgroundColor: "#eee2d3", borderWidth: 2, tension: 0.2, pointRadius: 4 };
 
   function projData(arr) { return makeProjData(arr); }
 
@@ -420,7 +432,7 @@ function makeProjData(arr) {
     : [
         { label: "Composite", data: history.map(d => d.composite),
           borderColor: P.composite, backgroundColor: "transparent", pointBackgroundColor: P.composite,
-          borderWidth: 2, borderDash: [6, 3], tension: 0.2, pointRadius: 4 },
+          borderWidth: 2.5, borderDash: [6, 3], tension: 0.2, pointRadius: 5 },
         { label: "ELA", data: history.map(d => d.ela),
           borderColor: P.ela, backgroundColor: "transparent", pointBackgroundColor: P.ela,
           borderWidth: 2, tension: 0.2, pointRadius: 4 },
@@ -428,16 +440,16 @@ function makeProjData(arr) {
           borderColor: P.math, backgroundColor: "transparent", pointBackgroundColor: P.math,
           borderWidth: 2, tension: 0.2, pointRadius: 4 },
         proj ? { label: "Composite (projected)", data: projData(proj.composite),
-          borderColor: "rgba(61,79,99,0.28)", backgroundColor: "transparent",
-          pointBackgroundColor: "rgba(61,79,99,0.22)", borderWidth: 1.5, borderDash: [4, 4],
+          borderColor: "rgba(36,15,5,0.2)", backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(36,15,5,0.15)", borderWidth: 1.5, borderDash: [4, 4],
           tension: 0.2, pointRadius: 3 } : null,
         proj ? { label: "ELA (projected)", data: projData(proj.ela),
-          borderColor: "rgba(91,142,196,0.3)", backgroundColor: "transparent",
-          pointBackgroundColor: "rgba(91,142,196,0.25)", borderWidth: 1.5, borderDash: [4, 4],
+          borderColor: "rgba(122,135,117,0.25)", backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(122,135,117,0.2)", borderWidth: 1.5, borderDash: [4, 4],
           tension: 0.2, pointRadius: 3 } : null,
         proj ? { label: "Math (projected)", data: projData(proj.math),
-          borderColor: "rgba(196,99,91,0.3)", backgroundColor: "transparent",
-          pointBackgroundColor: "rgba(196,99,91,0.25)", borderWidth: 1.5, borderDash: [4, 4],
+          borderColor: "rgba(171,85,63,0.25)", backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(171,85,63,0.2)", borderWidth: 1.5, borderDash: [4, 4],
           tension: 0.2, pointRadius: 3 } : null,
       ].filter(Boolean);
 
@@ -451,16 +463,29 @@ function makeProjData(arr) {
       _emptyMessage: "Take a test or log a score to see your history",
       responsive: true,
       aspectRatio: chartAR(2.5, 1.2),
+      layout: { padding: { top: 36 } },
       plugins: {
+        title: {
+          display: true,
+          text: chartTitle,
+          align: "start",
+          color: titleColor,
+          font: { family: F.title, size: 20, weight: "600" },
+          padding: { bottom: 20 },
+        },
         legend: {
-          display: true, position: "top", align: "end",
+          display: true, position: "right", align: "start",
           labels: {
-            boxWidth: 14, font: { size: 12 }, padding: 18,
-            color: isEmpty ? "rgba(0,0,0,0.25)" : undefined,
+            boxWidth: 14, boxHeight: 14, usePointStyle: false,
+            font: { family: F.label, size: 12, weight: "400" },
+            padding: 14,
+            color: isEmpty ? "#aba784" : titleColor,
             filter: (item) => !item.text.includes("projected"),
           }
         },
         tooltip: {
+          titleFont: { family: F.label, size: 12 },
+          bodyFont: { family: F.label, size: 12 },
           callbacks: {
             title: (items) => {
               const idx = items[0].dataIndex;
@@ -482,14 +507,18 @@ function makeProjData(arr) {
       scales: {
         y: {
           min: 100, max: 700,
-          grid: { color: isEmpty ? "rgba(0,0,0,0.04)" : P.grid },
-          ticks: { font: { size: 12 }, stepSize: 100,
-                   color: isEmpty ? "rgba(0,0,0,0.2)" : undefined }
+          grid: { color: isEmpty ? "rgba(238,226,211,0.4)" : P.grid, drawBorder: false,
+                  borderDash: [2, 3] },
+          ticks: { font: { family: F.label, size: 11, weight: "300" }, stepSize: 100,
+                   color: isEmpty ? "#aba784" : "#aba784" },
+          border: { display: false },
         },
         x: {
           grid: { display: false },
+          border: { display: false },
           ticks: {
-            font: { size: 12 }, color: isEmpty ? "rgba(0,0,0,0.2)" : undefined,
+            font: { family: F.label, size: 12 },
+            color: isEmpty ? "#aba784" : "#aba784",
             callback: function(val, idx) {
               const label = this.getLabelForValue(val);
               return label.includes("projected") ? label.replace(" (projected)", " ↑") : label;
@@ -515,11 +544,11 @@ function makeProjData(arr) {
         chart.options.plugins.annotation.annotations = {
           cutoffLine: {
             type: "line", yMin: cutoff, yMax: cutoff,
-            borderColor: "rgba(196,99,91,0.75)", borderWidth: 2, borderDash: [6, 4],
+            borderColor: P.math, borderWidth: 2, borderDash: [6, 4],
             label: {
               content: school + " " + cutoff, display: true, position: "end",
-              backgroundColor: "rgba(196,99,91,0.75)", color: "#fff",
-              padding: { x: 6, y: 3 }, font: { size: 11, weight: "600" },
+              backgroundColor: P.math, color: "#fffef8",
+              padding: { x: 6, y: 3 }, font: { family: F.label, size: 11, weight: "600" },
             }
           }
         };

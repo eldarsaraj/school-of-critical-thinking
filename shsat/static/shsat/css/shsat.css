@@ -766,34 +766,36 @@
 }
 
 .shsat-cutoff-pills__label {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.4);
+  color: #aba784;
   margin-right: 4px;
 }
 
 .shsat-cutoff-pill {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   padding: 6px 14px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  border: 1px solid #111;
+  border: 1px solid #240f05;
   background: transparent;
-  color: #111;
+  color: #240f05;
   cursor: pointer;
   border-radius: 0;
   transition: background 0.12s, color 0.12s;
 }
 
 .shsat-cutoff-pill:hover {
-  background: rgba(0, 0, 0, 0.06);
+  background: #eee2d3;
 }
 
 .shsat-cutoff-pill.active {
-  background: #111;
-  color: #fff;
+  background: #240f05;
+  color: #fffef8;
 }
 
 /* ----------------------------------------------------------
