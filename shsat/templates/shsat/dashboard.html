@@ -626,22 +626,21 @@ function makeProjData(arr) {
 
   function renderTrapChart(canvasId, wrapId, sectionData, color) {
     if (!sectionData.length) return;
-    const top5 = sectionData.slice(0, 5);
     const wrap = document.getElementById(wrapId);
     if (!wrap) return;
     wrap.style.display = "";
     new Chart(document.getElementById(canvasId).getContext("2d"), {
       type: "bar",
       data: {
-        labels: top5.map(d => d.label),
-        datasets: [{ label: "% of wrong answers", data: top5.map(d => d.pct), backgroundColor: color, borderWidth: 0, barThickness: 18 }]
+        labels: sectionData.map(d => d.label),
+        datasets: [{ label: "% of wrong answers", data: sectionData.map(d => d.pct), backgroundColor: color, borderWidth: 0, barThickness: 18 }]
       },
       options: {
         indexAxis: "y", responsive: true,
-        aspectRatio: chartAR(Math.max(1.4, 4 / Math.max(top5.length, 2))),
+        aspectRatio: chartAR(Math.max(1.4, 4 / Math.max(sectionData.length, 2))),
         plugins: {
           legend: { display: false },
-          tooltip: { callbacks: { label: item => ` ${item.raw}% (${sectionData[item.dataIndex].count}×)` } }
+          tooltip: { callbacks: { label: item => ` ${item.raw}% (${sectionData[item.dataIndex].count} caught)` } }
         },
         scales: {
           x: { min: 0, max: 100, ticks: { font: { size: 11 }, callback: v => v + "%" }, grid: { color: P.grid },
@@ -722,7 +721,7 @@ function makeProjData(arr) {
             callbacks: {
               label: item => {
                 const d = item.raw;
-                return `${d.from} → ${d.to}: ${d.flow}×`;
+                return `${d.from} → ${d.to}: ${d.flow}`;
               }
             }
           }
