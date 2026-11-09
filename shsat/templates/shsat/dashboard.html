@@ -485,6 +485,7 @@ function makeProjData(arr) {
               return "";
             },
             label: (item) => {
+              if (item.dataset.label.includes("projected")) return null;
               const idx = item.dataIndex;
               if (idx < history.length) {
                 const d = history[idx];
@@ -516,7 +517,7 @@ function makeProjData(arr) {
             color: "#240f05",
             callback: function(val, idx) {
               const label = this.getLabelForValue(val);
-              return label.includes("projected") ? label.replace(" (projected)", " ↑") : label;
+              return label.replace(" (projected)", "");
             }
           }
         }
