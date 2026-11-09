@@ -719,7 +719,7 @@
    Placement bars (dashboard)
    ---------------------------------------------------------- */
 .shsat-placement-bars {
-  max-width: 640px;
+  width: 100%;
 }
 .shsat-placement-row {
   display: flex;
