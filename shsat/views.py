@@ -475,23 +475,32 @@ def dashboard(request):
     top_trap_label = dash_trap_data[0]["label"] if dash_trap_data else None
     top_trap_count = dash_trap_data[0]["count"] if dash_trap_data else 0
 
-    # Sankey data: bipartite flow from tests → top 5 traps
+    # Sankey data: separate ELA + Math, bipartite flow from tests → top 5 traps per section
     attempts_asc = list(reversed(list(attempts)))  # oldest first
-    top_5_traps = [(s, l) for (s, l), _ in sorted(trap_aggregate.items(), key=lambda x: x[1], reverse=True)[:5]]
-    sankey_data = []
-    if top_5_traps and attempts_asc:
+    _ela_traps = sorted(
+        [(s, l, v) for (s, l), v in trap_aggregate.items() if s in ELA_SECTIONS],
+        key=lambda x: x[2], reverse=True,
+    )[:5]
+    _math_traps = sorted(
+        [(s, l, v) for (s, l), v in trap_aggregate.items() if s in MATH_SECTIONS],
+        key=lambda x: x[2], reverse=True,
+    )[:5]
+
+    def _build_sankey(traps_list):
+        flows = []
+        if not traps_list or not attempts_asc:
+            return flows
         for a in attempts_asc:
             test_label = "Baseline" if a.test.title.lower().startswith("baseline") else a.test.title
             per_attempt = trap_by_attempt.get(a.id, {})
-            for (section, label) in top_5_traps:
+            for (section, label, _) in traps_list:
                 flow = per_attempt.get((section, label), 0)
                 if flow > 0:
-                    sec_label = "ELA" if section in ELA_SECTIONS else ("Math" if section in MATH_SECTIONS else section)
-                    sankey_data.append({
-                        "from": test_label,
-                        "to": f"{label} ({sec_label})",
-                        "flow": flow,
-                    })
+                    flows.append({"from": test_label, "to": label, "flow": flow})
+        return flows
+
+    sankey_ela = _build_sankey(_ela_traps)
+    sankey_math = _build_sankey(_math_traps)
 
     skill_stats = {}   # skill -> {correct, total, time_sum, time_count, section}
     # Per-attempt skill tracking for consistency analysis
@@ -634,7 +643,9 @@ def dashboard(request):
         "platform_n": platform_n,
         "has_paid": parent.has_paid,
         "dash_trap_data": dash_trap_data,
-        "sankey_data": sankey_data,
+        "sankey_ela": sankey_ela,
+        "sankey_math": sankey_math,
+        "sankey_single_test": len(attempts_asc) <= 1,
         "top_trap_label": top_trap_label,
         "top_trap_count": top_trap_count,
     }

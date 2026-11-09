@@ -99,12 +99,23 @@
   <canvas id="dashTrapChartMath"></canvas>
 </div>
 
-<!-- Sankey: tests → top traps -->
-{% if sankey_data %}
-<div id="sankeyWrap" class="shsat-chart-wrap" style="margin-top:16px;">
-  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Trap flow across tests</p>
-  <canvas id="sankeyChart"></canvas>
+<!-- Sankey: tests → top traps (separate ELA + Math) -->
+{% if sankey_ela %}
+<div id="sankeyElaWrap" class="shsat-chart-wrap" style="margin-top:16px;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA trap flow across tests</p>
+  <canvas id="sankeyChartEla"></canvas>
 </div>
+{% endif %}
+{% if sankey_math %}
+<div id="sankeyMathWrap" class="shsat-chart-wrap" style="margin-top:16px;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math trap flow across tests</p>
+  <canvas id="sankeyChartMath"></canvas>
+</div>
+{% endif %}
+{% if sankey_single_test and sankey_ela or sankey_single_test and sankey_math %}
+<p style="font-size:12px;color:rgba(0,0,0,0.38);margin:4px 0 12px;line-height:1.5;">
+  Complete more tests to see whether these traps persist or fade.
+</p>
 {% endif %}
 
 {% else %}
@@ -128,7 +139,7 @@
 <div class="shsat-teaser-locked-wrap" style="margin-bottom:12px;">
   <div class="shsat-teaser-locked">
     <div class="shsat-chart-wrap" style="height:160px;background:rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:center;">
-      <span style="font-size:14px;color:rgba(0,0,0,0.3);">Trap flow across tests</span>
+      <span style="font-size:14px;color:rgba(0,0,0,0.3);">Trap flow across tests (ELA + Math)</span>
     </div>
   </div>
 </div>
@@ -146,7 +157,8 @@
 {% endif %}
 {% endif %}
 {{ dash_trap_data|json_script:"dashTrapData" }}
-{{ sankey_data|json_script:"sankeyData" }}
+{{ sankey_ela|json_script:"sankeyElaData" }}
+{{ sankey_math|json_script:"sankeyMathData" }}
 
 {% if has_paid %}
 <!-- Skill accuracy radar charts -->
@@ -663,62 +675,64 @@ function makeProjData(arr) {
 
 {% if has_paid %}
 // ---------------------------------------------------------------------------
-// Sankey diagram — test → trap flow
+// Sankey diagrams — ELA + Math trap flow across tests
 // ---------------------------------------------------------------------------
 (function () {
-  const el = document.getElementById("sankeyChart");
-  if (!el) return;
-  const dataEl = document.getElementById("sankeyData");
-  if (!dataEl) return;
-  const flows = JSON.parse(dataEl.textContent);
-  if (!flows.length) return;
+  function renderSankey(canvasId, dataId, colorFrom, colorTo) {
+    const el = document.getElementById(canvasId);
+    if (!el) return;
+    const dataEl = document.getElementById(dataId);
+    if (!dataEl) return;
+    const flows = JSON.parse(dataEl.textContent);
+    if (!flows.length) return;
 
-  // Assign columns: tests on left (0), traps on right (1)
-  const testNodes = new Set(flows.map(f => f.from));
-  const trapNodes = new Set(flows.map(f => f.to));
-  const columnMap = {};
-  testNodes.forEach(n => { columnMap[n] = 0; });
-  trapNodes.forEach(n => { columnMap[n] = 1; });
+    const testNodes = new Set(flows.map(f => f.from));
+    const trapNodes = new Set(flows.map(f => f.to));
+    const columnMap = {};
+    testNodes.forEach(n => { columnMap[n] = 0; });
+    trapNodes.forEach(n => { columnMap[n] = 1; });
 
-  // Priority: tests sorted chronologically (already in order), traps by total flow
-  const trapTotals = {};
-  flows.forEach(f => { trapTotals[f.to] = (trapTotals[f.to] || 0) + f.flow; });
-  const priorityMap = {};
-  let pi = 0;
-  testNodes.forEach(n => { priorityMap[n] = pi++; });
-  const sortedTraps = Object.entries(trapTotals).sort((a, b) => b[1] - a[1]);
-  sortedTraps.forEach(([n], i) => { priorityMap[n] = i; });
+    const trapTotals = {};
+    flows.forEach(f => { trapTotals[f.to] = (trapTotals[f.to] || 0) + f.flow; });
+    const priorityMap = {};
+    let pi = 0;
+    testNodes.forEach(n => { priorityMap[n] = pi++; });
+    Object.entries(trapTotals).sort((a, b) => b[1] - a[1]).forEach(([n], i) => { priorityMap[n] = i; });
 
-  new Chart(el.getContext("2d"), {
-    type: "sankey",
-    data: {
-      datasets: [{
-        label: "Trap flow",
-        data: flows,
-        colorFrom: P.ela,
-        colorTo: P.wrong,
-        colorMode: "gradient",
-        column: columnMap,
-        priority: priorityMap,
-        borderWidth: 0,
-      }]
-    },
-    options: {
-      responsive: true,
-      aspectRatio: chartAR(2.5, 1.2),
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: item => {
-              const d = item.raw;
-              return `${d.from} → ${d.to}: ${d.flow}×`;
+    new Chart(el.getContext("2d"), {
+      type: "sankey",
+      data: {
+        datasets: [{
+          label: "Trap flow",
+          data: flows,
+          colorFrom: colorFrom,
+          colorTo: colorTo,
+          colorMode: "gradient",
+          column: columnMap,
+          priority: priorityMap,
+          borderWidth: 0,
+        }]
+      },
+      options: {
+        responsive: true,
+        aspectRatio: chartAR(2.5, 1.2),
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: item => {
+                const d = item.raw;
+                return `${d.from} → ${d.to}: ${d.flow}×`;
+              }
             }
           }
         }
       }
-    }
-  });
+    });
+  }
+
+  renderSankey("sankeyChartEla",  "sankeyElaData",  P.ela,  P.wrong);
+  renderSankey("sankeyChartMath", "sankeyMathData", P.math, P.wrong);
 })();
 
 // ---------------------------------------------------------------------------
