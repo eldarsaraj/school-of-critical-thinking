@@ -51,26 +51,30 @@
 </p>
 {% endif %}
 
-<!-- School placement heatmap -->
-<p class="shsat-section-title">School placement (2026 cutoffs)</p>
+<!-- School placement bars -->
 {% if placement_data %}
-<div class="shsat-heat-grid">
+<div class="shsat-placement-bars" style="margin-bottom:36px;">
   {% for p in placement_data %}
-  <div class="shsat-heat-tile" style="background:{{ p.heat_bg }};" title="{{ p.school_name }} — cutoff {{ p.cutoff }}">
-    <div class="shsat-heat-tile__school">{{ p.school_short }}</div>
-    <div class="shsat-heat-tile__gap">{% if p.gap >= 0 %}+{% endif %}{{ p.gap }}</div>
-    <div class="shsat-heat-tile__cutoff">cutoff {{ p.cutoff }}</div>
+  <div class="shsat-placement-row">
+    <div class="shsat-placement-row__school">{{ p.school_short }}</div>
+    <div class="shsat-placement-row__track">
+      {% widthratio latest_composite p.cutoff 100 as fill_pct %}
+      {% if p.gap >= 0 %}
+      <div class="shsat-placement-row__fill shsat-placement-row__fill--above" style="width:100%;"></div>
+      {% else %}
+      <div class="shsat-placement-row__fill shsat-placement-row__fill--below" style="width:{{ fill_pct }}%;"></div>
+      <div class="shsat-placement-row__gap" style="left:{{ fill_pct }}%;">{{ p.gap }}</div>
+      {% endif %}
+    </div>
+    <div class="shsat-placement-row__cutoff">{{ p.cutoff }}</div>
   </div>
   {% endfor %}
 </div>
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:14px 0 6px;">
-  Based on your latest composite score of <strong>{{ latest_composite }}</strong>. Colour indicates distance from cutoff.
-</p>
-<p style="font-size:12px;color:rgba(0,0,0,0.35);margin:0 0 36px;">
-  Estimated only. Actual SHSAT scaling varies by year and is not published by the DOE.
+<p style="font-size:12px;color:#aba784;margin:-24px 0 36px;">
+  Based on latest composite of <strong style="color:#240f05;">{{ latest_composite }}</strong>. Estimated — actual scaling varies by year.
 </p>
 {% else %}
-<p style="color:rgba(0,0,0,0.5);font-size:15px;margin-bottom:36px;">
+<p style="color:#aba784;font-size:15px;margin-bottom:36px;">
   Complete a practice test or <a href="{% url 'shsat_log_score' %}">log a score</a> to see your placement.
 </p>
 {% endif %}

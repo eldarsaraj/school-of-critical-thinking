@@ -716,6 +716,63 @@
 }
 
 /* ----------------------------------------------------------
+   Placement bars (dashboard)
+   ---------------------------------------------------------- */
+.shsat-placement-bars {
+  max-width: 640px;
+}
+.shsat-placement-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.shsat-placement-row__school {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #240f05;
+  width: 60px;
+  flex-shrink: 0;
+  text-align: right;
+}
+.shsat-placement-row__track {
+  flex: 1;
+  height: 28px;
+  background: #eee2d3;
+  position: relative;
+  overflow: hidden;
+}
+.shsat-placement-row__fill {
+  height: 100%;
+  transition: width 0.4s ease;
+}
+.shsat-placement-row__fill--above {
+  background: #7a8775;
+}
+.shsat-placement-row__fill--below {
+  background: #dda78c;
+}
+.shsat-placement-row__gap {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-left: 8px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ab553f;
+  white-space: nowrap;
+}
+.shsat-placement-row__cutoff {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+  font-size: 11px;
+  color: #aba784;
+  width: 32px;
+  flex-shrink: 0;
+}
+
+/* ----------------------------------------------------------
    Attempt links below bar chart
    ---------------------------------------------------------- */
 .shsat-attempt-links {
