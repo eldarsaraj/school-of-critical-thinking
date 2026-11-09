@@ -149,7 +149,6 @@
   padding: 20px 18px;
   background: #fff;
   border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .shsat-stat-card__value {
@@ -1537,7 +1536,7 @@
 
 .shsat-focus-card {
   border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
+  border-radius: 0;
   padding: 20px;
   background: transparent;
   display: flex;
@@ -1597,7 +1596,7 @@
 .shsat-skill-tile {
   width: 110px;
   height: 78px;
-  border-radius: 8px;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1636,7 +1635,10 @@
    ---------------------------------------------------------- */
 .shsat-chart-wrap {
   border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.shsat-chart-wrap:has(canvas[data-empty]) {
+  border-color: transparent;
 }
 
 /* ----------------------------------------------------------
@@ -1967,7 +1969,7 @@
   letter-spacing: .04em;
   text-transform: uppercase;
   padding: 2px 8px;
-  border-radius: 20px;
+  border-radius: 0;
   white-space: nowrap;
 }
 .shsat-persistence-badge--persistent {
@@ -2526,4 +2528,23 @@
   margin: 10px 0 0;
   font-style: italic;
   text-align: center;
+}
+
+/* ----------------------------------------------------------
+   Teaser: blurred locked items (results page upsell)
+   ---------------------------------------------------------- */
+.shsat-teaser-locked {
+  filter: blur(5px);
+  user-select: none;
+  pointer-events: none;
+}
+
+.shsat-teaser-locked-wrap {
+  position: relative;
+}
+
+.shsat-teaser-locked-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }

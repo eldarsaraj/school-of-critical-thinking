@@ -86,21 +86,95 @@
   <button type="submit" class="shsat-btn shsat-btn--outline">Save notes</button>
 </form>
 
-<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;">
-  <a href="{% url 'shsat_error_analysis' attempt.id %}" class="shsat-btn">View Error Analysis →</a>
+{% if show_teaser %}
+<!-- Error Profile Preview (unpaid baseline) -->
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;">
   <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline">Back to dashboard</a>
 </div>
 
-{% if is_baseline and not has_paid %}
-<!-- Benchmark upsell -->
-<div style="border:1px solid rgba(0,0,0,.12);padding:28px 24px;margin-bottom:40px;max-width:560px;">
-  <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:10px;">Next step</p>
-  <p style="font-size:18px;font-weight:600;margin-bottom:10px;letter-spacing:-.01em;">Track your progress with Benchmark Tests</p>
-  <p style="font-size:14px;line-height:1.65;color:rgba(0,0,0,.55);margin-bottom:20px;">
-    The Baseline shows where your child stands today. The Benchmark Tests will show whether
-    they're improving — with the same precision error analysis after each one.
+<div style="border-top:2px solid #111;padding-top:28px;margin-bottom:40px;max-width:620px;">
+  <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:6px;">Error Profile Preview</p>
+  <p style="font-size:14px;line-height:1.65;color:rgba(0,0,0,.55);margin-bottom:24px;">
+    We analyzed every wrong answer to identify the specific trap patterns and skill gaps behind your child's score.
   </p>
-  <a href="{% url 'shsat_upgrade' %}" class="shsat-btn">Unlock Benchmark Tests →</a>
+
+  {% if teaser.top_trap %}
+  <!-- #1 Costliest trap — revealed -->
+  <div style="border:1px solid rgba(0,0,0,.1);padding:20px;margin-bottom:16px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-error);margin-bottom:8px;">#1 Most Costly Trap</p>
+    <p style="font-size:17px;font-weight:600;margin-bottom:6px;letter-spacing:-.01em;">{{ teaser.top_trap }}</p>
+    <p style="font-size:14px;line-height:1.6;color:rgba(0,0,0,.55);">
+      Your child fell for this trap <strong>{{ teaser.top_trap_count }} time{{ teaser.top_trap_count|pluralize }}</strong>.
+    </p>
+  </div>
+  {% endif %}
+
+  {% if teaser.weak_skill %}
+  <!-- #1 Weakest skill — revealed -->
+  <div style="border:1px solid rgba(0,0,0,.1);padding:20px;margin-bottom:16px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-amber);margin-bottom:8px;">#1 Weakest Skill</p>
+    <p style="font-size:17px;font-weight:600;margin-bottom:6px;letter-spacing:-.01em;">{{ teaser.weak_skill.label }}</p>
+    <p style="font-size:14px;line-height:1.6;color:rgba(0,0,0,.55);">
+      {{ teaser.weak_skill.accuracy }}% accuracy — {{ teaser.weak_skill.correct }} of {{ teaser.weak_skill.total }} correct.
+    </p>
+  </div>
+  {% endif %}
+
+  <!-- Summary line -->
+  <p style="font-size:14px;color:rgba(0,0,0,.55);margin-bottom:20px;">
+    We identified <strong>{{ teaser.total_traps }} distinct trap pattern{{ teaser.total_traps|pluralize }}</strong> across {{ teaser.total_wrong }} wrong answer{{ teaser.total_wrong|pluralize }}.
+  </p>
+
+  {% if teaser.remaining_traps %}
+  <!-- Remaining traps — blurred -->
+  <div class="shsat-teaser-locked-wrap" style="margin-bottom:16px;">
+    <div class="shsat-teaser-locked">
+      {% for trap_name, trap_count in teaser.remaining_traps %}
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:14px;">
+        <span>{{ trap_name }}</span>
+        <span style="color:rgba(0,0,0,.4);">{{ trap_count }} occurrence{{ trap_count|pluralize }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if teaser.remaining_skills %}
+  <!-- Remaining skills — blurred tiles -->
+  <div class="shsat-teaser-locked-wrap" style="margin-bottom:16px;">
+    <div class="shsat-teaser-locked" style="display:flex;gap:8px;flex-wrap:wrap;">
+      {% for skill in teaser.remaining_skills %}
+      <div style="width:110px;height:78px;border:1px solid rgba(0,0,0,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;">
+        <span style="font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;text-align:center;">{{ skill.label }}</span>
+        <span style="font-size:20px;font-weight:700;">{{ skill.accuracy }}%</span>
+        <span style="font-size:10px;opacity:.65;">{{ skill.correct }}/{{ skill.total }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <p style="font-size:13px;color:rgba(0,0,0,.4);margin-bottom:24px;">
+    Personalized study plan: {{ teaser.total_traps }} priority areas identified.
+  </p>
+
+  <!-- Upgrade CTA -->
+  <div style="border:1px solid #111;padding:28px 24px;">
+    <p style="font-size:18px;font-weight:600;margin-bottom:10px;letter-spacing:-.01em;">Unlock your child's full Error Profile</p>
+    <p style="font-size:14px;line-height:1.65;color:rgba(0,0,0,.55);margin-bottom:20px;">
+      See every trap pattern, every skill gap, and a prioritized study plan — then track how it changes across 4 Benchmark Tests.
+    </p>
+    <a href="{% url 'shsat_upgrade' %}" class="shsat-btn" style="background:#111;color:#fff;border-color:#111;">
+      Unlock Full Analysis + Benchmark Tests — $149
+    </a>
+  </div>
+</div>
+
+{% else %}
+<!-- Paid or non-baseline: show full error analysis link -->
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;">
+  <a href="{% url 'shsat_error_analysis' attempt.id %}" class="shsat-btn">View Error Analysis →</a>
+  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline">Back to dashboard</a>
 </div>
 {% endif %}
 

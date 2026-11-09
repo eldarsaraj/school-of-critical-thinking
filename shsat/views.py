@@ -83,8 +83,10 @@ def terms(request):
 
 def upgrade(request):
     from django.conf import settings as django_settings
+    total_questions = Question.objects.filter(test__exam_type="shsat").count()
     return render(request, "shsat/upgrade.html", {
         "stripe_publishable_key": django_settings.STRIPE_PUBLISHABLE_KEY,
+        "total_questions": total_questions,
     })
 
 
@@ -1124,6 +1126,77 @@ def test_results(request, attempt_id):
     ela_total = len(ela_answers)
     math_total = len(math_answers)
 
+    # --- Teaser data for unpaid baseline users ---
+    show_teaser = False
+    teaser = {}
+    if not is_hunter and not attempt.test.is_drill and attempt.test.is_free and not parent.has_paid:
+        show_teaser = True
+        wrong_answers = [a for a in answers if a.selected_answer and not a.is_correct]
+
+        # Top distractor trap (reuses error_analysis logic)
+        from .forms import DISTRACTOR_CHOICES as _DC
+        import re as _re
+        _dist_label = {}
+        for entry in _DC:
+            if isinstance(entry[1], (list, tuple)) and entry[0] not in ("",):
+                for key, label in entry[1]:
+                    _dist_label[key] = label
+            elif entry[0]:
+                _dist_label[entry[0]] = entry[1]
+
+        trap_counts = {}
+        for ans in wrong_answers:
+            trap = ans.question.distractor_types.get(ans.selected_answer, "")
+            if trap:
+                raw_label = _dist_label.get(trap, trap.replace("_", " ").title())
+                clean_label = _re.sub(r"^\([EM]\)\s*", "", raw_label)
+                trap_counts[clean_label] = trap_counts.get(clean_label, 0) + 1
+        sorted_traps = sorted(trap_counts.items(), key=lambda x: x[1], reverse=True)
+
+        # Top weak skill
+        skill_label_map = {
+            "punctuation": "Punctuation", "usage_agreement": "Usage & Agreement",
+            "sentence_structure": "Sentence Structure", "main_idea": "Main Idea",
+            "supporting_detail": "Supporting Detail", "evidence_selection": "Evidence",
+            "inference": "Inference", "vocabulary": "Vocabulary",
+            "authors_craft": "Author's Craft", "cross_passage_synthesis": "Cross-passage",
+            "number_operations": "Number Ops", "ratios_proportions": "Ratios & Proportions",
+            "algebra": "Algebra", "geometry": "Geometry",
+            "statistics_data": "Statistics", "probability": "Probability",
+            "multistep_word_problems": "Multi-step",
+        }
+        skill_attempt = {}
+        for ans in answers:
+            if ans.selected_answer:
+                skill = ans.question.skill or "unknown"
+                if skill not in skill_attempt:
+                    skill_attempt[skill] = {"correct": 0, "total": 0}
+                skill_attempt[skill]["total"] += 1
+                if ans.is_correct:
+                    skill_attempt[skill]["correct"] += 1
+        skills_ranked = []
+        for skill, s in skill_attempt.items():
+            if s["total"] < 2:
+                continue
+            pct = round(s["correct"] / s["total"] * 100)
+            skills_ranked.append({
+                "label": skill_label_map.get(skill, skill),
+                "accuracy": pct,
+                "correct": s["correct"],
+                "total": s["total"],
+            })
+        skills_ranked.sort(key=lambda x: x["accuracy"])
+
+        teaser = {
+            "top_trap": sorted_traps[0][0] if sorted_traps else None,
+            "top_trap_count": sorted_traps[0][1] if sorted_traps else 0,
+            "total_traps": len(sorted_traps),
+            "total_wrong": len(wrong_answers),
+            "remaining_traps": sorted_traps[1:] if len(sorted_traps) > 1 else [],
+            "weak_skill": skills_ranked[0] if skills_ranked else None,
+            "remaining_skills": skills_ranked[1:6] if len(skills_ranked) > 1 else [],
+        }
+
     context = {
         "attempt": attempt,
         "ela_answers": ela_answers,
@@ -1152,6 +1225,8 @@ def test_results(request, attempt_id):
         "hunter_math_color": hunter_math_color,
         "hunter_composite_color": hunter_composite_color,
         "parent_template": "shsat/base_hunter.html" if is_hunter else "shsat/base_shsat.html",
+        "show_teaser": show_teaser,
+        "teaser": teaser,
     }
     template = "shsat/test_results_hunter.html" if is_hunter else "shsat/test_results_shsat.html"
     return render(request, template, context)

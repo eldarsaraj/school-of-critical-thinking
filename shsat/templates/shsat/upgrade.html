@@ -18,17 +18,40 @@
     We skip the digital interface bells and whistles by design: prep should train critical thinking, not mouse skills. We coach the mind, not the computer keyboard.
   </div>
 
+  <!-- Methodology stats -->
+  <div style="margin-bottom:48px;max-width:560px;">
+    <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:20px;">Methodology</p>
+    <div style="border-top:1px solid rgba(0,0,0,.12);padding-top:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:center;">
+      <div>
+        <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;">{{ total_questions|default:"1,000+" }}</div>
+        <div style="font-size:12px;color:rgba(0,0,0,.45);margin-top:4px;line-height:1.4;">questions<br>analyzed</div>
+      </div>
+      <div>
+        <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;">37</div>
+        <div style="font-size:12px;color:rgba(0,0,0,.45);margin-top:4px;line-height:1.4;">distractor trap<br>types catalogued</div>
+      </div>
+      <div>
+        <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;">17</div>
+        <div style="font-size:12px;color:rgba(0,0,0,.45);margin-top:4px;line-height:1.4;">skills tracked<br>per student</div>
+      </div>
+      <div>
+        <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;">19 + 18</div>
+        <div style="font-size:12px;color:rgba(0,0,0,.45);margin-top:4px;line-height:1.4;">ELA + Math trap<br>taxonomies</div>
+      </div>
+    </div>
+  </div>
+
   <!-- What's included -->
   <div class="up-includes">
     <p class="up-includes__label">What you get</p>
     <div class="up-includes__grid">
       <div class="up-item">
-        <div class="up-item__title">4 Benchmark Tests</div>
+        <div class="up-item__title">4 Benchmark Tests + updated Error Profile after each</div>
         <div class="up-item__body">Full-length adaptive tests — 50 ELA + 50 Math questions each, with the same structure as the real SHSAT.</div>
       </div>
       <div class="up-item">
-        <div class="up-item__title">Per-attempt error analysis</div>
-        <div class="up-item__body">After every test: which distractor traps caught your child, which skills cost the most points, and where to focus next.</div>
+        <div class="up-item__title">Distractor trap analysis</div>
+        <div class="up-item__body">Which wrong-answer patterns catch your child, how often they fall for each one, and how to break the pattern.</div>
       </div>
       <div class="up-item">
         <div class="up-item__title">Score history dashboard</div>
@@ -72,8 +95,8 @@
   </div>
   <p class="up-cta-note">
     Secure checkout via Stripe. One payment, no subscription.<br>
-    By completing your purchase you agree to our <a href="{% url 'shsat_terms' %}" target="_blank" style="color:rgba(0,0,0,.55);">Terms of Purchase</a>.
-    All sales are final — no refunds once access is granted.
+    By completing your purchase you agree to our <a href="{% url 'shsat_terms' %}" target="_blank" style="color:rgba(0,0,0,.55);">Terms of Purchase</a>.<br>
+    Questions? Email <a href="mailto:hello@schoolofcriticalthinking.org" style="color:rgba(0,0,0,.55);">hello@schoolofcriticalthinking.org</a> before purchasing.
   </p>
 
   <!-- Baseline note -->
