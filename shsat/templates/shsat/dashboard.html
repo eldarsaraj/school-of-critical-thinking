@@ -415,8 +415,7 @@ function makeProjData(arr) {
   const allLabels = _allLabels;
   const isEmpty = history.length === 0;
   const ctx = document.getElementById("scoreChart").getContext("2d");
-  const childName = JSON.parse(document.getElementById("childNickname").textContent);
-  const chartTitle = childName ? childName + "'s score history" : "Score history";
+  const chartTitle = "Score history";
 
   const greyLine = { borderColor: "#eee2d3", backgroundColor: "transparent",
                      pointBackgroundColor: "#eee2d3", borderWidth: 2, tension: 0.2, pointRadius: 4 };
@@ -470,36 +469,32 @@ function makeProjData(arr) {
           text: chartTitle,
           align: "start",
           color: titleColor,
-          font: { family: F.title, size: 20, weight: "600" },
-          padding: { bottom: 20 },
+          font: { family: F.title, size: 26, weight: "600" },
+          padding: { bottom: 24 },
         },
-        legend: {
-          display: true, position: "right", align: "start",
-          labels: {
-            boxWidth: 14, boxHeight: 14, usePointStyle: false,
-            font: { family: F.label, size: 12, weight: "400" },
-            padding: 14,
-            color: isEmpty ? "#aba784" : titleColor,
-            filter: (item) => !item.text.includes("projected"),
-          }
-        },
+        legend: { display: false },
         tooltip: {
-          titleFont: { family: F.label, size: 12 },
-          bodyFont: { family: F.label, size: 12 },
+          titleFont: { family: F.label, size: 13 },
+          bodyFont: { family: F.label, size: 13 },
           callbacks: {
             title: (items) => {
               const idx = items[0].dataIndex;
               if (idx < history.length) {
-                const d = history[idx];
-                return `${d.seq} · ${d.date} — ${d.source}`;
+                return history[idx].date;
               }
-              return items[0].label;
-            },
-            footer: (items) => {
-              const idx = items[0].dataIndex;
-              if (idx >= history.length) return "Projected improvement";
               return "";
-            }
+            },
+            label: (item) => {
+              const idx = item.dataIndex;
+              if (idx < history.length) {
+                const d = history[idx];
+                if (item.dataset.label === "Composite") return `Composite: ${d.composite}`;
+                if (item.dataset.label === "ELA") return `ELA: ${d.ela}`;
+                if (item.dataset.label === "Math") return `Math: ${d.math}`;
+              }
+              return `${item.dataset.label}: ${item.raw}`;
+            },
+            footer: () => ""
           }
         },
         annotation: { annotations: {} }
@@ -507,18 +502,18 @@ function makeProjData(arr) {
       scales: {
         y: {
           min: 100, max: 700,
-          grid: { color: isEmpty ? "rgba(238,226,211,0.4)" : P.grid, drawBorder: false,
-                  borderDash: [2, 3] },
-          ticks: { font: { family: F.label, size: 11, weight: "300" }, stepSize: 100,
-                   color: isEmpty ? "#aba784" : "#aba784" },
+          grid: { color: isEmpty ? "rgba(238,226,211,0.3)" : "rgba(238,226,211,0.5)",
+                  drawBorder: false, borderDash: [1, 3] },
+          ticks: { font: { family: F.label, size: 13, weight: "300" }, stepSize: 100,
+                   color: "#240f05" },
           border: { display: false },
         },
         x: {
           grid: { display: false },
           border: { display: false },
           ticks: {
-            font: { family: F.label, size: 12 },
-            color: isEmpty ? "#aba784" : "#aba784",
+            font: { family: F.label, size: 13 },
+            color: "#240f05",
             callback: function(val, idx) {
               const label = this.getLabelForValue(val);
               return label.includes("projected") ? label.replace(" (projected)", " ↑") : label;
