@@ -424,6 +424,65 @@ def dashboard(request):
         is_correct__isnull=False,
     ).select_related("question")
 
+    # ── Trap aggregation across all attempts (for dashboard trap profile) ──
+    from .forms import DISTRACTOR_CHOICES as _DC
+    _dist_label_dash = {}
+    for entry in _DC:
+        if isinstance(entry[1], (list, tuple)) and entry[0] not in ("",):
+            for key, label in entry[1]:
+                _dist_label_dash[key] = label
+        elif entry[0]:
+            _dist_label_dash[entry[0]] = entry[1]
+
+    import re as _re
+    trap_aggregate = {}       # (section, label) -> count
+    trap_by_attempt = {}      # attempt_id -> {(section, label): count}
+    for ans in all_answers:
+        if ans.selected_answer and not ans.is_correct:
+            dt = ans.question.distractor_types or {}
+            trap = dt.get(ans.selected_answer, "")
+            if trap:
+                section = ans.question.section or "unknown"
+                raw_label = _dist_label_dash.get(trap, trap.replace("_", " ").title())
+                clean_label = _re.sub(r"^\([EM]\)\s*", "", raw_label)
+                key = (section, clean_label)
+                trap_aggregate[key] = trap_aggregate.get(key, 0) + 1
+                trap_by_attempt.setdefault(ans.attempt_id, {})
+                trap_by_attempt[ans.attempt_id][key] = trap_by_attempt[ans.attempt_id].get(key, 0) + 1
+
+    dash_trap_data = sorted(
+        [{"label": label, "section": section, "count": v} for (section, label), v in trap_aggregate.items()],
+        key=lambda x: x["count"], reverse=True,
+    )
+
+    # Top trap for stat card
+    top_trap_label = dash_trap_data[0]["label"] if dash_trap_data else None
+    top_trap_count = dash_trap_data[0]["count"] if dash_trap_data else 0
+
+    # Trap trend data: top 5 traps over time (chronological attempts)
+    attempts_asc = list(reversed(list(attempts)))  # oldest first
+    top_5_traps = [(s, l) for (s, l), _ in sorted(trap_aggregate.items(), key=lambda x: x[1], reverse=True)[:5]]
+    trap_trend_data = {
+        "labels": [],
+        "series": [],
+    }
+    if top_5_traps and attempts_asc:
+        for a in attempts_asc:
+            if a.test.title.lower().startswith("baseline"):
+                trap_trend_data["labels"].append("Baseline")
+            else:
+                trap_trend_data["labels"].append(a.test.title)
+        for (section, label) in top_5_traps:
+            ELA_SECTIONS = {"ELA", "reading_comprehension", "writing"}
+            MATH_SECTIONS = {"Math", "quantitative_reasoning", "math_achievement"}
+            sec_label = "ELA" if section in ELA_SECTIONS else ("Math" if section in MATH_SECTIONS else section)
+            series = {
+                "label": label,
+                "section": sec_label,
+                "data": [trap_by_attempt.get(a.id, {}).get((section, label), 0) for a in attempts_asc],
+            }
+            trap_trend_data["series"].append(series)
+
     skill_stats = {}   # skill -> {correct, total, time_sum, time_count, section}
     # Per-attempt skill tracking for consistency analysis
     from collections import defaultdict
@@ -564,6 +623,10 @@ def dashboard(request):
         "platform_std": platform_std,
         "platform_n": platform_n,
         "has_paid": parent.has_paid,
+        "dash_trap_data": dash_trap_data,
+        "trap_trend_data": trap_trend_data,
+        "top_trap_label": top_trap_label,
+        "top_trap_count": top_trap_count,
     }
     return render(request, "shsat/dashboard.html", context)
 
@@ -1339,6 +1402,7 @@ def error_analysis(request, attempt_id):
     # Distractor trap analysis — build human-readable label map from DISTRACTOR_CHOICES
     from .forms import DISTRACTOR_CHOICES as _DC
     _dist_label = {}
+    _dist_key_for_label = {}  # reverse map: clean_label -> trap key
     for entry in _DC:
         if isinstance(entry[1], (list, tuple)) and entry[0] not in ("", ):
             for key, label in entry[1]:
@@ -1348,6 +1412,7 @@ def error_analysis(request, attempt_id):
 
     import re as _re
     trap_counts = {}
+    trap_questions = {}  # (section, label) -> list of question numbers
     for ans in wrong_answers:
         trap = ans.question.distractor_types.get(ans.selected_answer, "")
         if trap:
@@ -1357,10 +1422,37 @@ def error_analysis(request, attempt_id):
             clean_label = _re.sub(r"^\([EM]\)\s*", "", raw_label)
             key = (section, clean_label)
             trap_counts[key] = trap_counts.get(key, 0) + 1
+            trap_questions.setdefault(key, []).append(ans.question.question_number)
+            _dist_key_for_label[clean_label] = trap
     trap_data = sorted(
         [{"label": label, "section": section, "count": v} for (section, label), v in trap_counts.items()],
         key=lambda x: x["count"], reverse=True
     )
+
+    # Build trap detail cards for traps occurring 2+ times
+    from .trap_descriptions import TRAP_DESCRIPTIONS
+    trap_cards = []
+    for (section, label), count in sorted(trap_counts.items(), key=lambda x: x[1], reverse=True):
+        if count < 2:
+            continue
+        trap_key = _dist_key_for_label.get(label, "")
+        desc_data = TRAP_DESCRIPTIONS.get(trap_key, {})
+        q_nums = sorted(trap_questions.get((section, label), []))
+        section_label = section
+        ELA_SECTIONS = {"ELA", "reading_comprehension", "writing"}
+        MATH_SECTIONS = {"Math", "quantitative_reasoning", "math_achievement"}
+        if section in ELA_SECTIONS:
+            section_label = "ELA"
+        elif section in MATH_SECTIONS:
+            section_label = "Math"
+        trap_cards.append({
+            "label": label,
+            "section": section_label,
+            "count": count,
+            "description": desc_data.get("description", ""),
+            "remediation": desc_data.get("remediation", ""),
+            "questions": q_nums,
+        })
 
     # Difficulty breakdown of wrong answers
     diff_errors = {"easy": 0, "medium": 0, "hard": 0}
@@ -1540,6 +1632,7 @@ def error_analysis(request, attempt_id):
         "total_answered": total_answered,
         "skill_errors_data": skill_errors_data,
         "trap_data": trap_data,
+        "trap_cards": trap_cards,
         "trap_free_count": max(1, len(trap_data) // 5) if trap_data else 0,
         "diff_breakdown": diff_breakdown,
         "scatter_data": scatter_data,

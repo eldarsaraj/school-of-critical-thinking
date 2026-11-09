@@ -2548,3 +2548,52 @@
   position: absolute;
   inset: 0;
 }
+
+/* ── Trap detail cards ─────────────────────────────────────────── */
+.shsat-trap-card {
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-bottom: 10px;
+}
+.shsat-trap-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.shsat-trap-card__name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #161a1d;
+}
+.shsat-trap-card__meta {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+}
+.shsat-trap-card__desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.65);
+  margin: 0 0 10px;
+}
+.shsat-trap-card__remediation {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #1a1a1a;
+  background: rgba(90, 171, 140, 0.08);
+  border-left: 3px solid #5aab8c;
+  padding: 10px 14px;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 10px;
+}
+.shsat-trap-card__remediation-label {
+  font-weight: 600;
+  color: #3d7a63;
+}
+.shsat-trap-card__questions {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.38);
+  margin: 0;
+}

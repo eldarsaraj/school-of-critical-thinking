@@ -36,6 +36,120 @@
 <p id="sectionAbbrLegend" style="font-size:11px;color:rgba(0,0,0,0.38);margin:-28px 0 28px;letter-spacing:0.02em;"></p>
 {{ section_summary_data|json_script:"sectionSummaryData" }}
 
+<!-- ═══════════════════════════════════════════════════════════════════════
+     Distractor Trap Analysis (promoted to #2 — right after section overview)
+     ═══════════════════════════════════════════════════════════════════════ -->
+{% if trap_data %}
+{% if has_paid %}
+<p class="shsat-section-title" style="margin-top:12px;">Distractor Trap Analysis</p>
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Which wrong-answer patterns caught your child on this test.</p>
+<div id="trapElaWrap" class="shsat-chart-wrap" style="display:none;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
+  <canvas id="trapChartEla"></canvas>
+</div>
+<div id="trapMathWrap" class="shsat-chart-wrap" style="display:none;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
+  <canvas id="trapChartMath"></canvas>
+</div>
+
+<!-- Trap detail cards -->
+{% if trap_cards %}
+<div style="margin-top:8px;">
+  {% for card in trap_cards %}
+  <div class="shsat-trap-card">
+    <div class="shsat-trap-card__header">
+      <span class="shsat-trap-card__name">{{ card.label }}</span>
+      <span class="shsat-trap-card__meta">{{ card.section }} · {{ card.count }}x</span>
+    </div>
+    {% if card.description %}
+    <p class="shsat-trap-card__desc">{{ card.description }}</p>
+    {% endif %}
+    {% if card.remediation %}
+    <div class="shsat-trap-card__remediation">
+      <span class="shsat-trap-card__remediation-label">What to do:</span> {{ card.remediation }}
+    </div>
+    {% endif %}
+    {% if card.questions %}
+    <p class="shsat-trap-card__questions">Questions: {% for q in card.questions %}Q{{ q }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% else %}
+{# Unpaid: show real trap bar charts blurred + 1 unblurred card (least frequent) #}
+<p class="shsat-section-title" style="margin-top:12px;">Distractor Trap Analysis</p>
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Which wrong-answer patterns caught your child on this test.</p>
+<div class="shsat-teaser-locked-wrap" style="margin-bottom:12px;">
+  <div class="shsat-teaser-locked">
+    <div id="trapElaWrap" class="shsat-chart-wrap" style="display:none;">
+      <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
+      <canvas id="trapChartEla"></canvas>
+    </div>
+    <div id="trapMathWrap" class="shsat-chart-wrap" style="display:none;">
+      <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
+      <canvas id="trapChartMath"></canvas>
+    </div>
+  </div>
+</div>
+
+{# Show 1 unblurred trap card (the least frequent) as a teaser #}
+{% if trap_cards %}
+{% with last_card=trap_cards|last %}
+<div class="shsat-trap-card">
+  <div class="shsat-trap-card__header">
+    <span class="shsat-trap-card__name">{{ last_card.label }}</span>
+    <span class="shsat-trap-card__meta">{{ last_card.section }} · {{ last_card.count }}x</span>
+  </div>
+  {% if last_card.description %}
+  <p class="shsat-trap-card__desc">{{ last_card.description }}</p>
+  {% endif %}
+  {% if last_card.remediation %}
+  <div class="shsat-trap-card__remediation">
+    <span class="shsat-trap-card__remediation-label">What to do:</span> {{ last_card.remediation }}
+  </div>
+  {% endif %}
+  {% if last_card.questions %}
+  <p class="shsat-trap-card__questions">Questions: {% for q in last_card.questions %}Q{{ q }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  {% endif %}
+</div>
+{% endwith %}
+
+{# Blur remaining cards #}
+{% if trap_cards|length > 1 %}
+<div class="shsat-teaser-locked-wrap" style="margin-bottom:12px;">
+  <div class="shsat-teaser-locked">
+    {% for card in trap_cards %}
+    {% if not forloop.last %}
+    <div class="shsat-trap-card" style="margin-bottom:8px;">
+      <div class="shsat-trap-card__header">
+        <span class="shsat-trap-card__name">{{ card.label }}</span>
+        <span class="shsat-trap-card__meta">{{ card.section }} · {{ card.count }}x</span>
+      </div>
+      <p class="shsat-trap-card__desc">{{ card.description }}</p>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endif %}
+
+<!-- Upgrade CTA for trap section -->
+<div style="border:1px solid rgba(0,0,0,0.12);padding:20px 24px;margin:20px 0 36px;max-width:560px;border-radius:8px;">
+  <p style="font-size:15px;font-weight:600;margin-bottom:8px;letter-spacing:-.01em;">Unlock your child's full Trap Profile</p>
+  <p style="font-size:13px;line-height:1.6;color:rgba(0,0,0,.55);margin-bottom:16px;">
+    See which patterns persist and how to break them — with specific advice for every trap your child falls for.
+  </p>
+  <a href="{% url 'shsat_upgrade' %}" class="shsat-btn" style="background:#111;color:#fff;border-color:#111;">
+    Unlock Full Analysis + Benchmark Tests — $149
+  </a>
+</div>
+{% endif %}
+{% endif %}
+{{ trap_data|json_script:"trapData" }}
+
 {% if has_paid %}
 <!-- Wrong answers by skill -->
 <p class="shsat-section-title">Wrong answers by skill</p>
@@ -184,21 +298,6 @@
 {% endwith %}
 {% endfor %}
 {% endif %}
-
-<!-- Distractor trap analysis -->
-{% if trap_data %}
-<p class="shsat-section-title" style="margin-top:12px;">Distractor trap analysis</p>
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Which answer traps caught you most often.</p>
-<div id="trapElaWrap" class="shsat-chart-wrap" style="display:none;">
-  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
-  <canvas id="trapChartEla"></canvas>
-</div>
-<div id="trapMathWrap" class="shsat-chart-wrap" style="display:none;">
-  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
-  <canvas id="trapChartMath"></canvas>
-</div>
-{% endif %}
-{{ trap_data|json_script:"trapData" }}
 
 <!-- Difficulty breakdown — CSS bars, not a donut -->
 <p class="shsat-section-title" style="margin-top:12px;">Performance by difficulty</p>
@@ -384,7 +483,7 @@
 </div>
 
 {% else %}
-<!-- Unpaid: blurred preview of detailed analysis -->
+<!-- Unpaid: blurred preview of remaining analysis -->
 {% if skill_errors_data %}
 <p class="shsat-section-title">Wrong answers by skill</p>
 <div class="shsat-teaser-locked-wrap" style="margin-bottom:36px;">
@@ -394,34 +493,6 @@
     </div>
   </div>
 </div>
-{% endif %}
-
-{% if trap_data %}
-<p class="shsat-section-title">Distractor trap analysis</p>
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Which answer traps caught you most often.</p>
-<!-- Blurred: top traps (locked) -->
-<div class="shsat-teaser-locked-wrap" style="margin-bottom:12px;">
-  <div class="shsat-teaser-locked">
-    {% for t in trap_data %}
-    {% if forloop.revcounter > trap_free_count %}
-    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:14px;">
-      <span>{{ t.label }}</span>
-      <span style="color:rgba(0,0,0,.4);">{{ t.count }}x</span>
-    </div>
-    {% endif %}
-    {% endfor %}
-  </div>
-</div>
-<!-- Visible: bottom 20% of traps (free preview) -->
-{% for t in trap_data %}
-{% if forloop.revcounter <= trap_free_count %}
-<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:14px;">
-  <span>{{ t.label }}</span>
-  <span style="color:rgba(0,0,0,.4);">{{ t.count }}x</span>
-</div>
-{% endif %}
-{% endfor %}
-<div style="margin-bottom:36px;"></div>
 {% endif %}
 
 {% if recommendations %}
@@ -549,6 +620,56 @@ const P = {
   }
 })();
 
+// ---------------------------------------------------------------------------
+// Distractor trap bars — one chart per section (rendered for both paid & unpaid)
+// ---------------------------------------------------------------------------
+(function () {
+  const allData = JSON.parse(document.getElementById("trapData").textContent);
+  if (!allData.length) return;
+
+  function renderTrapChart(canvasId, wrapId, sectionData, color) {
+    if (!sectionData.length) return;
+    const wrap = document.getElementById(wrapId);
+    if (!wrap) return;
+    wrap.style.display = "";
+    new Chart(document.getElementById(canvasId).getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: sectionData.map(d => d.label),
+        datasets: [{ label: "Times caught", data: sectionData.map(d => d.count), backgroundColor: color, borderWidth: 0, barThickness: 18 }]
+      },
+      options: {
+        indexAxis: "y", responsive: true,
+        aspectRatio: chartAR(Math.max(1.4, 4 / Math.max(sectionData.length, 2))),
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: item => ` ${item.raw}×` } }
+        },
+        scales: {
+          x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } },
+          y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+        }
+      }
+    });
+  }
+
+  const ELA_SECTIONS  = new Set(["ELA", "reading_comprehension", "writing"]);
+  const MATH_SECTIONS = new Set(["Math", "quantitative_reasoning", "math_achievement"]);
+
+  function aggregateByLabel(data) {
+    const byLabel = {};
+    data.forEach(d => { byLabel[d.label] = (byLabel[d.label] || 0) + d.count; });
+    return Object.entries(byLabel)
+      .map(([label, count]) => ({ label, count }))
+      .sort((a, b) => b.count - a.count);
+  }
+
+  const elaData  = aggregateByLabel(allData.filter(d => ELA_SECTIONS.has(d.section)));
+  const mathData = aggregateByLabel(allData.filter(d => MATH_SECTIONS.has(d.section)));
+  renderTrapChart("trapChartEla",  "trapElaWrap",  elaData,  P.sections[0]);
+  renderTrapChart("trapChartMath", "trapMathWrap", mathData, P.sections[1]);
+})();
+
 {% if has_paid %}
 // ---------------------------------------------------------------------------
 // Wrong answers by skill — horizontal bar
@@ -575,56 +696,6 @@ const P = {
       }
     }
   });
-})();
-
-// ---------------------------------------------------------------------------
-// Distractor trap bars — one chart per section
-// ---------------------------------------------------------------------------
-(function () {
-  const allData = JSON.parse(document.getElementById("trapData").textContent);
-  if (!allData.length) return;
-
-  function renderTrapChart(canvasId, wrapId, sectionData, color) {
-    if (!sectionData.length) return;
-    document.getElementById(wrapId).style.display = "";
-    new Chart(document.getElementById(canvasId).getContext("2d"), {
-      type: "bar",
-      data: {
-        labels: sectionData.map(d => d.label),
-        datasets: [{ label: "Times caught", data: sectionData.map(d => d.count), backgroundColor: color, borderWidth: 0, barThickness: 18 }]
-      },
-      options: {
-        indexAxis: "y", responsive: true,
-        aspectRatio: chartAR(Math.max(1.4, 4 / Math.max(sectionData.length, 2))),
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: item => ` ${item.raw}×` } }
-        },
-        scales: {
-          x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } },
-          y: { grid: { display: false }, ticks: { font: { size: 12 } } }
-        }
-      }
-    });
-  }
-
-  // ELA sections: SHSAT uses "ELA", Hunter uses "reading_comprehension" / "writing"
-  const ELA_SECTIONS  = new Set(["ELA", "reading_comprehension", "writing"]);
-  // Math sections: SHSAT uses "Math", Hunter uses "quantitative_reasoning" / "math_achievement"
-  const MATH_SECTIONS = new Set(["Math", "quantitative_reasoning", "math_achievement"]);
-
-  function aggregateByLabel(data) {
-    const byLabel = {};
-    data.forEach(d => { byLabel[d.label] = (byLabel[d.label] || 0) + d.count; });
-    return Object.entries(byLabel)
-      .map(([label, count]) => ({ label, count }))
-      .sort((a, b) => b.count - a.count);
-  }
-
-  const elaData  = aggregateByLabel(allData.filter(d => ELA_SECTIONS.has(d.section)));
-  const mathData = aggregateByLabel(allData.filter(d => MATH_SECTIONS.has(d.section)));
-  renderTrapChart("trapChartEla",  "trapElaWrap",  elaData,  P.sections[0]);
-  renderTrapChart("trapChartMath", "trapMathWrap", mathData, P.sections[1]);
 })();
 
 // ---------------------------------------------------------------------------

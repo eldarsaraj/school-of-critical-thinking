@@ -21,8 +21,8 @@
     <div class="shsat-stat-card__label">Tests completed</div>
   </div>
   <div class="shsat-stat-card">
-    <div class="shsat-stat-card__value">{{ manual_scores|length }}</div>
-    <div class="shsat-stat-card__label">Scores logged</div>
+    <div class="shsat-stat-card__value" style="{% if top_trap_label %}font-size:16px;{% endif %}">{% if top_trap_label %}{{ top_trap_label }} · {{ top_trap_count }}x{% else %}—{% endif %}</div>
+    <div class="shsat-stat-card__label">Top trap</div>
   </div>
   <div class="shsat-stat-card">
     <div class="shsat-stat-card__value">{% if has_timing_data %}{{ avg_time_per_q }}m{% else %}—{% endif %}</div>
@@ -75,8 +75,116 @@
 </p>
 {% endif %}
 
+<!-- Recent attempts bar chart (visible to all users) -->
+<p class="shsat-section-title" style="margin-top:32px;">Practice test scores</p>
+<div class="shsat-chart-wrap">
+  <canvas id="attemptsChart"></canvas>
+</div>
+{{ attempts_chart_data|json_script:"attemptsChartData" }}
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     Distractor Trap Profile (centerpiece — PAID)
+     ═══════════════════════════════════════════════════════════════════════ -->
+{% if dash_trap_data %}
 {% if has_paid %}
-<!-- Score distribution -->
+<p class="shsat-section-title" style="margin-top:48px;">Distractor Trap Profile</p>
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Which wrong-answer patterns catch your child most often — and whether they're improving.</p>
+
+<div id="dashTrapElaWrap" class="shsat-chart-wrap" style="display:none;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
+  <canvas id="dashTrapChartEla"></canvas>
+</div>
+<div id="dashTrapMathWrap" class="shsat-chart-wrap" style="display:none;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
+  <canvas id="dashTrapChartMath"></canvas>
+</div>
+
+<!-- Trap trend over time -->
+<div id="trapTrendWrap" class="shsat-chart-wrap" style="display:none;margin-top:16px;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Top traps over time</p>
+  <canvas id="trapTrendChart"></canvas>
+</div>
+
+{% else %}
+{# Unpaid: show real trap bar charts blurred #}
+<p class="shsat-section-title" style="margin-top:48px;">Distractor Trap Profile</p>
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Which wrong-answer patterns catch your child most often — and whether they're improving.</p>
+
+<div class="shsat-teaser-locked-wrap" style="margin-bottom:12px;">
+  <div class="shsat-teaser-locked">
+    <div id="dashTrapElaWrap" class="shsat-chart-wrap" style="display:none;">
+      <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
+      <canvas id="dashTrapChartEla"></canvas>
+    </div>
+    <div id="dashTrapMathWrap" class="shsat-chart-wrap" style="display:none;">
+      <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
+      <canvas id="dashTrapChartMath"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="shsat-teaser-locked-wrap" style="margin-bottom:12px;">
+  <div class="shsat-teaser-locked">
+    <div class="shsat-chart-wrap" style="height:160px;background:rgba(0,0,0,0.02);display:flex;align-items:center;justify-content:center;">
+      <span style="font-size:14px;color:rgba(0,0,0,0.3);">Trap trend over time</span>
+    </div>
+  </div>
+</div>
+
+<!-- Upgrade CTA for trap section -->
+<div style="border:1px solid rgba(0,0,0,0.12);padding:20px 24px;margin:20px 0 36px;max-width:560px;border-radius:8px;">
+  <p style="font-size:15px;font-weight:600;margin-bottom:8px;letter-spacing:-.01em;">Unlock your child's full Trap Profile</p>
+  <p style="font-size:13px;line-height:1.6;color:rgba(0,0,0,.55);margin-bottom:16px;">
+    See which patterns persist and how to break them — track progress across every test.
+  </p>
+  <a href="{% url 'shsat_upgrade' %}" class="shsat-btn" style="background:#111;color:#fff;border-color:#111;">
+    Unlock Full Analysis + Benchmark Tests — $149
+  </a>
+</div>
+{% endif %}
+{% endif %}
+{{ dash_trap_data|json_script:"dashTrapData" }}
+{{ trap_trend_data|json_script:"trapTrendData" }}
+
+{% if has_paid %}
+<!-- Skill accuracy heatmap -->
+{% if skill_accuracy_data %}
+<p class="shsat-section-title" style="margin-top:48px;">Accuracy by skill</p>
+<div id="skillElaWrap" style="display:none;margin-bottom:24px;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
+  <div id="skillHeatEla" class="shsat-skill-heat"></div>
+</div>
+<div id="skillMathWrap" style="display:none;margin-bottom:24px;">
+  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
+  <div id="skillHeatMath" class="shsat-skill-heat"></div>
+</div>
+{{ skill_accuracy_data|json_script:"skillChartData" }}
+{% endif %}
+
+<!-- Focus Areas -->
+{% if skill_accuracy_data %}
+<p class="shsat-section-title" style="margin-top:48px;">Focus areas</p>
+<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Your three weakest skills, ranked by accuracy. Target these first.</p>
+<div class="shsat-focus-grid">
+  {% for skill in skill_accuracy_data|slice:":3" %}
+  <div class="shsat-focus-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div class="shsat-focus-card__skill" style="margin-bottom:0;">{{ skill.label|first_word }}</div>
+      {% if skill.is_persistent %}
+      <span class="shsat-persistence-badge shsat-persistence-badge--persistent">Persistent gap</span>
+      {% elif skill.weak_attempts == 1 %}
+      <span class="shsat-persistence-badge shsat-persistence-badge--new">First seen</span>
+      {% endif %}
+    </div>
+    <div class="shsat-focus-card__accuracy {% if skill.accuracy < 60 %}shsat-focus-card__accuracy--danger{% elif skill.accuracy < 80 %}shsat-focus-card__accuracy--warn{% else %}shsat-focus-card__accuracy--ok{% endif %}">{{ skill.accuracy }}%</div>
+    <div class="shsat-focus-card__detail">{{ skill.correct }} correct of {{ skill.total }} attempts</div>
+    <a href="{% url 'shsat_test_list' %}" class="shsat-focus-card__cta">Practice {{ skill.label }} →</a>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Score distribution (moved to bottom — nice-to-have but not actionable) -->
 <p class="shsat-section-title" style="margin-top:48px;">Where you stand</p>
 {% if platform_mean and latest_composite %}
 <p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 16px;">
@@ -100,16 +208,7 @@
   Complete a practice test to see where your score sits relative to other students.
 </p>
 {% endif %}
-{% endif %}
 
-<!-- Recent attempts bar chart (visible to all users) -->
-<p class="shsat-section-title" style="margin-top:32px;">Practice test scores</p>
-<div class="shsat-chart-wrap">
-  <canvas id="attemptsChart"></canvas>
-</div>
-{{ attempts_chart_data|json_script:"attemptsChartData" }}
-
-{% if has_paid %}
 <!-- Recent manual scores -->
 {% if manual_scores %}
 <p class="shsat-section-title" style="margin-top:32px;">Logged scores</p>
@@ -140,57 +239,8 @@
   <a href="{% url 'shsat_log_score' %}" class="shsat-btn shsat-btn--outline">Log a score</a>
 </div>
 
-<!-- Skill & Difficulty Charts -->
-{% if skill_accuracy_data %}
-<p class="shsat-section-title" style="margin-top:48px;">Accuracy by skill</p>
-<div id="skillElaWrap" style="display:none;margin-bottom:24px;">
-  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
-  <div id="skillHeatEla" class="shsat-skill-heat"></div>
-</div>
-<div id="skillMathWrap" style="display:none;margin-bottom:24px;">
-  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
-  <div id="skillHeatMath" class="shsat-skill-heat"></div>
-</div>
-{{ skill_accuracy_data|json_script:"skillChartData" }}
-
-{% if has_timing_data %}
-<p class="shsat-section-title" style="margin-top:32px;">Avg time per skill (minutes)</p>
-<div id="timeElaWrap" class="shsat-chart-wrap" style="display:none;">
-  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
-  <canvas id="timeChartEla"></canvas>
-</div>
-<div id="timeMathWrap" class="shsat-chart-wrap" style="display:none;">
-  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
-  <canvas id="timeChartMath"></canvas>
-</div>
-{% endif %}
-{% endif %}
-
-<!-- Focus Areas / Improvement Engineering -->
-{% if skill_accuracy_data %}
-<p class="shsat-section-title" style="margin-top:48px;">Focus areas</p>
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Your three weakest skills, ranked by accuracy. Target these first.</p>
-<div class="shsat-focus-grid">
-  {% for skill in skill_accuracy_data|slice:":3" %}
-  <div class="shsat-focus-card">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-      <div class="shsat-focus-card__skill" style="margin-bottom:0;">{{ skill.label|first_word }}</div>
-      {% if skill.is_persistent %}
-      <span class="shsat-persistence-badge shsat-persistence-badge--persistent">Persistent gap</span>
-      {% elif skill.weak_attempts == 1 %}
-      <span class="shsat-persistence-badge shsat-persistence-badge--new">First seen</span>
-      {% endif %}
-    </div>
-    <div class="shsat-focus-card__accuracy {% if skill.accuracy < 60 %}shsat-focus-card__accuracy--danger{% elif skill.accuracy < 80 %}shsat-focus-card__accuracy--warn{% else %}shsat-focus-card__accuracy--ok{% endif %}">{{ skill.accuracy }}%</div>
-    <div class="shsat-focus-card__detail">{{ skill.correct }} correct of {{ skill.total }} attempts</div>
-    <a href="{% url 'shsat_test_list' %}" class="shsat-focus-card__cta">Practice {{ skill.label }} →</a>
-  </div>
-  {% endfor %}
-</div>
-{% endif %}
-
 {% else %}
-<!-- Unpaid: blurred preview of analytics -->
+<!-- Unpaid: blurred preview of remaining analytics -->
 {% if skill_accuracy_data %}
 <p class="shsat-section-title" style="margin-top:48px;">Accuracy by skill</p>
 <div class="shsat-teaser-locked-wrap" style="margin-bottom:24px;">
@@ -548,7 +598,103 @@ function makeProjData(arr) {
   });
 })();
 
+// ---------------------------------------------------------------------------
+// Dashboard trap bar charts (rendered for both paid & unpaid — blurred for unpaid)
+// ---------------------------------------------------------------------------
+(function () {
+  const el = document.getElementById("dashTrapData");
+  if (!el) return;
+  const allData = JSON.parse(el.textContent);
+  if (!allData.length) return;
+
+  function renderTrapChart(canvasId, wrapId, sectionData, color) {
+    if (!sectionData.length) return;
+    const wrap = document.getElementById(wrapId);
+    if (!wrap) return;
+    wrap.style.display = "";
+    new Chart(document.getElementById(canvasId).getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: sectionData.map(d => d.label),
+        datasets: [{ label: "Times caught", data: sectionData.map(d => d.count), backgroundColor: color, borderWidth: 0, barThickness: 18 }]
+      },
+      options: {
+        indexAxis: "y", responsive: true,
+        aspectRatio: chartAR(Math.max(1.4, 4 / Math.max(sectionData.length, 2))),
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: item => ` ${item.raw}×` } }
+        },
+        scales: {
+          x: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid } },
+          y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+        }
+      }
+    });
+  }
+
+  const ELA_SECTIONS  = new Set(["ELA", "reading_comprehension", "writing"]);
+  const MATH_SECTIONS = new Set(["Math", "quantitative_reasoning", "math_achievement"]);
+
+  function aggregateByLabel(data) {
+    const byLabel = {};
+    data.forEach(d => { byLabel[d.label] = (byLabel[d.label] || 0) + d.count; });
+    return Object.entries(byLabel)
+      .map(([label, count]) => ({ label, count }))
+      .sort((a, b) => b.count - a.count);
+  }
+
+  const elaData  = aggregateByLabel(allData.filter(d => ELA_SECTIONS.has(d.section)));
+  const mathData = aggregateByLabel(allData.filter(d => MATH_SECTIONS.has(d.section)));
+  renderTrapChart("dashTrapChartEla",  "dashTrapElaWrap",  elaData,  P.ela);
+  renderTrapChart("dashTrapChartMath", "dashTrapMathWrap", mathData, P.math);
+})();
+
 {% if has_paid %}
+// ---------------------------------------------------------------------------
+// Trap trend line chart — top 5 traps over time
+// ---------------------------------------------------------------------------
+(function () {
+  const el = document.getElementById("trapTrendChart");
+  if (!el) return;
+  const trendEl = document.getElementById("trapTrendData");
+  if (!trendEl) return;
+  const trend = JSON.parse(trendEl.textContent);
+  if (!trend.labels || !trend.labels.length || !trend.series || !trend.series.length) return;
+
+  document.getElementById("trapTrendWrap").style.display = "";
+
+  const COLORS = ["#5b8ec4", "#c4635b", "#7aab6e", "#a07ac4", "#c49a5a"];
+  const datasets = trend.series.map((s, i) => ({
+    label: s.label + " (" + s.section + ")",
+    data: s.data,
+    borderColor: COLORS[i % COLORS.length],
+    backgroundColor: "transparent",
+    pointBackgroundColor: COLORS[i % COLORS.length],
+    borderWidth: 2,
+    tension: 0.2,
+    pointRadius: 4,
+  }));
+
+  new Chart(el.getContext("2d"), {
+    type: "line",
+    data: { labels: trend.labels, datasets },
+    options: {
+      responsive: true,
+      aspectRatio: chartAR(2.5, 1.2),
+      plugins: {
+        legend: { position: "bottom", labels: { font: { size: 11 }, boxWidth: 12, padding: 14 } },
+        tooltip: { callbacks: { label: item => ` ${item.dataset.label}: ${item.raw}×` } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 12 } } },
+        y: { min: 0, ticks: { stepSize: 1, font: { size: 11 } }, grid: { color: P.grid },
+             title: { display: true, text: "Times caught", font: { size: 11 }, color: "rgba(0,0,0,0.4)" } }
+      }
+    }
+  });
+})();
+
 // ---------------------------------------------------------------------------
 // Score distribution chart
 // ---------------------------------------------------------------------------
@@ -564,7 +710,6 @@ function makeProjData(arr) {
     return Math.exp(-0.5 * z * z) / (sigma * Math.sqrt(2 * Math.PI));
   }
 
-  // Abramowitz & Stegun erf approximation
   function erf(x) {
     const sign = x >= 0 ? 1 : -1;
     x = Math.abs(x);
@@ -577,7 +722,6 @@ function makeProjData(arr) {
     return 0.5 * (1 + erf((x - mu) / (sigma * Math.sqrt(2))));
   }
 
-  // Build curve data
   const pts = [];
   for (let x = 200; x <= 700; x += 4) {
     pts.push({ x, y: normalPDF(x, mean, std) });
@@ -586,7 +730,7 @@ function makeProjData(arr) {
   const pct = Math.round(normalCDF(score, mean, std) * 100);
   const labelPos = score < mean ? "end" : "start";
 
-  const distChart = new Chart(el.getContext("2d"), {
+  new Chart(el.getContext("2d"), {
     type: "line",
     data: {
       datasets: [{
@@ -657,24 +801,23 @@ function makeProjData(arr) {
 
 // ---------------------------------------------------------------------------
 // Skill accuracy CSS tile heatmap — one grid per section
-// ELA: light blue (#d5e6f7) → dark blue (#1d4a82)
-// Math: light red (#f7d5d2) → dark red (#821d16)
 // ---------------------------------------------------------------------------
 (function () {
-  const allSkills = JSON.parse(document.getElementById("skillChartData").textContent);
+  const el = document.getElementById("skillChartData");
+  if (!el) return;
+  const allSkills = JSON.parse(el.textContent);
 
   function lerpColor(t, r0, g0, b0, r1, g1, b1) {
     return `rgb(${Math.round(r0+t*(r1-r0))},${Math.round(g0+t*(g1-g0))},${Math.round(b0+t*(b1-b0))})`;
   }
-  // light text for dark tiles, dark text for light tiles
   function tileTextColor(t) {
     return t > 0.55 ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.65)";
   }
 
-  const ELA_LIGHT  = [213, 230, 247];   // #d5e6f7
-  const ELA_DARK   = [29,  74,  130];   // #1d4a82
-  const MATH_LIGHT = [247, 213, 210];   // #f7d5d2
-  const MATH_DARK  = [130, 29,  22];    // #821d16
+  const ELA_LIGHT  = [213, 230, 247];
+  const ELA_DARK   = [29,  74,  130];
+  const MATH_LIGHT = [247, 213, 210];
+  const MATH_DARK  = [130, 29,  22];
 
   function renderSkillHeat(containerId, wrapId, skills, lightRgb, darkRgb) {
     if (!skills.length) return;
@@ -699,43 +842,6 @@ function makeProjData(arr) {
 
   renderSkillHeat("skillHeatEla",  "skillElaWrap",  allSkills.filter(s => s.section === "ELA"),  ELA_LIGHT, ELA_DARK);
   renderSkillHeat("skillHeatMath", "skillMathWrap", allSkills.filter(s => s.section === "Math"), MATH_LIGHT, MATH_DARK);
-})();
-
-// ---------------------------------------------------------------------------
-// Time per skill horizontal bar charts — one per section
-// ELA: blue, Math: red (consistent with score charts)
-// ---------------------------------------------------------------------------
-(function () {
-  const allSkills = JSON.parse(document.getElementById("skillChartData").textContent);
-
-  function renderSkillTime(canvasId, wrapId, skills, color) {
-    const timed = skills.filter(s => s.avg_time !== null);
-    if (!timed.length) return;
-    document.getElementById(wrapId).style.display = "";
-    timed.sort((a, b) => b.avg_time - a.avg_time);
-    new Chart(document.getElementById(canvasId).getContext("2d"), {
-      type: "bar",
-      data: {
-        labels: timed.map(s => s.label),
-        datasets: [{ label: "Avg minutes", data: timed.map(s => s.avg_time), backgroundColor: color, borderWidth: 0, barThickness: 16 }]
-      },
-      options: {
-        indexAxis: "y", responsive: true,
-        aspectRatio: chartAR(timed.length > 6 ? 1.8 : 2.5, 1.2),
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: (item) => ` ${item.raw} min avg` } }
-        },
-        scales: {
-          x: { min: 0, grid: { color: P.grid }, ticks: { font: { size: 11 }, callback: v => v + "m" } },
-          y: { grid: { display: false }, ticks: { font: { size: 12 } } }
-        }
-      }
-    });
-  }
-
-  renderSkillTime("timeChartEla",  "timeElaWrap",  allSkills.filter(s => s.section === "ELA"),  P.ela);
-  renderSkillTime("timeChartMath", "timeMathWrap", allSkills.filter(s => s.section === "Math"), P.math);
 })();
 {% endif %}
 </script>
