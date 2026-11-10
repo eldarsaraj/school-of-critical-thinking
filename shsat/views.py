@@ -1655,6 +1655,7 @@ def error_analysis(request, attempt_id):
         "review_sections": [(s["section_code"], s["section"]) for s in section_summary_data],
         "parent_template": "shsat/base_hunter.html" if is_hunter else "shsat/base_shsat.html",
         "has_paid": parent.has_paid,
+        "hunter_has_paid": (parent.hunter_has_paid or _student_has_tutor_access(parent) or request.user.is_staff) if is_hunter else False,
         "is_baseline": attempt.test.is_free,
     }
 

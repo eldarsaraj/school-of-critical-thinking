@@ -569,6 +569,7 @@ def hunter_dashboard(request):
         "platform_mean": platform_mean,
         "platform_std": platform_std,
         "platform_n": platform_n,
+        "hunter_has_paid": parent.hunter_has_paid or _student_has_tutor_access(parent) or request.user.is_staff,
     }
     return render(request, "shsat/hunter_dashboard.html", context)
 

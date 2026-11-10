@@ -116,6 +116,19 @@
 </div>
 {% endif %}
 
+{% if not hunter_has_paid %}
+<div style="border:1px solid #111;padding:28px 24px;margin-top:32px;margin-bottom:32px;max-width:560px;">
+  <p style="font-size:18px;font-weight:600;margin-bottom:10px;letter-spacing:-.01em;">Let the data show you the way</p>
+  <p style="font-size:14px;line-height:1.65;color:rgba(0,0,0,.55);margin-bottom:20px;">
+    For less than half an hour of tutoring cost, get a precise insight into your child's strengths and weaknesses, so your test prep is effective where it needs to be.
+  </p>
+  <a href="{% url 'hunter_upgrade' %}" class="shsat-btn" style="background:#111;color:#fff;border-color:#111;">
+    Unlock Full Analysis + Benchmark Tests — $149
+  </a>
+</div>
+<div class="shsat-teaser-locked-wrap" style="margin-top:16px;margin-bottom:12px;"><div class="shsat-teaser-locked">
+{% endif %}
+
 <!-- Sankey diagrams -->
 {% if sankey_rc %}
 <div id="sankeyRcWrap" class="shsat-chart-wrap" style="margin-top:16px;">
@@ -188,6 +201,8 @@
   {% endfor %}
 </div>
 {% endif %}
+
+{% if not hunter_has_paid %}</div></div>{% endif %}
 
 {% endif %}
 
