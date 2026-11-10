@@ -274,27 +274,68 @@ const emptyStatePlugin = {
 Chart.register(emptyStatePlugin);
 
 // ---------------------------------------------------------------------------
+// Shared projection: ghost benchmark estimates for future tests
+// Hunter has 3 total slots: Baseline + Benchmark 1 + Benchmark 2
+// ---------------------------------------------------------------------------
+const _history = JSON.parse(document.getElementById("scoreChartData").textContent);
+
+function buildProjection(history) {
+  const totalTests = 3;
+  const testHistory = history.filter(d => !d.seq.toLowerCase().startsWith("log"));
+  const numProj = Math.max(0, totalTests - testHistory.length);
+  if (numProj === 0 || testHistory.length === 0) return null;
+
+  const last = history[history.length - 1];
+  if (!last) return null;
+  const bridgeIdx = history.length - 1;
+
+  let total = last.total, rc = last.rc, math = last.math;
+  const seed = total || 50;
+  const existingBenchmarks = testHistory.filter(d => d.seq.toLowerCase().startsWith("benchmark")).length;
+  const gains = [4, 3, 5, 2, 6, 3, 4, 5];
+
+  const totalProj = [], rcProj = [], mathProj = [], labels = [];
+  for (let i = 0; i < numProj; i++) {
+    const gain = gains[(seed + i * 3) % gains.length];
+    const rcGain = Math.round(gain * 0.5 + (i % 2 === 0 ? 1 : -1));
+    const mathGain = gain - rcGain;
+    rc = Math.min(100, rc + rcGain);
+    math = Math.min(100, math + mathGain);
+    total = Math.min(100, Math.round((rc + math) / 2));
+    totalProj.push(total);
+    rcProj.push(rc);
+    mathProj.push(math);
+    labels.push("Benchmark " + (existingBenchmarks + i + 1) + " (projected)");
+  }
+  return {
+    labels, bridgeIdx,
+    total: [last.total, ...totalProj],
+    rc: [last.rc, ...rcProj],
+    math: [last.math, ...mathProj],
+  };
+}
+
+const _proj = buildProjection(_history);
+const _realLabels = _history.map(d => d.seq);
+const _allLabels = _proj ? [..._realLabels, ..._proj.labels] : _realLabels;
+
+function makeProjData(arr) {
+  if (!arr || !_proj) return [];
+  const result = Array(_allLabels.length).fill(null);
+  arr.forEach((v, i) => { result[_proj.bridgeIdx + i] = v; });
+  return result;
+}
+
+// ---------------------------------------------------------------------------
 // Score history line chart (percentage-based, 0–100%)
 // ---------------------------------------------------------------------------
 (function () {
   const el = document.getElementById("scoreChart");
   if (!el) return;
-  const dataEl = document.getElementById("scoreChartData");
-  if (!dataEl) return;
-  const history = JSON.parse(dataEl.textContent);
+  const history = _history;
+  const proj = _proj;
+  const allLabels = _allLabels;
   const isEmpty = history.length === 0;
-
-  // Ghost benchmark labels — show empty slots for tests not yet taken
-  const totalSlots = 3; // Baseline + Benchmark 1 + Benchmark 2
-  const realLabels = history.map(d => d.seq);
-  const ghostLabels = [];
-  if (!isEmpty && history.length < totalSlots) {
-    const existingBenchmarks = history.filter(d => d.seq.toLowerCase().startsWith("benchmark")).length;
-    for (let i = existingBenchmarks + 1; i <= 2; i++) {
-      ghostLabels.push("Benchmark " + i + " ⟶");
-    }
-  }
-  const allLabels = [...realLabels, ...ghostLabels];
 
   const greyLine = { borderColor: "#eee2d3", backgroundColor: "transparent",
                      pointBackgroundColor: "#eee2d3", borderWidth: 2, tension: 0.2, pointRadius: 4 };
@@ -315,7 +356,19 @@ Chart.register(emptyStatePlugin);
         { label: "QR+MA", data: history.map(d => d.math),
           borderColor: P.math, backgroundColor: "transparent", pointBackgroundColor: P.math,
           borderWidth: 2, tension: 0.2, pointRadius: 4 },
-      ];
+        proj ? { label: "Overall (projected)", data: makeProjData(proj.total),
+          borderColor: "rgba(36,15,5,0.2)", backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(36,15,5,0.15)", borderWidth: 1.5, borderDash: [4, 4],
+          tension: 0.2, pointRadius: 3 } : null,
+        proj ? { label: "RC (projected)", data: makeProjData(proj.rc),
+          borderColor: "rgba(122,135,117,0.25)", backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(122,135,117,0.2)", borderWidth: 1.5, borderDash: [4, 4],
+          tension: 0.2, pointRadius: 3 } : null,
+        proj ? { label: "QR+MA (projected)", data: makeProjData(proj.math),
+          borderColor: "rgba(171,85,63,0.25)", backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(171,85,63,0.2)", borderWidth: 1.5, borderDash: [4, 4],
+          tension: 0.2, pointRadius: 3 } : null,
+      ].filter(Boolean);
 
   new Chart(el.getContext("2d"), {
     type: "line",
@@ -337,7 +390,7 @@ Chart.register(emptyStatePlugin);
         },
         subtitle: {
           display: true,
-          text: "Your score across repeated tests.",
+          text: "Your score across repeated tests." + (proj ? " Dotted lines show projected scores." : ""),
           align: "start",
           color: "#aba784",
           font: { family: F.label, size: 13, weight: "400" },
@@ -347,6 +400,7 @@ Chart.register(emptyStatePlugin);
         tooltip: {
           titleFont: { family: F.label, size: 13 },
           bodyFont: { family: F.label, size: 13 },
+          filter: (item) => !item.dataset.label.includes("projected"),
           callbacks: {
             title: (items) => {
               const idx = items[0].dataIndex;
@@ -377,6 +431,7 @@ Chart.register(emptyStatePlugin);
 
 // ---------------------------------------------------------------------------
 // Stacked bar chart — practice test scores (RC + Math stacked)
+// Ghost bars for projected benchmarks shown at reduced opacity
 // ---------------------------------------------------------------------------
 (function () {
   const dataEl = document.getElementById("attemptsChartData");
@@ -384,6 +439,21 @@ Chart.register(emptyStatePlugin);
   const data = JSON.parse(dataEl.textContent);
   const isEmpty = data.length === 0;
   const hasTime = !isEmpty && data.some(d => d.minutes !== null);
+  const proj = _proj;
+
+  // Build ghost bar data for projected benchmarks
+  const ghostBarLabels = proj ? proj.labels : [];
+  const barLabels = [...data.map(d => d.label), ...ghostBarLabels];
+
+  // For projected bars, estimate RC/Math split from last real test
+  const lastReal = data.length > 0 ? data[data.length - 1] : null;
+  const ghostRc = [], ghostMath = [];
+  if (proj && lastReal) {
+    for (let i = 0; i < proj.rc.length - 1; i++) { // skip bridge value at index 0
+      ghostRc.push(proj.rc[i + 1]);
+      ghostMath.push(proj.math[i + 1]);
+    }
+  }
 
   const greyBar = { backgroundColor: "rgba(0,0,0,0.1)", borderWidth: 0, barThickness: 48, order: 2 };
 
@@ -393,15 +463,23 @@ Chart.register(emptyStatePlugin);
         { label: "Math", data: [], ...greyBar },
       ]
     : [
-        { label: "RC",   data: data.map(d => d.rc),
+        { label: "RC",   data: [...data.map(d => d.rc), ...Array(ghostBarLabels.length).fill(null)],
           backgroundColor: P.rc,   borderWidth: 0, barThickness: 48, order: 2 },
-        { label: "Math", data: data.map(d => d.math),
+        { label: "Math", data: [...data.map(d => d.math), ...Array(ghostBarLabels.length).fill(null)],
           backgroundColor: P.math, borderWidth: 0, barThickness: 48, order: 2 },
+        ...(ghostRc.length > 0 ? [
+          { label: "RC (projected)", data: [...Array(data.length).fill(null), ...ghostRc],
+            backgroundColor: "rgba(122,135,117,0.18)", borderWidth: 1, borderColor: "rgba(122,135,117,0.3)",
+            borderDash: [3, 3], barThickness: 48, order: 2 },
+          { label: "Math (projected)", data: [...Array(data.length).fill(null), ...ghostMath],
+            backgroundColor: "rgba(171,85,63,0.18)", borderWidth: 1, borderColor: "rgba(171,85,63,0.3)",
+            borderDash: [3, 3], barThickness: 48, order: 2 },
+        ] : []),
       ];
 
   new Chart(document.getElementById("attemptsChart").getContext("2d"), {
     type: "bar",
-    data: { labels: data.map(d => d.label), datasets },
+    data: { labels: barLabels, datasets },
     options: {
       _emptyMessage: "Complete a practice test to see your scores here",
       responsive: true,
@@ -416,7 +494,7 @@ Chart.register(emptyStatePlugin);
         },
         subtitle: {
           display: true,
-          text: "How you performed on each section of the tests.",
+          text: "How you performed on each section." + (proj ? " Faded bars are projected estimates." : ""),
           align: "start",
           color: "#aba784",
           font: { family: F.label, size: 13, weight: "400" },
@@ -424,6 +502,7 @@ Chart.register(emptyStatePlugin);
         },
         legend: { display: false },
         tooltip: {
+          filter: (item) => !item.dataset.label.includes("projected"),
           titleFont: { family: F.label, size: 13 },
           bodyFont: { family: F.label, size: 13 },
           callbacks: {
@@ -459,27 +538,57 @@ Chart.register(emptyStatePlugin);
   if (!timingCtx) return;
   const timingData = hasTime ? data.filter(d => d.minutes !== null) : [];
   const timingEmpty = timingData.length === 0;
-  const maxMinutes = timingEmpty ? 180 : Math.max(...timingData.map(d => d.minutes));
+
+  // Ghost timing projections: estimate future test durations trending slightly faster
+  const timingLabels = timingData.map(d => d.label);
+  const timingGhostLabels = proj ? proj.labels : [];
+  const allTimingLabels = [...timingLabels, ...timingGhostLabels];
+  const lastTime = timingData.length > 0 ? timingData[timingData.length - 1].minutes : null;
+  const timingGhost = [];
+  if (proj && lastTime) {
+    let t = lastTime;
+    for (let i = 0; i < timingGhostLabels.length; i++) {
+      t = Math.max(30, Math.round(t * 0.95)); // trending 5% faster each test
+      timingGhost.push(t);
+    }
+  }
+
+  const maxMinutes = timingEmpty ? 180 : Math.max(...timingData.map(d => d.minutes), ...(timingGhost.length ? timingGhost : [0]));
   const yMax = Math.ceil(maxMinutes / 30) * 30;
   const stepMinutes = yMax <= 60 ? 15 : 30;
+
+  const timingDatasets = timingEmpty
+    ? [{ label: "Time", data: [], borderColor: "#eee2d3", borderWidth: 2, pointRadius: 4 }]
+    : [
+        {
+          label: "Time",
+          data: timingData.map(d => d.minutes),
+          borderColor: P.amber,
+          backgroundColor: "transparent",
+          pointBackgroundColor: P.amber,
+          borderWidth: 2,
+          tension: 0.2,
+          pointRadius: 5,
+          spanGaps: true,
+        },
+        ...(timingGhost.length > 0 ? [{
+          label: "Time (projected)",
+          data: [...Array(timingData.length - 1).fill(null), lastTime, ...timingGhost],
+          borderColor: "rgba(197,131,80,0.25)",
+          backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(197,131,80,0.2)",
+          borderWidth: 1.5,
+          borderDash: [4, 4],
+          tension: 0.2,
+          pointRadius: 3,
+        }] : []),
+      ];
 
   new Chart(timingCtx.getContext("2d"), {
     type: "line",
     data: {
-      labels: timingEmpty ? [] : timingData.map(d => d.label),
-      datasets: timingEmpty
-        ? [{ label: "Time", data: [], borderColor: "#eee2d3", borderWidth: 2, pointRadius: 4 }]
-        : [{
-            label: "Time",
-            data: timingData.map(d => d.minutes),
-            borderColor: P.amber,
-            backgroundColor: "transparent",
-            pointBackgroundColor: P.amber,
-            borderWidth: 2,
-            tension: 0.2,
-            pointRadius: 5,
-            spanGaps: true,
-          }]
+      labels: timingEmpty ? [] : allTimingLabels,
+      datasets: timingDatasets,
     },
     options: {
       _emptyMessage: "Timing data will appear after your first timed test",
@@ -495,7 +604,7 @@ Chart.register(emptyStatePlugin);
         },
         subtitle: {
           display: true,
-          text: "How long it took you to complete each test.",
+          text: "How long it took you to complete each test." + (timingGhost.length ? " Dotted line is projected." : ""),
           align: "start",
           color: "#aba784",
           font: { family: F.label, size: 13, weight: "400" },
@@ -503,6 +612,7 @@ Chart.register(emptyStatePlugin);
         },
         legend: { display: false },
         tooltip: {
+          filter: (item) => !item.dataset.label.includes("projected"),
           titleFont: { family: F.label, size: 13 },
           bodyFont: { family: F.label, size: 13 },
           callbacks: {
