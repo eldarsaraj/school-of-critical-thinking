@@ -14,6 +14,56 @@ from .forms import SignupForm, LoginForm, ManualScoreForm, NotesForm, AccountFor
 from .scoring import scale_score, compute_placement
 
 
+# ---------------------------------------------------------------------------
+# Trap descriptions — parent-friendly 1-2 sentence explanations
+# ---------------------------------------------------------------------------
+TRAP_DESCRIPTIONS = {
+    # ELA traps
+    "too_broad": "The chosen answer was technically true but covered more than the question asked for.",
+    "too_narrow": "The chosen answer focused on only part of what the question was asking about.",
+    "too_literal": "The answer took the passage at face value instead of reading between the lines.",
+    "less_precise": "A close answer, but another choice captured the meaning more exactly.",
+    "true_but_irrelevant": "The answer was factually true but didn't address what the question actually asked.",
+    "misidentified_detail": "A real detail from the passage, but not the one the question was looking for.",
+    "qualifier_blindness": "The answer missed a key word like 'always', 'never', or 'only' that changed its meaning.",
+    "opposite": "The answer said the opposite of what the passage or question stated.",
+    "overcorrection": "The answer fixed a real issue but introduced a new problem in the process.",
+    "surface_match": "The answer used words from the passage but didn't match the actual meaning.",
+    "inference_leap": "The answer went too far beyond what the passage actually supported.",
+    "causal_confusion": "The answer mixed up cause and effect, or assumed a connection that wasn't there.",
+    "wrong_logical_relation": "The answer got the logical relationship between ideas wrong.",
+    "changes_meaning": "The answer choice altered the intended meaning of the original sentence.",
+    "wrong_placement": "The right idea, but put in the wrong place in the sentence or passage.",
+    "overgeneralized_rule": "A grammar or usage rule was applied too broadly where an exception applied.",
+    "recognition_as_correctness": "The answer looked familiar from the passage, which made it feel correct even though it wasn't.",
+    "referent_slippage": "The answer confused who or what a pronoun or phrase was referring to.",
+    "partly_true_but_wrong": "Part of the answer was correct, but as a whole it didn't work.",
+    # Math traps
+    "wrong_setup": "The problem was set up incorrectly — the wrong equation or diagram was used.",
+    "partial_answer": "The work stopped too early. This is the answer to a middle step, not the final answer.",
+    "last_step_trap": "All the work was correct except the very last step — a common rushing mistake.",
+    "off_by_operation": "The wrong operation was used (e.g. multiplied instead of divided).",
+    "sign_error": "A positive/negative sign was flipped, changing the answer.",
+    "arithmetic_slip": "The method was right but a simple calculation mistake changed the result.",
+    "wrong_formula": "The wrong formula was applied to the problem.",
+    "procedure_substitution": "A correct procedure for a different type of problem was used here.",
+    "proportion_inversion": "The ratio or proportion was set up upside down.",
+    "order_of_operations": "Operations were done in the wrong order (PEMDAS error).",
+    "unit_error": "The units were mismatched or not converted properly.",
+    "unit_conversion_error": "A unit conversion step was done incorrectly.",
+    "unsimplified": "The answer was correct but needed to be simplified further.",
+    "misread_question": "The question was misread — a key detail or condition was missed.",
+    "wrong_concept": "The wrong mathematical concept was applied to solve this problem.",
+    "computation_error": "A calculation error somewhere in the work led to a wrong final answer.",
+    "estimation_failure": "The answer doesn't pass a basic reasonableness check.",
+    "fast_pattern_match": "The answer looked right at first glance but didn't hold up to careful checking.",
+    # General traps
+    "introduces_new_error": "The chosen answer introduced a new grammatical or logical error.",
+    "misattributed_error_location": "The actual error was in a different part of the sentence than expected.",
+    "semantic_over_syntactic": "The answer focused on meaning when the question was about grammar, or vice versa.",
+}
+
+
 def _hunter_band(pct):
     """Map a percentage score to a (label, hex_color) band tuple."""
     if pct is None:
@@ -1409,24 +1459,10 @@ def error_analysis(request, attempt_id):
 
     wrong_answers = [a for a in answers if a.selected_answer and not a.is_correct]
 
-    # Wrong answers by skill (with section for treemap coloring)
-    skill_errors = {}
-    for ans in wrong_answers:
-        skill = ans.question.skill or "unknown"
-        label = skill_label_map.get(skill, skill)
-        section = ans.question.section or "unknown"
-        if label not in skill_errors:
-            skill_errors[label] = {"count": 0, "section": section}
-        skill_errors[label]["count"] += 1
-    skill_errors_data = sorted(
-        [{"label": k, "count": v["count"], "section": v["section"]} for k, v in skill_errors.items()],
-        key=lambda x: x["count"], reverse=True
-    )
-
-    # Distractor trap analysis — build human-readable label map from DISTRACTOR_CHOICES
+    # Distractor trap analysis — build trap cards grouped by section
     from .forms import DISTRACTOR_CHOICES as _DC
+    import re as _re
     _dist_label = {}
-    _dist_key_for_label = {}  # reverse map: clean_label -> trap key
     for entry in _DC:
         if isinstance(entry[1], (list, tuple)) and entry[0] not in ("", ):
             for key, label in entry[1]:
@@ -1434,40 +1470,47 @@ def error_analysis(request, attempt_id):
         elif entry[0]:
             _dist_label[entry[0]] = entry[1]
 
-    import re as _re
-    trap_counts = {}
-    trap_questions = {}  # (section, label) -> list of question numbers
-    for ans in wrong_answers:
-        trap = ans.question.distractor_types.get(ans.selected_answer, "")
-        if trap:
-            section = ans.question.section
-            raw_label = _dist_label.get(trap, trap.replace("_", " ").title())
-            # Strip leading section prefix like "(E) " or "(M) "
-            clean_label = _re.sub(r"^\([EM]\)\s*", "", raw_label)
-            key = (section, clean_label)
-            trap_counts[key] = trap_counts.get(key, 0) + 1
-            trap_questions.setdefault(key, []).append(ans.question.question_number)
-            _dist_key_for_label[clean_label] = trap
-    # Compute total wrong per section for percentage
     ELA_SECTIONS = {"ELA", "reading_comprehension", "writing"}
     MATH_SECTIONS = {"Math", "quantitative_reasoning", "math_achievement"}
-    _trap_total_ela = sum(v for (s, _), v in trap_counts.items() if s in ELA_SECTIONS)
-    _trap_total_math = sum(v for (s, _), v in trap_counts.items() if s in MATH_SECTIONS)
 
-    trap_data = sorted(
-        [
-            {
-                "label": label,
-                "section": section,
-                "count": v,
-                "pct": round(v / (_trap_total_ela if section in ELA_SECTIONS else _trap_total_math) * 100, 1)
-                if (_trap_total_ela if section in ELA_SECTIONS else _trap_total_math) > 0
-                else 0,
+    # Collect per-trap question details
+    _trap_cards_raw = {}  # (trap_key, section_group) -> {label, questions: [...]}
+    for ans in wrong_answers:
+        trap_key = ans.question.distractor_types.get(ans.selected_answer, "")
+        if not trap_key:
+            continue
+        q = ans.question
+        section = q.section
+        section_group = "ELA" if section in ELA_SECTIONS else "Math"
+        raw_label = _dist_label.get(trap_key, trap_key.replace("_", " ").title())
+        clean_label = _re.sub(r"^\([EM]\)\s*", "", raw_label)
+        card_key = (trap_key, section_group)
+        if card_key not in _trap_cards_raw:
+            _trap_cards_raw[card_key] = {
+                "trap_key": trap_key,
+                "label": clean_label,
+                "section": section_group,
+                "description": TRAP_DESCRIPTIONS.get(trap_key, ""),
+                "questions": [],
             }
-            for (section, label), v in trap_counts.items()
-        ],
-        key=lambda x: x["count"], reverse=True
-    )
+        _trap_cards_raw[card_key]["questions"].append({
+            "number": q.question_number,
+            "skill": skill_label_map.get(q.skill or "unknown", q.skill or "Other"),
+            "difficulty": (q.difficulty or "medium").capitalize(),
+            "student_answer": ans.selected_answer,
+            "correct_answer": q.correct_answer,
+        })
+
+    # Build sorted list: ELA first, then Math; within each section sorted by count desc
+    trap_cards = []
+    for section_group in ("ELA", "Math"):
+        section_cards = [
+            {**card, "count": len(card["questions"])}
+            for card in _trap_cards_raw.values()
+            if card["section"] == section_group
+        ]
+        section_cards.sort(key=lambda c: c["count"], reverse=True)
+        trap_cards.extend(section_cards)
 
     # Difficulty breakdown of wrong answers
     diff_errors = {"easy": 0, "medium": 0, "hard": 0}
@@ -1484,72 +1527,6 @@ def error_analysis(request, attempt_id):
         {"label": "Medium", "errors": diff_errors["medium"], "total": diff_totals["medium"]},
         {"label": "Hard", "errors": diff_errors["hard"], "total": diff_totals["hard"]},
     ]
-
-    # Time bucket accuracy bars (replaces scatter plot)
-    _time_buckets = [
-        ("<30s", 0, 30),
-        ("30–60s", 30, 60),
-        ("60–120s", 60, 120),
-        (">120s", 120, float("inf")),
-    ]
-    _bucket_stats = {label: {"correct": 0, "total": 0} for label, _, _ in _time_buckets}
-    for ans in answers:
-        if ans.selected_answer and ans.time_spent_seconds is not None:
-            for label, lo, hi in _time_buckets:
-                if lo <= ans.time_spent_seconds < hi:
-                    _bucket_stats[label]["total"] += 1
-                    if ans.is_correct:
-                        _bucket_stats[label]["correct"] += 1
-                    break
-    time_bucket_data = []
-    for label, _, _ in _time_buckets:
-        s = _bucket_stats[label]
-        if s["total"] > 0:
-            pct = round(s["correct"] / s["total"] * 100, 1)
-            time_bucket_data.append({
-                "label": label,
-                "correct": s["correct"],
-                "total": s["total"],
-                "pct": pct,
-            })
-    has_timing = len(time_bucket_data) > 0
-
-    # Legacy scatter data (kept for compatibility)
-    scatter_data = []
-    for ans in answers:
-        if ans.selected_answer and ans.time_spent_seconds is not None:
-            scatter_data.append({
-                "x": ans.time_spent_seconds,
-                "y": 1 if ans.is_correct else 0,
-                "section": ans.question.section,
-                "q": ans.question.question_number,
-            })
-
-    # Recommendations: top 3 weak skills
-    skill_attempt = {}
-    for ans in answers:
-        if ans.selected_answer:
-            skill = ans.question.skill or "unknown"
-            if skill not in skill_attempt:
-                skill_attempt[skill] = {"correct": 0, "total": 0}
-            skill_attempt[skill]["total"] += 1
-            if ans.is_correct:
-                skill_attempt[skill]["correct"] += 1
-
-    recommendations = []
-    for skill, s in skill_attempt.items():
-        if s["total"] == 0:
-            continue
-        pct = round(s["correct"] / s["total"] * 100, 1)
-        recommendations.append({
-            "label": skill_label_map.get(skill, skill),
-            "skill": skill,
-            "accuracy": pct,
-            "wrong": s["total"] - s["correct"],
-            "total": s["total"],
-        })
-    recommendations.sort(key=lambda x: x["accuracy"])
-    recommendations = recommendations[:3]
 
     is_hunter = attempt.test.exam_type == "hunter"
 
@@ -1674,13 +1651,8 @@ def error_analysis(request, attempt_id):
         "accuracy_pct": accuracy_pct,
         "total_correct": total_correct,
         "total_answered": total_answered,
-        "skill_errors_data": skill_errors_data,
-        "trap_data": trap_data,
+        "trap_cards": trap_cards,
         "diff_breakdown": diff_breakdown,
-        "scatter_data": scatter_data,
-        "time_bucket_data": time_bucket_data,
-        "has_timing": has_timing,
-        "recommendations": recommendations,
         "section_summary_data": section_summary_data,
         "has_section_time": has_section_time,
         "passage_summary": passage_summary,

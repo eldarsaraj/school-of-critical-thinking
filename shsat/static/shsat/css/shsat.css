@@ -2604,4 +2604,130 @@
   inset: 0;
 }
 
-/* ── Trap detail cards ─────────────────────────────────────────── */
+/* ── Trap detail cards (error analysis) ────────────────────────── */
+
+.shsat-trap-section-heading {
+  font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  margin: 32px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee2d3;
+}
+
+.shsat-trap-section-heading--ela {
+  color: #7a8775;
+}
+
+.shsat-trap-section-heading--math {
+  color: #ab553f;
+}
+
+.shsat-trap-card {
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  border-left: 4px solid #eee2d3;
+  background: transparent;
+}
+
+.shsat-trap-card--ela {
+  border-left-color: #7a8775;
+}
+
+.shsat-trap-card--math {
+  border-left-color: #ab553f;
+}
+
+.shsat-trap-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.shsat-trap-card__title {
+  font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #240f05;
+  letter-spacing: -0.01em;
+}
+
+.shsat-trap-card__count {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(36, 15, 5, 0.5);
+  white-space: nowrap;
+  padding: 2px 10px;
+  border: 1px solid #eee2d3;
+  border-radius: 12px;
+}
+
+.shsat-trap-card__desc {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(36, 15, 5, 0.55);
+  margin: 0 0 14px;
+}
+
+.shsat-trap-card__questions {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.shsat-trap-card__question {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #240f05;
+  padding: 7px 0;
+  border-top: 1px dotted #eee2d3;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.shsat-trap-card__question:first-child {
+  border-top: none;
+}
+
+.shsat-trap-card__qnum {
+  font-weight: 600;
+  min-width: 32px;
+}
+
+.shsat-trap-card__qskill {
+  color: rgba(36, 15, 5, 0.6);
+}
+
+.shsat-trap-card__qskill::after {
+  content: "\00b7";
+  margin-left: 8px;
+  color: #eee2d3;
+}
+
+.shsat-trap-card__qdiff {
+  color: rgba(36, 15, 5, 0.45);
+  font-size: 12px;
+}
+
+.shsat-trap-card__qanswer {
+  margin-left: auto;
+  color: rgba(36, 15, 5, 0.5);
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .shsat-trap-card__qanswer {
+    margin-left: 0;
+    width: 100%;
+  }
+}
