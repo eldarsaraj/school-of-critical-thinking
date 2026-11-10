@@ -96,12 +96,13 @@
      Paid: shown normally. Unpaid: everything blurred.
      ═══════════════════════════════════════════════════════════════════════ -->
 
-{% if not has_paid %}<div class="shsat-teaser-locked-wrap" style="margin-top:48px;margin-bottom:12px;"><div class="shsat-teaser-locked">{% endif %}
-
 {% if dash_trap_data %}
-<div id="dashTrapElaWrap" class="shsat-chart-wrap" style="display:none;{% if has_paid %}margin-top:48px;{% endif %}">
+<div id="dashTrapElaWrap" class="shsat-chart-wrap" style="display:none;margin-top:48px;">
   <canvas id="dashTrapChartEla"></canvas>
 </div>
+
+{% if not has_paid %}<div class="shsat-teaser-locked-wrap" style="margin-top:16px;margin-bottom:12px;"><div class="shsat-teaser-locked">{% endif %}
+
 <div id="dashTrapMathWrap" class="shsat-chart-wrap" style="display:none;">
   <canvas id="dashTrapChartMath"></canvas>
 </div>
@@ -803,7 +804,7 @@ function makeProjData(arr) {
   }
 
   renderSankey("sankeyChartEla",  "sankeyElaData",  P.ela,  P.wrong, "ELA traps you keep catching across tests");
-  renderSankey("sankeyChartMath", "sankeyMathData", P.math, P.wrong, "math traps you keep catching across tests");
+  renderSankey("sankeyChartMath", "sankeyMathData", P.math, P.wrong, "Math traps you keep catching across tests");
 })();
 
 // ---------------------------------------------------------------------------
