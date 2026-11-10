@@ -92,7 +92,7 @@
 {{ attempts_chart_data|json_script:"attemptsChartData" }}
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     Distractor Trap Profile (centerpiece — PAID)
+     Distractor Trap Analysis (PAID)
      ═══════════════════════════════════════════════════════════════════════ -->
 {% if dash_trap_data %}
 {% if has_paid %}
@@ -139,16 +139,6 @@
   </div>
 </div>
 
-<!-- Upgrade CTA for trap section -->
-<div style="border:1px solid rgba(0,0,0,0.12);padding:20px 24px;margin:20px 0 36px;max-width:560px;border-radius:8px;">
-  <p style="font-size:15px;font-weight:600;margin-bottom:8px;letter-spacing:-.01em;">Unlock your child's full Trap Profile</p>
-  <p style="font-size:13px;line-height:1.6;color:rgba(0,0,0,.55);margin-bottom:16px;">
-    See which patterns persist and how to break them — track progress across every test.
-  </p>
-  <a href="{% url 'shsat_upgrade' %}" class="shsat-btn" style="background:#111;color:#fff;border-color:#111;">
-    Unlock Full Analysis + Benchmark Tests — $149
-  </a>
-</div>
 {% endif %}
 {% endif %}
 {{ dash_trap_data|json_script:"dashTrapData" }}
