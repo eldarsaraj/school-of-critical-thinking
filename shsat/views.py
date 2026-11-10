@@ -657,6 +657,8 @@ def dashboard(request):
         round(sum(a.time_spent_seconds for a in timed_answers) / len(timed_answers) / 60, 1)
         if timed_answers else None
     )
+    if avg_time_per_q == 0.0:
+        avg_time_per_q = None
 
     # Platform score distribution (all completed attempts across all users)
     import math as _math
