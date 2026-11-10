@@ -270,7 +270,15 @@ Chart.register(emptyStatePlugin);
           display: true, text: "Score history", align: "start",
           color: titleColor,
           font: { family: F.title, size: 26, weight: "600" },
-          padding: { bottom: 24 },
+          padding: { bottom: 4 },
+        },
+        subtitle: {
+          display: true,
+          text: "Your score across repeated tests.",
+          align: "start",
+          color: "#aba784",
+          font: { family: F.label, size: 13, weight: "400" },
+          padding: { bottom: 20 },
         },
         legend: { display: false },
         tooltip: {
@@ -341,7 +349,15 @@ Chart.register(emptyStatePlugin);
           display: true, text: "Practice test scores", align: "start",
           color: titleColor,
           font: { family: F.title, size: 26, weight: "600" },
-          padding: { bottom: 24 },
+          padding: { bottom: 4 },
+        },
+        subtitle: {
+          display: true,
+          text: "How you performed on each section of the tests.",
+          align: "start",
+          color: "#aba784",
+          font: { family: F.label, size: 13, weight: "400" },
+          padding: { bottom: 20 },
         },
         legend: { display: false },
         tooltip: {
@@ -412,7 +428,15 @@ Chart.register(emptyStatePlugin);
           display: true, text: "Your test timing", align: "start",
           color: titleColor,
           font: { family: F.title, size: 26, weight: "600" },
-          padding: { bottom: 24 },
+          padding: { bottom: 4 },
+        },
+        subtitle: {
+          display: true,
+          text: "How long it took you to complete each test.",
+          align: "start",
+          color: "#aba784",
+          font: { family: F.label, size: 13, weight: "400" },
+          padding: { bottom: 20 },
         },
         legend: { display: false },
         tooltip: {
@@ -476,7 +500,7 @@ Chart.register(emptyStatePlugin);
       .sort((a, b) => b.pct - a.pct);
   }
 
-  function renderTrapChart(canvasId, wrapId, sectionData, color, chartTitle) {
+  function renderTrapChart(canvasId, wrapId, sectionData, color, chartTitle, chartSubtitle) {
     if (!sectionData.length) return;
     const wrap = document.getElementById(wrapId);
     if (!wrap) return;
@@ -498,7 +522,15 @@ Chart.register(emptyStatePlugin);
             display: true, text: chartTitle, align: "start",
             color: titleColor,
             font: { family: F.title, size: 26, weight: "600" },
-            padding: { bottom: 24 },
+            padding: { bottom: 4 },
+          },
+          subtitle: {
+            display: true,
+            text: chartSubtitle,
+            align: "start",
+            color: "#aba784",
+            font: { family: F.label, size: 13, weight: "400" },
+            padding: { bottom: 20 },
           },
           legend: { display: false },
           tooltip: {
@@ -522,15 +554,15 @@ Chart.register(emptyStatePlugin);
 
   const rcData   = aggregateByLabel(allData.filter(d => RC_SECTIONS.has(d.section)));
   const mathData = aggregateByLabel(allData.filter(d => MATH_SECTIONS.has(d.section)));
-  renderTrapChart("dashTrapChartRc",   "dashTrapRcWrap",   rcData,   P.rc,   "Top RC & Writing traps that caught you");
-  renderTrapChart("dashTrapChartMath", "dashTrapMathWrap", mathData, P.math, "Top math traps that caught you");
+  renderTrapChart("dashTrapChartRc",   "dashTrapRcWrap",   rcData,   P.rc,   "Top RC & Writing traps that caught you", "Pay attention to the main traps you catch in each test.");
+  renderTrapChart("dashTrapChartMath", "dashTrapMathWrap", mathData, P.math, "Top math traps that caught you", "Pay attention to the main traps you catch in each test.");
 })();
 
 // ---------------------------------------------------------------------------
 // Sankey diagrams — RC + Math trap flow across tests
 // ---------------------------------------------------------------------------
 (function () {
-  function renderSankey(canvasId, dataId, colorFrom, colorTo, chartTitle) {
+  function renderSankey(canvasId, dataId, colorFrom, colorTo, chartTitle, chartSubtitle) {
     const el = document.getElementById(canvasId);
     if (!el) return;
     const dataEl = document.getElementById(dataId);
@@ -575,7 +607,15 @@ Chart.register(emptyStatePlugin);
             display: true, text: chartTitle, align: "start",
             color: titleColor,
             font: { family: F.title, size: 26, weight: "600" },
-            padding: { bottom: 24 },
+            padding: { bottom: 4 },
+          },
+          subtitle: {
+            display: true,
+            text: chartSubtitle,
+            align: "start",
+            color: "#aba784",
+            font: { family: F.label, size: 13, weight: "400" },
+            padding: { bottom: 20 },
           },
           legend: { display: false },
           tooltip: {
@@ -593,8 +633,8 @@ Chart.register(emptyStatePlugin);
     });
   }
 
-  renderSankey("sankeyChartRc",   "sankeyRcData",   P.rc,   P.wrong, "RC & Writing traps across tests");
-  renderSankey("sankeyChartMath", "sankeyMathData", P.math, P.wrong, "Math traps across tests");
+  renderSankey("sankeyChartRc",   "sankeyRcData",   P.rc,   P.wrong, "RC & Writing traps across tests", "Are you improving your trap recognition over time?");
+  renderSankey("sankeyChartMath", "sankeyMathData", P.math, P.wrong, "Math traps across tests", "Are you improving your trap recognition over time?");
 })();
 
 // ---------------------------------------------------------------------------
@@ -608,7 +648,7 @@ Chart.register(emptyStatePlugin);
   const RC_SECTIONS   = new Set(["reading_comprehension", "writing"]);
   const MATH_SECTIONS = new Set(["quantitative_reasoning", "math_achievement"]);
 
-  function renderRadar(canvasId, wrapId, skills, fillColor, borderColor, chartTitle) {
+  function renderRadar(canvasId, wrapId, skills, fillColor, borderColor, chartTitle, chartSubtitle) {
     if (!skills.length) return;
     document.getElementById(wrapId).style.display = "";
     const ctx = document.getElementById(canvasId).getContext("2d");
@@ -649,7 +689,15 @@ Chart.register(emptyStatePlugin);
             display: true, text: chartTitle, align: "start",
             color: titleColor,
             font: { family: F.title, size: 26, weight: "600" },
-            padding: { bottom: 16 },
+            padding: { bottom: 4 },
+          },
+          subtitle: {
+            display: true,
+            text: chartSubtitle,
+            align: "start",
+            color: "#aba784",
+            font: { family: F.label, size: 13, weight: "400" },
+            padding: { bottom: 12 },
           },
           legend: { display: false },
           tooltip: {
@@ -679,8 +727,8 @@ Chart.register(emptyStatePlugin);
 
   const rcSkills   = allSkills.filter(s => RC_SECTIONS.has(s.section));
   const mathSkills = allSkills.filter(s => MATH_SECTIONS.has(s.section));
-  renderRadar("skillRadarRc",   "skillRadarRcWrap",   rcSkills,   "rgba(122,135,117,0.15)", P.rc,   "Your RC & Writing strengths");
-  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(171,85,63,0.15)",  P.math, "Your math strengths");
+  renderRadar("skillRadarRc",   "skillRadarRcWrap",   rcSkills,   "rgba(122,135,117,0.15)", P.rc,   "Your RC & Writing strengths", "These are your strong RC & Writing areas.");
+  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(171,85,63,0.15)",  P.math, "Your math strengths", "These are your strong math areas.");
 })();
 </script>
 {% endblock %}

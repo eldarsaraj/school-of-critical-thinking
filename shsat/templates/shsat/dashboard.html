@@ -53,7 +53,8 @@
 
 <!-- School placement bars -->
 {% if placement_data %}
-<div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;color:#240f05;margin-bottom:16px;">Distance to cutoff</div>
+<div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;color:#240f05;margin-bottom:4px;">Distance to cutoff</div>
+<p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:13px;color:#aba784;margin-bottom:16px;">How far you are from your desired high school threshold.</p>
 <div class="shsat-placement-bars" style="margin-bottom:36px;">
   {% for p in placement_data %}
   <div class="shsat-placement-row">
@@ -410,7 +411,15 @@ function makeProjData(arr) {
           align: "start",
           color: titleColor,
           font: { family: F.title, size: 26, weight: "600" },
-          padding: { bottom: 24 },
+          padding: { bottom: 4 },
+        },
+        subtitle: {
+          display: true,
+          text: "Your score across repeated tests.",
+          align: "start",
+          color: "#aba784",
+          font: { family: F.label, size: 13, weight: "400" },
+          padding: { bottom: 20 },
         },
         legend: { display: false },
         tooltip: {
@@ -538,7 +547,15 @@ function makeProjData(arr) {
           align: "start",
           color: titleColor,
           font: { family: F.title, size: 26, weight: "600" },
-          padding: { bottom: 24 },
+          padding: { bottom: 4 },
+        },
+        subtitle: {
+          display: true,
+          text: "How you performed on each section of the tests.",
+          align: "start",
+          color: "#aba784",
+          font: { family: F.label, size: 13, weight: "400" },
+          padding: { bottom: 20 },
         },
         legend: { display: false },
         tooltip: {
@@ -627,7 +644,15 @@ function makeProjData(arr) {
           align: "start",
           color: titleColor,
           font: { family: F.title, size: 26, weight: "600" },
-          padding: { bottom: 24 },
+          padding: { bottom: 4 },
+        },
+        subtitle: {
+          display: true,
+          text: "How long it took you to complete each test.",
+          align: "start",
+          color: "#aba784",
+          font: { family: F.label, size: 13, weight: "400" },
+          padding: { bottom: 20 },
         },
         legend: { display: false },
         tooltip: {
@@ -677,7 +702,7 @@ function makeProjData(arr) {
   const allData = JSON.parse(el.textContent);
   if (!allData.length) return;
 
-  function renderTrapChart(canvasId, wrapId, sectionData, color, chartTitle) {
+  function renderTrapChart(canvasId, wrapId, sectionData, color, chartTitle, chartSubtitle) {
     if (!sectionData.length) return;
     const wrap = document.getElementById(wrapId);
     if (!wrap) return;
@@ -702,7 +727,15 @@ function makeProjData(arr) {
             align: "start",
             color: titleColor,
             font: { family: F.title, size: 26, weight: "600" },
-            padding: { bottom: 24 },
+            padding: { bottom: 4 },
+          },
+          subtitle: {
+            display: true,
+            text: chartSubtitle,
+            align: "start",
+            color: "#aba784",
+            font: { family: F.label, size: 13, weight: "400" },
+            padding: { bottom: 20 },
           },
           legend: { display: false },
           tooltip: {
@@ -741,15 +774,15 @@ function makeProjData(arr) {
 
   const elaData  = aggregateByLabel(allData.filter(d => ELA_SECTIONS.has(d.section)));
   const mathData = aggregateByLabel(allData.filter(d => MATH_SECTIONS.has(d.section)));
-  renderTrapChart("dashTrapChartEla",  "dashTrapElaWrap",  elaData,  P.ela,  "Top ELA traps that caught you");
-  renderTrapChart("dashTrapChartMath", "dashTrapMathWrap", mathData, P.math, "Top math traps that caught you");
+  renderTrapChart("dashTrapChartEla",  "dashTrapElaWrap",  elaData,  P.ela,  "Top ELA traps that caught you", "Pay attention to the main traps you catch in each test.");
+  renderTrapChart("dashTrapChartMath", "dashTrapMathWrap", mathData, P.math, "Top math traps that caught you", "Pay attention to the main traps you catch in each test.");
 })();
 
 // ---------------------------------------------------------------------------
 // Sankey diagrams — ELA + Math trap flow across tests
 // ---------------------------------------------------------------------------
 (function () {
-  function renderSankey(canvasId, dataId, colorFrom, colorTo, chartTitle) {
+  function renderSankey(canvasId, dataId, colorFrom, colorTo, chartTitle, chartSubtitle) {
     const el = document.getElementById(canvasId);
     if (!el) return;
     const dataEl = document.getElementById(dataId);
@@ -796,7 +829,15 @@ function makeProjData(arr) {
             align: "start",
             color: titleColor,
             font: { family: F.title, size: 26, weight: "600" },
-            padding: { bottom: 24 },
+            padding: { bottom: 4 },
+          },
+          subtitle: {
+            display: true,
+            text: chartSubtitle,
+            align: "start",
+            color: "#aba784",
+            font: { family: F.label, size: 13, weight: "400" },
+            padding: { bottom: 20 },
           },
           legend: { display: false },
           tooltip: {
@@ -814,8 +855,8 @@ function makeProjData(arr) {
     });
   }
 
-  renderSankey("sankeyChartEla",  "sankeyElaData",  P.ela,  P.wrong, "ELA traps you keep catching across tests");
-  renderSankey("sankeyChartMath", "sankeyMathData", P.math, P.wrong, "Math traps you keep catching across tests");
+  renderSankey("sankeyChartEla",  "sankeyElaData",  P.ela,  P.wrong, "ELA traps you keep catching across tests", "Are you improving your trap recognition over time?");
+  renderSankey("sankeyChartMath", "sankeyMathData", P.math, P.wrong, "Math traps you keep catching across tests", "Are you improving your trap recognition over time?");
 })();
 
 // ---------------------------------------------------------------------------
@@ -951,7 +992,7 @@ function makeProjData(arr) {
   const ELA_SECTIONS  = new Set(["ELA", "reading_comprehension", "writing"]);
   const MATH_SECTIONS = new Set(["Math", "quantitative_reasoning", "math_achievement"]);
 
-  function renderRadar(canvasId, wrapId, skills, fillColor, borderColor, chartTitle) {
+  function renderRadar(canvasId, wrapId, skills, fillColor, borderColor, chartTitle, chartSubtitle) {
     if (!skills.length) return;
     document.getElementById(wrapId).style.display = "";
     const ctx = document.getElementById(canvasId).getContext("2d");
@@ -995,7 +1036,15 @@ function makeProjData(arr) {
             align: "start",
             color: titleColor,
             font: { family: F.title, size: 26, weight: "600" },
-            padding: { bottom: 16 },
+            padding: { bottom: 4 },
+          },
+          subtitle: {
+            display: true,
+            text: chartSubtitle,
+            align: "start",
+            color: "#aba784",
+            font: { family: F.label, size: 13, weight: "400" },
+            padding: { bottom: 12 },
           },
           legend: { display: false },
           tooltip: {
@@ -1025,8 +1074,8 @@ function makeProjData(arr) {
 
   const elaSkills  = allSkills.filter(s => ELA_SECTIONS.has(s.section));
   const mathSkills = allSkills.filter(s => MATH_SECTIONS.has(s.section));
-  renderRadar("skillRadarEla",  "skillRadarElaWrap",  elaSkills,  "rgba(122,135,117,0.15)", P.ela, "Your ELA strengths");
-  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(171,85,63,0.15)",  P.math, "Your math strengths");
+  renderRadar("skillRadarEla",  "skillRadarElaWrap",  elaSkills,  "rgba(122,135,117,0.15)", P.ela, "Your ELA strengths", "These are your strong ELA areas.");
+  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(171,85,63,0.15)",  P.math, "Your math strengths", "These are your strong math areas.");
 })();
 </script>
 {% endblock %}
