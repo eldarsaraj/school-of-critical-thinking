@@ -5,17 +5,6 @@
 
 {% block shsat_content %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<style>
-:root {
-  --h-correct: #5aab8c;
-  --h-correct-bg: rgba(90,171,140,.12);
-  --h-error: #c4635b;
-  --h-error-bg: rgba(196,99,91,.10);
-  --h-amber: #c49a5a;
-  --h-amber-bg: rgba(196,154,90,.12);
-  --h-neutral: #8896a8;
-}
-</style>
 
 <a href="{% url 'tutor_dashboard_hunter' %}" style="font-size:13px;color:rgba(0,0,0,.45);text-decoration:none;display:inline-block;margin-bottom:12px;">&larr; Back to all students</a>
 
@@ -29,39 +18,39 @@
 {% else %}
 
 <!-- Stat cards -->
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:36px;">
-  <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Latest score</div>
+<div class="shsat-stat-grid">
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__label">Latest score</div>
     {% if latest_composite_pct is not None %}
-    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:#111;line-height:1;">{{ latest_composite_pct }}<span style="font-size:16px;font-weight:400;">%</span></div>
+    <div class="shsat-stat-card__value">{{ latest_composite_pct }}<span style="font-size:16px;font-weight:400;">%</span></div>
     {% if latest_composite_band %}
     <div style="display:inline-block;margin-top:6px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:{{ latest_composite_color }}22;color:{{ latest_composite_color }};">{{ latest_composite_band }}</div>
     {% endif %}
     {% else %}
-    <div style="font-size:28px;font-weight:700;color:#ccc;">—</div>
+    <div class="shsat-stat-card__value" style="color:#ccc;">—</div>
     {% endif %}
   </div>
 
-  <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Tests completed</div>
-    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:#111;line-height:1;">{{ tests_completed }}</div>
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__label">Tests completed</div>
+    <div class="shsat-stat-card__value">{{ tests_completed }}</div>
   </div>
 
-  <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Avg time / question</div>
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__label">Avg time / question</div>
     {% if avg_time_per_q %}
-    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:#111;line-height:1;">{{ avg_time_per_q }}<span style="font-size:14px;font-weight:400;color:rgba(0,0,0,0.45);">m</span></div>
+    <div class="shsat-stat-card__value">{{ avg_time_per_q }}<span style="font-size:14px;font-weight:400;color:rgba(0,0,0,0.45);">m</span></div>
     {% else %}
-    <div style="font-size:28px;font-weight:700;color:#ccc;">—</div>
+    <div class="shsat-stat-card__value" style="color:#ccc;">—</div>
     {% endif %}
   </div>
 
-  <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Essay feedback</div>
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__label">Essay feedback</div>
     {% if essay_eval %}
-    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:var(--h-correct);line-height:1;">Ready</div>
+    <div class="shsat-stat-card__value" style="color:#7a8775;">Ready</div>
     {% else %}
-    <div style="font-size:28px;font-weight:700;color:#ccc;line-height:1;">—</div>
+    <div class="shsat-stat-card__value" style="color:#ccc;">—</div>
     <div style="font-size:11px;color:rgba(0,0,0,0.38);margin-top:4px;">Pending NLP review</div>
     {% endif %}
   </div>
@@ -69,16 +58,14 @@
 
 <!-- Score history chart -->
 {% if score_history|length > 0 %}
-<p class="shsat-section-title">Score history</p>
-<div style="border:1px solid rgba(0,0,0,0.08);border-radius:6px;padding:20px;margin-bottom:36px;">
-  <div style="position:relative;height:220px;">
-    <canvas id="scoreHistoryChart"></canvas>
-  </div>
+{{ score_history|json_script:"scoreChartData" }}
+<div class="shsat-chart-wrap">
+  <canvas id="scoreHistoryChart"></canvas>
 </div>
 {% endif %}
 
 <!-- Test scores table -->
-<p class="shsat-section-title">Test scores</p>
+<p class="shsat-section-title" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Test scores</p>
 <div style="margin-bottom:36px;">
   <table class="shsat-table">
     <thead>
@@ -92,13 +79,13 @@
         <td><strong>{% if row.math_pct is not None %}{{ row.math_pct }}%{% else %}—{% endif %}</strong></td>
         <td>
           {% if row.comp_pct is not None %}
-          <strong style="color:#111;">{{ row.comp_pct }}%</strong>
+          <strong style="color:#240f05;">{{ row.comp_pct }}%</strong>
           {% if row.comp_band %}
           <span style="margin-left:6px;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;background:{{ row.comp_color }}22;color:{{ row.comp_color }};">{{ row.comp_band }}</span>
           {% endif %}
           {% else %}—{% endif %}
         </td>
-        <td style="font-size:12px;color:rgba(0,0,0,0.4);">{{ row.attempt.submitted_at|date:"M j, Y" }}</td>
+        <td style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;color:rgba(0,0,0,0.4);">{{ row.attempt.submitted_at|date:"M j, Y" }}</td>
         <td><a href="{% url 'tutor_error_analysis' parent.id row.attempt.id %}" style="font-size:12px;color:rgba(0,0,0,0.55);">Error analysis &rarr;</a></td>
       </tr>
       {% endfor %}
@@ -108,32 +95,32 @@
 
 <!-- Skill accuracy -->
 {% if skill_accuracy_data %}
-<p class="shsat-section-title">Skill accuracy</p>
+<p class="shsat-section-title" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Skill accuracy</p>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px;">
   <div>
-    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:12px;">Reading &amp; Writing</div>
+    <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#aba784;margin-bottom:12px;">Reading &amp; Writing</div>
     {% for s in skill_accuracy_data %}
     {% if s.section == "reading_comprehension" or s.section == "writing" %}
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-      <span style="flex:0 0 130px;font-size:12px;color:rgba(0,0,0,0.65);">{{ s.label }}</span>
+      <span style="flex:0 0 130px;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;color:rgba(0,0,0,0.65);">{{ s.label }}</span>
       <div style="flex:1;height:6px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;">
-        <div style="height:100%;width:{{ s.accuracy }}%;background:{% if s.accuracy >= 75 %}var(--h-correct){% elif s.accuracy >= 50 %}var(--h-amber){% else %}var(--h-error){% endif %};border-radius:3px;"></div>
+        <div style="height:100%;width:{{ s.accuracy }}%;background:{% if s.accuracy >= 75 %}#7a8775{% elif s.accuracy >= 50 %}#c58350{% else %}#ab553f{% endif %};border-radius:3px;"></div>
       </div>
-      <span style="flex:0 0 38px;font-size:12px;font-weight:600;text-align:right;">{{ s.accuracy }}%</span>
+      <span style="flex:0 0 38px;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;font-weight:600;text-align:right;">{{ s.accuracy }}%</span>
     </div>
     {% endif %}
     {% endfor %}
   </div>
   <div>
-    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:12px;">Math</div>
+    <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#aba784;margin-bottom:12px;">Math</div>
     {% for s in skill_accuracy_data %}
     {% if s.section == "quantitative_reasoning" or s.section == "math_achievement" %}
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-      <span style="flex:0 0 130px;font-size:12px;color:rgba(0,0,0,0.65);">{{ s.label }}</span>
+      <span style="flex:0 0 130px;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;color:rgba(0,0,0,0.65);">{{ s.label }}</span>
       <div style="flex:1;height:6px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;">
-        <div style="height:100%;width:{{ s.accuracy }}%;background:{% if s.accuracy >= 75 %}var(--h-correct){% elif s.accuracy >= 50 %}var(--h-amber){% else %}var(--h-error){% endif %};border-radius:3px;"></div>
+        <div style="height:100%;width:{{ s.accuracy }}%;background:{% if s.accuracy >= 75 %}#7a8775{% elif s.accuracy >= 50 %}#c58350{% else %}#ab553f{% endif %};border-radius:3px;"></div>
       </div>
-      <span style="flex:0 0 38px;font-size:12px;font-weight:600;text-align:right;">{{ s.accuracy }}%</span>
+      <span style="flex:0 0 38px;font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;font-weight:600;text-align:right;">{{ s.accuracy }}%</span>
     </div>
     {% endif %}
     {% endfor %}
@@ -143,15 +130,15 @@
 
 <!-- Focus areas -->
 {% if focus_areas %}
-<p class="shsat-section-title">Focus areas</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:36px;">
+<p class="shsat-section-title" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Focus areas</p>
+<div class="shsat-focus-grid">
   {% for s in focus_areas %}
-  <div style="border:1px solid rgba(196,99,91,.25);border-radius:6px;padding:16px 18px;background:var(--h-error-bg);">
-    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--h-error);margin-bottom:6px;">
+  <div class="shsat-focus-card">
+    <div class="shsat-focus-card__skill">
       {% if s.section == "reading_comprehension" or s.section == "writing" %}Reading{% else %}Math{% endif %}
     </div>
-    <div style="font-size:16px;font-weight:700;color:#111;margin-bottom:6px;">{{ s.label }}</div>
-    <div style="font-size:13px;color:rgba(0,0,0,0.55);">{{ s.correct }}/{{ s.total }} correct &mdash; {{ s.accuracy }}%</div>
+    <div style="font-size:16px;font-weight:700;color:#240f05;margin-bottom:6px;">{{ s.label }}</div>
+    <div class="shsat-focus-card__detail">{{ s.correct }}/{{ s.total }} correct &mdash; {{ s.accuracy }}%</div>
   </div>
   {% endfor %}
 </div>
@@ -159,32 +146,32 @@
 
 <!-- Essay snapshot -->
 {% if essay_eval %}
-<p class="shsat-section-title">Essay snapshot</p>
+<p class="shsat-section-title" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Essay snapshot</p>
 <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:24px;margin-bottom:36px;">
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:20px;">
     {% with wc=essay_eval.word_count %}
     <div>
-      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Essay length</div>
-      <div style="font-size:20px;font-weight:700;color:#111;">{{ wc }} <span style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);">words</span></div>
-      <div style="font-size:11px;color:rgba(0,0,0,0.4);">Target: 350–500</div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Essay length</div>
+      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:#240f05;">{{ wc }} <span style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);">words</span></div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;color:#aba784;">Target: 350–500</div>
     </div>
     {% endwith %}
     {% with op=essay_eval.on_prompt_relevance %}
     <div>
-      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Stays on prompt</div>
-      <div style="font-size:20px;font-weight:700;color:{% if op >= 0.75 %}var(--h-correct){% elif op >= 0.5 %}var(--h-amber){% else %}var(--h-error){% endif %};">{% widthratio op 1 100 %}%</div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Stays on prompt</div>
+      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:{% if op >= 0.75 %}#7a8775{% elif op >= 0.5 %}#c58350{% else %}#ab553f{% endif %};">{% widthratio op 1 100 %}%</div>
     </div>
     {% endwith %}
     {% with ser=essay_eval.spelling_error_rate %}
     <div>
-      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Spelling</div>
-      <div style="font-size:20px;font-weight:700;color:{% if ser <= 1 %}var(--h-correct){% elif ser <= 3 %}var(--h-amber){% else %}var(--h-error){% endif %};">{{ ser }} <span style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);">/ 100 words</span></div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Spelling</div>
+      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:{% if ser <= 1 %}#7a8775{% elif ser <= 3 %}#c58350{% else %}#ab553f{% endif %};">{{ ser }} <span style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);">/ 100 words</span></div>
     </div>
     {% endwith %}
     {% with sov=essay_eval.sentence_opener_variety %}
     <div>
-      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Sentence variety</div>
-      <div style="font-size:20px;font-weight:700;color:{% if sov >= 0.6 %}var(--h-correct){% elif sov >= 0.4 %}var(--h-amber){% else %}var(--h-error){% endif %};">{% widthratio sov 1 100 %}%</div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Sentence variety</div>
+      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:{% if sov >= 0.6 %}#7a8775{% elif sov >= 0.4 %}#c58350{% else %}#ab553f{% endif %};">{% widthratio sov 1 100 %}%</div>
     </div>
     {% endwith %}
   </div>
@@ -197,7 +184,31 @@
 {% if score_history %}
 <script>
 (function () {
-  const history = {{ score_history_json|safe }};
+  const P = {
+    rc: "#7a8775", math: "#ab553f", composite: "#240f05",
+    neutral: "#aba784", grid: "#eee2d3", amber: "#c58350",
+  };
+  const F = {
+    title: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+    label: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif",
+  };
+
+  const emptyStatePlugin = {
+    id: "emptyState",
+    afterDraw(chart) {
+      const isEmpty = chart.data.datasets.every(ds => !ds.data || ds.data.length === 0);
+      if (!isEmpty) return;
+      const { ctx, width, height } = chart;
+      ctx.save(); ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.font = "400 14px " + F.label;
+      ctx.fillStyle = "#aba784";
+      ctx.fillText(chart.options._emptyMessage || "No data yet", width / 2, height / 2);
+      ctx.restore();
+    }
+  };
+  Chart.register(emptyStatePlugin);
+
+  const history = JSON.parse(document.getElementById("scoreChartData").textContent);
   if (!history.length) return;
 
   const labels = history.map(e => e.seq);
@@ -216,33 +227,33 @@
         {
           label: "Overall",
           data: totals,
-          borderColor: "#1a1a1a",
-          backgroundColor: "rgba(26,26,26,.08)",
+          borderColor: P.composite,
+          backgroundColor: "rgba(36,15,5,.08)",
           borderWidth: 2.5,
           pointRadius: 5,
-          pointBackgroundColor: "#1a1a1a",
+          pointBackgroundColor: P.composite,
           tension: 0.25,
           fill: true,
         },
         {
           label: "RC",
           data: rc,
-          borderColor: "#5aab8c",
+          borderColor: P.rc,
           backgroundColor: "transparent",
-          borderWidth: 1.5,
+          borderWidth: 2,
           pointRadius: 4,
-          pointBackgroundColor: "#5aab8c",
+          pointBackgroundColor: P.rc,
           tension: 0.25,
           borderDash: [4, 3],
         },
         {
           label: "QR + MA",
           data: math,
-          borderColor: "#8896a8",
+          borderColor: P.math,
           backgroundColor: "transparent",
-          borderWidth: 1.5,
+          borderWidth: 2,
           pointRadius: 4,
-          pointBackgroundColor: "#8896a8",
+          pointBackgroundColor: P.math,
           tension: 0.25,
           borderDash: [4, 3],
         },
@@ -250,15 +261,28 @@
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      aspectRatio: chartAR(2.5, 1.2),
+      layout: { padding: { top: 36 } },
       interaction: { mode: "index", intersect: false },
       plugins: {
-        legend: {
-          position: "top",
-          align: "end",
-          labels: { boxWidth: 12, font: { size: 11 }, padding: 16 },
+        title: {
+          display: true, text: "Score history", align: "start",
+          color: P.composite,
+          font: { family: F.title, size: 26, weight: "600" },
+          padding: { bottom: 4 },
         },
+        subtitle: {
+          display: true,
+          text: "Score across repeated tests.",
+          align: "start",
+          color: P.neutral,
+          font: { family: F.label, size: 13, weight: "400" },
+          padding: { bottom: 20 },
+        },
+        legend: { display: false },
         tooltip: {
+          titleFont: { family: F.label, size: 13 },
+          bodyFont: { family: F.label, size: 13 },
           callbacks: {
             title: (items) => {
               const idx = items[0].dataIndex;
@@ -269,12 +293,17 @@
         },
       },
       scales: {
-        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        x: {
+          grid: { display: false }, border: { display: false },
+          ticks: { font: { family: F.label, size: 13 }, color: P.composite },
+        },
         y: {
           min: 0,
           max: 100,
-          ticks: { font: { size: 11 }, callback: (v) => v + "%" },
-          grid: { color: "rgba(0,0,0,0.05)" },
+          ticks: { font: { family: F.label, size: 13, weight: "300" }, color: P.composite,
+                   stepSize: 20, callback: (v) => v + "%" },
+          grid: { color: "rgba(238,226,211,0.5)", drawBorder: false, borderDash: [1, 3] },
+          border: { display: false },
         },
       },
     },

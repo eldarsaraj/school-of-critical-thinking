@@ -82,7 +82,6 @@
           </div>
         </div>
 
-        <p class="shsat-section-title">Class progress</p>
         <div id="mockTutorPills" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;"></div>
         <div class="shsat-chart-wrap">
           <canvas id="mockTutorChart"></canvas>
@@ -118,7 +117,6 @@
           </div>
         </div>
 
-        <p class="shsat-section-title">Sofia M.'s score history</p>
         <div class="shsat-chart-wrap">
           <canvas id="mockSofiaChart"></canvas>
         </div>
@@ -243,7 +241,16 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 (function () {
-  var colours = ["#5b8ec4", "#c4635b", "#5aab8c", "#c49a5a"];
+  var P = {
+    rc: "#7a8775", math: "#ab553f", amber: "#c58350",
+    neutral: "#aba784", composite: "#240f05", accent: "#dda78c",
+    grid: "#eee2d3",
+  };
+  var F = {
+    title: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+    label: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif",
+  };
+  var colours = [P.rc, P.math, P.amber, P.neutral];
   var labels = ["Baseline", "Benchmark 1", "Benchmark 2", "Benchmark 3", "Benchmark 4"];
 
   var students = [
@@ -273,18 +280,42 @@
     options: {
       responsive: true,
       aspectRatio: chartAR(2.5, 1.2),
+      layout: { padding: { top: 36 } },
       plugins: {
+        title: {
+          display: true, text: "Class progress", align: "start",
+          color: P.composite,
+          font: { family: F.title, size: 26, weight: "600" },
+          padding: { bottom: 4 },
+        },
+        subtitle: {
+          display: true,
+          text: "Score trends for each student across tests.",
+          align: "start",
+          color: P.neutral,
+          font: { family: F.label, size: 13, weight: "400" },
+          padding: { bottom: 20 },
+        },
         legend: { display: false },
         tooltip: {
+          titleFont: { family: F.label, size: 13 },
+          bodyFont: { family: F.label, size: 13 },
           callbacks: {
             label: function (item) { return " " + item.dataset.label + ": " + item.raw; }
           }
         }
       },
       scales: {
-        y: { min: 300, max: 600, grid: { color: "rgba(0,0,0,0.06)" },
-             ticks: { font: { size: 12 }, stepSize: 50 } },
-        x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+        y: {
+          min: 300, max: 600,
+          grid: { color: "rgba(238,226,211,0.5)", drawBorder: false, borderDash: [1, 3] },
+          border: { display: false },
+          ticks: { font: { family: F.label, size: 13 }, color: P.composite, stepSize: 50 }
+        },
+        x: {
+          grid: { display: false }, border: { display: false },
+          ticks: { font: { family: F.label, size: 13 }, color: P.composite }
+        }
       }
     }
   });
@@ -297,8 +328,9 @@
     var pill = document.createElement("button");
     pill.textContent = s.name;
     pill.style.cssText =
-      "padding:5px 14px;font-size:12px;font-weight:600;border:none;cursor:pointer;" +
-      "background:" + colours[i] + ";color:#fff;font-family:inherit;";
+      "padding:5px 14px;font-size:12px;font-weight:600;border:none;cursor:pointer;border-radius:3px;" +
+      "font-family:" + F.label + ";" +
+      "background:" + colours[i] + ";color:#fff;";
     pill.addEventListener("click", function () {
       if (visible[i]) {
         delete visible[i];
@@ -327,55 +359,75 @@
         {
           label: "Composite",
           data: sofiaScores,
-          borderColor: "#c49a5a",
+          borderColor: P.composite,
           backgroundColor: "transparent",
-          pointBackgroundColor: "#c49a5a",
+          pointBackgroundColor: P.composite,
           borderWidth: 2.5,
+          borderDash: [6, 3],
           tension: 0.2,
           pointRadius: 5,
         },
         {
           label: "ELA",
           data: sofiaEla,
-          borderColor: "rgba(90,171,140,0.6)",
+          borderColor: P.rc,
           backgroundColor: "transparent",
-          pointBackgroundColor: "rgba(90,171,140,0.6)",
-          borderWidth: 1.5,
-          borderDash: [5, 3],
+          pointBackgroundColor: P.rc,
+          borderWidth: 2,
           tension: 0.2,
-          pointRadius: 3,
+          pointRadius: 4,
         },
         {
           label: "Math",
           data: sofiaMath,
-          borderColor: "rgba(91,142,196,0.6)",
+          borderColor: P.math,
           backgroundColor: "transparent",
-          pointBackgroundColor: "rgba(91,142,196,0.6)",
-          borderWidth: 1.5,
-          borderDash: [5, 3],
+          pointBackgroundColor: P.math,
+          borderWidth: 2,
           tension: 0.2,
-          pointRadius: 3,
+          pointRadius: 4,
         }
       ]
     },
     options: {
       responsive: true,
       aspectRatio: chartAR(2.5, 1.2),
+      layout: { padding: { top: 36 } },
       plugins: {
-        legend: {
-          display: true,
-          labels: { boxWidth: 12, font: { size: 12 } }
+        title: {
+          display: true, text: "Score history", align: "start",
+          color: P.composite,
+          font: { family: F.title, size: 26, weight: "600" },
+          padding: { bottom: 4 },
         },
+        subtitle: {
+          display: true,
+          text: "Score across repeated tests.",
+          align: "start",
+          color: P.neutral,
+          font: { family: F.label, size: 13, weight: "400" },
+          padding: { bottom: 20 },
+        },
+        legend: { display: false },
         tooltip: {
+          titleFont: { family: F.label, size: 13 },
+          bodyFont: { family: F.label, size: 13 },
           callbacks: {
             label: function (item) { return " " + item.dataset.label + ": " + item.raw; }
           }
         }
       },
       scales: {
-        y: { min: 200, max: 550, grid: { color: "rgba(0,0,0,0.06)" },
-             ticks: { font: { size: 12 }, stepSize: 50 } },
-        x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+        y: {
+          min: 200, max: 550,
+          grid: { color: "rgba(238,226,211,0.5)", drawBorder: false, borderDash: [1, 3] },
+          border: { display: false },
+          ticks: { font: { family: F.label, size: 13 }, color: P.composite, stepSize: 50 }
+        },
+        x: {
+          grid: { display: false }, border: { display: false },
+          ticks: { font: { family: F.label, size: 13 }, color: P.composite }
+        }
       }
     }
   });

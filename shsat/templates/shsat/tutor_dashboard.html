@@ -33,14 +33,13 @@
   <p style="font-size:13px;color:rgba(0,0,0,.45);margin:0 0 10px;">Send your students this link and code. They sign up, enter the code, and appear on your dashboard.</p>
   <p style="font-size:13px;margin:0;">
     <span style="color:rgba(0,0,0,.45);">Student signup link:</span>
-    <a href="/shsat/signup/" style="font-family:monospace;color:#5b8ec4;text-decoration:none;border-bottom:1px solid rgba(91,142,196,.3);">{{ request.scheme }}://{{ request.get_host }}/shsat/signup/</a>
+    <a href="/shsat/signup/" style="font-family:monospace;color:#7a8775;text-decoration:none;border-bottom:1px solid rgba(122,135,117,.3);">{{ request.scheme }}://{{ request.get_host }}/shsat/signup/</a>
   </p>
 </div>
 
 {# Class progress chart #}
 {{ student_histories_json|json_script:"studentHistories" }}
 <div id="classChartSection" style="margin-top:32px;display:none;">
-  <p class="shsat-section-title">Class progress</p>
   <div id="classChartPills" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;"></div>
   <div class="shsat-chart-wrap">
     <canvas id="classProgressChart"></canvas>
@@ -50,7 +49,7 @@
 {# Student roster #}
 {% if students %}
 <div style="margin-top:32px;">
-  <p class="shsat-section-title">Students</p>
+  <p class="shsat-section-title" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Students</p>
   <table class="shsat-table">
     <thead>
       <tr>
@@ -78,7 +77,7 @@
         {% if is_hunter %}
         <td>
           {% if s.latest_pct is not None %}
-          <strong{% if s.latest_pct >= 85 %} style="color:#2c6e8a"{% elif s.latest_pct >= 70 %} style="color:#5aab8c"{% elif s.latest_pct >= 50 %} style="color:#c49a5a"{% endif %}>{{ s.latest_pct }}%</strong>
+          <strong{% if s.latest_pct >= 85 %} style="color:#7a8775"{% elif s.latest_pct >= 70 %} style="color:#aba784"{% elif s.latest_pct >= 50 %} style="color:#c58350"{% endif %}>{{ s.latest_pct }}%</strong>
           {% else %}—{% endif %}
         </td>
         <td>{% if s.latest_rc_pct is not None %}{{ s.latest_rc_pct }}%{% else %}—{% endif %}</td>
@@ -86,7 +85,7 @@
         {% else %}
         <td>
           {% if s.latest_composite %}
-          <strong{% if s.latest_composite >= 500 %} style="color:#2c6e8a"{% elif s.latest_composite >= 450 %} style="color:#c49a5a"{% endif %}>{{ s.latest_composite }}</strong>
+          <strong{% if s.latest_composite >= 500 %} style="color:#7a8775"{% elif s.latest_composite >= 450 %} style="color:#c58350"{% endif %}>{{ s.latest_composite }}</strong>
           {% else %}—{% endif %}
         </td>
         <td>{{ s.latest_ela|default:"—" }}</td>
@@ -109,7 +108,8 @@
 {# Class-wide skill weakness heatmap #}
 {% if skill_accuracy_data %}
 <div style="margin-top:40px;">
-  <p class="shsat-section-title">Class skill accuracy</p>
+  <p class="shsat-section-title" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">Class skill accuracy</p>
+  <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:13px;color:#aba784;margin:-8px 0 16px;">Accuracy across all students, by skill.</p>
   <div class="shsat-skill-heat">
     {% for s in skill_accuracy_data %}
     <div class="shsat-skill-tile shsat-skill-tile--{% if s.section == 'ELA' or s.section == 'reading_comprehension' or s.section == 'writing' %}ela{% else %}math{% endif %}"
@@ -131,10 +131,33 @@
 
   document.getElementById("classChartSection").style.display = "";
 
-  var colours = [
-    "#5b8ec4", "#c4635b", "#5aab8c", "#c49a5a",
-    "#8896a8", "#7c6bc4", "#c45b96", "#4aaa7a",
-  ];
+  // Design palette
+  var P = {
+    rc: "#7a8775", math: "#ab553f", amber: "#c58350",
+    neutral: "#aba784", composite: "#240f05", accent: "#dda78c",
+    grid: "#eee2d3", bg: "#fffef8",
+  };
+  var F = {
+    title: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+    label: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif",
+  };
+  var colours = [P.rc, P.math, P.amber, P.neutral, P.composite, P.accent];
+
+  // Empty state plugin
+  var emptyStatePlugin = {
+    id: "emptyState",
+    afterDraw: function (chart) {
+      var isEmpty = chart.data.datasets.every(function (ds) { return !ds.data || ds.data.length === 0; });
+      if (!isEmpty) return;
+      var ctx = chart.ctx, w = chart.width, h = chart.height;
+      ctx.save(); ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.font = "400 14px " + F.label;
+      ctx.fillStyle = "#aba784";
+      ctx.fillText(chart.options._emptyMessage || "No data yet", w / 2, h / 2);
+      ctx.restore();
+    }
+  };
+  Chart.register(emptyStatePlugin);
 
   var labelSet = [];
   histories.forEach(function (h) {
@@ -168,9 +191,26 @@
     options: {
       responsive: true,
       aspectRatio: chartAR(2.5, 1.2),
+      layout: { padding: { top: 36 } },
       plugins: {
+        title: {
+          display: true, text: "Class progress", align: "start",
+          color: "#240f05",
+          font: { family: F.title, size: 26, weight: "600" },
+          padding: { bottom: 4 },
+        },
+        subtitle: {
+          display: true,
+          text: "Score trends for each student across tests.",
+          align: "start",
+          color: "#aba784",
+          font: { family: F.label, size: 13, weight: "400" },
+          padding: { bottom: 20 },
+        },
         legend: { display: false },
         tooltip: {
+          titleFont: { family: F.label, size: 13 },
+          bodyFont: { family: F.label, size: 13 },
           callbacks: {
             title: function (items) { return items[0].label; },
             label: function (item) { return " " + item.dataset.label + ": " + item.raw + (isHunter ? "%" : ""); },
@@ -178,9 +218,16 @@
         }
       },
       scales: {
-        y: { grid: { color: "rgba(0,0,0,0.06)" },
-             ticks: { font: { size: 12 }, callback: function (v) { return isHunter ? v + "%" : v; } } },
-        x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+        y: {
+          grid: { color: "rgba(238,226,211,0.5)", drawBorder: false, borderDash: [1, 3] },
+          border: { display: false },
+          ticks: { font: { family: F.label, size: 13 }, color: "#240f05",
+                   callback: function (v) { return isHunter ? v + "%" : v; } }
+        },
+        x: {
+          grid: { display: false }, border: { display: false },
+          ticks: { font: { family: F.label, size: 13 }, color: "#240f05" }
+        }
       }
     }
   });
@@ -193,8 +240,9 @@
     var pill = document.createElement("button");
     pill.textContent = h.name;
     pill.style.cssText =
-      "padding:5px 14px;font-size:12px;font-weight:600;border:none;cursor:pointer;" +
-      "background:" + colours[i % colours.length] + ";color:#fff;font-family:inherit;";
+      "padding:5px 14px;font-size:12px;font-weight:600;border:none;cursor:pointer;border-radius:3px;" +
+      "font-family:" + F.label + ";" +
+      "background:" + colours[i % colours.length] + ";color:#fff;";
     pill.addEventListener("click", function () {
       if (visible[i]) {
         delete visible[i];
