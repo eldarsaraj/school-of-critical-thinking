@@ -71,10 +71,10 @@
 </div>
 {% endif %}
 
-{% if not hunter_has_paid_raw and days_since_baseline and days_since_baseline >= 3 %}
+{% if not hunter_has_paid_raw and days_since_baseline is not None %}
 <div style="background:rgba(197,131,80,0.08);border:1px solid rgba(197,131,80,0.2);border-radius:6px;padding:14px 20px;margin-bottom:24px;max-width:560px;">
   <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:14px;color:#240f05;margin:0 0 4px;line-height:1.5;">
-    Your baseline is <strong>{{ days_since_baseline }} day{{ days_since_baseline|pluralize }}</strong> old.{% if days_since_baseline >= 14 %} Scores shift over time. The longer you wait, the less useful a single data point becomes.{% else %} One score is a snapshot, not a trend.{% endif %}
+    {% if days_since_baseline >= 14 %}Your baseline is <strong>{{ days_since_baseline }} days</strong> old. Scores shift over time. The longer you wait, the less useful a single data point becomes.{% elif days_since_baseline >= 3 %}Your baseline is <strong>{{ days_since_baseline }} day{{ days_since_baseline|pluralize }}</strong> old. One score is a snapshot, not a trend.{% else %}You have one data point. One score tells you where your child stands, but not whether they are improving.{% endif %}
   </p>
   <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:13px;color:#aba784;margin:0;">
     A second test tells you whether your child is improving. <a href="{% url 'hunter_upgrade' %}" style="color:#240f05;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(36,15,5,0.3);">Unlock Benchmark Tests →</a>

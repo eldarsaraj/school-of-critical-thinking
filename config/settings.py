@@ -200,6 +200,7 @@ DEFAULT_FROM_EMAIL = os.environ.get(
     "The School of Critical Thinking <hello@schoolofcriticalthinking.com>",
 )
 CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "eldar@schoolofcriticalthinking.org")
+SITE_URL = os.environ.get("SITE_URL", "https://schoolofcriticalthinking.org")
 
 LOGGING = {
     "version": 1,

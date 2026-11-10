@@ -329,3 +329,23 @@ class TutorStudent(models.Model):
 
     def __str__(self):
         return f"{self.tutor} → {self.parent}"
+
+
+class SentEmail(models.Model):
+    EMAIL_TYPES = [
+        ("drip_day3", "Drip: Day 3 (trap explanation)"),
+        ("drip_day7", "Drip: Day 7 (urgency)"),
+        ("abandoned_test", "Abandoned test follow-up"),
+    ]
+    parent = models.ForeignKey(Parent, on_delete=models.CASCADE, related_name="sent_emails")
+    email_type = models.CharField(max_length=30, choices=EMAIL_TYPES)
+    attempt = models.ForeignKey(TestAttempt, null=True, blank=True, on_delete=models.SET_NULL)
+    sent_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["parent", "email_type"]),
+        ]
+
+    def __str__(self):
+        return f"{self.parent.user.email} — {self.email_type} ({self.sent_at:%Y-%m-%d})"
