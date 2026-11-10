@@ -71,14 +71,19 @@
 </div>
 {% endif %}
 
-{% if not hunter_has_paid_raw and days_since_baseline is not None %}
-<div style="background:rgba(197,131,80,0.08);border:1px solid rgba(197,131,80,0.2);border-radius:6px;padding:14px 20px;margin-bottom:24px;max-width:560px;">
-  <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:14px;color:#240f05;margin:0 0 4px;line-height:1.5;">
-    {% if days_since_baseline >= 14 %}Your baseline is <strong>{{ days_since_baseline }} days</strong> old. Scores shift over time. The longer you wait, the less useful a single data point becomes.{% elif days_since_baseline >= 3 %}Your baseline is <strong>{{ days_since_baseline }} day{{ days_since_baseline|pluralize }}</strong> old. One score is a snapshot, not a trend.{% else %}You have one data point. One score tells you where your child stands, but not whether they are improving.{% endif %}
+{% if not hunter_has_paid_raw and days_since_baseline is not None and days_since_baseline < 14 %}
+<div style="background:#240f05;border-radius:6px;padding:12px 20px;margin-bottom:24px;max-width:560px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:14px;color:#fffef8;margin:0;line-height:1.4;">
+    <strong style="color:#dda78c;">{{ days_remaining }} day{{ days_remaining|pluralize }}</strong> left at early access pricing
   </p>
-  <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:13px;color:#aba784;margin:0;">
-    A second test tells you whether your child is improving. <a href="{% url 'hunter_upgrade' %}" style="color:#240f05;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(36,15,5,0.3);">Unlock Benchmark Tests →</a>
+  <a href="{% url 'hunter_upgrade' %}" style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:13px;color:#fffef8;font-weight:600;text-decoration:none;white-space:nowrap;border-bottom:1px solid rgba(255,254,248,0.4);">Unlock Benchmarks →</a>
+</div>
+{% elif not hunter_has_paid_raw and days_since_baseline is not None and days_since_baseline >= 14 %}
+<div style="background:#240f05;border-radius:6px;padding:12px 20px;margin-bottom:24px;max-width:560px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:14px;color:#fffef8;margin:0;line-height:1.4;">
+    Your baseline is <strong style="color:#dda78c;">{{ days_since_baseline }} days</strong> old and losing accuracy
   </p>
+  <a href="{% url 'hunter_upgrade' %}" style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:13px;color:#fffef8;font-weight:600;text-decoration:none;white-space:nowrap;border-bottom:1px solid rgba(255,254,248,0.4);">Unlock Benchmarks →</a>
 </div>
 {% endif %}
 

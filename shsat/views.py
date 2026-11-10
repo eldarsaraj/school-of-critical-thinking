@@ -688,6 +688,7 @@ def dashboard(request):
         (_tz.now() - baseline_attempt.submitted_at).days
         if baseline_attempt else None
     )
+    days_remaining = max(0, 14 - days_since_baseline) if days_since_baseline is not None else None
 
     context = {
         "parent": parent,
@@ -714,6 +715,7 @@ def dashboard(request):
         "top_trap_label": top_trap_label,
         "top_trap_count": top_trap_count,
         "days_since_baseline": days_since_baseline,
+        "days_remaining": days_remaining,
     }
     return render(request, "shsat/dashboard.html", context)
 

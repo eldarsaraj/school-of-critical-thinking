@@ -559,6 +559,7 @@ def hunter_dashboard(request):
         (_tz.now() - _baseline_attempt.submitted_at).days
         if _baseline_attempt else None
     )
+    days_remaining = max(0, 14 - days_since_baseline) if days_since_baseline is not None else None
 
     context = {
         "parent": parent,
@@ -587,6 +588,7 @@ def hunter_dashboard(request):
         "hunter_has_paid": parent.hunter_has_paid or _student_has_tutor_access(parent) or request.user.is_staff,
         "hunter_has_paid_raw": parent.hunter_has_paid,
         "days_since_baseline": days_since_baseline,
+        "days_remaining": days_remaining,
     }
     return render(request, "shsat/hunter_dashboard.html", context)
 
