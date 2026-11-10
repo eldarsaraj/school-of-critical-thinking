@@ -551,7 +551,8 @@ def hunter_dashboard(request):
     from django.utils import timezone as _tz
     _baseline_attempt = (
         TestAttempt.objects.filter(
-            parent=parent, is_completed=True, test__is_free=True, test__exam_type="hunter",
+            parent=parent, is_completed=True, test__exam_type="hunter",
+            test__title__icontains="baseline",
         ).order_by("-submitted_at").first()
     )
     days_since_baseline = (
@@ -584,6 +585,7 @@ def hunter_dashboard(request):
         "platform_std": platform_std,
         "platform_n": platform_n,
         "hunter_has_paid": parent.hunter_has_paid or _student_has_tutor_access(parent) or request.user.is_staff,
+        "hunter_has_paid_raw": parent.hunter_has_paid,
         "days_since_baseline": days_since_baseline,
     }
     return render(request, "shsat/hunter_dashboard.html", context)

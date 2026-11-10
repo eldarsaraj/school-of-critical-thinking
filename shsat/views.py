@@ -680,7 +680,8 @@ def dashboard(request):
     from django.utils import timezone as _tz
     baseline_attempt = (
         TestAttempt.objects.filter(
-            parent=parent, is_completed=True, test__is_free=True, test__exam_type="shsat",
+            parent=parent, is_completed=True, test__exam_type="shsat",
+            test__title__icontains="baseline",
         ).order_by("-submitted_at").first()
     )
     days_since_baseline = (

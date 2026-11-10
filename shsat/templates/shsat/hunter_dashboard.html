@@ -71,7 +71,7 @@
 </div>
 {% endif %}
 
-{% if not hunter_has_paid and days_since_baseline and days_since_baseline >= 3 %}
+{% if not hunter_has_paid_raw and days_since_baseline and days_since_baseline >= 3 %}
 <div style="background:rgba(197,131,80,0.08);border:1px solid rgba(197,131,80,0.2);border-radius:6px;padding:14px 20px;margin-bottom:24px;max-width:560px;">
   <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:14px;color:#240f05;margin:0 0 4px;line-height:1.5;">
     Your baseline is <strong>{{ days_since_baseline }} day{{ days_since_baseline|pluralize }}</strong> old.{% if days_since_baseline >= 14 %} Scores shift over time. The longer you wait, the less useful a single data point becomes.{% else %} One score is a snapshot, not a trend.{% endif %}
