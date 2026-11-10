@@ -71,6 +71,41 @@
 </div>
 {{ attempts_chart_data|json_script:"attemptsChartData" }}
 
+<!-- Essay snapshot (right after timing) -->
+{% if essay_eval %}
+<div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;color:#240f05;margin-top:48px;margin-bottom:16px;">Your latest essay snapshot</div>
+<div style="border:1px solid #eee2d3;border-radius:6px;padding:24px;margin-bottom:36px;">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:20px;">
+    {% with wc=essay_eval.word_count %}
+    <div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Essay length</div>
+      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:#240f05;">{{ wc }} <span style="font-size:12px;font-weight:400;color:#aba784;">words</span></div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;color:#aba784;">Target: 350–500</div>
+    </div>
+    {% endwith %}
+    {% with op=essay_eval.on_prompt_relevance %}
+    <div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Stays on prompt</div>
+      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:{% if op >= 0.75 %}#7a8775{% elif op >= 0.5 %}#c58350{% else %}#ab553f{% endif %};">{% widthratio op 1 100 %}%</div>
+    </div>
+    {% endwith %}
+    {% with ser=essay_eval.spelling_error_rate %}
+    <div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Spelling</div>
+      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:{% if ser <= 1 %}#7a8775{% elif ser <= 3 %}#c58350{% else %}#ab553f{% endif %};">{{ ser }} <span style="font-size:12px;font-weight:400;color:#aba784;">/ 100 words</span></div>
+    </div>
+    {% endwith %}
+    {% with sov=essay_eval.sentence_opener_variety %}
+    <div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Sentence variety</div>
+      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:{% if sov >= 0.6 %}#7a8775{% elif sov >= 0.4 %}#c58350{% else %}#ab553f{% endif %};">{% widthratio sov 1 100 %}%</div>
+    </div>
+    {% endwith %}
+  </div>
+  <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;color:#aba784;margin:0;">Full written feedback is in the <a href="{% url 'hunter_error_analysis_list' %}" style="color:#240f05;">Error Analysis</a>.</p>
+</div>
+{% endif %}
+
 <!-- Trap bar charts -->
 {% if dash_trap_data %}
 <div id="dashTrapRcWrap" class="shsat-chart-wrap" style="display:none;margin-top:48px;">
@@ -133,41 +168,6 @@
     <a href="{% url 'hunter_test_list' %}" class="shsat-focus-card__cta">Practice {{ skill.label }} →</a>
   </div>
   {% endfor %}
-</div>
-{% endif %}
-
-<!-- Essay snapshot -->
-{% if essay_eval %}
-<div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;color:#240f05;margin-top:48px;margin-bottom:16px;">Essay snapshot</div>
-<div style="border:1px solid #eee2d3;border-radius:6px;padding:24px;margin-bottom:36px;">
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:20px;">
-    {% with wc=essay_eval.word_count %}
-    <div>
-      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Essay length</div>
-      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:#240f05;">{{ wc }} <span style="font-size:12px;font-weight:400;color:#aba784;">words</span></div>
-      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;color:#aba784;">Target: 350–500</div>
-    </div>
-    {% endwith %}
-    {% with op=essay_eval.on_prompt_relevance %}
-    <div>
-      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Stays on prompt</div>
-      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:{% if op >= 0.75 %}#7a8775{% elif op >= 0.5 %}#c58350{% else %}#ab553f{% endif %};">{% widthratio op 1 100 %}%</div>
-    </div>
-    {% endwith %}
-    {% with ser=essay_eval.spelling_error_rate %}
-    <div>
-      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Spelling</div>
-      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:{% if ser <= 1 %}#7a8775{% elif ser <= 3 %}#c58350{% else %}#ab553f{% endif %};">{{ ser }} <span style="font-size:12px;font-weight:400;color:#aba784;">/ 100 words</span></div>
-    </div>
-    {% endwith %}
-    {% with sov=essay_eval.sentence_opener_variety %}
-    <div>
-      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Sentence variety</div>
-      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:{% if sov >= 0.6 %}#7a8775{% elif sov >= 0.4 %}#c58350{% else %}#ab553f{% endif %};">{% widthratio sov 1 100 %}%</div>
-    </div>
-    {% endwith %}
-  </div>
-  <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;color:#aba784;margin:0;">Full written feedback is in the <a href="{% url 'hunter_error_analysis_list' %}" style="color:#240f05;">Error Analysis</a>.</p>
 </div>
 {% endif %}
 
