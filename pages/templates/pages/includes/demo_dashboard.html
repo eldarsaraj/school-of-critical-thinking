@@ -9,18 +9,18 @@
 
   <div class="home-demo__header">
     <span class="home-demo__badge">Live example</span>
-    <span class="home-demo__title">Alex's Dashboard</span>
-    <span class="home-demo__subtitle">5 tests completed · Baseline + 4 Benchmarks</span>
+    <span class="home-demo__title">Alex's SHSAT Dashboard</span>
+    <span class="home-demo__subtitle">2 tests completed · Baseline + 1 Benchmark</span>
   </div>
 
   <!-- Stat cards -->
   <div class="shsat-stat-grid">
     <div class="shsat-stat-card">
-      <div class="shsat-stat-card__value">558</div>
+      <div class="shsat-stat-card__value">458</div>
       <div class="shsat-stat-card__label">Latest composite</div>
     </div>
     <div class="shsat-stat-card">
-      <div class="shsat-stat-card__value">5</div>
+      <div class="shsat-stat-card__value">2</div>
       <div class="shsat-stat-card__label">Tests completed</div>
     </div>
     <div class="shsat-stat-card">
@@ -55,35 +55,35 @@
     <div class="shsat-placement-row">
       <div class="shsat-placement-row__school">Stuy</div>
       <div class="shsat-placement-row__track">
-        <div class="shsat-placement-row__fill shsat-placement-row__fill--above" style="width:100%;"></div>
+        <div class="shsat-placement-row__fill shsat-placement-row__fill--below" style="width:83%;"></div>
       </div>
       <div class="shsat-placement-row__cutoff">552</div>
     </div>
     <div class="shsat-placement-row">
       <div class="shsat-placement-row__school">HSAS</div>
       <div class="shsat-placement-row__track">
-        <div class="shsat-placement-row__fill shsat-placement-row__fill--above" style="width:100%;"></div>
+        <div class="shsat-placement-row__fill shsat-placement-row__fill--below" style="width:90%;"></div>
       </div>
       <div class="shsat-placement-row__cutoff">509</div>
     </div>
     <div class="shsat-placement-row">
       <div class="shsat-placement-row__school">BxSci</div>
       <div class="shsat-placement-row__track">
-        <div class="shsat-placement-row__fill shsat-placement-row__fill--above" style="width:100%;"></div>
+        <div class="shsat-placement-row__fill shsat-placement-row__fill--below" style="width:92%;"></div>
       </div>
       <div class="shsat-placement-row__cutoff">496</div>
     </div>
     <div class="shsat-placement-row">
       <div class="shsat-placement-row__school">SI Tech</div>
       <div class="shsat-placement-row__track">
-        <div class="shsat-placement-row__fill shsat-placement-row__fill--above" style="width:100%;"></div>
+        <div class="shsat-placement-row__fill shsat-placement-row__fill--below" style="width:93%;"></div>
       </div>
       <div class="shsat-placement-row__cutoff">492</div>
     </div>
     <div class="shsat-placement-row">
       <div class="shsat-placement-row__school">BkTech</div>
       <div class="shsat-placement-row__track">
-        <div class="shsat-placement-row__fill shsat-placement-row__fill--above" style="width:100%;"></div>
+        <div class="shsat-placement-row__fill shsat-placement-row__fill--below" style="width:98%;"></div>
       </div>
       <div class="shsat-placement-row__cutoff">465</div>
     </div>
@@ -110,7 +110,7 @@
     </div>
   </div>
   <p style="font-size:12px;color:#aba784;margin:-24px 0 36px;">
-    Based on latest composite of <strong style="color:#240f05;">558</strong>. Estimated — actual scaling varies by year.
+    Based on latest composite of <strong style="color:#240f05;">458</strong>. Estimated — actual scaling varies by year.
   </p>
 
   <!-- Practice test scores bar chart -->
@@ -131,6 +131,16 @@
   <!-- Distractor trap analysis — Math -->
   <div class="shsat-chart-wrap">
     <canvas id="demoTrapChartMath"></canvas>
+  </div>
+
+  <!-- Sankey — ELA trap flow across tests -->
+  <div class="shsat-chart-wrap" style="margin-top:16px;">
+    <canvas id="demoSankeyEla"></canvas>
+  </div>
+
+  <!-- Sankey — Math trap flow across tests -->
+  <div class="shsat-chart-wrap" style="margin-top:16px;">
+    <canvas id="demoSankeyMath"></canvas>
   </div>
 
   <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;color:#aba784;margin:4px 0 12px;line-height:1.5;">
@@ -196,6 +206,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-sankey@0.19.1/dist/chartjs-chart-sankey.min.js"></script>
 <script>
 (function () {
   // ── Palette (matches actual dashboard) ──────────────────────────────────
@@ -222,17 +233,33 @@
   const history = [
     { seq: "Baseline",    date: "Mar 1, 2025",  ela: 198, math: 195, composite: 393 },
     { seq: "Benchmark 1", date: "Apr 12, 2025", ela: 232, math: 226, composite: 458 },
-    { seq: "Benchmark 2", date: "May 24, 2025", ela: 246, math: 241, composite: 487 },
-    { seq: "Benchmark 3", date: "Jul 5, 2025",  ela: 255, math: 252, composite: 507 },
-    { seq: "Benchmark 4", date: "Aug 23, 2025", ela: 281, math: 277, composite: 558 },
   ];
 
   const attemptsData = [
     { label: "Baseline",    ela: 198, math: 195, composite: 393, minutes: 192 },
     { label: "Benchmark 1", ela: 232, math: 226, composite: 458, minutes: 184 },
-    { label: "Benchmark 2", ela: 246, math: 241, composite: 487, minutes: 179 },
-    { label: "Benchmark 3", ela: 255, math: 252, composite: 507, minutes: 174 },
-    { label: "Benchmark 4", ela: 281, math: 277, composite: 558, minutes: 177 },
+  ];
+
+  // Sankey flows — trap distribution across Baseline and Benchmark 1
+  const sankeyElaFlows = [
+    { from: "Baseline",    to: "Too Narrow",          flow: 5 },
+    { from: "Baseline",    to: "Surface Match",       flow: 3 },
+    { from: "Baseline",    to: "True but Irrelevant", flow: 3 },
+    { from: "Baseline",    to: "Misidentified Detail", flow: 2 },
+    { from: "Benchmark 1", to: "Too Narrow",          flow: 4 },
+    { from: "Benchmark 1", to: "Surface Match",       flow: 2 },
+    { from: "Benchmark 1", to: "True but Irrelevant", flow: 1 },
+    { from: "Benchmark 1", to: "Less Precise",        flow: 2 },
+  ];
+  const sankeyMathFlows = [
+    { from: "Baseline",    to: "Wrong Setup",     flow: 4 },
+    { from: "Baseline",    to: "Arithmetic Slip", flow: 3 },
+    { from: "Baseline",    to: "Partial Answer",  flow: 3 },
+    { from: "Baseline",    to: "Sign Error",      flow: 2 },
+    { from: "Benchmark 1", to: "Wrong Setup",     flow: 3 },
+    { from: "Benchmark 1", to: "Arithmetic Slip", flow: 2 },
+    { from: "Benchmark 1", to: "Last Step Trap",  flow: 2 },
+    { from: "Benchmark 1", to: "Sign Error",      flow: 1 },
   ];
 
   const elaTraps = [
@@ -509,7 +536,69 @@
     });
   }
   renderTrapChart("demoTrapChartEla",  elaTraps,  P.ela,  "Top ELA traps that caught you");
-  renderTrapChart("demoTrapChartMath", mathTraps, P.math, "Top math traps that caught you");
+  renderTrapChart("demoTrapChartMath", mathTraps, P.math, "Top Math traps that caught you");
+
+  // ── Sankey diagrams — trap flow across tests ─────────────────────────
+  function renderSankey(canvasId, flows, colorFrom, colorTo, chartTitle) {
+    const el = document.getElementById(canvasId);
+    if (!el || !flows.length) return;
+
+    const testNodes = new Set(flows.map(f => f.from));
+    const trapNodes = new Set(flows.map(f => f.to));
+    const columnMap = {};
+    testNodes.forEach(n => { columnMap[n] = 0; });
+    trapNodes.forEach(n => { columnMap[n] = 1; });
+
+    const trapTotals = {};
+    flows.forEach(f => { trapTotals[f.to] = (trapTotals[f.to] || 0) + f.flow; });
+    const priorityMap = {};
+    let pi = 0;
+    testNodes.forEach(n => { priorityMap[n] = pi++; });
+    Object.entries(trapTotals).sort((a, b) => b[1] - a[1]).forEach(([n], i) => { priorityMap[n] = i; });
+
+    new Chart(el.getContext("2d"), {
+      type: "sankey",
+      data: {
+        datasets: [{
+          label: "Trap flow",
+          data: flows,
+          colorFrom: colorFrom,
+          colorTo: colorTo,
+          colorMode: "gradient",
+          column: columnMap,
+          priority: priorityMap,
+          borderWidth: 0,
+          font: { family: F.label, size: 12 },
+        }]
+      },
+      options: {
+        responsive: true,
+        aspectRatio: chartAR(2.5, 1.2),
+        layout: { padding: { top: 36 } },
+        plugins: {
+          title: {
+            display: true, text: chartTitle, align: "start",
+            color: titleColor,
+            font: { family: F.title, size: 26, weight: "600" },
+            padding: { bottom: 24 },
+          },
+          legend: { display: false },
+          tooltip: {
+            titleFont: { family: F.label, size: 13 },
+            bodyFont: { family: F.label, size: 13 },
+            callbacks: {
+              label: item => {
+                const d = item.raw;
+                return `${d.from} → ${d.to}: ${d.flow}`;
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+  renderSankey("demoSankeyEla",  sankeyElaFlows,  P.ela,  P.wrong, "ELA traps you keep catching across tests");
+  renderSankey("demoSankeyMath", sankeyMathFlows, P.math, P.wrong, "Math traps you keep catching across tests");
 
   // ── Skill accuracy radar charts ────────────────────────────────────────
   function renderRadar(canvasId, skills, fillColor, borderColor, chartTitle) {
@@ -579,7 +668,7 @@
 
   // ── Score distribution ─────────────────────────────────────────────────
   (function () {
-    const mean = 440, std = 65, score = 558;
+    const mean = 440, std = 65, score = 458;
 
     function normalPDF(x, mu, sigma) {
       const z = (x - mu) / sigma;
