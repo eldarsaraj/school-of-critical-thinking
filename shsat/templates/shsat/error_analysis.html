@@ -17,24 +17,18 @@
 </div>
 
 <!-- Section overview -->
-<p class="shsat-section-title">Section overview</p>
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Accuracy and time per section.{% if has_section_time %} Stacked bars show time on correct vs. wrong answers.{% endif %}</p>
-<div style="display:grid;grid-template-columns:1fr {% if section_summary_data|length <= 2 %}220px{% else %}200px{% endif %};gap:24px;align-items:stretch;margin-bottom:40px;">
-  <div class="shsat-chart-wrap" style="margin-bottom:0;display:flex;align-items:stretch;min-height:200px;">
-    <canvas id="sectionOverviewChart" style="width:100%;height:100%;"></canvas>
-  </div>
-  <div style="display:flex;flex-direction:column;gap:10px;">
-    {% for s in section_summary_data %}
-    <div style="flex:1;padding:14px 18px;border:1px solid rgba(0,0,0,0.08);border-radius:8px;">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:3px;">{{ s.section }}</div>
-      <div style="font-size:22px;font-weight:700;color:#161a1d;line-height:1;font-variant-numeric:tabular-nums;">{{ s.accuracy_pct }}%</div>
-      <div style="font-size:12px;color:rgba(0,0,0,0.5);margin-top:2px;">{{ s.correct }}/{{ s.total }}{% if s.has_time %} · {{ s.time_minutes }}m{% endif %}</div>
-    </div>
-    {% endfor %}
-  </div>
+<div class="shsat-chart-wrap" style="min-height:220px;margin-bottom:40px;">
+  <canvas id="sectionOverviewChart" style="width:100%;height:100%;"></canvas>
 </div>
-<p id="sectionAbbrLegend" style="font-size:11px;color:rgba(0,0,0,0.38);margin:-28px 0 28px;letter-spacing:0.02em;"></p>
 {{ section_summary_data|json_script:"sectionSummaryData" }}
+
+<!-- Trap distribution donut -->
+{% if trap_cards %}
+<div class="shsat-chart-wrap" style="max-width:480px;margin:0 auto 48px;">
+  <canvas id="trapDonutChart"></canvas>
+</div>
+{{ trap_cards|json_script:"trapCardsData" }}
+{% endif %}
 
 <!-- ═══════════════════════════════════════════════════════════════════════
      Traps that caught you — grouped by section, one card per trap
@@ -414,13 +408,12 @@ const P = {
 };
 
 // ---------------------------------------------------------------------------
-// Section overview — stacked bar (dashboard palette)
+// Section overview — stacked bar (correct vs wrong questions)
 // ---------------------------------------------------------------------------
 (function () {
   const el = document.getElementById("sectionOverviewChart");
   if (!el) return;
   const data = JSON.parse(document.getElementById("sectionSummaryData").textContent);
-  const hasTime = data.some(s => s.has_time);
 
   const ABBREV = {
     "Reading Comprehension": "RC",
@@ -431,54 +424,22 @@ const P = {
   };
   function abbrev(s) { return ABBREV[s] || s; }
 
-  const titleText = "Section breakdown";
   const titleOpts = {
-    display: true, text: titleText, align: "start",
-    font: { family: "-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif", size: 16, weight: "bold" },
+    display: true, text: "How did you do on this test?", align: "start",
+    font: { family: "-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif", size: 20, weight: "bold" },
     color: P.text, padding: { bottom: 16 },
   };
   const gridOpts = { color: P.grid, borderDash: [2, 3] };
   const tickFont = { family: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif", size: 12 };
   const legendFont = { family: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif", size: 12 };
 
-  if (!hasTime) {
-    new Chart(el.getContext("2d"), {
-      type: "bar",
-      data: {
-        labels: data.map(s => abbrev(s.section)),
-        datasets: [
-          { label: "Correct",    data: data.map(s => s.correct),           backgroundColor: P.correct, borderWidth: 0, barThickness: 48 },
-          { label: "Wrong/skip", data: data.map(s => s.total - s.correct), backgroundColor: P.wrong,   borderWidth: 0, barThickness: 48 },
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        layout: { padding: { top: 4 } },
-        plugins: {
-          title: titleOpts,
-          legend: { position: "bottom", labels: { font: legendFont, boxWidth: 12, padding: 14 } },
-          tooltip: { callbacks: { footer: items => { const s = data[items[0].dataIndex]; return `${s.accuracy_pct}% correct  (${s.correct}/${s.total})`; } } }
-        },
-        scales: {
-          x: { stacked: true, grid: { display: false }, ticks: { font: { ...tickFont, weight: "600" } } },
-          y: { stacked: true, grid: gridOpts, ticks: { stepSize: 5, font: tickFont } }
-        }
-      }
-    });
-    return;
-  }
-
-  const labels   = data.map(s => abbrev(s.section));
-  const correctT = data.map(s => +(s.time_minutes * s.accuracy_pct / 100).toFixed(1));
-  const wrongT   = data.map(s => +(s.time_minutes * (1 - s.accuracy_pct / 100)).toFixed(1));
-
   new Chart(el.getContext("2d"), {
     type: "bar",
     data: {
-      labels,
+      labels: data.map(s => abbrev(s.section)),
       datasets: [
-        { label: "Correct", data: correctT, backgroundColor: P.correct, borderWidth: 0, barThickness: 64 },
-        { label: "Wrong",   data: wrongT,   backgroundColor: P.wrong,   borderWidth: 0, barThickness: 64 },
+        { label: "Correct",    data: data.map(s => s.correct),           backgroundColor: P.correct, borderWidth: 0, barThickness: 48 },
+        { label: "Wrong/skip", data: data.map(s => s.total - s.correct), backgroundColor: P.wrong,   borderWidth: 0, barThickness: 48 },
       ]
     },
     options: {
@@ -486,23 +447,70 @@ const P = {
       layout: { padding: { top: 4 } },
       plugins: {
         title: titleOpts,
-        legend: { position: "bottom", labels: { font: legendFont, boxWidth: 14, padding: 14 } },
-        tooltip: { callbacks: { footer: items => { const s = data[items[0].dataIndex]; return `Total: ${s.time_minutes} min · ${s.accuracy_pct}% correct (${s.correct}/${s.total})`; } } }
+        legend: { position: "bottom", labels: { font: legendFont, boxWidth: 12, padding: 14 } },
+        tooltip: { callbacks: { footer: items => { const s = data[items[0].dataIndex]; return `${s.accuracy_pct}% correct  (${s.correct}/${s.total})`; } } }
       },
       scales: {
         x: { stacked: true, grid: { display: false }, ticks: { font: { ...tickFont, weight: "600" } } },
-        y: { stacked: true, grid: gridOpts,
-             ticks: { font: tickFont, callback: v => v + " min" },
-             title: { display: true, text: "Minutes", font: { ...tickFont, size: 11 }, color: "rgba(0,0,0,0.4)" } }
+        y: { stacked: true, grid: gridOpts, ticks: { stepSize: 5, font: tickFont },
+             title: { display: true, text: "Questions", font: { ...tickFont, size: 11 }, color: "rgba(0,0,0,0.4)" } }
       }
     }
   });
+})();
 
-  const legendEl = document.getElementById("sectionAbbrLegend");
-  if (legendEl) {
-    const unique = data.map(s => s.section).filter(s => ABBREV[s]);
-    if (unique.length) legendEl.textContent = unique.map(s => `${ABBREV[s]} = ${s}`).join(" · ");
-  }
+// ---------------------------------------------------------------------------
+// Trap distribution donut
+// ---------------------------------------------------------------------------
+(function () {
+  const el = document.getElementById("trapDonutChart");
+  if (!el) return;
+  const dataEl = document.getElementById("trapCardsData");
+  if (!dataEl) return;
+  const cards = JSON.parse(dataEl.textContent);
+  if (!cards.length) return;
+
+  const labels = cards.map(c => c.label);
+  const counts = cards.map(c => c.count);
+  const colors = cards.map(c => c.section === "ELA" ? P.sage : P.terra);
+  const tickFont = { family: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif", size: 12 };
+
+  new Chart(el.getContext("2d"), {
+    type: "doughnut",
+    data: {
+      labels,
+      datasets: [{
+        data: counts,
+        backgroundColor: colors.map((c, i) => {
+          // Vary opacity so slices are distinguishable
+          const opacity = 1 - (i * 0.12);
+          return c + Math.round(opacity * 255).toString(16).padStart(2, "0");
+        }),
+        borderWidth: 2,
+        borderColor: "#fffef8",
+      }]
+    },
+    options: {
+      responsive: true,
+      cutout: "55%",
+      plugins: {
+        title: {
+          display: true, text: "Trap distribution", align: "start",
+          font: { family: "-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif", size: 20, weight: "bold" },
+          color: P.text, padding: { bottom: 12 },
+        },
+        legend: {
+          position: "right",
+          labels: { font: tickFont, boxWidth: 14, padding: 10, color: P.text },
+        },
+        tooltip: {
+          callbacks: {
+            label: item => ` ${item.label}: ${item.raw} question${item.raw === 1 ? "" : "s"}`,
+          }
+        }
+      }
+    }
+  });
 })();
 
 {% if essay_eval_pending %}
