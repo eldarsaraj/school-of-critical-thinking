@@ -523,13 +523,27 @@ function makeProjData(arr) {
 })();
 
 // ---------------------------------------------------------------------------
-// Attempts stacked bar chart (visible to all users)
+// Attempts stacked bar chart with ghost projected bars
 // ---------------------------------------------------------------------------
 (function () {
   const data = JSON.parse(document.getElementById("attemptsChartData").textContent);
   const isEmpty = data.length === 0;
   const hasTime = !isEmpty && data.some(d => d.minutes !== null);
   const ctx2 = document.getElementById("attemptsChart").getContext("2d");
+  const proj = _proj;
+
+  // Ghost bar data from projected benchmarks
+  const ghostBarLabels = proj ? proj.labels : [];
+  const barLabels = [...data.map(d => d.label), ...ghostBarLabels];
+
+  // For projected bars, use projected ELA/Math scores
+  const ghostEla = [], ghostMath = [];
+  if (proj) {
+    for (let i = 0; i < proj.ela.length - 1; i++) { // skip bridge value at index 0
+      ghostEla.push(proj.ela[i + 1]);
+      ghostMath.push(proj.math[i + 1]);
+    }
+  }
 
   const greyBar = { backgroundColor: "rgba(0,0,0,0.1)", borderWidth: 0,
                     barThickness: 48, order: 2 };
@@ -540,16 +554,24 @@ function makeProjData(arr) {
         { label: "Math", data: [], ...greyBar },
       ]
     : [
-        { label: "ELA",  data: data.map(d => d.ela),
+        { label: "ELA",  data: [...data.map(d => d.ela), ...Array(ghostBarLabels.length).fill(null)],
           backgroundColor: P.ela,  borderWidth: 0, barThickness: 48, order: 2 },
-        { label: "Math", data: data.map(d => d.math),
+        { label: "Math", data: [...data.map(d => d.math), ...Array(ghostBarLabels.length).fill(null)],
           backgroundColor: P.math, borderWidth: 0, barThickness: 48, order: 2 },
+        ...(ghostEla.length > 0 ? [
+          { label: "ELA (projected)", data: [...Array(data.length).fill(null), ...ghostEla],
+            backgroundColor: "rgba(122,135,117,0.18)", borderWidth: 1, borderColor: "rgba(122,135,117,0.3)",
+            borderDash: [3, 3], barThickness: 48, order: 2 },
+          { label: "Math (projected)", data: [...Array(data.length).fill(null), ...ghostMath],
+            backgroundColor: "rgba(171,85,63,0.18)", borderWidth: 1, borderColor: "rgba(171,85,63,0.3)",
+            borderDash: [3, 3], barThickness: 48, order: 2 },
+        ] : []),
       ];
 
   new Chart(ctx2, {
     type: "bar",
     data: {
-      labels: data.map(d => d.label),
+      labels: barLabels,
       datasets,
     },
     options: {
@@ -568,7 +590,7 @@ function makeProjData(arr) {
         },
         subtitle: {
           display: true,
-          text: "How you performed on each section of the tests.",
+          text: "How you performed on each section of the tests." + (ghostEla.length ? " Faded bars are projected estimates." : ""),
           align: "start",
           color: "#aba784",
           font: { family: F.label, size: 13, weight: "400" },
@@ -576,6 +598,7 @@ function makeProjData(arr) {
         },
         legend: { display: false },
         tooltip: {
+          filter: (item) => !item.dataset.label.includes("projected"),
           titleFont: { family: F.label, size: 13 },
           bodyFont: { family: F.label, size: 13 },
           callbacks: {
@@ -607,47 +630,63 @@ function makeProjData(arr) {
   });
 
   // -------------------------------------------------------------------------
-  // Test timing line chart (separate)
+  // Test timing line chart with ghost projection
   // -------------------------------------------------------------------------
   const timingCtx = document.getElementById("timingChart").getContext("2d");
-  // Convert seconds to minutes for the chart
   const timingData = hasTime ? data.filter(d => d.minutes !== null) : [];
   const timingEmpty = timingData.length === 0;
 
-  // Helper: format seconds as h:mm
-  function fmtTime(totalSeconds) {
-    // data.minutes is actually seconds from the view
-    const mins = Math.floor(totalSeconds / 60);
-    const secs = totalSeconds % 60;
-    const h = Math.floor(mins / 60);
-    const m = mins % 60;
-    if (h > 0) return `${h}:${String(m).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-    return `${m}:${String(secs).padStart(2, "0")}`;
+  // Ghost timing projections: estimate future test durations trending ~3% faster
+  const timingLabels = timingData.map(d => d.label);
+  const timingGhostLabels = proj ? proj.labels : [];
+  const allTimingLabels = [...timingLabels, ...timingGhostLabels];
+  const lastTime = timingData.length > 0 ? timingData[timingData.length - 1].minutes : null;
+  const timingGhost = [];
+  if (proj && lastTime) {
+    let t = lastTime;
+    const floor = Math.round(lastTime * 0.85);  // no lower than 85% of current time
+    for (let i = 0; i < timingGhostLabels.length; i++) {
+      t = Math.max(floor, Math.round(t * 0.97));
+      timingGhost.push(t);
+    }
   }
 
-  // Use raw seconds values; determine sensible max (round up to nearest 30 min)
-  const rawSeconds = timingData.map(d => d.minutes * 60);  // minutes field is actually minutes
-  const maxMinutes = timingEmpty ? 180 : Math.max(...timingData.map(d => d.minutes));
+  const maxMinutes = timingEmpty ? 180 : Math.max(...timingData.map(d => d.minutes), ...(timingGhost.length ? timingGhost : [0]));
   const yMax = Math.ceil(maxMinutes / 30) * 30;
   const stepMinutes = yMax <= 60 ? 15 : 30;
+
+  const timingDatasets = timingEmpty
+    ? [{ label: "Time", data: [], borderColor: "#eee2d3", borderWidth: 2, pointRadius: 4 }]
+    : [
+        {
+          label: "Time",
+          data: timingData.map(d => d.minutes),
+          borderColor: P.amber,
+          backgroundColor: "transparent",
+          pointBackgroundColor: P.amber,
+          borderWidth: 2,
+          tension: 0.2,
+          pointRadius: 5,
+          spanGaps: true,
+        },
+        ...(timingGhost.length > 0 ? [{
+          label: "Time (projected)",
+          data: [...Array(timingData.length - 1).fill(null), lastTime, ...timingGhost],
+          borderColor: "rgba(197,131,80,0.25)",
+          backgroundColor: "transparent",
+          pointBackgroundColor: "rgba(197,131,80,0.2)",
+          borderWidth: 1.5,
+          borderDash: [4, 4],
+          tension: 0.2,
+          pointRadius: 3,
+        }] : []),
+      ];
 
   new Chart(timingCtx, {
     type: "line",
     data: {
-      labels: timingEmpty ? [] : timingData.map(d => d.label),
-      datasets: timingEmpty
-        ? [{ label: "Time", data: [], borderColor: "#eee2d3", borderWidth: 2, pointRadius: 4 }]
-        : [{
-            label: "Time",
-            data: timingData.map(d => d.minutes),
-            borderColor: P.amber,
-            backgroundColor: "transparent",
-            pointBackgroundColor: P.amber,
-            borderWidth: 2,
-            tension: 0.2,
-            pointRadius: 5,
-            spanGaps: true,
-          }]
+      labels: timingEmpty ? [] : allTimingLabels,
+      datasets: timingDatasets,
     },
     options: {
       _emptyMessage: "Timing data will appear after your first timed test",
@@ -665,7 +704,7 @@ function makeProjData(arr) {
         },
         subtitle: {
           display: true,
-          text: "How long it took you to complete each test.",
+          text: "How long it took you to complete each test." + (timingGhost.length ? " Dotted line is projected." : ""),
           align: "start",
           color: "#aba784",
           font: { family: F.label, size: 13, weight: "400" },
@@ -673,6 +712,7 @@ function makeProjData(arr) {
         },
         legend: { display: false },
         tooltip: {
+          filter: (item) => !item.dataset.label.includes("projected"),
           titleFont: { family: F.label, size: 13 },
           bodyFont: { family: F.label, size: 13 },
           callbacks: {

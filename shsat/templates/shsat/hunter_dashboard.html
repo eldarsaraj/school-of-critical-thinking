@@ -539,7 +539,7 @@ function makeProjData(arr) {
   const timingData = hasTime ? data.filter(d => d.minutes !== null) : [];
   const timingEmpty = timingData.length === 0;
 
-  // Ghost timing projections: estimate future test durations trending slightly faster
+  // Ghost timing projections: estimate future test durations trending ~3% faster
   const timingLabels = timingData.map(d => d.label);
   const timingGhostLabels = proj ? proj.labels : [];
   const allTimingLabels = [...timingLabels, ...timingGhostLabels];
@@ -547,8 +547,9 @@ function makeProjData(arr) {
   const timingGhost = [];
   if (proj && lastTime) {
     let t = lastTime;
+    const floor = Math.round(lastTime * 0.85);  // no lower than 85% of current time
     for (let i = 0; i < timingGhostLabels.length; i++) {
-      t = Math.max(30, Math.round(t * 0.95)); // trending 5% faster each test
+      t = Math.max(floor, Math.round(t * 0.97));
       timingGhost.push(t);
     }
   }
