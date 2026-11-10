@@ -19,7 +19,7 @@
       <div style="font-size:14px;color:rgba(0,0,0,0.55);margin:3px 0 2px;">{{ test.description }}</div>
       {% endif %}
       <div class="shsat-test-item__meta">
-        {{ test.displayed_question_count }} questions · {{ test.ela_questions.count }} ELA + {{ test.math_questions.count }} Math
+        {{ test.displayed_question_count }} questions · {{ test.displayed_ela_count }} ELA + {{ test.displayed_math_count }} Math
         {% if test.source %} · {{ test.source }}{% endif %}
         {% if not test.is_free %} · <span style="color:rgba(0,0,0,0.4);">Premium</span>{% endif %}
       </div>

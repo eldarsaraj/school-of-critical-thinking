@@ -59,12 +59,24 @@ class Test(models.Model):
     def displayed_question_count(self):
         """For adaptive tests, count routing + one module (what the student actually sees)."""
         if self.is_adaptive:
-            ela_r = self.questions.filter(section="ELA", stage="routing").count()
-            math_r = self.questions.filter(section="Math", stage="routing").count()
-            ela_m = self.questions.filter(section="ELA", stage="easy_module").count()
-            math_m = self.questions.filter(section="Math", stage="easy_module").count()
-            return ela_r + math_r + ela_m + math_m
+            return self.displayed_ela_count + self.displayed_math_count
         return self.questions.count()
+
+    @property
+    def displayed_ela_count(self):
+        if self.is_adaptive:
+            r = self.questions.filter(section="ELA", stage="routing").count()
+            m = self.questions.filter(section="ELA", stage="easy_module").count()
+            return r + m
+        return self.questions.filter(section="ELA").count()
+
+    @property
+    def displayed_math_count(self):
+        if self.is_adaptive:
+            r = self.questions.filter(section="Math", stage="routing").count()
+            m = self.questions.filter(section="Math", stage="easy_module").count()
+            return r + m
+        return self.questions.filter(section="Math").count()
 
 
 class Question(models.Model):
