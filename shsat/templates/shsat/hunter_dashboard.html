@@ -108,6 +108,11 @@
 </div>
 {% endif %}
 
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;margin-bottom:48px;">
+  <a href="{% url 'hunter_test_list' %}" class="shsat-btn">Take a practice test</a>
+  <a href="{% url 'hunter_error_analysis_list' %}" class="shsat-btn shsat-btn--outline">Error analysis</a>
+</div>
+
 <!-- Focus areas -->
 {% if skill_accuracy_data %}
 <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;color:#240f05;margin-top:48px;margin-bottom:8px;">Areas you must improve in</div>
@@ -165,11 +170,6 @@
   <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;color:#aba784;margin:0;">Full written feedback is in the <a href="{% url 'hunter_error_analysis_list' %}" style="color:#240f05;">Error Analysis</a>.</p>
 </div>
 {% endif %}
-
-<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
-  <a href="{% url 'hunter_test_list' %}" class="shsat-btn">Take a practice test</a>
-  <a href="{% url 'hunter_error_analysis_list' %}" class="shsat-btn shsat-btn--outline">Error analysis</a>
-</div>
 
 {% endif %}
 
@@ -523,7 +523,7 @@ Chart.register(emptyStatePlugin);
   const rcData   = aggregateByLabel(allData.filter(d => RC_SECTIONS.has(d.section)));
   const mathData = aggregateByLabel(allData.filter(d => MATH_SECTIONS.has(d.section)));
   renderTrapChart("dashTrapChartRc",   "dashTrapRcWrap",   rcData,   P.rc,   "Top RC & Writing traps that caught you");
-  renderTrapChart("dashTrapChartMath", "dashTrapMathWrap", mathData, P.math, "Top Math traps that caught you");
+  renderTrapChart("dashTrapChartMath", "dashTrapMathWrap", mathData, P.math, "Top math traps that caught you");
 })();
 
 // ---------------------------------------------------------------------------
@@ -680,7 +680,7 @@ Chart.register(emptyStatePlugin);
   const rcSkills   = allSkills.filter(s => RC_SECTIONS.has(s.section));
   const mathSkills = allSkills.filter(s => MATH_SECTIONS.has(s.section));
   renderRadar("skillRadarRc",   "skillRadarRcWrap",   rcSkills,   "rgba(122,135,117,0.15)", P.rc,   "Your RC & Writing strengths");
-  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(171,85,63,0.15)",  P.math, "Your Math strengths");
+  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(171,85,63,0.15)",  P.math, "Your math strengths");
 })();
 </script>
 {% endblock %}
