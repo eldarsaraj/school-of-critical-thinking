@@ -727,8 +727,8 @@ Chart.register(emptyStatePlugin);
 
   const rcSkills   = allSkills.filter(s => RC_SECTIONS.has(s.section));
   const mathSkills = allSkills.filter(s => MATH_SECTIONS.has(s.section));
-  renderRadar("skillRadarRc",   "skillRadarRcWrap",   rcSkills,   "rgba(122,135,117,0.15)", P.rc,   "Your RC & Writing strengths", "These are your strong RC & Writing areas.");
-  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(171,85,63,0.15)",  P.math, "Your math strengths", "These are your strong math areas.");
+  renderRadar("skillRadarRc",   "skillRadarRcWrap",   rcSkills,   "rgba(122,135,117,0.15)", P.rc,   "Your RC & Writing strengths", "The closer the point is to the edge, the stronger you are.");
+  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(171,85,63,0.15)",  P.math, "Your math strengths", "The closer the point is to the edge, the stronger you are.");
 })();
 </script>
 {% endblock %}

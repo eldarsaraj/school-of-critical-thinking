@@ -1074,8 +1074,8 @@ function makeProjData(arr) {
 
   const elaSkills  = allSkills.filter(s => ELA_SECTIONS.has(s.section));
   const mathSkills = allSkills.filter(s => MATH_SECTIONS.has(s.section));
-  renderRadar("skillRadarEla",  "skillRadarElaWrap",  elaSkills,  "rgba(122,135,117,0.15)", P.ela, "Your ELA strengths", "These are your strong ELA areas.");
-  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(171,85,63,0.15)",  P.math, "Your math strengths", "These are your strong math areas.");
+  renderRadar("skillRadarEla",  "skillRadarElaWrap",  elaSkills,  "rgba(122,135,117,0.15)", P.ela, "Your ELA strengths", "The closer the point is to the edge, the stronger you are.");
+  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(171,85,63,0.15)",  P.math, "Your math strengths", "The closer the point is to the edge, the stronger you are.");
 })();
 </script>
 {% endblock %}
