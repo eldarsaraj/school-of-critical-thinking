@@ -101,7 +101,18 @@
   <canvas id="dashTrapChartEla"></canvas>
 </div>
 
-{% if not has_paid %}<div class="shsat-teaser-locked-wrap" style="margin-top:16px;margin-bottom:12px;"><div class="shsat-teaser-locked">{% endif %}
+{% if not has_paid %}
+<div style="border:1px solid #111;padding:28px 24px;margin-top:32px;margin-bottom:32px;max-width:560px;">
+  <p style="font-size:18px;font-weight:600;margin-bottom:10px;letter-spacing:-.01em;">Let the data show you the way</p>
+  <p style="font-size:14px;line-height:1.65;color:rgba(0,0,0,.55);margin-bottom:20px;">
+    For less than half an hour of tutoring cost, get a precise insight into your child's strengths and weaknesses, so your test prep is effective where it needs to be.
+  </p>
+  <a href="{% url 'shsat_upgrade' %}" class="shsat-btn" style="background:#111;color:#fff;border-color:#111;">
+    Unlock Full Analysis + Benchmark Tests — $149
+  </a>
+</div>
+<div class="shsat-teaser-locked-wrap" style="margin-top:16px;margin-bottom:12px;"><div class="shsat-teaser-locked">
+{% endif %}
 
 <div id="dashTrapMathWrap" class="shsat-chart-wrap" style="display:none;">
   <canvas id="dashTrapChartMath"></canvas>
@@ -218,9 +229,9 @@
 {% else %}
 <!-- Upgrade CTA -->
 <div style="border:1px solid #111;padding:28px 24px;margin-top:32px;max-width:560px;">
-  <p style="font-size:18px;font-weight:600;margin-bottom:10px;letter-spacing:-.01em;">Unlock the full dashboard</p>
+  <p style="font-size:18px;font-weight:600;margin-bottom:10px;letter-spacing:-.01em;">Let the data show you the way</p>
   <p style="font-size:14px;line-height:1.65;color:rgba(0,0,0,.55);margin-bottom:20px;">
-    See every skill gap, every distractor trap pattern, score distribution, focus areas, and a personalized study plan — then track how it all changes across 4 Benchmark Tests.
+    For less than half an hour of tutoring cost, get a precise insight into your child's strengths and weaknesses, so your test prep is effective where it needs to be.
   </p>
   <a href="{% url 'shsat_upgrade' %}" class="shsat-btn" style="background:#111;color:#fff;border-color:#111;">
     Unlock Full Analysis + Benchmark Tests — $149
