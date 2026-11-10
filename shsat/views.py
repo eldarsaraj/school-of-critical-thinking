@@ -676,6 +676,18 @@ def dashboard(request):
         platform_mean = None
         platform_std = None
 
+    # Days since baseline (for urgency banner on free dashboards)
+    from django.utils import timezone as _tz
+    baseline_attempt = (
+        TestAttempt.objects.filter(
+            parent=parent, is_completed=True, test__is_free=True, test__exam_type="shsat",
+        ).order_by("-submitted_at").first()
+    )
+    days_since_baseline = (
+        (_tz.now() - baseline_attempt.submitted_at).days
+        if baseline_attempt else None
+    )
+
     context = {
         "parent": parent,
         "attempts": attempts[:5],
@@ -700,6 +712,7 @@ def dashboard(request):
         "sankey_single_test": len(attempts_asc) <= 1,
         "top_trap_label": top_trap_label,
         "top_trap_count": top_trap_count,
+        "days_since_baseline": days_since_baseline,
     }
     return render(request, "shsat/dashboard.html", context)
 

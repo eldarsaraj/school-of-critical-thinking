@@ -547,6 +547,18 @@ def hunter_dashboard(request):
         platform_mean = None
         platform_std = None
 
+    # Days since baseline (for urgency banner on free dashboards)
+    from django.utils import timezone as _tz
+    _baseline_attempt = (
+        TestAttempt.objects.filter(
+            parent=parent, is_completed=True, test__is_free=True, test__exam_type="hunter",
+        ).order_by("-submitted_at").first()
+    )
+    days_since_baseline = (
+        (_tz.now() - _baseline_attempt.submitted_at).days
+        if _baseline_attempt else None
+    )
+
     context = {
         "parent": parent,
         "in_progress": in_progress,
@@ -572,6 +584,7 @@ def hunter_dashboard(request):
         "platform_std": platform_std,
         "platform_n": platform_n,
         "hunter_has_paid": parent.hunter_has_paid or _student_has_tutor_access(parent) or request.user.is_staff,
+        "days_since_baseline": days_since_baseline,
     }
     return render(request, "shsat/hunter_dashboard.html", context)
 
