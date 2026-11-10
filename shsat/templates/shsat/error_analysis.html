@@ -10,7 +10,7 @@
   <a href="{% url 'shsat_test_results' attempt.id %}" style="font-size:13px;color:rgba(0,0,0,0.45);text-decoration:none;">← Back to results</a>
   <h1 class="shsat-page-title" style="margin-top:12px;">Error Analysis</h1>
   <p class="shsat-page-subtitle">
-    {{ attempt.test.title }} · {{ attempt.submitted_at|date:"F j, Y" }}
+    <strong style="color:#240f05;">{{ attempt.test.title }}</strong> · {{ attempt.submitted_at|date:"F j, Y" }}
     {% if not is_hunter %} · Composite <strong>{{ attempt.composite_score }}</strong>{% endif %}
     · <strong>{{ accuracy_pct }}%</strong> accuracy ({{ total_correct }}/{{ total_answered }} answered)
   </p>
@@ -24,7 +24,7 @@
 
 <!-- Trap distribution donut -->
 {% if trap_cards %}
-<div class="shsat-chart-wrap" style="max-width:480px;margin:0 auto 48px;">
+<div class="shsat-chart-wrap" style="margin-bottom:48px;">
   <canvas id="trapDonutChart"></canvas>
 </div>
 {{ trap_cards|json_script:"trapCardsData" }}
@@ -57,10 +57,17 @@
       <span class="shsat-trap-card__qnum">Q{{ q.number }}</span>
       <span class="shsat-trap-card__qskill">{{ q.skill }}</span>
       <span class="shsat-trap-card__qdiff">{{ q.difficulty }}</span>
-      <span class="shsat-trap-card__qanswer">You chose <strong>{{ q.student_answer }}</strong>, correct was <strong>{{ q.correct_answer }}</strong></span>
+      <span class="shsat-trap-card__qanswer">You chose <strong>{{ q.student_answer }}</strong>, correct was <strong>{{ q.correct_answer }}</strong>{% if q.time_seconds != None %} · {{ q.time_seconds }}s{% endif %}</span>
     </div>
     {% endfor %}
   </div>
+  {% with has_time=card.questions.0.time_seconds %}
+  {% if has_time != None %}
+  <div class="shsat-trap-card__timechart" style="margin-top:12px;height:{{ card.count|add:"1" }}0px;min-height:60px;max-height:200px;">
+    <canvas class="trap-time-canvas" data-trap="{{ card.trap_key }}-{{ card.section|lower }}"></canvas>
+  </div>
+  {% endif %}
+  {% endwith %}
 </div>
 {% endfor %}
 {% endfor %}
@@ -205,43 +212,6 @@
 {% endif %}
 {% endwith %}
 {% endfor %}
-{% endif %}
-
-<!-- Parent Insights -->
-{% if easy_wrong or unanswered_count or total_time_minutes %}
-<div class="shsat-insights-box" style="margin-top:48px;">
-  <p class="shsat-insights-box__title">Parent insights</p>
-  <div class="shsat-insights-grid">
-    {% if easy_wrong %}
-    <div class="shsat-insight shsat-insight--warn">
-      <div class="shsat-insight__value">{{ easy_wrong|length }}</div>
-      <div class="shsat-insight__label">Easy questions missed</div>
-      <div class="shsat-insight__note">These are the most recoverable points — straightforward concepts answered incorrectly. Prioritise reviewing these first.</div>
-    </div>
-    {% endif %}
-    {% if unanswered_count %}
-    <div class="shsat-insight shsat-insight--warn">
-      <div class="shsat-insight__value">{{ unanswered_count }}</div>
-      <div class="shsat-insight__label">Questions left blank</div>
-      <div class="shsat-insight__note">Unanswered questions score zero. Work on pacing so every question gets an attempt — even a guess.</div>
-    </div>
-    {% endif %}
-    {% if total_time_minutes %}
-    <div class="shsat-insight {% if pacing_ok %}shsat-insight--ok{% else %}shsat-insight--warn{% endif %}">
-      <div class="shsat-insight__value">{{ total_time_minutes|floatformat:0 }} min</div>
-      <div class="shsat-insight__label">Total time used</div>
-      <div class="shsat-insight__note">{% if pacing_ok %}Good pacing — well within the 3-hour limit.{% else %}Close to or over the 3-hour limit. Practise answering more quickly on familiar question types.{% endif %}</div>
-    </div>
-    {% endif %}
-    {% if not easy_wrong and not unanswered_count %}
-    <div class="shsat-insight shsat-insight--ok">
-      <div class="shsat-insight__value">✓</div>
-      <div class="shsat-insight__label">No easy questions missed</div>
-      <div class="shsat-insight__note">All easy questions were answered correctly. Focus areas are in medium and hard difficulty questions.</div>
-    </div>
-    {% endif %}
-  </div>
-</div>
 {% endif %}
 
 <!-- Full Question Review -->
@@ -460,7 +430,7 @@ const P = {
 })();
 
 // ---------------------------------------------------------------------------
-// Trap distribution donut
+// Trap distribution donut — distinct shades per slice
 // ---------------------------------------------------------------------------
 (function () {
   const el = document.getElementById("trapDonutChart");
@@ -470,9 +440,18 @@ const P = {
   const cards = JSON.parse(dataEl.textContent);
   if (!cards.length) return;
 
+  // Build a palette of distinct shades for ELA (greens) and Math (reds/oranges)
+  const elaShades  = ["#7a8775", "#5e6e58", "#9aab94", "#4a5c44", "#b3c4ad", "#3d4f38", "#c8d6c3"];
+  const mathShades = ["#ab553f", "#c58350", "#8a3d2a", "#dda78c", "#6e2e1e", "#eec4b0", "#c46a4e"];
+  let elaIdx = 0, mathIdx = 0;
+
+  const bgColors = cards.map(c => {
+    if (c.section === "ELA") return elaShades[elaIdx++ % elaShades.length];
+    return mathShades[mathIdx++ % mathShades.length];
+  });
+
   const labels = cards.map(c => c.label);
   const counts = cards.map(c => c.count);
-  const colors = cards.map(c => c.section === "ELA" ? P.sage : P.terra);
   const tickFont = { family: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif", size: 12 };
 
   new Chart(el.getContext("2d"), {
@@ -481,11 +460,7 @@ const P = {
       labels,
       datasets: [{
         data: counts,
-        backgroundColor: colors.map((c, i) => {
-          // Vary opacity so slices are distinguishable
-          const opacity = 1 - (i * 0.12);
-          return c + Math.round(opacity * 255).toString(16).padStart(2, "0");
-        }),
+        backgroundColor: bgColors,
         borderWidth: 2,
         borderColor: "#fffef8",
       }]
@@ -508,6 +483,134 @@ const P = {
             label: item => ` ${item.label}: ${item.raw} question${item.raw === 1 ? "" : "s"}`,
           }
         }
+      }
+    }
+  });
+})();
+
+// ---------------------------------------------------------------------------
+// Per-trap time bars — horizontal bar showing seconds per wrong question
+// ---------------------------------------------------------------------------
+(function () {
+  const dataEl = document.getElementById("trapCardsData");
+  if (!dataEl) return;
+  const cards = JSON.parse(dataEl.textContent);
+  if (!cards.length) return;
+
+  const tickFont = { family: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif", size: 11 };
+
+  document.querySelectorAll(".trap-time-canvas").forEach(canvas => {
+    const key = canvas.dataset.trap;
+    // Find the matching card
+    const card = cards.find(c => (c.trap_key + "-" + c.section.toLowerCase()) === key);
+    if (!card) return;
+
+    const qs = card.questions.filter(q => q.time_seconds != null);
+    if (!qs.length) return;
+
+    const color = card.section === "ELA" ? P.sage : P.terra;
+
+    new Chart(canvas.getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: qs.map(q => "Q" + q.number),
+        datasets: [{
+          label: "Time (seconds)",
+          data: qs.map(q => q.time_seconds),
+          backgroundColor: color + "99",
+          borderColor: color,
+          borderWidth: 1,
+          barThickness: 14,
+        }]
+      },
+      options: {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          title: {
+            display: true, text: "Time spent per question", align: "start",
+            font: { family: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif", size: 12, weight: "normal" },
+            color: "rgba(36,15,5,0.45)", padding: { bottom: 6 },
+          },
+          tooltip: {
+            callbacks: { label: item => ` ${item.raw}s on Q${qs[item.dataIndex].number} (${qs[item.dataIndex].skill})` }
+          }
+        },
+        scales: {
+          x: { grid: { color: P.grid, borderDash: [2, 3] }, ticks: { font: tickFont, callback: v => v + "s" } },
+          y: { grid: { display: false }, ticks: { font: { ...tickFont, weight: "600" } } }
+        }
+      }
+    });
+  });
+})();
+
+// ---------------------------------------------------------------------------
+// Trap by difficulty — which difficulty levels fall for traps most
+// ---------------------------------------------------------------------------
+(function () {
+  const dataEl = document.getElementById("trapCardsData");
+  if (!dataEl) return;
+  const cards = JSON.parse(dataEl.textContent);
+  if (!cards.length) return;
+
+  // Aggregate: count traps by difficulty
+  const diffCounts = { Easy: 0, Medium: 0, Hard: 0 };
+  cards.forEach(c => c.questions.forEach(q => {
+    if (diffCounts[q.difficulty] !== undefined) diffCounts[q.difficulty]++;
+  }));
+  const total = Object.values(diffCounts).reduce((a, b) => a + b, 0);
+  if (!total) return;
+
+  // Insert a canvas before the "Traps that caught you" heading
+  const trapHeading = document.querySelector(".shsat-trap-section-heading");
+  if (!trapHeading) return;
+  const wrap = document.createElement("div");
+  wrap.className = "shsat-chart-wrap";
+  wrap.style.marginBottom = "48px";
+  wrap.style.maxHeight = "260px";
+  const canvas = document.createElement("canvas");
+  canvas.id = "trapDiffChart";
+  wrap.appendChild(canvas);
+  trapHeading.parentNode.insertBefore(wrap, trapHeading);
+
+  const labels = ["Easy", "Medium", "Hard"];
+  const data = labels.map(l => diffCounts[l]);
+  const colors = [P.amber, P.sage, P.terra];
+  const tickFont = { family: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif", size: 12 };
+
+  new Chart(canvas.getContext("2d"), {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        data,
+        backgroundColor: colors,
+        borderWidth: 0,
+        barThickness: 40,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        title: {
+          display: true, text: "Which difficulty catches you?", align: "start",
+          font: { family: "-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif", size: 20, weight: "bold" },
+          color: P.text, padding: { bottom: 16 },
+        },
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: item => ` ${item.raw} trap${item.raw === 1 ? "" : "s"} on ${item.label} questions`,
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { ...tickFont, weight: "600" } } },
+        y: { grid: { color: P.grid, borderDash: [2, 3] }, ticks: { stepSize: 1, font: tickFont },
+             title: { display: true, text: "Traps caught", font: { ...tickFont, size: 11 }, color: "rgba(0,0,0,0.4)" } }
       }
     }
   });

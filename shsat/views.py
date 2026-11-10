@@ -1499,6 +1499,7 @@ def error_analysis(request, attempt_id):
             "difficulty": (q.difficulty or "medium").capitalize(),
             "student_answer": ans.selected_answer,
             "correct_answer": q.correct_answer,
+            "time_seconds": ans.time_spent_seconds,
         })
 
     # Build sorted list: ELA first, then Math; within each section sorted by count desc
@@ -1639,12 +1640,6 @@ def error_analysis(request, attempt_id):
             **_parse_quant_comparison(q.question_text),
         })
 
-    # Parent insights: easy questions wrong, unanswered count, pacing
-    easy_wrong = [q for q in question_review if q["difficulty"] == "Easy" and not q["is_correct"] and not q["unanswered"]]
-    unanswered_count = sum(1 for q in question_review if q["unanswered"])
-    total_time_minutes = sum(s["time_minutes"] for s in section_summary_data)
-    pacing_ok = total_time_minutes <= 170 if has_section_time else None
-
     context = {
         "attempt": attempt,
         "is_hunter": is_hunter,
@@ -1657,10 +1652,6 @@ def error_analysis(request, attempt_id):
         "has_section_time": has_section_time,
         "passage_summary": passage_summary,
         "question_review": question_review,
-        "easy_wrong": easy_wrong,
-        "unanswered_count": unanswered_count,
-        "pacing_ok": pacing_ok,
-        "total_time_minutes": round(total_time_minutes, 0) if has_section_time else None,
         "review_sections": [(s["section_code"], s["section"]) for s in section_summary_data],
         "parent_template": "shsat/base_hunter.html" if is_hunter else "shsat/base_shsat.html",
         "has_paid": parent.has_paid,
