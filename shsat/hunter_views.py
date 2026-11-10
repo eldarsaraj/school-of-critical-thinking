@@ -511,6 +511,40 @@ def hunter_dashboard(request):
     latest_composite_pct = attempts_with_pct[0]["comp_pct"] if attempts_with_pct else None
     latest_composite_band, latest_composite_color = _hunter_band(latest_composite_pct)
 
+    # Platform score distribution (all completed Hunter attempts across all users)
+    import math as _math
+    _all_hunter = (
+        TestAttempt.objects.filter(
+            is_completed=True, composite_score__isnull=False,
+            test__exam_type="hunter", test__is_drill=False,
+        )
+        .select_related("test")
+    )
+    # Build question totals per test for percentage conversion
+    _dist_test_ids = set(_all_hunter.values_list("test_id", flat=True))
+    _dist_q_totals = {}
+    for _row in (
+        _Question.objects.filter(test_id__in=_dist_test_ids)
+        .values("test_id")
+        .annotate(n=_Count("id"))
+    ):
+        _dist_q_totals[_row["test_id"]] = _row["n"]
+
+    _pct_scores = []
+    for _a in _all_hunter:
+        _total = _dist_q_totals.get(_a.test_id, 0)
+        if _total:
+            _pct_scores.append(round(_a.composite_score / _total * 100))
+
+    platform_n = len(_pct_scores)
+    if platform_n >= 5:
+        platform_mean = round(sum(_pct_scores) / platform_n, 1)
+        _variance = sum((s - platform_mean) ** 2 for s in _pct_scores) / platform_n
+        platform_std = round(max(_math.sqrt(_variance), 5), 1)
+    else:
+        platform_mean = None
+        platform_std = None
+
     context = {
         "parent": parent,
         "in_progress": in_progress,
@@ -532,6 +566,9 @@ def hunter_dashboard(request):
         "top_trap_label": top_trap_label,
         "sankey_rc": sankey_rc,
         "sankey_math": sankey_math,
+        "platform_mean": platform_mean,
+        "platform_std": platform_std,
+        "platform_n": platform_n,
     }
     return render(request, "shsat/hunter_dashboard.html", context)
 
