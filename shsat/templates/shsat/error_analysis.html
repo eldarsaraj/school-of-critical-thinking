@@ -47,7 +47,7 @@
 
 {% regroup trap_cards by section as section_groups %}
 {% for group in section_groups %}
-<p class="shsat-trap-section-heading shsat-trap-section-heading--{{ group.grouper|lower }}">{% if is_hunter and group.grouper == "ELA" %}RC &amp; Writing{% else %}{{ group.grouper }}{% endif %} traps</p>
+<p class="shsat-trap-section-heading shsat-trap-section-heading--{{ group.grouper|lower }}">{% if is_hunter and group.grouper == "ELA" %}Reading comprehension{% else %}{{ group.grouper }}{% endif %} traps</p>
 {% for card in group.list %}
 <div class="shsat-trap-card shsat-trap-card--{{ card.section|lower }}">
   <div class="shsat-trap-card__header">
@@ -323,7 +323,7 @@
   <div class="shsat-teaser-locked">
     {% regroup trap_cards by section as section_groups %}
     {% for group in section_groups %}
-    <p class="shsat-trap-section-heading shsat-trap-section-heading--{{ group.grouper|lower }}">{% if is_hunter and group.grouper == "ELA" %}RC &amp; Writing{% else %}{{ group.grouper }}{% endif %} traps</p>
+    <p class="shsat-trap-section-heading shsat-trap-section-heading--{{ group.grouper|lower }}">{% if is_hunter and group.grouper == "ELA" %}Reading comprehension{% else %}{{ group.grouper }}{% endif %} traps</p>
     {% for card in group.list %}
     <div class="shsat-trap-card shsat-trap-card--{{ card.section|lower }}">
       <div class="shsat-trap-card__header">
@@ -483,7 +483,7 @@ const P = {
   const isHunter = {{ is_hunter|yesno:"true,false" }};
   const elaCards  = cards.filter(c => c.section === "ELA");
   const mathCards = cards.filter(c => c.section === "Math");
-  renderDonut("trapDonutEla",  elaCards,  elaShades,  isHunter ? "RC & Writing traps" : "ELA traps");
+  renderDonut("trapDonutEla",  elaCards,  elaShades,  isHunter ? "Reading comprehension traps" : "ELA traps");
   renderDonut("trapDonutMath", mathCards, mathShades, "Math traps");
 })();
 
