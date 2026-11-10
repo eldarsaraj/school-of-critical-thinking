@@ -2730,4 +2730,10 @@
     margin-left: 0;
     width: 100%;
   }
+  .shsat-donut-pair {
+    flex-direction: column !important;
+  }
+  .shsat-donut-pair__item {
+    max-width: 100% !important;
+  }
 }

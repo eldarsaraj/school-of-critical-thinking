@@ -22,10 +22,16 @@
 </div>
 {{ section_summary_data|json_script:"sectionSummaryData" }}
 
-<!-- Trap distribution donut -->
+<!-- Trap distribution donuts (ELA + Math side by side) -->
 {% if trap_cards %}
-<div class="shsat-chart-wrap" style="margin-bottom:48px;max-width:480px;max-height:320px;">
-  <canvas id="trapDonutChart"></canvas>
+<div style="font-family:-apple-system,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:bold;color:#240f05;margin-bottom:16px;">Traps you caught on this test</div>
+<div class="shsat-donut-pair" style="display:flex;gap:24px;margin-bottom:48px;">
+  <div class="shsat-donut-pair__item" style="flex:1;min-width:0;max-width:400px;">
+    <canvas id="trapDonutEla"></canvas>
+  </div>
+  <div class="shsat-donut-pair__item" style="flex:1;min-width:0;max-width:400px;">
+    <canvas id="trapDonutMath"></canvas>
+  </div>
 </div>
 {{ trap_cards|json_script:"trapCardsData" }}
 {% endif %}
@@ -430,62 +436,63 @@ const P = {
 })();
 
 // ---------------------------------------------------------------------------
-// Trap distribution donut — distinct shades per slice
+// Trap distribution donuts — one for ELA, one for Math
 // ---------------------------------------------------------------------------
 (function () {
-  const el = document.getElementById("trapDonutChart");
-  if (!el) return;
   const dataEl = document.getElementById("trapCardsData");
   if (!dataEl) return;
   const cards = JSON.parse(dataEl.textContent);
   if (!cards.length) return;
 
-  // Full palette colors — cycle through all available shades
   const elaShades  = ["#7a8775", "#aba784", "#c58350", "#5e6e58", "#9aab94", "#4a5c44", "#b3c4ad"];
   const mathShades = ["#ab553f", "#dda78c", "#c58350", "#8a3d2a", "#eec4b0", "#6e2e1e", "#c46a4e"];
-  let elaIdx = 0, mathIdx = 0;
+  const tickFont = { family: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif", size: 11 };
 
-  const bgColors = cards.map(c => {
-    if (c.section === "ELA") return elaShades[elaIdx++ % elaShades.length];
-    return mathShades[mathIdx++ % mathShades.length];
-  });
-
-  const labels = cards.map(c => c.label);
-  const counts = cards.map(c => c.count);
-  const tickFont = { family: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif", size: 12 };
-
-  new Chart(el.getContext("2d"), {
-    type: "doughnut",
-    data: {
-      labels,
-      datasets: [{
-        data: counts,
-        backgroundColor: bgColors,
-        borderWidth: 2,
-        borderColor: "#fffef8",
-      }]
-    },
-    options: {
-      responsive: true,
-      cutout: "55%",
-      plugins: {
-        title: {
-          display: true, text: "Traps you caught on this test", align: "start",
-          font: { family: "-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif", size: 20, weight: "bold" },
-          color: P.text, padding: { bottom: 12 },
-        },
-        legend: {
-          position: "right",
-          labels: { font: tickFont, boxWidth: 14, padding: 10, color: P.text },
-        },
-        tooltip: {
-          callbacks: {
-            label: item => ` ${item.label}: ${item.raw} question${item.raw === 1 ? "" : "s"}`,
+  function renderDonut(canvasId, sectionCards, shades, title) {
+    const el = document.getElementById(canvasId);
+    if (!el || !sectionCards.length) {
+      if (el) el.parentElement.style.display = "none";
+      return;
+    }
+    const colors = sectionCards.map((_, i) => shades[i % shades.length]);
+    new Chart(el.getContext("2d"), {
+      type: "doughnut",
+      data: {
+        labels: sectionCards.map(c => c.label),
+        datasets: [{
+          data: sectionCards.map(c => c.count),
+          backgroundColor: colors,
+          borderWidth: 2,
+          borderColor: "#fffef8",
+        }]
+      },
+      options: {
+        responsive: true,
+        cutout: "50%",
+        plugins: {
+          title: {
+            display: true, text: title, align: "start",
+            font: { family: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif", size: 14, weight: "600" },
+            color: P.text, padding: { bottom: 8 },
+          },
+          legend: {
+            position: "bottom",
+            labels: { font: tickFont, boxWidth: 12, padding: 8, color: P.text },
+          },
+          tooltip: {
+            callbacks: {
+              label: item => ` ${item.label}: ${item.raw} question${item.raw === 1 ? "" : "s"}`,
+            }
           }
         }
       }
-    }
-  });
+    });
+  }
+
+  const elaCards  = cards.filter(c => c.section === "ELA");
+  const mathCards = cards.filter(c => c.section === "Math");
+  renderDonut("trapDonutEla",  elaCards,  elaShades,  "ELA traps");
+  renderDonut("trapDonutMath", mathCards, mathShades, "Math traps");
 })();
 
 // ---------------------------------------------------------------------------
