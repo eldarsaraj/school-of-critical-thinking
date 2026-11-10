@@ -25,11 +25,11 @@
 <!-- Trap distribution donuts (ELA + Math side by side) -->
 {% if trap_cards %}
 <div style="font-family:-apple-system,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:bold;color:#240f05;margin-bottom:16px;">Traps you caught on this test</div>
-<div class="shsat-donut-pair" style="display:flex;gap:24px;margin-bottom:48px;">
-  <div class="shsat-donut-pair__item" style="flex:1;min-width:0;max-width:400px;">
+<div class="shsat-donut-pair" style="display:flex;gap:24px;margin-bottom:48px;align-items:start;">
+  <div class="shsat-donut-pair__item" style="flex:1;min-width:0;max-width:400px;aspect-ratio:1/1;">
     <canvas id="trapDonutEla"></canvas>
   </div>
-  <div class="shsat-donut-pair__item" style="flex:1;min-width:0;max-width:400px;">
+  <div class="shsat-donut-pair__item" style="flex:1;min-width:0;max-width:400px;aspect-ratio:1/1;">
     <canvas id="trapDonutMath"></canvas>
   </div>
 </div>
@@ -458,6 +458,7 @@ const P = {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         cutout: "50%",
         plugins: {
           title: {
