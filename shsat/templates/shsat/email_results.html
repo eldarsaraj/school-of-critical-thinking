@@ -9,7 +9,7 @@
   <p style="margin: 0 0 24px 0;">Hello,</p>
 
   <p style="margin: 0 0 16px 0;">
-    Your child has finished the <strong>{{ test_title }}</strong>. The results are ready.
+    Your child has finished the <strong>{{ test_title }}</strong>. Here's how they did:
   </p>
 
   <table style="width: 100%; border-collapse: collapse; margin: 0 0 28px 0; font-size: 15px;">
@@ -26,32 +26,46 @@
     {% if not is_drill %}
     <tr>
       <td style="padding: 10px 0; color: #555;">Composite score (estimated)</td>
-      <td style="padding: 10px 0; font-weight: bold; text-align: right;">{{ composite_score }}</td>
+      <td style="padding: 10px 0; font-weight: bold; text-align: right; font-size: 18px;">{{ composite_score }}</td>
     </tr>
     {% endif %}
   </table>
 
-  <p style="margin: 0 0 16px 0;">
-    The full error analysis breaks down which answer traps appeared most often and which skill areas
-    need the most work. It is the most useful part of the results.
-  </p>
+  {% if top_trap_label %}
+  <div style="background: #f9f6f2; border-left: 3px solid #ab553f; padding: 14px 18px; margin: 0 0 28px 0;">
+    <p style="margin: 0 0 4px 0; font-size: 14px; font-weight: bold; color: #ab553f;">Top trap: {{ top_trap_label }}</p>
+    <p style="margin: 0; font-size: 14px; color: #555;">
+      This wrong-answer pattern caught your child {{ top_trap_count }} time{{ top_trap_count|pluralize }} on this test.
+      The error analysis shows exactly which questions were affected and why.
+    </p>
+  </div>
+  {% endif %}
 
   <p style="margin: 0 0 32px 0;">
-    <a href="{{ error_analysis_url }}" style="color: #1a1a1a; font-weight: bold;">
-      View the full error analysis &rarr;
+    <a href="{{ error_analysis_url }}" style="display: inline-block; padding: 12px 24px; background: #1a1a1a; color: #fff; text-decoration: none; font-weight: bold; font-size: 14px;">
+      View the error analysis &rarr;
     </a>
   </p>
 
-  {% if is_baseline %}
+  {% if is_baseline and not has_paid %}
   <hr style="border: none; border-top: 1px solid #ddd; margin: 32px 0;">
 
-  <p style="margin: 0 0 12px 0; font-size: 15px; font-weight: bold;">Want to track whether they improve?</p>
+  <p style="margin: 0 0 8px 0; font-size: 16px; font-weight: bold;">This is one data point. You need at least two.</p>
   <p style="margin: 0 0 16px 0; font-size: 14px; color: #555; line-height: 1.7;">
-    The Baseline Test shows where your child stands today. The four Benchmark Tests show whether
-    they're improving — and the error analysis after each one tells you exactly what to focus on next.
+    The Baseline Test tells you where your child stands today. But one score doesn't tell you whether they're improving.
+    The Benchmark Tests do — each one comes with a full error analysis that shows exactly what changed and what to focus on next.
   </p>
+  <p style="margin: 0 0 8px 0; font-size: 14px; color: #555;">
+    For less than the cost of one tutoring session:
+  </p>
+  <ul style="margin: 0 0 20px 0; padding-left: 18px; font-size: 14px; color: #555; line-height: 1.8;">
+    <li>4 full-length Benchmark Tests</li>
+    <li>Question-by-question error analysis after each one</li>
+    <li>Score tracking with projected progress</li>
+    <li>Permanent access — no subscription, no expiry</li>
+  </ul>
   <p style="margin: 0 0 32px 0;">
-    <a href="{{ upgrade_url }}" style="color: #1a1a1a; font-weight: bold; font-size: 14px;">
+    <a href="{{ upgrade_url }}" style="display: inline-block; padding: 12px 24px; background: #1a1a1a; color: #fff; text-decoration: none; font-weight: bold; font-size: 14px;">
       Unlock all 4 Benchmark Tests — $149 &rarr;
     </a>
   </p>

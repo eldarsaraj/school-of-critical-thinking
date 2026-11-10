@@ -30,6 +30,23 @@
   </div>
 </div>
 
+{% if not has_paid and latest_composite and placement_data %}
+<div style="background:rgba(238,226,211,0.2);border:1px solid #eee2d3;border-radius:6px;padding:16px 20px;margin-bottom:24px;max-width:560px;">
+  <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:14px;color:#240f05;margin:0 0 6px;line-height:1.5;">
+    {% with p=placement_data.0 %}
+    {% if p.gap >= 0 %}
+    Your child scored <strong>{{ latest_composite }}</strong> — <strong style="color:#7a8775;">{{ p.gap }} points above</strong> the {{ p.school_short }} cutoff.
+    {% else %}
+    Your child scored <strong>{{ latest_composite }}</strong> — <strong style="color:#ab553f;">{{ p.gap|cut:"-" }} points below</strong> the {{ p.school_short }} cutoff ({{ p.cutoff }}).
+    {% endif %}
+    {% endwith %}
+  </p>
+  <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:13px;color:#aba784;margin:0;">
+    Benchmark Tests track whether that gap is closing. <a href="{% url 'shsat_upgrade' %}" style="color:#240f05;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(36,15,5,0.3);">Unlock Benchmarks →</a>
+  </p>
+</div>
+{% endif %}
+
 <!-- Score chart -->
 <div class="shsat-chart-wrap" style="padding-top:8px;">
   <canvas id="scoreChart"></canvas>

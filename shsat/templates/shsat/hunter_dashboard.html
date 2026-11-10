@@ -54,6 +54,23 @@
   </div>
 </div>
 
+{% if not hunter_has_paid and latest_composite_pct is not None %}
+<div style="background:rgba(238,226,211,0.2);border:1px solid #eee2d3;border-radius:6px;padding:16px 20px;margin-bottom:24px;max-width:560px;">
+  <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:14px;color:#240f05;margin:0 0 6px;line-height:1.5;">
+    {% if latest_composite_pct >= 85 %}
+    Your child scored <strong>{{ latest_composite_pct }}%</strong> — a strong start. Benchmark Tests will show if this holds.
+    {% elif latest_composite_pct >= 70 %}
+    Your child scored <strong>{{ latest_composite_pct }}%</strong> — promising, but is it consistent? Benchmark Tests will tell you.
+    {% else %}
+    Your child scored <strong>{{ latest_composite_pct }}%</strong> — there's room to grow. Benchmark Tests will track the progress.
+    {% endif %}
+  </p>
+  <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:13px;color:#aba784;margin:0;">
+    One test is a snapshot. Two tests are a trend. <a href="{% url 'hunter_upgrade' %}" style="color:#240f05;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(36,15,5,0.3);">Unlock Benchmarks →</a>
+  </p>
+</div>
+{% endif %}
+
 <!-- Score history line chart -->
 <div class="shsat-chart-wrap" style="padding-top:8px;">
   <canvas id="scoreChart"></canvas>
@@ -267,6 +284,18 @@ Chart.register(emptyStatePlugin);
   const history = JSON.parse(dataEl.textContent);
   const isEmpty = history.length === 0;
 
+  // Ghost benchmark labels — show empty slots for tests not yet taken
+  const totalSlots = 3; // Baseline + Benchmark 1 + Benchmark 2
+  const realLabels = history.map(d => d.seq);
+  const ghostLabels = [];
+  if (!isEmpty && history.length < totalSlots) {
+    const existingBenchmarks = history.filter(d => d.seq.toLowerCase().startsWith("benchmark")).length;
+    for (let i = existingBenchmarks + 1; i <= 2; i++) {
+      ghostLabels.push("Benchmark " + i + " ⟶");
+    }
+  }
+  const allLabels = [...realLabels, ...ghostLabels];
+
   const greyLine = { borderColor: "#eee2d3", backgroundColor: "transparent",
                      pointBackgroundColor: "#eee2d3", borderWidth: 2, tension: 0.2, pointRadius: 4 };
 
@@ -291,7 +320,7 @@ Chart.register(emptyStatePlugin);
   new Chart(el.getContext("2d"), {
     type: "line",
     data: {
-      labels: isEmpty ? [] : history.map(d => d.seq),
+      labels: isEmpty ? [] : allLabels,
       datasets,
     },
     options: {

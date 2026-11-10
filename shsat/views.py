@@ -1124,6 +1124,30 @@ def test_submit(request, test_id):
     except Exception:
         pass
 
+    # Compute the top trap for email context
+    from .forms import DISTRACTOR_CHOICES as _DC_email
+    import re as _re_email
+    _dist_label_email = {}
+    for _entry in _DC_email:
+        if isinstance(_entry[1], (list, tuple)) and _entry[0] not in ("",):
+            for _k, _l in _entry[1]:
+                _dist_label_email[_k] = _l
+        elif _entry[0]:
+            _dist_label_email[_entry[0]] = _entry[1]
+    _trap_counts_email = {}
+    for _ans in answers:
+        if _ans.selected_answer and _ans.is_correct is False and _ans.question.distractor_types:
+            _trap_key = _ans.question.distractor_types.get(_ans.selected_answer, "")
+            if _trap_key:
+                _trap_counts_email[_trap_key] = _trap_counts_email.get(_trap_key, 0) + 1
+    top_trap_label_email = None
+    top_trap_count_email = 0
+    if _trap_counts_email:
+        _top_key = max(_trap_counts_email, key=_trap_counts_email.get)
+        _raw_label = _dist_label_email.get(_top_key, _top_key.replace("_", " ").title())
+        top_trap_label_email = _re_email.sub(r"^\([EM]\)\s*", "", _raw_label)
+        top_trap_count_email = _trap_counts_email[_top_key]
+
     if attempt.test.exam_type == "hunter":
         # Pre-load heavy models in the main thread so torch/nn are imported
         # before the daemon thread starts (torch lazy modules break otherwise).
@@ -1169,6 +1193,11 @@ def test_submit(request, test_id):
                 "composite_pct": composite_pct,
                 "composite_band": composite_band,
                 "error_analysis_url": error_analysis_url,
+                "top_trap_label": top_trap_label_email,
+                "top_trap_count": top_trap_count_email,
+                "is_baseline": attempt.test.is_free,
+                "upgrade_url": request.build_absolute_uri("/hunter/upgrade/"),
+                "hunter_has_paid": parent.hunter_has_paid,
             })
             send_mail(
                 subject=f"Results ready: {attempt.test.title}",
@@ -1203,6 +1232,9 @@ def test_submit(request, test_id):
             "is_baseline": attempt.test.is_free,
             "is_drill": attempt.test.is_drill,
             "upgrade_url": request.build_absolute_uri("/shsat/upgrade/"),
+            "top_trap_label": top_trap_label_email,
+            "top_trap_count": top_trap_count_email,
+            "has_paid": parent.has_paid,
         })
         send_mail(
             subject=f"Results ready: {attempt.test.title}",
