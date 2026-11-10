@@ -7,7 +7,7 @@
 {% block shsat_content %}
 <!-- Header -->
 <div style="margin-bottom:32px;">
-  <a href="{% url 'shsat_test_results' attempt.id %}" style="font-size:13px;color:rgba(0,0,0,0.45);text-decoration:none;">← Back to results</a>
+  <a href="{% if is_hunter %}{% url 'hunter_test_results' attempt.id %}{% else %}{% url 'shsat_test_results' attempt.id %}{% endif %}" style="font-size:13px;color:rgba(0,0,0,0.45);text-decoration:none;">← Back to results</a>
   <h1 class="shsat-page-title" style="margin-top:12px;">Error Analysis</h1>
   <p class="shsat-page-subtitle">
     <strong style="color:#240f05;">{{ attempt.test.title }}</strong> · {{ attempt.submitted_at|date:"F j, Y" }}
@@ -47,7 +47,7 @@
 
 {% regroup trap_cards by section as section_groups %}
 {% for group in section_groups %}
-<p class="shsat-trap-section-heading shsat-trap-section-heading--{{ group.grouper|lower }}">{{ group.grouper }} traps</p>
+<p class="shsat-trap-section-heading shsat-trap-section-heading--{{ group.grouper|lower }}">{% if is_hunter and group.grouper == "ELA" %}RC &amp; Writing{% else %}{{ group.grouper }}{% endif %} traps</p>
 {% for card in group.list %}
 <div class="shsat-trap-card shsat-trap-card--{{ card.section|lower }}">
   <div class="shsat-trap-card__header">
@@ -309,8 +309,8 @@
 {% endfor %}
 
 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:48px;">
-  <a href="{% url 'shsat_test_results' attempt.id %}" class="shsat-btn shsat-btn--outline">← Back to results</a>
-  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline">Dashboard</a>
+  <a href="{% if is_hunter %}{% url 'hunter_test_results' attempt.id %}{% else %}{% url 'shsat_test_results' attempt.id %}{% endif %}" class="shsat-btn shsat-btn--outline">← Back to results</a>
+  <a href="{% if is_hunter %}{% url 'hunter_dashboard' %}{% else %}{% url 'shsat_dashboard' %}{% endif %}" class="shsat-btn shsat-btn--outline">Dashboard</a>
 </div>
 
 {% else %}
@@ -323,7 +323,7 @@
   <div class="shsat-teaser-locked">
     {% regroup trap_cards by section as section_groups %}
     {% for group in section_groups %}
-    <p class="shsat-trap-section-heading shsat-trap-section-heading--{{ group.grouper|lower }}">{{ group.grouper }} traps</p>
+    <p class="shsat-trap-section-heading shsat-trap-section-heading--{{ group.grouper|lower }}">{% if is_hunter and group.grouper == "ELA" %}RC &amp; Writing{% else %}{{ group.grouper }}{% endif %} traps</p>
     {% for card in group.list %}
     <div class="shsat-trap-card shsat-trap-card--{{ card.section|lower }}">
       <div class="shsat-trap-card__header">
@@ -356,7 +356,7 @@
 </div>
 
 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
-  <a href="{% url 'shsat_dashboard' %}" class="shsat-btn shsat-btn--outline">Back to dashboard</a>
+  <a href="{% if is_hunter %}{% url 'hunter_dashboard' %}{% else %}{% url 'shsat_dashboard' %}{% endif %}" class="shsat-btn shsat-btn--outline">Back to dashboard</a>
 </div>
 {% endif %}
 
@@ -480,9 +480,10 @@ const P = {
     });
   }
 
+  const isHunter = {{ is_hunter|yesno:"true,false" }};
   const elaCards  = cards.filter(c => c.section === "ELA");
   const mathCards = cards.filter(c => c.section === "Math");
-  renderDonut("trapDonutEla",  elaCards,  elaShades,  "ELA traps");
+  renderDonut("trapDonutEla",  elaCards,  elaShades,  isHunter ? "RC & Writing traps" : "ELA traps");
   renderDonut("trapDonutMath", mathCards, mathShades, "Math traps");
 })();
 

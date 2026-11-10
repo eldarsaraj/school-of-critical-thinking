@@ -1,33 +1,19 @@
 {% extends "shsat/base_hunter.html" %}
-{% load static %}
+{% load static shsat_extras %}
 
 {% block title %}Dashboard — Hunter Prep{% endblock %}
 {% block tab_dashboard %}active{% endblock %}
 
 {% block shsat_content %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<style>
-:root {
-  --h-correct: #5aab8c;
-  --h-correct-bg: rgba(90,171,140,.12);
-  --h-error: #c4635b;
-  --h-error-bg: rgba(196,99,91,.10);
-  --h-amber: #c49a5a;
-  --h-amber-bg: rgba(196,154,90,.12);
-  --h-neutral: #8896a8;
-}
-</style>
-
-<div style="margin-bottom:32px;">
-  <h1 class="shsat-page-title" style="margin-bottom:4px;">
-    {% if parent.child_nickname %}{{ parent.child_nickname }}'s Dashboard{% else %}Dashboard{% endif %}
-  </h1>
+<h1 class="shsat-page-title">
+  {% if parent.child_nickname %}{{ parent.child_nickname }}'s Dashboard{% else %}Dashboard{% endif %}
+</h1>
+<p class="shsat-page-subtitle">
+  {% if parent.child_nickname %}Track {{ parent.child_nickname }}'s progress.{% else %}Track your progress.{% endif %}
   {% if not parent.child_nickname %}
-  <p style="font-size:13px;color:rgba(0,0,0,0.4);margin:0;">
-    Add your child's name in <a href="{% url 'hunter_account' %}" style="color:inherit;text-decoration:underline;">Account settings</a> to personalise this page.
-  </p>
+  <span style="font-size:12px;color:rgba(0,0,0,0.35);">Add your child's name in <a href="{% url 'hunter_account' %}" style="color:inherit;text-decoration:underline;">Account settings</a> to personalise this page.</span>
   {% endif %}
-</div>
+</p>
 
 {% if in_progress %}
 <div style="background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.08);padding:16px 20px;margin-bottom:28px;max-width:520px;">
@@ -45,290 +31,656 @@
 
 {% else %}
 
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:36px;">
-  <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Latest score</div>
-    {% if latest_attempt and latest_composite_pct is not None %}
-    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:#111;line-height:1;">{{ latest_composite_pct }}<span style="font-size:16px;font-weight:400;">%</span></div>
+<!-- Stat cards -->
+<div class="shsat-stat-grid">
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__value">{% if latest_composite_pct is not None %}{{ latest_composite_pct }}%{% else %}—{% endif %}</div>
+    <div class="shsat-stat-card__label">Latest score</div>
     {% if latest_composite_band %}
-    <div style="display:inline-block;margin-top:6px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:{{ latest_composite_color }}22;color:{{ latest_composite_color }};">{{ latest_composite_band }}</div>
-    {% endif %}
-    <div style="font-size:11px;color:rgba(0,0,0,0.38);margin-top:4px;">{{ latest_attempt.test.title }}</div>
-    {% else %}
-    <div style="font-size:28px;font-weight:700;color:#ccc;">—</div>
+    <div style="display:inline-block;margin-top:4px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:{{ latest_composite_color }}22;color:{{ latest_composite_color }};">{{ latest_composite_band }}</div>
     {% endif %}
   </div>
-
-  <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Tests completed</div>
-    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:#111;line-height:1;">{{ tests_completed }}</div>
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__value">{{ tests_completed }}</div>
+    <div class="shsat-stat-card__label">Tests completed</div>
   </div>
-
-  <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Avg time / question</div>
-    {% if avg_time_per_q %}
-    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:#111;line-height:1;">{{ avg_time_per_q }}<span style="font-size:14px;font-weight:400;color:rgba(0,0,0,0.45);">m</span></div>
-    {% else %}
-    <div style="font-size:28px;font-weight:700;color:#ccc;">—</div>
-    <div style="font-size:11px;color:rgba(0,0,0,0.38);margin-top:4px;">Not yet available</div>
-    {% endif %}
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__value" style="{% if top_trap_label %}font-size:16px;{% endif %}">{% if top_trap_label %}{{ top_trap_label }}{% else %}—{% endif %}</div>
+    <div class="shsat-stat-card__label">Top trap</div>
   </div>
-
-  <div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:16px 20px;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:8px;">Essay feedback</div>
-    {% if essay_eval %}
-    <div style="font-size:28px;font-weight:700;letter-spacing:-.02em;color:var(--h-correct);line-height:1;">Ready</div>
-    {% else %}
-    <div style="font-size:28px;font-weight:700;color:#ccc;line-height:1;">—</div>
-    <div style="font-size:11px;color:rgba(0,0,0,0.38);margin-top:4px;">Pending NLP review</div>
-    {% endif %}
+  <div class="shsat-stat-card">
+    <div class="shsat-stat-card__value">{% if has_timing_data %}{{ avg_time_per_q }}m{% else %}—{% endif %}</div>
+    <div class="shsat-stat-card__label">Avg time / question</div>
   </div>
 </div>
 
-{% if score_history|length > 0 %}
-<p class="shsat-section-title">Score history</p>
-<div style="border:1px solid rgba(0,0,0,0.08);border-radius:6px;padding:20px;margin-bottom:36px;">
-  <div style="position:relative;height:300px;">
-    <canvas id="scoreHistoryChart"></canvas>
-  </div>
+<!-- Score history line chart -->
+<div class="shsat-chart-wrap" style="padding-top:8px;">
+  <canvas id="scoreChart"></canvas>
+</div>
+{{ score_history|json_script:"scoreChartData" }}
+
+<!-- Stacked bar chart (replaces test scores table) -->
+<div class="shsat-chart-wrap" style="margin-top:32px;">
+  <canvas id="attemptsChart"></canvas>
+</div>
+
+<!-- Test timing line chart -->
+<div class="shsat-chart-wrap">
+  <canvas id="timingChart"></canvas>
+</div>
+{{ attempts_chart_data|json_script:"attemptsChartData" }}
+
+<!-- Trap bar charts -->
+{% if dash_trap_data %}
+<div id="dashTrapRcWrap" class="shsat-chart-wrap" style="display:none;margin-top:48px;">
+  <canvas id="dashTrapChartRc"></canvas>
+</div>
+<div id="dashTrapMathWrap" class="shsat-chart-wrap" style="display:none;">
+  <canvas id="dashTrapChartMath"></canvas>
 </div>
 {% endif %}
 
-<p class="shsat-section-title">Test scores</p>
-<div style="margin-bottom:36px;">
-  <div style="display:grid;grid-template-columns:1fr 80px 80px 160px 130px 160px;gap:8px;padding:0 0 8px;border-bottom:1px solid rgba(0,0,0,0.1);font-size:11px;font-weight:600;color:rgba(0,0,0,0.4);letter-spacing:.03em;text-transform:uppercase;">
-    <span>Test</span><span>RC</span><span>QR+MA</span><span>Overall</span><span>Date</span><span></span>
-  </div>
-  {% for row in attempts_with_pct %}
-  <div style="display:grid;grid-template-columns:1fr 80px 80px 160px 130px 160px;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);">
-    <span style="font-size:14px;">{{ row.attempt.test.title }}</span>
-    <span style="font-size:14px;font-weight:600;">{% if row.rc_pct is not None %}{{ row.rc_pct }}%{% else %}—{% endif %}</span>
-    <span style="font-size:14px;font-weight:600;">{% if row.math_pct is not None %}{{ row.math_pct }}%{% else %}—{% endif %}</span>
-    <span>
-      {% if row.comp_pct is not None %}
-      <span style="font-size:14px;font-weight:700;color:#111;">{{ row.comp_pct }}%</span>
-      {% if row.comp_band %}
-      <span style="margin-left:6px;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;background:{{ row.comp_color }}22;color:{{ row.comp_color }};">{{ row.comp_band }}</span>
-      {% endif %}
-      {% else %}—{% endif %}
-    </span>
-    <span style="font-size:12px;color:rgba(0,0,0,0.4);">{{ row.attempt.submitted_at|date:"M j, Y" }}</span>
-    <span><a href="{% url 'hunter_error_analysis' row.attempt.id %}" style="font-size:12px;color:rgba(0,0,0,0.55);">Error analysis &rarr;</a></span>
-  </div>
-  {% endfor %}
+<!-- Sankey diagrams -->
+{% if sankey_rc %}
+<div id="sankeyRcWrap" class="shsat-chart-wrap" style="margin-top:16px;">
+  <canvas id="sankeyChartRc"></canvas>
 </div>
+{% endif %}
+{% if sankey_math %}
+<div id="sankeyMathWrap" class="shsat-chart-wrap" style="margin-top:16px;">
+  <canvas id="sankeyChartMath"></canvas>
+</div>
+{% endif %}
+{% if dash_trap_data %}
+<p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;color:#aba784;margin:4px 0 12px;line-height:1.5;">
+  Complete more tests to see how your trap patterns change over time.
+</p>
+{% endif %}
 
+<!-- Skill accuracy radar charts -->
 {% if skill_accuracy_data %}
-<p class="shsat-section-title">Skill accuracy</p>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px;">
-  <div>
-    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:12px;">Reading &amp; Writing</div>
-    {% for s in skill_accuracy_data %}
-    {% if s.section == "reading_comprehension" or s.section == "writing" %}
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-      <span style="flex:0 0 130px;font-size:12px;color:rgba(0,0,0,0.65);">{{ s.label }}</span>
-      <div style="flex:1;height:6px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;">
-        <div style="height:100%;width:{{ s.accuracy }}%;background:{% if s.accuracy >= 75 %}var(--h-correct){% elif s.accuracy >= 50 %}var(--h-amber){% else %}var(--h-error){% endif %};border-radius:3px;"></div>
-      </div>
-      <span style="flex:0 0 38px;font-size:12px;font-weight:600;text-align:right;">{{ s.accuracy }}%</span>
-    </div>
-    {% endif %}
-    {% endfor %}
-  </div>
-  <div>
-    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:12px;">Math</div>
-    {% for s in skill_accuracy_data %}
-    {% if s.section == "quantitative_reasoning" or s.section == "math_achievement" %}
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-      <span style="flex:0 0 130px;font-size:12px;color:rgba(0,0,0,0.65);">{{ s.label }}</span>
-      <div style="flex:1;height:6px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;">
-        <div style="height:100%;width:{{ s.accuracy }}%;background:{% if s.accuracy >= 75 %}var(--h-correct){% elif s.accuracy >= 50 %}var(--h-amber){% else %}var(--h-error){% endif %};border-radius:3px;"></div>
-      </div>
-      <span style="flex:0 0 38px;font-size:12px;font-weight:600;text-align:right;">{{ s.accuracy }}%</span>
-    </div>
-    {% endif %}
-    {% endfor %}
-  </div>
+<div id="skillRadarRcWrap" class="shsat-chart-wrap" style="display:none;margin-top:48px;">
+  <canvas id="skillRadarRc"></canvas>
+</div>
+<div id="skillRadarMathWrap" class="shsat-chart-wrap" style="display:none;">
+  <canvas id="skillRadarMath"></canvas>
 </div>
 {% endif %}
 
-{% if has_timing_data and skill_accuracy_data %}
-<p class="shsat-section-title">Average time per skill</p>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px;">
-  <div>
-    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:12px;">Reading &amp; Writing</div>
-    {% for s in skill_accuracy_data %}
-    {% if s.avg_time and s.section == "reading_comprehension" or s.avg_time and s.section == "writing" %}
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-      <span style="flex:0 0 130px;font-size:12px;color:rgba(0,0,0,0.65);">{{ s.label }}</span>
-      <div style="flex:1;height:6px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;">
-        <div style="height:100%;width:{% widthratio s.avg_time 5 100 %}%;max-width:100%;background:var(--h-neutral);border-radius:3px;"></div>
-      </div>
-      <span style="flex:0 0 42px;font-size:12px;text-align:right;color:rgba(0,0,0,0.55);">{{ s.avg_time }}m</span>
+<!-- Focus areas -->
+{% if skill_accuracy_data %}
+<div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;color:#240f05;margin-top:48px;margin-bottom:8px;">Areas you must improve in</div>
+<p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:13px;color:#aba784;margin-bottom:20px;">Your three weakest skills, ranked by accuracy. Target these first.</p>
+<div class="shsat-focus-grid">
+  {% for skill in skill_accuracy_data|slice:":3" %}
+  <div class="shsat-focus-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div class="shsat-focus-card__skill" style="margin-bottom:0;">{{ skill.label|first_word }}</div>
+      {% if skill.is_persistent %}
+      <span class="shsat-persistence-badge shsat-persistence-badge--persistent">Persistent gap</span>
+      {% elif skill.weak_attempts == 1 %}
+      <span class="shsat-persistence-badge shsat-persistence-badge--new">First seen</span>
+      {% endif %}
     </div>
-    {% endif %}
-    {% endfor %}
-  </div>
-  <div>
-    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:12px;">Math</div>
-    {% for s in skill_accuracy_data %}
-    {% if s.avg_time and s.section == "quantitative_reasoning" or s.avg_time and s.section == "math_achievement" %}
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-      <span style="flex:0 0 130px;font-size:12px;color:rgba(0,0,0,0.65);">{{ s.label }}</span>
-      <div style="flex:1;height:6px;background:rgba(0,0,0,0.07);border-radius:3px;overflow:hidden;">
-        <div style="height:100%;width:{% widthratio s.avg_time 5 100 %}%;max-width:100%;background:var(--h-neutral);border-radius:3px;"></div>
-      </div>
-      <span style="flex:0 0 42px;font-size:12px;text-align:right;color:rgba(0,0,0,0.55);">{{ s.avg_time }}m</span>
-    </div>
-    {% endif %}
-    {% endfor %}
-  </div>
-</div>
-{% endif %}
-
-{% if focus_areas %}
-<p class="shsat-section-title">Focus areas</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:36px;">
-  {% for s in focus_areas %}
-  <div style="border:1px solid rgba(196,99,91,.25);border-radius:6px;padding:16px 18px;background:var(--h-error-bg);">
-    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--h-error);margin-bottom:6px;">
-      {% if s.section == "reading_comprehension" or s.section == "writing" %}Reading{% else %}Math{% endif %}
-    </div>
-    <div style="font-size:16px;font-weight:700;color:#111;margin-bottom:6px;">{{ s.label }}</div>
-    <div style="font-size:13px;color:rgba(0,0,0,0.55);">{{ s.correct }}/{{ s.total }} correct &mdash; {{ s.accuracy }}%</div>
+    <div class="shsat-focus-card__accuracy {% if skill.accuracy < 60 %}shsat-focus-card__accuracy--danger{% elif skill.accuracy < 80 %}shsat-focus-card__accuracy--warn{% else %}shsat-focus-card__accuracy--ok{% endif %}">{{ skill.accuracy }}%</div>
+    <div class="shsat-focus-card__detail">{{ skill.correct }} correct of {{ skill.total }} attempts</div>
+    <a href="{% url 'hunter_test_list' %}" class="shsat-focus-card__cta">Practice {{ skill.label }} →</a>
   </div>
   {% endfor %}
 </div>
 {% endif %}
 
+<!-- Essay snapshot -->
 {% if essay_eval %}
-<p class="shsat-section-title">Essay snapshot</p>
-<div style="border:1px solid rgba(0,0,0,0.09);border-radius:6px;padding:24px;margin-bottom:36px;">
+<div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;color:#240f05;margin-top:48px;margin-bottom:16px;">Essay snapshot</div>
+<div style="border:1px solid #eee2d3;border-radius:6px;padding:24px;margin-bottom:36px;">
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:20px;">
     {% with wc=essay_eval.word_count %}
     <div>
-      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Essay length</div>
-      <div style="font-size:20px;font-weight:700;color:#111;">{{ wc }} <span style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);">words</span></div>
-      <div style="font-size:11px;color:rgba(0,0,0,0.4);">Target: 350–500</div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Essay length</div>
+      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:#240f05;">{{ wc }} <span style="font-size:12px;font-weight:400;color:#aba784;">words</span></div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:11px;color:#aba784;">Target: 350–500</div>
     </div>
     {% endwith %}
     {% with op=essay_eval.on_prompt_relevance %}
     <div>
-      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Stays on prompt</div>
-      <div style="font-size:20px;font-weight:700;color:{% if op >= 0.75 %}var(--h-correct){% elif op >= 0.5 %}var(--h-amber){% else %}var(--h-error){% endif %};">{% widthratio op 1 100 %}%</div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Stays on prompt</div>
+      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:{% if op >= 0.75 %}#7a8775{% elif op >= 0.5 %}#c58350{% else %}#ab553f{% endif %};">{% widthratio op 1 100 %}%</div>
     </div>
     {% endwith %}
     {% with ser=essay_eval.spelling_error_rate %}
     <div>
-      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Spelling</div>
-      <div style="font-size:20px;font-weight:700;color:{% if ser <= 1 %}var(--h-correct){% elif ser <= 3 %}var(--h-amber){% else %}var(--h-error){% endif %};">{{ ser }} <span style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);">/ 100 words</span></div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Spelling</div>
+      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:{% if ser <= 1 %}#7a8775{% elif ser <= 3 %}#c58350{% else %}#ab553f{% endif %};">{{ ser }} <span style="font-size:12px;font-weight:400;color:#aba784;">/ 100 words</span></div>
     </div>
     {% endwith %}
     {% with sov=essay_eval.sentence_opener_variety %}
     <div>
-      <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(0,0,0,0.38);margin-bottom:4px;">Sentence variety</div>
-      <div style="font-size:20px;font-weight:700;color:{% if sov >= 0.6 %}var(--h-correct){% elif sov >= 0.4 %}var(--h-amber){% else %}var(--h-error){% endif %};">{% widthratio sov 1 100 %}%</div>
+      <div style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#aba784;margin-bottom:4px;">Sentence variety</div>
+      <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:{% if sov >= 0.6 %}#7a8775{% elif sov >= 0.4 %}#c58350{% else %}#ab553f{% endif %};">{% widthratio sov 1 100 %}%</div>
     </div>
     {% endwith %}
   </div>
-  <p style="font-size:12px;color:rgba(0,0,0,0.4);margin:0;">Full written feedback is in the <a href="{% url 'hunter_error_analysis_list' %}" style="color:rgba(0,0,0,0.55);">Error Analysis</a>.</p>
+  <p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;color:#aba784;margin:0;">Full written feedback is in the <a href="{% url 'hunter_error_analysis_list' %}" style="color:#240f05;">Error Analysis</a>.</p>
 </div>
 {% endif %}
 
-<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
-  <a href="{% url 'hunter_error_analysis_list' %}" class="shsat-btn">Error analysis &rarr;</a>
-  <a href="{% url 'hunter_test_list' %}" class="shsat-btn shsat-btn--outline">Practice tests</a>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
+  <a href="{% url 'hunter_test_list' %}" class="shsat-btn">Take a practice test</a>
+  <a href="{% url 'hunter_error_analysis_list' %}" class="shsat-btn shsat-btn--outline">Error analysis</a>
 </div>
 
 {% endif %}
 
-{% if score_history %}
+{{ dash_trap_data|json_script:"dashTrapData" }}
+{{ sankey_rc|json_script:"sankeyRcData" }}
+{{ sankey_math|json_script:"sankeyMathData" }}
+{% if skill_accuracy_data %}{{ skill_accuracy_data|json_script:"skillChartData" }}{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-sankey@0.19.1/dist/chartjs-chart-sankey.min.js"></script>
 <script>
+// ---------------------------------------------------------------------------
+// Shared palette & typography
+// ---------------------------------------------------------------------------
+const P = {
+  rc:        "#7a8775",
+  math:      "#ab553f",
+  correct:   "#7a8775",
+  wrong:     "#ab553f",
+  warn:      "#c58350",
+  neutral:   "#aba784",
+  composite: "#240f05",
+  grid:      "#eee2d3",
+  accent:    "#dda78c",
+  amber:     "#c58350",
+  bg:        "#fffef8",
+};
+const F = {
+  title:  "'Helvetica Neue', Helvetica, Arial, sans-serif",
+  label:  "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif",
+};
+const titleColor = "#240f05";
+
+// Plugin: empty state message
+const emptyStatePlugin = {
+  id: "emptyState",
+  afterDraw(chart) {
+    const isEmpty = chart.data.datasets.every(ds => !ds.data || ds.data.length === 0);
+    if (!isEmpty) return;
+    const { ctx, width, height } = chart;
+    const msg = chart.options._emptyMessage || "No data yet";
+    ctx.save();
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = "400 14px " + F.label;
+    ctx.fillStyle = "#aba784";
+    ctx.fillText(msg, width / 2, height / 2);
+    ctx.restore();
+  }
+};
+Chart.register(emptyStatePlugin);
+
+// ---------------------------------------------------------------------------
+// Score history line chart (percentage-based, 0–100%)
+// ---------------------------------------------------------------------------
 (function () {
-  const history = {{ score_history_json|safe }};
-  if (!history.length) return;
+  const el = document.getElementById("scoreChart");
+  if (!el) return;
+  const dataEl = document.getElementById("scoreChartData");
+  if (!dataEl) return;
+  const history = JSON.parse(dataEl.textContent);
+  const isEmpty = history.length === 0;
 
-  const labels = history.map(e => e.seq);
-  const totals = history.map(e => e.total);
-  const rc     = history.map(e => e.rc);
-  const math   = history.map(e => e.math);
+  const greyLine = { borderColor: "#eee2d3", backgroundColor: "transparent",
+                     pointBackgroundColor: "#eee2d3", borderWidth: 2, tension: 0.2, pointRadius: 4 };
 
-  const ctx = document.getElementById("scoreHistoryChart");
-  if (!ctx) return;
+  const datasets = isEmpty
+    ? [
+        { label: "Overall", data: [], ...greyLine },
+        { label: "RC",      data: [], ...greyLine },
+        { label: "QR+MA",   data: [], ...greyLine },
+      ]
+    : [
+        { label: "Overall", data: history.map(d => d.total),
+          borderColor: P.composite, backgroundColor: "transparent", pointBackgroundColor: P.composite,
+          borderWidth: 2.5, borderDash: [6, 3], tension: 0.2, pointRadius: 5 },
+        { label: "RC", data: history.map(d => d.rc),
+          borderColor: P.rc, backgroundColor: "transparent", pointBackgroundColor: P.rc,
+          borderWidth: 2, tension: 0.2, pointRadius: 4 },
+        { label: "QR+MA", data: history.map(d => d.math),
+          borderColor: P.math, backgroundColor: "transparent", pointBackgroundColor: P.math,
+          borderWidth: 2, tension: 0.2, pointRadius: 4 },
+      ];
 
-  new Chart(ctx, {
+  new Chart(el.getContext("2d"), {
     type: "line",
     data: {
-      labels,
-      datasets: [
-        {
-          label: "Overall",
-          data: totals,
-          borderColor: "#1a1a1a",
-          backgroundColor: "rgba(26,26,26,.08)",
-          borderWidth: 2.5,
-          pointRadius: 5,
-          pointBackgroundColor: "#1a1a1a",
-          tension: 0.25,
-          fill: true,
-        },
-        {
-          label: "RC",
-          data: rc,
-          borderColor: "#5aab8c",
-          backgroundColor: "transparent",
-          borderWidth: 1.5,
-          pointRadius: 4,
-          pointBackgroundColor: "#5aab8c",
-          tension: 0.25,
-          borderDash: [4, 3],
-        },
-        {
-          label: "QR + MA",
-          data: math,
-          borderColor: "#8896a8",
-          backgroundColor: "transparent",
-          borderWidth: 1.5,
-          pointRadius: 4,
-          pointBackgroundColor: "#8896a8",
-          tension: 0.25,
-          borderDash: [4, 3],
-        },
-      ],
+      labels: isEmpty ? [] : history.map(d => d.seq),
+      datasets,
     },
     options: {
+      _emptyMessage: "Take a test to see your score history",
       responsive: true,
-      maintainAspectRatio: false,
-      interaction: { mode: "index", intersect: false },
+      aspectRatio: chartAR(2.5, 1.2),
+      layout: { padding: { top: 36 } },
       plugins: {
-        legend: {
-          position: "top",
-          align: "end",
-          labels: { boxWidth: 12, font: { size: 11 }, padding: 16 },
+        title: {
+          display: true, text: "Score history", align: "start",
+          color: titleColor,
+          font: { family: F.title, size: 26, weight: "600" },
+          padding: { bottom: 24 },
         },
+        legend: { display: false },
         tooltip: {
+          titleFont: { family: F.label, size: 13 },
+          bodyFont: { family: F.label, size: 13 },
           callbacks: {
             title: (items) => {
               const idx = items[0].dataIndex;
-              return history[idx].source + " · " + history[idx].date;
+              if (idx < history.length) return history[idx].source + " · " + history[idx].date;
+              return "";
             },
             label: (item) => ` ${item.dataset.label}: ${item.raw !== null ? item.raw + "%" : "—"}`,
-          },
-        },
+          }
+        }
       },
       scales: {
-        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
-        y: {
-          min: 0,
-          max: 100,
-          ticks: { font: { size: 11 }, callback: (v) => v + "%" },
-          grid: { color: "rgba(0,0,0,0.05)" },
+        x: {
+          grid: { display: false }, border: { display: false },
+          ticks: { font: { family: F.label, size: 13 }, color: "#240f05" },
         },
-      },
-    },
+        y: {
+          min: 0, max: 100,
+          grid: { color: isEmpty ? "rgba(238,226,211,0.3)" : "rgba(238,226,211,0.5)",
+                  drawBorder: false, borderDash: [1, 3] },
+          border: { display: false },
+          ticks: { font: { family: F.label, size: 13, weight: "300" }, stepSize: 20,
+                   color: "#240f05", callback: v => v + "%" },
+        }
+      }
+    }
   });
 })();
-</script>
-{% endif %}
 
+// ---------------------------------------------------------------------------
+// Stacked bar chart — practice test scores (RC + Math stacked)
+// ---------------------------------------------------------------------------
+(function () {
+  const dataEl = document.getElementById("attemptsChartData");
+  if (!dataEl) return;
+  const data = JSON.parse(dataEl.textContent);
+  const isEmpty = data.length === 0;
+  const hasTime = !isEmpty && data.some(d => d.minutes !== null);
+
+  const greyBar = { backgroundColor: "rgba(0,0,0,0.1)", borderWidth: 0, barThickness: 48, order: 2 };
+
+  const datasets = isEmpty
+    ? [
+        { label: "RC",   data: [], ...greyBar },
+        { label: "Math", data: [], ...greyBar },
+      ]
+    : [
+        { label: "RC",   data: data.map(d => d.rc),
+          backgroundColor: P.rc,   borderWidth: 0, barThickness: 48, order: 2 },
+        { label: "Math", data: data.map(d => d.math),
+          backgroundColor: P.math, borderWidth: 0, barThickness: 48, order: 2 },
+      ];
+
+  new Chart(document.getElementById("attemptsChart").getContext("2d"), {
+    type: "bar",
+    data: { labels: data.map(d => d.label), datasets },
+    options: {
+      _emptyMessage: "Complete a practice test to see your scores here",
+      responsive: true,
+      aspectRatio: chartAR(2.5, 1.2),
+      layout: { padding: { top: 36 } },
+      plugins: {
+        title: {
+          display: true, text: "Practice test scores", align: "start",
+          color: titleColor,
+          font: { family: F.title, size: 26, weight: "600" },
+          padding: { bottom: 24 },
+        },
+        legend: { display: false },
+        tooltip: {
+          titleFont: { family: F.label, size: 13 },
+          bodyFont: { family: F.label, size: 13 },
+          callbacks: {
+            label: item => ` ${item.dataset.label}: ${item.raw}%`,
+            footer: items => {
+              const d = data[items[0].dataIndex];
+              return d ? "Overall: " + d.total + "%" : "";
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true, grid: { display: false }, border: { display: false },
+          ticks: { font: { family: F.label, size: 13 },
+                   color: isEmpty ? "rgba(0,0,0,0.2)" : "#240f05" }
+        },
+        y: {
+          stacked: true, min: 0, max: 100,
+          grid: { color: isEmpty ? "rgba(0,0,0,0.04)" : "rgba(238,226,211,0.5)",
+                  drawBorder: false, borderDash: [1, 3] },
+          border: { display: false },
+          ticks: { font: { family: F.label, size: 13, weight: "300" }, stepSize: 20,
+                   color: isEmpty ? "rgba(0,0,0,0.2)" : "#240f05",
+                   callback: v => v + "%" }
+        }
+      }
+    }
+  });
+
+  // ── Test timing line chart ──
+  const timingCtx = document.getElementById("timingChart");
+  if (!timingCtx) return;
+  const timingData = hasTime ? data.filter(d => d.minutes !== null) : [];
+  const timingEmpty = timingData.length === 0;
+  const maxMinutes = timingEmpty ? 180 : Math.max(...timingData.map(d => d.minutes));
+  const yMax = Math.ceil(maxMinutes / 30) * 30;
+  const stepMinutes = yMax <= 60 ? 15 : 30;
+
+  new Chart(timingCtx.getContext("2d"), {
+    type: "line",
+    data: {
+      labels: timingEmpty ? [] : timingData.map(d => d.label),
+      datasets: timingEmpty
+        ? [{ label: "Time", data: [], borderColor: "#eee2d3", borderWidth: 2, pointRadius: 4 }]
+        : [{
+            label: "Time",
+            data: timingData.map(d => d.minutes),
+            borderColor: P.amber,
+            backgroundColor: "transparent",
+            pointBackgroundColor: P.amber,
+            borderWidth: 2,
+            tension: 0.2,
+            pointRadius: 5,
+            spanGaps: true,
+          }]
+    },
+    options: {
+      _emptyMessage: "Timing data will appear after your first timed test",
+      responsive: true,
+      aspectRatio: chartAR(2.5, 1.2),
+      layout: { padding: { top: 36 } },
+      plugins: {
+        title: {
+          display: true, text: "Your test timing", align: "start",
+          color: titleColor,
+          font: { family: F.title, size: 26, weight: "600" },
+          padding: { bottom: 24 },
+        },
+        legend: { display: false },
+        tooltip: {
+          titleFont: { family: F.label, size: 13 },
+          bodyFont: { family: F.label, size: 13 },
+          callbacks: {
+            label: item => {
+              const mins = item.raw;
+              const h = Math.floor(mins / 60);
+              const m = mins % 60;
+              return h > 0 ? `${h}h ${m}m` : `${m} min`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false }, border: { display: false },
+          ticks: { font: { family: F.label, size: 13 }, color: "#240f05" }
+        },
+        y: {
+          min: 0, max: yMax,
+          grid: { color: timingEmpty ? "rgba(0,0,0,0.04)" : "rgba(238,226,211,0.5)",
+                  drawBorder: false, borderDash: [1, 3] },
+          border: { display: false },
+          ticks: { font: { family: F.label, size: 13, weight: "300" },
+                   color: timingEmpty ? "rgba(0,0,0,0.2)" : "#240f05",
+                   stepSize: stepMinutes,
+                   callback: function(v) {
+                     const h = Math.floor(v / 60);
+                     const m = v % 60;
+                     return h > 0 ? `${h}:${String(m).padStart(2, "0")}` : `${m}m`;
+                   } }
+        }
+      }
+    }
+  });
+})();
+
+// ---------------------------------------------------------------------------
+// Dashboard trap bar charts — RC + Math (horizontal bars, % of wrong answers)
+// ---------------------------------------------------------------------------
+(function () {
+  const el = document.getElementById("dashTrapData");
+  if (!el) return;
+  const allData = JSON.parse(el.textContent);
+  if (!allData.length) return;
+
+  const RC_SECTIONS  = new Set(["reading_comprehension", "writing"]);
+  const MATH_SECTIONS = new Set(["quantitative_reasoning", "math_achievement"]);
+
+  function aggregateByLabel(data) {
+    const byLabel = {};
+    data.forEach(d => {
+      if (!byLabel[d.label]) byLabel[d.label] = { count: 0, pct: 0 };
+      byLabel[d.label].count += d.count;
+      byLabel[d.label].pct += d.pct;
+    });
+    return Object.entries(byLabel)
+      .map(([label, v]) => ({ label, count: v.count, pct: Math.round(v.pct * 10) / 10 }))
+      .sort((a, b) => b.pct - a.pct);
+  }
+
+  function renderTrapChart(canvasId, wrapId, sectionData, color, chartTitle) {
+    if (!sectionData.length) return;
+    const wrap = document.getElementById(wrapId);
+    if (!wrap) return;
+    wrap.style.display = "";
+    const canvasEl = document.getElementById(canvasId);
+    const chartHeight = Math.max(200, 80 + sectionData.length * 36);
+    canvasEl.parentElement.style.height = chartHeight + "px";
+    new Chart(canvasEl.getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: sectionData.map(d => d.label),
+        datasets: [{ label: "% of wrong answers", data: sectionData.map(d => d.pct), backgroundColor: color, borderWidth: 0, barThickness: 18 }]
+      },
+      options: {
+        indexAxis: "y", responsive: true, maintainAspectRatio: false,
+        layout: { padding: { top: 36 } },
+        plugins: {
+          title: {
+            display: true, text: chartTitle, align: "start",
+            color: titleColor,
+            font: { family: F.title, size: 26, weight: "600" },
+            padding: { bottom: 24 },
+          },
+          legend: { display: false },
+          tooltip: {
+            titleFont: { family: F.label, size: 13 },
+            bodyFont: { family: F.label, size: 13 },
+            callbacks: { label: item => ` ${item.raw}% (${sectionData[item.dataIndex].count} caught)` }
+          }
+        },
+        scales: {
+          x: { min: 0, max: 50,
+               grid: { color: "rgba(238,226,211,0.5)", drawBorder: false, borderDash: [1, 3] },
+               border: { display: false },
+               ticks: { font: { family: F.label, size: 13, weight: "300" }, color: "#240f05", callback: v => v + "%" } },
+          y: { grid: { display: false },
+               border: { display: false },
+               ticks: { font: { family: F.label, size: 13 }, color: "#240f05" } }
+        }
+      }
+    });
+  }
+
+  const rcData   = aggregateByLabel(allData.filter(d => RC_SECTIONS.has(d.section)));
+  const mathData = aggregateByLabel(allData.filter(d => MATH_SECTIONS.has(d.section)));
+  renderTrapChart("dashTrapChartRc",   "dashTrapRcWrap",   rcData,   P.rc,   "Top RC & Writing traps that caught you");
+  renderTrapChart("dashTrapChartMath", "dashTrapMathWrap", mathData, P.math, "Top Math traps that caught you");
+})();
+
+// ---------------------------------------------------------------------------
+// Sankey diagrams — RC + Math trap flow across tests
+// ---------------------------------------------------------------------------
+(function () {
+  function renderSankey(canvasId, dataId, colorFrom, colorTo, chartTitle) {
+    const el = document.getElementById(canvasId);
+    if (!el) return;
+    const dataEl = document.getElementById(dataId);
+    if (!dataEl) return;
+    const flows = JSON.parse(dataEl.textContent);
+    if (!flows.length) return;
+
+    const testNodes = new Set(flows.map(f => f.from));
+    const trapNodes = new Set(flows.map(f => f.to));
+    const columnMap = {};
+    testNodes.forEach(n => { columnMap[n] = 0; });
+    trapNodes.forEach(n => { columnMap[n] = 1; });
+
+    const trapTotals = {};
+    flows.forEach(f => { trapTotals[f.to] = (trapTotals[f.to] || 0) + f.flow; });
+    const priorityMap = {};
+    let pi = 0;
+    testNodes.forEach(n => { priorityMap[n] = pi++; });
+    Object.entries(trapTotals).sort((a, b) => b[1] - a[1]).forEach(([n], i) => { priorityMap[n] = i; });
+
+    new Chart(el.getContext("2d"), {
+      type: "sankey",
+      data: {
+        datasets: [{
+          label: "Trap flow",
+          data: flows,
+          colorFrom: colorFrom,
+          colorTo: colorTo,
+          colorMode: "gradient",
+          column: columnMap,
+          priority: priorityMap,
+          borderWidth: 0,
+          font: { family: F.label, size: 12 },
+        }]
+      },
+      options: {
+        responsive: true,
+        aspectRatio: chartAR(2.5, 1.2),
+        layout: { padding: { top: 36 } },
+        plugins: {
+          title: {
+            display: true, text: chartTitle, align: "start",
+            color: titleColor,
+            font: { family: F.title, size: 26, weight: "600" },
+            padding: { bottom: 24 },
+          },
+          legend: { display: false },
+          tooltip: {
+            titleFont: { family: F.label, size: 13 },
+            bodyFont: { family: F.label, size: 13 },
+            callbacks: {
+              label: item => {
+                const d = item.raw;
+                return `${d.from} → ${d.to}: ${d.flow}`;
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  renderSankey("sankeyChartRc",   "sankeyRcData",   P.rc,   P.wrong, "RC & Writing traps across tests");
+  renderSankey("sankeyChartMath", "sankeyMathData", P.math, P.wrong, "Math traps across tests");
+})();
+
+// ---------------------------------------------------------------------------
+// Skill accuracy radar charts — RC/Writing + QR/MA
+// ---------------------------------------------------------------------------
+(function () {
+  const el = document.getElementById("skillChartData");
+  if (!el) return;
+  const allSkills = JSON.parse(el.textContent);
+
+  const RC_SECTIONS   = new Set(["reading_comprehension", "writing"]);
+  const MATH_SECTIONS = new Set(["quantitative_reasoning", "math_achievement"]);
+
+  function renderRadar(canvasId, wrapId, skills, fillColor, borderColor, chartTitle) {
+    if (!skills.length) return;
+    document.getElementById(wrapId).style.display = "";
+    const ctx = document.getElementById(canvasId).getContext("2d");
+
+    const targetData = skills.map(() => 80);
+
+    new Chart(ctx, {
+      type: "radar",
+      data: {
+        labels: skills.map(s => s.label),
+        datasets: [
+          {
+            label: "Accuracy",
+            data: skills.map(s => s.accuracy),
+            backgroundColor: fillColor,
+            borderColor: borderColor,
+            borderWidth: 2,
+            pointBackgroundColor: borderColor,
+            pointRadius: 4,
+          },
+          {
+            label: "80% target",
+            data: targetData,
+            backgroundColor: "transparent",
+            borderColor: "rgba(0,0,0,0.18)",
+            borderWidth: 1.5,
+            borderDash: [5, 4],
+            pointRadius: 0,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        aspectRatio: chartAR(1.4, 0.9),
+        layout: { padding: { top: 16 } },
+        plugins: {
+          title: {
+            display: true, text: chartTitle, align: "start",
+            color: titleColor,
+            font: { family: F.title, size: 26, weight: "600" },
+            padding: { bottom: 16 },
+          },
+          legend: { display: false },
+          tooltip: {
+            titleFont: { family: F.label, size: 13 },
+            bodyFont: { family: F.label, size: 13 },
+            callbacks: {
+              label: item => {
+                if (item.datasetIndex === 1) return "Target: 80%";
+                const s = skills[item.dataIndex];
+                return ` ${s.accuracy}% (${s.correct}/${s.total})`;
+              }
+            }
+          }
+        },
+        scales: {
+          r: {
+            min: 0, max: 100,
+            ticks: { stepSize: 20, font: { family: F.label, size: 11 }, backdropColor: "transparent", color: "#aba784" },
+            pointLabels: { font: { family: F.label, size: 13 }, color: "#240f05" },
+            grid: { color: "rgba(238,226,211,0.5)" },
+            angleLines: { color: "rgba(238,226,211,0.5)" },
+          }
+        }
+      }
+    });
+  }
+
+  const rcSkills   = allSkills.filter(s => RC_SECTIONS.has(s.section));
+  const mathSkills = allSkills.filter(s => MATH_SECTIONS.has(s.section));
+  renderRadar("skillRadarRc",   "skillRadarRcWrap",   rcSkills,   "rgba(122,135,117,0.15)", P.rc,   "Your RC & Writing strengths");
+  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(171,85,63,0.15)",  P.math, "Your Math strengths");
+})();
+</script>
 {% endblock %}

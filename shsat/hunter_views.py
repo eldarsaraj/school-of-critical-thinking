@@ -221,7 +221,7 @@ _MATH_SECTIONS = {"quantitative_reasoning", "math_achievement"}
 
 @_hunter_required
 def hunter_dashboard(request):
-    import json as _json
+    import re as _re
     from collections import defaultdict
     from evaluators.models import EssayEvaluation
 
@@ -231,7 +231,7 @@ def hunter_dashboard(request):
         return redirect("hunter_verify_pending")
 
     # All completed non-drill Hunter attempts, oldest first for charts
-    attempts_asc = (
+    attempts_asc = list(
         TestAttempt.objects.filter(
             parent=parent, is_completed=True,
             test__is_drill=False, test__exam_type="hunter",
@@ -239,7 +239,7 @@ def hunter_dashboard(request):
         .select_related("test")
         .order_by("submitted_at")
     )
-    attempts_desc = list(reversed(list(attempts_asc)))
+    attempts_desc = list(reversed(attempts_asc))
 
     # Question counts per test per section (used for percentage scoring)
     from .models import Question as _Question
@@ -293,26 +293,6 @@ def hunter_dashboard(request):
         e["seq"] = f"Benchmark {i}"
         score_history.append(e)
 
-    # Practice (drill) scores
-    drill_attempts = (
-        TestAttempt.objects.filter(
-            parent=parent, is_completed=True,
-            test__is_drill=True, test__exam_type="hunter",
-        )
-        .select_related("test")
-        .order_by("submitted_at")
-    )
-    practice_chart_data = [
-        {
-            "label": f"{a.test.title} · {a.submitted_at.strftime('%b %d')}",
-            "rc": a.ela_correct or 0,
-            "math": a.math_correct or 0,
-            "total": a.composite_score or 0,
-        }
-        for a in drill_attempts
-        if a.composite_score is not None
-    ]
-
     # Latest completed attempt for KPI
     latest_attempt = attempts_desc[0] if attempts_desc else None
 
@@ -327,7 +307,82 @@ def hunter_dashboard(request):
         ).select_related("question")
     )
 
+    # ── Trap aggregation across all attempts ──
+    from .forms import DISTRACTOR_CHOICES as _DC
+    _dist_label = {}
+    for entry in _DC:
+        if isinstance(entry[1], (list, tuple)) and entry[0] not in ("",):
+            for key, label in entry[1]:
+                _dist_label[key] = label
+        elif entry[0]:
+            _dist_label[entry[0]] = entry[1]
+
+    trap_aggregate = {}       # (section, label) -> count
+    trap_by_attempt = {}      # attempt_id -> {(section, label): count}
+    for ans in all_answers:
+        if ans.selected_answer and not ans.is_correct:
+            dt = ans.question.distractor_types or {}
+            trap = dt.get(ans.selected_answer, "")
+            if trap:
+                section = ans.question.section or "unknown"
+                raw_label = _dist_label.get(trap, trap.replace("_", " ").title())
+                clean_label = _re.sub(r"^\([EM]\)\s*", "", raw_label)
+                key = (section, clean_label)
+                trap_aggregate[key] = trap_aggregate.get(key, 0) + 1
+                trap_by_attempt.setdefault(ans.attempt_id, {})
+                trap_by_attempt[ans.attempt_id][key] = trap_by_attempt[ans.attempt_id].get(key, 0) + 1
+
+    total_wrong_rc = sum(v for (s, _), v in trap_aggregate.items() if s in _RC_SECTIONS)
+    total_wrong_math = sum(v for (s, _), v in trap_aggregate.items() if s in _MATH_SECTIONS)
+
+    dash_trap_data = sorted(
+        [
+            {
+                "label": label,
+                "section": section,
+                "count": v,
+                "pct": round(v / (total_wrong_rc if section in _RC_SECTIONS else total_wrong_math) * 100, 1)
+                if (total_wrong_rc if section in _RC_SECTIONS else total_wrong_math) > 0
+                else 0,
+            }
+            for (section, label), v in trap_aggregate.items()
+        ],
+        key=lambda x: x["count"], reverse=True,
+    )
+
+    top_trap_label = dash_trap_data[0]["label"] if dash_trap_data else None
+
+    # ── Sankey data: RC + Math trap flow across tests ──
+    _rc_traps = sorted(
+        [(s, l, v) for (s, l), v in trap_aggregate.items() if s in _RC_SECTIONS],
+        key=lambda x: x[2], reverse=True,
+    )[:5]
+    _math_traps = sorted(
+        [(s, l, v) for (s, l), v in trap_aggregate.items() if s in _MATH_SECTIONS],
+        key=lambda x: x[2], reverse=True,
+    )[:5]
+
+    def _build_sankey(traps_list):
+        flows = []
+        if not traps_list or not attempts_asc:
+            return flows
+        for a in attempts_asc:
+            test_label = "Baseline" if a.test.title.lower().startswith("baseline") else a.test.title
+            per_attempt = trap_by_attempt.get(a.id, {})
+            for (section, label, _) in traps_list:
+                flow = per_attempt.get((section, label), 0)
+                if flow > 0:
+                    flows.append({"from": test_label, "to": label, "flow": flow})
+        return flows
+
+    sankey_rc = _build_sankey(_rc_traps)
+    sankey_math = _build_sankey(_math_traps)
+
+    # ── Skill stats + per-attempt tracking for persistence ──
     skill_stats = {}
+    att_skill_correct = defaultdict(lambda: defaultdict(int))
+    att_skill_total = defaultdict(lambda: defaultdict(int))
+
     for ans in all_answers:
         if ans.question.question_type == "essay":
             continue
@@ -345,6 +400,18 @@ def hunter_dashboard(request):
         if ans.time_spent_seconds:
             skill_stats[skill]["time_sum"] += ans.time_spent_seconds
             skill_stats[skill]["time_count"] += 1
+        att_skill_total[ans.attempt_id][skill] += 1
+        if ans.is_correct:
+            att_skill_correct[ans.attempt_id][skill] += 1
+
+    # Count how many attempts each skill was weak (< 70%) in
+    skill_weak_counts = defaultdict(int)
+    for att_id, totals in att_skill_total.items():
+        for skill, total in totals.items():
+            if total >= 2:
+                correct = att_skill_correct[att_id].get(skill, 0)
+                if correct / total < 0.70:
+                    skill_weak_counts[skill] += 1
 
     skill_accuracy_data = []
     for skill, s in skill_stats.items():
@@ -363,6 +430,12 @@ def hunter_dashboard(request):
         })
     skill_accuracy_data.sort(key=lambda x: x["accuracy"])
 
+    # Annotate with persistence badges
+    for s in skill_accuracy_data:
+        weak_count = skill_weak_counts.get(s["skill"], 0)
+        s["weak_attempts"] = weak_count
+        s["is_persistent"] = weak_count >= 2
+
     # Focus areas: 3 weakest skills with at least 3 answers
     focus_areas = [s for s in skill_accuracy_data if s["total"] >= 3][:3]
 
@@ -375,6 +448,24 @@ def hunter_dashboard(request):
         round(sum(a.time_spent_seconds for a in timed_answers) / len(timed_answers) / 60, 1)
         if timed_answers else None
     )
+
+    # ── Attempts chart data (stacked bar + timing) ──
+    attempts_chart_data = []
+    for a in attempts_asc:
+        if a.composite_score is None:
+            continue
+        tc = q_counts.get(a.test_id, {})
+        rc_total = tc.get("reading_comprehension", 0)
+        math_total = tc.get("quantitative_reasoning", 0) + tc.get("math_achievement", 0)
+        rc_pct = round(a.ela_correct / rc_total * 100) if rc_total and a.ela_correct is not None else None
+        math_pct = round(a.math_correct / math_total * 100) if math_total and a.math_correct is not None else None
+        attempts_chart_data.append({
+            "label": f"{a.test.title} · {a.submitted_at.strftime('%b %d')}",
+            "rc": rc_pct or 0,
+            "math": math_pct or 0,
+            "total": round(a.composite_score / (rc_total + math_total) * 100) if (rc_total + math_total) else 0,
+            "minutes": round(a.total_seconds / 60, 1) if a.total_seconds else None,
+        })
 
     # Essay evaluation (most recent)
     essay_eval = None
@@ -397,7 +488,7 @@ def hunter_dashboard(request):
     except Exception:
         pass
 
-    # Per-attempt percentage scores for the scores table
+    # Per-attempt percentage scores (kept for tooltip data)
     attempts_with_pct = []
     for a in attempts_desc:
         tc = q_counts.get(a.test_id, {})
@@ -426,20 +517,21 @@ def hunter_dashboard(request):
         "attempts": attempts_desc,
         "attempts_with_pct": attempts_with_pct,
         "score_history": score_history,
-        "score_history_json": _json.dumps(score_history),
-        "practice_chart_data": practice_chart_data,
-        "practice_chart_data_json": _json.dumps(practice_chart_data),
+        "attempts_chart_data": attempts_chart_data,
         "latest_attempt": latest_attempt,
         "latest_composite_pct": latest_composite_pct,
         "latest_composite_band": latest_composite_band,
         "latest_composite_color": latest_composite_color,
         "skill_accuracy_data": skill_accuracy_data,
-        "skill_accuracy_json": _json.dumps(skill_accuracy_data),
         "focus_areas": focus_areas,
         "avg_time_per_q": avg_time_per_q,
         "has_timing_data": bool(timed_answers),
         "essay_eval": essay_eval,
         "tests_completed": len(attempts_desc),
+        "dash_trap_data": dash_trap_data,
+        "top_trap_label": top_trap_label,
+        "sankey_rc": sankey_rc,
+        "sankey_math": sankey_math,
     }
     return render(request, "shsat/hunter_dashboard.html", context)
 
