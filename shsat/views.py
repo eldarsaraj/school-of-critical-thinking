@@ -53,7 +53,7 @@ TRAP_DESCRIPTIONS = {
     "unit_conversion_error": "A unit conversion step was done incorrectly.",
     "unsimplified": "The answer was correct but needed to be simplified further.",
     "misread_question": "The question was misread — a key detail or condition was missed.",
-    "wrong_concept": "The wrong mathematical concept was applied to solve this problem.",
+    "wrong_concept": "Identifies the wrong concept in the question or the passage.",
     "computation_error": "A calculation error somewhere in the work led to a wrong final answer.",
     "estimation_failure": "The answer doesn't pass a basic reasonableness check.",
     "fast_pattern_match": "The answer looked right at first glance but didn't hold up to careful checking.",
