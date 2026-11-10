@@ -790,7 +790,7 @@ function makeProjData(arr) {
   const elaData  = aggregateByLabel(allData.filter(d => ELA_SECTIONS.has(d.section)));
   const mathData = aggregateByLabel(allData.filter(d => MATH_SECTIONS.has(d.section)));
   renderTrapChart("dashTrapChartEla",  "dashTrapElaWrap",  elaData,  P.ela,  "Top ELA traps that caught you");
-  renderTrapChart("dashTrapChartMath", "dashTrapMathWrap", mathData, P.math, "Top Math traps that caught you");
+  renderTrapChart("dashTrapChartMath", "dashTrapMathWrap", mathData, P.math, "Top math traps that caught you");
 })();
 
 {% if has_paid %}
@@ -864,7 +864,7 @@ function makeProjData(arr) {
   }
 
   renderSankey("sankeyChartEla",  "sankeyElaData",  P.ela,  P.wrong, "ELA traps you keep catching across tests");
-  renderSankey("sankeyChartMath", "sankeyMathData", P.math, P.wrong, "Math traps you keep catching across tests");
+  renderSankey("sankeyChartMath", "sankeyMathData", P.math, P.wrong, "math traps you keep catching across tests");
 })();
 
 // ---------------------------------------------------------------------------
