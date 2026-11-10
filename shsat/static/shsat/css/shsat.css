@@ -145,7 +145,7 @@
 }
 
 .shsat-stat-card {
-  border: none;
+  border: 1px dotted #eee2d3;
   padding: 20px 18px;
   background: transparent;
   border-radius: 4px;

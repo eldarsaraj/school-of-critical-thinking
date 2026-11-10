@@ -106,21 +106,17 @@
 <!-- Sankey: tests → top traps (separate ELA + Math) -->
 {% if sankey_ela %}
 <div id="sankeyElaWrap" class="shsat-chart-wrap" style="margin-top:16px;">
-  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA trap flow across tests</p>
   <canvas id="sankeyChartEla"></canvas>
 </div>
 {% endif %}
 {% if sankey_math %}
 <div id="sankeyMathWrap" class="shsat-chart-wrap" style="margin-top:16px;">
-  <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math trap flow across tests</p>
   <canvas id="sankeyChartMath"></canvas>
 </div>
 {% endif %}
-{% if sankey_single_test and sankey_ela or sankey_single_test and sankey_math %}
-<p style="font-size:12px;color:rgba(0,0,0,0.38);margin:4px 0 12px;line-height:1.5;">
-  Complete more tests to see whether these traps persist or fade.
+<p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;color:#aba784;margin:4px 0 12px;line-height:1.5;">
+  Complete more tests to see how your trap patterns change over time.
 </p>
-{% endif %}
 
 {% else %}
 {# Unpaid: show real trap bar charts blurred #}
@@ -162,24 +158,42 @@
 {% if has_paid %}
 <!-- Skill accuracy radar charts -->
 {% if skill_accuracy_data %}
-<p class="shsat-section-title" style="margin-top:48px;">Accuracy by skill</p>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
-  <div id="skillRadarElaWrap" class="shsat-chart-wrap" style="display:none;">
-    <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">ELA</p>
-    <canvas id="skillRadarEla"></canvas>
-  </div>
-  <div id="skillRadarMathWrap" class="shsat-chart-wrap" style="display:none;">
-    <p style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin:0 0 12px;">Math</p>
-    <canvas id="skillRadarMath"></canvas>
-  </div>
+<div id="skillRadarElaWrap" class="shsat-chart-wrap" style="display:none;margin-top:48px;">
+  <canvas id="skillRadarEla"></canvas>
+</div>
+<div id="skillRadarMathWrap" class="shsat-chart-wrap" style="display:none;">
+  <canvas id="skillRadarMath"></canvas>
 </div>
 {{ skill_accuracy_data|json_script:"skillChartData" }}
 {% endif %}
 
+<!-- Score distribution -->
+{% if platform_mean and latest_composite %}
+<div class="shsat-chart-wrap" style="margin-top:48px;">
+  <canvas id="distributionChart"></canvas>
+</div>
+<script id="distributionParams" type="application/json">
+{"mean": {{ platform_mean }}, "std": {{ platform_std }}, "n": {{ platform_n }}, "score": {{ latest_composite }}}
+</script>
+<p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:12px;color:#aba784;margin:-8px 0 36px;">
+  Based on {{ platform_n }} completed test{{ platform_n|pluralize }} on this platform. Distribution updates as more students complete tests.
+</p>
+{% elif latest_composite %}
+<p style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;color:#240f05;margin-top:48px;margin-bottom:8px;">How you compare</p>
+<p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:13px;color:#aba784;margin-bottom:36px;">
+  This chart will appear once enough students have completed tests on the platform.
+</p>
+{% else %}
+<p style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;color:#240f05;margin-top:48px;margin-bottom:8px;">How you compare</p>
+<p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:13px;color:#aba784;margin-bottom:36px;">
+  Complete a practice test to see where your score sits relative to other students.
+</p>
+{% endif %}
+
 <!-- Focus Areas -->
 {% if skill_accuracy_data %}
-<p class="shsat-section-title" style="margin-top:48px;">Focus areas</p>
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 20px;">Your three weakest skills, ranked by accuracy. Target these first.</p>
+<div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;color:#240f05;margin-top:48px;margin-bottom:8px;">Areas you must improve in</div>
+<p style="font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;font-size:13px;color:#aba784;margin-bottom:20px;">Your three weakest skills, ranked by accuracy. Target these first.</p>
 <div class="shsat-focus-grid">
   {% for skill in skill_accuracy_data|slice:":3" %}
   <div class="shsat-focus-card">
@@ -197,31 +211,6 @@
   </div>
   {% endfor %}
 </div>
-{% endif %}
-
-<!-- Score distribution (moved to bottom — nice-to-have but not actionable) -->
-<p class="shsat-section-title" style="margin-top:48px;">Where you stand</p>
-{% if platform_mean and latest_composite %}
-<p style="font-size:13px;color:rgba(0,0,0,0.45);margin:-8px 0 16px;">
-  Your latest score against the distribution of all completed tests on this platform.
-</p>
-<div class="shsat-chart-wrap">
-  <canvas id="distributionChart"></canvas>
-</div>
-<script id="distributionParams" type="application/json">
-{"mean": {{ platform_mean }}, "std": {{ platform_std }}, "n": {{ platform_n }}, "score": {{ latest_composite }}}
-</script>
-<p style="font-size:12px;color:rgba(0,0,0,0.35);margin:-8px 0 36px;">
-  Based on {{ platform_n }} completed test{{ platform_n|pluralize }} on this platform. Distribution updates as more students complete tests.
-</p>
-{% elif latest_composite %}
-<p style="font-size:14px;color:rgba(0,0,0,0.45);margin:-8px 0 36px;">
-  This chart will appear once enough students have completed tests on the platform.
-</p>
-{% else %}
-<p style="font-size:14px;color:rgba(0,0,0,0.45);margin:-8px 0 36px;">
-  Complete a practice test to see where your score sits relative to other students.
-</p>
 {% endif %}
 
 <!-- Recent manual scores -->
@@ -635,17 +624,35 @@ function makeProjData(arr) {
   // Test timing line chart (separate)
   // -------------------------------------------------------------------------
   const timingCtx = document.getElementById("timingChart").getContext("2d");
+  // Convert seconds to minutes for the chart
   const timingData = hasTime ? data.filter(d => d.minutes !== null) : [];
   const timingEmpty = timingData.length === 0;
+
+  // Helper: format seconds as h:mm
+  function fmtTime(totalSeconds) {
+    // data.minutes is actually seconds from the view
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    if (h > 0) return `${h}:${String(m).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    return `${m}:${String(secs).padStart(2, "0")}`;
+  }
+
+  // Use raw seconds values; determine sensible max (round up to nearest 30 min)
+  const rawSeconds = timingData.map(d => d.minutes * 60);  // minutes field is actually minutes
+  const maxMinutes = timingEmpty ? 180 : Math.max(...timingData.map(d => d.minutes));
+  const yMax = Math.ceil(maxMinutes / 30) * 30;
+  const stepMinutes = yMax <= 60 ? 15 : 30;
 
   new Chart(timingCtx, {
     type: "line",
     data: {
       labels: timingEmpty ? [] : timingData.map(d => d.label),
       datasets: timingEmpty
-        ? [{ label: "Minutes", data: [], borderColor: "#eee2d3", borderWidth: 2, pointRadius: 4 }]
+        ? [{ label: "Time", data: [], borderColor: "#eee2d3", borderWidth: 2, pointRadius: 4 }]
         : [{
-            label: "Minutes",
+            label: "Time",
             data: timingData.map(d => d.minutes),
             borderColor: P.amber,
             backgroundColor: "transparent",
@@ -675,7 +682,12 @@ function makeProjData(arr) {
           titleFont: { family: F.label, size: 13 },
           bodyFont: { family: F.label, size: 13 },
           callbacks: {
-            label: (item) => `${item.raw} minutes`
+            label: (item) => {
+              const mins = item.raw;
+              const h = Math.floor(mins / 60);
+              const m = mins % 60;
+              return h > 0 ? `${h}h ${m}m` : `${m} min`;
+            }
           }
         }
       },
@@ -686,13 +698,18 @@ function makeProjData(arr) {
           ticks: { font: { family: F.label, size: 13 }, color: "#240f05" }
         },
         y: {
-          min: 0,
+          min: 0, max: yMax,
           grid: { color: timingEmpty ? "rgba(0,0,0,0.04)" : "rgba(238,226,211,0.5)",
                   drawBorder: false, borderDash: [1, 3] },
           border: { display: false },
           ticks: { font: { family: F.label, size: 13, weight: "300" },
                    color: timingEmpty ? "rgba(0,0,0,0.2)" : "#240f05",
-                   callback: v => v + "m" }
+                   stepSize: stepMinutes,
+                   callback: function(v) {
+                     const h = Math.floor(v / 60);
+                     const m = v % 60;
+                     return h > 0 ? `${h}:${String(m).padStart(2, "0")}` : `${m}m`;
+                   } }
         }
       }
     }
@@ -713,15 +730,18 @@ function makeProjData(arr) {
     const wrap = document.getElementById(wrapId);
     if (!wrap) return;
     wrap.style.display = "";
-    new Chart(document.getElementById(canvasId).getContext("2d"), {
+    // Set height based on number of traps so bar spacing is consistent
+    const canvasEl = document.getElementById(canvasId);
+    const chartHeight = Math.max(200, 80 + sectionData.length * 36);
+    canvasEl.parentElement.style.height = chartHeight + "px";
+    new Chart(canvasEl.getContext("2d"), {
       type: "bar",
       data: {
         labels: sectionData.map(d => d.label),
         datasets: [{ label: "% of wrong answers", data: sectionData.map(d => d.pct), backgroundColor: color, borderWidth: 0, barThickness: 18 }]
       },
       options: {
-        indexAxis: "y", responsive: true,
-        aspectRatio: chartAR(Math.max(1.4, 4 / Math.max(sectionData.length, 2))),
+        indexAxis: "y", responsive: true, maintainAspectRatio: false,
         layout: { padding: { top: 36 } },
         plugins: {
           title: {
@@ -778,7 +798,7 @@ function makeProjData(arr) {
 // Sankey diagrams — ELA + Math trap flow across tests
 // ---------------------------------------------------------------------------
 (function () {
-  function renderSankey(canvasId, dataId, colorFrom, colorTo) {
+  function renderSankey(canvasId, dataId, colorFrom, colorTo, chartTitle) {
     const el = document.getElementById(canvasId);
     if (!el) return;
     const dataEl = document.getElementById(dataId);
@@ -811,14 +831,26 @@ function makeProjData(arr) {
           column: columnMap,
           priority: priorityMap,
           borderWidth: 0,
+          font: { family: F.label, size: 12 },
         }]
       },
       options: {
         responsive: true,
         aspectRatio: chartAR(2.5, 1.2),
+        layout: { padding: { top: 36 } },
         plugins: {
+          title: {
+            display: true,
+            text: chartTitle,
+            align: "start",
+            color: titleColor,
+            font: { family: F.title, size: 26, weight: "600" },
+            padding: { bottom: 24 },
+          },
           legend: { display: false },
           tooltip: {
+            titleFont: { family: F.label, size: 13 },
+            bodyFont: { family: F.label, size: 13 },
             callbacks: {
               label: item => {
                 const d = item.raw;
@@ -831,8 +863,8 @@ function makeProjData(arr) {
     });
   }
 
-  renderSankey("sankeyChartEla",  "sankeyElaData",  P.ela,  P.wrong);
-  renderSankey("sankeyChartMath", "sankeyMathData", P.math, P.wrong);
+  renderSankey("sankeyChartEla",  "sankeyElaData",  P.ela,  P.wrong, "ELA traps you keep catching across tests");
+  renderSankey("sankeyChartMath", "sankeyMathData", P.math, P.wrong, "Math traps you keep catching across tests");
 })();
 
 // ---------------------------------------------------------------------------
@@ -877,7 +909,7 @@ function makeProjData(arr) {
         label: "Score distribution",
         data: pts,
         borderColor: P.neutral,
-        backgroundColor: "rgba(136,150,168,0.13)",
+        backgroundColor: "rgba(171,167,132,0.1)",
         borderWidth: 2,
         fill: true,
         tension: 0.4,
@@ -887,6 +919,7 @@ function makeProjData(arr) {
     options: {
       responsive: true,
       aspectRatio: chartAR(2.5, 1.2),
+      layout: { padding: { top: 36 } },
       onHover: (event, _elements, chart) => {
         if (!chart.scales.x || event.x === null) return;
         const lineX = chart.scales.x.getPixelForValue(score);
@@ -898,6 +931,22 @@ function makeProjData(arr) {
         }
       },
       plugins: {
+        title: {
+          display: true,
+          text: "How you compare",
+          align: "start",
+          color: titleColor,
+          font: { family: F.title, size: 26, weight: "600" },
+          padding: { bottom: 4 },
+        },
+        subtitle: {
+          display: true,
+          text: "Your latest score against the distribution of all completed tests on this platform.",
+          align: "start",
+          color: "#aba784",
+          font: { family: F.label, size: 13, weight: "400" },
+          padding: { bottom: 20 },
+        },
         legend: { display: false },
         tooltip: { enabled: false },
         annotation: {
@@ -915,7 +964,7 @@ function makeProjData(arr) {
                 backgroundColor: P.composite,
                 color: "#fff",
                 padding: { x: 8, y: 5 },
-                font: { size: 12, weight: "600" },
+                font: { family: F.label, size: 12, weight: "600" },
                 yAdjust: -8,
               }
             }
@@ -926,11 +975,12 @@ function makeProjData(arr) {
         x: {
           type: "linear",
           min: 200, max: 700,
-          grid: { color: P.grid },
-          ticks: { font: { size: 11 }, stepSize: 100, callback: v => v },
+          grid: { color: "rgba(238,226,211,0.5)", borderDash: [1, 3], drawBorder: false },
+          border: { display: false },
+          ticks: { font: { family: F.label, size: 13, weight: "300" }, stepSize: 100, color: "#240f05", callback: v => v },
           title: {
             display: true, text: "Composite score",
-            font: { size: 11 }, color: "rgba(0,0,0,0.4)",
+            font: { family: F.label, size: 11 }, color: "#aba784",
           }
         },
         y: { display: false }
@@ -950,7 +1000,7 @@ function makeProjData(arr) {
   const ELA_SECTIONS  = new Set(["ELA", "reading_comprehension", "writing"]);
   const MATH_SECTIONS = new Set(["Math", "quantitative_reasoning", "math_achievement"]);
 
-  function renderRadar(canvasId, wrapId, skills, fillColor, borderColor) {
+  function renderRadar(canvasId, wrapId, skills, fillColor, borderColor, chartTitle) {
     if (!skills.length) return;
     document.getElementById(wrapId).style.display = "";
     const ctx = document.getElementById(canvasId).getContext("2d");
@@ -970,7 +1020,7 @@ function makeProjData(arr) {
             borderColor: borderColor,
             borderWidth: 2,
             pointBackgroundColor: borderColor,
-            pointRadius: 3,
+            pointRadius: 4,
           },
           {
             label: "80% target",
@@ -985,10 +1035,21 @@ function makeProjData(arr) {
       },
       options: {
         responsive: true,
-        aspectRatio: 1,
+        aspectRatio: chartAR(1.4, 0.9),
+        layout: { padding: { top: 16 } },
         plugins: {
+          title: {
+            display: true,
+            text: chartTitle,
+            align: "start",
+            color: titleColor,
+            font: { family: F.title, size: 26, weight: "600" },
+            padding: { bottom: 16 },
+          },
           legend: { display: false },
           tooltip: {
+            titleFont: { family: F.label, size: 13 },
+            bodyFont: { family: F.label, size: 13 },
             callbacks: {
               label: item => {
                 if (item.datasetIndex === 1) return "Target: 80%";
@@ -1001,10 +1062,10 @@ function makeProjData(arr) {
         scales: {
           r: {
             min: 0, max: 100,
-            ticks: { stepSize: 20, font: { size: 10 }, backdropColor: "transparent" },
-            pointLabels: { font: { size: 11 } },
-            grid: { color: "rgba(0,0,0,0.06)" },
-            angleLines: { color: "rgba(0,0,0,0.06)" },
+            ticks: { stepSize: 20, font: { family: F.label, size: 11 }, backdropColor: "transparent", color: "#aba784" },
+            pointLabels: { font: { family: F.label, size: 13 }, color: "#240f05" },
+            grid: { color: "rgba(238,226,211,0.5)" },
+            angleLines: { color: "rgba(238,226,211,0.5)" },
           }
         }
       }
@@ -1013,8 +1074,8 @@ function makeProjData(arr) {
 
   const elaSkills  = allSkills.filter(s => ELA_SECTIONS.has(s.section));
   const mathSkills = allSkills.filter(s => MATH_SECTIONS.has(s.section));
-  renderRadar("skillRadarEla",  "skillRadarElaWrap",  elaSkills,  "rgba(91,142,196,0.2)", P.ela);
-  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(196,99,91,0.2)",  P.math);
+  renderRadar("skillRadarEla",  "skillRadarElaWrap",  elaSkills,  "rgba(122,135,117,0.15)", P.ela, "Your ELA strengths");
+  renderRadar("skillRadarMath", "skillRadarMathWrap", mathSkills, "rgba(171,85,63,0.15)",  P.math, "Your Math strengths");
 })();
 {% endif %}
 </script>
